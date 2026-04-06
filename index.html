@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>SLCGP 2026 State Windows + Prior Awards Data Tracker</title>
+<style>
+  :root {
+    --bg: #f5f7fb;
+    --card: #ffffff;
+    --ink: #18212f;
+    --muted: #5c6b80;
+    --line: #d9e1ec;
+    --blue: #1f6feb;
+    --blue-soft: #eaf2ff;
+    --green: #1a7f37;
+    --green-soft: #eaf7ee;
+    --amber: #9a6700;
+    --amber-soft: #fff4d6;
+    --red: #b42318;
+    --red-soft: #fdecec;
+    --shadow: 0 10px 24px rgba(18, 33, 53, 0.08);
+    --radius: 16px;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: Inter, Arial, Helvetica, sans-serif;
+    background: linear-gradient(180deg, #f8fbff 0%, var(--bg) 100%);
+    color: var(--ink);
+  }
+  .wrap {
+    max-width: 1580px;
+    margin: 0 auto;
+    padding: 28px 22px 60px;
+  }
+  .hero {
+    background: linear-gradient(135deg, #ffffff 0%, #f6faff 100%);
+    border: 1px solid var(--line);
+    border-radius: 22px;
+    box-shadow: var(--shadow);
+    padding: 24px 24px 18px;
+    margin-bottom: 18px;
+  }
+  .eyebrow {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin-bottom: 8px;
+  }
+  h1 { margin: 0 0 10px; font-size: 32px; line-height: 1.1; }
+  .sub { color: var(--muted); font-size: 15px; line-height: 1.55; max-width: 1180px; }
+  .meta { display: flex; flex-wrap: wrap; gap: 12px 20px; margin-top: 16px; color: var(--muted); font-size: 14px; }
+  .meta b { color: var(--ink); }
+  .cards { display: grid; grid-template-columns: repeat(6, minmax(0,1fr)); gap: 14px; margin: 18px 0; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); padding: 16px 18px; }
+  .card .label { font-size: 12px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin-bottom: 8px; font-weight: 700; }
+  .card .value { font-size: 28px; font-weight: 800; line-height: 1; }
+  .toolbar { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); padding: 16px; margin-bottom: 18px; }
+  .controls { display: grid; grid-template-columns: 1.2fr 1fr 1fr 1fr auto auto; gap: 12px; align-items: end; }
+  .field label { display: block; font-size: 12px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin-bottom: 7px; font-weight: 700; }
+  input[type="search"], select { width: 100%; padding: 11px 12px; border-radius: 12px; border: 1px solid var(--line); background: #fff; color: var(--ink); font-size: 14px; }
+  .btn { appearance: none; border: 1px solid var(--line); background: #fff; color: var(--ink); border-radius: 12px; padding: 11px 14px; font-size: 14px; font-weight: 700; cursor: pointer; min-height: 44px; }
+  .btn.primary { background: var(--blue); border-color: var(--blue); color: #fff; }
+  .btn:hover { transform: translateY(-1px); }
+  .note { margin-top: 12px; color: var(--muted); font-size: 13px; line-height: 1.5; }
+  .table-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; }
+  .table-wrap { overflow: auto; }
+  table { width: 100%; border-collapse: collapse; min-width: 1450px; }
+  thead th { position: sticky; top: 0; z-index: 2; background: #f8fbff; color: var(--ink); font-size: 12px; text-transform: uppercase; letter-spacing: .08em; font-weight: 800; border-bottom: 1px solid var(--line); padding: 14px 14px; text-align: left; }
+  tbody td { border-bottom: 1px solid var(--line); padding: 14px 14px; vertical-align: top; font-size: 14px; line-height: 1.5; }
+  tbody tr:hover { background: #fbfdff; }
+  .state { font-weight: 800; font-size: 15px; }
+  .region { color: var(--muted); font-size: 12px; margin-top: 3px; text-transform: uppercase; letter-spacing: .06em; }
+  .badge { display: inline-flex; align-items: center; border-radius: 999px; padding: 6px 10px; font-size: 12px; font-weight: 800; letter-spacing: .03em; }
+  .badge.open { color: var(--green); background: var(--green-soft); }
+  .badge.closed { color: var(--red); background: var(--red-soft); }
+  .badge.forecast { color: var(--amber); background: var(--amber-soft); }
+  .confidence { display: inline-flex; padding: 5px 9px; border-radius: 999px; background: var(--blue-soft); color: var(--blue); font-weight: 700; font-size: 12px; }
+  .muted { color: var(--muted); }
+  .small-note { color: var(--muted); font-size: 12px; line-height: 1.45; margin-top: 6px; }
+  a { color: var(--blue); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .footer { color: var(--muted); font-size: 12px; margin-top: 14px; line-height: 1.55; }
+
+  @media (max-width: 1200px) {
+    .cards { grid-template-columns: repeat(3, minmax(0,1fr)); }
+    .controls { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 720px) {
+    .cards { grid-template-columns: 1fr; }
+    .controls { grid-template-columns: 1fr; }
+    h1 { font-size: 26px; }
+  }
+  @media print {
+    body { background: #fff; }
+    .wrap { max-width: 100%; padding: 0; }
+    .toolbar, .btn-print-note { display: none !important; }
+    .hero, .card, .table-card { box-shadow: none !important; border: 1px solid #cfd8e3 !important; }
+    thead th { position: static; background: #f7f7f7 !important; }
+    a { color: #000; text-decoration: none; }
+    @page { size: landscape; margin: 0.4in; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <section class="hero">
+    <div class="eyebrow">GPS Team Tracker</div>
+    <h1>SLCGP 2026 State Application Windows + Prior Awards / Applicant Data</h1>
+    <div class="sub">
+      Official-state-source tracker for State and Local Cybersecurity Grant Program local/subrecipient windows, organized by current status and paired with a second link for the best publicly available <b>prior awards, project, or applicant-data evidence</b> surfaced during review. Where a state did not publicly post a dated 2026 local window, it is marked <b>Forecasted/TBD</b>. Where a public prior-awards list was not clearly available, the tracker links the best official program page, prior-round guidance, or state plan instead.
+    </div>
+    <div class="meta">
+      <div><b>Last Refresh Date:</b> April 6, 2026</div>
+      <div><b>Created by:</b> GPS Team</div>
+      <div><b>Default sort:</b> earliest posted/forecasted window date first; undated items at the bottom</div>
+    </div>
+  </section>
+
+  <section class="cards" id="summaryCards">
+    <div class="card"><div class="label">Visible States</div><div class="value" id="visibleCount">0</div></div>
+    <div class="card"><div class="label">Open</div><div class="value" id="openCount">0</div></div>
+    <div class="card"><div class="label">Closed</div><div class="value" id="closedCount">0</div></div>
+    <div class="card"><div class="label">Forecasted / TBD</div><div class="value" id="forecastCount">0</div></div>
+    <div class="card"><div class="label">High Confidence</div><div class="value" id="highCount">0</div></div>
+    <div class="card"><div class="label">Prior Data Links</div><div class="value" id="priorCount">0</div></div>
+  </section>
+
+  <section class="toolbar">
+    <div class="controls">
+      <div class="field">
+        <label for="search">Search</label>
+        <input id="search" type="search" placeholder="Search state, description, prior data, or source..." />
+      </div>
+      <div class="field">
+        <label for="regionFilter">Region</label>
+        <select id="regionFilter"><option value="">All regions</option></select>
+      </div>
+      <div class="field">
+        <label for="stateFilter">State</label>
+        <select id="stateFilter"><option value="">All states</option></select>
+      </div>
+      <div class="field">
+        <label for="statusFilter">Open status</label>
+        <select id="statusFilter">
+          <option value="">All statuses</option>
+          <option value="Open">Open</option>
+          <option value="Closed">Closed</option>
+          <option value="Forecasted/TBD">Forecasted/TBD</option>
+        </select>
+      </div>
+      <button class="btn" id="resetBtn">Reset filters</button>
+      <button class="btn primary" id="pdfBtn">Export to PDF</button>
+    </div>
+    <div class="note btn-print-note">
+      Tip: the PDF button prints the <b>currently filtered view</b>. Use region, state, and status filters first, then export.
+    </div>
+    <div class="note">
+      Method: official state program pages first; official awards announcements, reporting pages, plan PDFs, and prior-round guidance used as the “prior data” link when available.
+      This is a sales-ops tracker, not legal guidance. Verify final eligibility, match, and submission mechanics on the linked source page before outreach.
+    </div>
+  </section>
+
+  <section class="table-card">
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>State</th>
+            <th>Status</th>
+            <th>Window Start</th>
+            <th>Window End / Next Date</th>
+            <th>Description</th>
+            <th>2026 Window Source</th>
+            <th>Prior awards / applicant data</th>
+            <th>Confidence</th>
+          </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <div class="footer">
+    Notes: “Window End / Next Date” shows the posted close date when available. For rolling or undated windows, this field may show the next listed deadline or remain blank.
+    Forecasted/TBD means no dated 2026 local window was publicly posted on the reviewed official page as of the refresh above. “Prior awards / applicant data” may be a direct awards announcement, a state summary page, a plan/report, or prior-round guidance where a neat statewide awards list was not publicly surfaced.
+  </div>
+</div>
+
+<script>
+const data = [
+  {
+    "State": "Alabama",
+    "Region": "South",
+    "Status": "Forecasted/TBD",
+    "Start": "",
+    "End": "",
+    "SortDate": "2099-12-31",
+    "Description": "Official Alabama SLCGP program pages are live, but no dated 2026 local/subrecipient window was publicly posted on the reviewed pages as of refresh.",
+    "SourceLabel": "Alabama SLCGP program overview",
+    "SourceURL": "https://slcgp.alabama.gov/about/additional-info/",
+    "Confidence": "Medium",
+    "PriorLabel": "Alabama apply page (round funding totals)",
+    "PriorURL": "https://slcgp.alabama.gov/apply/",
+    "PriorNote": "Shows Round One through Round Four funding available for approved local government cybersecurity projects."
+  },
+  {
+    "State": "Alaska",
+    "Region": "West",
+    "Status": "Forecasted/TBD",
+    "Start": "",
+    "End": "",
+    "SortDate": "2099-12-31",
+    "Description": "Alaska's grants section lists SLCGP application/guidance resources, but no dated 2026 local/subrecipient window was publicly posted on the reviewed page as of refresh.",
+    "SourceLabel": "Alaska DHS&EM SLCGP page",
+    "SourceURL": "https://ready.alaska.gov/Grants/CGP",
+    "Confidence": "Medium",
+    "PriorLabel": "Alaska FY2023 SLCGP overview & guidelines",
+    "PriorURL": "https://ready.alaska.gov/Documents/Grants/HSGP/2023%20State%20and%20Local%20Cybersecurity%20Grant%20Program%20State%20Overview%20and%20Guidelines%20-%20MASTER.pdf",
+    "PriorNote": "Official prior-round guidance describing project eligibility, application structure, and expected awards workflow."
+  },
+  {
+    "State": "Arizona",
+    "Region": "West",
+    "Status": "Forecasted/TBD",
+    "Start": "",
+    "End": "",
+    "SortDate": "2099-12-31",
+    "Description": "Arizona's official grants pages were reviewed, but no clearly labeled 2026 SLCGP local/subrecipient window was publicly posted on the pages surfaced in current search.",
+    "SourceLabel": "Arizona grant programs page",
+    "SourceURL": "https://azdohs.gov/grants",
+    "Confidence": "Low",
+    "PriorLabel": "Arizona Statewide Cyber Readiness Grant Program",
+    "PriorURL": "https://aset.az.gov/programs/cyber-resources-local-and-tribal-governments",
+    "PriorNote": "Arizona\u2019s state-awarded cyber resources page for local and tribal governments; useful when no public subaward list is posted."
+  },
+  {
+    "State": "Arkansas",
+    "Region": "South",
+    "Status": "Forecasted/TBD",
+    "Start": "",
+    "End": "",
+    "SortDate": "2099-12-31",
+    "Description": "Arkansas homeland security/infrastructure grant pages were reviewed, but no dated 2026 local SLCGP window was publicly posted on the surfaced official pages as of refresh.",
+    "SourceLabel": "Arkansas homeland security grants page",
+    "SourceURL": "https://dps.arkansas.gov/emergency-management/adem/grants-funding/homeland-security-grant-program/",
+    "Confidence": "Low",
+    "PriorLabel": "Arkansas homeland security grants page",
+    "PriorURL": "https://dps.arkansas.gov/emergency-management/adem/grants-funding/homeland-security-grant-program/",
+    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material."
+  },
+  {
+    "State": "California",
+    "Region": "West",
+    "Status": "Closed",
+    "Start": "2026-01-30",
+    "End": "2026-03-13",
+    "SortDate": "2026-01-30",
+    "Description": "Cal OES announced applicants could apply 'now through Friday, March 13, 2026' for cities, counties, tribes, school districts, special districts, and state agencies.",
+    "SourceLabel": "Cal OES January 30, 2026 announcement",
+    "SourceURL": "https://www.news.caloes.ca.gov/california-is-taking-action-to-strengthen-cybersecurity-with-grant-program/",
+    "Confidence": "High",
+    "PriorLabel": "Cal OES SLCGP program page",
+    "PriorURL": "https://www.caloes.ca.gov/office-of-the-director/policy-administration/finance-administration/grants-management/homeland-security-emergency-management-programs/state-and-local-cybersecurity-grant-program/",
+    "PriorNote": "Explains that individual projects named in California\u2019s approved Cybersecurity Plan drive disbursement and align later subrecipient applications."
+  },
+  {
+    "State": "Colorado",
+    "Region": "West",
+    "Status": "Forecasted/TBD",
+    "Start": "",
+    "End": "",
+    "SortDate": "2099-12-31",
+    "Description": "No dated 2026 Colorado local/subrecipient SLCGP window was publicly surfaced in the reviewed official-state search results. Contact the State Administrative Agency for the latest release timing.",
+    "SourceLabel": "FEMA State Administrative Agency contacts",
+    "SourceURL": "https://www.fema.gov/grants/preparedness/about/state-administrative-agency-contacts",
+    "Confidence": "Low",
+    "PriorLabel": "FEMA State Administrative Agency contacts",
+    "PriorURL": "https://www.fema.gov/grants/preparedness/about/state-administrative-agency-contacts",
+    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material."
+  },
+  {
+    "State": "Connecticut",
+    "Region": "Northeast",
+    "Status": "Forecasted/TBD",
+    "Start": "",
+    "End": "",
+    "SortDate": "2099-12-31",
+    "Description": "Connecticut's latest posted sub-application page showed the second round extended to October 30, 2025. No new dated 2026 local window was publicly posted on the reviewed page as of refresh.",
+    "SourceLabel": "CT SLCGP apply page",
+    "SourceURL": "https://portal.ct.gov/demhs/grants/state-and-local-cybersecurity-grant-program/apply",
+    "Confidence": "Medium",
+    "PriorLabel": "Connecticut SLCGP guidance & closeout forms",
+    "PriorURL": "https://portal.ct.gov/demhs/grants/state-and-local-cybersecurity-grant-program/guidance-and-forms",
+    "PriorNote": "Connecticut\u2019s official forms hub references quarterly reporting and closeout steps for awarded SLCGP projects."
+  },
+  {
+    "State": "Delaware",
+    "Region": "South",
+    "Status": "Forecasted/TBD",
+    "Start": "",
+    "End": "",
+    "SortDate": "2099-12-31",
+    "Description": "Delaware's official SLCGP page is live, but no dated 2026 local/subrecipient window was publicly posted on the reviewed page as of refresh.",
+    "SourceLabel": "Delaware SLCGP page",
+    "SourceURL": "https://digiknow.dti.delaware.gov/grants/",
+    "Confidence": "Medium",
+    "PriorLabel": "Delaware preparedness grants summary",
+    "PriorURL": "https://dema.delaware.gov/about/grants/index.shtml?dc=preparednessgrants",
+    "PriorNote": "State summary page reporting that Delaware managed $10.1M in SLCGP funds for state, local, and rural subrecipients."
+  },
+  {
+    "State": "Florida",
+    "Region": "South",
+    "Status": "Forecasted/TBD",
+    "Start": "",
+    "End": "",
+    "SortDate": "2099-12-31",
+    "Description": "Florida's cyber grants FAQ references continued funding into 2026/27, but no clearly posted 2026 SLCGP local/subrecipient application window was surfaced in current official-page review.",
+    "SourceLabel": "Florida cyber grants FAQ",
+    "SourceURL": "https://cybergrants.fl.gov/faqs.html",
+    "Confidence": "Low",
+    "PriorLabel": "Florida cybersecurity grants FAQ",
+    "PriorURL": "https://cybergrants.fl.gov/faqs.html",
+    "PriorNote": "Official FAQ notes that Year 1 and Year 2 recipients are eligible to apply again and that grant applications and awards are exempt from Florida public-records disclosure."
+  },
+  {
+    "State": "Georgia",
+    "Region": "South",
+    "Status": "Open",
+    "Start": "2026-04-01",
+    "End": "2026-04-29",
+    "SortDate": "2026-04-01",
+    "Description": "Georgia is accepting FY2024 SLCGP applications online from April 1 to April 29, 2026. Georgia also announced that its FY2025 SLCGP application period will open September 1, 2026.",
+    "SourceLabel": "Georgia SLCGP program page",
+    "SourceURL": "https://gema.georgia.gov/state-and-local-cybersecurity-grant-program",
+    "Confidence": "High",
+    "PriorLabel": "Georgia awards press release",
+    "PriorURL": "https://gema.georgia.gov/press-releases/2026-03-25/nearly-99-million-cybersecurity-grants-awarded-georgia-schools-and",
+    "PriorNote": "Official March 25, 2026 release announcing nearly $9.9M in awards to Georgia schools and local governments."
+  },
+  {
+    "State": "Hawaii",
+    "Region": "West",
+    "Status": "Forecasted/TBD",
+    "Start": "",
+    "End": "",
+    "SortDate": "2099-12-31",
+    "Description": "Hawaii's Office of Homeland Security lists SLCGP, but no dated 2026 local/subrecipient window was publicly posted on the reviewed page as of refresh.",
+    "SourceLabel": "Hawaii OHS grants page",
+    "SourceURL": "https://law.hawaii.gov/ohs/grants/",
+    "Confidence": "Medium",
+    "PriorLabel": "Hawai\u2018i statewide cybersecurity strategy",
+    "PriorURL": "https://law.hawaii.gov/ohs/wp-content/uploads/sites/2/2024/01/Hawaii-Statewide-Cyber-Strategy-Plan-Final-1.pdf",
+    "PriorNote": "Official statewide cybersecurity strategy and plan prepared under the SLCGP framework."
+  },
+  {
+    "State": "Idaho",
+    "Region": "West",
+    "Status": "Forecasted/TBD",
+    "Start": "",
+    "End": "",
+    "SortDate": "2099-12-31",
+    "Description": "Idaho's Operation Cyber Idaho page confirms SLCGP-backed work continues through 2025-2026, but no dated 2026 local/subrecipient application window was publicly posted on the reviewed pages.",
+    "SourceLabel": "Operation Cyber Idaho",
+    "SourceURL": "https://cybersecurity.idaho.gov/operation-cyber-idaho/",
+    "Confidence": "Medium",
+    "PriorLabel": "Idaho SLCGP cybersecurity plan",
+    "PriorURL": "https://ioem.idaho.gov/wp-content/uploads/2023/10/Idaho-Cybersecurity-Plan.pdf",
+    "PriorNote": "Official Idaho SLCGP implementation plan covering statewide priorities and future project execution."
+  },
+  {
+    "State": "Illinois",
+    "Region": "Midwest",
+    "Status": "Forecasted/TBD",
+    "Start": "",
+    "End": "",
+    "SortDate": "2099-12-31",
+    "Description": "Illinois maintains an SLCGP page, but no dated 2026 local/subrecipient window was publicly posted on the reviewed page as of refresh.",
+    "SourceLabel": "Illinois SLCGP page",
+    "SourceURL": "https://doit.illinois.gov/initiatives/cybersecurity/slcgp.html",
+    "Confidence": "Medium",
+    "PriorLabel": "Illinois SLCGP page",
+    "PriorURL": "https://doit.illinois.gov/initiatives/cybersecurity/slcgp.html",
+    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material."
+  },
+  {
+    "State": "Indiana",
+    "Region": "Midwest",
+    "Status": "Forecasted/TBD",
+    "Start": "",
+    "End": "",
+    "SortDate": "2099-12-31",
+    "Description": "Indiana's SLCGP committee/resources are live, but no dated 2026 local/subrecipient window was publicly posted on the reviewed state pages as of refresh.",
+    "SourceLabel": "Indiana SLCGP committee page",
+    "SourceURL": "https://www.in.gov/iot/slcgp-committee/",
+    "Confidence": "Medium",
+    "PriorLabel": "Indiana SLCGP committee page",
+    "PriorURL": "https://www.in.gov/iot/slcgp-committee/",
+    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material."
+  },
+  {
+    "State": "Iowa",
+    "Region": "Midwest",
+    "Status": "Forecasted/TBD",
+    "Start": "",
+    "End": "",
+    "SortDate": "2099-12-31",
+    "Description": "Iowa's SLCGP page is live, but no dated 2026 local/subrecipient window was publicly posted on the reviewed page as of refresh.",
+    "SourceLabel": "Iowa SLCGP page",
+    "SourceURL": "https://homelandsecurity.iowa.gov/grants/state-and-local-cybersecurity-grant-program-slcgp",
+    "Confidence": "Medium",
+    "PriorLabel": "Iowa SLCGP page",
+    "PriorURL": "https://homelandsecurity.iowa.gov/grants/state-and-local-cybersecurity-grant-program-slcgp",
+    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material."
+  },
+  {
+    "State": "Kansas",
+    "Region": "Midwest",
+    "Status": "Forecasted/TBD",
+    "Start": "",
+    "End": "",
+    "SortDate": "2099-12-31",
+    "Description": "Kansas has an active SLCGP program page and shared-service offerings, but no dated 2026 local/subrecipient application window was publicly posted on the reviewed page as of refresh.",
+    "SourceLabel": "Kansas SLCGP page",
+    "SourceURL": "https://www.ebit.ks.gov/divisions/slcgp",
+    "Confidence": "Medium",
+    "PriorLabel": "Kansas SLCGP page",
+    "PriorURL": "https://www.ebit.ks.gov/divisions/slcgp",
+    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material."
+  },
+  {
+    "State": "Kentucky",
+    "Region": "South",
+    "Status": "Forecasted/TBD",
+    "Start": "",
+    "End": "",
+    "SortDate": "2099-12-31",
+    "Description": "Kentucky's grants pages were reviewed, but no clearly posted dated 2026 SLCGP local/subrecipient window was surfaced in current official-page review.",
+    "SourceLabel": "Kentucky Homeland Security grants page",
+    "SourceURL": "https://homelandsecurity.ky.gov/Pages/Grants.aspx",
+    "Confidence": "Low",
+    "PriorLabel": "Kentucky cybersecurity grants page",
+    "PriorURL": "https://homelandsecurity.ky.gov/Pages/Cybersecurity.aspx",
+    "PriorNote": "Official Kentucky cyber-grants page noting SLCGP support for cybersecurity improvements since 2022."
+  },
+  {
+    "State": "Louisiana",
+    "Region": "South",
+    "Status": "Closed",
+    "Start": "2026-01-01",
+    "End": "2026-02-28",
+    "SortDate": "2026-01-01",
+    "Description": "Louisiana officials stated the FY23/FY24/FY25 SLCGP application period ran January 1 to February 28, 2026, and applicants should focus on mitigation and training.",
+    "SourceLabel": "Louisiana official meeting minutes",
+    "SourceURL": "https://wwwcfprd.doa.louisiana.gov/boardsandcommissions/MeetingMinutes/348_Regional%20Directors%20Meeting%20minutes-%20February%202026.pdf",
+    "Confidence": "High",
+    "PriorLabel": "Louisiana GOHSEP cyber funding meeting minutes",
+    "PriorURL": "https://gohsep.la.gov/media/3hcjz3sm/gohsep-first-responder-subcommitte-meeting-minutes-june-11-2025.pdf",
+    "PriorNote": "Meeting minutes state that Louisiana used SLCGP funds to support endpoint detection software; useful as public prior-use evidence."
+  },
+  {
+    "State": "Maine",
+    "Region": "Northeast",
+    "Status": "Forecasted/TBD",
+    "Start": "",
+    "End": "",
+    "SortDate": "2099-12-31",
+    "Description": "Maine's SLCGP page/program reference are live, but no dated 2026 local/subrecipient window was publicly posted on the reviewed page as of refresh.",
+    "SourceLabel": "Maine SLCGP page",
+    "SourceURL": "https://www.maine.gov/mema/grants/state-and-local-cybersecurity-grant-program",
+    "Confidence": "Medium",
+    "PriorLabel": "Maine SLCGP page",
+    "PriorURL": "https://www.maine.gov/mema/grants/state-and-local-cybersecurity-grant-program",
+    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material."
+  },
+  {
+    "State": "Maryland",
+    "Region": "South",
+    "Status": "Forecasted/TBD",
+    "Start": "",
+    "End": "",
+    "SortDate": "2099-12-31",
+    "Description": "Maryland's cyber preparedness funding page says FY2024 information is 'coming soon' and FY2025 information is 'coming soon.'",
+    "SourceLabel": "Maryland cyber preparedness funding page",
+    "SourceURL": "https://mdem.maryland.gov/pages/cyber-preparedness-funding.aspx",
+    "Confidence": "High",
+    "PriorLabel": "Maryland cyber preparedness funding page",
+    "PriorURL": "https://mdem.maryland.gov/pages/cyber-preparedness-funding.aspx",
+    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material."
+  },
+  {
+    "State": "Massachusetts",
+    "Region": "Northeast",
+    "Status": "Forecasted/TBD",
+    "Start": "",
+    "End": "",
+    "SortDate": "2099-12-31",
+    "Description": "Massachusetts maintains a general SLCGP page, but no dated 2026 local/subrecipient window was publicly posted on the reviewed page as of refresh.",
+    "SourceLabel": "Massachusetts SLCGP page",
+    "SourceURL": "https://www.mass.gov/info-details/state-and-local-cybersecurity-grant-program",
+    "Confidence": "Medium",
+    "PriorLabel": "Massachusetts SLCGP page",
+    "PriorURL": "https://www.mass.gov/info-details/state-and-local-cybersecurity-grant-program",
+    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material."
+  },
+  {
+    "State": "Michigan",
+    "Region": "Midwest",
+    "Status": "Forecasted/TBD",
+    "Start": "",
+    "End": "",
+    "SortDate": "2099-12-31",
+    "Description": "Michigan states FY2025 application available date, submission deadline, and award notification are all to be determined.",
+    "SourceLabel": "Michigan SLCGP page",
+    "SourceURL": "https://www.michigan.gov/dtmb/services/cybersecurity/cyber-partners/state-and-local-cybersecurity-grant-program",
+    "Confidence": "High",
+    "PriorLabel": "Michigan SLCGP page",
+    "PriorURL": "https://www.michigan.gov/dtmb/services/cybersecurity/cyber-partners/state-and-local-cybersecurity-grant-program",
+    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material."
+  },
+  {
+    "State": "Minnesota",
+    "Region": "Midwest",
+    "Status": "Forecasted/TBD",
+    "Start": "",
+    "End": "",
+    "SortDate": "2099-12-31",
+    "Description": "Minnesota's whole-of-state SLCGP plan and participant information pages are active, but no dated 2026 local application window was publicly posted on the reviewed pages as of refresh.",
+    "SourceLabel": "Minnesota whole-of-state participant information",
+    "SourceURL": "https://mn.gov/mnit/about-mnit/security/whole-of-state-cybersecurity-plan/wos/index.jsp",
+    "Confidence": "Medium",
+    "PriorLabel": "Minnesota whole-of-state participant information",
+    "PriorURL": "https://mn.gov/mnit/about-mnit/security/whole-of-state-cybersecurity-plan/wos/index.jsp",
+    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material."
+  },
+  {
+    "State": "Mississippi",
+    "Region": "South",
+    "Status": "Closed",
+    "Start": "2026-01-15",
+    "End": "2026-02-27",
+    "SortDate": "2026-01-15",
+    "Description": "Mississippi posted a January 15, 2026 open date and February 27, 2026 close date for the SLCGP application.",
+    "SourceLabel": "Mississippi SLCGP announcements",
+    "SourceURL": "https://www.homelandsecurity.ms.gov/grants/homeland-security-state-and-local-cybersecurity-grant-program-slcgp",
+    "Confidence": "High",
+    "PriorLabel": "Mississippi SLCGP announcements",
+    "PriorURL": "https://www.homelandsecurity.ms.gov/grants/homeland-security-state-and-local-cybersecurity-grant-program-slcgp",
+    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material."
+  },
+  {
+    "State": "Missouri",
+    "Region": "Midwest",
+    "Status": "Forecasted/TBD",
+    "Start": "",
+    "End": "",
+    "SortDate": "2099-12-31",
+    "Description": "Missouri's grants/training portal was reviewed, but no dated 2026 SLCGP local/subrecipient window was publicly posted on the surfaced page as of refresh.",
+    "SourceLabel": "Missouri grants and training portal",
+    "SourceURL": "https://dps.mo.gov/dir/programs/ohs/grantstraining/",
+    "Confidence": "Low",
+    "PriorLabel": "Missouri grants and training portal",
+    "PriorURL": "https://dps.mo.gov/dir/programs/ohs/grantstraining/",
+    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material."
+  },
+  {
+    "State": "Montana",
+    "Region": "West",
+    "Status": "Forecasted/TBD",
+    "Start": "2026-05-15",
+    "End": "",
+    "SortDate": "2026-05-15",
+    "Description": "Montana says its most recent application window closed January 9, 2026 and that the next application window will open by late spring 2026.",
+    "SourceLabel": "Montana SLCGP application info",
+    "SourceURL": "https://des.mt.gov/Grant-Programs/SLCGPApplicationInfo",
+    "Confidence": "High",
+    "PriorLabel": "Montana SLCGP application info",
+    "PriorURL": "https://des.mt.gov/Grant-Programs/SLCGPApplicationInfo",
+    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material."
+  },
+  {
+    "State": "Nebraska",
+    "Region": "Midwest",
+    "Status": "Forecasted/TBD",
+    "Start": "",
+    "End": "",
+    "SortDate": "2099-12-31",
+    "Description": "Nebraska's SLCGP grant information page is live, but no dated 2026 local/subrecipient window was publicly posted on the reviewed page as of refresh.",
+    "SourceLabel": "Nebraska SLCGP grant info",
+    "SourceURL": "https://slcg.nebraska.gov/grant-info",
+    "Confidence": "Medium",
+    "PriorLabel": "Nebraska SLCGP grant info",
+    "PriorURL": "https://slcg.nebraska.gov/grant-info",
+    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material."
+  },
+  {
+    "State": "Nevada",
+    "Region": "West",
+    "Status": "Forecasted/TBD",
+    "Start": "",
+    "End": "",
+    "SortDate": "2099-12-31",
+    "Description": "Nevada's grants portfolio confirms SLCGP administration, but no clearly posted dated 2026 local/subrecipient window was surfaced in current official-page review.",
+    "SourceLabel": "Nevada grants portfolio",
+    "SourceURL": "https://www.oem.nv.gov/agency-portfolio-sections-programs/grants-portfolio/",
+    "Confidence": "Medium",
+    "PriorLabel": "Nevada grants portfolio",
+    "PriorURL": "https://www.oem.nv.gov/agency-portfolio-sections-programs/grants-portfolio/",
+    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material."
+  },
+  {
+    "State": "New Hampshire",
+    "Region": "Northeast",
+    "Status": "Forecasted/TBD",
+    "Start": "",
+    "End": "",
+    "SortDate": "2099-12-31",
+    "Description": "New Hampshire's SLCGP page is live, but no dated 2026 local/subrecipient window was publicly posted in the currently retrievable official content as of refresh.",
+    "SourceLabel": "New Hampshire SLCGP page",
+    "SourceURL": "https://www.doit.nh.gov/state-and-local-cybersecurity-grant-program",
+    "Confidence": "Low",
+    "PriorLabel": "New Hampshire SLCGP page",
+    "PriorURL": "https://www.doit.nh.gov/state-and-local-cybersecurity-grant-program",
+    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material."
+  },
+  {
+    "State": "New Jersey",
+    "Region": "Northeast",
+    "Status": "Forecasted/TBD",
+    "Start": "",
+    "End": "",
+    "SortDate": "2099-12-31",
+    "Description": "New Jersey's NJCCIC SLCGP resources are live, but no new dated 2026 local/subrecipient window was publicly posted on the reviewed state pages as of refresh.",
+    "SourceLabel": "New Jersey SLCGP page",
+    "SourceURL": "https://www.cyber.nj.gov/grants-and-resources/grants/state-and-local-cybersecurity-grant-program-slcgp",
+    "Confidence": "Medium",
+    "PriorLabel": "New Jersey SLCGP page",
+    "PriorURL": "https://www.cyber.nj.gov/grants-and-resources/grants/state-and-local-cybersecurity-grant-program-slcgp",
+    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material."
+  },
+  {
+    "State": "New Mexico",
+    "Region": "West",
+    "Status": "Open",
+    "Start": "",
+    "End": "",
+    "SortDate": "2026-04-06",
+    "Description": "New Mexico says its Cybersecurity Planning Committee is accepting participation interest and request forms now for prospective SLCGP-funded services covering State Fiscal Year 2027 (July 1, 2026 to June 30, 2027).",
+    "SourceLabel": "New Mexico SLCGP page",
+    "SourceURL": "https://www.doit.nm.gov/programs/cybersecurity/state-and-local-cybersecurity-grant-program-slcgp/",
+    "Confidence": "High",
+    "PriorLabel": "New Mexico SLCGP page",
+    "PriorURL": "https://www.doit.nm.gov/programs/cybersecurity/state-and-local-cybersecurity-grant-program-slcgp/",
+    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material."
+  },
+  {
+    "State": "New York",
+    "Region": "Northeast",
+    "Status": "Forecasted/TBD",
+    "Start": "",
+    "End": "",
+    "SortDate": "2099-12-31",
+    "Description": "New York notes the combined FY2022/FY2023 SLCGP application period closed November 19, 2025; no new dated 2026 local window was publicly posted on the reviewed page as of refresh.",
+    "SourceLabel": "New York federal programs page",
+    "SourceURL": "https://www.dhses.ny.gov/federal-programs",
+    "Confidence": "Medium",
+    "PriorLabel": "New York federal programs page",
+    "PriorURL": "https://www.dhses.ny.gov/federal-programs",
+    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material."
+  },
+  {
+    "State": "North Carolina",
+    "Region": "South",
+    "Status": "Forecasted/TBD",
+    "Start": "",
+    "End": "",
+    "SortDate": "2099-12-31",
+    "Description": "North Carolina's latest posted FY2025 SLCGP window ran November 1 to November 30, 2025; awards were projected for spring 2026 or later, but no new dated 2026 window was posted on the reviewed page as of refresh.",
+    "SourceLabel": "North Carolina SLCGP page",
+    "SourceURL": "https://www.ncdps.gov/SLCGP",
+    "Confidence": "Medium",
+    "PriorLabel": "North Carolina SLCGP page",
+    "PriorURL": "https://www.ncdps.gov/SLCGP",
+    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material."
+  },
+  {
+    "State": "North Dakota",
+    "Region": "Midwest",
+    "Status": "Forecasted/TBD",
+    "Start": "",
+    "End": "",
+    "SortDate": "2099-12-31",
+    "Description": "North Dakota official materials reviewed showed prior SLCGP activity but no clearly posted dated 2026 local/subrecipient window on current official pages surfaced in search.",
+    "SourceLabel": "North Dakota emergency services news page",
+    "SourceURL": "https://www.des.nd.gov/news/nddes-issues-notice-intent-noi-apply-fy-2025-state-homeland-security-grant-program",
+    "Confidence": "Low",
+    "PriorLabel": "North Dakota emergency services news page",
+    "PriorURL": "https://www.des.nd.gov/news/nddes-issues-notice-intent-noi-apply-fy-2025-state-homeland-security-grant-program",
+    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material."
+  },
+  {
+    "State": "Ohio",
+    "Region": "Midwest",
+    "Status": "Closed",
+    "Start": "",
+    "End": "2026-03-13",
+    "SortDate": "2026-03-13",
+    "Description": "Ohio's Round 3 SLCGP .gov migration application guidance required project applications to be submitted by midnight on March 13, 2026.",
+    "SourceLabel": "Ohio Round 3 SLCGP guidance",
+    "SourceURL": "https://dam.assets.ohio.gov/image/upload/cyber.ohio.gov/Round_3_SLCGP_Grant_Application_Guidance.gov_Migration-Final.pdf",
+    "Confidence": "High",
+    "PriorLabel": "Ohio Round 3 SLCGP guidance",
+    "PriorURL": "https://dam.assets.ohio.gov/image/upload/cyber.ohio.gov/Round_3_SLCGP_Grant_Application_Guidance.gov_Migration-Final.pdf",
+    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material."
+  },
+  {
+    "State": "Oklahoma",
+    "Region": "South",
+    "Status": "Forecasted/TBD",
+    "Start": "",
+    "End": "",
+    "SortDate": "2099-12-31",
+    "Description": "Oklahoma's cybersecurity page states that the subrecipient application deadline had not been established on the reviewed page; no dated 2026 local window was publicly posted as of refresh.",
+    "SourceLabel": "Oklahoma cybersecurity page",
+    "SourceURL": "https://oklahoma.gov/homeland-security/cyber-security.html",
+    "Confidence": "Medium",
+    "PriorLabel": "Oklahoma cybersecurity page",
+    "PriorURL": "https://oklahoma.gov/homeland-security/cyber-security.html",
+    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material."
+  },
+  {
+    "State": "Oregon",
+    "Region": "West",
+    "Status": "Open",
+    "Start": "",
+    "End": "2026-06-30",
+    "SortDate": "2026-06-30",
+    "Description": "Oregon's Round 3 notice lists quarterly submission dates of December 31, 2025; March 31, 2026; June 30, 2026; and September 30, 2026. As of refresh, the next listed deadline is June 30, 2026.",
+    "SourceLabel": "Oregon SLCGP page",
+    "SourceURL": "https://www.oregon.gov/oem/emresources/grants/pages/state-and-local-cybersecurity-grant-program.aspx",
+    "Confidence": "High",
+    "PriorLabel": "Oregon SLCGP page",
+    "PriorURL": "https://www.oregon.gov/oem/emresources/grants/pages/state-and-local-cybersecurity-grant-program.aspx",
+    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material."
+  },
+  {
+    "State": "Pennsylvania",
+    "Region": "Northeast",
+    "Status": "Forecasted/TBD",
+    "Start": "",
+    "End": "",
+    "SortDate": "2099-12-31",
+    "Description": "Pennsylvania's cyber grant page says more information to apply for 2025 funding will be provided later; no dated 2026 local window was publicly posted on the reviewed page as of refresh.",
+    "SourceLabel": "Pennsylvania cyber grant page",
+    "SourceURL": "https://www.pa.gov/services/pema/cybersecurity-grant",
+    "Confidence": "High",
+    "PriorLabel": "Pennsylvania cyber grant page",
+    "PriorURL": "https://www.pa.gov/services/pema/cybersecurity-grant",
+    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material."
+  },
+  {
+    "State": "Rhode Island",
+    "Region": "Northeast",
+    "Status": "Forecasted/TBD",
+    "Start": "",
+    "End": "",
+    "SortDate": "2099-12-31",
+    "Description": "Rhode Island's grants hub was reviewed, but no clearly posted dated 2026 local/subrecipient SLCGP window was surfaced on the reviewed official pages as of refresh.",
+    "SourceLabel": "RIEMA non-disaster grants page",
+    "SourceURL": "https://riema.ri.gov/fiscal-branch/non-disaster-grants",
+    "Confidence": "Low",
+    "PriorLabel": "RIEMA non-disaster grants page",
+    "PriorURL": "https://riema.ri.gov/fiscal-branch/non-disaster-grants",
+    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material."
+  },
+  {
+    "State": "South Carolina",
+    "Region": "South",
+    "Status": "Open",
+    "Start": "",
+    "End": "2026-05-15",
+    "SortDate": "2026-05-15",
+    "Description": "South Carolina's 2024 SLCGP application proposal worksheet requires proposals to be submitted not later than May 15, 2026.",
+    "SourceLabel": "South Carolina SLCGP proposal worksheet",
+    "SourceURL": "https://www.sled.sc.gov/sites/sled/files/forms/homeland/Grants/2024%20SLCGP%20Application%20Proposal%20Worksheet.pdf",
+    "Confidence": "High",
+    "PriorLabel": "South Carolina SLCGP proposal worksheet",
+    "PriorURL": "https://www.sled.sc.gov/sites/sled/files/forms/homeland/Grants/2024%20SLCGP%20Application%20Proposal%20Worksheet.pdf",
+    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material."
+  },
+  {
+    "State": "South Dakota",
+    "Region": "Midwest",
+    "Status": "Forecasted/TBD",
+    "Start": "",
+    "End": "",
+    "SortDate": "2099-12-31",
+    "Description": "South Dakota's homeland security grants pages were reviewed, but no clearly labeled 2026 SLCGP local/subrecipient window was publicly posted on surfaced official pages as of refresh.",
+    "SourceLabel": "South Dakota homeland security grants page",
+    "SourceURL": "https://www.sd.gov/cs?id=kb_article_view&sysparm_article=KB0043443",
+    "Confidence": "Low",
+    "PriorLabel": "South Dakota homeland security grants page",
+    "PriorURL": "https://www.sd.gov/cs?id=kb_article_view&sysparm_article=KB0043443",
+    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material."
+  },
+  {
+    "State": "Tennessee",
+    "Region": "South",
+    "Status": "Forecasted/TBD",
+    "Start": "",
+    "End": "",
+    "SortDate": "2099-12-31",
+    "Description": "Tennessee SLCGP reporting and grant documents are live, but no clearly posted dated 2026 statewide local/subrecipient application window was surfaced in current official-page review.",
+    "SourceLabel": "Tennessee SLCGP reporting form hub",
+    "SourceURL": "https://www.tn.gov/content/dam/tn/cybersecurity/slcgp/State%20and%20Local%20Cybersecurity%20Grant%20Program%20Reporting%20Form.docx",
+    "Confidence": "Low",
+    "PriorLabel": "Tennessee SLCGP reporting form hub",
+    "PriorURL": "https://www.tn.gov/content/dam/tn/cybersecurity/slcgp/State%20and%20Local%20Cybersecurity%20Grant%20Program%20Reporting%20Form.docx",
+    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material."
+  },
+  {
+    "State": "Texas",
+    "Region": "South",
+    "Status": "Closed",
+    "Start": "2025-12-15",
+    "End": "2026-02-12",
+    "SortDate": "2025-12-15",
+    "Description": "Texas states the year 3 RFA opened December 15, 2025 and closed February 12, 2026.",
+    "SourceLabel": "Texas SLCGP page",
+    "SourceURL": "https://dir.texas.gov/information-security/state-and-local-cybersecurity-grant-program-slcgp",
+    "Confidence": "High",
+    "PriorLabel": "Texas SLCGP page",
+    "PriorURL": "https://dir.texas.gov/information-security/state-and-local-cybersecurity-grant-program-slcgp",
+    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material."
+  },
+  {
+    "State": "Utah",
+    "Region": "West",
+    "Status": "Forecasted/TBD",
+    "Start": "",
+    "End": "",
+    "SortDate": "2099-12-31",
+    "Description": "Utah materials reviewed discussed cybersecurity support and legislative funding, but no clearly posted dated 2026 SLCGP local/subrecipient application window was surfaced in current official-page review.",
+    "SourceLabel": "Utah legislative cybersecurity support document",
+    "SourceURL": "https://le.utah.gov/interim/2026/pdf/00000702.pdf",
+    "Confidence": "Low",
+    "PriorLabel": "Utah legislative cybersecurity support document",
+    "PriorURL": "https://le.utah.gov/interim/2026/pdf/00000702.pdf",
+    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material."
+  },
+  {
+    "State": "Vermont",
+    "Region": "Northeast",
+    "Status": "Forecasted/TBD",
+    "Start": "",
+    "End": "",
+    "SortDate": "2099-12-31",
+    "Description": "Vermont's 2026 Cybersecurity Advisory Council report confirms SLCGP support and matching-fund activity, but no dated 2026 local/subrecipient window was publicly posted in reviewed official materials.",
+    "SourceLabel": "Vermont Cybersecurity Advisory Council 2026 report",
+    "SourceURL": "https://legislature.vermont.gov/assets/Legislative-Reports/Cybersecurity-Advisory-Council-Annual-Report-2026.pdf",
+    "Confidence": "Medium",
+    "PriorLabel": "Vermont Cybersecurity Advisory Council 2026 report",
+    "PriorURL": "https://legislature.vermont.gov/assets/Legislative-Reports/Cybersecurity-Advisory-Council-Annual-Report-2026.pdf",
+    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material."
+  },
+  {
+    "State": "Virginia",
+    "Region": "South",
+    "Status": "Closed",
+    "Start": "",
+    "End": "",
+    "SortDate": "2099-12-31",
+    "Description": "Virginia's cybersecurity grants FAQ states the application window is now closed and directs users to the VDEM listserv for future notifications. No dated 2026 local window was posted on the reviewed page.",
+    "SourceLabel": "Virginia cybersecurity grants page",
+    "SourceURL": "https://www.vita.virginia.gov/security/cybersecurity-grants/",
+    "Confidence": "Medium",
+    "PriorLabel": "Virginia cybersecurity grants page",
+    "PriorURL": "https://www.vita.virginia.gov/security/cybersecurity-grants/",
+    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material."
+  },
+  {
+    "State": "Washington",
+    "Region": "West",
+    "Status": "Forecasted/TBD",
+    "Start": "2026-04-25",
+    "End": "2026-06-10",
+    "SortDate": "2026-04-25",
+    "Description": "Washington's WaTech page said the application would be available in late April 2026 with a tentative deadline in early June 2026 and scoring anticipated in August 2026.",
+    "SourceLabel": "Washington WaTech SLCGP page",
+    "SourceURL": "https://watech.wa.gov/state-local-cybersecurity-grant-program",
+    "Confidence": "Medium",
+    "PriorLabel": "Washington WaTech SLCGP page",
+    "PriorURL": "https://watech.wa.gov/state-local-cybersecurity-grant-program",
+    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material."
+  },
+  {
+    "State": "West Virginia",
+    "Region": "South",
+    "Status": "Forecasted/TBD",
+    "Start": "",
+    "End": "",
+    "SortDate": "2099-12-31",
+    "Description": "West Virginia's grants/news pages encourage eligible entities to apply and provide program contacts, but no clearly posted dated 2026 local/subrecipient window was surfaced in current official-page review.",
+    "SourceLabel": "West Virginia local governments cyber grants news",
+    "SourceURL": "https://emd.wv.gov/About/News/Pages/LocalGovsCyberGrants.aspx",
+    "Confidence": "Low",
+    "PriorLabel": "West Virginia local governments cyber grants news",
+    "PriorURL": "https://emd.wv.gov/About/News/Pages/LocalGovsCyberGrants.aspx",
+    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material."
+  },
+  {
+    "State": "Wisconsin",
+    "Region": "Midwest",
+    "Status": "Closed",
+    "Start": "2025-11-18",
+    "End": "2026-01-30",
+    "SortDate": "2025-11-18",
+    "Description": "Wisconsin says the FFY23 cycle-2 round-2 NOFO and grant application were open November 18, 2025 to January 30, 2026.",
+    "SourceLabel": "Wisconsin cybersecurity grants page",
+    "SourceURL": "https://det.wi.gov/Pages/Cybersecurity_Grants.aspx",
+    "Confidence": "High",
+    "PriorLabel": "Wisconsin cybersecurity grants page",
+    "PriorURL": "https://det.wi.gov/Pages/Cybersecurity_Grants.aspx",
+    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material."
+  },
+  {
+    "State": "Wyoming",
+    "Region": "West",
+    "Status": "Forecasted/TBD",
+    "Start": "",
+    "End": "",
+    "SortDate": "2099-12-31",
+    "Description": "Wyoming's grants pages were reviewed, but no clearly labeled 2026 SLCGP local/subrecipient window was publicly posted on surfaced official pages as of refresh.",
+    "SourceLabel": "Wyoming grants page",
+    "SourceURL": "https://hls.wyo.gov/grants",
+    "Confidence": "Low",
+    "PriorLabel": "Wyoming grants page",
+    "PriorURL": "https://hls.wyo.gov/grants",
+    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material."
+  }
+];
+
+const tbody = document.getElementById('tbody');
+const searchEl = document.getElementById('search');
+const regionFilter = document.getElementById('regionFilter');
+const stateFilter = document.getElementById('stateFilter');
+const statusFilter = document.getElementById('statusFilter');
+
+function fmtDate(val) {
+  if (!val) return '—';
+  if (/^\d{4}-\d{2}-\d{2}$/.test(val)) {
+    const [y,m,d] = val.split('-').map(Number);
+    const dt = new Date(y, m - 1, d);
+    return dt.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+  }
+  return val;
+}
+
+function badgeClass(status) {
+  if (status === 'Open') return 'badge open';
+  if (status === 'Closed') return 'badge closed';
+  return 'badge forecast';
+}
+
+function escapeHtml(str) {
+  return String(str ?? '')
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .replaceAll("'", '&#39;');
+}
+
+function populateSelect(selectEl, values, placeholder) {
+  const current = selectEl.value;
+  selectEl.innerHTML = `<option value="">${placeholder}</option>` +
+    values.map(v => `<option value="${escapeHtml(v)}">${escapeHtml(v)}</option>`).join('');
+  if ([...selectEl.options].some(o => o.value === current)) selectEl.value = current;
+}
+
+function render() {
+  const q = searchEl.value.trim().toLowerCase();
+  const regionVal = regionFilter.value;
+  const stateVal = stateFilter.value;
+  const statusVal = statusFilter.value;
+
+  let filtered = data.filter(row => {
+    const hay = [
+      row.State, row.Region, row.Status, row.Description, row.SourceLabel, row.PriorLabel, row.PriorNote
+    ].join(' ').toLowerCase();
+
+    const searchMatch = !q || hay.includes(q);
+    const regionMatch = !regionVal || row.Region === regionVal;
+    const stateMatch = !stateVal || row.State === stateVal;
+    const statusMatch = !statusVal || row.Status === statusVal;
+    return searchMatch && regionMatch && stateMatch && statusMatch;
+  });
+
+  filtered.sort((a, b) => {
+    const ad = a.SortDate || '2099-12-31';
+    const bd = b.SortDate || '2099-12-31';
+    if (ad < bd) return -1;
+    if (ad > bd) return 1;
+    return a.State.localeCompare(b.State);
+  });
+
+  tbody.innerHTML = filtered.map(row => `
+    <tr>
+      <td>
+        <div class="state">${escapeHtml(row.State)}</div>
+        <div class="region">${escapeHtml(row.Region)}</div>
+      </td>
+      <td><span class="${badgeClass(row.Status)}">${escapeHtml(row.Status)}</span></td>
+      <td>${fmtDate(row.Start)}</td>
+      <td>${fmtDate(row.End)}</td>
+      <td>${escapeHtml(row.Description)}</td>
+      <td>
+        <a href="${escapeHtml(row.SourceURL)}" target="_blank" rel="noopener noreferrer">${escapeHtml(row.SourceLabel)}</a>
+      </td>
+      <td>
+        <a href="${escapeHtml(row.PriorURL)}" target="_blank" rel="noopener noreferrer">${escapeHtml(row.PriorLabel)}</a>
+        <div class="small-note">${escapeHtml(row.PriorNote)}</div>
+      </td>
+      <td><span class="confidence">${escapeHtml(row.Confidence)}</span></td>
+    </tr>
+  `).join('');
+
+  document.getElementById('visibleCount').textContent = filtered.length;
+  document.getElementById('openCount').textContent = filtered.filter(r => r.Status === 'Open').length;
+  document.getElementById('closedCount').textContent = filtered.filter(r => r.Status === 'Closed').length;
+  document.getElementById('forecastCount').textContent = filtered.filter(r => r.Status === 'Forecasted/TBD').length;
+  document.getElementById('highCount').textContent = filtered.filter(r => r.Confidence === 'High').length;
+  document.getElementById('priorCount').textContent = filtered.filter(r => !!r.PriorURL).length;
+}
+
+populateSelect(regionFilter, [...new Set(data.map(d => d.Region))].sort(), 'All regions');
+populateSelect(stateFilter, [...new Set(data.map(d => d.State))].sort(), 'All states');
+
+[searchEl, regionFilter, stateFilter, statusFilter].forEach(el => {
+  el.addEventListener('input', render);
+  el.addEventListener('change', render);
+});
+
+document.getElementById('resetBtn').addEventListener('click', () => {
+  searchEl.value = '';
+  regionFilter.value = '';
+  stateFilter.value = '';
+  statusFilter.value = '';
+  render();
+});
+
+document.getElementById('pdfBtn').addEventListener('click', () => window.print());
+
+render();
+</script>
+</body>
+</html>
