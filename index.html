@@ -6,7 +6,7 @@
 <title>SLCGP 2026 State Windows + Prior Awards Data Tracker</title>
 <style>
   :root {
-    --bg: #f5f7fb;
+    --bg: #f3f7fc;
     --card: #ffffff;
     --ink: #18212f;
     --muted: #5c6b80;
@@ -19,6 +19,10 @@
     --amber-soft: #fff4d6;
     --red: #b42318;
     --red-soft: #fdecec;
+    --purple: #6f42c1;
+    --purple-soft: #f2ebff;
+    --teal: #0f766e;
+    --teal-soft: #e7f8f6;
     --shadow: 0 10px 24px rgba(18, 33, 53, 0.08);
     --radius: 16px;
   }
@@ -26,21 +30,21 @@
   body {
     margin: 0;
     font-family: Inter, Arial, Helvetica, sans-serif;
-    background: linear-gradient(180deg, #f8fbff 0%, var(--bg) 100%);
+    background: linear-gradient(180deg, #f7fbff 0%, #eef5fd 100%);
     color: var(--ink);
   }
   .wrap {
-    max-width: 1580px;
+    max-width: 1480px;
     margin: 0 auto;
-    padding: 28px 22px 60px;
+    padding: 20px 16px 44px;
   }
   .hero {
-    background: linear-gradient(135deg, #ffffff 0%, #f6faff 100%);
+    background: linear-gradient(135deg, #ffffff 0%, #f1f7ff 58%, #eefbf8 100%);
     border: 1px solid var(--line);
     border-radius: 22px;
     box-shadow: var(--shadow);
-    padding: 24px 24px 18px;
-    margin-bottom: 18px;
+    padding: 20px 20px 16px;
+    margin-bottom: 16px;
   }
   .eyebrow {
     font-size: 12px;
@@ -50,40 +54,65 @@
     color: var(--blue);
     margin-bottom: 8px;
   }
-  h1 { margin: 0 0 10px; font-size: 32px; line-height: 1.1; }
-  .sub { color: var(--muted); font-size: 15px; line-height: 1.55; max-width: 1180px; }
-  .meta { display: flex; flex-wrap: wrap; gap: 12px 20px; margin-top: 16px; color: var(--muted); font-size: 14px; }
+  h1 { margin: 0 0 8px; font-size: 30px; line-height: 1.08; }
+  .sub { color: var(--muted); font-size: 14px; line-height: 1.5; max-width: 1120px; }
+  .meta { display: flex; flex-wrap: wrap; gap: 10px 18px; margin-top: 14px; color: var(--muted); font-size: 13px; }
   .meta b { color: var(--ink); }
-  .cards { display: grid; grid-template-columns: repeat(6, minmax(0,1fr)); gap: 14px; margin: 18px 0; }
-  .card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); padding: 16px 18px; }
-  .card .label { font-size: 12px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin-bottom: 8px; font-weight: 700; }
-  .card .value { font-size: 28px; font-weight: 800; line-height: 1; }
-  .toolbar { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); padding: 16px; margin-bottom: 18px; }
-  .controls { display: grid; grid-template-columns: 1.2fr 1fr 1fr 1fr auto auto; gap: 12px; align-items: end; }
-  .field label { display: block; font-size: 12px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin-bottom: 7px; font-weight: 700; }
-  input[type="search"], select { width: 100%; padding: 11px 12px; border-radius: 12px; border: 1px solid var(--line); background: #fff; color: var(--ink); font-size: 14px; }
-  .btn { appearance: none; border: 1px solid var(--line); background: #fff; color: var(--ink); border-radius: 12px; padding: 11px 14px; font-size: 14px; font-weight: 700; cursor: pointer; min-height: 44px; }
-  .btn.primary { background: var(--blue); border-color: var(--blue); color: #fff; }
+  .cards { display: grid; grid-template-columns: repeat(6, minmax(0,1fr)); gap: 12px; margin: 16px 0; }
+  .card { position: relative; overflow: hidden; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); padding: 14px 16px; }
+  .card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--blue), #72a7ff); }
+  .card:nth-child(2)::before { background: linear-gradient(90deg, var(--green), #41b36c); }
+  .card:nth-child(3)::before { background: linear-gradient(90deg, var(--red), #e36c62); }
+  .card:nth-child(4)::before { background: linear-gradient(90deg, var(--amber), #d7a000); }
+  .card:nth-child(5)::before { background: linear-gradient(90deg, var(--purple), #9b74e5); }
+  .card:nth-child(6)::before { background: linear-gradient(90deg, var(--teal), #31b4a8); }
+  .card .label { font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin-bottom: 7px; font-weight: 700; }
+  .card .value { font-size: 24px; font-weight: 800; line-height: 1; }
+  .toolbar { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); padding: 14px; margin-bottom: 16px; }
+  .controls { display: grid; grid-template-columns: 1.15fr .95fr .95fr .95fr auto auto; gap: 10px; align-items: end; }
+  .field label { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin-bottom: 6px; font-weight: 700; }
+  input[type="search"], select { width: 100%; padding: 10px 11px; border-radius: 11px; border: 1px solid var(--line); background: #fff; color: var(--ink); font-size: 13px; }
+  .btn { appearance: none; border: 1px solid var(--line); background: #fff; color: var(--ink); border-radius: 11px; padding: 10px 13px; font-size: 13px; font-weight: 700; cursor: pointer; min-height: 42px; }
+  .btn.primary { background: linear-gradient(135deg, #2f7bff 0%, var(--blue) 100%); border-color: var(--blue); color: #fff; }
   .btn:hover { transform: translateY(-1px); }
-  .note { margin-top: 12px; color: var(--muted); font-size: 13px; line-height: 1.5; }
+  .note { margin-top: 10px; color: var(--muted); font-size: 12px; line-height: 1.45; }
   .table-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; }
-  .table-wrap { overflow: auto; }
-  table { width: 100%; border-collapse: collapse; min-width: 1450px; }
-  thead th { position: sticky; top: 0; z-index: 2; background: #f8fbff; color: var(--ink); font-size: 12px; text-transform: uppercase; letter-spacing: .08em; font-weight: 800; border-bottom: 1px solid var(--line); padding: 14px 14px; text-align: left; }
-  tbody td { border-bottom: 1px solid var(--line); padding: 14px 14px; vertical-align: top; font-size: 14px; line-height: 1.5; }
-  tbody tr:hover { background: #fbfdff; }
-  .state { font-weight: 800; font-size: 15px; }
-  .region { color: var(--muted); font-size: 12px; margin-top: 3px; text-transform: uppercase; letter-spacing: .06em; }
-  .badge { display: inline-flex; align-items: center; border-radius: 999px; padding: 6px 10px; font-size: 12px; font-weight: 800; letter-spacing: .03em; }
+  .table-wrap { overflow: auto; max-width: 100%; }
+  table { width: 100%; border-collapse: collapse; min-width: 100%; table-layout: fixed; }
+  colgroup col { width: auto; }
+  thead th { position: sticky; top: 0; z-index: 2; background: linear-gradient(180deg, #f8fbff 0%, #eef5ff 100%); color: var(--ink); font-size: 11px; text-transform: uppercase; letter-spacing: .08em; font-weight: 800; border-bottom: 1px solid var(--line); padding: 0; text-align: left; }
+  thead th.sortable { cursor: pointer; }
+  thead th .th-inner { position: relative; display: flex; align-items: center; justify-content: space-between; gap: 7px; padding: 11px 10px; min-height: 44px; }
+  thead th .th-label { display: inline-block; }
+  thead th .sort-indicator { color: var(--muted); font-size: 11px; flex: 0 0 auto; }
+  thead th.active-sort .sort-indicator { color: var(--blue); }
+  thead th .resize-handle { position: absolute; top: 0; right: -3px; width: 10px; height: 100%; cursor: col-resize; z-index: 4; }
+  thead th .resize-handle::after { content: ''; position: absolute; top: 9px; bottom: 9px; left: 4px; width: 2px; border-radius: 2px; background: #c6d3e3; opacity: 0; transition: opacity .15s ease; }
+  thead th:hover .resize-handle::after, thead th.resizing .resize-handle::after { opacity: 1; }
+  tbody td { border-bottom: 1px solid var(--line); padding: 10px 10px; vertical-align: top; font-size: 13px; line-height: 1.38; overflow-wrap: anywhere; }
+  tbody tr:hover { background: #f7fbff; }
+  tbody tr.status-open td:first-child { border-left: 4px solid var(--green); }
+  tbody tr.status-closed td:first-child { border-left: 4px solid var(--red); }
+  tbody tr.status-forecast td:first-child { border-left: 4px solid var(--amber); }
+  .state { font-weight: 800; font-size: 14px; }
+  .region { display: inline-flex; margin-top: 5px; padding: 3px 8px; border-radius: 999px; font-size: 10px; text-transform: uppercase; letter-spacing: .08em; font-weight: 800; background: #eef4ff; color: #31588f; }
+  .region.northeast { background: #eef2ff; color: #4f46e5; }
+  .region.south { background: #fff1e6; color: #b45309; }
+  .region.midwest { background: #ecfeff; color: #0f766e; }
+  .region.west { background: #f3e8ff; color: #7e22ce; }
+  .badge { display: inline-flex; align-items: center; border-radius: 999px; padding: 5px 9px; font-size: 11px; font-weight: 800; letter-spacing: .03em; }
   .badge.open { color: var(--green); background: var(--green-soft); }
   .badge.closed { color: var(--red); background: var(--red-soft); }
   .badge.forecast { color: var(--amber); background: var(--amber-soft); }
-  .confidence { display: inline-flex; padding: 5px 9px; border-radius: 999px; background: var(--blue-soft); color: var(--blue); font-weight: 700; font-size: 12px; }
+  .confidence { display: inline-flex; padding: 5px 9px; border-radius: 999px; background: var(--blue-soft); color: var(--blue); font-weight: 700; font-size: 11px; }
+  .confidence.high { background: var(--green-soft); color: var(--green); }
+  .confidence.medium { background: var(--amber-soft); color: var(--amber); }
+  .confidence.low { background: var(--red-soft); color: var(--red); }
   .muted { color: var(--muted); }
-  .small-note { color: var(--muted); font-size: 12px; line-height: 1.45; margin-top: 6px; }
-  a { color: var(--blue); text-decoration: none; }
+  .small-note { color: var(--muted); font-size: 11px; line-height: 1.35; margin-top: 5px; }
+  a { color: var(--blue); text-decoration: none; font-weight: 600; }
   a:hover { text-decoration: underline; }
-  .footer { color: var(--muted); font-size: 12px; margin-top: 14px; line-height: 1.55; }
+  .footer { color: var(--muted); font-size: 11px; margin-top: 12px; line-height: 1.45; }
 
   @media (max-width: 1200px) {
     .cards { grid-template-columns: repeat(3, minmax(0,1fr)); }
@@ -99,9 +128,19 @@
     .wrap { max-width: 100%; padding: 0; }
     .toolbar, .btn-print-note { display: none !important; }
     .hero, .card, .table-card { box-shadow: none !important; border: 1px solid #cfd8e3 !important; }
-    thead th { position: static; background: #f7f7f7 !important; }
+    .cards { gap: 8px; }
+    .card { padding: 10px 12px; }
+    .card .label { font-size: 9px; }
+    .card .value { font-size: 16px; }
+    table { table-layout: fixed; width: 100%; min-width: 100%; }
+    tbody td { font-size: 10px; padding: 6px 6px; line-height: 1.25; }
+    .state { font-size: 11px; }
+    .region, .badge, .confidence { font-size: 9px; }
+    .small-note, .footer, .sub, .meta { font-size: 10px; }
+    thead th { position: static; background: #f7f7f7 !important; font-size: 9px; }
+    thead th .resize-handle { display: none !important; }
     a { color: #000; text-decoration: none; }
-    @page { size: landscape; margin: 0.4in; }
+    @page { size: landscape; margin: 0.35in; }
   }
 </style>
 </head>
@@ -156,7 +195,7 @@
       <button class="btn primary" id="pdfBtn">Export to PDF</button>
     </div>
     <div class="note btn-print-note">
-      Tip: the PDF button prints the <b>currently filtered view</b>. Use region, state, and status filters first, then export.
+      Tip: the PDF button prints the <b>currently filtered view</b>. Use region, state, and status filters first, then export. Click any column header to sort; drag the right edge of a header to resize that column.
     </div>
     <div class="note">
       Method: official state program pages first; official awards announcements, reporting pages, plan PDFs, and prior-round guidance used as the “prior data” link when available.
@@ -166,17 +205,27 @@
 
   <section class="table-card">
     <div class="table-wrap">
-      <table>
+      <table id="dataTable">
+        <colgroup id="colgroup">
+          <col style="width: 140px;" />
+          <col style="width: 100px;" />
+          <col style="width: 95px;" />
+          <col style="width: 125px;" />
+          <col style="width: 310px;" />
+          <col style="width: 180px;" />
+          <col style="width: 250px;" />
+          <col style="width: 95px;" />
+        </colgroup>
         <thead>
           <tr>
-            <th>State</th>
-            <th>Status</th>
-            <th>Window Start</th>
-            <th>Window End / Next Date</th>
-            <th>Description</th>
-            <th>2026 Window Source</th>
-            <th>Prior awards / applicant data</th>
-            <th>Confidence</th>
+            <th class="sortable" data-key="State" data-type="text"><div class="th-inner"><span class="th-label">State</span><span class="sort-indicator"></span><span class="resize-handle" aria-hidden="true"></span></div></th>
+            <th class="sortable" data-key="Status" data-type="status"><div class="th-inner"><span class="th-label">Status</span><span class="sort-indicator"></span><span class="resize-handle" aria-hidden="true"></span></div></th>
+            <th class="sortable" data-key="Start" data-type="date"><div class="th-inner"><span class="th-label">Window Start</span><span class="sort-indicator"></span><span class="resize-handle" aria-hidden="true"></span></div></th>
+            <th class="sortable" data-key="End" data-type="date"><div class="th-inner"><span class="th-label">Window End / Next Date</span><span class="sort-indicator"></span><span class="resize-handle" aria-hidden="true"></span></div></th>
+            <th class="sortable" data-key="Description" data-type="text"><div class="th-inner"><span class="th-label">Description</span><span class="sort-indicator"></span><span class="resize-handle" aria-hidden="true"></span></div></th>
+            <th class="sortable" data-key="SourceLabel" data-type="text"><div class="th-inner"><span class="th-label">2026 Window Source</span><span class="sort-indicator"></span><span class="resize-handle" aria-hidden="true"></span></div></th>
+            <th class="sortable" data-key="PriorLabel" data-type="text"><div class="th-inner"><span class="th-label">Prior awards / applicant data</span><span class="sort-indicator"></span><span class="resize-handle" aria-hidden="true"></span></div></th>
+            <th class="sortable" data-key="Confidence" data-type="confidence"><div class="th-inner"><span class="th-label">Confidence</span><span class="sort-indicator"></span><span class="resize-handle" aria-hidden="true"></span></div></th>
           </tr>
         </thead>
         <tbody id="tbody"></tbody>
@@ -945,10 +994,15 @@ const data = [
 ];
 
 const tbody = document.getElementById('tbody');
+const table = document.getElementById('dataTable');
 const searchEl = document.getElementById('search');
 const regionFilter = document.getElementById('regionFilter');
 const stateFilter = document.getElementById('stateFilter');
 const statusFilter = document.getElementById('statusFilter');
+const headerCells = Array.from(table.querySelectorAll('thead th.sortable'));
+const statusOrder = { Open: 0, Closed: 1, 'Forecasted/TBD': 2 };
+const confidenceOrder = { High: 0, Medium: 1, Low: 2 };
+let sortState = { key: 'SortDate', dir: 'asc', type: 'date' };
 
 function fmtDate(val) {
   if (!val) return '—';
@@ -964,6 +1018,20 @@ function badgeClass(status) {
   if (status === 'Open') return 'badge open';
   if (status === 'Closed') return 'badge closed';
   return 'badge forecast';
+}
+
+function statusRowClass(status) {
+  if (status === 'Open') return 'status-open';
+  if (status === 'Closed') return 'status-closed';
+  return 'status-forecast';
+}
+
+function regionClass(region) {
+  return String(region || '').toLowerCase().replace(/[^a-z]+/g, '-').replace(/^-|-$/g, '');
+}
+
+function confidenceClass(value) {
+  return 'confidence ' + String(value || '').toLowerCase();
 }
 
 function escapeHtml(str) {
@@ -982,6 +1050,55 @@ function populateSelect(selectEl, values, placeholder) {
   if ([...selectEl.options].some(o => o.value === current)) selectEl.value = current;
 }
 
+function getDateSortValue(row, key) {
+  const raw = row[key];
+  if (!raw) return '9999-12-31';
+  return raw;
+}
+
+function compareRows(a, b) {
+  const { key, dir, type } = sortState;
+  let av;
+  let bv;
+
+  if (key === 'SortDate') {
+    av = a.SortDate || '9999-12-31';
+    bv = b.SortDate || '9999-12-31';
+  } else if (type === 'date') {
+    av = getDateSortValue(a, key);
+    bv = getDateSortValue(b, key);
+  } else if (type === 'status') {
+    av = statusOrder[a[key]] ?? 99;
+    bv = statusOrder[b[key]] ?? 99;
+  } else if (type === 'confidence') {
+    av = confidenceOrder[a[key]] ?? 99;
+    bv = confidenceOrder[b[key]] ?? 99;
+  } else {
+    av = String(a[key] ?? '').toLowerCase();
+    bv = String(b[key] ?? '').toLowerCase();
+  }
+
+  let result;
+  if (typeof av === 'number' && typeof bv === 'number') {
+    result = av - bv;
+  } else {
+    result = av.localeCompare(bv);
+  }
+
+  if (result === 0) result = a.State.localeCompare(b.State);
+  return dir === 'asc' ? result : -result;
+}
+
+function updateSortIndicators() {
+  headerCells.forEach(th => {
+    const isActive = th.dataset.key === sortState.key;
+    th.classList.toggle('active-sort', isActive);
+    const indicator = th.querySelector('.sort-indicator');
+    indicator.textContent = isActive ? (sortState.dir === 'asc' ? '▲' : '▼') : '↕';
+    th.setAttribute('aria-sort', isActive ? (sortState.dir === 'asc' ? 'ascending' : 'descending') : 'none');
+  });
+}
+
 function render() {
   const q = searchEl.value.trim().toLowerCase();
   const regionVal = regionFilter.value;
@@ -990,7 +1107,7 @@ function render() {
 
   let filtered = data.filter(row => {
     const hay = [
-      row.State, row.Region, row.Status, row.Description, row.SourceLabel, row.PriorLabel, row.PriorNote
+      row.State, row.Region, row.Status, row.Description, row.SourceLabel, row.PriorLabel, row.PriorNote, row.Confidence
     ].join(' ').toLowerCase();
 
     const searchMatch = !q || hay.includes(q);
@@ -1000,19 +1117,13 @@ function render() {
     return searchMatch && regionMatch && stateMatch && statusMatch;
   });
 
-  filtered.sort((a, b) => {
-    const ad = a.SortDate || '2099-12-31';
-    const bd = b.SortDate || '2099-12-31';
-    if (ad < bd) return -1;
-    if (ad > bd) return 1;
-    return a.State.localeCompare(b.State);
-  });
+  filtered.sort(compareRows);
 
   tbody.innerHTML = filtered.map(row => `
-    <tr>
+    <tr class="${statusRowClass(row.Status)}">
       <td>
         <div class="state">${escapeHtml(row.State)}</div>
-        <div class="region">${escapeHtml(row.Region)}</div>
+        <div class="region ${regionClass(row.Region)}">${escapeHtml(row.Region)}</div>
       </td>
       <td><span class="${badgeClass(row.Status)}">${escapeHtml(row.Status)}</span></td>
       <td>${fmtDate(row.Start)}</td>
@@ -1025,7 +1136,7 @@ function render() {
         <a href="${escapeHtml(row.PriorURL)}" target="_blank" rel="noopener noreferrer">${escapeHtml(row.PriorLabel)}</a>
         <div class="small-note">${escapeHtml(row.PriorNote)}</div>
       </td>
-      <td><span class="confidence">${escapeHtml(row.Confidence)}</span></td>
+      <td><span class="${confidenceClass(row.Confidence)}">${escapeHtml(row.Confidence)}</span></td>
     </tr>
   `).join('');
 
@@ -1035,6 +1146,58 @@ function render() {
   document.getElementById('forecastCount').textContent = filtered.filter(r => r.Status === 'Forecasted/TBD').length;
   document.getElementById('highCount').textContent = filtered.filter(r => r.Confidence === 'High').length;
   document.getElementById('priorCount').textContent = filtered.filter(r => !!r.PriorURL).length;
+
+  updateSortIndicators();
+}
+
+function setupSorting() {
+  headerCells.forEach(th => {
+    th.addEventListener('click', event => {
+      if (event.target.closest('.resize-handle')) return;
+      const key = th.dataset.key;
+      const type = th.dataset.type || 'text';
+      if (sortState.key === key) {
+        sortState.dir = sortState.dir === 'asc' ? 'desc' : 'asc';
+      } else {
+        sortState = { key, dir: 'asc', type };
+      }
+      render();
+    });
+  });
+}
+
+function setupResizableColumns() {
+  const cols = Array.from(table.querySelectorAll('colgroup col'));
+  headerCells.forEach((th, index) => {
+    const handle = th.querySelector('.resize-handle');
+    if (!handle || !cols[index]) return;
+
+    handle.addEventListener('pointerdown', event => {
+      event.preventDefault();
+      event.stopPropagation();
+      const startX = event.clientX;
+      const startWidth = cols[index].getBoundingClientRect().width;
+      th.classList.add('resizing');
+      handle.setPointerCapture(event.pointerId);
+
+      const onMove = moveEvent => {
+        const nextWidth = Math.max(90, startWidth + (moveEvent.clientX - startX));
+        cols[index].style.width = `${nextWidth}px`;
+      };
+
+      const onUp = upEvent => {
+        th.classList.remove('resizing');
+        handle.releasePointerCapture(upEvent.pointerId);
+        handle.removeEventListener('pointermove', onMove);
+        handle.removeEventListener('pointerup', onUp);
+        handle.removeEventListener('pointercancel', onUp);
+      };
+
+      handle.addEventListener('pointermove', onMove);
+      handle.addEventListener('pointerup', onUp);
+      handle.addEventListener('pointercancel', onUp);
+    });
+  });
 }
 
 populateSelect(regionFilter, [...new Set(data.map(d => d.Region))].sort(), 'All regions');
@@ -1050,11 +1213,14 @@ document.getElementById('resetBtn').addEventListener('click', () => {
   regionFilter.value = '';
   stateFilter.value = '';
   statusFilter.value = '';
+  sortState = { key: 'SortDate', dir: 'asc', type: 'date' };
   render();
 });
 
 document.getElementById('pdfBtn').addEventListener('click', () => window.print());
 
+setupSorting();
+setupResizableColumns();
 render();
 </script>
 </body>
