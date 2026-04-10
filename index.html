@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>SLCGP 2026 State Windows, Procurement, and Prior Awards Tracker</title>
+<title>SLCGP 2026 State Windows, Procurement, Prior Awards, and FY/Match Tracker</title>
 <style>
   :root {
     --bg: #f2f6fb;
@@ -68,15 +68,16 @@
   table { width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 11px; }
   colgroup col:nth-child(1) { width: 8%; }
   colgroup col:nth-child(2) { width: 6%; }
-  colgroup col:nth-child(3) { width: 6%; }
-  colgroup col:nth-child(4) { width: 7%; }
-  colgroup col:nth-child(5) { width: 8%; }
-  colgroup col:nth-child(6) { width: 17%; }
-  colgroup col:nth-child(7) { width: 9%; }
-  colgroup col:nth-child(8) { width: 11%; }
-  colgroup col:nth-child(9) { width: 14%; }
-  colgroup col:nth-child(10) { width: 10%; }
-  colgroup col:nth-child(11) { width: 4%; }
+  colgroup col:nth-child(3) { width: 5%; }
+  colgroup col:nth-child(4) { width: 6%; }
+  colgroup col:nth-child(5) { width: 12%; }
+  colgroup col:nth-child(6) { width: 8%; }
+  colgroup col:nth-child(7) { width: 14%; }
+  colgroup col:nth-child(8) { width: 8%; }
+  colgroup col:nth-child(9) { width: 9%; }
+  colgroup col:nth-child(10) { width: 11%; }
+  colgroup col:nth-child(11) { width: 9%; }
+  colgroup col:nth-child(12) { width: 4%; }
   thead th { position: sticky; top: 0; background: #eff5fd; z-index: 2; text-align: left; padding: 8px 8px; border-bottom: 1px solid var(--line); color: #26405f; font-size: 10px; text-transform: uppercase; letter-spacing: .05em; vertical-align: bottom; }
   tbody td { padding: 8px 8px; border-bottom: 1px solid #e9eef5; vertical-align: top; line-height: 1.35; overflow-wrap: anywhere; word-break: break-word; }
   tbody tr:hover { background: #f9fbff; }
@@ -132,8 +133,8 @@
 <div class="wrap">
   <section class="hero">
     <div class="eyebrow">GPS Team | SLCGP sales tracker</div>
-    <h1>SLCGP 2026 State Windows, Procurement, and Prior Awards Tracker</h1>
-    <div class="sub">Tracks state-level SLCGP subrecipient windows, likely procurement route, best drill-down source, and the best official prior-awards/applicant-data link found. Procurement type now classifies the front-door access model by state, such as RFP, RFA, rolling application, first-come portal, or state page/TBD.</div>
+    <h1>SLCGP 2026 State Windows, Procurement, Prior Awards, and FY/Match Tracker</h1>
+    <div class="sub">Tracks state-level SLCGP subrecipient windows, likely procurement route, best drill-down source, prior-awards/applicant-data link, and a new FY / match / min-max summary column. Procurement type classifies the front-door access model by state, such as RFP, RFA, rolling application, first-come portal, or state page/TBD.</div>
     <div class="meta">
       <div><b>Last Refresh Date:</b> April 10, 2026</div>
       <div><b>Created by:</b> GPS Team</div>
@@ -182,14 +183,14 @@
       <button class="btn primary" id="pdfBtn">Export to PDF</button>
     </div>
     <div class="note btn-print-note">Tip: the PDF button prints the currently filtered and sorted view. Click any header to sort. Drag the right edge of a header to resize a column.</div>
-    <div class="note">Method: official state program pages first; official award notices, guidance packets, prior-round materials, and program pages used when a clean statewide awards list was not published. Forecasted/TBD means no clearly dated 2026 local window was found on the reviewed public source.</div>
+    <div class="note">Method: official state program pages first; official award notices, guidance packets, prior-round materials, and program pages used when a clean statewide awards list was not published. Forecasted/TBD means no clearly dated 2026 local window was found on the reviewed public source. The FY / match / min-max column uses the reviewed state page where it was explicit; otherwise it falls back to the federal year-based cost-share rules or marks the item as not publicly stated.</div>
   </section>
 
   <section class="table-card">
     <div class="table-wrap">
       <table id="dataTable">
         <colgroup id="colgroup">
-          <col /><col /><col /><col /><col /><col /><col /><col /><col /><col /><col />
+          <col /><col /><col /><col /><col /><col /><col /><col /><col /><col /><col /><col />
         </colgroup>
         <thead>
           <tr>
@@ -197,6 +198,7 @@
             <th class="sortable" data-key="Status" data-type="status"><div class="th-inner"><span class="th-label">Status</span><span class="sort-indicator"></span><span class="resize-handle" aria-hidden="true"></span></div></th>
             <th class="sortable" data-key="Start" data-type="date"><div class="th-inner"><span class="th-label">Start</span><span class="sort-indicator"></span><span class="resize-handle" aria-hidden="true"></span></div></th>
             <th class="sortable" data-key="End" data-type="date"><div class="th-inner"><span class="th-label">End / Next</span><span class="sort-indicator"></span><span class="resize-handle" aria-hidden="true"></span></div></th>
+            <th class="sortable" data-key="FYSummary" data-type="text"><div class="th-inner"><span class="th-label">FY / Match / Min-Max</span><span class="sort-indicator"></span><span class="resize-handle" aria-hidden="true"></span></div></th>
             <th class="sortable" data-key="ProcurementType" data-type="text"><div class="th-inner"><span class="th-label">Procurement type</span><span class="sort-indicator"></span><span class="resize-handle" aria-hidden="true"></span></div></th>
             <th class="sortable" data-key="Description" data-type="text"><div class="th-inner"><span class="th-label">Description</span><span class="sort-indicator"></span><span class="resize-handle" aria-hidden="true"></span></div></th>
             <th class="sortable" data-key="SourceLabel" data-type="text"><div class="th-inner"><span class="th-label">2026 source</span><span class="sort-indicator"></span><span class="resize-handle" aria-hidden="true"></span></div></th>
@@ -209,7 +211,7 @@
         <tbody id="tbody"></tbody>
       </table>
     </div>
-    <div class="footer">Notes: “End / Next” shows the posted close date when available. For rolling or undated windows, it may show the next listed deadline or remain blank. Links open official sources in a new tab.</div>
+    <div class="footer">Notes: “End / Next” shows the posted close date when available. For rolling or undated windows, it may show the next listed deadline or remain blank. “FY / Match / Min-Max” shows the funding year or round tied to the row where it was explicit, the best reviewed match requirement, and any published min/max signal if found. Links open official sources in a new tab.</div>
   </section>
 </div>
 
@@ -228,11 +230,15 @@ const data =[
     "Confidence": "High",
     "PriorLabel": "Alabama fact sheets page",
     "PriorURL": "https://slcgp.alabama.gov/apply/factsheets/",
-    "PriorNote": "Official project fact sheets for Alabama\u2019s SLCGP application rounds, including service and provider details.",
+    "PriorNote": "Official project fact sheets for Alabama’s SLCGP application rounds, including service and provider details.",
     "DrillDownLabel": "Alabama apply portal",
     "DrillDownURL": "https://slcgp.alabama.gov/apply/",
     "ProcurementProcess": "Open portal / first-come, first-served. Eligible locals start on the Alabama apply page. If funded, purchases follow grant conditions and local/state procurement rules.",
-    "ProcurementType": "First-come portal"
+    "ProcurementType": "First-come portal",
+    "FYYear": "TBD on reviewed source",
+    "MatchInfo": "TBD on reviewed source",
+    "MinMaxInfo": "Not publicly stated on reviewed source",
+    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
   },
   {
     "State": "Alaska",
@@ -251,7 +257,11 @@ const data =[
     "DrillDownLabel": "Alaska DHS&EM SLCGP page",
     "DrillDownURL": "https://ready.alaska.gov/Grants/CGP",
     "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
-    "ProcurementType": "State page / TBD"
+    "ProcurementType": "State page / TBD",
+    "FYYear": "TBD on reviewed source",
+    "MatchInfo": "TBD on reviewed source",
+    "MinMaxInfo": "Not publicly stated on reviewed source",
+    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
   },
   {
     "State": "Arizona",
@@ -266,11 +276,15 @@ const data =[
     "Confidence": "Low",
     "PriorLabel": "Arizona Statewide Cyber Readiness Grant Program",
     "PriorURL": "https://aset.az.gov/programs/cyber-resources-local-and-tribal-governments",
-    "PriorNote": "Arizona\u2019s state-awarded cyber resources page for local and tribal governments; useful when no public subaward list is posted.",
+    "PriorNote": "Arizona’s state-awarded cyber resources page for local and tribal governments; useful when no public subaward list is posted.",
     "DrillDownLabel": "Arizona grant programs page",
     "DrillDownURL": "https://azdohs.gov/grants",
     "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
-    "ProcurementType": "State page / TBD"
+    "ProcurementType": "State page / TBD",
+    "FYYear": "TBD on reviewed source",
+    "MatchInfo": "TBD on reviewed source",
+    "MinMaxInfo": "Not publicly stated on reviewed source",
+    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
   },
   {
     "State": "Arkansas",
@@ -289,7 +303,11 @@ const data =[
     "DrillDownLabel": "Arkansas homeland security grants page",
     "DrillDownURL": "https://dps.arkansas.gov/emergency-management/adem/grants-funding/homeland-security-grant-program/",
     "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
-    "ProcurementType": "State page / TBD"
+    "ProcurementType": "State page / TBD",
+    "FYYear": "TBD on reviewed source",
+    "MatchInfo": "TBD on reviewed source",
+    "MinMaxInfo": "Not publicly stated on reviewed source",
+    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
   },
   {
     "State": "California",
@@ -304,11 +322,15 @@ const data =[
     "Confidence": "High",
     "PriorLabel": "Cal OES SLCGP program page",
     "PriorURL": "https://www.caloes.ca.gov/office-of-the-director/policy-administration/finance-administration/grants-management/homeland-security-emergency-management-programs/state-and-local-cybersecurity-grant-program/",
-    "PriorNote": "Explains that individual projects named in California\u2019s approved Cybersecurity Plan drive disbursement and align later subrecipient applications.",
+    "PriorNote": "Explains that individual projects named in California’s approved Cybersecurity Plan drive disbursement and align later subrecipient applications.",
     "DrillDownLabel": "Cal OES RFP announcement and package",
     "DrillDownURL": "https://www.caloes.ca.gov/grant-announcement/ffy-2024-state-local-cybersecurity-grant-local-tribal-sl-rfp/",
     "ProcurementProcess": "Competitive state subrecipient RFP. Locals and tribes respond to the Cal OES RFP/NOI package during the state window. After award, buying follows applicable state/local procurement rules and grant conditions.",
-    "ProcurementType": "RFP"
+    "ProcurementType": "RFP",
+    "FYYear": "FY2024",
+    "MatchInfo": "State supplement says FY2024 subrecipient match waived in full",
+    "MinMaxInfo": "Not publicly stated on reviewed source",
+    "FYSummary": "FY2024 | Match: State supplement says FY2024 subrecipient match waived in full | Min/Max: Not publicly stated on reviewed source"
   },
   {
     "State": "Colorado",
@@ -327,7 +349,11 @@ const data =[
     "DrillDownLabel": "FEMA State Administrative Agency contacts",
     "DrillDownURL": "https://www.fema.gov/grants/preparedness/about/state-administrative-agency-contacts",
     "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
-    "ProcurementType": "State page / TBD"
+    "ProcurementType": "State page / TBD",
+    "FYYear": "TBD on reviewed source",
+    "MatchInfo": "TBD on reviewed source",
+    "MinMaxInfo": "Not publicly stated on reviewed source",
+    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
   },
   {
     "State": "Connecticut",
@@ -342,11 +368,15 @@ const data =[
     "Confidence": "Medium",
     "PriorLabel": "Connecticut SLCGP guidance & closeout forms",
     "PriorURL": "https://portal.ct.gov/demhs/grants/state-and-local-cybersecurity-grant-program/guidance-and-forms",
-    "PriorNote": "Connecticut\u2019s official forms hub references quarterly reporting and closeout steps for awarded SLCGP projects.",
+    "PriorNote": "Connecticut’s official forms hub references quarterly reporting and closeout steps for awarded SLCGP projects.",
     "DrillDownLabel": "Connecticut SLCGP apply page",
     "DrillDownURL": "https://portal.ct.gov/demhs/grants/state-and-local-cybersecurity-grant-program/apply",
     "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
-    "ProcurementType": "State page / TBD"
+    "ProcurementType": "State page / TBD",
+    "FYYear": "TBD on reviewed source",
+    "MatchInfo": "TBD on reviewed source",
+    "MinMaxInfo": "Not publicly stated on reviewed source",
+    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
   },
   {
     "State": "Delaware",
@@ -365,7 +395,11 @@ const data =[
     "DrillDownLabel": "Delaware SLCGP page",
     "DrillDownURL": "https://digiknow.dti.delaware.gov/grants/",
     "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
-    "ProcurementType": "State page / TBD"
+    "ProcurementType": "State page / TBD",
+    "FYYear": "TBD on reviewed source",
+    "MatchInfo": "TBD on reviewed source",
+    "MinMaxInfo": "Not publicly stated on reviewed source",
+    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
   },
   {
     "State": "Florida",
@@ -384,7 +418,11 @@ const data =[
     "DrillDownLabel": "Florida cyber grants FAQ",
     "DrillDownURL": "https://cybergrants.fl.gov/faqs.html",
     "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
-    "ProcurementType": "State page / TBD"
+    "ProcurementType": "State page / TBD",
+    "FYYear": "TBD on reviewed source",
+    "MatchInfo": "TBD on reviewed source",
+    "MinMaxInfo": "Not publicly stated on reviewed source",
+    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
   },
   {
     "State": "Georgia",
@@ -403,7 +441,11 @@ const data =[
     "DrillDownLabel": "Georgia SLCGP program / EM Grants Manager",
     "DrillDownURL": "https://gema.georgia.gov/state-and-local-cybersecurity-grant-program",
     "ProcurementProcess": "Online state subrecipient application through Georgia EM Grants Manager during the posted window. Funded entities then procure under applicable procurement rules and grant terms.",
-    "ProcurementType": "Online application window"
+    "ProcurementType": "Online application window",
+    "FYYear": "FY2024",
+    "MatchInfo": "30% single / 20% multi-entity",
+    "MinMaxInfo": "Not publicly stated on reviewed source",
+    "FYSummary": "FY2024 | Match: 30% single / 20% multi-entity | Min/Max: Not publicly stated on reviewed source"
   },
   {
     "State": "Hawaii",
@@ -416,13 +458,17 @@ const data =[
     "SourceLabel": "Hawaii OHS grants page",
     "SourceURL": "https://law.hawaii.gov/ohs/grants/",
     "Confidence": "Medium",
-    "PriorLabel": "Hawai\u2018i statewide cybersecurity strategy",
+    "PriorLabel": "Hawai‘i statewide cybersecurity strategy",
     "PriorURL": "https://law.hawaii.gov/ohs/wp-content/uploads/sites/2/2024/01/Hawaii-Statewide-Cyber-Strategy-Plan-Final-1.pdf",
     "PriorNote": "Official statewide cybersecurity strategy and plan prepared under the SLCGP framework.",
     "DrillDownLabel": "Hawaii OHS grants page",
     "DrillDownURL": "https://law.hawaii.gov/ohs/grants/",
     "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
-    "ProcurementType": "State page / TBD"
+    "ProcurementType": "State page / TBD",
+    "FYYear": "TBD on reviewed source",
+    "MatchInfo": "TBD on reviewed source",
+    "MinMaxInfo": "Not publicly stated on reviewed source",
+    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
   },
   {
     "State": "Idaho",
@@ -441,7 +487,11 @@ const data =[
     "DrillDownLabel": "Operation Cyber Idaho",
     "DrillDownURL": "https://cybersecurity.idaho.gov/operation-cyber-idaho/",
     "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
-    "ProcurementType": "State page / TBD"
+    "ProcurementType": "State page / TBD",
+    "FYYear": "TBD on reviewed source",
+    "MatchInfo": "TBD on reviewed source",
+    "MinMaxInfo": "Not publicly stated on reviewed source",
+    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
   },
   {
     "State": "Illinois",
@@ -460,7 +510,11 @@ const data =[
     "DrillDownLabel": "Illinois SLCGP page",
     "DrillDownURL": "https://doit.illinois.gov/initiatives/cybersecurity/slcgp.html",
     "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
-    "ProcurementType": "State page / TBD"
+    "ProcurementType": "State page / TBD",
+    "FYYear": "TBD on reviewed source",
+    "MatchInfo": "TBD on reviewed source",
+    "MinMaxInfo": "Not publicly stated on reviewed source",
+    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
   },
   {
     "State": "Indiana",
@@ -479,7 +533,11 @@ const data =[
     "DrillDownLabel": "Indiana SLCGP committee page",
     "DrillDownURL": "https://www.in.gov/iot/slcgp-committee/",
     "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
-    "ProcurementType": "State page / TBD"
+    "ProcurementType": "State page / TBD",
+    "FYYear": "TBD on reviewed source",
+    "MatchInfo": "TBD on reviewed source",
+    "MinMaxInfo": "Not publicly stated on reviewed source",
+    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
   },
   {
     "State": "Iowa",
@@ -498,7 +556,11 @@ const data =[
     "DrillDownLabel": "Iowa SLCGP page",
     "DrillDownURL": "https://homelandsecurity.iowa.gov/grants/state-and-local-cybersecurity-grant-program-slcgp",
     "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
-    "ProcurementType": "State page / TBD"
+    "ProcurementType": "State page / TBD",
+    "FYYear": "TBD on reviewed source",
+    "MatchInfo": "TBD on reviewed source",
+    "MinMaxInfo": "Not publicly stated on reviewed source",
+    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
   },
   {
     "State": "Kansas",
@@ -517,7 +579,11 @@ const data =[
     "DrillDownLabel": "Kansas SLCGP page",
     "DrillDownURL": "https://www.ebit.ks.gov/divisions/slcgp",
     "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
-    "ProcurementType": "State page / TBD"
+    "ProcurementType": "State page / TBD",
+    "FYYear": "TBD on reviewed source",
+    "MatchInfo": "TBD on reviewed source",
+    "MinMaxInfo": "Not publicly stated on reviewed source",
+    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
   },
   {
     "State": "Kentucky",
@@ -536,7 +602,11 @@ const data =[
     "DrillDownLabel": "Kentucky Homeland Security grants page",
     "DrillDownURL": "https://homelandsecurity.ky.gov/Pages/Grants.aspx",
     "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
-    "ProcurementType": "State page / TBD"
+    "ProcurementType": "State page / TBD",
+    "FYYear": "TBD on reviewed source",
+    "MatchInfo": "TBD on reviewed source",
+    "MinMaxInfo": "Not publicly stated on reviewed source",
+    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
   },
   {
     "State": "Louisiana",
@@ -555,7 +625,11 @@ const data =[
     "DrillDownLabel": "Louisiana SLCGP page / committee materials",
     "DrillDownURL": "https://wwwcfprd.doa.louisiana.gov/boardsandcommissions/MeetingMinutes/348_Regional%20Directors%20Meeting%20minutes-%20February%202026.pdf",
     "ProcurementProcess": "State-run application cycle. Applicants respond to Louisiana SLCGP priorities and guidance; funded entities then procure under Louisiana/local procurement rules and reporting requirements.",
-    "ProcurementType": "State application"
+    "ProcurementType": "State application",
+    "FYYear": "FY2023–FY2025",
+    "MatchInfo": "Varies by year: FY23 20/10; FY24 30/20; FY25 40/30",
+    "MinMaxInfo": "Not publicly stated on reviewed source",
+    "FYSummary": "FY2023–FY2025 | Match: Varies by year: FY23 20/10; FY24 30/20; FY25 40/30 | Min/Max: Not publicly stated on reviewed source"
   },
   {
     "State": "Maine",
@@ -574,7 +648,11 @@ const data =[
     "DrillDownLabel": "Maine SLCGP page",
     "DrillDownURL": "https://www.maine.gov/mema/grants/state-and-local-cybersecurity-grant-program",
     "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
-    "ProcurementType": "State page / TBD"
+    "ProcurementType": "State page / TBD",
+    "FYYear": "TBD on reviewed source",
+    "MatchInfo": "TBD on reviewed source",
+    "MinMaxInfo": "Not publicly stated on reviewed source",
+    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
   },
   {
     "State": "Maryland",
@@ -593,7 +671,11 @@ const data =[
     "DrillDownLabel": "Maryland rolling application page",
     "DrillDownURL": "https://mema.maryland.gov/pages/cyber-preparedness-funding.aspx",
     "ProcurementProcess": "Rolling state application. Eligible entities download and submit Maryland application materials. Post-award purchases follow state/local procurement rules plus grant reporting requirements.",
-    "ProcurementType": "Rolling application"
+    "ProcurementType": "Rolling application",
+    "FYYear": "FY2023 (second round open)",
+    "MatchInfo": "20% single / 10% multi-entity",
+    "MinMaxInfo": "Not publicly stated on reviewed source",
+    "FYSummary": "FY2023 (second round open) | Match: 20% single / 10% multi-entity | Min/Max: Not publicly stated on reviewed source"
   },
   {
     "State": "Massachusetts",
@@ -612,7 +694,11 @@ const data =[
     "DrillDownLabel": "Massachusetts SLCGP page",
     "DrillDownURL": "https://www.mass.gov/info-details/state-and-local-cybersecurity-grant-program",
     "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
-    "ProcurementType": "State page / TBD"
+    "ProcurementType": "State page / TBD",
+    "FYYear": "TBD on reviewed source",
+    "MatchInfo": "TBD on reviewed source",
+    "MinMaxInfo": "Not publicly stated on reviewed source",
+    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
   },
   {
     "State": "Michigan",
@@ -631,7 +717,11 @@ const data =[
     "DrillDownLabel": "Michigan SLCGP page",
     "DrillDownURL": "https://www.michigan.gov/dtmb/services/cybersecurity/cyber-partners/state-and-local-cybersecurity-grant-program",
     "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
-    "ProcurementType": "State page / TBD"
+    "ProcurementType": "State page / TBD",
+    "FYYear": "FY2025 (dates TBD)",
+    "MatchInfo": "40% single / 30% multi-entity",
+    "MinMaxInfo": "Not publicly stated on reviewed source",
+    "FYSummary": "FY2025 (dates TBD) | Match: 40% single / 30% multi-entity | Min/Max: Not publicly stated on reviewed source"
   },
   {
     "State": "Minnesota",
@@ -650,7 +740,11 @@ const data =[
     "DrillDownLabel": "Minnesota whole-of-state participant information",
     "DrillDownURL": "https://mn.gov/mnit/about-mnit/security/whole-of-state-cybersecurity-plan/wos/index.jsp",
     "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
-    "ProcurementType": "State page / TBD"
+    "ProcurementType": "State page / TBD",
+    "FYYear": "TBD on reviewed source",
+    "MatchInfo": "TBD on reviewed source",
+    "MinMaxInfo": "Not publicly stated on reviewed source",
+    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
   },
   {
     "State": "Mississippi",
@@ -669,7 +763,11 @@ const data =[
     "DrillDownLabel": "Mississippi SLCGP announcements",
     "DrillDownURL": "https://www.homelandsecurity.ms.gov/grants/homeland-security-state-and-local-cybersecurity-grant-program-slcgp",
     "ProcurementProcess": "The primary state subrecipient window is closed. Use this official page to monitor the next cycle, RFP/RFA, or grants portal. After award, local procurement typically follows state/local purchasing rules.",
-    "ProcurementType": "RFP"
+    "ProcurementType": "RFP",
+    "FYYear": "TBD on reviewed source",
+    "MatchInfo": "TBD on reviewed source",
+    "MinMaxInfo": "Not publicly stated on reviewed source",
+    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
   },
   {
     "State": "Missouri",
@@ -688,7 +786,11 @@ const data =[
     "DrillDownLabel": "Missouri grants and training portal",
     "DrillDownURL": "https://dps.mo.gov/dir/programs/ohs/grantstraining/",
     "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
-    "ProcurementType": "State page / TBD"
+    "ProcurementType": "State page / TBD",
+    "FYYear": "TBD on reviewed source",
+    "MatchInfo": "TBD on reviewed source",
+    "MinMaxInfo": "Not publicly stated on reviewed source",
+    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
   },
   {
     "State": "Montana",
@@ -707,7 +809,11 @@ const data =[
     "DrillDownLabel": "Montana SLCGP application info",
     "DrillDownURL": "https://des.mt.gov/Grant-Programs/SLCGPApplicationInfo",
     "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
-    "ProcurementType": "State page / TBD"
+    "ProcurementType": "State page / TBD",
+    "FYYear": "TBD on reviewed source",
+    "MatchInfo": "TBD on reviewed source",
+    "MinMaxInfo": "Not publicly stated on reviewed source",
+    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
   },
   {
     "State": "Nebraska",
@@ -726,7 +832,11 @@ const data =[
     "DrillDownLabel": "Nebraska SLCGP grant info",
     "DrillDownURL": "https://slcg.nebraska.gov/grant-info",
     "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
-    "ProcurementType": "State page / TBD"
+    "ProcurementType": "State page / TBD",
+    "FYYear": "TBD on reviewed source",
+    "MatchInfo": "TBD on reviewed source",
+    "MinMaxInfo": "Not publicly stated on reviewed source",
+    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
   },
   {
     "State": "Nevada",
@@ -745,7 +855,11 @@ const data =[
     "DrillDownLabel": "Nevada grants portfolio",
     "DrillDownURL": "https://www.oem.nv.gov/agency-portfolio-sections-programs/grants-portfolio/",
     "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
-    "ProcurementType": "State page / TBD"
+    "ProcurementType": "State page / TBD",
+    "FYYear": "TBD on reviewed source",
+    "MatchInfo": "TBD on reviewed source",
+    "MinMaxInfo": "Not publicly stated on reviewed source",
+    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
   },
   {
     "State": "New Hampshire",
@@ -764,7 +878,11 @@ const data =[
     "DrillDownLabel": "New Hampshire SLCGP page",
     "DrillDownURL": "https://www.doit.nh.gov/state-and-local-cybersecurity-grant-program",
     "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
-    "ProcurementType": "State page / TBD"
+    "ProcurementType": "State page / TBD",
+    "FYYear": "TBD on reviewed source",
+    "MatchInfo": "TBD on reviewed source",
+    "MinMaxInfo": "Not publicly stated on reviewed source",
+    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
   },
   {
     "State": "New Jersey",
@@ -783,7 +901,11 @@ const data =[
     "DrillDownLabel": "New Jersey SLCGP page",
     "DrillDownURL": "https://www.cyber.nj.gov/grants-and-resources/grants/state-and-local-cybersecurity-grant-program-slcgp",
     "ProcurementProcess": "State-run SLCGP application window is currently closed. Use the NJCCIC grants page to monitor the next cycle and subrecipient instructions.",
-    "ProcurementType": "State application"
+    "ProcurementType": "State application",
+    "FYYear": "TBD on reviewed source",
+    "MatchInfo": "TBD on reviewed source",
+    "MinMaxInfo": "Not publicly stated on reviewed source",
+    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
   },
   {
     "State": "New Mexico",
@@ -802,7 +924,11 @@ const data =[
     "DrillDownLabel": "New Mexico request / participation forms page",
     "DrillDownURL": "https://www.doit.nm.gov/programs/cybersecurity/state-and-local-cybersecurity-grant-program-slcgp/",
     "ProcurementProcess": "Current process is participation/request forms for SLCGP-funded shared services. Procurement may be state-managed for service offerings, with local participation routed through the program office.",
-    "ProcurementType": "Participation/request forms"
+    "ProcurementType": "Participation/request forms",
+    "FYYear": "State FY2027 services; federal FY not stated",
+    "MatchInfo": "TBD on reviewed source",
+    "MinMaxInfo": "First-come / funding available basis; no min/max stated",
+    "FYSummary": "State FY2027 services; federal FY not stated | Match: TBD on reviewed source | Min/Max: First-come / funding available basis; no min/max stated"
   },
   {
     "State": "New York",
@@ -821,7 +947,11 @@ const data =[
     "DrillDownLabel": "New York federal programs page",
     "DrillDownURL": "https://www.dhses.ny.gov/federal-programs",
     "ProcurementProcess": "New York uses a state-run Request for Applications tied to cybersecurity shared services rather than simple direct cash awards. The current combined FY2022/FY2023 application period is closed.",
-    "ProcurementType": "RFA"
+    "ProcurementType": "RFA",
+    "FYYear": "FY2022–FY2023 (combined)",
+    "MatchInfo": "FY22 10/0; FY23 20/10",
+    "MinMaxInfo": "Not publicly stated on reviewed source",
+    "FYSummary": "FY2022–FY2023 (combined) | Match: FY22 10/0; FY23 20/10 | Min/Max: Not publicly stated on reviewed source"
   },
   {
     "State": "North Carolina",
@@ -840,7 +970,11 @@ const data =[
     "DrillDownLabel": "North Carolina SLCGP Q&A / procurement guidance",
     "DrillDownURL": "https://www.ncdps.gov/our-organization/emergency-management/emergency-management-grants/state-and-local-cybersecurity-grant-program/state-and-local-cybersecurity-grant-program-qa",
     "ProcurementProcess": "Competitive state subrecipient application submitted through North Carolina's Salesforce grants portal during the posted window. NC also publishes procurement Q&A, including when local entities may use state contract vehicles instead of issuing a separate formal RFP.",
-    "ProcurementType": "Online application window"
+    "ProcurementType": "Online application window",
+    "FYYear": "FY2025",
+    "MatchInfo": "40% single / 30% multi-entity",
+    "MinMaxInfo": "No clear statewide min; state page gives 40% example for a $100,000 project",
+    "FYSummary": "FY2025 | Match: 40% single / 30% multi-entity | Min/Max: No clear statewide min; state page gives 40% example for a $100,000 project"
   },
   {
     "State": "North Dakota",
@@ -859,7 +993,11 @@ const data =[
     "DrillDownLabel": "North Dakota emergency services news page",
     "DrillDownURL": "https://www.des.nd.gov/news/nddes-issues-notice-intent-noi-apply-fy-2025-state-homeland-security-grant-program",
     "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
-    "ProcurementType": "State page / TBD"
+    "ProcurementType": "State page / TBD",
+    "FYYear": "TBD on reviewed source",
+    "MatchInfo": "TBD on reviewed source",
+    "MinMaxInfo": "Not publicly stated on reviewed source",
+    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
   },
   {
     "State": "Ohio",
@@ -878,7 +1016,11 @@ const data =[
     "DrillDownLabel": "Ohio Round 3 SLCGP guidance",
     "DrillDownURL": "https://dam.assets.ohio.gov/image/upload/cyber.ohio.gov/Round_3_SLCGP_Grant_Application_Guidance.gov_Migration-Final.pdf",
     "ProcurementProcess": "The primary state subrecipient window is closed. Use this official page to monitor the next cycle, RFP/RFA, or grants portal. After award, local procurement typically follows state/local purchasing rules.",
-    "ProcurementType": "RFP"
+    "ProcurementType": "RFP",
+    "FYYear": "Round 3; federal FY not stated",
+    "MatchInfo": "TBD on reviewed source",
+    "MinMaxInfo": "Not publicly stated on reviewed source",
+    "FYSummary": "Round 3; federal FY not stated | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
   },
   {
     "State": "Oklahoma",
@@ -897,7 +1039,11 @@ const data =[
     "DrillDownLabel": "Oklahoma grants page / SLCGP application materials",
     "DrillDownURL": "https://oklahoma.gov/homeland-security/grants.html",
     "ProcurementProcess": "Recurring state application process with multiple 2026 deadlines. Applicants review the one-page announcement, tie projects to the State Cyber Plan, and submit applications to hsgrants@okohs.ok.gov.",
-    "ProcurementType": "Quarterly rolling application"
+    "ProcurementType": "Quarterly rolling application",
+    "FYYear": "TBD; page links FY22–FY25 NOFOs",
+    "MatchInfo": "Depends on linked NOFO year",
+    "MinMaxInfo": "Not publicly stated on reviewed source",
+    "FYSummary": "TBD; page links FY22–FY25 NOFOs | Match: Depends on linked NOFO year | Min/Max: Not publicly stated on reviewed source"
   },
   {
     "State": "Oregon",
@@ -916,7 +1062,11 @@ const data =[
     "DrillDownLabel": "Oregon Round 3 application instructions",
     "DrillDownURL": "https://www.oregon.gov/oem/Documents/2025-SLCGP-Application-Instructions_Round-3.pdf",
     "ProcurementProcess": "Quarterly competitive application. Applicants email the package to OEM; review occurs once each quarter. Awards are reimbursement-based, with quarterly reporting and reimbursement requests.",
-    "ProcurementType": "Quarterly rolling application"
+    "ProcurementType": "Quarterly rolling application",
+    "FYYear": "Round 3; FY2024/FY2025 dependent",
+    "MatchInfo": "FY24 may require 30% (waiver pending on cited guidance); FY25 40%",
+    "MinMaxInfo": "No statewide min/max stated; up to 2 projects per quarter",
+    "FYSummary": "Round 3; FY2024/FY2025 dependent | Match: FY24 may require 30% (waiver pending on cited guidance); FY25 40% | Min/Max: No statewide min/max stated; up to 2 projects per quarter"
   },
   {
     "State": "Pennsylvania",
@@ -935,7 +1085,11 @@ const data =[
     "DrillDownLabel": "Pennsylvania cyber grant page",
     "DrillDownURL": "https://www.pa.gov/services/pema/cybersecurity-grant",
     "ProcurementProcess": "Pennsylvania is using a committee-identified service/project model. Local governments cannot apply directly to the federal government and must wait for Commonwealth-issued application instructions when a state cycle opens.",
-    "ProcurementType": "State page / TBD"
+    "ProcurementType": "State page / TBD",
+    "FYYear": "TBD on reviewed source",
+    "MatchInfo": "TBD on reviewed source",
+    "MinMaxInfo": "Not publicly stated on reviewed source",
+    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
   },
   {
     "State": "Rhode Island",
@@ -954,7 +1108,11 @@ const data =[
     "DrillDownLabel": "RIEMA non-disaster grants page",
     "DrillDownURL": "https://riema.ri.gov/fiscal-branch/non-disaster-grants",
     "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
-    "ProcurementType": "State page / TBD"
+    "ProcurementType": "State page / TBD",
+    "FYYear": "TBD on reviewed source",
+    "MatchInfo": "TBD on reviewed source",
+    "MinMaxInfo": "Not publicly stated on reviewed source",
+    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
   },
   {
     "State": "South Carolina",
@@ -973,7 +1131,11 @@ const data =[
     "DrillDownLabel": "South Carolina SLCGP application worksheet",
     "DrillDownURL": "https://www.sled.sc.gov/sites/sled/files/forms/homeland/Grants/2024%20SLCGP%20Application%20Proposal%20Worksheet.pdf",
     "ProcurementProcess": "State proposal application distributed through SLED/SAA, with solicitation emails beginning March 20, 2026 and proposals due May 15, 2026. After award, local procurement follows South Carolina/local rules and any state instructions in the award package.",
-    "ProcurementType": "Proposal application"
+    "ProcurementType": "Proposal application",
+    "FYYear": "FY2024",
+    "MatchInfo": "30% single / 20% multi-entity",
+    "MinMaxInfo": "Not publicly stated on reviewed source",
+    "FYSummary": "FY2024 | Match: 30% single / 20% multi-entity | Min/Max: Not publicly stated on reviewed source"
   },
   {
     "State": "South Dakota",
@@ -992,7 +1154,11 @@ const data =[
     "DrillDownLabel": "South Dakota homeland security grants page",
     "DrillDownURL": "https://www.sd.gov/cs?id=kb_article_view&sysparm_article=KB0043443",
     "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
-    "ProcurementType": "State page / TBD"
+    "ProcurementType": "State page / TBD",
+    "FYYear": "TBD on reviewed source",
+    "MatchInfo": "TBD on reviewed source",
+    "MinMaxInfo": "Not publicly stated on reviewed source",
+    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
   },
   {
     "State": "Tennessee",
@@ -1011,7 +1177,11 @@ const data =[
     "DrillDownLabel": "Tennessee SLCGP reporting form hub",
     "DrillDownURL": "https://www.tn.gov/content/dam/tn/cybersecurity/slcgp/State%20and%20Local%20Cybersecurity%20Grant%20Program%20Reporting%20Form.docx",
     "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
-    "ProcurementType": "State page / TBD"
+    "ProcurementType": "State page / TBD",
+    "FYYear": "TBD on reviewed source",
+    "MatchInfo": "TBD on reviewed source",
+    "MinMaxInfo": "Not publicly stated on reviewed source",
+    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
   },
   {
     "State": "Texas",
@@ -1030,7 +1200,11 @@ const data =[
     "DrillDownLabel": "Texas DIR SLCGP RFA page",
     "DrillDownURL": "https://dir.texas.gov/information-security/state-and-local-cybersecurity-grant-program-slcgp",
     "ProcurementProcess": "Objective-based state RFA. Eligible applicants respond to the Texas DIR solicitation. After award, procurement follows Texas/local purchasing rules and grant conditions.",
-    "ProcurementType": "RFA"
+    "ProcurementType": "RFA",
+    "FYYear": "FY2024 (Year 3 RFA)",
+    "MatchInfo": "30% single / 20% multi-entity",
+    "MinMaxInfo": "Not publicly stated on reviewed source",
+    "FYSummary": "FY2024 (Year 3 RFA) | Match: 30% single / 20% multi-entity | Min/Max: Not publicly stated on reviewed source"
   },
   {
     "State": "Utah",
@@ -1049,7 +1223,11 @@ const data =[
     "DrillDownLabel": "Utah legislative cybersecurity support document",
     "DrillDownURL": "https://le.utah.gov/interim/2026/pdf/00000702.pdf",
     "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
-    "ProcurementType": "State page / TBD"
+    "ProcurementType": "State page / TBD",
+    "FYYear": "TBD on reviewed source",
+    "MatchInfo": "TBD on reviewed source",
+    "MinMaxInfo": "Not publicly stated on reviewed source",
+    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
   },
   {
     "State": "Vermont",
@@ -1068,7 +1246,11 @@ const data =[
     "DrillDownLabel": "Vermont Cybersecurity Advisory Council 2026 report",
     "DrillDownURL": "https://legislature.vermont.gov/assets/Legislative-Reports/Cybersecurity-Advisory-Council-Annual-Report-2026.pdf",
     "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
-    "ProcurementType": "State page / TBD"
+    "ProcurementType": "State page / TBD",
+    "FYYear": "TBD on reviewed source",
+    "MatchInfo": "TBD on reviewed source",
+    "MinMaxInfo": "Not publicly stated on reviewed source",
+    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
   },
   {
     "State": "Virginia",
@@ -1087,7 +1269,11 @@ const data =[
     "DrillDownLabel": "Virginia cybersecurity grants FAQ / listserv page",
     "DrillDownURL": "https://www.vita.virginia.gov/security/cybersecurity-grants/",
     "ProcurementProcess": "State application window is currently closed. Use the Virginia page and listserv to catch the next subrecipient cycle; funded entities then procure under Virginia/local rules and grant terms.",
-    "ProcurementType": "Online application window"
+    "ProcurementType": "Online application window",
+    "FYYear": "TBD on reviewed source",
+    "MatchInfo": "TBD on reviewed source",
+    "MinMaxInfo": "Not publicly stated on reviewed source",
+    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
   },
   {
     "State": "Washington",
@@ -1106,7 +1292,11 @@ const data =[
     "DrillDownLabel": "Washington WaTech SLCGP page",
     "DrillDownURL": "https://watech.wa.gov/state-local-cybersecurity-grant-program",
     "ProcurementProcess": "Washington is signaling another state-led solicitation round, with the application expected in late April 2026 and a tentative early June 2026 deadline. Use the WaTech page and preparedness.grants@mil.wa.gov to track release details.",
-    "ProcurementType": "State application"
+    "ProcurementType": "State application",
+    "FYYear": "Expected final round; likely FY2025",
+    "MatchInfo": "40% single / 30% multi-entity",
+    "MinMaxInfo": "Not publicly stated on reviewed source",
+    "FYSummary": "Expected final round; likely FY2025 | Match: 40% single / 30% multi-entity | Min/Max: Not publicly stated on reviewed source"
   },
   {
     "State": "West Virginia",
@@ -1125,7 +1315,11 @@ const data =[
     "DrillDownLabel": "West Virginia cybersecurity grant funding page",
     "DrillDownURL": "https://emd.wv.gov/cybersecurity-grant-funding",
     "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
-    "ProcurementType": "State page / TBD"
+    "ProcurementType": "State page / TBD",
+    "FYYear": "TBD on reviewed source",
+    "MatchInfo": "TBD on reviewed source",
+    "MinMaxInfo": "Not publicly stated on reviewed source",
+    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
   },
   {
     "State": "Wisconsin",
@@ -1144,7 +1338,11 @@ const data =[
     "DrillDownLabel": "Wisconsin cybersecurity grants page",
     "DrillDownURL": "https://det.wi.gov/Pages/Cybersecurity_Grants.aspx",
     "ProcurementProcess": "The primary state subrecipient window is closed. Use this official page to monitor the next cycle, RFP/RFA, or grants portal. After award, local procurement typically follows state/local purchasing rules.",
-    "ProcurementType": "RFP"
+    "ProcurementType": "RFP",
+    "FYYear": "FFY2023 cycle 2 / round 2",
+    "MatchInfo": "FFY23 cost-share waiver approved; FFY24 30%; FFY25 40%",
+    "MinMaxInfo": "Not publicly stated on reviewed source",
+    "FYSummary": "FFY2023 cycle 2 / round 2 | Match: FFY23 cost-share waiver approved; FFY24 30%; FFY25 40% | Min/Max: Not publicly stated on reviewed source"
   },
   {
     "State": "Wyoming",
@@ -1163,7 +1361,11 @@ const data =[
     "DrillDownLabel": "Wyoming grants page",
     "DrillDownURL": "https://hls.wyo.gov/grants",
     "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
-    "ProcurementType": "State page / TBD"
+    "ProcurementType": "State page / TBD",
+    "FYYear": "TBD on reviewed source",
+    "MatchInfo": "TBD on reviewed source",
+    "MinMaxInfo": "Not publicly stated on reviewed source",
+    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
   }
 ];
 const regionOrder = ["Mid-Atlantic", "Northeast", "Southeast", "West"];
@@ -1256,7 +1458,7 @@ function render() {
   const procVal = procTypeFilter.value;
 
   let filtered = data.filter(row => {
-    const hay = [row.State, row.Region, row.Status, row.ProcurementType, row.Description, row.SourceLabel, row.PriorLabel, row.PriorNote, row.Confidence].join(' ').toLowerCase();
+    const hay = [row.State, row.Region, row.Status, row.FYYear, row.MatchInfo, row.MinMaxInfo, row.ProcurementType, row.Description, row.SourceLabel, row.PriorLabel, row.PriorNote, row.Confidence].join(' ').toLowerCase();
     return (!q || hay.includes(q))
       && (!regionVal || row.Region === regionVal)
       && (!stateVal || row.State === stateVal)
@@ -1275,6 +1477,7 @@ function render() {
       <td><span class="status-chip status-${cssKey(row.Status)}">${escapeHtml(row.Status)}</span></td>
       <td>${escapeHtml(fmtDate(row.Start))}</td>
       <td>${escapeHtml(fmtDate(row.End))}</td>
+      <td><div><strong>${escapeHtml(row.FYYear || '')}</strong></div><div class="small-note">Match: ${escapeHtml(row.MatchInfo || '')}</div><div class="small-note">Min/Max: ${escapeHtml(row.MinMaxInfo || '')}</div></td>
       <td><span class="ptype-chip ptype-${cssKey(row.ProcurementType)}">${escapeHtml(row.ProcurementType)}</span></td>
       <td>${escapeHtml(row.Description)}</td>
       <td><a href="${escapeHtml(row.SourceURL)}" target="_blank" rel="noopener noreferrer">${escapeHtml(row.SourceLabel)}</a></td>
