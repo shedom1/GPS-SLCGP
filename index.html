@@ -3,27 +3,27 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>SLCGP 2026 State Windows + Prior Awards Data Tracker</title>
+<title>SLCGP 2026 State Windows, Procurement, and Prior Awards Tracker</title>
 <style>
   :root {
-    --bg: #f3f7fc;
+    --bg: #f2f6fb;
     --card: #ffffff;
-    --ink: #18212f;
-    --muted: #5c6b80;
-    --line: #d9e1ec;
-    --blue: #1f6feb;
-    --blue-soft: #eaf2ff;
-    --green: #1a7f37;
-    --green-soft: #eaf7ee;
-    --amber: #9a6700;
-    --amber-soft: #fff4d6;
+    --ink: #172335;
+    --muted: #5c6a80;
+    --line: #d8e2ef;
+    --blue: #2563eb;
+    --blue-soft: #eaf1ff;
+    --green: #15803d;
+    --green-soft: #eaf8ef;
+    --amber: #a16207;
+    --amber-soft: #fff4d8;
     --red: #b42318;
     --red-soft: #fdecec;
-    --purple: #6f42c1;
-    --purple-soft: #f2ebff;
+    --purple: #6d28d9;
+    --purple-soft: #f3ebff;
     --teal: #0f766e;
     --teal-soft: #e7f8f6;
-    --shadow: 0 10px 24px rgba(18, 33, 53, 0.08);
+    --shadow: 0 10px 24px rgba(18,33,53,0.08);
     --radius: 16px;
   }
   * { box-sizing: border-box; }
@@ -34,145 +34,128 @@
     color: var(--ink);
   }
   .wrap {
-    max-width: 1480px;
+    width: min(100vw, 1520px);
     margin: 0 auto;
-    padding: 20px 16px 44px;
+    padding: 18px 12px 40px;
   }
-  .hero {
-    background: linear-gradient(135deg, #ffffff 0%, #f1f7ff 58%, #eefbf8 100%);
-    border: 1px solid var(--line);
-    border-radius: 22px;
-    box-shadow: var(--shadow);
-    padding: 20px 20px 16px;
-    margin-bottom: 16px;
-  }
-  .eyebrow {
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: .08em;
-    text-transform: uppercase;
-    color: var(--blue);
-    margin-bottom: 8px;
-  }
-  h1 { margin: 0 0 8px; font-size: 30px; line-height: 1.08; }
-  .sub { color: var(--muted); font-size: 14px; line-height: 1.5; max-width: 1120px; }
-  .meta { display: flex; flex-wrap: wrap; gap: 10px 18px; margin-top: 14px; color: var(--muted); font-size: 13px; }
+  .hero, .toolbar, .table-card, .card { background: var(--card); border: 1px solid var(--line); box-shadow: var(--shadow); }
+  .hero { border-radius: 22px; padding: 18px 18px 14px; margin-bottom: 14px; background: linear-gradient(135deg, #ffffff 0%, #f3f8ff 58%, #eefbf8 100%); }
+  .eyebrow { font-size: 11px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--blue); margin-bottom: 7px; }
+  h1 { margin: 0 0 8px; font-size: 28px; line-height: 1.06; }
+  .sub { color: var(--muted); font-size: 13px; line-height: 1.45; max-width: 1180px; }
+  .meta { display: flex; flex-wrap: wrap; gap: 8px 16px; margin-top: 13px; color: var(--muted); font-size: 12px; }
   .meta b { color: var(--ink); }
-  .cards { display: grid; grid-template-columns: repeat(6, minmax(0,1fr)); gap: 12px; margin: 16px 0; }
-  .card { position: relative; overflow: hidden; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); padding: 14px 16px; }
-  .card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--blue), #72a7ff); }
-  .card:nth-child(2)::before { background: linear-gradient(90deg, var(--green), #41b36c); }
-  .card:nth-child(3)::before { background: linear-gradient(90deg, var(--red), #e36c62); }
-  .card:nth-child(4)::before { background: linear-gradient(90deg, var(--amber), #d7a000); }
-  .card:nth-child(5)::before { background: linear-gradient(90deg, var(--purple), #9b74e5); }
-  .card:nth-child(6)::before { background: linear-gradient(90deg, var(--teal), #31b4a8); }
-  .card .label { font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin-bottom: 7px; font-weight: 700; }
-  .card .value { font-size: 24px; font-weight: 800; line-height: 1; }
-  .toolbar { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); padding: 14px; margin-bottom: 16px; }
-  .controls { display: grid; grid-template-columns: 1.15fr .95fr .95fr .95fr auto auto; gap: 10px; align-items: end; }
-  .field label { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin-bottom: 6px; font-weight: 700; }
-  input[type="search"], select { width: 100%; padding: 10px 11px; border-radius: 11px; border: 1px solid var(--line); background: #fff; color: var(--ink); font-size: 13px; }
-  .btn { appearance: none; border: 1px solid var(--line); background: #fff; color: var(--ink); border-radius: 11px; padding: 10px 13px; font-size: 13px; font-weight: 700; cursor: pointer; min-height: 42px; }
-  .btn.primary { background: linear-gradient(135deg, #2f7bff 0%, var(--blue) 100%); border-color: var(--blue); color: #fff; }
+  .cards { display: grid; grid-template-columns: repeat(6, minmax(0,1fr)); gap: 10px; margin: 14px 0; }
+  .card { border-radius: 15px; padding: 12px 14px; position: relative; overflow: hidden; }
+  .card::before { content:''; position:absolute; left:0; top:0; right:0; height:4px; background:linear-gradient(90deg,var(--blue),#7aaaff); }
+  .card:nth-child(2)::before { background: linear-gradient(90deg, var(--green), #43b26f); }
+  .card:nth-child(3)::before { background: linear-gradient(90deg, var(--red), #de6b61); }
+  .card:nth-child(4)::before { background: linear-gradient(90deg, var(--amber), #d2a100); }
+  .card:nth-child(5)::before { background: linear-gradient(90deg, var(--purple), #9c7bea); }
+  .card:nth-child(6)::before { background: linear-gradient(90deg, var(--teal), #2fb7aa); }
+  .card .label { font-size: 10px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin-bottom: 7px; font-weight: 800; }
+  .card .value { font-size: 22px; font-weight: 800; line-height: 1; }
+  .toolbar { border-radius: var(--radius); padding: 12px; margin-bottom: 14px; }
+  .controls { display: grid; grid-template-columns: 1.25fr .9fr .9fr .85fr .95fr auto auto; gap: 8px; align-items: end; }
+  .field label { display: block; font-size: 10px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin-bottom: 5px; font-weight: 800; }
+  input[type="search"], select { width: 100%; padding: 9px 10px; border-radius: 10px; border: 1px solid var(--line); background: #fff; color: var(--ink); font-size: 12px; min-height: 38px; }
+  .btn { appearance:none; border:1px solid var(--line); background:#fff; color:var(--ink); border-radius:10px; padding:9px 12px; font-size:12px; font-weight:800; cursor:pointer; min-height:38px; }
+  .btn.primary { background: linear-gradient(135deg, #2f7bff 0%, var(--blue) 100%); border-color: var(--blue); color:#fff; }
   .btn:hover { transform: translateY(-1px); }
-  .note { margin-top: 10px; color: var(--muted); font-size: 12px; line-height: 1.45; }
-  .table-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; }
-  .table-wrap { overflow: auto; max-width: 100%; }
-  table { width: 100%; border-collapse: collapse; min-width: 100%; table-layout: fixed; }
-  colgroup col { width: auto; }
-  thead th { position: sticky; top: 0; z-index: 2; background: linear-gradient(180deg, #f8fbff 0%, #eef5ff 100%); color: var(--ink); font-size: 11px; text-transform: uppercase; letter-spacing: .08em; font-weight: 800; border-bottom: 1px solid var(--line); padding: 0; text-align: left; }
-  thead th.sortable { cursor: pointer; }
-  thead th .th-inner { position: relative; display: flex; align-items: center; justify-content: space-between; gap: 7px; padding: 11px 10px; min-height: 44px; }
-  thead th .th-label { display: inline-block; }
-  thead th .sort-indicator { color: var(--muted); font-size: 11px; flex: 0 0 auto; }
-  thead th.active-sort .sort-indicator { color: var(--blue); }
-  thead th .resize-handle { position: absolute; top: 0; right: -3px; width: 10px; height: 100%; cursor: col-resize; z-index: 4; }
-  thead th .resize-handle::after { content: ''; position: absolute; top: 9px; bottom: 9px; left: 4px; width: 2px; border-radius: 2px; background: #c6d3e3; opacity: 0; transition: opacity .15s ease; }
-  thead th:hover .resize-handle::after, thead th.resizing .resize-handle::after { opacity: 1; }
-  tbody td { border-bottom: 1px solid var(--line); padding: 10px 10px; vertical-align: top; font-size: 13px; line-height: 1.38; overflow-wrap: anywhere; }
-  tbody tr:hover { background: #f7fbff; }
-  tbody tr.status-open td:first-child { border-left: 4px solid var(--green); }
-  tbody tr.status-closed td:first-child { border-left: 4px solid var(--red); }
-  tbody tr.status-forecast td:first-child { border-left: 4px solid var(--amber); }
-  .state { font-weight: 800; font-size: 14px; }
-  .region { display: inline-flex; margin-top: 5px; padding: 3px 8px; border-radius: 999px; font-size: 10px; text-transform: uppercase; letter-spacing: .08em; font-weight: 800; background: #eef4ff; color: #31588f; }
-  .region.northeast { background: #eef2ff; color: #4f46e5; }
-  .region.southeast { background: #fff1e6; color: #b45309; }
-  .region.mid-atlantic { background: #ecfeff; color: #0f766e; }
-  .region.west { background: #f3e8ff; color: #7e22ce; }
-  .badge { display: inline-flex; align-items: center; border-radius: 999px; padding: 5px 9px; font-size: 11px; font-weight: 800; letter-spacing: .03em; }
-  .badge.open { color: var(--green); background: var(--green-soft); }
-  .badge.closed { color: var(--red); background: var(--red-soft); }
-  .badge.forecast { color: var(--amber); background: var(--amber-soft); }
-  .confidence { display: inline-flex; padding: 5px 9px; border-radius: 999px; background: var(--blue-soft); color: var(--blue); font-weight: 700; font-size: 11px; }
-  .confidence.high { background: var(--green-soft); color: var(--green); }
-  .confidence.medium { background: var(--amber-soft); color: var(--amber); }
-  .confidence.low { background: var(--red-soft); color: var(--red); }
-  .muted { color: var(--muted); }
-  .small-note { color: var(--muted); font-size: 11px; line-height: 1.35; margin-top: 5px; }
-  a { color: var(--blue); text-decoration: none; font-weight: 600; }
+  .note { margin-top: 8px; color: var(--muted); font-size: 11px; line-height: 1.4; }
+  .table-card { border-radius: var(--radius); overflow: hidden; }
+  .table-wrap { width: 100%; overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 11px; }
+  colgroup col:nth-child(1) { width: 8%; }
+  colgroup col:nth-child(2) { width: 6%; }
+  colgroup col:nth-child(3) { width: 6%; }
+  colgroup col:nth-child(4) { width: 7%; }
+  colgroup col:nth-child(5) { width: 8%; }
+  colgroup col:nth-child(6) { width: 17%; }
+  colgroup col:nth-child(7) { width: 9%; }
+  colgroup col:nth-child(8) { width: 11%; }
+  colgroup col:nth-child(9) { width: 14%; }
+  colgroup col:nth-child(10) { width: 10%; }
+  colgroup col:nth-child(11) { width: 4%; }
+  thead th { position: sticky; top: 0; background: #eff5fd; z-index: 2; text-align: left; padding: 8px 8px; border-bottom: 1px solid var(--line); color: #26405f; font-size: 10px; text-transform: uppercase; letter-spacing: .05em; vertical-align: bottom; }
+  tbody td { padding: 8px 8px; border-bottom: 1px solid #e9eef5; vertical-align: top; line-height: 1.35; overflow-wrap: anywhere; word-break: break-word; }
+  tbody tr:hover { background: #f9fbff; }
+  .th-inner { position: relative; padding-right: 12px; }
+  th.sortable { cursor: pointer; user-select: none; }
+  .sort-indicator { margin-left: 5px; font-size: 10px; color: var(--muted); }
+  .resize-handle { position:absolute; top:-6px; right:-4px; width:10px; height:32px; cursor: col-resize; }
+  th.resizing, th.resizing .th-label { color: var(--blue); }
+  .state { font-weight: 800; font-size: 11.2px; margin-bottom: 4px; }
+  .region-chip, .status-chip, .conf-chip, .ptype-chip { display:inline-flex; align-items:center; gap:4px; border-radius:999px; padding:3px 7px; font-size:10px; font-weight:800; line-height:1.1; }
+  .region-chip.mid { background: #eef2ff; color: #4f46e5; }
+  .region-chip.ne { background: #eefaf7; color: #0f766e; }
+  .region-chip.se { background: #fff5ec; color: #b45309; }
+  .region-chip.west { background: #f5f0ff; color: #7c3aed; }
+  .status-open { background: var(--green-soft); color: var(--green); }
+  .status-closed { background: var(--red-soft); color: var(--red); }
+  .status-forecasted-tbd { background: var(--amber-soft); color: var(--amber); }
+  .conf-high { background: var(--green-soft); color: var(--green); }
+  .conf-medium { background: var(--amber-soft); color: var(--amber); }
+  .conf-low { background: var(--red-soft); color: var(--red); }
+  .ptype-rfp { background:#eaf1ff; color:#1d4ed8; }
+  .ptype-rfa { background:#eefbf8; color:#0f766e; }
+  .ptype-quarterly-rolling-application, .ptype-rolling-application { background:#fff7df; color:#9a6700; }
+  .ptype-first-come-portal { background:#eef8e9; color:#15803d; }
+  .ptype-online-application-window, .ptype-state-application, .ptype-proposal-application { background:#f1f4f9; color:#31445e; }
+  .ptype-participation-request-forms { background:#f3ebff; color:#6d28d9; }
+  .ptype-state-page-tbd { background:#fff4d8; color:#a16207; }
+  .row-open td:first-child { box-shadow: inset 4px 0 0 #25a55f; }
+  .row-closed td:first-child { box-shadow: inset 4px 0 0 #d95d55; }
+  .row-forecasted-tbd td:first-child { box-shadow: inset 4px 0 0 #d2a100; }
+  a { color: var(--blue); text-decoration: none; font-weight: 700; }
   a:hover { text-decoration: underline; }
-  .footer { color: var(--muted); font-size: 11px; margin-top: 12px; line-height: 1.45; }
-
+  .small-note, .proc-note { margin-top: 5px; color: var(--muted); font-size: 10.5px; line-height: 1.35; }
+  .footer { color: var(--muted); font-size: 10.5px; line-height: 1.45; padding: 10px 12px 14px; }
   @media (max-width: 1200px) {
     .cards { grid-template-columns: repeat(3, minmax(0,1fr)); }
-    .controls { grid-template-columns: 1fr 1fr; }
-  }
-  @media (max-width: 720px) {
-    .cards { grid-template-columns: 1fr; }
-    .controls { grid-template-columns: 1fr; }
-    h1 { font-size: 26px; }
+    .controls { grid-template-columns: 1fr 1fr 1fr 1fr; }
+    .controls .btn { width: 100%; }
   }
   @media print {
     body { background: #fff; }
-    .wrap { max-width: 100%; padding: 0; }
-    .toolbar, .btn-print-note { display: none !important; }
-    .hero, .card, .table-card { box-shadow: none !important; border: 1px solid #cfd8e3 !important; }
-    .cards { gap: 8px; }
-    .card { padding: 10px 12px; }
-    .card .label { font-size: 9px; }
-    .card .value { font-size: 16px; }
-    table { table-layout: fixed; width: 100%; min-width: 100%; }
-    tbody td { font-size: 10px; padding: 6px 6px; line-height: 1.25; }
-    .state { font-size: 11px; }
-    .region, .badge, .confidence { font-size: 9px; }
-    .small-note, .footer, .sub, .meta { font-size: 10px; }
-    thead th { position: static; background: #f7f7f7 !important; font-size: 9px; }
-    thead th .resize-handle { display: none !important; }
-    a { color: #000; text-decoration: none; }
-    @page { size: landscape; margin: 0.35in; }
+    .wrap { width: 100%; max-width: none; padding: 0; }
+    .hero, .toolbar, .table-card, .card { box-shadow:none; }
+    .toolbar .btn, .toolbar .note.btn-print-note { display:none; }
+    .cards { gap: 6px; }
+    table { font-size: 9px; }
+    thead th, tbody td { padding: 4px 5px; }
+    .table-wrap { overflow: visible; }
   }
 </style>
 </head>
 <body>
 <div class="wrap">
   <section class="hero">
-    <div class="eyebrow">GPS Team Tracker</div>
-    <h1>SLCGP 2026 State Application Windows + Prior Awards / Applicant Data</h1>
-    <div class="sub">
-      Official-state-source tracker for State and Local Cybersecurity Grant Program local/subrecipient windows, organized by current status and paired with a second link for the best publicly available <b>prior awards, project, or applicant-data evidence</b> surfaced during review. Where a state did not publicly post a dated 2026 local window, it is marked <b>Forecasted/TBD</b>. Where a public prior-awards list was not clearly available, the tracker links the best official program page, prior-round guidance, or state plan instead.
-    </div>
+    <div class="eyebrow">GPS Team | SLCGP sales tracker</div>
+    <h1>SLCGP 2026 State Windows, Procurement, and Prior Awards Tracker</h1>
+    <div class="sub">Tracks state-level SLCGP subrecipient windows, likely procurement route, best drill-down source, and the best official prior-awards/applicant-data link found. Procurement type now classifies the front-door access model by state, such as RFP, RFA, rolling application, first-come portal, or state page/TBD.</div>
     <div class="meta">
-      <div><b>Last Refresh Date:</b> April 6, 2026</div>
+      <div><b>Last Refresh Date:</b> April 10, 2026</div>
       <div><b>Created by:</b> GPS Team</div>
-      <div><b>Default sort:</b> earliest posted/forecasted window date first; undated items at the bottom</div>
+      <div><b>States:</b> 50</div>
+      <div><b>Default Sort:</b> Window date ascending</div>
     </div>
   </section>
 
-  <section class="cards" id="summaryCards">
-    <div class="card"><div class="label">Visible States</div><div class="value" id="visibleCount">0</div></div>
+  <section class="cards">
+    <div class="card"><div class="label">Visible states</div><div class="value" id="visibleCount">50</div></div>
     <div class="card"><div class="label">Open</div><div class="value" id="openCount">0</div></div>
     <div class="card"><div class="label">Closed</div><div class="value" id="closedCount">0</div></div>
     <div class="card"><div class="label">Forecasted / TBD</div><div class="value" id="forecastCount">0</div></div>
-    <div class="card"><div class="label">High Confidence</div><div class="value" id="highCount">0</div></div>
-    <div class="card"><div class="label">Prior Data Links</div><div class="value" id="priorCount">0</div></div>
+    <div class="card"><div class="label">High confidence</div><div class="value" id="highCount">0</div></div>
+    <div class="card"><div class="label">Prior data links</div><div class="value" id="priorCount">0</div></div>
   </section>
 
   <section class="toolbar">
     <div class="controls">
       <div class="field">
         <label for="search">Search</label>
-        <input id="search" type="search" placeholder="Search state, description, prior data, or source..." />
+        <input id="search" type="search" placeholder="Search state, procurement type, source, or description..." />
       </div>
       <div class="field">
         <label for="regionFilter">Region</label>
@@ -191,39 +174,34 @@
           <option value="Forecasted/TBD">Forecasted/TBD</option>
         </select>
       </div>
+      <div class="field">
+        <label for="procTypeFilter">Procurement type</label>
+        <select id="procTypeFilter"><option value="">All types</option></select>
+      </div>
       <button class="btn" id="resetBtn">Reset filters</button>
       <button class="btn primary" id="pdfBtn">Export to PDF</button>
     </div>
-    <div class="note btn-print-note">
-      Tip: the PDF button prints the <b>currently filtered view</b>. Use region, state, and status filters first, then export. Click any column header to sort; drag the right edge of a header to resize that column.
-    </div>
-    <div class="note">
-      Method: official state program pages first; official awards announcements, reporting pages, plan PDFs, and prior-round guidance used as the “prior data” link when available.
-      This is a sales-ops tracker, not legal guidance. Verify final eligibility, match, and submission mechanics on the linked source page before outreach.
-    </div>
+    <div class="note btn-print-note">Tip: the PDF button prints the currently filtered and sorted view. Click any header to sort. Drag the right edge of a header to resize a column.</div>
+    <div class="note">Method: official state program pages first; official award notices, guidance packets, prior-round materials, and program pages used when a clean statewide awards list was not published. Forecasted/TBD means no clearly dated 2026 local window was found on the reviewed public source.</div>
   </section>
 
   <section class="table-card">
     <div class="table-wrap">
       <table id="dataTable">
         <colgroup id="colgroup">
-          <col style="width: 140px;" />
-          <col style="width: 100px;" />
-          <col style="width: 95px;" />
-          <col style="width: 125px;" />
-          <col style="width: 310px;" />
-          <col style="width: 180px;" />
-          <col style="width: 250px;" />
-          <col style="width: 95px;" />
+          <col /><col /><col /><col /><col /><col /><col /><col /><col /><col /><col />
         </colgroup>
         <thead>
           <tr>
             <th class="sortable" data-key="State" data-type="text"><div class="th-inner"><span class="th-label">State</span><span class="sort-indicator"></span><span class="resize-handle" aria-hidden="true"></span></div></th>
             <th class="sortable" data-key="Status" data-type="status"><div class="th-inner"><span class="th-label">Status</span><span class="sort-indicator"></span><span class="resize-handle" aria-hidden="true"></span></div></th>
-            <th class="sortable" data-key="Start" data-type="date"><div class="th-inner"><span class="th-label">Window Start</span><span class="sort-indicator"></span><span class="resize-handle" aria-hidden="true"></span></div></th>
-            <th class="sortable" data-key="End" data-type="date"><div class="th-inner"><span class="th-label">Window End / Next Date</span><span class="sort-indicator"></span><span class="resize-handle" aria-hidden="true"></span></div></th>
+            <th class="sortable" data-key="Start" data-type="date"><div class="th-inner"><span class="th-label">Start</span><span class="sort-indicator"></span><span class="resize-handle" aria-hidden="true"></span></div></th>
+            <th class="sortable" data-key="End" data-type="date"><div class="th-inner"><span class="th-label">End / Next</span><span class="sort-indicator"></span><span class="resize-handle" aria-hidden="true"></span></div></th>
+            <th class="sortable" data-key="ProcurementType" data-type="text"><div class="th-inner"><span class="th-label">Procurement type</span><span class="sort-indicator"></span><span class="resize-handle" aria-hidden="true"></span></div></th>
             <th class="sortable" data-key="Description" data-type="text"><div class="th-inner"><span class="th-label">Description</span><span class="sort-indicator"></span><span class="resize-handle" aria-hidden="true"></span></div></th>
-            <th class="sortable" data-key="SourceLabel" data-type="text"><div class="th-inner"><span class="th-label">2026 Window Source</span><span class="sort-indicator"></span><span class="resize-handle" aria-hidden="true"></span></div></th>
+            <th class="sortable" data-key="SourceLabel" data-type="text"><div class="th-inner"><span class="th-label">2026 source</span><span class="sort-indicator"></span><span class="resize-handle" aria-hidden="true"></span></div></th>
+            <th class="sortable" data-key="DrillDownLabel" data-type="text"><div class="th-inner"><span class="th-label">Best drill-down</span><span class="sort-indicator"></span><span class="resize-handle" aria-hidden="true"></span></div></th>
+            <th class="sortable" data-key="ProcurementProcess" data-type="text"><div class="th-inner"><span class="th-label">Procurement process</span><span class="sort-indicator"></span><span class="resize-handle" aria-hidden="true"></span></div></th>
             <th class="sortable" data-key="PriorLabel" data-type="text"><div class="th-inner"><span class="th-label">Prior awards / applicant data</span><span class="sort-indicator"></span><span class="resize-handle" aria-hidden="true"></span></div></th>
             <th class="sortable" data-key="Confidence" data-type="confidence"><div class="th-inner"><span class="th-label">Confidence</span><span class="sort-indicator"></span><span class="resize-handle" aria-hidden="true"></span></div></th>
           </tr>
@@ -231,30 +209,30 @@
         <tbody id="tbody"></tbody>
       </table>
     </div>
+    <div class="footer">Notes: “End / Next” shows the posted close date when available. For rolling or undated windows, it may show the next listed deadline or remain blank. Links open official sources in a new tab.</div>
   </section>
-
-  <div class="footer">
-    Notes: “Window End / Next Date” shows the posted close date when available. For rolling or undated windows, this field may show the next listed deadline or remain blank.
-    Forecasted/TBD means no dated 2026 local window was publicly posted on the reviewed official page as of the refresh above. “Prior awards / applicant data” may be a direct awards announcement, a state summary page, a plan/report, or prior-round guidance where a neat statewide awards list was not publicly surfaced.
-  </div>
 </div>
 
 <script>
-const data = [
+const data =[
   {
     "State": "Alabama",
     "Region": "Southeast",
-    "Status": "Forecasted/TBD",
+    "Status": "Open",
     "Start": "",
     "End": "",
-    "SortDate": "2099-12-31",
-    "Description": "Official Alabama SLCGP program pages are live, but no dated 2026 local/subrecipient window was publicly posted on the reviewed pages as of refresh.",
-    "SourceLabel": "Alabama SLCGP program overview",
-    "SourceURL": "https://slcgp.alabama.gov/about/additional-info/",
-    "Confidence": "Medium",
-    "PriorLabel": "Alabama apply page (round funding totals)",
-    "PriorURL": "https://slcgp.alabama.gov/apply/",
-    "PriorNote": "Shows Round One through Round Four funding available for approved local government cybersecurity projects."
+    "SortDate": "2026-04-09",
+    "Description": "Alabama's official apply page says local government entities should apply online now, that projects are available on a first-come, first-served basis, and that Round 2 application links are live.",
+    "SourceLabel": "Alabama apply page",
+    "SourceURL": "https://slcgp.alabama.gov/apply/",
+    "Confidence": "High",
+    "PriorLabel": "Alabama fact sheets page",
+    "PriorURL": "https://slcgp.alabama.gov/apply/factsheets/",
+    "PriorNote": "Official project fact sheets for Alabama\u2019s SLCGP application rounds, including service and provider details.",
+    "DrillDownLabel": "Alabama apply portal",
+    "DrillDownURL": "https://slcgp.alabama.gov/apply/",
+    "ProcurementProcess": "Open portal / first-come, first-served. Eligible locals start on the Alabama apply page. If funded, purchases follow grant conditions and local/state procurement rules.",
+    "ProcurementType": "First-come portal"
   },
   {
     "State": "Alaska",
@@ -269,7 +247,11 @@ const data = [
     "Confidence": "Medium",
     "PriorLabel": "Alaska FY2023 SLCGP overview & guidelines",
     "PriorURL": "https://ready.alaska.gov/Documents/Grants/HSGP/2023%20State%20and%20Local%20Cybersecurity%20Grant%20Program%20State%20Overview%20and%20Guidelines%20-%20MASTER.pdf",
-    "PriorNote": "Official prior-round guidance describing project eligibility, application structure, and expected awards workflow."
+    "PriorNote": "Official prior-round guidance describing project eligibility, application structure, and expected awards workflow.",
+    "DrillDownLabel": "Alaska DHS&EM SLCGP page",
+    "DrillDownURL": "https://ready.alaska.gov/Grants/CGP",
+    "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
+    "ProcurementType": "State page / TBD"
   },
   {
     "State": "Arizona",
@@ -284,7 +266,11 @@ const data = [
     "Confidence": "Low",
     "PriorLabel": "Arizona Statewide Cyber Readiness Grant Program",
     "PriorURL": "https://aset.az.gov/programs/cyber-resources-local-and-tribal-governments",
-    "PriorNote": "Arizona\u2019s state-awarded cyber resources page for local and tribal governments; useful when no public subaward list is posted."
+    "PriorNote": "Arizona\u2019s state-awarded cyber resources page for local and tribal governments; useful when no public subaward list is posted.",
+    "DrillDownLabel": "Arizona grant programs page",
+    "DrillDownURL": "https://azdohs.gov/grants",
+    "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
+    "ProcurementType": "State page / TBD"
   },
   {
     "State": "Arkansas",
@@ -299,22 +285,30 @@ const data = [
     "Confidence": "Low",
     "PriorLabel": "Arkansas homeland security grants page",
     "PriorURL": "https://dps.arkansas.gov/emergency-management/adem/grants-funding/homeland-security-grant-program/",
-    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material."
+    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material.",
+    "DrillDownLabel": "Arkansas homeland security grants page",
+    "DrillDownURL": "https://dps.arkansas.gov/emergency-management/adem/grants-funding/homeland-security-grant-program/",
+    "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
+    "ProcurementType": "State page / TBD"
   },
   {
     "State": "California",
     "Region": "West",
     "Status": "Closed",
-    "Start": "2026-01-30",
+    "Start": "2026-01-16",
     "End": "2026-03-13",
-    "SortDate": "2026-01-30",
-    "Description": "Cal OES announced applicants could apply 'now through Friday, March 13, 2026' for cities, counties, tribes, school districts, special districts, and state agencies.",
-    "SourceLabel": "Cal OES January 30, 2026 announcement",
-    "SourceURL": "https://www.news.caloes.ca.gov/california-is-taking-action-to-strengthen-cybersecurity-with-grant-program/",
+    "SortDate": "2026-01-16",
+    "Description": "California posted a formal FFY 2024 Local & Tribal SLCGP RFP with a due date of March 13, 2026.",
+    "SourceLabel": "Cal OES Local & Tribal SLCGP RFP",
+    "SourceURL": "https://www.caloes.ca.gov/grant-announcement/ffy-2024-state-local-cybersecurity-grant-local-tribal-sl-rfp/",
     "Confidence": "High",
     "PriorLabel": "Cal OES SLCGP program page",
     "PriorURL": "https://www.caloes.ca.gov/office-of-the-director/policy-administration/finance-administration/grants-management/homeland-security-emergency-management-programs/state-and-local-cybersecurity-grant-program/",
-    "PriorNote": "Explains that individual projects named in California\u2019s approved Cybersecurity Plan drive disbursement and align later subrecipient applications."
+    "PriorNote": "Explains that individual projects named in California\u2019s approved Cybersecurity Plan drive disbursement and align later subrecipient applications.",
+    "DrillDownLabel": "Cal OES RFP announcement and package",
+    "DrillDownURL": "https://www.caloes.ca.gov/grant-announcement/ffy-2024-state-local-cybersecurity-grant-local-tribal-sl-rfp/",
+    "ProcurementProcess": "Competitive state subrecipient RFP. Locals and tribes respond to the Cal OES RFP/NOI package during the state window. After award, buying follows applicable state/local procurement rules and grant conditions.",
+    "ProcurementType": "RFP"
   },
   {
     "State": "Colorado",
@@ -329,7 +323,11 @@ const data = [
     "Confidence": "Low",
     "PriorLabel": "FEMA State Administrative Agency contacts",
     "PriorURL": "https://www.fema.gov/grants/preparedness/about/state-administrative-agency-contacts",
-    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material."
+    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material.",
+    "DrillDownLabel": "FEMA State Administrative Agency contacts",
+    "DrillDownURL": "https://www.fema.gov/grants/preparedness/about/state-administrative-agency-contacts",
+    "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
+    "ProcurementType": "State page / TBD"
   },
   {
     "State": "Connecticut",
@@ -338,13 +336,17 @@ const data = [
     "Start": "",
     "End": "",
     "SortDate": "2099-12-31",
-    "Description": "Connecticut's latest posted sub-application page showed the second round extended to October 30, 2025. No new dated 2026 local window was publicly posted on the reviewed page as of refresh.",
-    "SourceLabel": "CT SLCGP apply page",
-    "SourceURL": "https://portal.ct.gov/demhs/grants/state-and-local-cybersecurity-grant-program/apply",
+    "Description": "Connecticut's official SLCGP overview says eligible state, tribal, and local entities must complete a sub-application and submit it to DEMHS to be eligible as subrecipients, but no dated 2026 local window was publicly posted on the reviewed page as of refresh.",
+    "SourceLabel": "Connecticut SLCGP overview",
+    "SourceURL": "https://portal.ct.gov/demhs/grants/state-and-local-cybersecurity-grant-program",
     "Confidence": "Medium",
     "PriorLabel": "Connecticut SLCGP guidance & closeout forms",
     "PriorURL": "https://portal.ct.gov/demhs/grants/state-and-local-cybersecurity-grant-program/guidance-and-forms",
-    "PriorNote": "Connecticut\u2019s official forms hub references quarterly reporting and closeout steps for awarded SLCGP projects."
+    "PriorNote": "Connecticut\u2019s official forms hub references quarterly reporting and closeout steps for awarded SLCGP projects.",
+    "DrillDownLabel": "Connecticut SLCGP apply page",
+    "DrillDownURL": "https://portal.ct.gov/demhs/grants/state-and-local-cybersecurity-grant-program/apply",
+    "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
+    "ProcurementType": "State page / TBD"
   },
   {
     "State": "Delaware",
@@ -359,7 +361,11 @@ const data = [
     "Confidence": "Medium",
     "PriorLabel": "Delaware preparedness grants summary",
     "PriorURL": "https://dema.delaware.gov/about/grants/index.shtml?dc=preparednessgrants",
-    "PriorNote": "State summary page reporting that Delaware managed $10.1M in SLCGP funds for state, local, and rural subrecipients."
+    "PriorNote": "State summary page reporting that Delaware managed $10.1M in SLCGP funds for state, local, and rural subrecipients.",
+    "DrillDownLabel": "Delaware SLCGP page",
+    "DrillDownURL": "https://digiknow.dti.delaware.gov/grants/",
+    "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
+    "ProcurementType": "State page / TBD"
   },
   {
     "State": "Florida",
@@ -374,7 +380,11 @@ const data = [
     "Confidence": "Low",
     "PriorLabel": "Florida cybersecurity grants FAQ",
     "PriorURL": "https://cybergrants.fl.gov/faqs.html",
-    "PriorNote": "Official FAQ notes that Year 1 and Year 2 recipients are eligible to apply again and that grant applications and awards are exempt from Florida public-records disclosure."
+    "PriorNote": "Official FAQ notes that Year 1 and Year 2 recipients are eligible to apply again and that grant applications and awards are exempt from Florida public-records disclosure.",
+    "DrillDownLabel": "Florida cyber grants FAQ",
+    "DrillDownURL": "https://cybergrants.fl.gov/faqs.html",
+    "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
+    "ProcurementType": "State page / TBD"
   },
   {
     "State": "Georgia",
@@ -383,13 +393,17 @@ const data = [
     "Start": "2026-04-01",
     "End": "2026-04-29",
     "SortDate": "2026-04-01",
-    "Description": "Georgia is accepting FY2024 SLCGP applications online from April 1 to April 29, 2026. Georgia also announced that its FY2025 SLCGP application period will open September 1, 2026.",
+    "Description": "Georgia's official SLCGP page says applications are accepted online via the Georgia EM Grants Manager beginning April 1, 2026 and are due April 29, 2026; the March 25 release also announced an FY2025 opening on September 1, 2026.",
     "SourceLabel": "Georgia SLCGP program page",
     "SourceURL": "https://gema.georgia.gov/state-and-local-cybersecurity-grant-program",
     "Confidence": "High",
     "PriorLabel": "Georgia awards press release",
     "PriorURL": "https://gema.georgia.gov/press-releases/2026-03-25/nearly-99-million-cybersecurity-grants-awarded-georgia-schools-and",
-    "PriorNote": "Official March 25, 2026 release announcing nearly $9.9M in awards to Georgia schools and local governments."
+    "PriorNote": "Official March 25, 2026 release announcing nearly $9.9M in awards to Georgia schools and local governments.",
+    "DrillDownLabel": "Georgia SLCGP program / EM Grants Manager",
+    "DrillDownURL": "https://gema.georgia.gov/state-and-local-cybersecurity-grant-program",
+    "ProcurementProcess": "Online state subrecipient application through Georgia EM Grants Manager during the posted window. Funded entities then procure under applicable procurement rules and grant terms.",
+    "ProcurementType": "Online application window"
   },
   {
     "State": "Hawaii",
@@ -404,7 +418,11 @@ const data = [
     "Confidence": "Medium",
     "PriorLabel": "Hawai\u2018i statewide cybersecurity strategy",
     "PriorURL": "https://law.hawaii.gov/ohs/wp-content/uploads/sites/2/2024/01/Hawaii-Statewide-Cyber-Strategy-Plan-Final-1.pdf",
-    "PriorNote": "Official statewide cybersecurity strategy and plan prepared under the SLCGP framework."
+    "PriorNote": "Official statewide cybersecurity strategy and plan prepared under the SLCGP framework.",
+    "DrillDownLabel": "Hawaii OHS grants page",
+    "DrillDownURL": "https://law.hawaii.gov/ohs/grants/",
+    "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
+    "ProcurementType": "State page / TBD"
   },
   {
     "State": "Idaho",
@@ -419,7 +437,11 @@ const data = [
     "Confidence": "Medium",
     "PriorLabel": "Idaho SLCGP cybersecurity plan",
     "PriorURL": "https://ioem.idaho.gov/wp-content/uploads/2023/10/Idaho-Cybersecurity-Plan.pdf",
-    "PriorNote": "Official Idaho SLCGP implementation plan covering statewide priorities and future project execution."
+    "PriorNote": "Official Idaho SLCGP implementation plan covering statewide priorities and future project execution.",
+    "DrillDownLabel": "Operation Cyber Idaho",
+    "DrillDownURL": "https://cybersecurity.idaho.gov/operation-cyber-idaho/",
+    "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
+    "ProcurementType": "State page / TBD"
   },
   {
     "State": "Illinois",
@@ -434,7 +456,11 @@ const data = [
     "Confidence": "Medium",
     "PriorLabel": "Illinois SLCGP page",
     "PriorURL": "https://doit.illinois.gov/initiatives/cybersecurity/slcgp.html",
-    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material."
+    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material.",
+    "DrillDownLabel": "Illinois SLCGP page",
+    "DrillDownURL": "https://doit.illinois.gov/initiatives/cybersecurity/slcgp.html",
+    "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
+    "ProcurementType": "State page / TBD"
   },
   {
     "State": "Indiana",
@@ -449,7 +475,11 @@ const data = [
     "Confidence": "Medium",
     "PriorLabel": "Indiana SLCGP committee page",
     "PriorURL": "https://www.in.gov/iot/slcgp-committee/",
-    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material."
+    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material.",
+    "DrillDownLabel": "Indiana SLCGP committee page",
+    "DrillDownURL": "https://www.in.gov/iot/slcgp-committee/",
+    "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
+    "ProcurementType": "State page / TBD"
   },
   {
     "State": "Iowa",
@@ -464,7 +494,11 @@ const data = [
     "Confidence": "Medium",
     "PriorLabel": "Iowa SLCGP page",
     "PriorURL": "https://homelandsecurity.iowa.gov/grants/state-and-local-cybersecurity-grant-program-slcgp",
-    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material."
+    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material.",
+    "DrillDownLabel": "Iowa SLCGP page",
+    "DrillDownURL": "https://homelandsecurity.iowa.gov/grants/state-and-local-cybersecurity-grant-program-slcgp",
+    "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
+    "ProcurementType": "State page / TBD"
   },
   {
     "State": "Kansas",
@@ -479,7 +513,11 @@ const data = [
     "Confidence": "Medium",
     "PriorLabel": "Kansas SLCGP page",
     "PriorURL": "https://www.ebit.ks.gov/divisions/slcgp",
-    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material."
+    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material.",
+    "DrillDownLabel": "Kansas SLCGP page",
+    "DrillDownURL": "https://www.ebit.ks.gov/divisions/slcgp",
+    "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
+    "ProcurementType": "State page / TBD"
   },
   {
     "State": "Kentucky",
@@ -494,7 +532,11 @@ const data = [
     "Confidence": "Low",
     "PriorLabel": "Kentucky cybersecurity grants page",
     "PriorURL": "https://homelandsecurity.ky.gov/Pages/Cybersecurity.aspx",
-    "PriorNote": "Official Kentucky cyber-grants page noting SLCGP support for cybersecurity improvements since 2022."
+    "PriorNote": "Official Kentucky cyber-grants page noting SLCGP support for cybersecurity improvements since 2022.",
+    "DrillDownLabel": "Kentucky Homeland Security grants page",
+    "DrillDownURL": "https://homelandsecurity.ky.gov/Pages/Grants.aspx",
+    "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
+    "ProcurementType": "State page / TBD"
   },
   {
     "State": "Louisiana",
@@ -509,7 +551,11 @@ const data = [
     "Confidence": "High",
     "PriorLabel": "Louisiana GOHSEP cyber funding meeting minutes",
     "PriorURL": "https://gohsep.la.gov/media/3hcjz3sm/gohsep-first-responder-subcommitte-meeting-minutes-june-11-2025.pdf",
-    "PriorNote": "Meeting minutes state that Louisiana used SLCGP funds to support endpoint detection software; useful as public prior-use evidence."
+    "PriorNote": "Meeting minutes state that Louisiana used SLCGP funds to support endpoint detection software; useful as public prior-use evidence.",
+    "DrillDownLabel": "Louisiana SLCGP page / committee materials",
+    "DrillDownURL": "https://wwwcfprd.doa.louisiana.gov/boardsandcommissions/MeetingMinutes/348_Regional%20Directors%20Meeting%20minutes-%20February%202026.pdf",
+    "ProcurementProcess": "State-run application cycle. Applicants respond to Louisiana SLCGP priorities and guidance; funded entities then procure under Louisiana/local procurement rules and reporting requirements.",
+    "ProcurementType": "State application"
   },
   {
     "State": "Maine",
@@ -524,22 +570,30 @@ const data = [
     "Confidence": "Medium",
     "PriorLabel": "Maine SLCGP page",
     "PriorURL": "https://www.maine.gov/mema/grants/state-and-local-cybersecurity-grant-program",
-    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material."
+    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material.",
+    "DrillDownLabel": "Maine SLCGP page",
+    "DrillDownURL": "https://www.maine.gov/mema/grants/state-and-local-cybersecurity-grant-program",
+    "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
+    "ProcurementType": "State page / TBD"
   },
   {
     "State": "Maryland",
     "Region": "Mid-Atlantic",
-    "Status": "Forecasted/TBD",
+    "Status": "Open",
     "Start": "",
     "End": "",
-    "SortDate": "2099-12-31",
-    "Description": "Maryland's cyber preparedness funding page says FY2024 information is 'coming soon' and FY2025 information is 'coming soon.'",
+    "SortDate": "2026-04-09",
+    "Description": "Maryland's cyber preparedness funding page says a second-round application for FY2023 SLCGP funds is now open and accepted on a rolling basis; the same page says FY2024 and FY2025 information is still coming soon.",
     "SourceLabel": "Maryland cyber preparedness funding page",
-    "SourceURL": "https://mdem.maryland.gov/pages/cyber-preparedness-funding.aspx",
+    "SourceURL": "https://mema.maryland.gov/pages/cyber-preparedness-funding.aspx",
     "Confidence": "High",
     "PriorLabel": "Maryland cyber preparedness funding page",
-    "PriorURL": "https://mdem.maryland.gov/pages/cyber-preparedness-funding.aspx",
-    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material."
+    "PriorURL": "https://mema.maryland.gov/pages/cyber-preparedness-funding.aspx",
+    "PriorNote": "Official Maryland funding page with current subgrant materials and prior-round application guidance.",
+    "DrillDownLabel": "Maryland rolling application page",
+    "DrillDownURL": "https://mema.maryland.gov/pages/cyber-preparedness-funding.aspx",
+    "ProcurementProcess": "Rolling state application. Eligible entities download and submit Maryland application materials. Post-award purchases follow state/local procurement rules plus grant reporting requirements.",
+    "ProcurementType": "Rolling application"
   },
   {
     "State": "Massachusetts",
@@ -554,7 +608,11 @@ const data = [
     "Confidence": "Medium",
     "PriorLabel": "Massachusetts SLCGP page",
     "PriorURL": "https://www.mass.gov/info-details/state-and-local-cybersecurity-grant-program",
-    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material."
+    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material.",
+    "DrillDownLabel": "Massachusetts SLCGP page",
+    "DrillDownURL": "https://www.mass.gov/info-details/state-and-local-cybersecurity-grant-program",
+    "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
+    "ProcurementType": "State page / TBD"
   },
   {
     "State": "Michigan",
@@ -569,7 +627,11 @@ const data = [
     "Confidence": "High",
     "PriorLabel": "Michigan SLCGP page",
     "PriorURL": "https://www.michigan.gov/dtmb/services/cybersecurity/cyber-partners/state-and-local-cybersecurity-grant-program",
-    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material."
+    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material.",
+    "DrillDownLabel": "Michigan SLCGP page",
+    "DrillDownURL": "https://www.michigan.gov/dtmb/services/cybersecurity/cyber-partners/state-and-local-cybersecurity-grant-program",
+    "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
+    "ProcurementType": "State page / TBD"
   },
   {
     "State": "Minnesota",
@@ -584,7 +646,11 @@ const data = [
     "Confidence": "Medium",
     "PriorLabel": "Minnesota whole-of-state participant information",
     "PriorURL": "https://mn.gov/mnit/about-mnit/security/whole-of-state-cybersecurity-plan/wos/index.jsp",
-    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material."
+    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material.",
+    "DrillDownLabel": "Minnesota whole-of-state participant information",
+    "DrillDownURL": "https://mn.gov/mnit/about-mnit/security/whole-of-state-cybersecurity-plan/wos/index.jsp",
+    "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
+    "ProcurementType": "State page / TBD"
   },
   {
     "State": "Mississippi",
@@ -599,7 +665,11 @@ const data = [
     "Confidence": "High",
     "PriorLabel": "Mississippi SLCGP announcements",
     "PriorURL": "https://www.homelandsecurity.ms.gov/grants/homeland-security-state-and-local-cybersecurity-grant-program-slcgp",
-    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material."
+    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material.",
+    "DrillDownLabel": "Mississippi SLCGP announcements",
+    "DrillDownURL": "https://www.homelandsecurity.ms.gov/grants/homeland-security-state-and-local-cybersecurity-grant-program-slcgp",
+    "ProcurementProcess": "The primary state subrecipient window is closed. Use this official page to monitor the next cycle, RFP/RFA, or grants portal. After award, local procurement typically follows state/local purchasing rules.",
+    "ProcurementType": "RFP"
   },
   {
     "State": "Missouri",
@@ -614,7 +684,11 @@ const data = [
     "Confidence": "Low",
     "PriorLabel": "Missouri grants and training portal",
     "PriorURL": "https://dps.mo.gov/dir/programs/ohs/grantstraining/",
-    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material."
+    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material.",
+    "DrillDownLabel": "Missouri grants and training portal",
+    "DrillDownURL": "https://dps.mo.gov/dir/programs/ohs/grantstraining/",
+    "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
+    "ProcurementType": "State page / TBD"
   },
   {
     "State": "Montana",
@@ -629,7 +703,11 @@ const data = [
     "Confidence": "High",
     "PriorLabel": "Montana SLCGP application info",
     "PriorURL": "https://des.mt.gov/Grant-Programs/SLCGPApplicationInfo",
-    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material."
+    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material.",
+    "DrillDownLabel": "Montana SLCGP application info",
+    "DrillDownURL": "https://des.mt.gov/Grant-Programs/SLCGPApplicationInfo",
+    "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
+    "ProcurementType": "State page / TBD"
   },
   {
     "State": "Nebraska",
@@ -644,7 +722,11 @@ const data = [
     "Confidence": "Medium",
     "PriorLabel": "Nebraska SLCGP grant info",
     "PriorURL": "https://slcg.nebraska.gov/grant-info",
-    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material."
+    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material.",
+    "DrillDownLabel": "Nebraska SLCGP grant info",
+    "DrillDownURL": "https://slcg.nebraska.gov/grant-info",
+    "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
+    "ProcurementType": "State page / TBD"
   },
   {
     "State": "Nevada",
@@ -659,7 +741,11 @@ const data = [
     "Confidence": "Medium",
     "PriorLabel": "Nevada grants portfolio",
     "PriorURL": "https://www.oem.nv.gov/agency-portfolio-sections-programs/grants-portfolio/",
-    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material."
+    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material.",
+    "DrillDownLabel": "Nevada grants portfolio",
+    "DrillDownURL": "https://www.oem.nv.gov/agency-portfolio-sections-programs/grants-portfolio/",
+    "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
+    "ProcurementType": "State page / TBD"
   },
   {
     "State": "New Hampshire",
@@ -668,28 +754,36 @@ const data = [
     "Start": "",
     "End": "",
     "SortDate": "2099-12-31",
-    "Description": "New Hampshire's SLCGP page is live, but no dated 2026 local/subrecipient window was publicly posted in the currently retrievable official content as of refresh.",
+    "Description": "New Hampshire's SLCGP page is live, but the surfaced page notes that documents created before April 24, 2026 are for reference or record-keeping only. No new dated 2026 local application window was surfaced during this refresh.",
     "SourceLabel": "New Hampshire SLCGP page",
     "SourceURL": "https://www.doit.nh.gov/state-and-local-cybersecurity-grant-program",
-    "Confidence": "Low",
+    "Confidence": "Medium",
     "PriorLabel": "New Hampshire SLCGP page",
     "PriorURL": "https://www.doit.nh.gov/state-and-local-cybersecurity-grant-program",
-    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material."
+    "PriorNote": "Official NH page surfaced in search; detailed page fetch was restricted, but the page is the current state landing point for SLCGP materials.",
+    "DrillDownLabel": "New Hampshire SLCGP page",
+    "DrillDownURL": "https://www.doit.nh.gov/state-and-local-cybersecurity-grant-program",
+    "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
+    "ProcurementType": "State page / TBD"
   },
   {
     "State": "New Jersey",
     "Region": "Northeast",
-    "Status": "Forecasted/TBD",
+    "Status": "Closed",
     "Start": "",
     "End": "",
-    "SortDate": "2099-12-31",
-    "Description": "New Jersey's NJCCIC SLCGP resources are live, but no new dated 2026 local/subrecipient window was publicly posted on the reviewed state pages as of refresh.",
+    "SortDate": "2026-04-10",
+    "Description": "New Jersey's NJCCIC SLCGP page says the application window for SLCGP 2025 is closed.",
     "SourceLabel": "New Jersey SLCGP page",
     "SourceURL": "https://www.cyber.nj.gov/grants-and-resources/grants/state-and-local-cybersecurity-grant-program-slcgp",
-    "Confidence": "Medium",
+    "Confidence": "High",
     "PriorLabel": "New Jersey SLCGP page",
     "PriorURL": "https://www.cyber.nj.gov/grants-and-resources/grants/state-and-local-cybersecurity-grant-program-slcgp",
-    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material."
+    "PriorNote": "Official NJCCIC grants page indicating the current SLCGP 2025 application window is closed.",
+    "DrillDownLabel": "New Jersey SLCGP page",
+    "DrillDownURL": "https://www.cyber.nj.gov/grants-and-resources/grants/state-and-local-cybersecurity-grant-program-slcgp",
+    "ProcurementProcess": "State-run SLCGP application window is currently closed. Use the NJCCIC grants page to monitor the next cycle and subrecipient instructions.",
+    "ProcurementType": "State application"
   },
   {
     "State": "New Mexico",
@@ -697,44 +791,56 @@ const data = [
     "Status": "Open",
     "Start": "",
     "End": "",
-    "SortDate": "2026-04-06",
+    "SortDate": "2026-04-07",
     "Description": "New Mexico says its Cybersecurity Planning Committee is accepting participation interest and request forms now for prospective SLCGP-funded services covering State Fiscal Year 2027 (July 1, 2026 to June 30, 2027).",
     "SourceLabel": "New Mexico SLCGP page",
     "SourceURL": "https://www.doit.nm.gov/programs/cybersecurity/state-and-local-cybersecurity-grant-program-slcgp/",
     "Confidence": "High",
     "PriorLabel": "New Mexico SLCGP page",
     "PriorURL": "https://www.doit.nm.gov/programs/cybersecurity/state-and-local-cybersecurity-grant-program-slcgp/",
-    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material."
+    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material.",
+    "DrillDownLabel": "New Mexico request / participation forms page",
+    "DrillDownURL": "https://www.doit.nm.gov/programs/cybersecurity/state-and-local-cybersecurity-grant-program-slcgp/",
+    "ProcurementProcess": "Current process is participation/request forms for SLCGP-funded shared services. Procurement may be state-managed for service offerings, with local participation routed through the program office.",
+    "ProcurementType": "Participation/request forms"
   },
   {
     "State": "New York",
     "Region": "Northeast",
-    "Status": "Forecasted/TBD",
+    "Status": "Closed",
     "Start": "",
-    "End": "",
-    "SortDate": "2099-12-31",
-    "Description": "New York notes the combined FY2022/FY2023 SLCGP application period closed November 19, 2025; no new dated 2026 local window was publicly posted on the reviewed page as of refresh.",
+    "End": "2025-11-19",
+    "SortDate": "2025-11-19",
+    "Description": "New York says the application period for the combined FY2022 and FY2023 State and Local Cybersecurity Grant Program closed on November 19, 2025. The state uses shared services and directs applicants to a Request for Applications for eligibility and process details.",
     "SourceLabel": "New York federal programs page",
     "SourceURL": "https://www.dhses.ny.gov/federal-programs",
-    "Confidence": "Medium",
+    "Confidence": "High",
     "PriorLabel": "New York federal programs page",
     "PriorURL": "https://www.dhses.ny.gov/federal-programs",
-    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material."
+    "PriorNote": "Official DHSES page describing the shared-services model and the closed November 19, 2025 application period.",
+    "DrillDownLabel": "New York federal programs page",
+    "DrillDownURL": "https://www.dhses.ny.gov/federal-programs",
+    "ProcurementProcess": "New York uses a state-run Request for Applications tied to cybersecurity shared services rather than simple direct cash awards. The current combined FY2022/FY2023 application period is closed.",
+    "ProcurementType": "RFA"
   },
   {
     "State": "North Carolina",
     "Region": "Southeast",
-    "Status": "Forecasted/TBD",
-    "Start": "",
-    "End": "",
-    "SortDate": "2099-12-31",
-    "Description": "North Carolina's latest posted FY2025 SLCGP window ran November 1 to November 30, 2025; awards were projected for spring 2026 or later, but no new dated 2026 window was posted on the reviewed page as of refresh.",
+    "Status": "Closed",
+    "Start": "2025-11-01",
+    "End": "2025-11-30",
+    "SortDate": "2025-11-01",
+    "Description": "North Carolina's FY2025 SLCGP application period ran November 1 to November 30, 2025 through the state's Salesforce grants portal, with subrecipient awards estimated for spring 2026 or later.",
     "SourceLabel": "North Carolina SLCGP page",
     "SourceURL": "https://www.ncdps.gov/SLCGP",
-    "Confidence": "Medium",
+    "Confidence": "High",
     "PriorLabel": "North Carolina SLCGP page",
     "PriorURL": "https://www.ncdps.gov/SLCGP",
-    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material."
+    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material.",
+    "DrillDownLabel": "North Carolina SLCGP Q&A / procurement guidance",
+    "DrillDownURL": "https://www.ncdps.gov/our-organization/emergency-management/emergency-management-grants/state-and-local-cybersecurity-grant-program/state-and-local-cybersecurity-grant-program-qa",
+    "ProcurementProcess": "Competitive state subrecipient application submitted through North Carolina's Salesforce grants portal during the posted window. NC also publishes procurement Q&A, including when local entities may use state contract vehicles instead of issuing a separate formal RFP.",
+    "ProcurementType": "Online application window"
   },
   {
     "State": "North Dakota",
@@ -749,7 +855,11 @@ const data = [
     "Confidence": "Low",
     "PriorLabel": "North Dakota emergency services news page",
     "PriorURL": "https://www.des.nd.gov/news/nddes-issues-notice-intent-noi-apply-fy-2025-state-homeland-security-grant-program",
-    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material."
+    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material.",
+    "DrillDownLabel": "North Dakota emergency services news page",
+    "DrillDownURL": "https://www.des.nd.gov/news/nddes-issues-notice-intent-noi-apply-fy-2025-state-homeland-security-grant-program",
+    "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
+    "ProcurementType": "State page / TBD"
   },
   {
     "State": "Ohio",
@@ -764,22 +874,30 @@ const data = [
     "Confidence": "High",
     "PriorLabel": "Ohio Round 3 SLCGP guidance",
     "PriorURL": "https://dam.assets.ohio.gov/image/upload/cyber.ohio.gov/Round_3_SLCGP_Grant_Application_Guidance.gov_Migration-Final.pdf",
-    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material."
+    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material.",
+    "DrillDownLabel": "Ohio Round 3 SLCGP guidance",
+    "DrillDownURL": "https://dam.assets.ohio.gov/image/upload/cyber.ohio.gov/Round_3_SLCGP_Grant_Application_Guidance.gov_Migration-Final.pdf",
+    "ProcurementProcess": "The primary state subrecipient window is closed. Use this official page to monitor the next cycle, RFP/RFA, or grants portal. After award, local procurement typically follows state/local purchasing rules.",
+    "ProcurementType": "RFP"
   },
   {
     "State": "Oklahoma",
     "Region": "West",
-    "Status": "Forecasted/TBD",
+    "Status": "Open",
     "Start": "",
-    "End": "",
-    "SortDate": "2099-12-31",
-    "Description": "Oklahoma's cybersecurity page states that the subrecipient application deadline had not been established on the reviewed page; no dated 2026 local window was publicly posted as of refresh.",
-    "SourceLabel": "Oklahoma cybersecurity page",
-    "SourceURL": "https://oklahoma.gov/homeland-security/cyber-security.html",
+    "End": "2026-04-30",
+    "SortDate": "2026-04-30",
+    "Description": "Oklahoma's grants page says the State and Local Cybersecurity Grant Program is now accepting new applications, with 2026 deadlines of January 30, April 30, July 31, and October 30. The same page notes funding is not currently accessible and additional funding is expected later in the year.",
+    "SourceLabel": "Oklahoma grants page",
+    "SourceURL": "https://oklahoma.gov/homeland-security/grants.html",
     "Confidence": "Medium",
-    "PriorLabel": "Oklahoma cybersecurity page",
-    "PriorURL": "https://oklahoma.gov/homeland-security/cyber-security.html",
-    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material."
+    "PriorLabel": "Oklahoma grants page",
+    "PriorURL": "https://oklahoma.gov/homeland-security/grants.html",
+    "PriorNote": "Official Oklahoma grants page with current SLCGP application materials, deadlines, and procurement guidance links.",
+    "DrillDownLabel": "Oklahoma grants page / SLCGP application materials",
+    "DrillDownURL": "https://oklahoma.gov/homeland-security/grants.html",
+    "ProcurementProcess": "Recurring state application process with multiple 2026 deadlines. Applicants review the one-page announcement, tie projects to the State Cyber Plan, and submit applications to hsgrants@okohs.ok.gov.",
+    "ProcurementType": "Quarterly rolling application"
   },
   {
     "State": "Oregon",
@@ -788,13 +906,17 @@ const data = [
     "Start": "",
     "End": "2026-06-30",
     "SortDate": "2026-06-30",
-    "Description": "Oregon's Round 3 notice lists quarterly submission dates of December 31, 2025; March 31, 2026; June 30, 2026; and September 30, 2026. As of refresh, the next listed deadline is June 30, 2026.",
-    "SourceLabel": "Oregon SLCGP page",
-    "SourceURL": "https://www.oregon.gov/oem/emresources/grants/pages/state-and-local-cybersecurity-grant-program.aspx",
+    "Description": "Oregon Round 3 instructions say the program is collecting applications throughout the year until funds are awarded, with review once every quarter; the next listed 2026 quarter-end deadline is June 30, 2026.",
+    "SourceLabel": "Oregon Round 3 application instructions",
+    "SourceURL": "https://www.oregon.gov/oem/Documents/2025-SLCGP-Application-Instructions_Round-3.pdf",
     "Confidence": "High",
-    "PriorLabel": "Oregon SLCGP page",
-    "PriorURL": "https://www.oregon.gov/oem/emresources/grants/pages/state-and-local-cybersecurity-grant-program.aspx",
-    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material."
+    "PriorLabel": "Oregon Round 3 program guidance",
+    "PriorURL": "https://www.oregon.gov/oem/Documents/2025-SLCGP-Program-Guidance_Round-3.pdf",
+    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material.",
+    "DrillDownLabel": "Oregon Round 3 application instructions",
+    "DrillDownURL": "https://www.oregon.gov/oem/Documents/2025-SLCGP-Application-Instructions_Round-3.pdf",
+    "ProcurementProcess": "Quarterly competitive application. Applicants email the package to OEM; review occurs once each quarter. Awards are reimbursement-based, with quarterly reporting and reimbursement requests.",
+    "ProcurementType": "Quarterly rolling application"
   },
   {
     "State": "Pennsylvania",
@@ -803,13 +925,17 @@ const data = [
     "Start": "",
     "End": "",
     "SortDate": "2099-12-31",
-    "Description": "Pennsylvania's cyber grant page says more information to apply for 2025 funding will be provided later; no dated 2026 local window was publicly posted on the reviewed page as of refresh.",
+    "Description": "Pennsylvania's cybersecurity grant page says local governments will be able to apply to the Commonwealth to participate in committee-identified cybersecurity projects, but additional information to apply for 2025 funding will be provided later and no dated 2026 local window was publicly posted on the reviewed page as of refresh.",
     "SourceLabel": "Pennsylvania cyber grant page",
     "SourceURL": "https://www.pa.gov/services/pema/cybersecurity-grant",
     "Confidence": "High",
     "PriorLabel": "Pennsylvania cyber grant page",
     "PriorURL": "https://www.pa.gov/services/pema/cybersecurity-grant",
-    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material."
+    "PriorNote": "Official Commonwealth page describing the offered services and stating that more application information will be provided later.",
+    "DrillDownLabel": "Pennsylvania cyber grant page",
+    "DrillDownURL": "https://www.pa.gov/services/pema/cybersecurity-grant",
+    "ProcurementProcess": "Pennsylvania is using a committee-identified service/project model. Local governments cannot apply directly to the federal government and must wait for Commonwealth-issued application instructions when a state cycle opens.",
+    "ProcurementType": "State page / TBD"
   },
   {
     "State": "Rhode Island",
@@ -824,7 +950,11 @@ const data = [
     "Confidence": "Low",
     "PriorLabel": "RIEMA non-disaster grants page",
     "PriorURL": "https://riema.ri.gov/fiscal-branch/non-disaster-grants",
-    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material."
+    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material.",
+    "DrillDownLabel": "RIEMA non-disaster grants page",
+    "DrillDownURL": "https://riema.ri.gov/fiscal-branch/non-disaster-grants",
+    "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
+    "ProcurementType": "State page / TBD"
   },
   {
     "State": "South Carolina",
@@ -833,13 +963,17 @@ const data = [
     "Start": "",
     "End": "2026-05-15",
     "SortDate": "2026-05-15",
-    "Description": "South Carolina's 2024 SLCGP application proposal worksheet requires proposals to be submitted not later than May 15, 2026.",
-    "SourceLabel": "South Carolina SLCGP proposal worksheet",
-    "SourceURL": "https://www.sled.sc.gov/sites/sled/files/forms/homeland/Grants/2024%20SLCGP%20Application%20Proposal%20Worksheet.pdf",
+    "Description": "South Carolina's SAA page says the 2024 SLCGP application process started March 20, 2026 with solicitation emails, and applicants must submit the application by May 15, 2026, close of business.",
+    "SourceLabel": "South Carolina SAA homeland security page",
+    "SourceURL": "https://www.sled.sc.gov/departments/state-administrative-agency-saa-homeland-security",
     "Confidence": "High",
-    "PriorLabel": "South Carolina SLCGP proposal worksheet",
-    "PriorURL": "https://www.sled.sc.gov/sites/sled/files/forms/homeland/Grants/2024%20SLCGP%20Application%20Proposal%20Worksheet.pdf",
-    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material."
+    "PriorLabel": "South Carolina SAA homeland security page",
+    "PriorURL": "https://www.sled.sc.gov/departments/state-administrative-agency-saa-homeland-security",
+    "PriorNote": "Official SAA page describing the current application process and linking to the proposal worksheet.",
+    "DrillDownLabel": "South Carolina SLCGP application worksheet",
+    "DrillDownURL": "https://www.sled.sc.gov/sites/sled/files/forms/homeland/Grants/2024%20SLCGP%20Application%20Proposal%20Worksheet.pdf",
+    "ProcurementProcess": "State proposal application distributed through SLED/SAA, with solicitation emails beginning March 20, 2026 and proposals due May 15, 2026. After award, local procurement follows South Carolina/local rules and any state instructions in the award package.",
+    "ProcurementType": "Proposal application"
   },
   {
     "State": "South Dakota",
@@ -854,7 +988,11 @@ const data = [
     "Confidence": "Low",
     "PriorLabel": "South Dakota homeland security grants page",
     "PriorURL": "https://www.sd.gov/cs?id=kb_article_view&sysparm_article=KB0043443",
-    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material."
+    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material.",
+    "DrillDownLabel": "South Dakota homeland security grants page",
+    "DrillDownURL": "https://www.sd.gov/cs?id=kb_article_view&sysparm_article=KB0043443",
+    "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
+    "ProcurementType": "State page / TBD"
   },
   {
     "State": "Tennessee",
@@ -869,7 +1007,11 @@ const data = [
     "Confidence": "Low",
     "PriorLabel": "Tennessee SLCGP reporting form hub",
     "PriorURL": "https://www.tn.gov/content/dam/tn/cybersecurity/slcgp/State%20and%20Local%20Cybersecurity%20Grant%20Program%20Reporting%20Form.docx",
-    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material."
+    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material.",
+    "DrillDownLabel": "Tennessee SLCGP reporting form hub",
+    "DrillDownURL": "https://www.tn.gov/content/dam/tn/cybersecurity/slcgp/State%20and%20Local%20Cybersecurity%20Grant%20Program%20Reporting%20Form.docx",
+    "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
+    "ProcurementType": "State page / TBD"
   },
   {
     "State": "Texas",
@@ -878,13 +1020,17 @@ const data = [
     "Start": "2025-12-15",
     "End": "2026-02-12",
     "SortDate": "2025-12-15",
-    "Description": "Texas states the year 3 RFA opened December 15, 2025 and closed February 12, 2026.",
+    "Description": "Texas states its year 3 Request for Applications opened December 15, 2025 and closed February 12, 2026.",
     "SourceLabel": "Texas SLCGP page",
     "SourceURL": "https://dir.texas.gov/information-security/state-and-local-cybersecurity-grant-program-slcgp",
     "Confidence": "High",
     "PriorLabel": "Texas SLCGP page",
     "PriorURL": "https://dir.texas.gov/information-security/state-and-local-cybersecurity-grant-program-slcgp",
-    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material."
+    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material.",
+    "DrillDownLabel": "Texas DIR SLCGP RFA page",
+    "DrillDownURL": "https://dir.texas.gov/information-security/state-and-local-cybersecurity-grant-program-slcgp",
+    "ProcurementProcess": "Objective-based state RFA. Eligible applicants respond to the Texas DIR solicitation. After award, procurement follows Texas/local purchasing rules and grant conditions.",
+    "ProcurementType": "RFA"
   },
   {
     "State": "Utah",
@@ -899,7 +1045,11 @@ const data = [
     "Confidence": "Low",
     "PriorLabel": "Utah legislative cybersecurity support document",
     "PriorURL": "https://le.utah.gov/interim/2026/pdf/00000702.pdf",
-    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material."
+    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material.",
+    "DrillDownLabel": "Utah legislative cybersecurity support document",
+    "DrillDownURL": "https://le.utah.gov/interim/2026/pdf/00000702.pdf",
+    "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
+    "ProcurementType": "State page / TBD"
   },
   {
     "State": "Vermont",
@@ -914,7 +1064,11 @@ const data = [
     "Confidence": "Medium",
     "PriorLabel": "Vermont Cybersecurity Advisory Council 2026 report",
     "PriorURL": "https://legislature.vermont.gov/assets/Legislative-Reports/Cybersecurity-Advisory-Council-Annual-Report-2026.pdf",
-    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material."
+    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material.",
+    "DrillDownLabel": "Vermont Cybersecurity Advisory Council 2026 report",
+    "DrillDownURL": "https://legislature.vermont.gov/assets/Legislative-Reports/Cybersecurity-Advisory-Council-Annual-Report-2026.pdf",
+    "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
+    "ProcurementType": "State page / TBD"
   },
   {
     "State": "Virginia",
@@ -923,13 +1077,17 @@ const data = [
     "Start": "",
     "End": "",
     "SortDate": "2099-12-31",
-    "Description": "Virginia's cybersecurity grants FAQ states the application window is now closed and directs users to the VDEM listserv for future notifications. No dated 2026 local window was posted on the reviewed page.",
+    "Description": "Virginia's cybersecurity grants FAQ says the application window is now closed and directs users to the VDEM listserv for future notifications.",
     "SourceLabel": "Virginia cybersecurity grants page",
     "SourceURL": "https://www.vita.virginia.gov/security/cybersecurity-grants/",
-    "Confidence": "Medium",
+    "Confidence": "High",
     "PriorLabel": "Virginia cybersecurity grants page",
     "PriorURL": "https://www.vita.virginia.gov/security/cybersecurity-grants/",
-    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material."
+    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material.",
+    "DrillDownLabel": "Virginia cybersecurity grants FAQ / listserv page",
+    "DrillDownURL": "https://www.vita.virginia.gov/security/cybersecurity-grants/",
+    "ProcurementProcess": "State application window is currently closed. Use the Virginia page and listserv to catch the next subrecipient cycle; funded entities then procure under Virginia/local rules and grant terms.",
+    "ProcurementType": "Online application window"
   },
   {
     "State": "Washington",
@@ -938,13 +1096,17 @@ const data = [
     "Start": "2026-04-25",
     "End": "2026-06-10",
     "SortDate": "2026-04-25",
-    "Description": "Washington's WaTech page said the application would be available in late April 2026 with a tentative deadline in early June 2026 and scoring anticipated in August 2026.",
+    "Description": "Washington's WaTech page says the current expected timeline for the last SLCGP round is a late April 2026 application release and an early June 2026 tentative application deadline.",
     "SourceLabel": "Washington WaTech SLCGP page",
     "SourceURL": "https://watech.wa.gov/state-local-cybersecurity-grant-program",
-    "Confidence": "Medium",
+    "Confidence": "High",
     "PriorLabel": "Washington WaTech SLCGP page",
     "PriorURL": "https://watech.wa.gov/state-local-cybersecurity-grant-program",
-    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material."
+    "PriorNote": "Official WaTech page noting more than $6.2M has already been allocated from FY22 and FY23 awards and outlining the expected final round timeline.",
+    "DrillDownLabel": "Washington WaTech SLCGP page",
+    "DrillDownURL": "https://watech.wa.gov/state-local-cybersecurity-grant-program",
+    "ProcurementProcess": "Washington is signaling another state-led solicitation round, with the application expected in late April 2026 and a tentative early June 2026 deadline. Use the WaTech page and preparedness.grants@mil.wa.gov to track release details.",
+    "ProcurementType": "State application"
   },
   {
     "State": "West Virginia",
@@ -953,13 +1115,17 @@ const data = [
     "Start": "",
     "End": "",
     "SortDate": "2099-12-31",
-    "Description": "West Virginia's grants/news pages encourage eligible entities to apply and provide program contacts, but no clearly posted dated 2026 local/subrecipient window was surfaced in current official-page review.",
-    "SourceLabel": "West Virginia local governments cyber grants news",
-    "SourceURL": "https://emd.wv.gov/About/News/Pages/LocalGovsCyberGrants.aspx",
+    "Description": "West Virginia's current cybersecurity grant funding page urges eligible agencies to apply and provides program contacts, but no clearly dated 2026 application window or direct state application materials were posted on the reviewed page.",
+    "SourceLabel": "West Virginia cybersecurity grant funding page",
+    "SourceURL": "https://emd.wv.gov/cybersecurity-grant-funding",
     "Confidence": "Low",
-    "PriorLabel": "West Virginia local governments cyber grants news",
-    "PriorURL": "https://emd.wv.gov/About/News/Pages/LocalGovsCyberGrants.aspx",
-    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material."
+    "PriorLabel": "West Virginia cybersecurity grant funding page",
+    "PriorURL": "https://emd.wv.gov/cybersecurity-grant-funding",
+    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material.",
+    "DrillDownLabel": "West Virginia cybersecurity grant funding page",
+    "DrillDownURL": "https://emd.wv.gov/cybersecurity-grant-funding",
+    "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
+    "ProcurementType": "State page / TBD"
   },
   {
     "State": "Wisconsin",
@@ -974,7 +1140,11 @@ const data = [
     "Confidence": "High",
     "PriorLabel": "Wisconsin cybersecurity grants page",
     "PriorURL": "https://det.wi.gov/Pages/Cybersecurity_Grants.aspx",
-    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material."
+    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material.",
+    "DrillDownLabel": "Wisconsin cybersecurity grants page",
+    "DrillDownURL": "https://det.wi.gov/Pages/Cybersecurity_Grants.aspx",
+    "ProcurementProcess": "The primary state subrecipient window is closed. Use this official page to monitor the next cycle, RFP/RFA, or grants portal. After award, local procurement typically follows state/local purchasing rules.",
+    "ProcurementType": "RFP"
   },
   {
     "State": "Wyoming",
@@ -989,154 +1159,129 @@ const data = [
     "Confidence": "Low",
     "PriorLabel": "Wyoming grants page",
     "PriorURL": "https://hls.wyo.gov/grants",
-    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material."
+    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material.",
+    "DrillDownLabel": "Wyoming grants page",
+    "DrillDownURL": "https://hls.wyo.gov/grants",
+    "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
+    "ProcurementType": "State page / TBD"
   }
 ];
+const regionOrder = ["Mid-Atlantic", "Northeast", "Southeast", "West"];
+const statusOrder = {"Open": 0, "Closed": 1, "Forecasted/TBD": 2};
+const confidenceOrder = {"High": 0, "Medium": 1, "Low": 2};
+const procurementOrder = ["RFP", "RFA", "Quarterly rolling application", "Rolling application", "First-come portal", "Online application window", "Proposal application", "Participation/request forms", "State application", "State page / TBD"];
+let sortState = { key: 'SortDate', dir: 'asc', type: 'date' };
 
-const tbody = document.getElementById('tbody');
-const table = document.getElementById('dataTable');
 const searchEl = document.getElementById('search');
 const regionFilter = document.getElementById('regionFilter');
 const stateFilter = document.getElementById('stateFilter');
 const statusFilter = document.getElementById('statusFilter');
-const headerCells = Array.from(table.querySelectorAll('thead th.sortable'));
-const statusOrder = { Open: 0, Closed: 1, 'Forecasted/TBD': 2 };
-const confidenceOrder = { High: 0, Medium: 1, Low: 2 };
-let sortState = { key: 'SortDate', dir: 'asc', type: 'date' };
+const procTypeFilter = document.getElementById('procTypeFilter');
+const table = document.getElementById('dataTable');
+const tbody = document.getElementById('tbody');
+const headerCells = Array.from(document.querySelectorAll('thead th'));
 
-function fmtDate(val) {
-  if (!val) return '—';
-  if (/^\d{4}-\d{2}-\d{2}$/.test(val)) {
-    const [y,m,d] = val.split('-').map(Number);
-    const dt = new Date(y, m - 1, d);
-    return dt.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
-  }
-  return val;
+function populateSelect(el, values, placeholder) {
+  el.innerHTML = `<option value="">${placeholder}</option>` + values.map(v => `<option value="${escapeHtml(v)}">${escapeHtml(v)}</option>`).join('');
 }
 
-function badgeClass(status) {
-  if (status === 'Open') return 'badge open';
-  if (status === 'Closed') return 'badge closed';
-  return 'badge forecast';
-}
-
-function statusRowClass(status) {
-  if (status === 'Open') return 'status-open';
-  if (status === 'Closed') return 'status-closed';
-  return 'status-forecast';
-}
-
-function regionClass(region) {
-  return String(region || '').toLowerCase().replace(/[^a-z]+/g, '-').replace(/^-|-$/g, '');
-}
-
-function confidenceClass(value) {
-  return 'confidence ' + String(value || '').toLowerCase();
-}
-
-function escapeHtml(str) {
-  return String(str ?? '')
-    .replaceAll('&', '&amp;')
-    .replaceAll('<', '&lt;')
-    .replaceAll('>', '&gt;')
-    .replaceAll('"', '&quot;')
-    .replaceAll("'", '&#39;');
-}
-
-function populateSelect(selectEl, values, placeholder) {
-  const current = selectEl.value;
-  selectEl.innerHTML = `<option value="">${placeholder}</option>` +
-    values.map(v => `<option value="${escapeHtml(v)}">${escapeHtml(v)}</option>`).join('');
-  if ([...selectEl.options].some(o => o.value === current)) selectEl.value = current;
-}
-
-function getDateSortValue(row, key) {
-  const raw = row[key];
-  if (!raw) return '9999-12-31';
-  return raw;
+function normalize(value) {
+  return (value ?? '').toString().trim().toLowerCase();
 }
 
 function compareRows(a, b) {
-  const { key, dir, type } = sortState;
-  let av;
-  let bv;
+  const key = sortState.key;
+  const dir = sortState.dir === 'asc' ? 1 : -1;
+  const type = sortState.type;
+  let av = a[key] ?? '';
+  let bv = b[key] ?? '';
 
-  if (key === 'SortDate') {
-    av = a.SortDate || '9999-12-31';
-    bv = b.SortDate || '9999-12-31';
-  } else if (type === 'date') {
-    av = getDateSortValue(a, key);
-    bv = getDateSortValue(b, key);
+  if (type === 'date') {
+    av = Date.parse(av || '2099-12-31');
+    bv = Date.parse(bv || '2099-12-31');
   } else if (type === 'status') {
-    av = statusOrder[a[key]] ?? 99;
-    bv = statusOrder[b[key]] ?? 99;
+    av = statusOrder[a.Status] ?? 99;
+    bv = statusOrder[b.Status] ?? 99;
   } else if (type === 'confidence') {
-    av = confidenceOrder[a[key]] ?? 99;
-    bv = confidenceOrder[b[key]] ?? 99;
+    av = confidenceOrder[a.Confidence] ?? 99;
+    bv = confidenceOrder[b.Confidence] ?? 99;
   } else {
-    av = String(a[key] ?? '').toLowerCase();
-    bv = String(b[key] ?? '').toLowerCase();
+    av = normalize(av);
+    bv = normalize(bv);
   }
 
-  let result;
-  if (typeof av === 'number' && typeof bv === 'number') {
-    result = av - bv;
-  } else {
-    result = av.localeCompare(bv);
-  }
+  if (av < bv) return -1 * dir;
+  if (av > bv) return 1 * dir;
+  return normalize(a.State).localeCompare(normalize(b.State));
+}
 
-  if (result === 0) result = a.State.localeCompare(b.State);
-  return dir === 'asc' ? result : -result;
+function escapeHtml(value) {
+  return String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function fmtDate(value) {
+  if (!value) return '';
+  const parts = value.split('-');
+  if (parts.length !== 3) return value;
+  const d = new Date(value + 'T00:00:00');
+  return d.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
+}
+
+function cssKey(value) {
+  return normalize(value).replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+}
+
+function regionClass(region) {
+  const map = {'Mid-Atlantic':'mid','Northeast':'ne','Southeast':'se','West':'west'};
+  return map[region] || 'ne';
 }
 
 function updateSortIndicators() {
   headerCells.forEach(th => {
-    const isActive = th.dataset.key === sortState.key;
-    th.classList.toggle('active-sort', isActive);
-    const indicator = th.querySelector('.sort-indicator');
-    indicator.textContent = isActive ? (sortState.dir === 'asc' ? '▲' : '▼') : '↕';
-    th.setAttribute('aria-sort', isActive ? (sortState.dir === 'asc' ? 'ascending' : 'descending') : 'none');
+    const ind = th.querySelector('.sort-indicator');
+    ind.textContent = th.dataset.key === sortState.key ? (sortState.dir === 'asc' ? '▲' : '▼') : '';
   });
 }
 
 function render() {
-  const q = searchEl.value.trim().toLowerCase();
+  const q = normalize(searchEl.value);
   const regionVal = regionFilter.value;
   const stateVal = stateFilter.value;
   const statusVal = statusFilter.value;
+  const procVal = procTypeFilter.value;
 
   let filtered = data.filter(row => {
-    const hay = [
-      row.State, row.Region, row.Status, row.Description, row.SourceLabel, row.PriorLabel, row.PriorNote, row.Confidence
-    ].join(' ').toLowerCase();
-
-    const searchMatch = !q || hay.includes(q);
-    const regionMatch = !regionVal || row.Region === regionVal;
-    const stateMatch = !stateVal || row.State === stateVal;
-    const statusMatch = !statusVal || row.Status === statusVal;
-    return searchMatch && regionMatch && stateMatch && statusMatch;
+    const hay = [row.State, row.Region, row.Status, row.ProcurementType, row.Description, row.SourceLabel, row.PriorLabel, row.PriorNote, row.Confidence].join(' ').toLowerCase();
+    return (!q || hay.includes(q))
+      && (!regionVal || row.Region === regionVal)
+      && (!stateVal || row.State === stateVal)
+      && (!statusVal || row.Status === statusVal)
+      && (!procVal || row.ProcurementType === procVal);
   });
 
   filtered.sort(compareRows);
 
   tbody.innerHTML = filtered.map(row => `
-    <tr class="${statusRowClass(row.Status)}">
+    <tr class="row-${cssKey(row.Status)}">
       <td>
         <div class="state">${escapeHtml(row.State)}</div>
-        <div class="region ${regionClass(row.Region)}">${escapeHtml(row.Region)}</div>
+        <span class="region-chip ${regionClass(row.Region)}">${escapeHtml(row.Region)}</span>
       </td>
-      <td><span class="${badgeClass(row.Status)}">${escapeHtml(row.Status)}</span></td>
-      <td>${fmtDate(row.Start)}</td>
-      <td>${fmtDate(row.End)}</td>
+      <td><span class="status-chip status-${cssKey(row.Status)}">${escapeHtml(row.Status)}</span></td>
+      <td>${escapeHtml(fmtDate(row.Start))}</td>
+      <td>${escapeHtml(fmtDate(row.End))}</td>
+      <td><span class="ptype-chip ptype-${cssKey(row.ProcurementType)}">${escapeHtml(row.ProcurementType)}</span></td>
       <td>${escapeHtml(row.Description)}</td>
-      <td>
-        <a href="${escapeHtml(row.SourceURL)}" target="_blank" rel="noopener noreferrer">${escapeHtml(row.SourceLabel)}</a>
-      </td>
-      <td>
-        <a href="${escapeHtml(row.PriorURL)}" target="_blank" rel="noopener noreferrer">${escapeHtml(row.PriorLabel)}</a>
-        <div class="small-note">${escapeHtml(row.PriorNote)}</div>
-      </td>
-      <td><span class="${confidenceClass(row.Confidence)}">${escapeHtml(row.Confidence)}</span></td>
+      <td><a href="${escapeHtml(row.SourceURL)}" target="_blank" rel="noopener noreferrer">${escapeHtml(row.SourceLabel)}</a></td>
+      <td><a href="${escapeHtml(row.DrillDownURL)}" target="_blank" rel="noopener noreferrer">${escapeHtml(row.DrillDownLabel)}</a></td>
+      <td><div class="proc-note">${escapeHtml(row.ProcurementProcess)}</div></td>
+      <td><a href="${escapeHtml(row.PriorURL)}" target="_blank" rel="noopener noreferrer">${escapeHtml(row.PriorLabel)}</a><div class="small-note">${escapeHtml(row.PriorNote)}</div></td>
+      <td><span class="conf-chip conf-${cssKey(row.Confidence)}">${escapeHtml(row.Confidence)}</span></td>
     </tr>
   `).join('');
 
@@ -1146,7 +1291,6 @@ function render() {
   document.getElementById('forecastCount').textContent = filtered.filter(r => r.Status === 'Forecasted/TBD').length;
   document.getElementById('highCount').textContent = filtered.filter(r => r.Confidence === 'High').length;
   document.getElementById('priorCount').textContent = filtered.filter(r => !!r.PriorURL).length;
-
   updateSortIndicators();
 }
 
@@ -1167,24 +1311,23 @@ function setupSorting() {
 }
 
 function setupResizableColumns() {
-  const cols = Array.from(table.querySelectorAll('colgroup col'));
+  const cols = Array.from(document.querySelectorAll('#colgroup col'));
   headerCells.forEach((th, index) => {
     const handle = th.querySelector('.resize-handle');
     if (!handle || !cols[index]) return;
-
     handle.addEventListener('pointerdown', event => {
       event.preventDefault();
       event.stopPropagation();
       const startX = event.clientX;
       const startWidth = cols[index].getBoundingClientRect().width;
+      const totalWidth = table.getBoundingClientRect().width;
       th.classList.add('resizing');
       handle.setPointerCapture(event.pointerId);
 
       const onMove = moveEvent => {
-        const nextWidth = Math.max(90, startWidth + (moveEvent.clientX - startX));
-        cols[index].style.width = `${nextWidth}px`;
+        const nextWidth = Math.max(55, startWidth + (moveEvent.clientX - startX));
+        cols[index].style.width = `${(nextWidth / totalWidth) * 100}%`;
       };
-
       const onUp = upEvent => {
         th.classList.remove('resizing');
         handle.releasePointerCapture(upEvent.pointerId);
@@ -1192,7 +1335,6 @@ function setupResizableColumns() {
         handle.removeEventListener('pointerup', onUp);
         handle.removeEventListener('pointercancel', onUp);
       };
-
       handle.addEventListener('pointermove', onMove);
       handle.addEventListener('pointerup', onUp);
       handle.addEventListener('pointercancel', onUp);
@@ -1200,10 +1342,11 @@ function setupResizableColumns() {
   });
 }
 
-populateSelect(regionFilter, [...new Set(data.map(d => d.Region))].sort(), 'All regions');
+populateSelect(regionFilter, regionOrder, 'All regions');
 populateSelect(stateFilter, [...new Set(data.map(d => d.State))].sort(), 'All states');
+populateSelect(procTypeFilter, procurementOrder.filter(v => data.some(d => d.ProcurementType === v)), 'All types');
 
-[searchEl, regionFilter, stateFilter, statusFilter].forEach(el => {
+[searchEl, regionFilter, stateFilter, statusFilter, procTypeFilter].forEach(el => {
   el.addEventListener('input', render);
   el.addEventListener('change', render);
 });
@@ -1213,6 +1356,7 @@ document.getElementById('resetBtn').addEventListener('click', () => {
   regionFilter.value = '';
   stateFilter.value = '';
   statusFilter.value = '';
+  procTypeFilter.value = '';
   sortState = { key: 'SortDate', dir: 'asc', type: 'date' };
   render();
 });
