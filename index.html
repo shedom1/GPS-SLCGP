@@ -1,1574 +1,417 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>SLCGP 2026 State Windows, Procurement, Prior Awards, and FY/Match Tracker</title>
-<style>
-  :root {
-    --bg: #f2f6fb;
-    --card: #ffffff;
-    --ink: #172335;
-    --muted: #5c6a80;
-    --line: #d8e2ef;
-    --blue: #2563eb;
-    --blue-soft: #eaf1ff;
-    --green: #15803d;
-    --green-soft: #eaf8ef;
-    --amber: #a16207;
-    --amber-soft: #fff4d8;
-    --red: #b42318;
-    --red-soft: #fdecec;
-    --purple: #6d28d9;
-    --purple-soft: #f3ebff;
-    --teal: #0f766e;
-    --teal-soft: #e7f8f6;
-    --shadow: 0 10px 24px rgba(18,33,53,0.08);
-    --radius: 16px;
-  }
-  * { box-sizing: border-box; }
-  body {
-    margin: 0;
-    font-family: Inter, Arial, Helvetica, sans-serif;
-    background: linear-gradient(180deg, #f7fbff 0%, #eef5fd 100%);
-    color: var(--ink);
-  }
-  .wrap {
-    width: min(100vw, 1520px);
-    margin: 0 auto;
-    padding: 18px 12px 40px;
-  }
-  .hero, .toolbar, .table-card, .card { background: var(--card); border: 1px solid var(--line); box-shadow: var(--shadow); }
-  .hero { border-radius: 22px; padding: 18px 18px 14px; margin-bottom: 14px; background: linear-gradient(135deg, #ffffff 0%, #f3f8ff 58%, #eefbf8 100%); }
-  .eyebrow { font-size: 11px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--blue); margin-bottom: 7px; }
-  h1 { margin: 0 0 8px; font-size: 28px; line-height: 1.06; }
-  .sub { color: var(--muted); font-size: 13px; line-height: 1.45; max-width: 1180px; }
-  .meta { display: flex; flex-wrap: wrap; gap: 8px 16px; margin-top: 13px; color: var(--muted); font-size: 12px; }
-  .meta b { color: var(--ink); }
-  .cards { display: grid; grid-template-columns: repeat(6, minmax(0,1fr)); gap: 10px; margin: 14px 0; }
-  .card { border-radius: 15px; padding: 12px 14px; position: relative; overflow: hidden; }
-  .card::before { content:''; position:absolute; left:0; top:0; right:0; height:4px; background:linear-gradient(90deg,var(--blue),#7aaaff); }
-  .card:nth-child(2)::before { background: linear-gradient(90deg, var(--green), #43b26f); }
-  .card:nth-child(3)::before { background: linear-gradient(90deg, var(--red), #de6b61); }
-  .card:nth-child(4)::before { background: linear-gradient(90deg, var(--amber), #d2a100); }
-  .card:nth-child(5)::before { background: linear-gradient(90deg, var(--purple), #9c7bea); }
-  .card:nth-child(6)::before { background: linear-gradient(90deg, var(--teal), #2fb7aa); }
-  .card .label { font-size: 10px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin-bottom: 7px; font-weight: 800; }
-  .card .value { font-size: 22px; font-weight: 800; line-height: 1; }
-  .toolbar { border-radius: var(--radius); padding: 12px; margin-bottom: 14px; }
-  .controls { display: grid; grid-template-columns: 1.25fr .9fr .9fr .85fr .95fr auto auto; gap: 8px; align-items: end; }
-  .field label { display: block; font-size: 10px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin-bottom: 5px; font-weight: 800; }
-  input[type="search"], select { width: 100%; padding: 9px 10px; border-radius: 10px; border: 1px solid var(--line); background: #fff; color: var(--ink); font-size: 12px; min-height: 38px; }
-  .btn { appearance:none; border:1px solid var(--line); background:#fff; color:var(--ink); border-radius:10px; padding:9px 12px; font-size:12px; font-weight:800; cursor:pointer; min-height:38px; }
-  .btn.primary { background: linear-gradient(135deg, #2f7bff 0%, var(--blue) 100%); border-color: var(--blue); color:#fff; }
-  .btn:hover { transform: translateY(-1px); }
-  .note { margin-top: 8px; color: var(--muted); font-size: 11px; line-height: 1.4; }
-  .table-card { border-radius: var(--radius); overflow: hidden; }
-  .table-wrap { width: 100%; overflow-x: auto; }
-  table { width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 11px; }
-  colgroup col:nth-child(1) { width: 8%; }
-  colgroup col:nth-child(2) { width: 6%; }
-  colgroup col:nth-child(3) { width: 5%; }
-  colgroup col:nth-child(4) { width: 6%; }
-  colgroup col:nth-child(5) { width: 12%; }
-  colgroup col:nth-child(6) { width: 8%; }
-  colgroup col:nth-child(7) { width: 14%; }
-  colgroup col:nth-child(8) { width: 8%; }
-  colgroup col:nth-child(9) { width: 9%; }
-  colgroup col:nth-child(10) { width: 11%; }
-  colgroup col:nth-child(11) { width: 9%; }
-  colgroup col:nth-child(12) { width: 4%; }
-  thead th { position: sticky; top: 0; background: #eff5fd; z-index: 2; text-align: left; padding: 8px 8px; border-bottom: 1px solid var(--line); color: #26405f; font-size: 10px; text-transform: uppercase; letter-spacing: .05em; vertical-align: bottom; }
-  tbody td { padding: 8px 8px; border-bottom: 1px solid #e9eef5; vertical-align: top; line-height: 1.35; overflow-wrap: anywhere; word-break: break-word; }
-  tbody tr:hover { background: #f9fbff; }
-  .th-inner { position: relative; padding-right: 12px; }
-  th.sortable { cursor: pointer; user-select: none; }
-  .sort-indicator { margin-left: 5px; font-size: 10px; color: var(--muted); }
-  .resize-handle { position:absolute; top:-6px; right:-4px; width:10px; height:32px; cursor: col-resize; }
-  th.resizing, th.resizing .th-label { color: var(--blue); }
-  .state { font-weight: 800; font-size: 11.2px; margin-bottom: 4px; }
-  .region-chip, .status-chip, .conf-chip, .ptype-chip { display:inline-flex; align-items:center; gap:4px; border-radius:999px; padding:3px 7px; font-size:10px; font-weight:800; line-height:1.1; }
-  .region-chip.mid { background: #eef2ff; color: #4f46e5; }
-  .region-chip.ne { background: #eefaf7; color: #0f766e; }
-  .region-chip.se { background: #fff5ec; color: #b45309; }
-  .region-chip.west { background: #f5f0ff; color: #7c3aed; }
-  .status-open { background: var(--green-soft); color: var(--green); }
-  .status-closed { background: var(--red-soft); color: var(--red); }
-  .status-forecasted-tbd { background: var(--amber-soft); color: var(--amber); }
-  .conf-high { background: var(--green-soft); color: var(--green); }
-  .conf-medium { background: var(--amber-soft); color: var(--amber); }
-  .conf-low { background: var(--red-soft); color: var(--red); }
-  .ptype-rfp { background:#eaf1ff; color:#1d4ed8; }
-  .ptype-rfa { background:#eefbf8; color:#0f766e; }
-  .ptype-quarterly-rolling-application, .ptype-rolling-application { background:#fff7df; color:#9a6700; }
-  .ptype-first-come-portal { background:#eef8e9; color:#15803d; }
-  .ptype-online-application-window, .ptype-state-application, .ptype-proposal-application { background:#f1f4f9; color:#31445e; }
-  .ptype-participation-request-forms { background:#f3ebff; color:#6d28d9; }
-  .ptype-state-page-tbd { background:#fff4d8; color:#a16207; }
-  .row-open td:first-child { box-shadow: inset 4px 0 0 #25a55f; }
-  .row-closed td:first-child { box-shadow: inset 4px 0 0 #d95d55; }
-  .row-forecasted-tbd td:first-child { box-shadow: inset 4px 0 0 #d2a100; }
-  a { color: var(--blue); text-decoration: none; font-weight: 700; }
-  a:hover { text-decoration: underline; }
-  .small-note, .proc-note { margin-top: 5px; color: var(--muted); font-size: 10.5px; line-height: 1.35; }
-  .footer { color: var(--muted); font-size: 10.5px; line-height: 1.45; padding: 10px 12px 14px; }
-  @media (max-width: 1200px) {
-    .cards { grid-template-columns: repeat(3, minmax(0,1fr)); }
-    .controls { grid-template-columns: 1fr 1fr 1fr 1fr; }
-    .controls .btn { width: 100%; }
-  }
-  @media print {
-    body { background: #fff; }
-    .wrap { width: 100%; max-width: none; padding: 0; }
-    .hero, .toolbar, .table-card, .card { box-shadow:none; }
-    .toolbar .btn, .toolbar .note.btn-print-note { display:none; }
-    .cards { gap: 6px; }
-    table { font-size: 9px; }
-    thead th, tbody td { padding: 4px 5px; }
-    .table-wrap { overflow: visible; }
-  }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RHTP State Opportunity Tracker | Interactive Master | April 13, 2026</title>
+  <style>
+    :root{--navy:#12395b;--blue:#1f5f97;--light:#eaf3fb;--ink:#1f2937;--muted:#5b6470;--line:#d8dee6;--green:#0f8b5f;--amber:#b96a00;--red:#c2410c;--gray:#6b7280;--gold:#c68a00;--bg:#f7f9fc}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--ink);background:var(--bg);line-height:1.4}
+    .page{max-width:1380px;margin:24px auto;background:#fff;border:1px solid var(--line);box-shadow:0 10px 30px rgba(18,57,91,.08)}
+    .hero{padding:28px 34px 22px;background:linear-gradient(135deg,var(--navy),var(--blue));color:#fff}
+    .hero h1{margin:0 0 8px;font-size:30px;line-height:1.15}
+    .hero p{margin:0;max-width:980px;font-size:15px;opacity:.96}
+    .hero-links{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+    .hero-links a,.hero-links button{display:inline-block;padding:8px 12px;border:1px solid rgba(255,255,255,.28);border-radius:999px;color:#fff;text-decoration:none;font-size:12px;background:rgba(255,255,255,.08);cursor:pointer}
+    .meta{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;padding:18px 34px;border-bottom:1px solid var(--line);background:#fbfdff;font-size:13px}
+    .meta div{padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:#fff}
+    .section{padding:22px 34px 8px}
+    .section h2{margin:0 0 10px;color:var(--navy);font-size:20px}
+    .section p{margin:0 0 14px;color:var(--muted);font-size:14px}
+    .toolrow,.keyword-panel,.dev-check,.export-note{margin:0 34px 16px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:#fbfdff;color:var(--muted);font-size:12px}
+    .toolrow{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+    .toolrow button{padding:5px 9px;border:1px solid var(--line);border-radius:999px;background:#fff;color:var(--navy);font-size:11px;font-weight:800;cursor:pointer}
+    .toolrow button.is-off{background:#f3f4f6;color:var(--gray);border-color:#d1d5db}
+    .toolrow select,.toolrow input{padding:5px 9px;border:1px solid var(--line);border-radius:999px;background:#fff;color:var(--ink);font-size:11px}
+    .toolrow label{display:flex;align-items:center;gap:8px;font-weight:700;color:var(--navy)}
+    .keyword-panel h3{margin:0 0 8px;color:var(--navy);font-size:16px}
+    .keyword-panel p{margin:0 0 10px}
+    .keyword-chips{display:flex;flex-wrap:wrap;gap:8px}
+    .keyword-chip{display:inline-flex;align-items:center;padding:6px 10px;border-radius:999px;font-size:11px;font-weight:700;letter-spacing:.2px;border:1px solid transparent;white-space:nowrap}
+    .kw-proc,.keyword-chip.kw-proc{background:#e8f0ff;color:#1d4ed8;border-color:#bfd3ff}
+    .kw-fund,.keyword-chip.kw-fund{background:#e8fbef;color:#0f8b5f;border-color:#bfe8cc}
+    .kw-intent,.keyword-chip.kw-intent{background:#fff4e5;color:#b96a00;border-color:#f0d3a2}
+    .kw-event,.keyword-chip.kw-event{background:#f4eaff;color:#7c3aed;border-color:#dcc7ff}
+    .kw-award,.keyword-chip.kw-award{background:#fdecec;color:#c2410c;border-color:#f3c8bc}
+    table{width:calc(100% - 68px);margin:0 34px 28px;border-collapse:collapse;font-size:12.5px;table-layout:fixed}
+    thead th{background:var(--light);color:var(--navy);text-align:left;border:1px solid var(--line);padding:11px 10px;vertical-align:top;position:relative}
+    tbody td{border:1px solid var(--line);padding:10px;vertical-align:top}
+    tbody tr:nth-child(even){background:#fcfdff}
+    .sortable{cursor:pointer;user-select:none;padding-right:22px!important}
+    .sortable::after{content:attr(data-indicator);position:absolute;right:8px;top:11px;font-size:11px;color:var(--blue)}
+    .status{display:inline-block;padding:4px 8px;border-radius:999px;font-size:10.5px;font-weight:800;letter-spacing:.25px;text-transform:uppercase;white-space:nowrap}
+    .active{background:#e7f7ef;color:var(--green)}
+    .forecast{background:#fff4e5;color:var(--amber)}
+    .closed{background:#fbe9e7;color:var(--red)}
+    .monitor{background:#eef2f7;color:var(--gray)}
+    a{color:var(--blue);word-break:break-word}
+    .updated-star{color:var(--gold);font-weight:700;margin-left:4px}
+    .hidden-row{display:none!important}
+    .hidden-col{display:none!important}
+    .link-cell a{display:block;margin-bottom:4px;font-weight:700}
+    .resize-handle{position:absolute;top:0;right:0;width:8px;height:100%;cursor:col-resize;user-select:none}
+    .callouts{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;padding:0 34px 28px}
+    .card{border:1px solid var(--line);border-radius:14px;padding:16px;background:#fff}
+    .card h3{margin:0 0 8px;color:var(--navy);font-size:16px}
+    .card p{margin:0;color:var(--muted);font-size:13px}
+    .footer{padding:18px 34px 30px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+    @media print{body{background:#fff}.page{margin:0;border:none;box-shadow:none}.hero-links,.toolrow,.dev-check,.export-note{display:none}a{color:#000;text-decoration:underline}thead{display:table-header-group}tr{page-break-inside:avoid}table{font-size:11px}}
+    @media (max-width:1100px){.meta,.callouts{grid-template-columns:1fr 1fr}}
+    @media (max-width:720px){.meta,.callouts{grid-template-columns:1fr}.hero-links,.toolrow{flex-direction:column;align-items:flex-start}}
+  </style>
 </head>
 <body>
-<div class="wrap">
-  <section class="hero">
-    <div class="eyebrow">GPS Team | SLCGP sales tracker</div>
-    <h1>SLCGP 2026 State Windows, Procurement, Prior Awards, and FY/Match Tracker</h1>
-    <div class="sub">Tracks state-level SLCGP subrecipient windows, likely procurement route, best drill-down source, prior-awards/applicant-data link, and a new FY / match / min-max summary column. Procurement type classifies the front-door access model by state, such as RFP, RFA, rolling application, first-come portal, or state page/TBD.</div>
-    <div class="meta">
-      <div><b>Last Refresh Date:</b> April 13, 2026</div>
-      <div><b>Created by:</b> GPS Team</div>
-      <div><b>States:</b> 50</div>
-      <div><b>Default Sort:</b> Window date ascending</div>
+  <div class="page">
+    <div class="hero">
+      <h1>RHTP State Opportunity Tracker | Grants Program Services</h1>
+      <p>Interactive working master for weekly RHTP refreshes across all 50 states. Built for sales-team tracking of A/V, telehealth, cybersecurity, digital-health, and care-coordination opportunities.</p>
+      <div class="hero-links"><a href="#trackerSection">Opportunity Tracker</a><a href="#eventsSection">Conferences, Events &amp; Webinars</a><a href="#resourcesSection">Official Resources</a><button type="button" onclick="exportPdf()">Export PDF</button></div>
     </div>
-  </section>
+    <div class="meta"><div><strong>Last verified:</strong> April 13, 2026</div><div><strong>States included:</strong> 50</div><div><strong>Master type:</strong> Interactive HTML working file</div><div><strong>Regions used:</strong> Mid-Atlantic, Northeast, Southeast, West</div></div>
+    <div class="export-note">Use <strong>Export PDF</strong> to open the browser print dialog, then choose <strong>Save as PDF</strong>. Browser-generated PDFs usually preserve clickable links.</div>
+    <div class="keyword-panel"><h3>Keyword scan legend</h3><p>These keywords are color-coded in the tracker and event descriptions so new notices are easier to spot quickly, including plural forms like RFPs and Grants.</p><div class="keyword-chips"><span class="keyword-chip kw-proc">RFA</span><span class="keyword-chip kw-proc">RFP</span><span class="keyword-chip kw-proc">RFQ</span><span class="keyword-chip kw-proc">Solicitation</span><span class="keyword-chip kw-proc">GFO</span><span class="keyword-chip kw-fund">NOFO</span><span class="keyword-chip kw-fund">NOFA</span><span class="keyword-chip kw-fund">FOA</span><span class="keyword-chip kw-fund">Grant</span><span class="keyword-chip kw-intent">LOI</span><span class="keyword-chip kw-intent">ROI</span><span class="keyword-chip kw-intent">NOI</span><span class="keyword-chip kw-intent">Letter of Intent</span><span class="keyword-chip kw-intent">Notice of Interest</span><span class="keyword-chip kw-event">Webinar</span><span class="keyword-chip kw-event">Event</span><span class="keyword-chip kw-event">Conference</span><span class="keyword-chip kw-award">Award</span></div></div>
+    <div class="section" id="trackerSection"><h2>How to use this tracker</h2><p>Click the State, Region, or Status column header to sort. “Active” means a live application or package-level RFA/RFP is open now. “Recently closed” means a recent cycle just ended but is still useful for partner mapping. “Forecasted” means an official state source has announced an upcoming window or release period. “Monitor” means the state is strategically relevant, but no public competitive dates were found on official RHTP pages as of the verification date.</p></div>
+    <div class="toolrow" id="stateFilters"><button type="button" onclick="showAllStatuses()">All statuses</button><button id="status-active-btn" type="button" onclick="toggleStatusFilter('active')">Active</button><button id="status-recently-closed-btn" type="button" onclick="toggleStatusFilter('recently closed')">Recently closed</button><button id="status-forecasted-btn" type="button" onclick="toggleStatusFilter('forecasted')">Forecasted</button><button id="status-monitor-btn" type="button" onclick="toggleStatusFilter('monitor')">Monitor</button><button type="button" onclick="showAllRegions()">All regions</button><button id="region-mid-atlantic-btn" type="button" onclick="toggleRegionFilter('Mid-Atlantic')">Mid-Atlantic</button><button id="region-northeast-btn" type="button" onclick="toggleRegionFilter('Northeast')">Northeast</button><button id="region-southeast-btn" type="button" onclick="toggleRegionFilter('Southeast')">Southeast</button><button id="region-west-btn" type="button" onclick="toggleRegionFilter('West')">West</button><button id="toggleLinksBtn" type="button" onclick="toggleLinksCol()">Hide links</button><button id="toggleResourcesBtn" type="button" onclick="toggleResources()">Hide resources</button><button id="toggleEventsBtn" type="button" onclick="toggleEventsList()">Hide events list</button><span id="filterCounts">Visible states: --</span><span id="eventCounts">Visible events: --</span></div>
+    <div class="toolrow"><label>Sales rep email <input id="emailTo" type="email" placeholder="rep@company.com"></label><label>State <select id="stateEmailSelect"><option value="">Select state…</option></select></label><button type="button" onclick="emailSelectedState()">Email selected state</button><button type="button" onclick="emailFilteredReport()">Email filtered report</button><button type="button" onclick="emailFullReport()">Email full report</button></div>
+    <table id="trackerTable"><thead><tr><th id="stateHeader" class="sortable" data-indicator="▲" onclick="sortRows('state')" style="width:9%">State</th><th id="regionHeader" class="sortable" data-indicator="↕" onclick="sortRows('region')" style="width:9%">Region</th><th id="statusHeader" class="sortable" data-indicator="↕" onclick="sortRows('status')" style="width:9%">Status</th><th style="width:16%">Current signal</th><th style="width:12%">Open / posted</th><th style="width:13%">Close / next date</th><th style="width:14%">Solutionz fit</th><th style="width:18%">Links</th></tr></thead><tbody></tbody></table>
+    <div class="section" id="eventsSection"><h2>Conferences, Events &amp; Webinars</h2><p>This section captures public RHTP-related webinars, stakeholder sessions, and event-style notices that help reps engage early.</p></div>
+    <div id="eventsTools" class="toolrow"><button id="togglePastBtn" type="button" onclick="togglePastEvents()">Hide past dates</button><label>Event Type <select id="eventTypeFilter" onchange="setEventTypeFilter(this.value)"><option value="">All event types</option></select></label><span>Click State or Date / Time to sort the event list.</span><span>Past dates are compared against April 13, 2026.</span></div>
+    <table id="eventsTable"><thead><tr><th id="eventStateHeader" class="sortable" data-indicator="↕" onclick="sortEventRows('state')" style="width:10%">State</th><th style="width:10%">Event Type</th><th style="width:15%">Event</th><th id="eventDateHeader" class="sortable" data-indicator="▲" onclick="sortEventRows('date')" style="width:16%">Date / Time</th><th style="width:13%">Place</th><th style="width:13%">Location</th><th style="width:11%">Description</th><th style="width:12%">Link</th></tr></thead><tbody></tbody></table>
+    <div class="section" id="resourcesSection"><h2>Official Resources</h2><p>Include these official resources in weekly RHTP research, partner discovery, and event searches.</p></div>
+    <table id="resourcesTable"><thead><tr><th style="width:28%">Resource</th><th style="width:24%">Coverage</th><th style="width:28%">Why it matters</th><th style="width:20%">Link</th></tr></thead><tbody></tbody></table>
+    <div class="section"><h2>Weekly refresh guidance</h2></div>
+    <div class="callouts"><div class="card"><h3>Working master</h3><p>Use this file for weekly research refreshes, sorting, filters, and event tracking. Publish a separate static SharePoint-safe snapshot after each update cycle.</p></div><div class="card"><h3>Search notes</h3><p>This rebuild focuses on stability first so the tables always render.</p></div><div class="card"><h3>Events &amp; webinars</h3><p>Review this section weekly for official state webinars, TRC events, and early-engagement sessions that help sales reps engage before procurements open.</p></div><div class="card"><h3>Sales message</h3><p>Lead with telehealth environments, secure connectivity, interoperability, provider collaboration spaces, RPM-ready workflows, digital access points, and cybersecurity lifecycle support.</p></div></div>
+    <div id="devCheck" class="dev-check"><strong>Self-check:</strong> running…</div>
+    <div class="footer">Produced by the Grant Program Services (GPS) Team. Contact <a href="mailto:solutionzgps@solutionzinc.com">solutionzgps@solutionzinc.com</a> for grant support.</div>
+  </div>
+  <script>
+    const TODAY = new Date('2026-04-13T00:00:00');
+    const stateData = [
+      {state:'Alabama',region:'Southeast',status:'monitor',updated:true,signal:'Official ARHTP page is live and Alabama received first-year funding, but no public RFA, RFP, NOFO, or GFO is posted yet.',open:'ARHTP page active; first advisory meeting Feb. 4, 2026',close:'TBD by state',fit:'Telehealth, teleconsulting, remote monitoring, rural specialty access, EMS, and infrastructure modernization.',links:[['Alabama ARHTP page','https://adeca.alabama.gov/alruralhealth/']]},
+      {state:'Alaska',region:'West',status:'recently closed',updated:false,signal:'First LOI registration period completed; future rounds expected.',open:'Feb. 17, 2026',close:'Mar. 11, 2026',fit:'Telehealth, RPM, digital access tools, remote-care infrastructure, provider connectivity.',links:[['Alaska RHTP page','https://health.alaska.gov/en/education/rural-health-transformation-program/']]},
+      {state:'Arizona',region:'West',status:'monitor',updated:true,signal:'Official AHCCCS RHTP page is live and says Arizona is investing federal funding, but no public RFA, RFP, or GFO is posted yet.',open:'Program runs Dec. 2025-Oct. 2030',close:'TBD by state',fit:'Telehealth hubs, mobile and satellite care, workforce growth, digital modernization, and rural provider support.',links:[['Arizona RHTP page','https://www.azahcccs.gov/AHCCCS/Initiatives/RHTP/']]},
+      {state:'Arkansas',region:'Southeast',status:'monitor',updated:true,signal:'Official application and FY26 award are posted, but no public RFA, RFP, NOFO, or GFO is live yet.',open:'Application and proposal portal posted in late 2025',close:'TBD by state',fit:'Telehealth, digital access, rural care redesign, provider collaboration, and cybersecurity positioning.',links:[['Arkansas RHTP application page','https://governor.arkansas.gov/arkansas-rural-health-transformation-program-application/']]},
+      {state:'California',region:'West',status:'monitor',updated:true,signal:'Program page is live; Spring 2026 webinar registration is posted, but no public competitive dates were posted on the official page.',open:'Program active',close:'Spring 2026 webinar: Apr. 21, 2026',fit:'Telehealth, rural tech modernization, interoperability, digital workflows, care-network buildout.',links:[['California RHTP page','https://hcai.ca.gov/workforce/health-workforce/california-state-office-of-rural-health/']]},
+      {state:'Colorado',region:'West',status:'monitor',updated:true,signal:'Official program page is live and shows a first-year award, but no public RFA, RFP, or GFO is posted yet.',open:'Program page active',close:'TBD by state',fit:'Behavioral health integration, rural access, hospital sustainability, and workforce support.',links:[['Colorado RHTP page','https://hcpf.colorado.gov/rural-health-transformation-program']]},
+      {state:'Connecticut',region:'Northeast',status:'monitor',updated:true,signal:'Official DSS program page is live and a first-year award was announced, but no public solicitation is posted yet.',open:'Award announced Mar. 5, 2026',close:'TBD by state',fit:'Workforce gaps, innovative care delivery, sustainable rural access points, and provider support.',links:[['Connecticut RHTP page','https://portal.ct.gov/dss/rural-health-transformation-program']]},
+      {state:'Delaware',region:'Northeast',status:'active',updated:false,signal:'Initial RFPs opened statewide and Delaware continues routing opportunity access through its program and state procurement channels.',open:'Feb. 9, 2026',close:'Package-specific; example live package due Apr. 29, 2026',fit:'Telehealth, RPM, health IT infrastructure, rural access points, workflow modernization.',links:[['Delaware RHTP page','https://dhss.delaware.gov/dph/rural-health-transformation-program/'],['Delaware procurement portal','https://mmp.delaware.gov/Bids/'],['Delaware launch announcement','https://news.delaware.gov/2026/02/09/state-of-delaware-opens-initial-rfps-to-transform-rural-health-care/']]},
+      {state:'Florida',region:'Southeast',status:'forecasted',updated:true,signal:'Official AHCA page lists vendor RFQs and applicant RFAs as coming soon.',open:'Feb. 18, 2026 webinar and FAQ posted',close:'RFA timing described as early 2026; vendor and applicant postings coming soon',fit:'Behavioral-health telehealth, tele-specialties, tele-ICU, telestroke, remote patient telemonitoring, diagnostic technology support, and HIE onboarding.',links:[['Florida RHTP page','https://ahca.myflorida.com/rural-health-transformation-program']]},
+      {state:'Georgia',region:'Southeast',status:'monitor',updated:true,signal:'Official GREAT Health page includes the amended budget and a January 15 information session, but no public RFA, RFP, or GFO is live yet.',open:'Value-Based Care Model information session Jan. 15, 2026',close:'TBD by state',fit:'Cybersecurity services, telehealth integration, EHR enhancement, rural technology investment fund, and rural value-based-care support.',links:[['Georgia GREAT Health page','https://dch.georgia.gov/great-health-program-georgias-rural-health-transformation-program']]},
+      {state:'Hawaii',region:'West',status:'monitor',updated:true,signal:'Official Hawaii plan page is live and shows a first-year award, but no public solicitation is posted yet.',open:'Award announced Dec. 29, 2025',close:'TBD by state',fit:'Neighbor-island access, care modernization, workforce support, and rural infrastructure.',links:[['Hawaii RHTP page','https://engage.hawaii.gov/rhtp/']]},
+      {state:'Idaho',region:'West',status:'forecasted',updated:false,signal:'Official milestone schedule says RFPs and competitive subgrants begin in Q2.',open:'April–June 2026',close:'Contracts/subgrants Jul.–Sep. 2026',fit:'Telehealth equipment, EHR upgrades, cybersecurity modernization, emergency communications, analytics.',links:[['Idaho RHTP page','https://healthandwelfare.idaho.gov/providers/rural-health-transformation-program-grant/about-rural-health-transformation-program-grant']]},
+      {state:'Illinois',region:'Northeast',status:'monitor',updated:true,signal:'Official HFS RHTP page is live with application materials and award information, but no public solicitation is posted yet.',open:'Award announced Dec. 31, 2025',close:'TBD by state',fit:'Rural infrastructure, provider stability, access expansion, and technology-enabled care.',links:[['Illinois RHTP page','https://hfs.illinois.gov/info/fedresctr/ruralhealthtp.html']]},
+      {state:'Indiana',region:'Northeast',status:'active',updated:true,signal:'GROW Regional Grants are live with a published request for funding and regional application timeline.',open:'Applications opened Mar. 2026',close:'LOIs due May 15, 2026; applications due Jul. 1, 2026',fit:'Teleconsult systems, telehealth infrastructure, secure provider workflows, regional digital-care buildouts.',links:[['Indiana regional grants','https://www.in.gov/grow-rural-health/regional-grants/'],['Indiana request for funding','https://www.in.gov/grow-rural-health/files/Request-for-Funding-Growing-Rural-Opportunities-for-Well-being-GROW-Regional-Grants-Program.pdf'],['Indiana procurement portal','https://www.in.gov/idoa/procurement/']]},
+      {state:'Iowa',region:'Northeast',status:'recently closed',updated:true,signal:'IowaGrants remains the primary path for CMS-RHT-26-001 opportunities, but the example live package tracked in this row closed on April 9, 2026.',open:'Example package issued Feb. 27, 2026',close:'Example package closed Apr. 9, 2026 at noon; monitor IowaGrants for additional CMS-RHT-26-001 packages',fit:'Medical equipment, telehealth, HIE, mobile care, maternal transport tech, hub-and-spoke support.',links:[['IowaGrants portal','https://www.iowagrants.gov/'],['Tracked Iowa RFP page','https://www.iowagrants.gov/viewStorefrontOpportunity.do?OIDString=1771951881019%7COpportunity']]},
+      {state:'Kansas',region:'Northeast',status:'recently closed',updated:true,signal:'KDHE’s first two posted grant opportunities have now passed their initial deadlines, but the program page remains the best launch point for upcoming cycles and follow-on activity.',open:'Feb. 24, 2026 announcement',close:'RPGP closed Apr. 3, 2026; REH/CAP closed Mar. 20, 2026',fit:'RPM, telehealth navigation, data platforms, AI-enabled tools, facility modernization, capital upgrades.',links:[['Kansas RHTP page','https://www.kdhe.ks.gov/2361/Rural-Health-Transformation-Program'],['Kansas grant announcement','https://www.kdhe.ks.gov/m/newsflash/Home/Detail/1870'],['Kansas procurement portal','https://supplier.sok.ks.gov/psc/sokfsprdsup/SUPPLIER/ERP/c/NUI_FRAMEWORK.PT_LANDINGPAGE.GBL?&']]},
+      {state:'Kentucky',region:'Mid-Atlantic',status:'monitor',updated:true,signal:'Team Kentucky plan page is live with hub-and-spoke initiatives, telehealth-enabled maternity and crisis care, but no public solicitation is posted yet.',open:'Plan page active',close:'TBD by state',fit:'Digital self-management tools, telehealth-enabled teams, crisis care, and rural dental access.',links:[['Kentucky RHTP page','https://ruralhealthplan.ky.gov/Pages/index.aspx']]},
+      {state:'Louisiana',region:'Southeast',status:'monitor',updated:true,signal:'Official RHTP timeline shows CMS Year 1 funding in January 2026 and projected state notification of funding opportunities in January 2026, but no current public RFA or NOFO is posted on the main state page.',open:'CMS distribution of Year 1 funding: January 2026',close:'Funding opportunity timing delayed / TBD on current public page',fit:'Telehealth, workforce technology, emergency systems integration, rural hospital stabilization, and digital-health infrastructure.',links:[['Louisiana RHTP page','https://ldh.la.gov/page/rural-health-transformation-program']]},
+      {state:'Maine',region:'Northeast',status:'forecasted',updated:true,signal:'Official Maine pages and webinars said the anticipated timeline for funding opportunities and next steps for provider participation would be discussed.',open:'Informational webinars Mar. 26 and Mar. 31, 2026',close:'Funding opportunity timeline discussed; dates TBD',fit:'Technology and data integration, workforce support, provider participation, and statewide rural system upgrades.',links:[['Maine RHTP page','https://www.maine.gov/dhhs/ruralhealth']]},
+      {state:'Maryland',region:'Mid-Atlantic',status:'monitor',updated:true,signal:'Official Maryland RHTP page is live and shows a first-year award, but no public solicitation is posted yet.',open:'Page updated Feb. 13, 2026',close:'TBD by state',fit:'Rural workforce, sustainable access, innovative care models, and food-as-health initiatives.',links:[['Maryland RHTP page','https://health.maryland.gov/pophealth/Pages/Rural-Health-Transformation-Program.aspx']]},
+      {state:'Massachusetts',region:'Northeast',status:'monitor',updated:true,signal:'Official Massachusetts RHTP pages are live and the state announced a first-year award, but no public solicitation is posted yet.',open:'Award announced Jan. 2, 2026',close:'TBD by state',fit:'Access expansion, rural system strengthening, technology, and sustainability planning.',links:[['Massachusetts RHTP page','https://www.mass.gov/rural-health-transformation-program']]},
+      {state:'Michigan',region:'Northeast',status:'monitor',updated:true,signal:'Official MDHHS RHTP page is live and the state sought advisory council members in January, but no public solicitation is posted yet.',open:'Advisory council recruitment Jan. 13, 2026',close:'TBD by state',fit:'Rural provider sustainability, growth support, service access, and long-term transformation.',links:[['Michigan RHTP page','https://www.michigan.gov/mdhhs/assistance-programs/medicaid/rural-health-transformation-program']]},
+      {state:'Minnesota',region:'Northeast',status:'active',updated:true,signal:'Multiple NOFOs are live for provider entities and MDH also posted a Health Information Technology Advisory Services RFP.',open:'Program grants opened Mar. 18, 2026; HIT RFP posted Mar. 2026',close:'HIT RFP responses due Apr. 20, 2026; other grant deadlines run from late Apr. to mid-May 2026',fit:'Remote monitoring, telehealth-enabled rural care, infrastructure, provider collaboration, digital access.',links:[['Minnesota RHTP funding page','https://www.health.state.mn.us/facilities/ruralhealth/ruraltrans/grants.html'],['Minnesota HIT advisory RFP','https://www.health.state.mn.us/facilities/ruralhealth/ruraltrans/docs/hitrfp.pdf'],['Minnesota supplier portal','https://guest.supplier.systems.state.mn.us/psc/fmssupap/SUPPLIER/ERP/c/NUI_FRAMEWORK.PT_LANDINGPAGE.GBL?&']]},
+      {state:'Mississippi',region:'Southeast',status:'monitor',updated:true,signal:'Official Medicaid pages show a 2025 consultant RFQ and stakeholder forum process, but no fresh 2026 public RFA, RFP, NOFO, or GFO was found.',open:'Consultant quotes posted Jul. 29, 2025',close:'Consultant quote deadline was Aug. 4, 2025; no new 2026 public funding notice found',fit:'Telehealth, rural care planning, secure collaboration, and future infrastructure modernization positioning.',links:[['Mississippi RHTP page','https://medicaid.ms.gov/rural-health-transformation-program/']]},
+      {state:'Missouri',region:'Northeast',status:'monitor',updated:true,signal:'Official DSS RHTP page is live with program overview content, but no public solicitation is posted yet.',open:'Program page active',close:'TBD by state',fit:'Rural healthcare system redesign, community partnerships, workforce support, and sustainability.',links:[['Missouri RHTP page','https://mydss.mo.gov/mhd/rural-health']]},
+      {state:'Montana',region:'West',status:'active',updated:true,signal:'Montana now has live RHTP Requests for Proposals posted and says additional funding opportunities will be issued over the coming months.',open:'RFPs posted Apr. 2026; vendor fair held Mar. 11, 2026',close:'See individual RFPs on the Montana RHTP RFPs page',fit:'Telemedicine, EHR modernization, EMS tech, dashboards, transport coordination, shared-service infrastructure.',links:[['Montana RHTP RFPs','https://dphhs.mt.gov/RuralHealthTransformationProgram/RHTP-RFPs'],['Montana RHTP page','https://dphhs.mt.gov/RuralHealthTransformationProgram/'],['Montana procurement portal','https://spb.mt.gov/eMACS-Resources']]},
+      {state:'Nebraska',region:'Northeast',status:'active',updated:true,signal:'Nebraska still has multiple active RHTP RFAs, including healthcare-associated infection prevention and remote patient monitoring, while earlier April opportunities have moved to closed or under review.',open:'RFAs released Mar.–Apr. 2026',close:'Active examples: RPM due Apr. 24, 2026; HAI Prevention due May 8, 2026',fit:'eHealth and mobile care, technology catalyst fund, RPM, mobile units, EHR coordination, clinical tech.',links:[['Nebraska grant opportunities','https://dhhs.ne.gov/Pages/Grant-Opportunities.aspx'],['Nebraska RHTP page','https://dhhs.ne.gov/Pages/Rural-Health-Transformation.aspx'],['Nebraska RPM RFA','https://dhhs.ne.gov/Grants%20and%20Contract%20Opportunity%20Docs/RHTP%20Initiative%204.4b%20RFA.pdf']]},
+      {state:'Nevada',region:'West',status:'active',updated:true,signal:'Nevada now has multiple live RHT funding opportunities, including the Rural Health System Flex Fund and Rural Tribal Health Transformation funding.',open:'Mar. 23, 2026 and Apr. 2, 2026',close:'Flex Fund Round 1 due Apr. 30, 2026; Tribal funding Round 1 due May 29, 2026',fit:'Capital equipment, rural infrastructure modernization, telehealth room buildouts, secure clinical environments.',links:[['Nevada Flex Fund RFA','https://www.medicaid.nv.gov/Downloads/provider/web_announcement_3873_20260323.pdf'],['Nevada Tribal funding RFA','https://www.medicaid.nv.gov/Downloads/provider/web_announcement_3883_20260402.pdf'],['Nevada announcements','https://www.medicaid.nv.gov/providers/newsannounce/default']]},
+      {state:'New Hampshire',region:'Northeast',status:'forecasted',updated:true,signal:'Official NH DHHS RHTP page is live and the state is moving forward under GO-NORTH oversight, but no public solicitation is posted yet.',open:'Award announced Dec. 29, 2025; GO-NORTH launched Mar. 2026',close:'TBD by state',fit:'Disease management, behavioral health, prenatal care, new access points, and rural initiative support.',links:[['New Hampshire RHTP page','https://www.dhhs.nh.gov/programs-services/medicaid/rural-health-transformation-program']]},
+      {state:'New Jersey',region:'Northeast',status:'active',updated:true,signal:'New Jersey still shows multiple live Rural Health Transformation opportunities in the state grant directory, including Community Health Workers in Rural New Jersey and Doula Integration in Rural New Jersey.',open:'Grant directory listings active as of Apr. 13, 2026',close:'Community Health Workers due Apr. 15, 2026; Doula Integration due Apr. 27, 2026',fit:'Telehealth, RPM, community health workers, maternal-health coordination, provider training, and workflow modernization.',links:[['New Jersey grant directory','https://healthapps.nj.gov/noticeofgrant/noticegrants.aspx'],['NJ statewide RHT RFA','https://healthapps.nj.gov/noticeofgrant/documents/DOHP26RHT_rfa.pdf'],['NJ rural hospital capacity NOFA','https://healthapps.nj.gov/noticeofgrant/documents/OHCF26RHC.pdf']]},
+      {state:'New Mexico',region:'West',status:'monitor',updated:true,signal:'Official HCA page is live and says Year 1 funding will expand services, stabilize facilities, grow workforce, and introduce technology solutions, but no public solicitation is posted yet.',open:'Award announced Dec. 30, 2025',close:'TBD by state',fit:'Technology-enabled care, coordination tools, clinic stability, and workforce growth.',links:[['New Mexico RHTP page','https://www.hca.nm.gov/rural-health-transformation-program/']]},
+      {state:'New York',region:'Northeast',status:'monitor',updated:true,signal:'Official DOH transformation page is live with coordinated rural health partnership goals, but no public solicitation is posted yet.',open:'First-year funding announced Dec. 30, 2025',close:'TBD by state',fit:'Telehealth, clinical integration, partnership development, and rural care coordination.',links:[['New York RHTP page','https://health.ny.gov/facilities/transforming_rural_healthcare/']]},
+      {state:'North Carolina',region:'Southeast',status:'recently closed',updated:true,signal:'The NC ROOTS Hub Lead RFA closed on April 2, 2026 and North Carolina has moved into review and award planning for the May 1 notification window.',open:'Public launch Feb. 26, 2026',close:'Applications closed Apr. 2, 2026 at 5:00 p.m. EST; review runs Apr. 3-30, 2026',fit:'Regional telehealth and collaboration rooms, hub operations, data interoperability, secure care coordination.',links:[['North Carolina grant opportunities','https://www.ncdhhs.gov/divisions/office-rural-health/rural-health-transformation-program/rural-health-transformation-program-grant-opportunities'],['North Carolina webinar timeline','https://www.ncdhhs.gov/ncrhtp-presentation-feb-26-webinar/download?attachment='],['North Carolina RFA document','https://www.ncdhhs.gov/rfa-2026-nc-rural-organizations-orchestrating-transformation-sustainability/download?attachment=']]},
+      {state:'North Dakota',region:'Northeast',status:'active',updated:true,signal:'North Dakota announced its first RHTP funding opportunity: Rural Workforce Retention grants for critical access hospitals and owned clinics.',open:'Mar. 18, 2026',close:'Apr. 30, 2026 at 5:00 p.m. CT',fit:'Workforce stabilization, rural hospital retention, provider support, and future technology/cyber positioning.',links:[['North Dakota workforce funding','https://www.hhs.nd.gov/rural-health-transformation/funding/workforce'],['North Dakota funding page','https://www.hhs.nd.gov/rural-health-transformation/funding'],['North Dakota procurement portal','https://www.bidnetdirect.com/north-dakota']]},
+      {state:'Ohio',region:'Northeast',status:'active',updated:true,signal:'Official Ohio Department of Health pages include a searchable repository of solicitation invitations and reference documents for the RHTP.',open:'Solicitation repository live Jan. 2026',close:'Package-specific; see solicitation repository',fit:'Provider innovation, infrastructure, prevention, and active bid tracking.',links:[['Ohio solicitation invitations','https://odh.ohio.gov/know-our-programs/rural-health-transformation-program/solicitation-invitations/solicitation-invitations']]},
+      {state:'Oklahoma',region:'West',status:'active',updated:true,signal:'Community-Led Wellness Hubs Microgrants remains live on the official RHTP funding page through the end of April 13, 2026, with webinar materials and FAQs posted.',open:'Mar. 16, 2026',close:'Applications due today, Apr. 13, 2026 at 11:59 p.m. CT',fit:'Telehealth access points, small-capital tech buildouts, AV-enabled rooms, secure connectivity, community hubs.',links:[['Oklahoma RHTP funding page','https://oklahoma.gov/health/rhtp/rhtp-funding.html'],['Oklahoma funding announcement','https://oklahoma.gov/health/news---events/newsroom/2026/oklahoma-rural-health-transformation-program-announces-public-gr.html'],['Oklahoma procurement portal','https://www.ok.gov/dcs/solicit/app/contractSearch.php']]},
+      {state:'Oregon',region:'West',status:'forecasted',updated:true,signal:'Catalyst Awards RFGP timing is public with an early-April target; Oregon webinar materials and prep guidance are posted.',open:'Spring 2026 target: early Apr. 2026',close:'~45-day window; closes early summer 2026',fit:'Telehealth, IT modernization, cybersecurity, AI-enabled health tech, closed-loop referrals, digital access.',links:[['Oregon webinar deck','https://www.oregon.gov/oha/HPA/HP/Documents/2026.03.25%20-%20PDF%20-%20RHTP%20Webinar%20-%20Website%20Version.pdf']]},
+      {state:'Pennsylvania',region:'Northeast',status:'monitor',updated:true,signal:'Official Pennsylvania plan page is live and proposes eight regional Rural Care Collaboratives with telehealth and clinical integration, but no public solicitation is posted yet.',open:'Plan page active',close:'TBD by state',fit:'Regional collaboratives, shared services, telehealth, and clinical integration.',links:[['Pennsylvania RHTP plan','https://www.pa.gov/agencies/dhs/programs-services/healthcare/rural-health/rural-health-transformation-plan']]},
+      {state:'Rhode Island',region:'Northeast',status:'monitor',updated:true,signal:'Official Rhode Island RHTP pages are live and show a five-year federal funding stream, but no public solicitation is posted yet.',open:'Award announced Dec. 30, 2025',close:'TBD by state',fit:'FQHC expansion, hospital-at-home style care, and rural provider support.',links:[['Rhode Island RHTP page','https://eohhs.ri.gov/initiatives/rural-health-transformation-program']]},
+      {state:'South Carolina',region:'Southeast',status:'active',updated:true,signal:'South Carolina posted Year 1 RHTP grant applications and FAQs, including Connections to Care, Leveling Up, Wellness Within Reach, and Shoring Up to Sustainability.',open:'Grant posting Apr. 2, 2026',close:'Questions due Apr. 14, 2026; applications due Jun. 1, 2026; anticipated notice of award Jul. 31, 2026',fit:'Telehealth, RPM, EHR adoption, digital infrastructure, mobile care, capital-first tech and cyber deployments.',links:[['South Carolina grants page','https://www.scdhhs.gov/resources/grants'],['South Carolina Leveling Up RFA','https://www.scdhhs.gov/sites/dhhs/files/%282026-04-02%29%20Leveling%20Up%20SCDHHS-26-002.pdf'],['South Carolina RHTP FAQs','https://www.scdhhs.gov/sites/dhhs/files/%282026-04-02%29%20FAQs%20RHTP%20.pdf']]},
+      {state:'South Dakota',region:'Northeast',status:'active',updated:true,signal:'South Dakota released first- and second-round RFPs for digital health modernization, coordinated delivery of care methods, and project management.',open:'First round Feb. 25, 2026; second round Mar. 3, 2026',close:'Package-specific; see posting board and state RFP resources',fit:'Digital health modernization, coordinated care, workforce development, RPM, and project management support.',links:[['South Dakota RHT project page','https://doh.sd.gov/healthcare-professionals/rural-health/rural-health-transformation-project/'],['South Dakota posting board','https://postingboard.esmsolutions.com/3444a404-3818-494f-84c5-2a850acd7779/events'],['South Dakota RHT FAQs','https://doh.sd.gov/healthcare-professionals/rural-health/rural-health-transformation-project/rht-resources-faqs/']]},
+      {state:'Tennessee',region:'Mid-Atlantic',status:'active',updated:true,signal:'Tennessee continues advancing RHTP implementation and now has an active state procurement RFI for Rural Health Transformation Funding Evaluation Consulting alongside its funding information pages.',open:'RFI posted Apr. 2, 2026; rural funding page active',close:'RFI responses due Apr. 17, 2026',fit:'Health-tech, telehealth expansion, eConsult, HIE/interoperability, cybersecurity, maternal and behavioral virtual care.',links:[['Tennessee funding opportunities','https://www.tn.gov/health/funding-opportunities.html'],['Tennessee RHTP page','https://www.tn.gov/health/rural.html'],['Tennessee procurement RFI','https://www.tn.gov/generalservices/procurement/central-procurement-office--cpo-/supplier-information/request-for-proposals--rfp--opportunities1.html']]},
+      {state:'Texas',region:'West',status:'forecasted',updated:true,signal:'Texas continues to route interested parties to its RFA portal and Rural Texas Strong program materials, but a live named RHTP opportunity was not found in this refresh.',open:'Program page active',close:'Monitor the HHSC RFA portal for postings',fit:'Large-scale rural transformation, workforce, access, and provider modernization opportunities.',links:[['Texas RHTP page','https://pfd.hhs.texas.gov/rural-health-transformation-program'],['Texas RFA portal','https://resources.hhs.texas.gov/rfa'],['Texas fact sheet','https://pfd.hhs.texas.gov/sites/default/files/documents/rural-hlth-prgm/rural-tx-strng-fact-sheet.pdf']]},
+      {state:'Utah',region:'West',status:'forecasted',updated:true,signal:'Utah’s official funding opportunities page now shows May estimated open dates for all listed Year 1 opportunities rather than the earlier early-April estimate.',open:'Estimated open dates now begin May 1–30, 2026, with Behavioral Health–Primary Care Integration listed for May 4, 2026',close:'Additional forecasted opportunities remain scheduled throughout May 2026',fit:'Integrated care workflows, rural clinic modernization, provider collaboration, digital care support, training opportunities.',links:[['Utah funding opportunities','https://dhhs.utah.gov/ruralhealth/funding-opportunities/'],['Utah rural health page','https://dhhs.utah.gov/ruralhealth/'],['Utah procurement portal','https://utah.bonfirehub.com/portal/?tab=openOpportunities']]},
+      {state:'Vermont',region:'Northeast',status:'forecasted',updated:true,signal:'Official federal and legislative materials say subrecipients and awardees will be provided following state procurement processes and later submissions.',open:'Award updates posted Jan.–Mar. 2026',close:'State procurement timing TBD',fit:'Infrastructure, workforce, care model transformation, and later subrecipient opportunities.',links:[['Vermont TAGGS award page','https://taggs.hhs.gov/Detail/AwardDetail?arg_AwardNum=RHTCMS332047&arg_ProgOfficeCode=190']]},
+      {state:'Virginia',region:'Mid-Atlantic',status:'recently closed',updated:true,signal:'Assessment and Technical Assistance RFP completed; next funding RFPs announced.',open:'Feb. 11, 2026',close:'Closed Feb. 25, 2026; CareIQ RFPs anticipated Jul. 2026',fit:'Interoperability, provider productivity, workflow redesign, EHR optimization, cyber readiness, implementation planning.',links:[['Virginia Rural Vitality page','https://www.vhcf.org/rural-health/']]},
+      {state:'Washington',region:'West',status:'forecasted',updated:true,signal:'Official Washington materials show a Q2 2026 competitive bid process and a provider technology fund in the updated budget alignment.',open:'Budget revision posted Feb. 9, 2026',close:'Competitive bid process Q2 2026',fit:'Provider technology fund, rural training, workforce, and competitive bid opportunities.',links:[['Washington RHTP page','https://www.hca.wa.gov/about-hca/programs-and-initiatives/value-based-purchasing/rural-health-transformation-program']]},
+      {state:'West Virginia',region:'Mid-Atlantic',status:'active',updated:true,signal:'West Virginia’s RHTP page now includes a direct grant opportunities link alongside webinar resources and application information.',open:'Program page and grant link active Mar.–Apr. 2026',close:'See WV vendor and subrecipient portal for opportunity-specific deadlines',fit:'Technology investment, access expansion, workforce re-entry support, and community health growth.',links:[['West Virginia RHTP page','https://health.wv.gov/rural-health-transformation-program'],['West Virginia vendor portal','https://prd311.wvoasis.gov/PRDVSS1X1ERP/Advantage4'],['West Virginia RHTP news','https://health.wv.gov/news']]},
+      {state:'Wisconsin',region:'Northeast',status:'forecasted',updated:true,signal:'Wisconsin describes competitive grant funding opportunities and GFO-style implementation planning, but a live named RHTP GFO was not found in this refresh.',open:'Implementation webinar Feb. 5, 2026',close:'Competitive grant timing TBD by state',fit:'Closed-loop referrals, telehealth capabilities, workforce grants, and rural region competitive grants.',links:[['Wisconsin RHTP page','https://www.dhs.wisconsin.gov/business/rhtp.htm'],['Wisconsin solicitations list','https://www.dhs.wisconsin.gov/business/solicitations-list.htm'],['Wisconsin SORH','https://worh.org/']]},
+      {state:'Wyoming',region:'West',status:'monitor',updated:true,signal:'Official Wyoming RHTP page and document library are live, but no public solicitation is posted yet.',open:'Program page active',close:'TBD by state',fit:'Behavioral health, sustaining access to care, workforce development, and IT advances.',links:[['Wyoming RHTP page','https://health.wyo.gov/admin/rural-health-transformation-program/']]}
+    ];
 
-  <section class="cards">
-    <div class="card"><div class="label">Visible states</div><div class="value" id="visibleCount">50</div></div>
-    <div class="card"><div class="label">Open</div><div class="value" id="openCount">0</div></div>
-    <div class="card"><div class="label">Closed</div><div class="value" id="closedCount">0</div></div>
-    <div class="card"><div class="label">Forecasted / TBD</div><div class="value" id="forecastCount">0</div></div>
-    <div class="card"><div class="label">High confidence</div><div class="value" id="highCount">0</div></div>
-    <div class="card"><div class="label">Prior data links</div><div class="value" id="priorCount">0</div></div>
-  </section>
+    const eventData = [
+      {state:'National',type:'Conference',event:'Telehealth Everywhere 2026 Conference',date:'Apr. 7, 2026',time:'9:00 am to 5:00 pm CT',place:'Conference venue',location:'Bloomington, MN',desc:'TRC-listed annual telehealth conference hosted by the Great Plains Telehealth Resource & Assistance Center.',link:'https://telehealthresourcecenter.org/events/',label:'TRC Events page',iso:'2026-04-07'},
+      {state:'National',type:'Webinar',event:'Digital Navigation and TAPs: Tools and Partnerships for Increasing Healthcare Access',date:'Apr. 7, 2026',time:'10:00 am to 11:00 am PT',place:'Online webinar',location:'Virtual, National',desc:'TRC-listed webinar on digital health navigation and partnership tools for increasing access to care.',link:'https://telehealthresourcecenter.org/events/',label:'TRC Events page',iso:'2026-04-07'},
+      {state:'AZ/CO/NV/NM',type:'Webinar',event:'Preparing for your state\'s Rural Health Transformation',date:'Apr. 14, 2026',time:'12:00 pm to 1:00 pm PT',place:'Online webinar',location:'Virtual, Multi-state',desc:'TRC-listed webinar focused on telehealth opportunities and timelines across Arizona, Colorado, Nevada, and New Mexico.',link:'https://telehealthresourcecenter.org/events/',label:'TRC Events page',iso:'2026-04-14'},
+      {state:'National',type:'Conference',event:'SEARCH 2026 – The National Telehealth Research Symposium',date:'Jun. 2–3, 2026',time:'9:00 am to 5:00 pm ET',place:'Conference venue',location:'Chapel Hill, NC',desc:'TRC-listed national symposium on telehealth, connected health, and digital-care research.',link:'https://telehealthresourcecenter.org/events/',label:'TRC Events page',iso:'2026-06-02'},
+      {state:'California',type:'Webinar',event:'CalRHT Spring 2026 Webinar',date:'Apr. 21, 2026',time:'Time not posted',place:'Online webinar',location:'Virtual, CA',desc:'Upcoming California Rural Health Transformation Program webinar and listening session touchpoint.',link:'https://hcai.ca.gov/workforce/health-workforce/california-state-office-of-rural-health/',label:'Register / Source',iso:'2026-04-21'},
+      {state:'Kansas',type:'Webinar',event:'EBP Program Introductory Webinar',date:'Mar. 30, 2026',time:'Recording available',place:'Virtual recording',location:'Virtual, KS',desc:'Official Kansas RHTP webinar materials for the EBP Program with recording, slides, and FAQs.',link:'https://www.kdhe.ks.gov/2361/Rural-Health-Transformation-Program',label:'KDHE RHTP page',iso:'2026-03-30'},
+      {state:'Maine',type:'Webinar',event:'Maine RHTP Informational Webinar',date:'Mar. 26, 2026',time:'3:00 pm to 4:00 pm',place:'Zoom webinar',location:'Virtual, ME',desc:'Official Maine DHHS webinar for clinician and community partners on Year 1 funding and implementation updates.',link:'https://www.maine.gov/dhhs/oms/providers/provider-bulletins/maine-rural-health-transformation-program-rhtp-webinar-2026-03-13',label:'Maine webinar notice',iso:'2026-03-26'},
+      {state:'Maine',type:'Webinar',event:'Maine RHTP Informational Webinar',date:'Mar. 31, 2026',time:'12:00 pm to 1:00 pm',place:'Zoom webinar',location:'Virtual, ME',desc:'Second official Maine DHHS webinar session covering the same Year 1 RHTP update content.',link:'https://www.maine.gov/dhhs/oms/providers/provider-bulletins/maine-rural-health-transformation-program-rhtp-webinar-2026-03-13',label:'Maine webinar notice',iso:'2026-03-31'},
+      {state:'Maryland',type:'Meeting',event:'Maryland Statewide Telehealth Interest Group',date:'Apr. 17, 2026',time:'12:00 pm to 1:00 pm EST',place:'Google Meet',location:'Virtual, MD',desc:'Telehealth interest group meeting posted on the Maryland rural health page under the RHTP announcement area.',link:'https://health.maryland.gov/pophealth/pages/rural-health.aspx',label:'Maryland rural health page',iso:'2026-04-17'},
+      {state:'Montana',type:'Vendor Webinar',event:'RHTP Vendor Webinar',date:'Mar. 11, 2026',time:'10:00 am to 12:00 pm',place:'Online webinar',location:'Virtual, MT',desc:'Vendor-facing session for companies interested in upcoming RHTP RFPs, with recording and presentation links.',link:'https://dphhs.mt.gov/RuralHealthTransformationProgram/InformationforVendors',label:'Montana vendor page',iso:'2026-03-11'},
+      {state:'North Carolina',type:'Information Session',event:'NC ROOTS Hub Information Session',date:'Feb. 26, 2026',time:'Recording available',place:'Recorded virtual session',location:'Virtual, NC',desc:'Official North Carolina ROOTS Hub information session recording posted on the RHTP page.',link:'https://www.ncdhhs.gov/divisions/office-rural-health/rural-health-transformation-program',label:'North Carolina RHTP page',iso:'2026-02-26'},
+      {state:'Oregon',type:'Webinar',event:'Preparing for the RFGP',date:'Mar. 25, 2026',time:'Time not posted in deck',place:'Online webinar',location:'Virtual, OR',desc:'Public webinar materials for Catalyst Awards preparation; deck also notes another dedicated webinar targeted for early April 2026 and a spring webinar series.',link:'https://www.oregon.gov/oha/HPA/HP/Documents/2026.03.25%20-%20PDF%20-%20RHTP%20Webinar%20-%20Website%20Version.pdf',label:'Deck / Source',iso:'2026-03-25'},
+      {state:'South Carolina',type:'Webinar',event:'Stakeholder Webinar on RHTP',date:'Mar. 24, 2026',time:'9:00 am EDT',place:'Webex',location:'Virtual, SC',desc:'Official state webinar explaining first-year grant opportunities, expected outcomes, and application timing.',link:'https://www.scdhhs.gov/communications/stakeholder-meeting-rural-health-transformation-program-0',label:'South Carolina event page',iso:'2026-03-24'},
+      {state:'Tennessee',type:'Informational Session',event:'Statewide Session on RHTP Funding Opportunities',date:'Mar. 31, 2026',time:'10:00 am Central',place:'Online session',location:'Virtual, TN',desc:'Official Tennessee information session and overview on new Rural Health Transformation Program funding opportunities.',link:'https://www.tn.gov/health/news/2026/3/26/tn-rural-health-transformation-program-info-session.html',label:'Tennessee session notice',iso:'2026-03-31'},
+      {state:'Utah',type:'Informational Webinar',event:'Utah RHTP Informational Webinar',date:'Feb. 12, 2026',time:'Recording available',place:'Zoom',location:'Virtual, UT',desc:'Official Utah DHHS informational webinar on program development, award details, and Year 1 funding plan.',link:'https://dhhs.utah.gov/ruralhealth/',label:'Utah rural health page',iso:'2026-02-12'},
+      {state:'Wisconsin',type:'Webinar',event:'Wisconsin RHTP Implementation Webinar',date:'Feb. 5, 2026',time:'Recording available',place:'Recorded webinar',location:'Virtual, WI',desc:'Official Wisconsin DHS recorded webinar on the state’s implementation plans, partnerships, telehealth capabilities, and digital infrastructure.',link:'https://www.dhs.wisconsin.gov/business/rhtp.htm',label:'Wisconsin RHTP page',iso:'2026-02-05'}
+    ];
 
-  <section class="toolbar">
-    <div class="controls">
-      <div class="field">
-        <label for="search">Search</label>
-        <input id="search" type="search" placeholder="Search state, procurement type, source, or description..." />
-      </div>
-      <div class="field">
-        <label for="regionFilter">Region</label>
-        <select id="regionFilter"><option value="">All regions</option></select>
-      </div>
-      <div class="field">
-        <label for="stateFilter">State</label>
-        <select id="stateFilter"><option value="">All states</option></select>
-      </div>
-      <div class="field">
-        <label for="statusFilter">Open status</label>
-        <select id="statusFilter">
-          <option value="">All statuses</option>
-          <option value="Open">Open</option>
-          <option value="Closed">Closed</option>
-          <option value="Forecasted/TBD">Forecasted/TBD</option>
-        </select>
-      </div>
-      <div class="field">
-        <label for="procTypeFilter">Procurement type</label>
-        <select id="procTypeFilter"><option value="">All types</option></select>
-      </div>
-      <button class="btn" id="resetBtn">Reset filters</button>
-      <button class="btn primary" id="pdfBtn">Export to PDF</button>
-    </div>
-    <div class="note btn-print-note">Tip: the PDF button prints the currently filtered and sorted view. Click any header to sort. Drag the right edge of a header to resize a column.</div>
-    <div class="note">Method: official state program pages first; refreshed against current public state pages as of April 13, 2026. Official award notices, guidance packets, prior-round materials, and program pages used when a clean statewide awards list was not published. Forecasted/TBD means no clearly dated 2026 local window was found on the reviewed public source. The FY / match / min-max column uses the reviewed state page where it was explicit; otherwise it falls back to the federal year-based cost-share rules or marks the item as not publicly stated.</div>
-  </section>
+    const resourceData = [
+      {name:'National Consortium of Telehealth Resource Centers (TRCs) – Centers Directory',coverage:'Regional and national telehealth assistance centers covering all states',why:'Use this official directory to identify the correct regional TRC, national policy support, and national technology support for each state.',link:'https://telehealthresourcecenter.org/centers/',label:'TRC Centers directory'},
+      {name:'National Consortium of Telehealth Resource Centers (TRCs) – Events',coverage:'National and multi-state telehealth events and webinar listings',why:'Use this official events page in weekly searches for telehealth conferences, webinars, and early-engagement opportunities relevant to RHTP and digital-health planning.',link:'https://telehealthresourcecenter.org/events/',label:'TRC Events page'},
+      {name:'National Rural Health Association – RHTP',coverage:'National rural health transformation resources and redesign support',why:'Use this page for national framing, policy context, and innovation-system-redesign guidance relevant to rural transformation work.',link:'https://www.ruralhealth.us/programs/center-for-rural-health-innovation-and-system-redesign/rural-health-transformation-program',label:'NRHA RHTP page'},
+      {name:'CMS – Rural Health Transformation Program Overview',coverage:'Federal program overview and official CMS program guidance',why:'Use this official CMS page for core program structure, federal framing, and source validation.',link:'https://www.cms.gov/priorities/rural-health-transformation-rht-program/overview',label:'CMS RHT overview'},
+      {name:'NASHP – RHTP State Focus on Primary Care',coverage:'State policy analysis and primary-care transformation context',why:'Use for comparative state perspective and primary-care positioning around RHTP.',link:'https://nashp.org/rural-health-transformation-program-state-focus-on-primary-care/',label:'NASHP state focus'},
+      {name:'NOSORH – Rural Health Transformation',coverage:'State rural health office perspective and related resources',why:'Use for state-office alignment and rural health office partner context.',link:'https://nosorh.org/rural-health-transformation/',label:'NOSORH RHT page'},
+      {name:'Rural Health Information Hub – RHTP Resources',coverage:'National curated resource list for RHTP',why:'Use as a fast discovery source for state materials, background, and related transformation references.',link:'https://www.ruralhealthinfo.org/resources/lists/rhtp',label:'RHIhub RHTP resources'},
+      {name:'The Rural Center – Resources',coverage:'Rural systems, workforce, broadband, and community development resources',why:'Use for broader rural ecosystem context that can support Solutionz positioning.',link:'https://www.ruralcenter.org/resources',label:'The Rural Center resources'}
+    ];
 
-  <section class="table-card">
-    <div class="table-wrap">
-      <table id="dataTable">
-        <colgroup id="colgroup">
-          <col /><col /><col /><col /><col /><col /><col /><col /><col /><col /><col /><col />
-        </colgroup>
-        <thead>
-          <tr>
-            <th class="sortable" data-key="State" data-type="text"><div class="th-inner"><span class="th-label">State</span><span class="sort-indicator"></span><span class="resize-handle" aria-hidden="true"></span></div></th>
-            <th class="sortable" data-key="Status" data-type="status"><div class="th-inner"><span class="th-label">Status</span><span class="sort-indicator"></span><span class="resize-handle" aria-hidden="true"></span></div></th>
-            <th class="sortable" data-key="Start" data-type="date"><div class="th-inner"><span class="th-label">Start</span><span class="sort-indicator"></span><span class="resize-handle" aria-hidden="true"></span></div></th>
-            <th class="sortable" data-key="End" data-type="date"><div class="th-inner"><span class="th-label">End / Next</span><span class="sort-indicator"></span><span class="resize-handle" aria-hidden="true"></span></div></th>
-            <th class="sortable" data-key="FYSummary" data-type="text"><div class="th-inner"><span class="th-label">FY / Match / Min-Max</span><span class="sort-indicator"></span><span class="resize-handle" aria-hidden="true"></span></div></th>
-            <th class="sortable" data-key="ProcurementType" data-type="text"><div class="th-inner"><span class="th-label">Procurement type</span><span class="sort-indicator"></span><span class="resize-handle" aria-hidden="true"></span></div></th>
-            <th class="sortable" data-key="Description" data-type="text"><div class="th-inner"><span class="th-label">Description</span><span class="sort-indicator"></span><span class="resize-handle" aria-hidden="true"></span></div></th>
-            <th class="sortable" data-key="SourceLabel" data-type="text"><div class="th-inner"><span class="th-label">2026 source</span><span class="sort-indicator"></span><span class="resize-handle" aria-hidden="true"></span></div></th>
-            <th class="sortable" data-key="DrillDownLabel" data-type="text"><div class="th-inner"><span class="th-label">Best drill-down</span><span class="sort-indicator"></span><span class="resize-handle" aria-hidden="true"></span></div></th>
-            <th class="sortable" data-key="ProcurementProcess" data-type="text"><div class="th-inner"><span class="th-label">Procurement process</span><span class="sort-indicator"></span><span class="resize-handle" aria-hidden="true"></span></div></th>
-            <th class="sortable" data-key="PriorLabel" data-type="text"><div class="th-inner"><span class="th-label">Prior awards / applicant data</span><span class="sort-indicator"></span><span class="resize-handle" aria-hidden="true"></span></div></th>
-            <th class="sortable" data-key="Confidence" data-type="confidence"><div class="th-inner"><span class="th-label">Confidence</span><span class="sort-indicator"></span><span class="resize-handle" aria-hidden="true"></span></div></th>
-          </tr>
-        </thead>
-        <tbody id="tbody"></tbody>
-      </table>
-    </div>
-    <div class="footer">Notes: “End / Next” shows the posted close date when available. For rolling or undated windows, it may show the next listed deadline or remain blank. “FY / Match / Min-Max” shows the funding year or round tied to the row where it was explicit, the best reviewed match requirement, and any published min/max signal if found. Links open official sources in a new tab.</div>
-  </section>
-</div>
+    const keywordGroups = [
+      { cls:'kw-proc', terms:['LETTER OF INTENT','NOTICE OF INTEREST','SOLICITATION','SOLICITATIONS','RFA','RFAS','RFP','RFPS','RFQ','RFQS','GFO','GFOS'] },
+      { cls:'kw-fund', terms:['NOFO','NOFOS','NOFA','NOFAS','FOA','FOAS','GRANT','GRANTS'] },
+      { cls:'kw-intent', terms:['LOI','LOIS','ROI','ROIS','NOI','NOIS'] },
+      { cls:'kw-event', terms:['WEBINAR','WEBINARS','EVENT','EVENTS','CONFERENCE','CONFERENCES'] },
+      { cls:'kw-award', terms:['AWARD','AWARDS'] }
+    ];
 
-<script>
-const data =[
-  {
-    "State": "Alabama",
-    "Region": "Southeast",
-    "Status": "Open",
-    "Start": "",
-    "End": "",
-    "SortDate": "2026-04-09",
-    "Description": "Alabama's official apply page says local government entities should apply online now on a first-come, first-served basis, and the page lists four rounds of statewide project funding spanning FY2022 through FY2025.",
-    "SourceLabel": "Alabama apply page",
-    "SourceURL": "https://slcgp.alabama.gov/apply/",
-    "Confidence": "High",
-    "PriorLabel": "Alabama fact sheets page",
-    "PriorURL": "https://slcgp.alabama.gov/apply/factsheets/",
-    "PriorNote": "Official project fact sheets for Alabama\u2019s SLCGP application rounds, including service and provider details.",
-    "DrillDownLabel": "Alabama apply portal",
-    "DrillDownURL": "https://slcgp.alabama.gov/apply/",
-    "ProcurementProcess": "Open portal / first-come, first-served. Eligible locals start on the Alabama apply page. If funded, purchases follow grant conditions and local/state procurement rules.",
-    "ProcurementType": "First-come portal",
-    "FYYear": "Rounds 1-4 spanning FY2022-FY2025",
-    "MatchInfo": "No direct cost to applicant on reviewed state page",
-    "MinMaxInfo": "Statewide rounds: $3.07M / $6.27M / $4.73M / $1.55M",
-    "FYSummary": "Rounds 1-4 spanning FY2022-FY2025 | Match: No direct cost to applicant on reviewed state page | Min/Max: Statewide rounds: $3.07M / $6.27M / $4.73M / $1.55M"
-  },
-  {
-    "State": "Alaska",
-    "Region": "West",
-    "Status": "Forecasted/TBD",
-    "Start": "",
-    "End": "",
-    "SortDate": "2099-12-31",
-    "Description": "Alaska's grants section lists SLCGP application/guidance resources, but no dated 2026 local/subrecipient window was publicly posted on the reviewed page as of refresh.",
-    "SourceLabel": "Alaska DHS&EM SLCGP page",
-    "SourceURL": "https://ready.alaska.gov/Grants/CGP",
-    "Confidence": "Medium",
-    "PriorLabel": "Alaska FY2023 SLCGP overview & guidelines",
-    "PriorURL": "https://ready.alaska.gov/Documents/Grants/HSGP/2023%20State%20and%20Local%20Cybersecurity%20Grant%20Program%20State%20Overview%20and%20Guidelines%20-%20MASTER.pdf",
-    "PriorNote": "Official prior-round guidance describing project eligibility, application structure, and expected awards workflow.",
-    "DrillDownLabel": "Alaska DHS&EM SLCGP page",
-    "DrillDownURL": "https://ready.alaska.gov/Grants/CGP",
-    "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
-    "ProcurementType": "State page / TBD",
-    "FYYear": "TBD on reviewed source",
-    "MatchInfo": "TBD on reviewed source",
-    "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
-  },
-  {
-    "State": "Arizona",
-    "Region": "West",
-    "Status": "Forecasted/TBD",
-    "Start": "",
-    "End": "",
-    "SortDate": "2099-12-31",
-    "Description": "Arizona's official grants pages were reviewed, but no clearly labeled 2026 SLCGP local/subrecipient window was publicly posted on the pages surfaced in current search.",
-    "SourceLabel": "Arizona grant programs page",
-    "SourceURL": "https://azdohs.gov/grants",
-    "Confidence": "Low",
-    "PriorLabel": "Arizona Statewide Cyber Readiness Grant Program",
-    "PriorURL": "https://aset.az.gov/programs/cyber-resources-local-and-tribal-governments",
-    "PriorNote": "Arizona\u2019s state-awarded cyber resources page for local and tribal governments; useful when no public subaward list is posted.",
-    "DrillDownLabel": "Arizona grant programs page",
-    "DrillDownURL": "https://azdohs.gov/grants",
-    "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
-    "ProcurementType": "State page / TBD",
-    "FYYear": "TBD on reviewed source",
-    "MatchInfo": "TBD on reviewed source",
-    "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
-  },
-  {
-    "State": "Arkansas",
-    "Region": "Southeast",
-    "Status": "Forecasted/TBD",
-    "Start": "",
-    "End": "",
-    "SortDate": "2099-12-31",
-    "Description": "Arkansas homeland security/infrastructure grant pages were reviewed, but no dated 2026 local SLCGP window was publicly posted on the surfaced official pages as of refresh.",
-    "SourceLabel": "Arkansas homeland security grants page",
-    "SourceURL": "https://dps.arkansas.gov/emergency-management/adem/grants-funding/homeland-security-grant-program/",
-    "Confidence": "Low",
-    "PriorLabel": "Arkansas homeland security grants page",
-    "PriorURL": "https://dps.arkansas.gov/emergency-management/adem/grants-funding/homeland-security-grant-program/",
-    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material.",
-    "DrillDownLabel": "Arkansas homeland security grants page",
-    "DrillDownURL": "https://dps.arkansas.gov/emergency-management/adem/grants-funding/homeland-security-grant-program/",
-    "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
-    "ProcurementType": "State page / TBD",
-    "FYYear": "TBD on reviewed source",
-    "MatchInfo": "TBD on reviewed source",
-    "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
-  },
-  {
-    "State": "California",
-    "Region": "West",
-    "Status": "Closed",
-    "Start": "2026-01-16",
-    "End": "2026-03-13",
-    "SortDate": "2026-01-16",
-    "Description": "California posted a formal FFY 2024 Local & Tribal SLCGP RFP with a due date of March 13, 2026.",
-    "SourceLabel": "Cal OES Local & Tribal SLCGP RFP",
-    "SourceURL": "https://www.caloes.ca.gov/grant-announcement/ffy-2024-state-local-cybersecurity-grant-local-tribal-sl-rfp/",
-    "Confidence": "High",
-    "PriorLabel": "Cal OES SLCGP program page",
-    "PriorURL": "https://www.caloes.ca.gov/office-of-the-director/policy-administration/finance-administration/grants-management/homeland-security-emergency-management-programs/state-and-local-cybersecurity-grant-program/",
-    "PriorNote": "Explains that individual projects named in California\u2019s approved Cybersecurity Plan drive disbursement and align later subrecipient applications.",
-    "DrillDownLabel": "Cal OES RFP announcement and package",
-    "DrillDownURL": "https://www.caloes.ca.gov/grant-announcement/ffy-2024-state-local-cybersecurity-grant-local-tribal-sl-rfp/",
-    "ProcurementProcess": "Competitive state subrecipient RFP. Locals and tribes respond to the Cal OES RFP/NOI package during the state window. After award, buying follows applicable state/local procurement rules and grant conditions.",
-    "ProcurementType": "RFP",
-    "FYYear": "FY2024",
-    "MatchInfo": "State supplement says FY2024 subrecipient match waived in full",
-    "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "FY2024 | Match: State supplement says FY2024 subrecipient match waived in full | Min/Max: Not publicly stated on reviewed source"
-  },
-  {
-    "State": "Colorado",
-    "Region": "West",
-    "Status": "Forecasted/TBD",
-    "Start": "",
-    "End": "",
-    "SortDate": "2099-12-31",
-    "Description": "No dated 2026 Colorado local/subrecipient SLCGP window was publicly surfaced in the reviewed official-state search results. Contact the State Administrative Agency for the latest release timing.",
-    "SourceLabel": "FEMA State Administrative Agency contacts",
-    "SourceURL": "https://www.fema.gov/grants/preparedness/about/state-administrative-agency-contacts",
-    "Confidence": "Low",
-    "PriorLabel": "FEMA State Administrative Agency contacts",
-    "PriorURL": "https://www.fema.gov/grants/preparedness/about/state-administrative-agency-contacts",
-    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material.",
-    "DrillDownLabel": "FEMA State Administrative Agency contacts",
-    "DrillDownURL": "https://www.fema.gov/grants/preparedness/about/state-administrative-agency-contacts",
-    "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
-    "ProcurementType": "State page / TBD",
-    "FYYear": "TBD on reviewed source",
-    "MatchInfo": "TBD on reviewed source",
-    "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
-  },
-  {
-    "State": "Connecticut",
-    "Region": "Northeast",
-    "Status": "Forecasted/TBD",
-    "Start": "",
-    "End": "",
-    "SortDate": "2099-12-31",
-    "Description": "Connecticut's official SLCGP overview says eligible state, tribal, and local entities must complete a sub-application and submit it to DEMHS to be eligible as subrecipients, but no dated 2026 local window was publicly posted on the reviewed page as of refresh.",
-    "SourceLabel": "Connecticut SLCGP overview",
-    "SourceURL": "https://portal.ct.gov/demhs/grants/state-and-local-cybersecurity-grant-program",
-    "Confidence": "Medium",
-    "PriorLabel": "Connecticut SLCGP guidance & closeout forms",
-    "PriorURL": "https://portal.ct.gov/demhs/grants/state-and-local-cybersecurity-grant-program/guidance-and-forms",
-    "PriorNote": "Connecticut\u2019s official forms hub references quarterly reporting and closeout steps for awarded SLCGP projects.",
-    "DrillDownLabel": "Connecticut SLCGP apply page",
-    "DrillDownURL": "https://portal.ct.gov/demhs/grants/state-and-local-cybersecurity-grant-program/apply",
-    "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
-    "ProcurementType": "State page / TBD",
-    "FYYear": "TBD on reviewed source",
-    "MatchInfo": "TBD on reviewed source",
-    "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
-  },
-  {
-    "State": "Delaware",
-    "Region": "Mid-Atlantic",
-    "Status": "Forecasted/TBD",
-    "Start": "",
-    "End": "",
-    "SortDate": "2099-12-31",
-    "Description": "Delaware's official SLCGP page is live, but no dated 2026 local/subrecipient window was publicly posted on the reviewed page as of refresh.",
-    "SourceLabel": "Delaware SLCGP page",
-    "SourceURL": "https://digiknow.dti.delaware.gov/grants/",
-    "Confidence": "Medium",
-    "PriorLabel": "Delaware preparedness grants summary",
-    "PriorURL": "https://dema.delaware.gov/about/grants/index.shtml?dc=preparednessgrants",
-    "PriorNote": "State summary page reporting that Delaware managed $10.1M in SLCGP funds for state, local, and rural subrecipients.",
-    "DrillDownLabel": "Delaware SLCGP page",
-    "DrillDownURL": "https://digiknow.dti.delaware.gov/grants/",
-    "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
-    "ProcurementType": "State page / TBD",
-    "FYYear": "TBD on reviewed source",
-    "MatchInfo": "TBD on reviewed source",
-    "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
-  },
-  {
-    "State": "Florida",
-    "Region": "Southeast",
-    "Status": "Forecasted/TBD",
-    "Start": "",
-    "End": "",
-    "SortDate": "2099-12-31",
-    "Description": "Florida's cyber grants FAQ references continued funding into 2026/27, but no clearly posted 2026 SLCGP local/subrecipient application window was surfaced in current official-page review.",
-    "SourceLabel": "Florida cyber grants FAQ",
-    "SourceURL": "https://cybergrants.fl.gov/faqs.html",
-    "Confidence": "Low",
-    "PriorLabel": "Florida cybersecurity grants FAQ",
-    "PriorURL": "https://cybergrants.fl.gov/faqs.html",
-    "PriorNote": "Official FAQ notes that Year 1 and Year 2 recipients are eligible to apply again and that grant applications and awards are exempt from Florida public-records disclosure.",
-    "DrillDownLabel": "Florida cyber grants FAQ",
-    "DrillDownURL": "https://cybergrants.fl.gov/faqs.html",
-    "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
-    "ProcurementType": "State page / TBD",
-    "FYYear": "TBD on reviewed source",
-    "MatchInfo": "TBD on reviewed source",
-    "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
-  },
-  {
-    "State": "Georgia",
-    "Region": "Southeast",
-    "Status": "Open",
-    "Start": "2026-04-01",
-    "End": "2026-04-29",
-    "SortDate": "2026-04-01",
-    "Description": "Georgia's official SLCGP page says applications are accepted online via the Georgia EM Grants Manager beginning April 1, 2026 and are due April 29, 2026; the March 25 release also announced an FY2025 opening on September 1, 2026.",
-    "SourceLabel": "Georgia SLCGP program page",
-    "SourceURL": "https://gema.georgia.gov/state-and-local-cybersecurity-grant-program",
-    "Confidence": "High",
-    "PriorLabel": "Georgia awards press release",
-    "PriorURL": "https://gema.georgia.gov/press-releases/2026-03-25/nearly-99-million-cybersecurity-grants-awarded-georgia-schools-and",
-    "PriorNote": "Official March 25, 2026 release announcing nearly $9.9M in awards to Georgia schools and local governments.",
-    "DrillDownLabel": "Georgia SLCGP program / EM Grants Manager",
-    "DrillDownURL": "https://gema.georgia.gov/state-and-local-cybersecurity-grant-program",
-    "ProcurementProcess": "Online state subrecipient application through Georgia EM Grants Manager during the posted window. Funded entities then procure under applicable procurement rules and grant terms.",
-    "ProcurementType": "Online application window",
-    "FYYear": "FY2024",
-    "MatchInfo": "30% single / 20% multi-entity",
-    "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "FY2024 | Match: 30% single / 20% multi-entity | Min/Max: Not publicly stated on reviewed source"
-  },
-  {
-    "State": "Hawaii",
-    "Region": "West",
-    "Status": "Forecasted/TBD",
-    "Start": "",
-    "End": "",
-    "SortDate": "2099-12-31",
-    "Description": "Hawaii's Office of Homeland Security lists SLCGP, but no dated 2026 local/subrecipient window was publicly posted on the reviewed page as of refresh.",
-    "SourceLabel": "Hawaii OHS grants page",
-    "SourceURL": "https://law.hawaii.gov/ohs/grants/",
-    "Confidence": "Medium",
-    "PriorLabel": "Hawai\u2018i statewide cybersecurity strategy",
-    "PriorURL": "https://law.hawaii.gov/ohs/wp-content/uploads/sites/2/2024/01/Hawaii-Statewide-Cyber-Strategy-Plan-Final-1.pdf",
-    "PriorNote": "Official statewide cybersecurity strategy and plan prepared under the SLCGP framework.",
-    "DrillDownLabel": "Hawaii OHS grants page",
-    "DrillDownURL": "https://law.hawaii.gov/ohs/grants/",
-    "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
-    "ProcurementType": "State page / TBD",
-    "FYYear": "TBD on reviewed source",
-    "MatchInfo": "TBD on reviewed source",
-    "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
-  },
-  {
-    "State": "Idaho",
-    "Region": "West",
-    "Status": "Forecasted/TBD",
-    "Start": "",
-    "End": "",
-    "SortDate": "2099-12-31",
-    "Description": "Idaho's Operation Cyber Idaho page confirms SLCGP-backed work continues through 2025-2026, but no dated 2026 local/subrecipient application window was publicly posted on the reviewed pages.",
-    "SourceLabel": "Operation Cyber Idaho",
-    "SourceURL": "https://cybersecurity.idaho.gov/operation-cyber-idaho/",
-    "Confidence": "Medium",
-    "PriorLabel": "Idaho SLCGP cybersecurity plan",
-    "PriorURL": "https://ioem.idaho.gov/wp-content/uploads/2023/10/Idaho-Cybersecurity-Plan.pdf",
-    "PriorNote": "Official Idaho SLCGP implementation plan covering statewide priorities and future project execution.",
-    "DrillDownLabel": "Operation Cyber Idaho",
-    "DrillDownURL": "https://cybersecurity.idaho.gov/operation-cyber-idaho/",
-    "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
-    "ProcurementType": "State page / TBD",
-    "FYYear": "TBD on reviewed source",
-    "MatchInfo": "TBD on reviewed source",
-    "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
-  },
-  {
-    "State": "Illinois",
-    "Region": "Northeast",
-    "Status": "Forecasted/TBD",
-    "Start": "",
-    "End": "",
-    "SortDate": "2099-12-31",
-    "Description": "Illinois maintains an SLCGP page, but no dated 2026 local/subrecipient window was publicly posted on the reviewed page as of refresh.",
-    "SourceLabel": "Illinois SLCGP page",
-    "SourceURL": "https://doit.illinois.gov/initiatives/cybersecurity/slcgp.html",
-    "Confidence": "Medium",
-    "PriorLabel": "Illinois SLCGP page",
-    "PriorURL": "https://doit.illinois.gov/initiatives/cybersecurity/slcgp.html",
-    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material.",
-    "DrillDownLabel": "Illinois SLCGP page",
-    "DrillDownURL": "https://doit.illinois.gov/initiatives/cybersecurity/slcgp.html",
-    "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
-    "ProcurementType": "State page / TBD",
-    "FYYear": "TBD on reviewed source",
-    "MatchInfo": "TBD on reviewed source",
-    "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
-  },
-  {
-    "State": "Indiana",
-    "Region": "Northeast",
-    "Status": "Forecasted/TBD",
-    "Start": "",
-    "End": "",
-    "SortDate": "2099-12-31",
-    "Description": "Indiana's SLCGP committee/resources are live, but no dated 2026 local/subrecipient window was publicly posted on the reviewed state pages as of refresh.",
-    "SourceLabel": "Indiana SLCGP committee page",
-    "SourceURL": "https://www.in.gov/iot/slcgp-committee/",
-    "Confidence": "Medium",
-    "PriorLabel": "Indiana SLCGP committee page",
-    "PriorURL": "https://www.in.gov/iot/slcgp-committee/",
-    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material.",
-    "DrillDownLabel": "Indiana SLCGP committee page",
-    "DrillDownURL": "https://www.in.gov/iot/slcgp-committee/",
-    "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
-    "ProcurementType": "State page / TBD",
-    "FYYear": "TBD on reviewed source",
-    "MatchInfo": "TBD on reviewed source",
-    "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
-  },
-  {
-    "State": "Iowa",
-    "Region": "Northeast",
-    "Status": "Forecasted/TBD",
-    "Start": "",
-    "End": "",
-    "SortDate": "2099-12-31",
-    "Description": "Iowa's SLCGP page is live, but no dated 2026 local/subrecipient window was publicly posted on the reviewed page as of refresh.",
-    "SourceLabel": "Iowa SLCGP page",
-    "SourceURL": "https://homelandsecurity.iowa.gov/grants/state-and-local-cybersecurity-grant-program-slcgp",
-    "Confidence": "Medium",
-    "PriorLabel": "Iowa SLCGP page",
-    "PriorURL": "https://homelandsecurity.iowa.gov/grants/state-and-local-cybersecurity-grant-program-slcgp",
-    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material.",
-    "DrillDownLabel": "Iowa SLCGP page",
-    "DrillDownURL": "https://homelandsecurity.iowa.gov/grants/state-and-local-cybersecurity-grant-program-slcgp",
-    "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
-    "ProcurementType": "State page / TBD",
-    "FYYear": "TBD on reviewed source",
-    "MatchInfo": "TBD on reviewed source",
-    "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
-  },
-  {
-    "State": "Kansas",
-    "Region": "Northeast",
-    "Status": "Forecasted/TBD",
-    "Start": "",
-    "End": "",
-    "SortDate": "2099-12-31",
-    "Description": "Kansas has an active SLCGP program page and shared-service offerings, but no dated 2026 local/subrecipient application window was publicly posted on the reviewed page as of refresh.",
-    "SourceLabel": "Kansas SLCGP page",
-    "SourceURL": "https://www.ebit.ks.gov/divisions/slcgp",
-    "Confidence": "Medium",
-    "PriorLabel": "Kansas SLCGP page",
-    "PriorURL": "https://www.ebit.ks.gov/divisions/slcgp",
-    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material.",
-    "DrillDownLabel": "Kansas SLCGP page",
-    "DrillDownURL": "https://www.ebit.ks.gov/divisions/slcgp",
-    "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
-    "ProcurementType": "State page / TBD",
-    "FYYear": "TBD on reviewed source",
-    "MatchInfo": "TBD on reviewed source",
-    "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
-  },
-  {
-    "State": "Kentucky",
-    "Region": "Mid-Atlantic",
-    "Status": "Forecasted/TBD",
-    "Start": "",
-    "End": "",
-    "SortDate": "2099-12-31",
-    "Description": "Kentucky's grants pages were reviewed, but no clearly posted dated 2026 SLCGP local/subrecipient window was surfaced in current official-page review.",
-    "SourceLabel": "Kentucky Homeland Security grants page",
-    "SourceURL": "https://homelandsecurity.ky.gov/Pages/Grants.aspx",
-    "Confidence": "Low",
-    "PriorLabel": "Kentucky cybersecurity grants page",
-    "PriorURL": "https://homelandsecurity.ky.gov/Pages/Cybersecurity.aspx",
-    "PriorNote": "Official Kentucky cyber-grants page noting SLCGP support for cybersecurity improvements since 2022.",
-    "DrillDownLabel": "Kentucky Homeland Security grants page",
-    "DrillDownURL": "https://homelandsecurity.ky.gov/Pages/Grants.aspx",
-    "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
-    "ProcurementType": "State page / TBD",
-    "FYYear": "TBD on reviewed source",
-    "MatchInfo": "TBD on reviewed source",
-    "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
-  },
-  {
-    "State": "Louisiana",
-    "Region": "Southeast",
-    "Status": "Closed",
-    "Start": "2026-01-01",
-    "End": "2026-02-28",
-    "SortDate": "2026-01-01",
-    "Description": "Louisiana officials stated the FY23/FY24/FY25 SLCGP application period ran January 1 to February 28, 2026, and applicants should focus on mitigation and training.",
-    "SourceLabel": "Louisiana official meeting minutes",
-    "SourceURL": "https://wwwcfprd.doa.louisiana.gov/boardsandcommissions/MeetingMinutes/348_Regional%20Directors%20Meeting%20minutes-%20February%202026.pdf",
-    "Confidence": "High",
-    "PriorLabel": "Louisiana GOHSEP cyber funding meeting minutes",
-    "PriorURL": "https://gohsep.la.gov/media/3hcjz3sm/gohsep-first-responder-subcommitte-meeting-minutes-june-11-2025.pdf",
-    "PriorNote": "Meeting minutes state that Louisiana used SLCGP funds to support endpoint detection software; useful as public prior-use evidence.",
-    "DrillDownLabel": "Louisiana SLCGP page / committee materials",
-    "DrillDownURL": "https://wwwcfprd.doa.louisiana.gov/boardsandcommissions/MeetingMinutes/348_Regional%20Directors%20Meeting%20minutes-%20February%202026.pdf",
-    "ProcurementProcess": "State-run application cycle. Applicants respond to Louisiana SLCGP priorities and guidance; funded entities then procure under Louisiana/local procurement rules and reporting requirements.",
-    "ProcurementType": "State application",
-    "FYYear": "FY2023\u2013FY2025",
-    "MatchInfo": "Varies by year: FY23 20/10; FY24 30/20; FY25 40/30",
-    "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "FY2023\u2013FY2025 | Match: Varies by year: FY23 20/10; FY24 30/20; FY25 40/30 | Min/Max: Not publicly stated on reviewed source"
-  },
-  {
-    "State": "Maine",
-    "Region": "Northeast",
-    "Status": "Forecasted/TBD",
-    "Start": "",
-    "End": "",
-    "SortDate": "2099-12-31",
-    "Description": "Maine's SLCGP page/program reference are live, but no dated 2026 local/subrecipient window was publicly posted on the reviewed page as of refresh.",
-    "SourceLabel": "Maine SLCGP page",
-    "SourceURL": "https://www.maine.gov/mema/grants/state-and-local-cybersecurity-grant-program",
-    "Confidence": "Medium",
-    "PriorLabel": "Maine SLCGP page",
-    "PriorURL": "https://www.maine.gov/mema/grants/state-and-local-cybersecurity-grant-program",
-    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material.",
-    "DrillDownLabel": "Maine SLCGP page",
-    "DrillDownURL": "https://www.maine.gov/mema/grants/state-and-local-cybersecurity-grant-program",
-    "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
-    "ProcurementType": "State page / TBD",
-    "FYYear": "TBD on reviewed source",
-    "MatchInfo": "TBD on reviewed source",
-    "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
-  },
-  {
-    "State": "Maryland",
-    "Region": "Mid-Atlantic",
-    "Status": "Open",
-    "Start": "",
-    "End": "",
-    "SortDate": "2026-04-09",
-    "Description": "Maryland's cyber preparedness funding page says a second-round application for FY2023 SLCGP funds is now open and accepted on a rolling basis; the same page says FY2024 and FY2025 information is still coming soon.",
-    "SourceLabel": "Maryland cyber preparedness funding page",
-    "SourceURL": "https://mema.maryland.gov/pages/cyber-preparedness-funding.aspx",
-    "Confidence": "High",
-    "PriorLabel": "Maryland cyber preparedness funding page",
-    "PriorURL": "https://mema.maryland.gov/pages/cyber-preparedness-funding.aspx",
-    "PriorNote": "Official Maryland funding page with current subgrant materials and prior-round application guidance.",
-    "DrillDownLabel": "Maryland rolling application page",
-    "DrillDownURL": "https://mema.maryland.gov/pages/cyber-preparedness-funding.aspx",
-    "ProcurementProcess": "Rolling state application. Eligible entities download and submit Maryland application materials. Post-award purchases follow state/local procurement rules plus grant reporting requirements.",
-    "ProcurementType": "Rolling application",
-    "FYYear": "FY2023 (second round open)",
-    "MatchInfo": "20% single / 10% multi-entity",
-    "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "FY2023 (second round open) | Match: 20% single / 10% multi-entity | Min/Max: Not publicly stated on reviewed source"
-  },
-  {
-    "State": "Massachusetts",
-    "Region": "Northeast",
-    "Status": "Forecasted/TBD",
-    "Start": "",
-    "End": "",
-    "SortDate": "2099-12-31",
-    "Description": "Massachusetts maintains a general SLCGP page, but no dated 2026 local/subrecipient window was publicly posted on the reviewed page as of refresh.",
-    "SourceLabel": "Massachusetts SLCGP page",
-    "SourceURL": "https://www.mass.gov/info-details/state-and-local-cybersecurity-grant-program",
-    "Confidence": "Medium",
-    "PriorLabel": "Massachusetts SLCGP page",
-    "PriorURL": "https://www.mass.gov/info-details/state-and-local-cybersecurity-grant-program",
-    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material.",
-    "DrillDownLabel": "Massachusetts SLCGP page",
-    "DrillDownURL": "https://www.mass.gov/info-details/state-and-local-cybersecurity-grant-program",
-    "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
-    "ProcurementType": "State page / TBD",
-    "FYYear": "TBD on reviewed source",
-    "MatchInfo": "TBD on reviewed source",
-    "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
-  },
-  {
-    "State": "Michigan",
-    "Region": "Northeast",
-    "Status": "Forecasted/TBD",
-    "Start": "",
-    "End": "",
-    "SortDate": "2099-12-31",
-    "Description": "Michigan's DTMB page says FY 2022, FY 2023, and FY 2024 subrecipient awards are closed or already awarded, while the FY 2025 application available date and submission deadline remain to be determined.",
-    "SourceLabel": "Michigan SLCGP page",
-    "SourceURL": "https://www.michigan.gov/dtmb/services/cybersecurity/cyber-partners/state-and-local-cybersecurity-grant-program",
-    "Confidence": "High",
-    "PriorLabel": "Michigan SLCGP page",
-    "PriorURL": "https://www.michigan.gov/dtmb/services/cybersecurity/cyber-partners/state-and-local-cybersecurity-grant-program",
-    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material.",
-    "DrillDownLabel": "Michigan SLCGP page",
-    "DrillDownURL": "https://www.michigan.gov/dtmb/services/cybersecurity/cyber-partners/state-and-local-cybersecurity-grant-program",
-    "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
-    "ProcurementType": "State page / TBD",
-    "FYYear": "FY2025 (dates TBD); FY2022-2024 awarded/closed",
-    "MatchInfo": "FY2025: 40% single / 30% multi-entity",
-    "MinMaxInfo": "FY2025 state allocation $2,346,859",
-    "FYSummary": "FY2025 (dates TBD); FY2022-2024 awarded/closed | Match: FY2025: 40% single / 30% multi-entity | Min/Max: FY2025 state allocation $2,346,859"
-  },
-  {
-    "State": "Minnesota",
-    "Region": "Northeast",
-    "Status": "Forecasted/TBD",
-    "Start": "",
-    "End": "",
-    "SortDate": "2099-12-31",
-    "Description": "Minnesota's whole-of-state SLCGP plan and participant information pages are active, but no dated 2026 local application window was publicly posted on the reviewed pages as of refresh.",
-    "SourceLabel": "Minnesota whole-of-state participant information",
-    "SourceURL": "https://mn.gov/mnit/about-mnit/security/whole-of-state-cybersecurity-plan/wos/index.jsp",
-    "Confidence": "Medium",
-    "PriorLabel": "Minnesota whole-of-state participant information",
-    "PriorURL": "https://mn.gov/mnit/about-mnit/security/whole-of-state-cybersecurity-plan/wos/index.jsp",
-    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material.",
-    "DrillDownLabel": "Minnesota whole-of-state participant information",
-    "DrillDownURL": "https://mn.gov/mnit/about-mnit/security/whole-of-state-cybersecurity-plan/wos/index.jsp",
-    "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
-    "ProcurementType": "State page / TBD",
-    "FYYear": "TBD on reviewed source",
-    "MatchInfo": "TBD on reviewed source",
-    "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
-  },
-  {
-    "State": "Mississippi",
-    "Region": "Southeast",
-    "Status": "Closed",
-    "Start": "2026-01-15",
-    "End": "2026-02-27",
-    "SortDate": "2026-01-15",
-    "Description": "Mississippi posted a January 15, 2026 open date and February 27, 2026 close date for the SLCGP application.",
-    "SourceLabel": "Mississippi SLCGP announcements",
-    "SourceURL": "https://www.homelandsecurity.ms.gov/grants/homeland-security-state-and-local-cybersecurity-grant-program-slcgp",
-    "Confidence": "High",
-    "PriorLabel": "Mississippi SLCGP announcements",
-    "PriorURL": "https://www.homelandsecurity.ms.gov/grants/homeland-security-state-and-local-cybersecurity-grant-program-slcgp",
-    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material.",
-    "DrillDownLabel": "Mississippi SLCGP announcements",
-    "DrillDownURL": "https://www.homelandsecurity.ms.gov/grants/homeland-security-state-and-local-cybersecurity-grant-program-slcgp",
-    "ProcurementProcess": "The primary state subrecipient window is closed. Use this official page to monitor the next cycle, RFP/RFA, or grants portal. After award, local procurement typically follows state/local purchasing rules.",
-    "ProcurementType": "RFP",
-    "FYYear": "TBD on reviewed source",
-    "MatchInfo": "TBD on reviewed source",
-    "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
-  },
-  {
-    "State": "Missouri",
-    "Region": "Northeast",
-    "Status": "Forecasted/TBD",
-    "Start": "",
-    "End": "",
-    "SortDate": "2099-12-31",
-    "Description": "Missouri's grants/training portal was reviewed, but no dated 2026 SLCGP local/subrecipient window was publicly posted on the surfaced page as of refresh.",
-    "SourceLabel": "Missouri grants and training portal",
-    "SourceURL": "https://dps.mo.gov/dir/programs/ohs/grantstraining/",
-    "Confidence": "Low",
-    "PriorLabel": "Missouri grants and training portal",
-    "PriorURL": "https://dps.mo.gov/dir/programs/ohs/grantstraining/",
-    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material.",
-    "DrillDownLabel": "Missouri grants and training portal",
-    "DrillDownURL": "https://dps.mo.gov/dir/programs/ohs/grantstraining/",
-    "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
-    "ProcurementType": "State page / TBD",
-    "FYYear": "TBD on reviewed source",
-    "MatchInfo": "TBD on reviewed source",
-    "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
-  },
-  {
-    "State": "Montana",
-    "Region": "West",
-    "Status": "Forecasted/TBD",
-    "Start": "2026-05-15",
-    "End": "",
-    "SortDate": "2026-05-15",
-    "Description": "Montana says its most recent application window closed January 9, 2026 and that the next application window will open by late spring 2026.",
-    "SourceLabel": "Montana SLCGP application info",
-    "SourceURL": "https://des.mt.gov/Grant-Programs/SLCGPApplicationInfo",
-    "Confidence": "High",
-    "PriorLabel": "Montana SLCGP application info",
-    "PriorURL": "https://des.mt.gov/Grant-Programs/SLCGPApplicationInfo",
-    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material.",
-    "DrillDownLabel": "Montana SLCGP application info",
-    "DrillDownURL": "https://des.mt.gov/Grant-Programs/SLCGPApplicationInfo",
-    "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
-    "ProcurementType": "State page / TBD",
-    "FYYear": "TBD on reviewed source",
-    "MatchInfo": "TBD on reviewed source",
-    "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
-  },
-  {
-    "State": "Nebraska",
-    "Region": "Northeast",
-    "Status": "Forecasted/TBD",
-    "Start": "",
-    "End": "",
-    "SortDate": "2099-12-31",
-    "Description": "Nebraska's SLCGP grant information page is live, but no dated 2026 local/subrecipient window was publicly posted on the reviewed page as of refresh.",
-    "SourceLabel": "Nebraska SLCGP grant info",
-    "SourceURL": "https://slcg.nebraska.gov/grant-info",
-    "Confidence": "Medium",
-    "PriorLabel": "Nebraska SLCGP grant info",
-    "PriorURL": "https://slcg.nebraska.gov/grant-info",
-    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material.",
-    "DrillDownLabel": "Nebraska SLCGP grant info",
-    "DrillDownURL": "https://slcg.nebraska.gov/grant-info",
-    "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
-    "ProcurementType": "State page / TBD",
-    "FYYear": "TBD on reviewed source",
-    "MatchInfo": "TBD on reviewed source",
-    "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
-  },
-  {
-    "State": "Nevada",
-    "Region": "West",
-    "Status": "Forecasted/TBD",
-    "Start": "",
-    "End": "",
-    "SortDate": "2099-12-31",
-    "Description": "Nevada's grants portfolio confirms SLCGP administration, but no clearly posted dated 2026 local/subrecipient window was surfaced in current official-page review.",
-    "SourceLabel": "Nevada grants portfolio",
-    "SourceURL": "https://www.oem.nv.gov/agency-portfolio-sections-programs/grants-portfolio/",
-    "Confidence": "Medium",
-    "PriorLabel": "Nevada grants portfolio",
-    "PriorURL": "https://www.oem.nv.gov/agency-portfolio-sections-programs/grants-portfolio/",
-    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material.",
-    "DrillDownLabel": "Nevada grants portfolio",
-    "DrillDownURL": "https://www.oem.nv.gov/agency-portfolio-sections-programs/grants-portfolio/",
-    "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
-    "ProcurementType": "State page / TBD",
-    "FYYear": "TBD on reviewed source",
-    "MatchInfo": "TBD on reviewed source",
-    "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
-  },
-  {
-    "State": "New Hampshire",
-    "Region": "Northeast",
-    "Status": "Forecasted/TBD",
-    "Start": "",
-    "End": "",
-    "SortDate": "2099-12-31",
-    "Description": "New Hampshire's SLCGP page is live, but the surfaced page notes that documents created before April 24, 2026 are for reference or record-keeping only. No new dated 2026 local application window was surfaced during this refresh.",
-    "SourceLabel": "New Hampshire SLCGP page",
-    "SourceURL": "https://www.doit.nh.gov/state-and-local-cybersecurity-grant-program",
-    "Confidence": "Medium",
-    "PriorLabel": "New Hampshire SLCGP page",
-    "PriorURL": "https://www.doit.nh.gov/state-and-local-cybersecurity-grant-program",
-    "PriorNote": "Official NH page surfaced in search; detailed page fetch was restricted, but the page is the current state landing point for SLCGP materials.",
-    "DrillDownLabel": "New Hampshire SLCGP page",
-    "DrillDownURL": "https://www.doit.nh.gov/state-and-local-cybersecurity-grant-program",
-    "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
-    "ProcurementType": "State page / TBD",
-    "FYYear": "TBD on reviewed source",
-    "MatchInfo": "TBD on reviewed source",
-    "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
-  },
-  {
-    "State": "New Jersey",
-    "Region": "Northeast",
-    "Status": "Closed",
-    "Start": "",
-    "End": "",
-    "SortDate": "2026-04-10",
-    "Description": "New Jersey's NJCCIC SLCGP page says the application window for SLCGP 2025 is closed.",
-    "SourceLabel": "New Jersey SLCGP page",
-    "SourceURL": "https://www.cyber.nj.gov/grants-and-resources/grants/state-and-local-cybersecurity-grant-program-slcgp",
-    "Confidence": "High",
-    "PriorLabel": "New Jersey SLCGP page",
-    "PriorURL": "https://www.cyber.nj.gov/grants-and-resources/grants/state-and-local-cybersecurity-grant-program-slcgp",
-    "PriorNote": "Official NJCCIC grants page indicating the current SLCGP 2025 application window is closed.",
-    "DrillDownLabel": "New Jersey SLCGP page",
-    "DrillDownURL": "https://www.cyber.nj.gov/grants-and-resources/grants/state-and-local-cybersecurity-grant-program-slcgp",
-    "ProcurementProcess": "State-run SLCGP application window is currently closed. Use the NJCCIC grants page to monitor the next cycle and subrecipient instructions.",
-    "ProcurementType": "State application",
-    "FYYear": "TBD on reviewed source",
-    "MatchInfo": "TBD on reviewed source",
-    "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
-  },
-  {
-    "State": "New Mexico",
-    "Region": "West",
-    "Status": "Open",
-    "Start": "",
-    "End": "",
-    "SortDate": "2026-04-07",
-    "Description": "New Mexico says its Cybersecurity Planning Committee is accepting participation interest and request forms now for prospective SLCGP-funded services covering State Fiscal Year 2027 (July 1, 2026 to June 30, 2027).",
-    "SourceLabel": "New Mexico SLCGP page",
-    "SourceURL": "https://www.doit.nm.gov/programs/cybersecurity/state-and-local-cybersecurity-grant-program-slcgp/",
-    "Confidence": "High",
-    "PriorLabel": "New Mexico SLCGP page",
-    "PriorURL": "https://www.doit.nm.gov/programs/cybersecurity/state-and-local-cybersecurity-grant-program-slcgp/",
-    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material.",
-    "DrillDownLabel": "New Mexico request / participation forms page",
-    "DrillDownURL": "https://www.doit.nm.gov/programs/cybersecurity/state-and-local-cybersecurity-grant-program-slcgp/",
-    "ProcurementProcess": "Current process is participation/request forms for SLCGP-funded shared services. Procurement may be state-managed for service offerings, with local participation routed through the program office.",
-    "ProcurementType": "Participation/request forms",
-    "FYYear": "State FY2027 services; federal FY not stated",
-    "MatchInfo": "TBD on reviewed source",
-    "MinMaxInfo": "First-come / funding available basis; no min/max stated",
-    "FYSummary": "State FY2027 services; federal FY not stated | Match: TBD on reviewed source | Min/Max: First-come / funding available basis; no min/max stated"
-  },
-  {
-    "State": "New York",
-    "Region": "Northeast",
-    "Status": "Closed",
-    "Start": "",
-    "End": "2025-11-19",
-    "SortDate": "2025-11-19",
-    "Description": "New York says the application period for the combined FY2022 and FY2023 State and Local Cybersecurity Grant Program closed on November 19, 2025. The state uses shared services and directs applicants to a Request for Applications for eligibility and process details.",
-    "SourceLabel": "New York federal programs page",
-    "SourceURL": "https://www.dhses.ny.gov/federal-programs",
-    "Confidence": "High",
-    "PriorLabel": "New York federal programs page",
-    "PriorURL": "https://www.dhses.ny.gov/federal-programs",
-    "PriorNote": "Official DHSES page describing the shared-services model and the closed November 19, 2025 application period.",
-    "DrillDownLabel": "New York federal programs page",
-    "DrillDownURL": "https://www.dhses.ny.gov/federal-programs",
-    "ProcurementProcess": "New York uses a state-run Request for Applications tied to cybersecurity shared services rather than simple direct cash awards. The current combined FY2022/FY2023 application period is closed.",
-    "ProcurementType": "RFA",
-    "FYYear": "FY2022\u2013FY2023 (combined)",
-    "MatchInfo": "FY22 10/0; FY23 20/10",
-    "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "FY2022\u2013FY2023 (combined) | Match: FY22 10/0; FY23 20/10 | Min/Max: Not publicly stated on reviewed source"
-  },
-  {
-    "State": "North Carolina",
-    "Region": "Southeast",
-    "Status": "Closed",
-    "Start": "2025-11-01",
-    "End": "2025-11-30",
-    "SortDate": "2025-11-01",
-    "Description": "North Carolina's FY2025 SLCGP application period ran November 1 to November 30, 2025 through the state's Salesforce grants portal, with subrecipient awards estimated for spring 2026 or later.",
-    "SourceLabel": "North Carolina SLCGP page",
-    "SourceURL": "https://www.ncdps.gov/SLCGP",
-    "Confidence": "High",
-    "PriorLabel": "North Carolina SLCGP page",
-    "PriorURL": "https://www.ncdps.gov/SLCGP",
-    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material.",
-    "DrillDownLabel": "North Carolina SLCGP Q&A / procurement guidance",
-    "DrillDownURL": "https://www.ncdps.gov/our-organization/emergency-management/emergency-management-grants/state-and-local-cybersecurity-grant-program/state-and-local-cybersecurity-grant-program-qa",
-    "ProcurementProcess": "Competitive state subrecipient application submitted through North Carolina's Salesforce grants portal during the posted window. NC also publishes procurement Q&A, including when local entities may use state contract vehicles instead of issuing a separate formal RFP.",
-    "ProcurementType": "Online application window",
-    "FYYear": "FY2025",
-    "MatchInfo": "40% single / 30% multi-entity",
-    "MinMaxInfo": "No clear statewide min; state page gives 40% example for a $100,000 project",
-    "FYSummary": "FY2025 | Match: 40% single / 30% multi-entity | Min/Max: No clear statewide min; state page gives 40% example for a $100,000 project"
-  },
-  {
-    "State": "North Dakota",
-    "Region": "Northeast",
-    "Status": "Forecasted/TBD",
-    "Start": "",
-    "End": "",
-    "SortDate": "2099-12-31",
-    "Description": "North Dakota official materials reviewed showed prior SLCGP activity but no clearly posted dated 2026 local/subrecipient window on current official pages surfaced in search.",
-    "SourceLabel": "North Dakota emergency services news page",
-    "SourceURL": "https://www.des.nd.gov/news/nddes-issues-notice-intent-noi-apply-fy-2025-state-homeland-security-grant-program",
-    "Confidence": "Low",
-    "PriorLabel": "North Dakota emergency services news page",
-    "PriorURL": "https://www.des.nd.gov/news/nddes-issues-notice-intent-noi-apply-fy-2025-state-homeland-security-grant-program",
-    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material.",
-    "DrillDownLabel": "North Dakota emergency services news page",
-    "DrillDownURL": "https://www.des.nd.gov/news/nddes-issues-notice-intent-noi-apply-fy-2025-state-homeland-security-grant-program",
-    "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
-    "ProcurementType": "State page / TBD",
-    "FYYear": "TBD on reviewed source",
-    "MatchInfo": "TBD on reviewed source",
-    "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
-  },
-  {
-    "State": "Ohio",
-    "Region": "Northeast",
-    "Status": "Closed",
-    "Start": "",
-    "End": "2026-03-13",
-    "SortDate": "2026-03-13",
-    "Description": "Ohio's Round 3 SLCGP .gov migration application guidance required project applications to be submitted by midnight on March 13, 2026.",
-    "SourceLabel": "Ohio Round 3 SLCGP guidance",
-    "SourceURL": "https://dam.assets.ohio.gov/image/upload/cyber.ohio.gov/Round_3_SLCGP_Grant_Application_Guidance.gov_Migration-Final.pdf",
-    "Confidence": "High",
-    "PriorLabel": "Ohio Round 3 SLCGP guidance",
-    "PriorURL": "https://dam.assets.ohio.gov/image/upload/cyber.ohio.gov/Round_3_SLCGP_Grant_Application_Guidance.gov_Migration-Final.pdf",
-    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material.",
-    "DrillDownLabel": "Ohio Round 3 SLCGP guidance",
-    "DrillDownURL": "https://dam.assets.ohio.gov/image/upload/cyber.ohio.gov/Round_3_SLCGP_Grant_Application_Guidance.gov_Migration-Final.pdf",
-    "ProcurementProcess": "The primary state subrecipient window is closed. Use this official page to monitor the next cycle, RFP/RFA, or grants portal. After award, local procurement typically follows state/local purchasing rules.",
-    "ProcurementType": "RFP",
-    "FYYear": "Round 3; federal FY not stated",
-    "MatchInfo": "TBD on reviewed source",
-    "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "Round 3; federal FY not stated | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
-  },
-  {
-    "State": "Oklahoma",
-    "Region": "West",
-    "Status": "Open",
-    "Start": "",
-    "End": "2026-04-30",
-    "SortDate": "2026-04-30",
-    "Description": "Oklahoma's grants page says the State and Local Cybersecurity Grant Program is now accepting new applications, with 2026 deadlines of January 30, April 30, July 31, and October 30. The same page notes funding is not currently accessible and additional funding is expected later in the year.",
-    "SourceLabel": "Oklahoma grants page",
-    "SourceURL": "https://oklahoma.gov/homeland-security/grants.html",
-    "Confidence": "Medium",
-    "PriorLabel": "Oklahoma grants page",
-    "PriorURL": "https://oklahoma.gov/homeland-security/grants.html",
-    "PriorNote": "Official Oklahoma grants page with current SLCGP application materials, deadlines, and procurement guidance links.",
-    "DrillDownLabel": "Oklahoma grants page / SLCGP application materials",
-    "DrillDownURL": "https://oklahoma.gov/homeland-security/grants.html",
-    "ProcurementProcess": "Recurring state application process with multiple 2026 deadlines. Applicants review the one-page announcement, tie projects to the State Cyber Plan, and submit applications to hsgrants@okohs.ok.gov.",
-    "ProcurementType": "Quarterly rolling application",
-    "FYYear": "TBD; page links FY22\u2013FY25 NOFOs",
-    "MatchInfo": "Depends on linked NOFO year",
-    "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "TBD; page links FY22\u2013FY25 NOFOs | Match: Depends on linked NOFO year | Min/Max: Not publicly stated on reviewed source"
-  },
-  {
-    "State": "Oregon",
-    "Region": "West",
-    "Status": "Open",
-    "Start": "",
-    "End": "2026-06-30",
-    "SortDate": "2026-06-30",
-    "Description": "Oregon Round 3 instructions say the program is collecting applications throughout the year until funds are awarded, with review once every quarter; the next listed 2026 quarter-end deadline is June 30, 2026.",
-    "SourceLabel": "Oregon Round 3 application instructions",
-    "SourceURL": "https://www.oregon.gov/oem/Documents/2025-SLCGP-Application-Instructions_Round-3.pdf",
-    "Confidence": "High",
-    "PriorLabel": "Oregon Round 3 program guidance",
-    "PriorURL": "https://www.oregon.gov/oem/Documents/2025-SLCGP-Program-Guidance_Round-3.pdf",
-    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material.",
-    "DrillDownLabel": "Oregon Round 3 application instructions",
-    "DrillDownURL": "https://www.oregon.gov/oem/Documents/2025-SLCGP-Application-Instructions_Round-3.pdf",
-    "ProcurementProcess": "Quarterly competitive application. Applicants email the package to OEM; review occurs once each quarter. Awards are reimbursement-based, with quarterly reporting and reimbursement requests.",
-    "ProcurementType": "Quarterly rolling application",
-    "FYYear": "Round 3; FY2024/FY2025 dependent",
-    "MatchInfo": "FY24 may require 30% (waiver pending on cited guidance); FY25 40%",
-    "MinMaxInfo": "No statewide min/max stated; up to 2 projects per quarter",
-    "FYSummary": "Round 3; FY2024/FY2025 dependent | Match: FY24 may require 30% (waiver pending on cited guidance); FY25 40% | Min/Max: No statewide min/max stated; up to 2 projects per quarter"
-  },
-  {
-    "State": "Pennsylvania",
-    "Region": "Northeast",
-    "Status": "Forecasted/TBD",
-    "Start": "",
-    "End": "",
-    "SortDate": "2099-12-31",
-    "Description": "Pennsylvania's cybersecurity grant page says local governments will be able to apply to the Commonwealth to participate in committee-identified cybersecurity projects, but additional information to apply for 2025 funding will be provided later and no dated 2026 local window was publicly posted on the reviewed page as of refresh.",
-    "SourceLabel": "Pennsylvania cyber grant page",
-    "SourceURL": "https://www.pa.gov/services/pema/cybersecurity-grant",
-    "Confidence": "High",
-    "PriorLabel": "Pennsylvania cyber grant page",
-    "PriorURL": "https://www.pa.gov/services/pema/cybersecurity-grant",
-    "PriorNote": "Official Commonwealth page describing the offered services and stating that more application information will be provided later.",
-    "DrillDownLabel": "Pennsylvania cyber grant page",
-    "DrillDownURL": "https://www.pa.gov/services/pema/cybersecurity-grant",
-    "ProcurementProcess": "Pennsylvania is using a committee-identified service/project model. Local governments cannot apply directly to the federal government and must wait for Commonwealth-issued application instructions when a state cycle opens.",
-    "ProcurementType": "State page / TBD",
-    "FYYear": "TBD on reviewed source",
-    "MatchInfo": "TBD on reviewed source",
-    "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
-  },
-  {
-    "State": "Rhode Island",
-    "Region": "Northeast",
-    "Status": "Forecasted/TBD",
-    "Start": "",
-    "End": "",
-    "SortDate": "2099-12-31",
-    "Description": "Rhode Island's grants hub was reviewed, but no clearly posted dated 2026 local/subrecipient SLCGP window was surfaced on the reviewed official pages as of refresh.",
-    "SourceLabel": "RIEMA non-disaster grants page",
-    "SourceURL": "https://riema.ri.gov/fiscal-branch/non-disaster-grants",
-    "Confidence": "Low",
-    "PriorLabel": "RIEMA non-disaster grants page",
-    "PriorURL": "https://riema.ri.gov/fiscal-branch/non-disaster-grants",
-    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material.",
-    "DrillDownLabel": "RIEMA non-disaster grants page",
-    "DrillDownURL": "https://riema.ri.gov/fiscal-branch/non-disaster-grants",
-    "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
-    "ProcurementType": "State page / TBD",
-    "FYYear": "TBD on reviewed source",
-    "MatchInfo": "TBD on reviewed source",
-    "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
-  },
-  {
-    "State": "South Carolina",
-    "Region": "Southeast",
-    "Status": "Open",
-    "Start": "",
-    "End": "2026-05-15",
-    "SortDate": "2026-05-15",
-    "Description": "South Carolina's SAA page says the 2024 SLCGP application process started March 20, 2026 with solicitation emails, and applicants must submit the application by May 15, 2026, close of business.",
-    "SourceLabel": "South Carolina SAA homeland security page",
-    "SourceURL": "https://www.sled.sc.gov/departments/state-administrative-agency-saa-homeland-security",
-    "Confidence": "High",
-    "PriorLabel": "South Carolina SAA homeland security page",
-    "PriorURL": "https://www.sled.sc.gov/departments/state-administrative-agency-saa-homeland-security",
-    "PriorNote": "Official SAA page describing the current application process and linking to the proposal worksheet.",
-    "DrillDownLabel": "South Carolina SLCGP application worksheet",
-    "DrillDownURL": "https://www.sled.sc.gov/sites/sled/files/forms/homeland/Grants/2024%20SLCGP%20Application%20Proposal%20Worksheet.pdf",
-    "ProcurementProcess": "State proposal application distributed through SLED/SAA, with solicitation emails beginning March 20, 2026 and proposals due May 15, 2026. After award, local procurement follows South Carolina/local rules and any state instructions in the award package.",
-    "ProcurementType": "Proposal application",
-    "FYYear": "FY2024",
-    "MatchInfo": "30% single / 20% multi-entity",
-    "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "FY2024 | Match: 30% single / 20% multi-entity | Min/Max: Not publicly stated on reviewed source"
-  },
-  {
-    "State": "South Dakota",
-    "Region": "Northeast",
-    "Status": "Forecasted/TBD",
-    "Start": "",
-    "End": "",
-    "SortDate": "2099-12-31",
-    "Description": "South Dakota's homeland security grants pages were reviewed, but no clearly labeled 2026 SLCGP local/subrecipient window was publicly posted on surfaced official pages as of refresh.",
-    "SourceLabel": "South Dakota homeland security grants page",
-    "SourceURL": "https://www.sd.gov/cs?id=kb_article_view&sysparm_article=KB0043443",
-    "Confidence": "Low",
-    "PriorLabel": "South Dakota homeland security grants page",
-    "PriorURL": "https://www.sd.gov/cs?id=kb_article_view&sysparm_article=KB0043443",
-    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material.",
-    "DrillDownLabel": "South Dakota homeland security grants page",
-    "DrillDownURL": "https://www.sd.gov/cs?id=kb_article_view&sysparm_article=KB0043443",
-    "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
-    "ProcurementType": "State page / TBD",
-    "FYYear": "TBD on reviewed source",
-    "MatchInfo": "TBD on reviewed source",
-    "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
-  },
-  {
-    "State": "Tennessee",
-    "Region": "Mid-Atlantic",
-    "Status": "Forecasted/TBD",
-    "Start": "",
-    "End": "",
-    "SortDate": "2099-12-31",
-    "Description": "Tennessee SLCGP reporting and grant documents are live, but no clearly posted dated 2026 statewide local/subrecipient application window was surfaced in current official-page review.",
-    "SourceLabel": "Tennessee SLCGP reporting form hub",
-    "SourceURL": "https://www.tn.gov/content/dam/tn/cybersecurity/slcgp/State%20and%20Local%20Cybersecurity%20Grant%20Program%20Reporting%20Form.docx",
-    "Confidence": "Low",
-    "PriorLabel": "Tennessee SLCGP reporting form hub",
-    "PriorURL": "https://www.tn.gov/content/dam/tn/cybersecurity/slcgp/State%20and%20Local%20Cybersecurity%20Grant%20Program%20Reporting%20Form.docx",
-    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material.",
-    "DrillDownLabel": "Tennessee SLCGP reporting form hub",
-    "DrillDownURL": "https://www.tn.gov/content/dam/tn/cybersecurity/slcgp/State%20and%20Local%20Cybersecurity%20Grant%20Program%20Reporting%20Form.docx",
-    "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
-    "ProcurementType": "State page / TBD",
-    "FYYear": "TBD on reviewed source",
-    "MatchInfo": "TBD on reviewed source",
-    "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
-  },
-  {
-    "State": "Texas",
-    "Region": "West",
-    "Status": "Closed",
-    "Start": "2025-12-15",
-    "End": "2026-02-12",
-    "SortDate": "2025-12-15",
-    "Description": "Texas states its year 3 Request for Applications opened December 15, 2025 and closed February 12, 2026.",
-    "SourceLabel": "Texas SLCGP page",
-    "SourceURL": "https://dir.texas.gov/information-security/state-and-local-cybersecurity-grant-program-slcgp",
-    "Confidence": "High",
-    "PriorLabel": "Texas SLCGP page",
-    "PriorURL": "https://dir.texas.gov/information-security/state-and-local-cybersecurity-grant-program-slcgp",
-    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material.",
-    "DrillDownLabel": "Texas DIR SLCGP RFA page",
-    "DrillDownURL": "https://dir.texas.gov/information-security/state-and-local-cybersecurity-grant-program-slcgp",
-    "ProcurementProcess": "Objective-based state RFA. Eligible applicants respond to the Texas DIR solicitation. After award, procurement follows Texas/local purchasing rules and grant conditions.",
-    "ProcurementType": "RFA",
-    "FYYear": "FY2024 (Year 3 RFA)",
-    "MatchInfo": "30% single / 20% multi-entity",
-    "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "FY2024 (Year 3 RFA) | Match: 30% single / 20% multi-entity | Min/Max: Not publicly stated on reviewed source"
-  },
-  {
-    "State": "Utah",
-    "Region": "West",
-    "Status": "Forecasted/TBD",
-    "Start": "",
-    "End": "",
-    "SortDate": "2099-12-31",
-    "Description": "Utah materials reviewed discussed cybersecurity support and legislative funding, but no clearly posted dated 2026 SLCGP local/subrecipient application window was surfaced in current official-page review.",
-    "SourceLabel": "Utah legislative cybersecurity support document",
-    "SourceURL": "https://le.utah.gov/interim/2026/pdf/00000702.pdf",
-    "Confidence": "Low",
-    "PriorLabel": "Utah legislative cybersecurity support document",
-    "PriorURL": "https://le.utah.gov/interim/2026/pdf/00000702.pdf",
-    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material.",
-    "DrillDownLabel": "Utah legislative cybersecurity support document",
-    "DrillDownURL": "https://le.utah.gov/interim/2026/pdf/00000702.pdf",
-    "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
-    "ProcurementType": "State page / TBD",
-    "FYYear": "TBD on reviewed source",
-    "MatchInfo": "TBD on reviewed source",
-    "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
-  },
-  {
-    "State": "Vermont",
-    "Region": "Northeast",
-    "Status": "Forecasted/TBD",
-    "Start": "",
-    "End": "",
-    "SortDate": "2099-12-31",
-    "Description": "Vermont's 2026 Cybersecurity Advisory Council report confirms SLCGP support and matching-fund activity, but no dated 2026 local/subrecipient window was publicly posted in reviewed official materials.",
-    "SourceLabel": "Vermont Cybersecurity Advisory Council 2026 report",
-    "SourceURL": "https://legislature.vermont.gov/assets/Legislative-Reports/Cybersecurity-Advisory-Council-Annual-Report-2026.pdf",
-    "Confidence": "Medium",
-    "PriorLabel": "Vermont Cybersecurity Advisory Council 2026 report",
-    "PriorURL": "https://legislature.vermont.gov/assets/Legislative-Reports/Cybersecurity-Advisory-Council-Annual-Report-2026.pdf",
-    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material.",
-    "DrillDownLabel": "Vermont Cybersecurity Advisory Council 2026 report",
-    "DrillDownURL": "https://legislature.vermont.gov/assets/Legislative-Reports/Cybersecurity-Advisory-Council-Annual-Report-2026.pdf",
-    "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
-    "ProcurementType": "State page / TBD",
-    "FYYear": "TBD on reviewed source",
-    "MatchInfo": "TBD on reviewed source",
-    "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
-  },
-  {
-    "State": "Virginia",
-    "Region": "Mid-Atlantic",
-    "Status": "Closed",
-    "Start": "",
-    "End": "",
-    "SortDate": "2099-12-31",
-    "Description": "Virginia's cybersecurity grants FAQ says the application window is now closed and directs users to the VDEM listserv for future notifications.",
-    "SourceLabel": "Virginia cybersecurity grants page",
-    "SourceURL": "https://www.vita.virginia.gov/security/cybersecurity-grants/",
-    "Confidence": "High",
-    "PriorLabel": "Virginia cybersecurity grants page",
-    "PriorURL": "https://www.vita.virginia.gov/security/cybersecurity-grants/",
-    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material.",
-    "DrillDownLabel": "Virginia cybersecurity grants FAQ / listserv page",
-    "DrillDownURL": "https://www.vita.virginia.gov/security/cybersecurity-grants/",
-    "ProcurementProcess": "State application window is currently closed. Use the Virginia page and listserv to catch the next subrecipient cycle; funded entities then procure under Virginia/local rules and grant terms.",
-    "ProcurementType": "Online application window",
-    "FYYear": "TBD on reviewed source",
-    "MatchInfo": "TBD on reviewed source",
-    "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
-  },
-  {
-    "State": "Washington",
-    "Region": "West",
-    "Status": "Forecasted/TBD",
-    "Start": "2026-04-25",
-    "End": "2026-06-10",
-    "SortDate": "2026-04-25",
-    "Description": "Washington's WaTech page says the current expected timeline for the last SLCGP round is a late April 2026 application release and an early June 2026 tentative application deadline.",
-    "SourceLabel": "Washington WaTech SLCGP page",
-    "SourceURL": "https://watech.wa.gov/state-local-cybersecurity-grant-program",
-    "Confidence": "High",
-    "PriorLabel": "Washington WaTech SLCGP page",
-    "PriorURL": "https://watech.wa.gov/state-local-cybersecurity-grant-program",
-    "PriorNote": "Official WaTech page noting more than $6.2M has already been allocated from FY22 and FY23 awards and outlining the expected final round timeline.",
-    "DrillDownLabel": "Washington WaTech SLCGP page",
-    "DrillDownURL": "https://watech.wa.gov/state-local-cybersecurity-grant-program",
-    "ProcurementProcess": "Washington is signaling another state-led solicitation round, with the application expected in late April 2026 and a tentative early June 2026 deadline. Use the WaTech page and preparedness.grants@mil.wa.gov to track release details.",
-    "ProcurementType": "State application",
-    "FYYear": "Expected final round; likely FY2025",
-    "MatchInfo": "40% single / 30% multi-entity",
-    "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "Expected final round; likely FY2025 | Match: 40% single / 30% multi-entity | Min/Max: Not publicly stated on reviewed source"
-  },
-  {
-    "State": "West Virginia",
-    "Region": "Mid-Atlantic",
-    "Status": "Forecasted/TBD",
-    "Start": "",
-    "End": "",
-    "SortDate": "2099-12-31",
-    "Description": "West Virginia's April 2026 funding page urges eligible agencies to apply and provides a program contact, but it still does not post a clearly dated state-local application packet or deadline on the reviewed page.",
-    "SourceLabel": "West Virginia cybersecurity grant funding page",
-    "SourceURL": "https://emd.wv.gov/cybersecurity-grant-funding",
-    "Confidence": "Medium",
-    "PriorLabel": "West Virginia cybersecurity grant funding page",
-    "PriorURL": "https://emd.wv.gov/cybersecurity-grant-funding",
-    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material.",
-    "DrillDownLabel": "West Virginia cybersecurity grant funding page",
-    "DrillDownURL": "https://emd.wv.gov/cybersecurity-grant-funding",
-    "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
-    "ProcurementType": "State page / TBD",
-    "FYYear": "TBD on reviewed source",
-    "MatchInfo": "TBD on reviewed source",
-    "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
-  },
-  {
-    "State": "Wisconsin",
-    "Region": "Northeast",
-    "Status": "Closed",
-    "Start": "2025-11-18",
-    "End": "2026-01-30",
-    "SortDate": "2025-11-18",
-    "Description": "Wisconsin says the FFY23 cycle-2 round-2 NOFO and grant application were open November 18, 2025 to January 30, 2026.",
-    "SourceLabel": "Wisconsin cybersecurity grants page",
-    "SourceURL": "https://det.wi.gov/Pages/Cybersecurity_Grants.aspx",
-    "Confidence": "High",
-    "PriorLabel": "Wisconsin cybersecurity grants page",
-    "PriorURL": "https://det.wi.gov/Pages/Cybersecurity_Grants.aspx",
-    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material.",
-    "DrillDownLabel": "Wisconsin cybersecurity grants page",
-    "DrillDownURL": "https://det.wi.gov/Pages/Cybersecurity_Grants.aspx",
-    "ProcurementProcess": "The primary state subrecipient window is closed. Use this official page to monitor the next cycle, RFP/RFA, or grants portal. After award, local procurement typically follows state/local purchasing rules.",
-    "ProcurementType": "RFP",
-    "FYYear": "FFY2023 cycle 2 / round 2",
-    "MatchInfo": "FFY23 cost-share waiver approved; FFY24 30%; FFY25 40%",
-    "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "FFY2023 cycle 2 / round 2 | Match: FFY23 cost-share waiver approved; FFY24 30%; FFY25 40% | Min/Max: Not publicly stated on reviewed source"
-  },
-  {
-    "State": "Wyoming",
-    "Region": "West",
-    "Status": "Forecasted/TBD",
-    "Start": "",
-    "End": "",
-    "SortDate": "2099-12-31",
-    "Description": "Wyoming's grants pages were reviewed, but no clearly labeled 2026 SLCGP local/subrecipient window was publicly posted on surfaced official pages as of refresh.",
-    "SourceLabel": "Wyoming grants page",
-    "SourceURL": "https://hls.wyo.gov/grants",
-    "Confidence": "Low",
-    "PriorLabel": "Wyoming grants page",
-    "PriorURL": "https://hls.wyo.gov/grants",
-    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material.",
-    "DrillDownLabel": "Wyoming grants page",
-    "DrillDownURL": "https://hls.wyo.gov/grants",
-    "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
-    "ProcurementType": "State page / TBD",
-    "FYYear": "TBD on reviewed source",
-    "MatchInfo": "TBD on reviewed source",
-    "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
-  }
-];
-const regionOrder = ["Mid-Atlantic", "Northeast", "Southeast", "West"];
-const statusOrder = {"Open": 0, "Closed": 1, "Forecasted/TBD": 2};
-const confidenceOrder = {"High": 0, "Medium": 1, "Low": 2};
-const procurementOrder = ["RFP", "RFA", "Quarterly rolling application", "Rolling application", "First-come portal", "Online application window", "Proposal application", "Participation/request forms", "State application", "State page / TBD"];
-let sortState = { key: 'SortDate', dir: 'asc', type: 'date' };
+    let currentSort = {key:'state',dir:'asc'};
+    let currentEventSort = {key:'date',dir:'asc'};
+    let visibleStatuses = new Set();
+    let visibleRegions = new Set();
+    let hidePastEvents = false;
+    let selectedEventType = '';
+    let showLinksCol = true;
+    let showResources = true;
+    let showEvents = true;
 
-const searchEl = document.getElementById('search');
-const regionFilter = document.getElementById('regionFilter');
-const stateFilter = document.getElementById('stateFilter');
-const statusFilter = document.getElementById('statusFilter');
-const procTypeFilter = document.getElementById('procTypeFilter');
-const table = document.getElementById('dataTable');
-const tbody = document.getElementById('tbody');
-const headerCells = Array.from(document.querySelectorAll('thead th'));
+    function exportPdf(){ window.print(); }
+    function escapeHtml(text){ return String(text).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
+    function escapeRegex(text){ return text.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'); }
+    function highlightText(text){
+      let html = escapeHtml(text);
+      const flat = keywordGroups.flatMap(g => g.terms.map(t => ({term:t, cls:g.cls}))).sort((a,b)=>b.term.length-a.term.length);
+      flat.forEach(item => {
+        const re = new RegExp('\\b' + escapeRegex(item.term) + '\\b','gi');
+        html = html.replace(re, m => '<span class="' + item.cls + '">' + m + '</span>');
+      });
+      return html;
+    }
+    function renderLinks(links){ return '<div class="link-cell">' + links.map(([label,url]) => '<a href="' + escapeHtml(url) + '">' + escapeHtml(label) + '</a>').join('') + '</div>'; }
+    function statusBadge(status){ const cls = status === 'active' ? 'active' : status === 'recently closed' ? 'closed' : status === 'forecasted' ? 'forecast' : 'monitor'; return '<span class="status ' + cls + '">' + escapeHtml(status) + '</span>'; }
 
-function populateSelect(el, values, placeholder) {
-  el.innerHTML = `<option value="">${placeholder}</option>` + values.map(v => `<option value="${escapeHtml(v)}">${escapeHtml(v)}</option>`).join('');
-}
+    function renderStates(){
+      const tbody = document.querySelector('#trackerTable tbody');
+      tbody.innerHTML = stateData.map(d => '<tr data-state="' + escapeHtml(d.state) + '" data-region="' + escapeHtml(d.region) + '" data-status="' + escapeHtml(d.status) + '">'
+        + '<td><strong>' + escapeHtml(d.state) + (d.updated ? ' <span class="updated-star">★</span>' : '') + '</strong></td>'
+        + '<td>' + escapeHtml(d.region) + '</td>'
+        + '<td>' + statusBadge(d.status) + '</td>'
+        + '<td>' + highlightText(d.signal) + '</td>'
+        + '<td>' + escapeHtml(d.open) + '</td>'
+        + '<td>' + escapeHtml(d.close) + '</td>'
+        + '<td>' + escapeHtml(d.fit) + '</td>'
+        + '<td>' + renderLinks(d.links) + '</td>'
+        + '</tr>').join('');
+      document.getElementById('stateEmailSelect').innerHTML = '<option value="">Select state…</option>' + stateData.map(d => '<option value="' + escapeHtml(d.state) + '">' + escapeHtml(d.state) + '</option>').join('');
+    }
 
-function normalize(value) {
-  return (value ?? '').toString().trim().toLowerCase();
-}
+    function renderEvents(){
+      const tbody = document.querySelector('#eventsTable tbody');
+      tbody.innerHTML = eventData.map(e => '<tr data-eventstate="' + escapeHtml(e.state) + '" data-eventdate="' + escapeHtml(e.iso) + '" data-eventtype="' + escapeHtml(String(e.type).toLowerCase()) + '">'
+        + '<td><strong>' + escapeHtml(e.state) + '</strong></td>'
+        + '<td>' + escapeHtml(e.type) + '</td>'
+        + '<td>' + highlightText(e.event) + '</td>'
+        + '<td>' + escapeHtml(e.date + (e.time && e.time !== 'Time not posted' ? ' | ' + e.time : '')) + '</td>'
+        + '<td>' + escapeHtml(e.place) + '</td>'
+        + '<td>' + escapeHtml(e.location) + '</td>'
+        + '<td>' + highlightText(e.desc) + '</td>'
+        + '<td><a href="' + escapeHtml(e.link) + '">' + escapeHtml(e.label) + '</a></td>'
+        + '</tr>').join('');
+      populateEventTypeFilter();
+    }
 
-function compareRows(a, b) {
-  const key = sortState.key;
-  const dir = sortState.dir === 'asc' ? 1 : -1;
-  const type = sortState.type;
-  let av = a[key] ?? '';
-  let bv = b[key] ?? '';
+    function renderResources(){
+      const tbody = document.querySelector('#resourcesTable tbody');
+      tbody.innerHTML = resourceData.map(r => '<tr><td><strong>' + escapeHtml(r.name) + '</strong></td><td>' + escapeHtml(r.coverage) + '</td><td>' + escapeHtml(r.why) + '</td><td><a href="' + escapeHtml(r.link) + '">' + escapeHtml(r.label) + '</a></td></tr>').join('');
+    }
 
-  if (type === 'date') {
-    av = Date.parse(av || '2099-12-31');
-    bv = Date.parse(bv || '2099-12-31');
-  } else if (type === 'status') {
-    av = statusOrder[a.Status] ?? 99;
-    bv = statusOrder[b.Status] ?? 99;
-  } else if (type === 'confidence') {
-    av = confidenceOrder[a.Confidence] ?? 99;
-    bv = confidenceOrder[b.Confidence] ?? 99;
-  } else {
-    av = normalize(av);
-    bv = normalize(bv);
-  }
+    function populateEventTypeFilter(){
+      const select = document.getElementById('eventTypeFilter');
+      const types = [...new Set(eventData.map(e => e.type))].sort((a,b)=>a.localeCompare(b));
+      select.innerHTML = '<option value="">All event types</option>' + types.map(type => '<option value="' + escapeHtml(type.toLowerCase()) + '">' + escapeHtml(type) + '</option>').join('');
+      select.value = selectedEventType;
+    }
 
-  if (av < bv) return -1 * dir;
-  if (av > bv) return 1 * dir;
-  return normalize(a.State).localeCompare(normalize(b.State));
-}
+    function sortRows(key){
+      const tbody = document.querySelector('#trackerTable tbody');
+      const rows = Array.from(tbody.querySelectorAll('tr'));
+      const dir = currentSort.key === key && currentSort.dir === 'asc' ? 'desc' : 'asc';
+      rows.sort((a,b)=>{
+        const av = (a.dataset[key] || '').toLowerCase();
+        const bv = (b.dataset[key] || '').toLowerCase();
+        if(av < bv) return dir === 'asc' ? -1 : 1;
+        if(av > bv) return dir === 'asc' ? 1 : -1;
+        return 0;
+      });
+      rows.forEach(r => tbody.appendChild(r));
+      currentSort = {key,dir};
+      updateSortIndicators();
+    }
 
-function escapeHtml(value) {
-  return String(value ?? '')
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#39;');
-}
+    function sortEventRows(key){
+      const tbody = document.querySelector('#eventsTable tbody');
+      const rows = Array.from(tbody.querySelectorAll('tr'));
+      const dir = currentEventSort.key === key && currentEventSort.dir === 'asc' ? 'desc' : 'asc';
+      rows.sort((a,b)=>{
+        const av = key === 'date' ? (a.dataset.eventdate || '') : (a.dataset.eventstate || '').toLowerCase();
+        const bv = key === 'date' ? (b.dataset.eventdate || '') : (b.dataset.eventstate || '').toLowerCase();
+        if(av < bv) return dir === 'asc' ? -1 : 1;
+        if(av > bv) return dir === 'asc' ? 1 : -1;
+        return 0;
+      });
+      rows.forEach(r => tbody.appendChild(r));
+      currentEventSort = {key,dir};
+      updateSortIndicators();
+    }
 
-function fmtDate(value) {
-  if (!value) return '';
-  const parts = value.split('-');
-  if (parts.length !== 3) return value;
-  const d = new Date(value + 'T00:00:00');
-  return d.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
-}
+    function updateSortIndicators(){
+      document.getElementById('stateHeader').setAttribute('data-indicator', currentSort.key === 'state' ? (currentSort.dir === 'asc' ? '▲' : '▼') : '↕');
+      document.getElementById('regionHeader').setAttribute('data-indicator', currentSort.key === 'region' ? (currentSort.dir === 'asc' ? '▲' : '▼') : '↕');
+      document.getElementById('statusHeader').setAttribute('data-indicator', currentSort.key === 'status' ? (currentSort.dir === 'asc' ? '▲' : '▼') : '↕');
+      document.getElementById('eventStateHeader').setAttribute('data-indicator', currentEventSort.key === 'state' ? (currentEventSort.dir === 'asc' ? '▲' : '▼') : '↕');
+      document.getElementById('eventDateHeader').setAttribute('data-indicator', currentEventSort.key === 'date' ? (currentEventSort.dir === 'asc' ? '▲' : '▼') : '↕');
+    }
 
-function cssKey(value) {
-  return normalize(value).replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
-}
+    function applyStateFilters(){
+      document.querySelectorAll('#trackerTable tbody tr').forEach(r => {
+        const statusOk = visibleStatuses.size === 0 || visibleStatuses.has(r.dataset.status);
+        const regionOk = visibleRegions.size === 0 || visibleRegions.has(r.dataset.region);
+        r.classList.toggle('hidden-row', !(statusOk && regionOk));
+      });
+      updateCounts();
+    }
+    function toggleStatusFilter(status){ if(visibleStatuses.has(status)) visibleStatuses.delete(status); else visibleStatuses.add(status); updateFilterButtons(); applyStateFilters(); }
+    function showAllStatuses(){ visibleStatuses = new Set(); updateFilterButtons(); applyStateFilters(); }
+    function toggleRegionFilter(region){ if(visibleRegions.has(region)) visibleRegions.delete(region); else visibleRegions.add(region); updateFilterButtons(); applyStateFilters(); }
+    function showAllRegions(){ visibleRegions = new Set(); updateFilterButtons(); applyStateFilters(); }
+    function updateFilterButtons(){
+      ['active','recently closed','forecasted','monitor'].forEach(s => { const el = document.getElementById('status-' + s.replace(/ /g,'-') + '-btn'); if(el) el.classList.toggle('is-off', visibleStatuses.size === 0 || !visibleStatuses.has(s)); });
+      ['Mid-Atlantic','Northeast','Southeast','West'].forEach(r => { const el = document.getElementById('region-' + r.toLowerCase().replace(/ /g,'-') + '-btn'); if(el) el.classList.toggle('is-off', visibleRegions.size === 0 || !visibleRegions.has(r)); });
+    }
 
-function regionClass(region) {
-  const map = {'Mid-Atlantic':'mid','Northeast':'ne','Southeast':'se','West':'west'};
-  return map[region] || 'ne';
-}
+    function setEventTypeFilter(value){ selectedEventType = String(value || '').toLowerCase(); applyEventFilters(); }
+    function togglePastEvents(){ hidePastEvents = !hidePastEvents; applyEventFilters(); }
+    function applyEventFilters(){
+      document.querySelectorAll('#eventsTable tbody tr').forEach(r => {
+        const isPast = Date.parse((r.dataset.eventdate || '') + 'T00:00:00') < TODAY.getTime();
+        const typeOk = !selectedEventType || (r.dataset.eventtype || '') === selectedEventType;
+        r.classList.toggle('hidden-row', (hidePastEvents && isPast) || !typeOk);
+      });
+      document.getElementById('togglePastBtn').textContent = hidePastEvents ? 'Show past dates' : 'Hide past dates';
+      updateCounts();
+    }
 
-function updateSortIndicators() {
-  headerCells.forEach(th => {
-    const ind = th.querySelector('.sort-indicator');
-    ind.textContent = th.dataset.key === sortState.key ? (sortState.dir === 'asc' ? '▲' : '▼') : '';
-  });
-}
+    function toggleLinksCol(){
+      showLinksCol = !showLinksCol;
+      document.querySelectorAll('#trackerTable tr').forEach(r => { if(r.children[7]) r.children[7].classList.toggle('hidden-col', !showLinksCol); });
+      document.getElementById('toggleLinksBtn').textContent = showLinksCol ? 'Hide links' : 'Show links';
+    }
+    function toggleResources(){
+      showResources = !showResources;
+      document.getElementById('resourcesSection').style.display = showResources ? 'block' : 'none';
+      document.getElementById('resourcesTable').style.display = showResources ? 'table' : 'none';
+      document.getElementById('toggleResourcesBtn').textContent = showResources ? 'Hide resources' : 'Show resources';
+    }
+    function toggleEventsList(){
+      showEvents = !showEvents;
+      document.getElementById('eventsSection').style.display = showEvents ? 'block' : 'none';
+      document.getElementById('eventsTools').style.display = showEvents ? 'flex' : 'none';
+      document.getElementById('eventsTable').style.display = showEvents ? 'table' : 'none';
+      document.getElementById('toggleEventsBtn').textContent = showEvents ? 'Hide events list' : 'Show events list';
+      updateCounts();
+    }
 
-function render() {
-  const q = normalize(searchEl.value);
-  const regionVal = regionFilter.value;
-  const stateVal = stateFilter.value;
-  const statusVal = statusFilter.value;
-  const procVal = procTypeFilter.value;
+    function visibleStateRows(){ return Array.from(document.querySelectorAll('#trackerTable tbody tr')).filter(r => !r.classList.contains('hidden-row')); }
+    function visibleEventRows(){ return Array.from(document.querySelectorAll('#eventsTable tbody tr')).filter(r => !r.classList.contains('hidden-row')); }
+    function updateCounts(){
+      const states = visibleStateRows();
+      const counts = {active:0,'recently closed':0,forecasted:0,monitor:0};
+      states.forEach(r => { counts[r.dataset.status] += 1; });
+      document.getElementById('filterCounts').textContent = 'Visible states: ' + states.length + ' of ' + stateData.length + ' | Active: ' + counts.active + ' | Recently closed: ' + counts['recently closed'] + ' | Forecasted: ' + counts.forecasted + ' | Monitor: ' + counts.monitor;
+      document.getElementById('eventCounts').textContent = showEvents ? 'Visible events: ' + visibleEventRows().length + ' of ' + eventData.length : 'Events hidden';
+    }
 
-  let filtered = data.filter(row => {
-    const hay = [row.State, row.Region, row.Status, row.FYYear, row.MatchInfo, row.MinMaxInfo, row.ProcurementType, row.Description, row.SourceLabel, row.PriorLabel, row.PriorNote, row.Confidence].join(' ').toLowerCase();
-    return (!q || hay.includes(q))
-      && (!regionVal || row.Region === regionVal)
-      && (!stateVal || row.State === stateVal)
-      && (!statusVal || row.Status === statusVal)
-      && (!procVal || row.ProcurementType === procVal);
-  });
+    function rowSummary(row){
+      const cells = row.querySelectorAll('td');
+      const links = Array.from(cells[7].querySelectorAll('a')).map(a => a.textContent + ': ' + a.href).join(' | ');
+      return {state:cells[0].innerText.replace('★','').trim(),region:cells[1].innerText.trim(),status:cells[2].innerText.trim(),signal:cells[3].innerText.trim(),open:cells[4].innerText.trim(),close:cells[5].innerText.trim(),fit:cells[6].innerText.trim(),links};
+    }
+    function openEmail(subject, body){
+      const to = document.getElementById('emailTo').value.trim();
+      const text = body.length > 3500 ? body.slice(0,3440) + '\n\n[Message trimmed for email length.]' : body;
+      window.location.href = 'mailto:' + encodeURIComponent(to) + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(text);
+    }
+    function emailSelectedState(){
+      const state = document.getElementById('stateEmailSelect').value;
+      if(!state) return;
+      const row = Array.from(document.querySelectorAll('#trackerTable tbody tr')).find(r => r.dataset.state === state);
+      if(!row) return;
+      const s = rowSummary(row);
+      const related = eventData.filter(e => e.state === state).map(e => e.event + ' | ' + e.date + ' | ' + e.link).join('\n');
+      let body = 'State report: ' + s.state + '\n\nRegion: ' + s.region + '\nStatus: ' + s.status + '\nOpen / posted: ' + s.open + '\nClose / next date: ' + s.close + '\n\nCurrent signal:\n' + s.signal + '\n\nSolutionz fit:\n' + s.fit + '\n\nLinks:\n' + (s.links || '—');
+      if(related) body += '\n\nRelated events:\n' + related;
+      openEmail('RHTP State Report | ' + s.state, body);
+    }
+    function emailFilteredReport(){
+      let body = 'Filtered RHTP report\nGenerated from the interactive master on April 13, 2026.\n\n';
+      visibleStateRows().forEach(r => { const s = rowSummary(r); body += s.state + ' | ' + s.region + ' | ' + s.status + ' | Open: ' + s.open + ' | Close: ' + s.close + '\nSignal: ' + s.signal + '\nLinks: ' + (s.links || '—') + '\n\n'; });
+      openEmail('RHTP Filtered Report | ' + visibleStateRows().length + ' states', body);
+    }
+    function emailFullReport(){
+      let body = 'Full RHTP report\nGenerated from the interactive master on April 13, 2026.\n\n';
+      Array.from(document.querySelectorAll('#trackerTable tbody tr')).forEach(r => { const s = rowSummary(r); body += s.state + ' | ' + s.region + ' | ' + s.status + ' | Open: ' + s.open + ' | Close: ' + s.close + '\nSignal: ' + s.signal + '\nLinks: ' + (s.links || '—') + '\n\n'; });
+      openEmail('RHTP Full Report | 50 states', body);
+    }
 
-  filtered.sort(compareRows);
+    function enableColumnResize(){
+      document.querySelectorAll('table thead th').forEach(th => {
+        if(th.querySelector('.resize-handle')) return;
+        const handle = document.createElement('span');
+        handle.className = 'resize-handle';
+        th.appendChild(handle);
+        let startX = 0, startW = 0;
+        handle.addEventListener('mousedown', e => {
+          e.stopPropagation();
+          startX = e.pageX; startW = th.offsetWidth;
+          const onMove = ev => { th.style.width = Math.max(90, startW + (ev.pageX - startX)) + 'px'; };
+          const onUp = () => { document.removeEventListener('mousemove', onMove); document.removeEventListener('mouseup', onUp); };
+          document.addEventListener('mousemove', onMove);
+          document.addEventListener('mouseup', onUp);
+        });
+      });
+    }
 
-  tbody.innerHTML = filtered.map(row => `
-    <tr class="row-${cssKey(row.Status)}">
-      <td>
-        <div class="state">${escapeHtml(row.State)}</div>
-        <span class="region-chip ${regionClass(row.Region)}">${escapeHtml(row.Region)}</span>
-      </td>
-      <td><span class="status-chip status-${cssKey(row.Status)}">${escapeHtml(row.Status)}</span></td>
-      <td>${escapeHtml(fmtDate(row.Start))}</td>
-      <td>${escapeHtml(fmtDate(row.End))}</td>
-      <td><div><strong>${escapeHtml(row.FYYear || '')}</strong></div><div class="small-note">Match: ${escapeHtml(row.MatchInfo || '')}</div><div class="small-note">Min/Max: ${escapeHtml(row.MinMaxInfo || '')}</div></td>
-      <td><span class="ptype-chip ptype-${cssKey(row.ProcurementType)}">${escapeHtml(row.ProcurementType)}</span></td>
-      <td>${escapeHtml(row.Description)}</td>
-      <td><a href="${escapeHtml(row.SourceURL)}" target="_blank" rel="noopener noreferrer">${escapeHtml(row.SourceLabel)}</a></td>
-      <td><a href="${escapeHtml(row.DrillDownURL)}" target="_blank" rel="noopener noreferrer">${escapeHtml(row.DrillDownLabel)}</a></td>
-      <td><div class="proc-note">${escapeHtml(row.ProcurementProcess)}</div></td>
-      <td><a href="${escapeHtml(row.PriorURL)}" target="_blank" rel="noopener noreferrer">${escapeHtml(row.PriorLabel)}</a><div class="small-note">${escapeHtml(row.PriorNote)}</div></td>
-      <td><span class="conf-chip conf-${cssKey(row.Confidence)}">${escapeHtml(row.Confidence)}</span></td>
-    </tr>
-  `).join('');
+    function runChecks(){
+      const checks = [];
+      checks.push(document.querySelectorAll('#trackerTable tbody tr').length === 50 ? '50 states ok' : 'state row count mismatch');
+      checks.push(document.querySelectorAll('#eventsTable tbody tr').length === 16 ? 'event row count ok' : 'event row count mismatch');
+      checks.push(document.querySelectorAll('#resourcesTable tbody tr').length === 8 ? 'resource row count ok' : 'resource row count mismatch');
+      checks.push(document.getElementById('eventTypeFilter') ? 'event filter ok' : 'event filter missing');
+      document.getElementById('devCheck').innerHTML = '<strong>Self-check:</strong> ' + checks.join(' | ');
+    }
 
-  document.getElementById('visibleCount').textContent = filtered.length;
-  document.getElementById('openCount').textContent = filtered.filter(r => r.Status === 'Open').length;
-  document.getElementById('closedCount').textContent = filtered.filter(r => r.Status === 'Closed').length;
-  document.getElementById('forecastCount').textContent = filtered.filter(r => r.Status === 'Forecasted/TBD').length;
-  document.getElementById('highCount').textContent = filtered.filter(r => r.Confidence === 'High').length;
-  document.getElementById('priorCount').textContent = filtered.filter(r => !!r.PriorURL).length;
-  updateSortIndicators();
-}
-
-function setupSorting() {
-  headerCells.forEach(th => {
-    th.addEventListener('click', event => {
-      if (event.target.closest('.resize-handle')) return;
-      const key = th.dataset.key;
-      const type = th.dataset.type || 'text';
-      if (sortState.key === key) {
-        sortState.dir = sortState.dir === 'asc' ? 'desc' : 'asc';
-      } else {
-        sortState = { key, dir: 'asc', type };
-      }
-      render();
-    });
-  });
-}
-
-function setupResizableColumns() {
-  const cols = Array.from(document.querySelectorAll('#colgroup col'));
-  headerCells.forEach((th, index) => {
-    const handle = th.querySelector('.resize-handle');
-    if (!handle || !cols[index]) return;
-    handle.addEventListener('pointerdown', event => {
-      event.preventDefault();
-      event.stopPropagation();
-      const startX = event.clientX;
-      const startWidth = cols[index].getBoundingClientRect().width;
-      const totalWidth = table.getBoundingClientRect().width;
-      th.classList.add('resizing');
-      handle.setPointerCapture(event.pointerId);
-
-      const onMove = moveEvent => {
-        const nextWidth = Math.max(55, startWidth + (moveEvent.clientX - startX));
-        cols[index].style.width = `${(nextWidth / totalWidth) * 100}%`;
-      };
-      const onUp = upEvent => {
-        th.classList.remove('resizing');
-        handle.releasePointerCapture(upEvent.pointerId);
-        handle.removeEventListener('pointermove', onMove);
-        handle.removeEventListener('pointerup', onUp);
-        handle.removeEventListener('pointercancel', onUp);
-      };
-      handle.addEventListener('pointermove', onMove);
-      handle.addEventListener('pointerup', onUp);
-      handle.addEventListener('pointercancel', onUp);
-    });
-  });
-}
-
-populateSelect(regionFilter, regionOrder, 'All regions');
-populateSelect(stateFilter, [...new Set(data.map(d => d.State))].sort(), 'All states');
-populateSelect(procTypeFilter, procurementOrder.filter(v => data.some(d => d.ProcurementType === v)), 'All types');
-
-[searchEl, regionFilter, stateFilter, statusFilter, procTypeFilter].forEach(el => {
-  el.addEventListener('input', render);
-  el.addEventListener('change', render);
-});
-
-document.getElementById('resetBtn').addEventListener('click', () => {
-  searchEl.value = '';
-  regionFilter.value = '';
-  stateFilter.value = '';
-  statusFilter.value = '';
-  procTypeFilter.value = '';
-  sortState = { key: 'SortDate', dir: 'asc', type: 'date' };
-  render();
-});
-
-document.getElementById('pdfBtn').addEventListener('click', () => window.print());
-
-setupSorting();
-setupResizableColumns();
-render();
-</script>
+    renderStates();
+    renderEvents();
+    renderResources();
+    updateSortIndicators();
+    updateFilterButtons();
+    applyStateFilters();
+    applyEventFilters();
+    enableColumnResize();
+    runChecks();
+  </script>
 </body>
 </html>
