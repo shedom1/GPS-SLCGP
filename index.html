@@ -1,8 +1,9 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
 <title>SLCGP 2026 State Windows, Procurement, Prior Awards, and FY/Match Tracker</title>
 <style>
   :root {
@@ -127,94 +128,96 @@
     thead th, tbody td { padding: 4px 5px; }
     .table-wrap { overflow: visible; }
   }
+
+  .changes { border-radius: var(--radius); padding: 12px 14px; margin: 0 0 14px; background: linear-gradient(135deg, #fffef8 0%, #f7fbff 100%); border: 1px solid var(--line); box-shadow: var(--shadow); }
+  .changes h2 { margin: 0 0 8px; font-size: 15px; }
+  .changes ul { margin: 0; padding-left: 18px; color: var(--ink); }
+  .changes li { margin: 0 0 6px; font-size: 12px; line-height: 1.4; }
+  .changes .small { margin-top: 6px; font-size: 11px; color: var(--muted); }
 </style>
 </head>
 <body>
 <div class="wrap">
-  <section class="hero">
-    <div class="eyebrow">GPS Team | SLCGP sales tracker</div>
-    <h1>SLCGP 2026 State Windows, Procurement, Prior Awards, and FY/Match Tracker</h1>
-    <div class="sub">Tracks state-level SLCGP subrecipient windows, likely procurement route, best drill-down source, prior-awards/applicant-data link, and a new FY / match / min-max summary column. Procurement type classifies the front-door access model by state, such as RFP, RFA, rolling application, first-come portal, or state page/TBD.</div>
-    <div class="meta">
-      <div><b>Last Refresh Date:</b> April 13, 2026</div>
-      <div><b>Created by:</b> GPS Team</div>
-      <div><b>States:</b> 50</div>
-      <div><b>Default Sort:</b> Window date ascending</div>
-    </div>
-  </section>
-
-  <section class="cards">
-    <div class="card"><div class="label">Visible states</div><div class="value" id="visibleCount">50</div></div>
-    <div class="card"><div class="label">Open</div><div class="value" id="openCount">0</div></div>
-    <div class="card"><div class="label">Closed</div><div class="value" id="closedCount">0</div></div>
-    <div class="card"><div class="label">Forecasted / TBD</div><div class="value" id="forecastCount">0</div></div>
-    <div class="card"><div class="label">High confidence</div><div class="value" id="highCount">0</div></div>
-    <div class="card"><div class="label">Prior data links</div><div class="value" id="priorCount">0</div></div>
-  </section>
-
-  <section class="toolbar">
-    <div class="controls">
-      <div class="field">
-        <label for="search">Search</label>
-        <input id="search" type="search" placeholder="Search state, procurement type, source, or description..." />
-      </div>
-      <div class="field">
-        <label for="regionFilter">Region</label>
-        <select id="regionFilter"><option value="">All regions</option></select>
-      </div>
-      <div class="field">
-        <label for="stateFilter">State</label>
-        <select id="stateFilter"><option value="">All states</option></select>
-      </div>
-      <div class="field">
-        <label for="statusFilter">Open status</label>
-        <select id="statusFilter">
-          <option value="">All statuses</option>
-          <option value="Open">Open</option>
-          <option value="Closed">Closed</option>
-          <option value="Forecasted/TBD">Forecasted/TBD</option>
-        </select>
-      </div>
-      <div class="field">
-        <label for="procTypeFilter">Procurement type</label>
-        <select id="procTypeFilter"><option value="">All types</option></select>
-      </div>
-      <button class="btn" id="resetBtn">Reset filters</button>
-      <button class="btn primary" id="pdfBtn">Export to PDF</button>
-    </div>
-    <div class="note btn-print-note">Tip: the PDF button prints the currently filtered and sorted view. Click any header to sort. Drag the right edge of a header to resize a column.</div>
-    <div class="note">Method: official state program pages first; refreshed against current public state pages as of April 13, 2026. Official award notices, guidance packets, prior-round materials, and program pages used when a clean statewide awards list was not published. Forecasted/TBD means no clearly dated 2026 local window was found on the reviewed public source. The FY / match / min-max column uses the reviewed state page where it was explicit; otherwise it falls back to the federal year-based cost-share rules or marks the item as not publicly stated.</div>
-  </section>
-
-  <section class="table-card">
-    <div class="table-wrap">
-      <table id="dataTable">
-        <colgroup id="colgroup">
-          <col /><col /><col /><col /><col /><col /><col /><col /><col /><col /><col /><col />
-        </colgroup>
-        <thead>
-          <tr>
-            <th class="sortable" data-key="State" data-type="text"><div class="th-inner"><span class="th-label">State</span><span class="sort-indicator"></span><span class="resize-handle" aria-hidden="true"></span></div></th>
-            <th class="sortable" data-key="Status" data-type="status"><div class="th-inner"><span class="th-label">Status</span><span class="sort-indicator"></span><span class="resize-handle" aria-hidden="true"></span></div></th>
-            <th class="sortable" data-key="Start" data-type="date"><div class="th-inner"><span class="th-label">Start</span><span class="sort-indicator"></span><span class="resize-handle" aria-hidden="true"></span></div></th>
-            <th class="sortable" data-key="End" data-type="date"><div class="th-inner"><span class="th-label">End / Next</span><span class="sort-indicator"></span><span class="resize-handle" aria-hidden="true"></span></div></th>
-            <th class="sortable" data-key="FYSummary" data-type="text"><div class="th-inner"><span class="th-label">FY / Match / Min-Max</span><span class="sort-indicator"></span><span class="resize-handle" aria-hidden="true"></span></div></th>
-            <th class="sortable" data-key="ProcurementType" data-type="text"><div class="th-inner"><span class="th-label">Procurement type</span><span class="sort-indicator"></span><span class="resize-handle" aria-hidden="true"></span></div></th>
-            <th class="sortable" data-key="Description" data-type="text"><div class="th-inner"><span class="th-label">Description</span><span class="sort-indicator"></span><span class="resize-handle" aria-hidden="true"></span></div></th>
-            <th class="sortable" data-key="SourceLabel" data-type="text"><div class="th-inner"><span class="th-label">2026 source</span><span class="sort-indicator"></span><span class="resize-handle" aria-hidden="true"></span></div></th>
-            <th class="sortable" data-key="DrillDownLabel" data-type="text"><div class="th-inner"><span class="th-label">Best drill-down</span><span class="sort-indicator"></span><span class="resize-handle" aria-hidden="true"></span></div></th>
-            <th class="sortable" data-key="ProcurementProcess" data-type="text"><div class="th-inner"><span class="th-label">Procurement process</span><span class="sort-indicator"></span><span class="resize-handle" aria-hidden="true"></span></div></th>
-            <th class="sortable" data-key="PriorLabel" data-type="text"><div class="th-inner"><span class="th-label">Prior awards / applicant data</span><span class="sort-indicator"></span><span class="resize-handle" aria-hidden="true"></span></div></th>
-            <th class="sortable" data-key="Confidence" data-type="confidence"><div class="th-inner"><span class="th-label">Confidence</span><span class="sort-indicator"></span><span class="resize-handle" aria-hidden="true"></span></div></th>
-          </tr>
-        </thead>
-        <tbody id="tbody"></tbody>
-      </table>
-    </div>
-    <div class="footer">Notes: “End / Next” shows the posted close date when available. For rolling or undated windows, it may show the next listed deadline or remain blank. “FY / Match / Min-Max” shows the funding year or round tied to the row where it was explicit, the best reviewed match requirement, and any published min/max signal if found. Links open official sources in a new tab.</div>
-  </section>
+<section class="hero">
+<div class="eyebrow">GPS Team | SLCGP sales tracker</div>
+<h1>SLCGP 2026 State Windows, Procurement, Prior Awards, and FY/Match Tracker</h1>
+<div class="sub">Tracks state-level SLCGP subrecipient windows, likely procurement route, best drill-down source, prior-awards/applicant-data link, and a new FY / match / min-max summary column. Procurement type classifies the front-door access model by state, such as RFP, RFA, rolling application, first-come portal, or state page/TBD.</div>
+<div class="meta">
+<div><b>Last Refresh Date:</b> April 14, 2026</div>
+<div><b>Created by:</b> GPS Team</div>
+<div><b>States:</b> 50</div>
+<div><b>Default Sort:</b> Window date ascending</div>
 </div>
-
+</section>
+<section class="cards">
+<div class="card"><div class="label">Visible states</div><div class="value" id="visibleCount">50</div></div>
+<div class="card"><div class="label">Open</div><div class="value" id="openCount">0</div></div>
+<div class="card"><div class="label">Closed</div><div class="value" id="closedCount">0</div></div>
+<div class="card"><div class="label">Forecasted / TBD</div><div class="value" id="forecastCount">0</div></div>
+<div class="card"><div class="label">High confidence</div><div class="value" id="highCount">0</div></div>
+<div class="card"><div class="label">Prior data links</div><div class="value" id="priorCount">0</div></div>
+</section>
+<section class="toolbar">
+<div class="controls">
+<div class="field">
+<label for="search">Search</label>
+<input id="search" placeholder="Search state, procurement type, source, or description..." type="search"/>
+</div>
+<div class="field">
+<label for="regionFilter">Region</label>
+<select id="regionFilter"><option value="">All regions</option></select>
+</div>
+<div class="field">
+<label for="stateFilter">State</label>
+<select id="stateFilter"><option value="">All states</option></select>
+</div>
+<div class="field">
+<label for="statusFilter">Open status</label>
+<select id="statusFilter">
+<option value="">All statuses</option>
+<option value="Open">Open</option>
+<option value="Closed">Closed</option>
+<option value="Forecasted/TBD">Forecasted/TBD</option>
+</select>
+</div>
+<div class="field">
+<label for="procTypeFilter">Procurement type</label>
+<select id="procTypeFilter"><option value="">All types</option></select>
+</div>
+<button class="btn" id="resetBtn">Reset filters</button>
+<button class="btn primary" id="pdfBtn">Export to PDF</button>
+</div>
+<div class="note btn-print-note">Tip: the PDF button prints the currently filtered and sorted view. Click any header to sort. Drag the right edge of a header to resize a column.</div>
+<div class="note">Method: official state program pages first; refreshed against current public state pages as of April 13, 2026. Official award notices, guidance packets, prior-round materials, and program pages used when a clean statewide awards list was not published. Forecasted/TBD means no clearly dated 2026 local window was found on the reviewed public source. The FY / match / min-max column uses the reviewed state page where it was explicit; otherwise it falls back to the federal year-based cost-share rules or marks the item as not publicly stated.</div>
+</section><section class="changes"><h2>What's changed since the last update</h2><ul><li><b>Georgia</b> and <b>South Carolina</b>: confirmed as actively posted current windows, with Georgia open April 1–29, 2026 and South Carolina due May 15, 2026.</li><li><b>Oklahoma</b> and <b>Washington</b>: Oklahoma moved to Open with rolling 2026 deadlines, and Washington moved from general TBD to a dated forecast with a late-April application release and early-June tentative deadline.</li><li><b>New Jersey</b>, <b>New York</b>, and <b>North Carolina</b>: tightened to clearly closed or currently closed status based on their public state pages.</li><li><b>Kansas</b>, <b>Kentucky</b>, and <b>Wisconsin</b>: Kansas now clearly shows a January 1–February 28, 2026 window; Kentucky’s grants page now explicitly says CLOSED; Wisconsin still shows its most recent posted round as closed while awaiting the next FFY24 NOFO update.</li></ul></section>
+<section class="table-card">
+<div class="table-wrap">
+<table id="dataTable">
+<colgroup id="colgroup">
+<col/><col/><col/><col/><col/><col/><col/><col/><col/><col/><col/><col/>
+</colgroup>
+<thead>
+<tr>
+<th class="sortable" data-key="State" data-type="text"><div class="th-inner"><span class="th-label">State</span><span class="sort-indicator"></span><span aria-hidden="true" class="resize-handle"></span></div></th>
+<th class="sortable" data-key="Status" data-type="status"><div class="th-inner"><span class="th-label">Status</span><span class="sort-indicator"></span><span aria-hidden="true" class="resize-handle"></span></div></th>
+<th class="sortable" data-key="Start" data-type="date"><div class="th-inner"><span class="th-label">Start</span><span class="sort-indicator"></span><span aria-hidden="true" class="resize-handle"></span></div></th>
+<th class="sortable" data-key="End" data-type="date"><div class="th-inner"><span class="th-label">End / Next</span><span class="sort-indicator"></span><span aria-hidden="true" class="resize-handle"></span></div></th>
+<th class="sortable" data-key="FYSummary" data-type="text"><div class="th-inner"><span class="th-label">FY / Match / Min-Max</span><span class="sort-indicator"></span><span aria-hidden="true" class="resize-handle"></span></div></th>
+<th class="sortable" data-key="ProcurementType" data-type="text"><div class="th-inner"><span class="th-label">Procurement type</span><span class="sort-indicator"></span><span aria-hidden="true" class="resize-handle"></span></div></th>
+<th class="sortable" data-key="Description" data-type="text"><div class="th-inner"><span class="th-label">Description</span><span class="sort-indicator"></span><span aria-hidden="true" class="resize-handle"></span></div></th>
+<th class="sortable" data-key="SourceLabel" data-type="text"><div class="th-inner"><span class="th-label">2026 source</span><span class="sort-indicator"></span><span aria-hidden="true" class="resize-handle"></span></div></th>
+<th class="sortable" data-key="DrillDownLabel" data-type="text"><div class="th-inner"><span class="th-label">Best drill-down</span><span class="sort-indicator"></span><span aria-hidden="true" class="resize-handle"></span></div></th>
+<th class="sortable" data-key="ProcurementProcess" data-type="text"><div class="th-inner"><span class="th-label">Procurement process</span><span class="sort-indicator"></span><span aria-hidden="true" class="resize-handle"></span></div></th>
+<th class="sortable" data-key="PriorLabel" data-type="text"><div class="th-inner"><span class="th-label">Prior awards / applicant data</span><span class="sort-indicator"></span><span aria-hidden="true" class="resize-handle"></span></div></th>
+<th class="sortable" data-key="Confidence" data-type="confidence"><div class="th-inner"><span class="th-label">Confidence</span><span class="sort-indicator"></span><span aria-hidden="true" class="resize-handle"></span></div></th>
+</tr>
+</thead>
+<tbody id="tbody"></tbody>
+</table>
+</div>
+<div class="footer">Notes: “End / Next” shows the posted close date when available. For rolling or undated windows, it may show the next listed deadline or remain blank. “FY / Match / Min-Max” shows the funding year or round tied to the row where it was explicit, the best reviewed match requirement, and any published min/max signal if found. Links open official sources in a new tab.</div>
+</section>
+</div>
 <script>
 const data =[
   {
@@ -230,7 +233,7 @@ const data =[
     "Confidence": "High",
     "PriorLabel": "Alabama fact sheets page",
     "PriorURL": "https://slcgp.alabama.gov/apply/factsheets/",
-    "PriorNote": "Official project fact sheets for Alabama\u2019s SLCGP application rounds, including service and provider details.",
+    "PriorNote": "Official project fact sheets for Alabama’s SLCGP application rounds, including service and provider details.",
     "DrillDownLabel": "Alabama apply portal",
     "DrillDownURL": "https://slcgp.alabama.gov/apply/",
     "ProcurementProcess": "Open portal / first-come, first-served. Eligible locals start on the Alabama apply page. If funded, purchases follow grant conditions and local/state procurement rules.",
@@ -276,7 +279,7 @@ const data =[
     "Confidence": "Low",
     "PriorLabel": "Arizona Statewide Cyber Readiness Grant Program",
     "PriorURL": "https://aset.az.gov/programs/cyber-resources-local-and-tribal-governments",
-    "PriorNote": "Arizona\u2019s state-awarded cyber resources page for local and tribal governments; useful when no public subaward list is posted.",
+    "PriorNote": "Arizona’s state-awarded cyber resources page for local and tribal governments; useful when no public subaward list is posted.",
     "DrillDownLabel": "Arizona grant programs page",
     "DrillDownURL": "https://azdohs.gov/grants",
     "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
@@ -322,7 +325,7 @@ const data =[
     "Confidence": "High",
     "PriorLabel": "Cal OES SLCGP program page",
     "PriorURL": "https://www.caloes.ca.gov/office-of-the-director/policy-administration/finance-administration/grants-management/homeland-security-emergency-management-programs/state-and-local-cybersecurity-grant-program/",
-    "PriorNote": "Explains that individual projects named in California\u2019s approved Cybersecurity Plan drive disbursement and align later subrecipient applications.",
+    "PriorNote": "Explains that individual projects named in California’s approved Cybersecurity Plan drive disbursement and align later subrecipient applications.",
     "DrillDownLabel": "Cal OES RFP announcement and package",
     "DrillDownURL": "https://www.caloes.ca.gov/grant-announcement/ffy-2024-state-local-cybersecurity-grant-local-tribal-sl-rfp/",
     "ProcurementProcess": "Competitive state subrecipient RFP. Locals and tribes respond to the Cal OES RFP/NOI package during the state window. After award, buying follows applicable state/local procurement rules and grant conditions.",
@@ -368,7 +371,7 @@ const data =[
     "Confidence": "Medium",
     "PriorLabel": "Connecticut SLCGP guidance & closeout forms",
     "PriorURL": "https://portal.ct.gov/demhs/grants/state-and-local-cybersecurity-grant-program/guidance-and-forms",
-    "PriorNote": "Connecticut\u2019s official forms hub references quarterly reporting and closeout steps for awarded SLCGP projects.",
+    "PriorNote": "Connecticut’s official forms hub references quarterly reporting and closeout steps for awarded SLCGP projects.",
     "DrillDownLabel": "Connecticut SLCGP apply page",
     "DrillDownURL": "https://portal.ct.gov/demhs/grants/state-and-local-cybersecurity-grant-program/apply",
     "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
@@ -458,7 +461,7 @@ const data =[
     "SourceLabel": "Hawaii OHS grants page",
     "SourceURL": "https://law.hawaii.gov/ohs/grants/",
     "Confidence": "Medium",
-    "PriorLabel": "Hawai\u2018i statewide cybersecurity strategy",
+    "PriorLabel": "Hawai‘i statewide cybersecurity strategy",
     "PriorURL": "https://law.hawaii.gov/ohs/wp-content/uploads/sites/2/2024/01/Hawaii-Statewide-Cyber-Strategy-Plan-Final-1.pdf",
     "PriorNote": "Official statewide cybersecurity strategy and plan prepared under the SLCGP framework.",
     "DrillDownLabel": "Hawaii OHS grants page",
@@ -565,48 +568,48 @@ const data =[
   {
     "State": "Kansas",
     "Region": "Northeast",
-    "Status": "Forecasted/TBD",
-    "Start": "",
-    "End": "",
-    "SortDate": "2099-12-31",
-    "Description": "Kansas has an active SLCGP program page and shared-service offerings, but no dated 2026 local/subrecipient application window was publicly posted on the reviewed page as of refresh.",
+    "Status": "Closed",
+    "Start": "2026-01-01",
+    "End": "2026-02-28",
+    "SortDate": "2026-01-01",
+    "Description": "Kansas's official SLCGP page now clearly lists a 2026 grant submission window opening January 1, 2026 and closing February 28, 2026.",
     "SourceLabel": "Kansas SLCGP page",
     "SourceURL": "https://www.ebit.ks.gov/divisions/slcgp",
-    "Confidence": "Medium",
+    "Confidence": "High",
     "PriorLabel": "Kansas SLCGP page",
     "PriorURL": "https://www.ebit.ks.gov/divisions/slcgp",
     "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material.",
     "DrillDownLabel": "Kansas SLCGP page",
     "DrillDownURL": "https://www.ebit.ks.gov/divisions/slcgp",
-    "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
-    "ProcurementType": "State page / TBD",
+    "ProcurementProcess": "State-run application window. The Kansas SLCGP page lists grant submission dates of January 1, 2026 to February 28, 2026. Funded entities then buy under applicable state/local procurement rules and grant conditions.",
+    "ProcurementType": "State application",
     "FYYear": "TBD on reviewed source",
     "MatchInfo": "TBD on reviewed source",
     "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
+    "FYSummary": "FY not labeled on reviewed page | Match: Not publicly stated on reviewed source | Min/Max: Not publicly stated on reviewed source"
   },
   {
     "State": "Kentucky",
     "Region": "Mid-Atlantic",
-    "Status": "Forecasted/TBD",
+    "Status": "Closed",
     "Start": "",
     "End": "",
     "SortDate": "2099-12-31",
-    "Description": "Kentucky's grants pages were reviewed, but no clearly posted dated 2026 SLCGP local/subrecipient window was surfaced in current official-page review.",
+    "Description": "Kentucky's homeland security grants page now explicitly says the State and Local Cyber Grant Program application is CLOSED; the same page still contains older 'Grant will return: Fall 2025' text and does not post a new dated 2026 reopening.",
     "SourceLabel": "Kentucky Homeland Security grants page",
     "SourceURL": "https://homelandsecurity.ky.gov/Pages/Grants.aspx",
-    "Confidence": "Low",
+    "Confidence": "Medium",
     "PriorLabel": "Kentucky cybersecurity grants page",
     "PriorURL": "https://homelandsecurity.ky.gov/Pages/Cybersecurity.aspx",
     "PriorNote": "Official Kentucky cyber-grants page noting SLCGP support for cybersecurity improvements since 2022.",
     "DrillDownLabel": "Kentucky Homeland Security grants page",
     "DrillDownURL": "https://homelandsecurity.ky.gov/Pages/Grants.aspx",
-    "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
-    "ProcurementType": "State page / TBD",
+    "ProcurementProcess": "The current state page explicitly shows the SLCGP application as closed. No new dated 2026 reopening window was posted on the reviewed page. Monitor the Kentucky grants page for the next release.",
+    "ProcurementType": "State application",
     "FYYear": "TBD on reviewed source",
     "MatchInfo": "TBD on reviewed source",
     "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
+    "FYSummary": "FY not labeled on reviewed page | Match: 30% on reviewed source | Min/Max: Not publicly stated on reviewed source"
   },
   {
     "State": "Louisiana",
@@ -626,10 +629,10 @@ const data =[
     "DrillDownURL": "https://wwwcfprd.doa.louisiana.gov/boardsandcommissions/MeetingMinutes/348_Regional%20Directors%20Meeting%20minutes-%20February%202026.pdf",
     "ProcurementProcess": "State-run application cycle. Applicants respond to Louisiana SLCGP priorities and guidance; funded entities then procure under Louisiana/local procurement rules and reporting requirements.",
     "ProcurementType": "State application",
-    "FYYear": "FY2023\u2013FY2025",
+    "FYYear": "FY2023–FY2025",
     "MatchInfo": "Varies by year: FY23 20/10; FY24 30/20; FY25 40/30",
     "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "FY2023\u2013FY2025 | Match: Varies by year: FY23 20/10; FY24 30/20; FY25 40/30 | Min/Max: Not publicly stated on reviewed source"
+    "FYSummary": "FY2023–FY2025 | Match: Varies by year: FY23 20/10; FY24 30/20; FY25 40/30 | Min/Max: Not publicly stated on reviewed source"
   },
   {
     "State": "Maine",
@@ -776,10 +779,10 @@ const data =[
     "Start": "",
     "End": "",
     "SortDate": "2099-12-31",
-    "Description": "Missouri's grants/training portal was reviewed, but no dated 2026 SLCGP local/subrecipient window was publicly posted on the surfaced page as of refresh.",
+    "Description": "Missouri's official grants portal now clearly posts FY 2024 SLCGP application materials and archive documents, but no new dated 2026 local/subrecipient window was publicly posted on the reviewed portal as of refresh.",
     "SourceLabel": "Missouri grants and training portal",
     "SourceURL": "https://dps.mo.gov/dir/programs/ohs/grantstraining/",
-    "Confidence": "Low",
+    "Confidence": "Medium",
     "PriorLabel": "Missouri grants and training portal",
     "PriorURL": "https://dps.mo.gov/dir/programs/ohs/grantstraining/",
     "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material.",
@@ -948,10 +951,10 @@ const data =[
     "DrillDownURL": "https://www.dhses.ny.gov/federal-programs",
     "ProcurementProcess": "New York uses a state-run Request for Applications tied to cybersecurity shared services rather than simple direct cash awards. The current combined FY2022/FY2023 application period is closed.",
     "ProcurementType": "RFA",
-    "FYYear": "FY2022\u2013FY2023 (combined)",
+    "FYYear": "FY2022–FY2023 (combined)",
     "MatchInfo": "FY22 10/0; FY23 20/10",
     "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "FY2022\u2013FY2023 (combined) | Match: FY22 10/0; FY23 20/10 | Min/Max: Not publicly stated on reviewed source"
+    "FYSummary": "FY2022–FY2023 (combined) | Match: FY22 10/0; FY23 20/10 | Min/Max: Not publicly stated on reviewed source"
   },
   {
     "State": "North Carolina",
@@ -1040,10 +1043,10 @@ const data =[
     "DrillDownURL": "https://oklahoma.gov/homeland-security/grants.html",
     "ProcurementProcess": "Recurring state application process with multiple 2026 deadlines. Applicants review the one-page announcement, tie projects to the State Cyber Plan, and submit applications to hsgrants@okohs.ok.gov.",
     "ProcurementType": "Quarterly rolling application",
-    "FYYear": "TBD; page links FY22\u2013FY25 NOFOs",
+    "FYYear": "TBD; page links FY22–FY25 NOFOs",
     "MatchInfo": "Depends on linked NOFO year",
     "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "TBD; page links FY22\u2013FY25 NOFOs | Match: Depends on linked NOFO year | Min/Max: Not publicly stated on reviewed source"
+    "FYSummary": "TBD; page links FY22–FY25 NOFOs | Match: Depends on linked NOFO year | Min/Max: Not publicly stated on reviewed source"
   },
   {
     "State": "Oregon",
