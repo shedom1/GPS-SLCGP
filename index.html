@@ -83,6 +83,9 @@
   tbody td { padding: 8px 8px; border-bottom: 1px solid #e9eef5; vertical-align: top; line-height: 1.35; overflow-wrap: anywhere; word-break: break-word; }
   tbody tr:hover { background: #f9fbff; }
   .th-inner { position: relative; padding-right: 12px; }
+  .help-tip { border-bottom: 1px dotted #8aa0bd; cursor: help; }
+  .help-tip::after { content: " ⓘ"; color: #6f86a3; font-weight: 700; }
+  @media print { .help-tip { border-bottom: none; } .help-tip::after { content: ""; } }
   th.sortable { cursor: pointer; user-select: none; }
   .sort-indicator { margin-left: 5px; font-size: 10px; color: var(--muted); }
   .resize-handle { position:absolute; top:-6px; right:-4px; width:10px; height:32px; cursor: col-resize; }
@@ -113,12 +116,194 @@
   a:hover { text-decoration: underline; }
   .small-note, .proc-note { margin-top: 5px; color: var(--muted); font-size: 10.5px; line-height: 1.35; }
   .footer { color: var(--muted); font-size: 10.5px; line-height: 1.45; padding: 10px 12px 14px; }
+
+  .state-trigger {
+    appearance: none;
+    border: 0;
+    background: transparent;
+    padding: 0;
+    margin: 0;
+    text-align: left;
+    cursor: pointer;
+    width: 100%;
+    color: inherit;
+  }
+  .state-trigger:hover .state { color: var(--blue); text-decoration: underline; text-underline-offset: 2px; }
+  .state-trigger:focus-visible {
+    outline: 2px solid rgba(37,99,235,.35);
+    outline-offset: 3px;
+    border-radius: 8px;
+  }
+  .prospect-overlay[hidden], .prospect-drawer[hidden] { display: none; }
+  .prospect-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.38);
+    z-index: 25;
+  }
+  .prospect-drawer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: min(520px, 96vw);
+    height: 100vh;
+    background: #fff;
+    border-left: 1px solid var(--line);
+    box-shadow: -14px 0 36px rgba(18,33,53,0.16);
+    z-index: 30;
+    display: flex;
+    flex-direction: column;
+  }
+  .prospect-head {
+    padding: 16px 18px 12px;
+    border-bottom: 1px solid var(--line);
+    background: linear-gradient(135deg, #ffffff 0%, #f3f8ff 65%, #eefbf8 100%);
+  }
+  .prospect-topline {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+  .prospect-title {
+    margin: 0;
+    font-size: 24px;
+    line-height: 1.05;
+  }
+  .close-drawer {
+    appearance: none;
+    border: 1px solid var(--line);
+    background: #fff;
+    border-radius: 999px;
+    width: 34px;
+    height: 34px;
+    cursor: pointer;
+    font-size: 18px;
+    line-height: 1;
+    color: var(--ink);
+  }
+  .prospect-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .print-drawer-btn {
+    appearance: none;
+    border: 1px solid var(--line);
+    background: #fff;
+    color: var(--ink);
+    border-radius: 10px;
+    min-height: 34px;
+    padding: 7px 11px;
+    cursor: pointer;
+    font-size: 11px;
+    font-weight: 800;
+    line-height: 1;
+  }
+  .print-drawer-btn:hover { transform: translateY(-1px); }
+  .prospect-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin-bottom: 10px;
+  }
+  .prospect-summary {
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.45;
+  }
+  .prospect-body {
+    padding: 14px 18px 24px;
+    overflow: auto;
+  }
+  .prospect-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0,1fr));
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+  .prospect-mini {
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 10px 11px;
+    background: #f9fbff;
+  }
+  .prospect-mini .kicker {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: .07em;
+    color: var(--muted);
+    font-weight: 800;
+    margin-bottom: 6px;
+  }
+  .prospect-mini .value {
+    font-size: 13px;
+    line-height: 1.35;
+    font-weight: 700;
+  }
+  .prospect-section {
+    margin-bottom: 15px;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 12px 13px;
+    background: #fff;
+  }
+  .prospect-section h3 {
+    margin: 0 0 8px;
+    font-size: 13px;
+  }
+  .prospect-section p, .prospect-section li {
+    font-size: 12px;
+    line-height: 1.45;
+    color: var(--ink);
+  }
+  .prospect-section ul, .prospect-section ol {
+    margin: 0;
+    padding-left: 18px;
+  }
+  .prospect-links a {
+    display: inline-block;
+    margin: 0 10px 8px 0;
+    font-size: 12px;
+  }
+  .program-lead {
+    margin: 0 0 9px;
+    color: var(--ink);
+    font-size: 12.5px;
+    line-height: 1.5;
+  }
+  .program-points li, .timeline-list li, .access-list li {
+    margin-bottom: 7px;
+  }
+  .program-points li:last-child, .timeline-list li:last-child, .access-list li:last-child {
+    margin-bottom: 0;
+  }
+  .prospect-muted {
+    color: var(--muted);
+    font-size: 11px;
+    line-height: 1.4;
+  }
+  .window-detail {
+    display: grid;
+    gap: 6px;
+  }
+  .window-detail div {
+    font-size: 12px;
+    line-height: 1.45;
+  }
+  .window-detail b {
+    color: var(--muted);
+    display: inline-block;
+    min-width: 92px;
+  }
   @media (max-width: 1200px) {
     .cards { grid-template-columns: repeat(3, minmax(0,1fr)); }
     .controls { grid-template-columns: 1fr 1fr 1fr 1fr; }
     .controls .btn { width: 100%; }
   }
   @media print {
+    .prospect-overlay, .prospect-drawer { display:none !important; }
     body { background: #fff; }
     .wrap { width: 100%; max-width: none; padding: 0; }
     .hero, .toolbar, .table-card, .card { box-shadow:none; }
@@ -143,7 +328,7 @@
 <h1>SLCGP 2026 State Windows, Procurement, Prior Awards, and FY/Match Tracker</h1>
 <div class="sub">Tracks state-level SLCGP subrecipient windows, likely procurement route, best drill-down source, prior-awards/applicant-data link, and a new FY / match / min-max summary column. Procurement type classifies the front-door access model by state, such as RFP, RFA, rolling application, first-come portal, or state page/TBD.</div>
 <div class="meta">
-<div><b>Last Refresh Date:</b> April 17, 2026</div>
+<div><b>Last Refresh Date:</b> April 20, 2026</div>
 <div><b>Created by:</b> GPS Team</div>
 <div><b>States:</b> 50</div>
 <div><b>Default Sort:</b> Window date ascending</div>
@@ -189,7 +374,7 @@
 </div>
 <div class="note btn-print-note">Tip: the PDF button prints the currently filtered and sorted view. Click any header to sort. Drag the right edge of a header to resize a column.</div>
 <div class="note">Method: official state program pages first; refreshed against current public state pages as of April 13, 2026. Official award notices, guidance packets, prior-round materials, and program pages used when a clean statewide awards list was not published. Forecasted/TBD means no clearly dated 2026 local window was found on the reviewed public source. The FY / match / min-max column uses the reviewed state page where it was explicit; otherwise it falls back to the federal year-based cost-share rules or marks the item as not publicly stated.</div>
-</section><section class="changes"><h2>What&#39;s changed since the last update</h2><ul><li><b>Wyoming</b>: moved to <b>Open</b>. The official Wyoming Homeland Security homepage now states that the SLCGP application period is open and that applications are due in ZoomGrants by <b>May 15, 2026</b>.</li><li><b>Tennessee</b>: moved to <b>Closed</b>. The official Tennessee SLCGP page lists an application deadline of <b>December 12, 2025</b>, so the row now reflects that posted closed status instead of TBD.</li><li><b>All other states</b>: after a second pass through state program pages plus homepage/news/announcement layers, I did not find another currently open state that the tracker was still understating on the reviewed official public pages.</li></ul></section>
+</section><section class="changes"><h2>What&#39;s changed since the last update</h2><ul><li><b>Florida</b>: moved to <b>Closed</b>. Florida&#39;s official SLCGP page and state one-pager now make clear that the posted application window ran <b>October 15, 2025 to December 15, 2025</b>, used the FDEM Grants Portal, and carried a <b>20% match</b>. <a href="https://www.floridadisaster.org/dem/finance/grants-unit/state-and-local-cybersecurity-grant-program/" target="_blank" rel="noopener">State page</a> | <a href="https://www.floridadisaster.org/globalassets/1/state-and-local-cybersecurity-grant-program-one-pager.pdf" target="_blank" rel="noopener">One-pager</a></li><li><b>Pennsylvania</b>: clarified <b>How to Access Funding</b>. The Commonwealth page now clearly says local governments will apply to the Commonwealth for committee-identified projects, cannot apply directly to the federal government, and should sign up for updates while additional application instructions are prepared. <a href="https://www.pa.gov/services/pema/cybersecurity-grant" target="_blank" rel="noopener">Source</a></li><li><b>West Virginia</b>: clarified state messaging. WVEMD&#39;s homepage and cybersecurity funding page actively encourage eligible agencies to apply and provide a dedicated contact email, but the reviewed official pages still do not post a clearly dated state-local application packet or deadline. <a href="https://emd.wv.gov/" target="_blank" rel="noopener">Homepage</a> | <a href="https://emd.wv.gov/cybersecurity-grant-funding" target="_blank" rel="noopener">Funding page</a></li><li><b>All other states</b>: after a fresh 50-state check using current official state program pages and, where useful, homepage/news/announcement layers, I did not confirm another material status change that required a row change in the tracker.</li></ul></section>
 <section class="table-card">
 <div class="table-wrap">
 <table id="dataTable">
@@ -198,18 +383,18 @@
 </colgroup>
 <thead>
 <tr>
-<th class="sortable" data-key="State" data-type="text"><div class="th-inner"><span class="th-label">State</span><span class="sort-indicator"></span><span aria-hidden="true" class="resize-handle"></span></div></th>
-<th class="sortable" data-key="Status" data-type="status"><div class="th-inner"><span class="th-label">Status</span><span class="sort-indicator"></span><span aria-hidden="true" class="resize-handle"></span></div></th>
-<th class="sortable" data-key="Start" data-type="date"><div class="th-inner"><span class="th-label">Start</span><span class="sort-indicator"></span><span aria-hidden="true" class="resize-handle"></span></div></th>
-<th class="sortable" data-key="End" data-type="date"><div class="th-inner"><span class="th-label">End / Next</span><span class="sort-indicator"></span><span aria-hidden="true" class="resize-handle"></span></div></th>
-<th class="sortable" data-key="FYSummary" data-type="text"><div class="th-inner"><span class="th-label">FY / Match / Min-Max</span><span class="sort-indicator"></span><span aria-hidden="true" class="resize-handle"></span></div></th>
-<th class="sortable" data-key="ProcurementType" data-type="text"><div class="th-inner"><span class="th-label">Procurement type</span><span class="sort-indicator"></span><span aria-hidden="true" class="resize-handle"></span></div></th>
-<th class="sortable" data-key="Description" data-type="text"><div class="th-inner"><span class="th-label">Description</span><span class="sort-indicator"></span><span aria-hidden="true" class="resize-handle"></span></div></th>
-<th class="sortable" data-key="SourceLabel" data-type="text"><div class="th-inner"><span class="th-label">2026 source</span><span class="sort-indicator"></span><span aria-hidden="true" class="resize-handle"></span></div></th>
-<th class="sortable" data-key="DrillDownLabel" data-type="text"><div class="th-inner"><span class="th-label">Best drill-down</span><span class="sort-indicator"></span><span aria-hidden="true" class="resize-handle"></span></div></th>
-<th class="sortable" data-key="ProcurementProcess" data-type="text"><div class="th-inner"><span class="th-label">Procurement process</span><span class="sort-indicator"></span><span aria-hidden="true" class="resize-handle"></span></div></th>
-<th class="sortable" data-key="PriorLabel" data-type="text"><div class="th-inner"><span class="th-label">Prior awards / applicant data</span><span class="sort-indicator"></span><span aria-hidden="true" class="resize-handle"></span></div></th>
-<th class="sortable" data-key="Confidence" data-type="confidence"><div class="th-inner"><span class="th-label">Confidence</span><span class="sort-indicator"></span><span aria-hidden="true" class="resize-handle"></span></div></th>
+<th class="sortable" data-key="State" data-type="text"><div class="th-inner"><span class="th-label"><span class="help-tip" title="Click a state name to open a sales prospecting panel with priority, targets, next steps, funding summary, and print-to-PDF.">State</span></span><span class="sort-indicator"></span><span aria-hidden="true" class="resize-handle"></span></div></th>
+<th class="sortable" data-key="Status" data-type="status"><div class="th-inner"><span class="th-label"><span class="help-tip" title="Current state of the public subrecipient window based on the reviewed official source: Open, Closed, or Forecasted/TBD.">Status</span></span><span class="sort-indicator"></span><span aria-hidden="true" class="resize-handle"></span></div></th>
+<th class="sortable" data-key="Start" data-type="date"><div class="th-inner"><span class="th-label"><span class="help-tip" title="Posted opening date for the current or most relevant application window, when publicly stated.">Start</span></span><span class="sort-indicator"></span><span aria-hidden="true" class="resize-handle"></span></div></th>
+<th class="sortable" data-key="End" data-type="date"><div class="th-inner"><span class="th-label"><span class="help-tip" title="Posted closing date for the current window, or the next listed deadline for rolling or quarterly processes.">End / Next</span></span><span class="sort-indicator"></span><span aria-hidden="true" class="resize-handle"></span></div></th>
+<th class="sortable" data-key="FYSummary" data-type="text"><div class="th-inner"><span class="th-label"><span class="help-tip" title="Funding year or round tied to the row, required local match amount or percentage, and any published minimum or maximum award amount.">FY / Match / Min-Max</span></span><span class="sort-indicator"></span><span aria-hidden="true" class="resize-handle"></span></div></th>
+<th class="sortable" data-key="ProcurementType" data-type="text"><div class="th-inner"><span class="th-label"><span class="help-tip" title="The front-door access model for the state, such as RFP, RFA, rolling application, first-come portal, or state page/TBD.">Procurement type</span></span><span class="sort-indicator"></span><span aria-hidden="true" class="resize-handle"></span></div></th>
+<th class="sortable" data-key="Description" data-type="text"><div class="th-inner"><span class="th-label"><span class="help-tip" title="Plain-English summary of the most important current state-specific program or application update.">Description</span></span><span class="sort-indicator"></span><span aria-hidden="true" class="resize-handle"></span></div></th>
+<th class="sortable" data-key="SourceLabel" data-type="text"><div class="th-inner"><span class="th-label"><span class="help-tip" title="The best official source used to support the current 2026 status shown in the row.">2026 source</span></span><span class="sort-indicator"></span><span aria-hidden="true" class="resize-handle"></span></div></th>
+<th class="sortable" data-key="DrillDownLabel" data-type="text"><div class="th-inner"><span class="th-label"><span class="help-tip" title="Best next official link for a rep to click to understand how the state process works and where to engage next, such as the application page, NOFO, grants portal, or detailed program page.">Best drill-down</span></span><span class="sort-indicator"></span><span aria-hidden="true" class="resize-handle"></span></div></th>
+<th class="sortable" data-key="ProcurementProcess" data-type="text"><div class="th-inner"><span class="th-label"><span class="help-tip" title="Short explanation of how a rep or applicant gets into the process, including whether the state uses an application, RFP/RFA, portal, rolling cycle, or later downstream procurement.">Procurement process</span></span><span class="sort-indicator"></span><span aria-hidden="true" class="resize-handle"></span></div></th>
+<th class="sortable" data-key="PriorLabel" data-type="text"><div class="th-inner"><span class="th-label"><span class="help-tip" title="Best official link found for prior awards, prior applicants, project summaries, prior-round materials, or related state evidence of earlier SLCGP activity.">Prior awards / applicant data</span></span><span class="sort-indicator"></span><span aria-hidden="true" class="resize-handle"></span></div></th>
+<th class="sortable" data-key="Confidence" data-type="confidence"><div class="th-inner"><span class="th-label"><span class="help-tip" title="How strong the public evidence is for the row based on the reviewed source. High means the state posted a clear current status or dates; Medium or Low means the public evidence is weaker or less direct.">Confidence</span></span><span class="sort-indicator"></span><span aria-hidden="true" class="resize-handle"></span></div></th>
 </tr>
 </thead>
 <tbody id="tbody"></tbody>
@@ -217,7 +402,74 @@
 </div>
 <div class="footer">Notes: “End / Next” shows the posted close date when available. For rolling or undated windows, it may show the next listed deadline or remain blank. “FY / Match / Min-Max” shows the funding year or round tied to the row where it was explicit, the best reviewed match requirement, and any published min/max signal if found. Links open official sources in a new tab.</div>
 </section>
+
 </div>
+<div class="prospect-overlay" id="prospectOverlay" hidden></div>
+<aside class="prospect-drawer" id="prospectDrawer" hidden aria-hidden="true" aria-labelledby="prospectTitle">
+  <div class="prospect-head">
+    <div class="prospect-topline">
+      <div>
+        <div class="eyebrow">Sales prospecting detail</div>
+        <h2 class="prospect-title" id="prospectTitle">State</h2>
+      </div>
+      <div class="prospect-actions">
+        <button class="print-drawer-btn" id="printProspectBtn" type="button">Print to PDF</button>
+        <button class="close-drawer" id="closeProspectDrawer" aria-label="Close">×</button>
+      </div>
+    </div>
+    <div class="prospect-badges" id="prospectBadges"></div>
+    <div class="prospect-summary" id="prospectSummary"></div>
+  </div>
+  <div class="prospect-body">
+    <div class="prospect-grid">
+      <div class="prospect-mini"><div class="kicker">Prospecting priority</div><div class="value" id="prospectPriority"></div></div>
+      <div class="prospect-mini"><div class="kicker">Window</div><div class="value" id="prospectWindow"></div></div>
+      <div class="prospect-mini"><div class="kicker">Funding & match</div><div class="value" id="prospectFunding"></div></div>
+    </div>
+    <section class="prospect-section">
+      <h3>SLCGP program overview</h3>
+      <p class="program-lead" id="prospectProgramOverview"></p>
+      <ul class="program-points" id="prospectProgramPoints"></ul>
+    </section>
+    <section class="prospect-section">
+      <h3>Timeline and application window</h3>
+      <ul class="timeline-list" id="prospectTimeline"></ul>
+    </section>
+    <section class="prospect-section">
+      <h3>Last open window</h3>
+      <div class="window-detail" id="prospectLastWindow"></div>
+    </section>
+    <section class="prospect-section">
+      <h3>Expected next open window</h3>
+      <div class="window-detail" id="prospectNextWindow"></div>
+    </section>
+    <section class="prospect-section">
+      <h3>How to access funding</h3>
+      <ol class="access-list" id="prospectAccess"></ol>
+    </section>
+    <section class="prospect-section">
+      <h3>Why this state matters now</h3>
+      <p id="prospectWhy"></p>
+    </section>
+    <section class="prospect-section">
+      <h3>Who to target first</h3>
+      <ul id="prospectTargets"></ul>
+    </section>
+    <section class="prospect-section">
+      <h3>Immediate next steps</h3>
+      <ol id="prospectSteps"></ol>
+    </section>
+    <section class="prospect-section">
+      <h3>Procurement path</h3>
+      <p id="prospectPath"></p>
+      <div class="prospect-muted" id="prospectPriorNote"></div>
+    </section>
+    <section class="prospect-section">
+      <h3>Best links</h3>
+      <div class="prospect-links" id="prospectLinks"></div>
+    </section>
+  </div>
+</aside>
 <script>
 const data =[
   {
@@ -233,7 +485,7 @@ const data =[
     "Confidence": "High",
     "PriorLabel": "Alabama fact sheets page",
     "PriorURL": "https://slcgp.alabama.gov/apply/factsheets/",
-    "PriorNote": "Official project fact sheets for Alabama’s SLCGP application rounds, including service and provider details.",
+    "PriorNote": "Official project fact sheets for Alabama\u2019s SLCGP application rounds, including service and provider details.",
     "DrillDownLabel": "Alabama apply portal",
     "DrillDownURL": "https://slcgp.alabama.gov/apply/",
     "ProcurementProcess": "Open portal / first-come, first-served. Eligible locals start on the Alabama apply page. If funded, purchases follow grant conditions and local/state procurement rules.",
@@ -279,7 +531,7 @@ const data =[
     "Confidence": "Low",
     "PriorLabel": "Arizona Statewide Cyber Readiness Grant Program",
     "PriorURL": "https://aset.az.gov/programs/cyber-resources-local-and-tribal-governments",
-    "PriorNote": "Arizona’s state-awarded cyber resources page for local and tribal governments; useful when no public subaward list is posted.",
+    "PriorNote": "Arizona\u2019s state-awarded cyber resources page for local and tribal governments; useful when no public subaward list is posted.",
     "DrillDownLabel": "Arizona grant programs page",
     "DrillDownURL": "https://azdohs.gov/grants",
     "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
@@ -325,7 +577,7 @@ const data =[
     "Confidence": "High",
     "PriorLabel": "Cal OES SLCGP program page",
     "PriorURL": "https://www.caloes.ca.gov/office-of-the-director/policy-administration/finance-administration/grants-management/homeland-security-emergency-management-programs/state-and-local-cybersecurity-grant-program/",
-    "PriorNote": "Explains that individual projects named in California’s approved Cybersecurity Plan drive disbursement and align later subrecipient applications.",
+    "PriorNote": "Explains that individual projects named in California\u2019s approved Cybersecurity Plan drive disbursement and align later subrecipient applications.",
     "DrillDownLabel": "Cal OES RFP announcement and package",
     "DrillDownURL": "https://www.caloes.ca.gov/grant-announcement/ffy-2024-state-local-cybersecurity-grant-local-tribal-sl-rfp/",
     "ProcurementProcess": "Competitive state subrecipient RFP. Locals and tribes respond to the Cal OES RFP/NOI package during the state window. After award, buying follows applicable state/local procurement rules and grant conditions.",
@@ -371,7 +623,7 @@ const data =[
     "Confidence": "Medium",
     "PriorLabel": "Connecticut SLCGP guidance & closeout forms",
     "PriorURL": "https://portal.ct.gov/demhs/grants/state-and-local-cybersecurity-grant-program/guidance-and-forms",
-    "PriorNote": "Connecticut’s official forms hub references quarterly reporting and closeout steps for awarded SLCGP projects.",
+    "PriorNote": "Connecticut\u2019s official forms hub references quarterly reporting and closeout steps for awarded SLCGP projects.",
     "DrillDownLabel": "Connecticut SLCGP apply page",
     "DrillDownURL": "https://portal.ct.gov/demhs/grants/state-and-local-cybersecurity-grant-program/apply",
     "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
@@ -407,25 +659,25 @@ const data =[
   {
     "State": "Florida",
     "Region": "Southeast",
-    "Status": "Forecasted/TBD",
-    "Start": "",
-    "End": "",
-    "SortDate": "2099-12-31",
-    "Description": "Florida's official state SLCGP page says the current application cycle is for FY2023 funding, shows a December 15, 2025 application deadline, and says the FY24 program will be released in 2026. No new dated 2026 local window was posted on the reviewed official page.",
+    "Status": "Closed",
+    "Start": "2025-10-15",
+    "End": "2025-12-15",
+    "SortDate": "2025-10-15",
+    "Description": "Florida's official SLCGP page and state one-pager now make clear that the current posted application window ran October 15 to December 15, 2025 through the FDEM Grants Portal. The state page says this cycle uses FY2023 federal funding, allocates $11,997,340 to Florida, requires a 20% match, and notes the next FY24 release will come later in 2026.",
     "SourceLabel": "Florida SLCGP page",
     "SourceURL": "https://www.floridadisaster.org/dem/finance/grants-unit/state-and-local-cybersecurity-grant-program/",
-    "Confidence": "Low",
-    "PriorLabel": "Florida SLCGP page",
-    "PriorURL": "https://www.floridadisaster.org/dem/finance/grants-unit/state-and-local-cybersecurity-grant-program/",
-    "PriorNote": "Official Florida page says the current cycle is FY2023, notes a December 15, 2025 application deadline, and says the FY24 program will be released in 2026.",
-    "DrillDownLabel": "Florida cyber grants FAQ",
-    "DrillDownURL": "https://cybergrants.fl.gov/faqs.html",
-    "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
-    "ProcurementType": "State page / TBD",
-    "FYYear": "TBD on reviewed source",
-    "MatchInfo": "TBD on reviewed source",
+    "Confidence": "High",
+    "PriorLabel": "Florida SLCGP one-pager",
+    "PriorURL": "https://www.floridadisaster.org/globalassets/1/state-and-local-cybersecurity-grant-program-one-pager.pdf",
+    "PriorNote": "Official Florida one-pager shows the October 15 to December 15, 2025 application window, $11,997,340 allocation, priority areas, and 20% match requirement.",
+    "DrillDownLabel": "Florida SLCGP page / FDEM Grants Portal instructions",
+    "DrillDownURL": "https://www.floridadisaster.org/dem/finance/grants-unit/state-and-local-cybersecurity-grant-program/",
+    "ProcurementProcess": "State pass-through application through the Florida DEMES/FDEM Grants Portal. Applicants use the state application and submission guide, upload supporting documents in the portal, and follow state grant instructions. The currently posted window ran October 15 to December 15, 2025; the page says the next FY24 release will come later in 2026.",
+    "ProcurementType": "State application",
+    "FYYear": "FY2025-26 state cycle / FY2023 federal funds",
+    "MatchInfo": "20% on reviewed source",
     "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "FY2023 current cycle on reviewed source; FY2024 to be released in 2026 | Match: FY23 20% on reviewed source | Min/Max: Not publicly stated on reviewed source"
+    "FYSummary": "FY2025-26 state cycle using FY2023 federal funds | Match: 20% on reviewed source | Min/Max: Not publicly stated on reviewed source"
   },
   {
     "State": "Georgia",
@@ -461,7 +713,7 @@ const data =[
     "SourceLabel": "Hawaii OHS grants page",
     "SourceURL": "https://law.hawaii.gov/ohs/grants/",
     "Confidence": "Medium",
-    "PriorLabel": "Hawai‘i statewide cybersecurity strategy",
+    "PriorLabel": "Hawai\u2018i statewide cybersecurity strategy",
     "PriorURL": "https://law.hawaii.gov/ohs/wp-content/uploads/sites/2/2024/01/Hawaii-Statewide-Cyber-Strategy-Plan-Final-1.pdf",
     "PriorNote": "Official statewide cybersecurity strategy and plan prepared under the SLCGP framework.",
     "DrillDownLabel": "Hawaii OHS grants page",
@@ -629,10 +881,10 @@ const data =[
     "DrillDownURL": "https://wwwcfprd.doa.louisiana.gov/boardsandcommissions/MeetingMinutes/348_Regional%20Directors%20Meeting%20minutes-%20February%202026.pdf",
     "ProcurementProcess": "State-run application cycle. Applicants respond to Louisiana SLCGP priorities and guidance; funded entities then procure under Louisiana/local procurement rules and reporting requirements.",
     "ProcurementType": "State application",
-    "FYYear": "FY2023–FY2025",
+    "FYYear": "FY2023\u2013FY2025",
     "MatchInfo": "Varies by year: FY23 20/10; FY24 30/20; FY25 40/30",
     "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "FY2023–FY2025 | Match: Varies by year: FY23 20/10; FY24 30/20; FY25 40/30 | Min/Max: Not publicly stated on reviewed source"
+    "FYSummary": "FY2023\u2013FY2025 | Match: Varies by year: FY23 20/10; FY24 30/20; FY25 40/30 | Min/Max: Not publicly stated on reviewed source"
   },
   {
     "State": "Maine",
@@ -951,10 +1203,10 @@ const data =[
     "DrillDownURL": "https://www.dhses.ny.gov/federal-programs",
     "ProcurementProcess": "New York uses a state-run Request for Applications tied to cybersecurity shared services rather than simple direct cash awards. The current combined FY2022/FY2023 application period is closed.",
     "ProcurementType": "RFA",
-    "FYYear": "FY2022–FY2023 (combined)",
+    "FYYear": "FY2022\u2013FY2023 (combined)",
     "MatchInfo": "FY22 10/0; FY23 20/10",
     "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "FY2022–FY2023 (combined) | Match: FY22 10/0; FY23 20/10 | Min/Max: Not publicly stated on reviewed source"
+    "FYSummary": "FY2022\u2013FY2023 (combined) | Match: FY22 10/0; FY23 20/10 | Min/Max: Not publicly stated on reviewed source"
   },
   {
     "State": "North Carolina",
@@ -1043,10 +1295,10 @@ const data =[
     "DrillDownURL": "https://oklahoma.gov/homeland-security/grants.html",
     "ProcurementProcess": "Recurring state application process with multiple 2026 deadlines. Applicants review the one-page announcement, tie projects to the State Cyber Plan, and submit applications to hsgrants@okohs.ok.gov.",
     "ProcurementType": "Quarterly rolling application",
-    "FYYear": "TBD; page links FY22–FY25 NOFOs",
+    "FYYear": "TBD; page links FY22\u2013FY25 NOFOs",
     "MatchInfo": "Depends on linked NOFO year",
     "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "TBD; page links FY22–FY25 NOFOs | Match: Depends on linked NOFO year | Min/Max: Not publicly stated on reviewed source"
+    "FYSummary": "TBD; page links FY22\u2013FY25 NOFOs | Match: Depends on linked NOFO year | Min/Max: Not publicly stated on reviewed source"
   },
   {
     "State": "Oregon",
@@ -1078,16 +1330,16 @@ const data =[
     "Start": "",
     "End": "",
     "SortDate": "2099-12-31",
-    "Description": "Pennsylvania's cybersecurity grant page says local governments will be able to apply to the Commonwealth to participate in committee-identified cybersecurity projects, but additional information to apply for 2025 funding will be provided later and no dated 2026 local window was publicly posted on the reviewed page as of refresh.",
+    "Description": "Pennsylvania's official cybersecurity grant page says local governments will be able to apply to the Commonwealth to participate in committee-identified cybersecurity projects, cannot apply directly to the federal government, and should sign up for updates while the Commonwealth prepares additional application instructions. No dated 2026 local window was publicly posted on the reviewed page as of refresh.",
     "SourceLabel": "Pennsylvania cyber grant page",
     "SourceURL": "https://www.pa.gov/services/pema/cybersecurity-grant",
     "Confidence": "High",
     "PriorLabel": "Pennsylvania cyber grant page",
     "PriorURL": "https://www.pa.gov/services/pema/cybersecurity-grant",
     "PriorNote": "Official Commonwealth page describing the offered services and stating that more application information will be provided later.",
-    "DrillDownLabel": "Pennsylvania cyber grant page",
+    "DrillDownLabel": "Pennsylvania cyber grant page and updates sign-up",
     "DrillDownURL": "https://www.pa.gov/services/pema/cybersecurity-grant",
-    "ProcurementProcess": "Pennsylvania is using a committee-identified service/project model. Local governments cannot apply directly to the federal government and must wait for Commonwealth-issued application instructions when a state cycle opens.",
+    "ProcurementProcess": "Pennsylvania is using a Commonwealth-managed service/project model. Local governments do not apply directly to FEMA or CISA; they participate when the Commonwealth opens the next state cycle and issues application instructions to eligible entities.",
     "ProcurementType": "State page / TBD",
     "FYYear": "TBD on reviewed source",
     "MatchInfo": "TBD on reviewed source",
@@ -1308,16 +1560,16 @@ const data =[
     "Start": "",
     "End": "",
     "SortDate": "2099-12-31",
-    "Description": "West Virginia's April 2026 funding page urges eligible agencies to apply and provides a program contact, but it still does not post a clearly dated state-local application packet or deadline on the reviewed page.",
-    "SourceLabel": "West Virginia cybersecurity grant funding page",
+    "Description": "West Virginia's WVEMD homepage and April 2026 funding page actively encourage eligible state and local agencies to apply for SLCGP funding and provide a dedicated contact email, but the reviewed official pages still do not post a clearly dated state-local application packet or deadline.",
+    "SourceLabel": "WVEMD cybersecurity grant funding page",
     "SourceURL": "https://emd.wv.gov/cybersecurity-grant-funding",
     "Confidence": "Medium",
     "PriorLabel": "West Virginia cybersecurity grant funding page",
     "PriorURL": "https://emd.wv.gov/cybersecurity-grant-funding",
     "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material.",
-    "DrillDownLabel": "West Virginia cybersecurity grant funding page",
+    "DrillDownLabel": "WVEMD cybersecurity grant funding page",
     "DrillDownURL": "https://emd.wv.gov/cybersecurity-grant-funding",
-    "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
+    "ProcurementProcess": "WVEMD is publicly encouraging eligible agencies to pursue SLCGP funding and provides a state contact, but the reviewed official pages still do not post a dated state application packet or deadline. Prospects should use the WVEMD page and contact WVEMD directly for current access instructions.",
     "ProcurementType": "State page / TBD",
     "FYYear": "TBD on reviewed source",
     "MatchInfo": "TBD on reviewed source",
@@ -1382,6 +1634,270 @@ const regionFilter = document.getElementById('regionFilter');
 const stateFilter = document.getElementById('stateFilter');
 const statusFilter = document.getElementById('statusFilter');
 const procTypeFilter = document.getElementById('procTypeFilter');
+
+const drawer = document.getElementById('prospectDrawer');
+const overlay = document.getElementById('prospectOverlay');
+const closeDrawerBtn = document.getElementById('closeProspectDrawer');
+const printProspectBtn = document.getElementById('printProspectBtn');
+const stateIndex = Object.fromEntries(data.map(row => [row.State, row]));
+
+function buildTargets(row) {
+  const targets = [
+    'State SAA / homeland security grant manager',
+    'State CIO, CISO, or statewide cyber program lead'
+  ];
+  const p = (row.ProcurementType || '').toLowerCase();
+  if (row.Status === 'Open') targets.push('Likely current applicants: counties, cities, school districts, and other eligible local entities');
+  if (row.Status !== 'Open') targets.push('Prior awardees and likely next-round applicants that can shape scope before the next cycle');
+  if (p.includes('rfp') || p.includes('rfa')) {
+    targets.push('Local IT + procurement + finance sponsors who will need compliant scope, quotes, and application support');
+  } else if (p.includes('rolling') || p.includes('quarterly') || p.includes('first-come')) {
+    targets.push('Fast-moving local applicants that can act quickly once technical scope and budget are ready');
+  } else {
+    targets.push('Public-sector technology leads who want monitoring help before the next formal window appears');
+  }
+  return targets.slice(0,4);
+}
+
+function buildSteps(row) {
+  const steps = [];
+  if (row.Status === 'Open') {
+    steps.push(`Open the current state source and confirm the live entry path, due date, and submission format for ${row.State}.`);
+    steps.push('Prioritize outreach to eligible local entities that already have cyber pain points, budget pressure, or board-level urgency.');
+    steps.push('Offer a short scoping call that translates needs into grant-ready categories, rough pricing, and procurement-friendly language.');
+  } else if (row.Status === 'Closed') {
+    steps.push('Review the prior cycle and identify likely repeat applicants, non-awardees, and entities that may need help preparing for the next round.');
+    steps.push('Use the prior-awards link to build an account list and look for project themes you can mirror in outreach.');
+    steps.push('Position planning help now so you are already attached to scope before the next state notice posts.');
+  } else {
+    steps.push('Set this state to monitor closely and use the official state page plus homepage/news layer to catch the next posted window early.');
+    steps.push('Start relationship-building with state cyber leaders and likely local applicants before the state publishes a dated packet.');
+    steps.push('Prepare reusable scope, budget, and procurement language so you can move fast when the release hits.');
+  }
+  if ((row.MatchInfo || '').match(/\d+%/)) {
+    steps.push('Address the match requirement directly in outreach with phased options, financing logic, or a smaller first-wave scope.');
+  }
+  return steps.slice(0,4);
+}
+
+function buildWhy(row) {
+  const windowText = row.Start || row.End ? `Current window signal: ${fmtDate(row.Start) || 'No posted start'}${row.End ? ` to ${fmtDate(row.End)}` : ''}.` : 'No dated local window is posted on the reviewed source yet.';
+  const openText = row.Status === 'Open'
+    ? 'This is an active pursuit state, so speed matters more than broad coverage.'
+    : row.Status === 'Closed'
+      ? 'This is a shaping state right now, so the best move is to get attached before the next cycle opens.'
+      : 'This is a watch-and-shape state, so relationship-building and early positioning matter most.';
+  const matchText = row.MatchInfo ? ` Match signal: ${row.MatchInfo}.` : '';
+  return `${openText} ${windowText}${matchText}`;
+}
+
+function buildPriority(row) {
+  if (row.Status === 'Open' && row.Confidence === 'High') return 'High';
+  if (row.Status === 'Open') return 'Medium-High';
+  if (row.Status === 'Forecasted/TBD' && row.Confidence === 'High') return 'Medium';
+  if (row.Status === 'Closed') return 'Monitor / shape';
+  return 'Monitor';
+}
+
+function buildLinks(row) {
+  return [
+    { label: '2026 source', url: row.SourceURL },
+    { label: 'Best drill-down', url: row.DrillDownURL },
+    { label: 'Prior awards / data', url: row.PriorURL }
+  ].filter(link => !!link.url);
+}
+
+function buildProgramOverview(row) {
+  const typeText = row.ProcurementType ? `How to access funding in ${row.State}: the current access path appears to be a ${row.ProcurementType.toLowerCase()}.` : `How to access funding in ${row.State}: the current access path is not clearly labeled on the reviewed source yet.`;
+  const statusText = row.Status === 'Open'
+    ? 'The state currently shows an active path to pursue funding.'
+    : row.Status === 'Closed'
+      ? 'The most recent public state window appears closed, so this is a prepare-and-position market right now.'
+      : 'The state does not appear to have a clearly dated public local window posted right now, so this remains a monitor-and-shape market.';
+  return `${typeText} ${statusText}`;
+}
+
+function buildProgramPoints(row) {
+  const points = [];
+  if (row.Description) points.push(row.Description);
+  if (row.FYYear) points.push(`Funding year / round signal: ${row.FYYear}.`);
+  if (row.MatchInfo) points.push(`Match signal: ${row.MatchInfo}.`);
+  if (row.MinMaxInfo) points.push(`Award size / cap signal: ${row.MinMaxInfo}.`);
+  return points.slice(0, 4);
+}
+
+function buildTimeline(row) {
+  const items = [];
+  if (row.Start || row.End) {
+    const start = fmtDate(row.Start) || 'Not posted';
+    const end = row.End ? fmtDate(row.End) : '';
+    items.push(`Posted application window: ${start}${end ? ` to ${end}` : ''}.`);
+  } else if (row.Status === 'Open') {
+    items.push('The reviewed state source indicates funding access is open now, but it does not post a clean dated start/end window in this tracker row.');
+  } else if (row.Status === 'Closed') {
+    items.push('The reviewed public window appears closed. Use the linked state materials to plan for the next release.');
+  } else {
+    items.push('No clearly dated local application window is posted on the reviewed source in this tracker row.');
+  }
+  items.push(`Current tracker status: ${row.Status}.`);
+  if (row.FYYear) items.push(`Funding round noted on the reviewed source: ${row.FYYear}.`);
+  if (row.MatchInfo) items.push(`Match requirement or cost-share note: ${row.MatchInfo}.`);
+  return items.slice(0, 4);
+}
+
+function buildAccessFunding(row) {
+  const sourceLabel = row.SourceLabel || 'current state source';
+  const drillLabel = row.DrillDownLabel || 'best drill-down link';
+  const steps = [
+    `Start with the ${sourceLabel} to confirm the current status, timing, and eligibility language.`,
+    `Use the ${drillLabel} to reach the state’s actual portal, application page, or release packet for the next action step.`
+  ];
+  const p = (row.ProcurementType || '').toLowerCase();
+  if (row.Status === 'Open') {
+    if (p.includes('rfp') || p.includes('rfa')) {
+      steps.push('Prepare a compliant response package or support package that matches the state notice, timeline, scope, and submission method.');
+    } else if (p.includes('rolling') || p.includes('quarterly') || p.includes('first-come') || p.includes('portal')) {
+      steps.push('Move quickly on scoping, pricing, and applicant coordination because these models reward speed and complete submissions.');
+    } else {
+      steps.push('Confirm whether the state wants an application, proposal, portal submission, or participation form before drafting materials.');
+    }
+  } else if (row.Status === 'Closed') {
+    steps.push('Use the prior materials and award links to identify likely repeat applicants and shape next-round scope before the state reopens.');
+  } else {
+    steps.push('Monitor the official state page and news/homepage layer until a dated packet posts, while building relationships with likely eligible applicants.');
+  }
+  steps.push('After award, funded entities typically buy through state or local procurement rules described in the procurement path section below.');
+  return steps.slice(0, 4);
+}
+
+function inferMatchFromFY(fy) {
+  if (!fy) return 'TBD on reviewed source';
+  const fyText = String(fy);
+  if (fyText.includes('FY2025')) return '40% single / 30% multi-entity unless the reviewed state materials say otherwise';
+  if (fyText.includes('FY2024')) return '30% single / 20% multi-entity unless the reviewed state materials say otherwise';
+  if (fyText.includes('FY2023')) return '20% single / 10% multi-entity unless the reviewed state materials say otherwise';
+  return 'TBD on reviewed source';
+}
+
+function extractNextWindowSignal(row) {
+  const d = row.Description || '';
+  let name = 'Next state cycle';
+  let window = 'Not yet publicly posted on the reviewed source';
+  let fy = 'TBD on reviewed source';
+
+  let m = d.match(/also announced an (FY\d{4}) opening on ([A-Z][a-z]+ \d{1,2}, \d{4})/);
+  if (m) {
+    return { name: `${m[1]} opening`, window: `Opens ${m[2]}`, fy: m[1], match: inferMatchFromFY(m[1]) };
+  }
+  m = d.match(/next application window will open by ([^.]+)/i);
+  if (m) {
+    return { name, window: m[1].trim().replace(/\.$/, ''), fy, match: 'TBD on reviewed source' };
+  }
+  m = d.match(/anticipated in ([^.]+)/i);
+  if (m) {
+    return { name, window: m[1].trim().replace(/\.$/, ''), fy, match: 'TBD on reviewed source' };
+  }
+  m = d.match(/(late [A-Za-z]+ \d{4}) application release and an? (early [A-Za-z]+ \d{4}) tentative application deadline/i);
+  if (m) {
+    fy = row.FYYear || 'TBD on reviewed source';
+    return { name: row.FYYear || 'Expected next round', window: `${m[1]} release; tentative deadline ${m[2]}`, fy, match: row.MatchInfo || inferMatchFromFY(fy) };
+  }
+  m = d.match(/(FY\d{4})[^.]*released? in (\d{4})/i);
+  if (m) {
+    return { name: `${m[1]} release`, window: `Expected in ${m[2]}`, fy: m[1], match: inferMatchFromFY(m[1]) };
+  }
+  if (/coming soon/i.test(d)) {
+    return { name, window: 'Coming soon / not yet dated on the reviewed source', fy, match: 'TBD on reviewed source' };
+  }
+  if (row.Status === 'Open') {
+    const currentEnd = row.End ? fmtDate(row.End) : 'the current cycle closes';
+    return { name, window: `Next opening not yet posted after ${currentEnd}`, fy, match: 'TBD on reviewed source' };
+  }
+  return { name, window, fy, match: 'TBD on reviewed source' };
+}
+
+function buildLastWindow(row) {
+  const name = row.FYYear || row.SourceLabel || 'Most recently posted state cycle';
+  let window = 'Not clearly dated on the reviewed source';
+  if (row.Start || row.End) {
+    window = `${fmtDate(row.Start) || 'Not posted'}${row.End ? ` to ${fmtDate(row.End)}` : ''}`;
+  } else if (row.Status === 'Open') {
+    window = 'Open now; the reviewed source does not show a clean dated start/end pair in this row';
+  } else if (row.Status === 'Closed') {
+    window = 'The most recently posted public window appears closed, but the exact start/end dates are not captured in this row';
+  }
+  return {
+    name,
+    window,
+    fy: row.FYYear || 'TBD on reviewed source',
+    match: row.MatchInfo || 'TBD on reviewed source'
+  };
+}
+
+function buildNextWindow(row) {
+  return extractNextWindowSignal(row);
+}
+
+function renderWindowDetail(info) {
+  return `
+    <div><b>Window name:</b> ${escapeHtml(info.name || 'TBD on reviewed source')}</div>
+    <div><b>Window:</b> ${escapeHtml(info.window || 'TBD on reviewed source')}</div>
+    <div><b>FY:</b> ${escapeHtml(info.fy || 'TBD on reviewed source')}</div>
+    <div><b>Match:</b> ${escapeHtml(info.match || 'TBD on reviewed source')}</div>`;
+}
+
+function openProspectDrawer(stateName) {
+  const row = stateIndex[stateName];
+  if (!row) return;
+  document.getElementById('prospectTitle').textContent = row.State;
+  document.getElementById('prospectSummary').textContent = row.Description || '';
+  document.getElementById('prospectPriority').textContent = buildPriority(row);
+  document.getElementById('prospectWindow').textContent = row.Start || row.End ? `${fmtDate(row.Start) || 'Not posted'}${row.End ? ` to ${fmtDate(row.End)}` : ''}` : 'No dated window posted';
+  document.getElementById('prospectFunding').textContent = `${row.FYYear || 'TBD'} | ${row.MatchInfo || 'Match TBD'}`;
+  document.getElementById('prospectProgramOverview').textContent = buildProgramOverview(row);
+  document.getElementById('prospectProgramPoints').innerHTML = buildProgramPoints(row).map(item => `<li>${escapeHtml(item)}</li>`).join('');
+  document.getElementById('prospectTimeline').innerHTML = buildTimeline(row).map(item => `<li>${escapeHtml(item)}</li>`).join('');
+  document.getElementById('prospectLastWindow').innerHTML = renderWindowDetail(buildLastWindow(row));
+  document.getElementById('prospectNextWindow').innerHTML = renderWindowDetail(buildNextWindow(row));
+  document.getElementById('prospectAccess').innerHTML = buildAccessFunding(row).map(item => `<li>${escapeHtml(item)}</li>`).join('');
+  document.getElementById('prospectWhy').textContent = buildWhy(row);
+  document.getElementById('prospectPath').textContent = row.ProcurementProcess || '';
+  document.getElementById('prospectPriorNote').textContent = row.PriorNote || '';
+
+  const badgeWrap = document.getElementById('prospectBadges');
+  badgeWrap.innerHTML = `
+    <span class="status-chip status-${cssKey(row.Status)}">${escapeHtml(row.Status)}</span>
+    <span class="region-chip ${regionClass(row.Region)}">${escapeHtml(row.Region)}</span>
+    <span class="ptype-chip ptype-${cssKey(row.ProcurementType)}">${escapeHtml(row.ProcurementType)}</span>
+    <span class="conf-chip conf-${cssKey(row.Confidence)}">${escapeHtml(row.Confidence)} confidence</span>`;
+
+  const targets = buildTargets(row);
+  document.getElementById('prospectTargets').innerHTML = targets.map(item => `<li>${escapeHtml(item)}</li>`).join('');
+
+  const steps = buildSteps(row);
+  document.getElementById('prospectSteps').innerHTML = steps.map(item => `<li>${escapeHtml(item)}</li>`).join('');
+
+  const links = buildLinks(row);
+  document.getElementById('prospectLinks').innerHTML = links.map(link => `<a href="${escapeHtml(link.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(link.label)}</a>`).join('');
+
+  overlay.hidden = false;
+  drawer.hidden = false;
+  drawer.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+}
+
+function printProspectDrawer() {
+  if (drawer.hidden) return;
+  document.body.classList.add('print-prospect');
+  window.print();
+}
+
+function closeProspectDrawer() {
+  overlay.hidden = true;
+  drawer.hidden = true;
+  drawer.setAttribute('aria-hidden', 'true');
+  document.body.style.overflow = '';
+}
 const table = document.getElementById('dataTable');
 const tbody = document.getElementById('tbody');
 const headerCells = Array.from(document.querySelectorAll('thead th'));
@@ -1474,8 +1990,10 @@ function render() {
   tbody.innerHTML = filtered.map(row => `
     <tr class="row-${cssKey(row.Status)}">
       <td>
-        <div class="state">${escapeHtml(row.State)}</div>
-        <span class="region-chip ${regionClass(row.Region)}">${escapeHtml(row.Region)}</span>
+        <button class="state-trigger" type="button" data-state="${escapeHtml(row.State)}" aria-label="Open sales prospecting detail for ${escapeHtml(row.State)}">
+          <div class="state">${escapeHtml(row.State)}</div>
+          <span class="region-chip ${regionClass(row.Region)}">${escapeHtml(row.Region)}</span>
+        </button>
       </td>
       <td><span class="status-chip status-${cssKey(row.Status)}">${escapeHtml(row.Status)}</span></td>
       <td>${escapeHtml(fmtDate(row.Start))}</td>
@@ -1568,6 +2086,23 @@ document.getElementById('resetBtn').addEventListener('click', () => {
 });
 
 document.getElementById('pdfBtn').addEventListener('click', () => window.print());
+printProspectBtn.addEventListener('click', printProspectDrawer);
+window.addEventListener('afterprint', () => {
+  document.body.classList.remove('print-prospect');
+});
+
+
+document.getElementById('tbody').addEventListener('click', event => {
+  const trigger = event.target.closest('.state-trigger');
+  if (!trigger) return;
+  openProspectDrawer(trigger.dataset.state);
+});
+
+overlay.addEventListener('click', closeProspectDrawer);
+closeDrawerBtn.addEventListener('click', closeProspectDrawer);
+document.addEventListener('keydown', event => {
+  if (event.key === 'Escape' && !drawer.hidden) closeProspectDrawer();
+});
 
 setupSorting();
 setupResizableColumns();
