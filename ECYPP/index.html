@@ -1,1 +1,1303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>E-Rate Cybersecurity Pilot Program Live Viewer</title>
+<style>
+:root{
+  --bg:#eef2f6; --panel:#ffffff; --text:#102131; --muted:#526476; --line:#cfd8e3;
+  --blue:#173a5c; --blue2:#24527d; --blueLight:#e8f0f8; --cream:#f5efe2; --green:#dce7df;
+  --shadow:0 10px 24px rgba(20,48,80,.08); --radius:18px;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text)}
+a{color:var(--blue2)}
+.page{max-width:1720px;margin:0 auto;padding:12px}
+.hero,.toolbar,.summary{background:var(--panel);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);padding:12px;margin-bottom:10px}
+.hero h1{margin:0 0 4px;font-size:24px}
+.hero p{margin:6px 0;color:var(--muted);line-height:1.35;font-size:13px}
+.banner{margin-top:8px;background:#fff8e7;border:1px solid #e8d8a7;padding:8px 10px;border-radius:10px;font-size:12px}
+.toolbar-grid,.summary-grid{display:grid;gap:12px}
+.toolbar-grid{grid-template-columns:2fr repeat(7,1fr)}
+.summary-grid{grid-template-columns:repeat(5,1fr)}
+.field{display:flex;flex-direction:column;gap:6px}
+.field label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.03em;color:var(--muted)}
+.field input,.field select{width:100%;min-height:34px;border:1px solid #c8d4e0;border-radius:8px;background:#fff;padding:6px 8px;font-size:12px;color:var(--text)}
+.field select[multiple]{min-height:92px;padding:4px 6px}
+.toolbar-actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:10px}
+button{border:1px solid #c7d3df;background:#fff;border-radius:999px;padding:7px 10px;font-size:12px;font-weight:700;cursor:pointer}
+button.primary{background:var(--blue);border-color:var(--blue);color:#fff;box-shadow:0 2px 8px rgba(23,58,92,.18)}
+.small-note{font-size:11px;color:var(--muted)}
+.stat{border:1px solid var(--line);border-radius:14px;padding:14px;background:linear-gradient(180deg,#fff,#fbfdff)}
+.stat .label{font-size:10px;text-transform:uppercase;color:var(--muted);font-weight:700;letter-spacing:.03em;margin-bottom:4px}
+.stat .value{font-size:18px;font-weight:800}
+.status-row{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:0 2px 6px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(900px,1fr));gap:22px}
+.card{background:var(--panel);border:2px solid #b9c7d6;border-radius:14px;box-shadow:var(--shadow);overflow:hidden}
+.card-top{background:linear-gradient(90deg,var(--blue) 0%, var(--blue2) 100%);color:#fff;padding:8px 12px;font-size:15px;font-weight:800;letter-spacing:.02em;text-transform:uppercase}
+.card-body{padding:0}
+.kpi-grid{display:grid;grid-template-columns:1.0fr .65fr .6fr .85fr 1.0fr .85fr .7fr .65fr;border-bottom:1px solid var(--line)}
+.kpi{padding:10px 12px;background:#f8fbfe;border-right:1px solid var(--line)}
+.kpi:nth-child(odd){background:#eef4f9}
+.kpi .k{font-size:10px;font-weight:800;color:#000;margin-bottom:2px}
+.kpi .v{font-size:13px;font-weight:700;line-height:1.2}
+.note{padding:8px 12px;background:var(--cream);font-style:italic;border-bottom:1px solid #dbc99d;font-size:11px;color:#213242}
+.disc-box{margin:8px 12px 0;padding:8px 10px;border:1px solid #d6b26e;background:#fff7e3;border-radius:10px;font-size:11px;line-height:1.35}
+.disc-box strong{display:block;margin-bottom:4px}
+.disc-good{color:#24481e}
+.disc-warn{color:#7a4a00}
+.disc-list{margin:4px 0 0;padding-left:16px}
+.disc-list li{margin:2px 0}
+.invoice-col{font-weight:900;background:#e4eef9 !important;color:#0f2f4a}
+.invoice-head{font-weight:900 !important;background:#0f2f4a !important;color:#fff !important}
 
+.invoice-template{font-family:Arial,Helvetica,sans-serif;color:#111}
+.invoice-header{display:flex;justify-content:space-between;gap:16px;margin-bottom:12px}
+.invoice-title{font-size:22px;font-weight:800}
+.invoice-sub{font-size:12px;line-height:1.35;color:#333}
+.invoice-meta{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:10px 0 14px}
+.invoice-meta-box{border:1px solid #d6d6d6;padding:8px;border-radius:8px}
+.invoice-meta-box .k{font-size:10px;font-weight:800;text-transform:uppercase;color:#555;margin-bottom:3px}
+.invoice-meta-box .v{font-size:11px;font-weight:700;line-height:1.2}
+.invoice-section{margin:12px 0 6px;font-size:14px;font-weight:800}
+.invoice-note{margin:6px 0 12px;font-size:11px;color:#444}
+.invoice-table{width:100%;border-collapse:collapse;font-size:10px;table-layout:fixed}
+.invoice-table th,.invoice-table td{border:1px solid #bbb;padding:3px 4px;vertical-align:top;word-break:break-word;overflow-wrap:anywhere}
+.invoice-table th{background:#123e63;color:#fff;font-weight:800;white-space:normal !important;word-break:break-word;overflow-wrap:anywhere;line-height:1.1;hyphens:auto}
+.invoice-total-row td{font-weight:800;background:#eef6ff}
+
+@page{size:auto;margin:0.25in}
+@media print{
+  body{background:#fff}
+  thead th{white-space:normal !important;word-break:break-word !important;overflow-wrap:anywhere !important;line-height:1.05 !important}
+  .invoice-table th{white-space:normal !important;word-break:break-word !important;overflow-wrap:anywhere !important;line-height:1.05 !important}
+  .hero,.toolbar,.summary,.status-row{box-shadow:none;border:1px solid #ddd}
+  .toolbar,.status-row,.raw-toggle, details{display:none !important}
+  .page{max-width:none;padding:0.1in}
+  .cards{grid-template-columns:1fr}
+  .card{break-inside:avoid;page-break-inside:avoid}
+  thead th{position:static}
+  .invoice-template{padding:0.1in}
+  .invoice-header{margin-bottom:8px}
+  .invoice-meta{gap:6px;margin:8px 0 10px}
+  .invoice-section{margin:10px 0 4px}
+  .invoice-table th,.invoice-table td{padding:4px}
+}
+.frn-block{border-top:10px solid #cfdac6}
+.frn-head{padding:8px 12px;background:#d5e0d4;font-weight:800;font-size:12px;color:#173a2d}
+.frn-summary{display:grid;grid-template-columns:repeat(6,1fr);border-bottom:1px solid var(--line)}
+.frn-box{padding:7px 8px;border-right:1px solid var(--line);background:#fafafa}
+.frn-box:nth-child(odd){background:#f2f2f2}
+.frn-box .k{font-size:10px;font-weight:800;color:#222;margin-bottom:2px}
+.frn-box .v{font-size:12px;font-weight:700;line-height:1.2}
+.table-wrap{overflow:auto}.table-wrap table{table-layout:fixed}
+table{width:100%;border-collapse:collapse}
+th,td{border:1px solid #e4e8ee;padding:4px 5px;vertical-align:top;white-space:normal;word-break:break-word;overflow-wrap:anywhere}
+thead th{position:sticky;top:0;background:var(--blue);color:#fff;font-size:9px;font-weight:800;text-transform:none;letter-spacing:.01em;z-index:1;white-space:normal;word-break:break-word;overflow-wrap:anywhere;line-height:1.1;hyphens:auto}
+tbody td{font-size:10px;background:#fff;line-height:1.15}
+tbody tr:nth-child(even) td{background:#fbfcfd}
+.num{text-align:right;white-space:nowrap;word-break:normal;overflow-wrap:normal}
+.total-row td{background:#f2f7fb !important;font-weight:800}
+.line-desc{min-width:90px;max-width:120px}
+.line-make{min-width:55px;max-width:80px}.line-model{min-width:70px;max-width:105px}.line-type{min-width:60px;max-width:85px}
+.raw-toggle{padding:8px 12px}
+details{border-top:1px solid var(--line);padding-top:10px}
+summary{cursor:pointer;font-weight:700}
+.raw-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px 14px;margin-top:10px}
+.raw-item{border-top:1px dashed #e5ebf2;padding-top:6px}
+.raw-item .k{font-size:10px;text-transform:uppercase;color:var(--muted);font-weight:700}
+.raw-item .v{font-size:11px;line-height:1.25;word-break:break-word;margin-top:2px}
+.empty{padding:32px;border:1px dashed #c7d3df;border-radius:16px;background:#fff;color:var(--muted);text-align:center}
+@media (max-width:1400px){.toolbar-grid,.summary-grid,.kpi-grid,.frn-summary{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:760px){.toolbar-grid,.summary-grid,.kpi-grid,.frn-summary,.raw-grid{grid-template-columns:1fr}.cards{grid-template-columns:1fr}}
+
+.invoice-table td:nth-child(1), .invoice-table th:nth-child(1){width:7%}
+.invoice-table td:nth-child(2), .invoice-table th:nth-child(2){width:6%}
+.invoice-table td:nth-child(3), .invoice-table th:nth-child(3){width:10%}
+.invoice-table td:nth-child(4), .invoice-table th:nth-child(4){width:8%}
+.invoice-table td:nth-child(5), .invoice-table th:nth-child(5){width:4%}
+.invoice-table td:nth-child(6), .invoice-table th:nth-child(6){width:4%}
+.invoice-table .num{white-space:nowrap !important}
+.invoice-table td:not(.num), .invoice-table th:not(.num){white-space:normal;word-break:break-word;overflow-wrap:anywhere}
+@media print{
+  .invoice-table{font-size:9px !important}
+  .invoice-table th,.invoice-table td{padding:3px !important}
+  .invoice-table .num{white-space:nowrap !important;font-size:8.5px !important}
+  .invoice-col{white-space:nowrap !important}
+}
+
+
+/* Interactive table column resizing + emphasis */
+table.resizable th{position:sticky; cursor:col-resize; user-select:none}
+table.resizable th.resizable-col{min-width:48px}
+table.resizable th,
+table.resizable td{border-color:#c9d4df}
+table.resizable th.invoice-head,
+table.resizable td.invoice-col{
+  border-left:3px solid #0f2f4a !important;
+  border-right:3px solid #0f2f4a !important;
+}
+table.resizable th.invoice-head:first-of-type,
+table.resizable td.invoice-col.usac-col{
+  border-left:4px solid #0f2f4a !important;
+}
+table.resizable th.invoice-head:last-of-type,
+table.resizable td.invoice-col.participant-col{
+  border-right:4px solid #0f2f4a !important;
+}
+
+
+.grand-total-90, .grand-total-10{
+  border:4px solid #0f2f4a !important;
+  background:#dbe8f6 !important;
+  font-weight:900 !important;
+}
+
+
+.card + .card{margin-top:4px}
+.card-body{border-top:2px solid #d7e0ea}
+.raw-toggle{border-top:2px solid #d7e0ea}
+
+
+th{
+  white-space: normal !important;
+  word-break: break-word !important;
+  overflow-wrap: anywhere !important;
+  hyphens: auto;
+  line-height: 1.05 !important;
+}
+thead th,
+.invoice-table th{
+  white-space: normal !important;
+  word-break: break-word !important;
+  overflow-wrap: anywhere !important;
+  hyphens: auto;
+  line-height: 1.05 !important;
+}
+
+
+.invoice-doc{font-family:Arial,Helvetica,sans-serif;color:#111;padding:0.2in}
+.invoice-doc-header{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;margin-bottom:12px}
+.invoice-doc-title{font-size:24px;font-weight:800}
+.invoice-doc-sub{font-size:12px;color:#333;line-height:1.35}.invoice-doc-sub strong{color:#102131}
+.invoice-address-grid{display:grid;grid-template-columns:1.1fr 1.1fr .8fr;gap:10px;margin:12px 0}
+.invoice-address-box{border:1px solid #cfd8e3;border-radius:8px;padding:10px}
+.invoice-address-box .k{font-size:10px;font-weight:800;text-transform:uppercase;color:#526476;margin-bottom:4px}
+.invoice-address-box .v{font-size:12px;line-height:1.35}
+.invoice-banner{margin:10px 0 12px;padding:8px 10px;border:2px solid #173a5c;background:#eef6ff;border-radius:8px;font-size:12px;font-weight:700}
+.invoice-split-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:10px 0 16px}
+.invoice-split-box{border:2px solid #173a5c;border-radius:10px;padding:10px;background:#fbfdff}
+.invoice-split-box h3{margin:0 0 8px;font-size:14px;color:#173a5c}
+.invoice-split-box p{margin:0;font-size:11px;line-height:1.35}
+.invoice-doc .section-title{margin:14px 0 8px;font-size:14px;font-weight:800;color:#173a5c}
+
+
+.print-page-footer{
+  position:fixed;
+  bottom:0.08in;
+  right:0.18in;
+  font-size:10px;
+  color:#333;
+}
+.print-page-footer::after{
+  content:"Page " counter(page);
+}
+.invoice-top-right{
+  font-size:12px;
+  line-height:1.35;
+}
+.invoice-top-right strong{
+  color:#102131;
+}
+.invoice-doc-title-block{
+  display:flex;
+  flex-direction:column;
+  gap:2px;
+}
+.invoice-doc-kicker{
+  font-size:18px;
+  font-weight:800;
+  color:#173a5c;
+}
+.invoice-doc-title{
+  font-size:18px;
+  font-weight:800;
+}
+
+</style>
+</head>
+<body>
+<div class="page">
+  <section class="hero">
+    <h1>E-Rate Cybersecurity Pilot Program Live Viewer</h1>
+    <p>Service-provider card view for the USAC Cybersecurity Pilot FCC Form 471 dataset. <a href="https://opendata.usac.org/Other-USAC-Programs/Cybersecurity-Pilot-FCC-Form-471/qr48-4kx4/data_preview" target="_blank" rel="noopener noreferrer">View data source</a>.</p>
+  </section>
+
+  <section class="toolbar">
+    <div class="toolbar-actions" style="margin-top:0;margin-bottom:10px">
+      <button id="reloadBtn" class="primary">Load Live USAC Data</button>
+      <button id="printBtn">Print to PDF</button>
+      <button id="invoiceBtn">Print Reconcile Doc</button>
+      <button id="createInvoiceBtn">Create Invoice</button>
+      <button id="emailBtn">Email</button>
+      <button id="clearBtn">Clear Filters</button>
+      <button id="exportBtn">Export Filtered CSV</button>
+      <label class="small-note" style="display:inline-flex;align-items:center;gap:6px;border:1px solid #c7d6e8;padding:6px 10px;border-radius:999px;background:#fbfdff;cursor:pointer"><input id="hideZeroCols" type="checkbox" checked /> Hide zero columns</label>
+      <label for="fileInput" class="small-note" style="display:inline-flex;align-items:center;gap:8px;border:1px dashed #c7d6e8;padding:6px 10px;border-radius:999px;background:#fbfdff;cursor:pointer">Optional Backup Import</label>
+      <input id="fileInput" type="file" accept=".json,.csv" style="display:none" />
+      <span id="fetchStatus" class="small-note">Not loaded yet. Live load uses browser-friendly USAC endpoints intended for hosted pages.</span>
+    </div>
+    <div class="toolbar-grid">
+      <div class="field">
+        <label for="searchBox">Search</label>
+        <input id="searchBox" type="text" placeholder="Participant name, FRN, make, model, provider, 470 number..." />
+      </div>
+      <div class="field"><label for="stateFilter">State</label><select id="stateFilter"><option value="">All states</option></select></div>
+      <div class="field"><label for="statusFilter">Application Status</label><select id="statusFilter"><option value="">All application statuses</option><option value="Committed" selected>Committed</option></select></div>
+      <div class="field"><label for="providerFilter">Provider</label><select id="providerFilter"><option value="">All providers</option></select></div>
+      <div class="field"><label for="makeFilter">Make</label><select id="makeFilter" multiple size="4" title="Hold Ctrl or Command to select multiple makes"></select><div class="small-note">Hold Ctrl or Command to select multiple makes</div></div>
+      <div class="field"><label for="entityTypeFilter">Participant Type</label><select id="entityTypeFilter"><option value="">All participant types</option></select></div>
+      <div class="field"><label for="versionFilter">Version</label><select id="versionFilter"><option value="">All versions</option><option value="Original">Original only</option><option value="Revised">Revised only</option></select></div>
+      <div class="field"><label for="sortBy">Sort</label><select id="sortBy"><option value="amount_desc">Cost High to Low</option><option value="amount_asc">Cost Low to High</option><option value="participant_asc">Participant A–Z</option><option value="participant_desc">Participant Z–A</option><option value="state_asc">State A–Z</option><option value="state_desc">State Z–A</option><option value="status_asc">Status A–Z</option><option value="status_desc">Status Z–A</option><option value="version_asc">Version</option></select></div>
+    </div>
+  </section>
+
+  <section class="summary">
+    <div class="summary-grid">
+      <div class="stat"><div class="label">Source Rows</div><div class="value" id="sumRows">0</div></div>
+      <div class="stat"><div class="label">Grouped Cards</div><div class="value" id="sumCards">0</div></div>
+      <div class="stat"><div class="label">Participants</div><div class="value" id="sumParticipants">0</div></div>
+      <div class="stat"><div class="label">Providers</div><div class="value" id="sumProviders">0</div></div>
+      <div class="stat"><div class="label">Eligible Line Total</div><div class="value" id="sumEligible">$0</div></div>
+    </div>
+  </section>
+
+  <div class="status-row">
+    <div id="resultText">0 cards shown</div>
+    <div class="small-note">Provider defaults to Solutionz when present in the loaded data. Use the Version filter and the multi-select Make filter to narrow the visible cards. Line items are sorted by line number by default.</div>
+  </div>
+
+  <section id="cards" class="cards"></section>
+</div>
+<script>
+const ENDPOINTS = [
+  'https://opendata.usac.org/resource/qr48-4kx4.json?$limit=50000',
+  'https://opendata.usac.org/api/views/qr48-4kx4/rows.json?accessType=DOWNLOAD'
+];
+
+let dataSourceState = {
+  tried: [],
+  succeeded: '',
+  rows: 0,
+  lastError: '',
+  log: []
+};
+
+function escHtml(v){
+  return String(v ?? '').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;');
+}
+
+function updateDataSourceStatus(){
+  const tried = document.getElementById('dsTried');
+  const succeeded = document.getElementById('dsSucceeded');
+  const rows = document.getElementById('dsRows');
+  const error = document.getElementById('dsError');
+  const log = document.getElementById('dsLog');
+  if(tried) tried.textContent = dataSourceState.tried.length ? dataSourceState.tried.join(' | ') : 'Not yet';
+  if(succeeded) succeeded.textContent = dataSourceState.succeeded || 'None';
+  if(rows) rows.textContent = String(dataSourceState.rows || 0);
+  if(error) error.textContent = dataSourceState.lastError || 'None';
+  if(log) log.textContent = dataSourceState.log.length ? dataSourceState.log.join('\n') : 'No requests yet.';
+}
+
+function addSourceLog(msg){
+  dataSourceState.log.push(msg);
+  if(dataSourceState.log.length > 20) dataSourceState.log = dataSourceState.log.slice(-20);
+  updateDataSourceStatus();
+}
+
+const state = { rawRows: [], rows: [], groups: [], filteredGroups: [], activeEndpoint: '', loadedAt: null, hideZeroCols: true };
+const cardsEl = document.getElementById('cards');
+const fetchStatusEl = document.getElementById('fetchStatus');
+function el(id){ return document.getElementById(id); }
+function escapeHtml(s){ return String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;'); }
+function compact(v){ return String(v ?? '').trim(); }
+function normalizeKey(k){ return String(k ?? '').toLowerCase().replace(/[^a-z0-9]+/g,''); }
+function parseNumber(v){ if(v===null||v===undefined||String(v).trim()==='') return 0; const n = Number(String(v).replace(/[$,%\s,]/g,'')); return Number.isFinite(n)?n:0; }
+function money(n){ return new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',minimumFractionDigits:2,maximumFractionDigits:2}).format(Number(n||0)); }
+function money0(n){ return new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:0}).format(Number(n||0)); }
+function intFmt(n){ return new Intl.NumberFormat('en-US',{maximumFractionDigits:0}).format(Number(n||0)); }
+function simpleDate(v){ if(!v) return ''; const d = new Date(v); return Number.isNaN(d.getTime()) ? String(v) : d.toLocaleDateString('en-US',{year:'numeric',month:'short',day:'numeric'}); }
+function todayString(){ return new Date().toLocaleDateString('en-US',{year:'numeric',month:'short',day:'numeric'}); }
+function unique(arr){ return [...new Set(arr.filter(Boolean))].sort((a,b)=>String(a).localeCompare(String(b))); }
+function statusClass(s){ const t=String(s||'').toLowerCase(); if(/(commit|fund|approved|granted)/.test(t)) return 'good'; if(/(pending|review|certified|submitted)/.test(t)) return 'warn'; if(/(denied|rejected|cancel)/.test(t)) return 'bad'; return ''; }
+function toObjects(payload){
+  if(Array.isArray(payload)) return payload;
+  if(payload && Array.isArray(payload.data) && payload.meta && payload.meta.view && Array.isArray(payload.meta.view.columns)){
+    const cols = payload.meta.view.columns.map(c => c.fieldName || c.name);
+    return payload.data.map(r => Object.fromEntries(cols.map((c,i)=>[c,r[i]])));
+  }
+  if(payload && Array.isArray(payload.results)) return payload.results;
+  return [];
+}
+function getByAliases(obj, aliases){
+  const byNorm = {};
+  Object.keys(obj || {}).forEach(k => byNorm[normalizeKey(k)] = obj[k]);
+  for(const alias of aliases){ const hit = byNorm[normalizeKey(alias)]; if(hit !== undefined && String(hit).trim() !== '') return hit; }
+  return '';
+}
+const F = {
+ participant:['Participant Name','participant_name','billed_entity_name','Applicant Name'],
+ participantType:['Participant Type','participant_type','entity_type'],
+ participantState:['Participant State','participant_state','state','billed_entity_state'],
+ participantCity:['Participant City','participant_city','city'],
+ participantAddress:['Participant Address','participant_address'],
+ applicationStatus:['Application Status','application_status'],
+ form471:['Pilot FCC Form 471 Number','pilot_fcc_form_471_number','application_number','471_application_number'],
+ form470:['FCC Form 470 Number','fcc_form_470_number','form_470_number','FCC Form 470 Number'],
+ frn:['FRN','frn','funding_request_number'],
+ frnStatus:['FRN Status','frn_status'],
+ provider:['Service Provider Name','service_provider_name','provider_name'],
+ spin:['SPIN','spin','service_provider_number'],
+ formPdf:['Form PDF','form_pdf'],
+ contractType:['Type of Contract','type_of_contract'],
+ contractAward:['Contract Award Date','contract_award_date'],
+ contractExp:['Contract Expiration Date','contract_expiration_date'],
+ invoiceMethod:['Invoicing Method','invoicing_method'],
+ discountRate:['Discount Rate','discount_rate'],
+ serviceStart:['Pilot FCC Form 471 FRN Service Start Date','pilot_fcc_form_471_frn_service','service_start_date'],
+ serviceDeadline:['Service Delivery Deadline','service_delivery_deadline'],
+ invoiceDeadline:['Invoice Deadline Date/Last Date to Invoice','invoice_deadline_date_last','invoice_deadline_date_last_date_to_invoice'],
+ fcdlDate:['FCDL Date','fcdl_date'],
+ revisedFcdlDate:['Revised FCDL Date','revised_fcdl_date'],
+ requestedAmount:['FRN Requested Amount','frn_requested_amount'],
+ committedAmount:['FRN Current Committed Amount','frn_current_committed_amount'],
+ disbursedAmount:['Total Disbursement Amount','total_disbursement_amount'],
+ netAuthorized:['FRN Net Authorized Disbursements','frn_net_authorized_disbursements'],
+ totalPreDiscountEligible:['Total Pre-Discount Eligible Amount','total_pre_discount_eligible','total_pre_discount_eligible_amount'],
+ totalParticipantNonDiscount:['Total Participant Non-Discount Share','total_participant_non_discount','total_participant_non_discount_share'],
+ lineNumber:['FRN Line Item Number','frn_line_item_number','line_item_number'],
+ lineType:['Line Item Type of Equipment or Service','line_item_type_of_equipment','line_item_type_of_equipment_or_service'],
+ lineMake:['Line Item Make','line_item_make','make'],
+ lineModel:['Line Item Model','line_item_model','model'],
+ lineInstallIncluded:['Line Item Installation Included in Price','line_item_installation','line_item_installation_included_in_price'],
+ lineLease:['Lease or Non-Purchase Agreement','lease_or_non_purchase','lease_or_non_purchase_agreement'],
+ monthlyQty:['Line Item Monthly Quantity','line_item_monthly_quantity'],
+ months:['Line Item Months of Service','line_item_months_of_service'],
+ oneTimeQty:['Line Item One-time Quantity','line_item_one_time_quantity'],
+ monthlyTax:['Line Item Monthly Tax Cost','line_item_monthly_tax_cost'],
+ monthlyInstall:['Line Item Monthly Installation/Activation/Configuration Cost','line_item_monthly_installation','line_item_monthly_installation_activation_configuration_cost'],
+ monthlyProduct:['Line Item Monthly Product/Service Cost','line_item_monthly_product_service_cost'],
+ monthlyIneligible:['Line Item Monthly Ineligible Costs','line_item_monthly_ineligible_costs'],
+ monthlyEligible:['Line Item Monthly Eligible Costs','line_item_monthly_eligible_costs'],
+ totalEligibleMonthly:['Line Item Total Eligible Monthly Costs','line_item_total_eligible','line_item_total_eligible_monthly_costs'],
+ oneTimeTax:['Line Item One-time Tax Cost','line_item_one_time_tax_cost'],
+ oneTimeInstall:['Line Item One-time Installation/Activation/Configuration Cost','line_item_one_time','line_item_one_time_installation_activation_configuration_cost'],
+ oneTimeProduct:['Line Item One-time Product/Service Cost','line_item_one_time_product','line_item_one_time_product_service_cost'],
+ oneTimeIneligible:['Line Item One-time Ineligible Costs','line_item_one_time_ineligible_costs'],
+ oneTimeEligible:['Line Item One-time Eligible Costs','line_item_one_time_eligible_costs'],
+ totalEligibleOneTime:['Line Item Total Eligible One-time Costs','line_item_total_eligible_1','line_item_total_eligible_one_time_costs'],
+ lastUpdated:['Last Updated Date/Time','last_updated_date_time']
+};
+function normalizeRow(obj){
+  const discountRate = parseNumber(getByAliases(obj,F.discountRate));
+  const requestedAmount = parseNumber(getByAliases(obj,F.requestedAmount));
+  const committedAmount = parseNumber(getByAliases(obj,F.committedAmount));
+
+  const monthlyEligible = parseNumber(getByAliases(obj,F.monthlyEligible));
+  const totalEligibleMonthly = parseNumber(getByAliases(obj,F.totalEligibleMonthly));
+
+  const oneTimeEligible = parseNumber(getByAliases(obj,F.oneTimeEligible));
+  const totalEligibleOneTime = parseNumber(getByAliases(obj,F.totalEligibleOneTime));
+
+  const eligibleLineTotal = totalEligibleMonthly + totalEligibleOneTime;
+
+  return {
+    _raw: obj,
+    participant: compact(getByAliases(obj,F.participant)),
+    participantType: compact(getByAliases(obj,F.participantType)),
+    participantState: compact(getByAliases(obj,F.participantState)),
+    participantCity: compact(getByAliases(obj,F.participantCity)),
+    participantAddress: compact(getByAliases(obj,F.participantAddress)),
+    applicationStatus: compact(getByAliases(obj,F.applicationStatus)),
+    form471: compact(getByAliases(obj,F.form471)),
+    form470: compact(getByAliases(obj,F.form470)),
+    frn: compact(getByAliases(obj,F.frn)),
+    frnStatus: compact(getByAliases(obj,F.frnStatus)),
+    provider: compact(getByAliases(obj,F.provider)),
+    spin: compact(getByAliases(obj,F.spin)),
+    formPdf: compact(getByAliases(obj,F.formPdf)),
+    contractType: compact(getByAliases(obj,F.contractType)),
+    contractAward: compact(getByAliases(obj,F.contractAward)),
+    contractExp: compact(getByAliases(obj,F.contractExp)),
+    invoiceMethod: compact(getByAliases(obj,F.invoiceMethod)),
+    discountRate: discountRate,
+    serviceStart: compact(getByAliases(obj,F.serviceStart)),
+    serviceDeadline: compact(getByAliases(obj,F.serviceDeadline)),
+    invoiceDeadline: compact(getByAliases(obj,F.invoiceDeadline)),
+    fcdlDate: compact(getByAliases(obj,F.fcdlDate)),
+    revisedFcdlDate: compact(getByAliases(obj,F.revisedFcdlDate)),
+    requestedAmount, committedAmount,
+    disbursedAmount: parseNumber(getByAliases(obj,F.disbursedAmount)),
+    netAuthorized: parseNumber(getByAliases(obj,F.netAuthorized)),
+    totalPreDiscountEligible: parseNumber(getByAliases(obj,F.totalPreDiscountEligible)),
+    totalParticipantNonDiscount: parseNumber(getByAliases(obj,F.totalParticipantNonDiscount)),
+    lineNumber: compact(getByAliases(obj,F.lineNumber)),
+    lineType: compact(getByAliases(obj,F.lineType)),
+    lineMake: compact(getByAliases(obj,F.lineMake)),
+    lineModel: compact(getByAliases(obj,F.lineModel)),
+    lineInstallIncluded: compact(getByAliases(obj,F.lineInstallIncluded)),
+    lineLease: compact(getByAliases(obj,F.lineLease)),
+    monthlyQty: parseNumber(getByAliases(obj,F.monthlyQty)),
+    months: parseNumber(getByAliases(obj,F.months)),
+    oneTimeQty: parseNumber(getByAliases(obj,F.oneTimeQty)),
+    monthlyTax: parseNumber(getByAliases(obj,F.monthlyTax)),
+    monthlyInstall: parseNumber(getByAliases(obj,F.monthlyInstall)),
+    monthlyProduct: parseNumber(getByAliases(obj,F.monthlyProduct)),
+    monthlyIneligible: parseNumber(getByAliases(obj,F.monthlyIneligible)),
+    monthlyEligible: monthlyEligible,
+    totalEligibleMonthly: totalEligibleMonthly,
+    oneTimeTax: parseNumber(getByAliases(obj,F.oneTimeTax)),
+    oneTimeInstall: parseNumber(getByAliases(obj,F.oneTimeInstall)),
+    oneTimeProduct: parseNumber(getByAliases(obj,F.oneTimeProduct)),
+    oneTimeIneligible: parseNumber(getByAliases(obj,F.oneTimeIneligible)),
+    oneTimeEligible: oneTimeEligible,
+    totalEligibleOneTime: totalEligibleOneTime,
+    eligibleLineTotal: eligibleLineTotal,
+    requestedCalc: 0,
+    nonDiscountCalc: 0,
+    lastUpdated: compact(getByAliases(obj,F.lastUpdated))
+  };
+}
+function lineSortValue(v){
+  const s = String(v || '');
+  const m = s.match(/(\d+)(?!.*\d)/);
+  return m ? Number(m[1]) : Number.MAX_SAFE_INTEGER;
+}
+function dedupeKey(r){
+  return [r.form471,r.frn,r.lineNumber,r.lineMake,r.lineModel,r.lineType,r.monthlyQty,r.months,r.oneTimeQty,r.totalEligibleMonthly,r.totalEligibleOneTime,r.requestedAmount,r.committedAmount].join('|');
+}
+function groupKey(r){
+  const baseStatus = r.applicationStatus || 'Unknown';
+  const versionLabel = r.revisedFcdlDate ? 'Revised' : 'Original';
+  return [baseStatus,versionLabel,r.participant,r.provider,r.participantState,r.form471,r.revisedFcdlDate||''].join('||');
+}
+function buildGroups(rows){
+  const grouped = new Map();
+  for(const row of rows){
+    const key = groupKey(row);
+    if(!grouped.has(key)){
+      const baseStatus = row.frnStatus || row.applicationStatus || 'Unknown';
+      grouped.set(key,{
+        key, applicationStatusLabel: row.applicationStatus || 'Unknown',
+        versionLabel: row.revisedFcdlDate ? 'Revised' : 'Original',
+        participant: row.participant || 'Unknown participant', participantType: row.participantType, state: row.participantState,
+        provider: row.provider, spin: row.spin, form471: row.form471, frnStatus: row.frnStatus, applicationStatus: row.applicationStatus,
+        revisedFcdlDate: row.revisedFcdlDate, revisedDateLabel: row.revisedFcdlDate ? simpleDate(row.revisedFcdlDate) : '',
+        lineRows: [], frnMap: new Map(), rawRows: []
+      });
+    }
+    const g = grouped.get(key);
+    g.rawRows.push(row._raw);
+    const dk = dedupeKey(row);
+    if(!g._dedupe) g._dedupe = new Set();
+    if(!g._dedupe.has(dk)){
+      g._dedupe.add(dk);
+      g.lineRows.push(row);
+    }
+    const frn = row.frn || 'No FRN';
+    if(!g.frnMap.has(frn)) g.frnMap.set(frn,{ frn, rows: [], requestedAmount: row.requestedAmount, committedAmount: row.committedAmount, totalPreDiscountEligible: row.totalPreDiscountEligible, totalParticipantNonDiscount: row.totalParticipantNonDiscount, discountRate: row.discountRate, invoiceMethod: row.invoiceMethod, form470: row.form470, fcdlDate: row.fcdlDate, revisedFcdlDate: row.revisedFcdlDate, serviceDeadline: row.serviceDeadline, invoiceDeadline: row.invoiceDeadline });
+    g.frnMap.get(frn).rows.push(row);
+  }
+  return [...grouped.values()].map(g => {
+    const frns = [...g.frnMap.values()].map(f => {
+      const lineCount = unique(f.rows.map(r=>r.lineNumber)).length;
+      const eligibleLineTotal = f.rows.reduce((s,r)=>s+r.eligibleLineTotal,0);
+      const requestedCalc = f.rows.reduce((s,r)=>s+r.requestedCalc,0);
+      const nonDiscountCalc = f.rows.reduce((s,r)=>s+r.nonDiscountCalc,0);
+      const sortedRows = [...f.rows].sort((a,b)=>
+        lineSortValue(a.lineNumber) - lineSortValue(b.lineNumber) ||
+        String(a.lineNumber || '').localeCompare(String(b.lineNumber || ''))
+      );
+      return {...f, rows: sortedRows, lineCount, eligibleLineTotal, requestedCalc, nonDiscountCalc};
+    }).sort((a,b)=>String(a.frn).localeCompare(String(b.frn)));
+    const eligibleLineTotal = frns.reduce((s,f)=>s+f.eligibleLineTotal,0);
+    return {...g, frns, uniqueFrnCount: frns.length, eligibleLineTotal};
+  });
+}
+function populateFilters(){
+  const rows = state.rows;
+  const providerSelect = el('providerFilter');
+  const curProvider = providerSelect.value;
+  const maps = [
+    ['stateFilter', unique(rows.map(r=>r.participantState)), 'All states'],
+    ['statusFilter', unique(state.groups.map(g=>g.applicationStatusLabel)), 'All application statuses'],
+    ['providerFilter', unique(rows.map(r=>r.provider)), 'All providers'],
+    ['makeFilter', unique(rows.map(r=>r.lineMake)), ''],
+    ['entityTypeFilter', unique(rows.map(r=>r.participantType)), 'All participant types'],
+    ['versionFilter', unique(state.groups.map(g=>g.versionLabel)), 'All versions']
+  ];
+  maps.forEach(([id,vals,first])=>{
+    const sel = el(id);
+    if(id === 'makeFilter'){
+      const current = Array.from(sel.selectedOptions || []).map(o => o.value);
+      sel.innerHTML = vals.map(v=>`<option value="${escapeHtml(v)}">${escapeHtml(v)}</option>`).join('');
+      Array.from(sel.options).forEach(opt => { opt.selected = current.includes(opt.value); });
+    } else {
+      const current = sel.value;
+      sel.innerHTML = `<option value="">${first}</option>` + vals.map(v=>`<option value="${escapeHtml(v)}">${escapeHtml(v)}</option>`).join('');
+      sel.value = vals.includes(current) ? current : '';
+    }
+  });
+  const providerOptions = unique(rows.map(r=>r.provider));
+  if(!curProvider){
+    const sol = providerOptions.find(v=>/solutionz/i.test(v));
+    if(sol) providerSelect.value = sol;
+  }
+}
+function applyFilters(){
+  const q = compact(el('searchBox').value).toLowerCase();
+  const stateVal = el('stateFilter').value;
+  const statusVal = el('statusFilter').value;
+  const providerVal = el('providerFilter').value;
+  const makeVals = Array.from(el('makeFilter').selectedOptions || []).map(o => o.value).filter(Boolean);
+  const typeVal = el('entityTypeFilter').value;
+  const versionVal = el('versionFilter').value;
+  const sortBy = el('sortBy').value;
+  let groups = state.groups.filter(g => {
+    if(stateVal && g.state !== stateVal) return false;
+    if(statusVal && g.applicationStatusLabel !== statusVal) return false;
+    if(providerVal && g.provider !== providerVal) return false;
+    if(makeVals.length && !g.frns.some(f => f.rows.some(r => makeVals.includes(r.lineMake)))) return false;
+    if(typeVal && g.participantType !== typeVal) return false;
+    if(versionVal && g.versionLabel !== versionVal) return false;
+    if(q){
+      const hay = [g.participant,g.provider,g.state,g.applicationStatusLabel,g.versionLabel,g.form471,...g.frns.flatMap(f=>[f.frn,f.form470,...f.rows.flatMap(r=>[r.lineNumber,r.lineMake,r.lineModel,r.lineType])])].join(' | ').toLowerCase();
+      if(!hay.includes(q)) return false;
+    }
+    return true;
+  });
+  groups.sort((a,b)=>{
+    if(sortBy==='participant_asc') return a.participant.localeCompare(b.participant);
+    if(sortBy==='participant_desc') return b.participant.localeCompare(a.participant);
+    if(sortBy==='state_asc') return a.state.localeCompare(b.state);
+    if(sortBy==='state_desc') return b.state.localeCompare(a.state);
+    if(sortBy==='status_asc') return a.applicationStatusLabel.localeCompare(b.applicationStatusLabel);
+    if(sortBy==='status_desc') return b.applicationStatusLabel.localeCompare(a.applicationStatusLabel);
+    if(sortBy==='version_asc') return a.versionLabel.localeCompare(b.versionLabel);
+    if(sortBy==='amount_asc') return a.eligibleLineTotal - b.eligibleLineTotal;
+    return b.eligibleLineTotal - a.eligibleLineTotal;
+  });
+  state.filteredGroups = groups;
+  render();
+el('hideZeroCols').checked = true;
+state.hideZeroCols = true;
+enableColumnResize();
+}
+function render(){
+  const groups = state.filteredGroups;
+  el('sumRows').textContent = intFmt(state.rows.length);
+  el('sumCards').textContent = intFmt(groups.length);
+  el('sumParticipants').textContent = intFmt(new Set(groups.map(g=>g.participant)).size);
+  el('sumProviders').textContent = intFmt(new Set(groups.map(g=>g.provider)).size);
+  el('sumEligible').textContent = money0(groups.reduce((s,g)=>s+g.eligibleLineTotal,0));
+  el('resultText').textContent = `${intFmt(groups.length)} cards shown`;
+  if(!groups.length){ cardsEl.innerHTML = '<div class="empty">No cards match the current filters.</div>'; return; }
+  cardsEl.innerHTML = groups.map(renderCard).join('');
+  enableColumnResize();
+}
+function renderCard(g){
+  const note = g.rawRows.length > g.lineRows.length ? 'Original extract included duplicate rows. Card tables use deduplicated line items.' : 'Grouped by participant, application status, provider, state, and application. All displayed amounts come directly from source fields. FRN requested and committed amounts are shown only at the FRN level and are not redistributed across line rows. The 90% and 10% columns are simple readability splits of each row total.';
+  return `<article class="card">
+    <div class="card-top">${escapeHtml(g.participant)}</div>
+    <div class="card-body">
+      <div class="kpi-grid">
+        <div class="kpi"><div class="k">State</div><div class="v">${escapeHtml(g.state || '')}</div></div>
+        <div class="kpi"><div class="k">Type</div><div class="v">${escapeHtml(g.participantType || '')}</div></div>
+        <div class="kpi"><div class="k">Unique FRNs</div><div class="v">${intFmt(g.uniqueFrnCount)}</div></div>
+        <div class="kpi"><div class="k">Eligible Line Total</div><div class="v">${money(g.eligibleLineTotal)}</div></div>
+        <div class="kpi"><div class="k">Service Provider</div><div class="v">${escapeHtml(g.provider || '')}</div></div>
+        <div class="kpi"><div class="k">Application Status</div><div class="v">${escapeHtml(g.applicationStatusLabel)}</div></div>
+        <div class="kpi"><div class="k">Version</div><div class="v">${escapeHtml(g.versionLabel || '')}</div></div>
+        <div class="kpi"><div class="k">Revised Date</div><div class="v">${escapeHtml(g.revisedDateLabel || '')}</div></div>
+      </div>
+      <div class="note">Analysis: ${escapeHtml(note)}</div><div style="padding:8px 12px 0;display:flex;gap:8px;flex-wrap:wrap"><button class="invoice-card-btn" data-card-key="${escapeHtml(g.key)}">Print This Reconcile Doc</button><button class="create-invoice-card-btn" data-card-key="${escapeHtml(g.key)}">Create Invoice</button></div>
+      ${g.frns.map(renderFrnBlock).join('')}
+      <section class="frn-block">
+        <div class="frn-head">${escapeHtml(g.participant || "Participant")} Grant Total</div>
+        <div class="table-wrap">
+          <table class="resizable">
+            <tbody>
+              <tr class="total-row">
+                <td colspan="2"><strong>USAC (90%) Grand Total</strong></td>
+                <td class="num invoice-col usac-col grand-total-90">${money(fundedShare90(g.eligibleLineTotal))}</td>
+                <td><strong>Participant (10%) Grand Total</strong></td>
+                <td class="num invoice-col participant-col grand-total-10">${money(participantShare10(g.eligibleLineTotal))}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+      <div class=\"raw-toggle\">
+        <details><summary>Show raw source fields</summary>
+          <div class="raw-grid">${Object.entries(g.rawRows[0] || {}).map(([k,v])=>`<div class="raw-item"><div class="k">${escapeHtml(k)}</div><div class="v">${escapeHtml(v)}</div></div>`).join('')}</div>
+        </details>
+      </div>
+    </div>
+  </article>`;
+}
+
+const LINE_COLUMNS = [
+  {key:'monthlyProduct', label:'Monthly Product / Service'},
+  {key:'monthlyInstall', label:'Monthly Install / Config'},
+  {key:'monthlyTax', label:'Monthly Tax'},
+  {key:'monthlyIneligible', label:'Monthly Ineligible'},
+  {key:'monthlyEligible', label:'Monthly Eligible'},
+  {key:'totalEligibleMonthly', label:'Source Total Eligible Monthly'},
+  {key:'oneTimeProduct', label:'One-Time Product / Service'},
+  {key:'oneTimeInstall', label:'One-Time Install / Config'},
+  {key:'oneTimeTax', label:'One-Time Tax'},
+  {key:'oneTimeIneligible', label:'One-Time Ineligible'},
+  {key:'oneTimeEligible', label:'One-Time Eligible'},
+  {key:'totalEligibleOneTime', label:'Source Total Eligible One-Time'},
+  {key:'eligibleLineTotal', label:'Line Total from Source Total Fields'}
+];
+
+function getVisibleAmountColumns(rows){
+  if(!state.hideZeroCols) return LINE_COLUMNS.map(c => c.key);
+  return LINE_COLUMNS.filter(c => rows.some(r => Number(r[c.key] || 0) !== 0)).map(c => c.key);
+}
+
+function amountHeader(label, visibleKeys, key){
+  return visibleKeys.includes(key) ? `<th class="num resizable-col">${label}</th>` : '';
+}
+
+function amountCell(value, visibleKeys, key){
+  return visibleKeys.includes(key) ? `<td class="num">${money(value)}</td>` : '';
+}
+
+
+function fundedShare90(v){ return Number(v || 0) * 0.9; }
+function participantShare10(v){ return Number(v || 0) * 0.1; }
+
+
+function diffAmount(a,b){ return Number(a||0) - Number(b||0); }
+function hasMeaningfulDiff(a,b){ return Math.abs(diffAmount(a,b)) >= 0.01; }
+function moneySigned(n){
+  const v = Number(n||0);
+  return (v < 0 ? '-' : '') + money(Math.abs(v));
+}
+function renderDiscrepancyBox(f){
+  const checks = [];
+  const totalEligibleMonthly = f.rows.reduce((s,r)=>s+Number(r.totalEligibleMonthly||0),0);
+  const totalEligibleOneTime = f.rows.reduce((s,r)=>s+Number(r.totalEligibleOneTime||0),0);
+  const lineTotal = Number(f.eligibleLineTotal||0);
+  const reportedPreDiscount = Number(f.totalPreDiscountEligible||0);
+  const discountRatePct = Number(f.discountRate||0) > 1 ? Number(f.discountRate||0) : Number(f.discountRate||0)*100;
+  const funded90 = fundedShare90(lineTotal);
+  const share10 = participantShare10(lineTotal);
+  const reportedNonDiscount = Number(f.totalParticipantNonDiscount||0);
+  const reportedRequested = Number(f.requestedAmount||0);
+  const reportedCommitted = Number(f.committedAmount||0);
+
+  if(hasMeaningfulDiff(lineTotal, totalEligibleMonthly + totalEligibleOneTime)){
+    checks.push(`Column subtotal error: line total from source total fields ${money(lineTotal)} does not equal monthly total ${money(totalEligibleMonthly)} plus one-time total ${money(totalEligibleOneTime)}. Difference: ${moneySigned(lineTotal - (totalEligibleMonthly + totalEligibleOneTime))}.`);
+  }
+  if(reportedPreDiscount && hasMeaningfulDiff(lineTotal, reportedPreDiscount)){
+    checks.push(`Pre-discount mismatch: summed line total ${money(lineTotal)} does not equal reported pre-discount eligible ${money(reportedPreDiscount)}. Difference: ${moneySigned(lineTotal - reportedPreDiscount)}.`);
+  }
+  if(reportedNonDiscount && hasMeaningfulDiff(share10, reportedNonDiscount)){
+    checks.push(`10% share mismatch: calculated 10% ${money(share10)} does not equal reported participant non-discount share ${money(reportedNonDiscount)}. Difference: ${moneySigned(share10 - reportedNonDiscount)}.`);
+  }
+  if(reportedRequested && hasMeaningfulDiff(funded90, reportedRequested)){
+    checks.push(`90% share mismatch: calculated 90% ${money(funded90)} does not equal reported requested amount ${money(reportedRequested)}. Difference: ${moneySigned(funded90 - reportedRequested)}.`);
+  }
+  if(reportedCommitted && hasMeaningfulDiff(funded90, reportedCommitted)){
+    checks.push(`Committed mismatch: calculated 90% ${money(funded90)} does not equal reported current committed ${money(reportedCommitted)}. Difference: ${moneySigned(funded90 - reportedCommitted)}.`);
+  }
+  if(reportedRequested && reportedCommitted && hasMeaningfulDiff(reportedRequested, reportedCommitted)){
+    checks.push(`Requested vs committed mismatch: reported requested ${money(reportedRequested)} does not equal reported current committed ${money(reportedCommitted)}. Difference: ${moneySigned(reportedRequested - reportedCommitted)}.`);
+  }
+  if(!checks.length){
+    return `<div class="disc-box disc-good"><strong>Math check</strong>All displayed totals tie to the source totals used on this card.</div>`;
+  }
+  return `<div class="disc-box disc-warn"><strong>Math check</strong><ul class="disc-list">${checks.map(c=>`<li>${escapeHtml(c)}</li>`).join('')}</ul></div>`;
+}
+
+function renderFrnBlock(f){
+  const visibleKeys = getVisibleAmountColumns(f.rows);
+  return `<section class="frn-block">
+    <div class="frn-head">FRN ${escapeHtml(f.frn)}</div>
+    <div class="frn-summary">
+      <div class="frn-box"><div class="k">470 Number</div><div class="v">${escapeHtml(f.form470 || '')}</div></div>
+      <div class="frn-box"><div class="k">Reported Pre-Discount Eligible</div><div class="v">${money(f.totalPreDiscountEligible)}</div></div>
+      <div class="frn-box"><div class="k">Reported Requested Amount</div><div class="v">${money(f.requestedAmount)}</div></div>
+      <div class="frn-box"><div class="k">Reported Current Committed</div><div class="v">${money(f.committedAmount)}</div></div>
+      <div class="frn-box"><div class="k">Reported Participant Non-Discount</div><div class="v">${money(f.totalParticipantNonDiscount)}</div></div>
+      <div class="frn-box"><div class="k">Discount Rate</div><div class="v">${f.discountRate ? `${Math.round((f.discountRate>1?f.discountRate:f.discountRate*100))}%` : ''}</div></div>
+      <div class="frn-box"><div class="k">Summed Line Total</div><div class="v">${money(f.eligibleLineTotal)}</div></div>
+      <div class="frn-box"><div class="k">Calculated 90% of Summed Line Total</div><div class="v">${money(fundedShare90(f.eligibleLineTotal))}</div></div>
+      <div class="frn-box"><div class="k">Calculated 10% of Summed Line Total</div><div class="v">${money(participantShare10(f.eligibleLineTotal))}</div></div>
+      <div class="frn-box"><div class="k">Invoicing Method</div><div class="v">${escapeHtml(f.invoiceMethod || '')}</div></div>
+      <div class="frn-box"><div class="k">FCDL Date</div><div class="v">${escapeHtml(simpleDate(f.fcdlDate) || '')}</div></div>
+      <div class="frn-box"><div class="k">Revised FCDL Date</div><div class="v">${escapeHtml(simpleDate(f.revisedFcdlDate) || '')}</div></div>
+      <div class="frn-box"><div class="k">Invoice Deadline Date</div><div class="v">${escapeHtml(simpleDate(f.invoiceDeadline) || '')}</div></div>
+    </div>
+    ${renderDiscrepancyBox(f)}
+    <div class="table-wrap">
+      <table class="resizable">
+        <thead>
+          <tr>
+            <th class="resizable-col">Line Item</th><th class="line-make resizable-col">Make</th><th class="line-model resizable-col">Model / Service</th><th class="line-type resizable-col">Type</th>
+            <th class="num">Qty</th><th class="num">Months</th>
+            ${amountHeader('Monthly Product / Service', visibleKeys, 'monthlyProduct')}
+            ${amountHeader('Monthly Install / Config', visibleKeys, 'monthlyInstall')}
+            ${amountHeader('Monthly Tax', visibleKeys, 'monthlyTax')}
+            ${amountHeader('Monthly Ineligible', visibleKeys, 'monthlyIneligible')}
+            ${amountHeader('Monthly Eligible', visibleKeys, 'monthlyEligible')}
+            ${amountHeader('Source Total Eligible Monthly', visibleKeys, 'totalEligibleMonthly')}
+            ${amountHeader('One-Time Product / Service', visibleKeys, 'oneTimeProduct')}
+            ${amountHeader('One-Time Install / Config', visibleKeys, 'oneTimeInstall')}
+            ${amountHeader('One-Time Tax', visibleKeys, 'oneTimeTax')}
+            ${amountHeader('One-Time Ineligible', visibleKeys, 'oneTimeIneligible')}
+            ${amountHeader('One-Time Eligible', visibleKeys, 'oneTimeEligible')}
+            ${amountHeader('Source Total Eligible One-Time', visibleKeys, 'totalEligibleOneTime')}
+            ${amountHeader('Line Total from Source Total Fields', visibleKeys, 'eligibleLineTotal')}
+            <th class="num invoice-head resizable-col">USAC (90%)</th>
+            <th class="num invoice-head resizable-col">Participant (10%)</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${f.rows.map(r => renderLineRow(r, visibleKeys)).join('')}
+          <tr class="total-row">
+            <td colspan="6">FRN line subtotal</td>
+            ${amountCell(f.rows.reduce((s,r)=>s+r.monthlyProduct,0), visibleKeys, 'monthlyProduct')}
+            ${amountCell(f.rows.reduce((s,r)=>s+r.monthlyInstall,0), visibleKeys, 'monthlyInstall')}
+            ${amountCell(f.rows.reduce((s,r)=>s+r.monthlyTax,0), visibleKeys, 'monthlyTax')}
+            ${amountCell(f.rows.reduce((s,r)=>s+r.monthlyIneligible,0), visibleKeys, 'monthlyIneligible')}
+            ${amountCell(f.rows.reduce((s,r)=>s+r.monthlyEligible,0), visibleKeys, 'monthlyEligible')}
+            ${amountCell(f.rows.reduce((s,r)=>s+r.totalEligibleMonthly,0), visibleKeys, 'totalEligibleMonthly')}
+            ${amountCell(f.rows.reduce((s,r)=>s+r.oneTimeProduct,0), visibleKeys, 'oneTimeProduct')}
+            ${amountCell(f.rows.reduce((s,r)=>s+r.oneTimeInstall,0), visibleKeys, 'oneTimeInstall')}
+            ${amountCell(f.rows.reduce((s,r)=>s+r.oneTimeTax,0), visibleKeys, 'oneTimeTax')}
+            ${amountCell(f.rows.reduce((s,r)=>s+r.oneTimeIneligible,0), visibleKeys, 'oneTimeIneligible')}
+            ${amountCell(f.rows.reduce((s,r)=>s+r.oneTimeEligible,0), visibleKeys, 'oneTimeEligible')}
+            ${amountCell(f.rows.reduce((s,r)=>s+r.totalEligibleOneTime,0), visibleKeys, 'totalEligibleOneTime')}
+            ${amountCell(f.eligibleLineTotal, visibleKeys, 'eligibleLineTotal')}
+            <td class="num invoice-col usac-col grand-total-90">${money(fundedShare90(f.eligibleLineTotal))}</td>
+            <td class="num invoice-col participant-col grand-total-10">${money(participantShare10(f.eligibleLineTotal))}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>`;
+}
+function renderLineRow(r, visibleKeys){
+  const qty = r.monthlyQty || r.oneTimeQty || 0;
+  const modelText = r.lineModel || '';
+  return `<tr>
+    <td>${escapeHtml(r.lineNumber || '')}</td>
+    <td>${escapeHtml(r.lineMake || '')}</td>
+    <td class="line-desc">${escapeHtml(modelText)}</td>
+    <td>${escapeHtml(r.lineType || '')}</td>
+    <td class="num">${qty ? intFmt(qty) : ''}</td>
+    <td class="num">${r.months ? intFmt(r.months) : ''}</td>
+    ${amountCell(r.monthlyProduct, visibleKeys, 'monthlyProduct')}
+    ${amountCell(r.monthlyInstall, visibleKeys, 'monthlyInstall')}
+    ${amountCell(r.monthlyTax, visibleKeys, 'monthlyTax')}
+    ${amountCell(r.monthlyIneligible, visibleKeys, 'monthlyIneligible')}
+    ${amountCell(r.monthlyEligible, visibleKeys, 'monthlyEligible')}
+    ${amountCell(r.totalEligibleMonthly, visibleKeys, 'totalEligibleMonthly')}
+    ${amountCell(r.oneTimeProduct, visibleKeys, 'oneTimeProduct')}
+    ${amountCell(r.oneTimeInstall, visibleKeys, 'oneTimeInstall')}
+    ${amountCell(r.oneTimeTax, visibleKeys, 'oneTimeTax')}
+    ${amountCell(r.oneTimeIneligible, visibleKeys, 'oneTimeIneligible')}
+    ${amountCell(r.oneTimeEligible, visibleKeys, 'oneTimeEligible')}
+    ${amountCell(r.totalEligibleOneTime, visibleKeys, 'totalEligibleOneTime')}
+    ${amountCell(r.eligibleLineTotal, visibleKeys, 'eligibleLineTotal')}
+    <td class="num invoice-col usac-col">${money(fundedShare90(r.eligibleLineTotal))}</td>
+    <td class="num invoice-col participant-col">${money(participantShare10(r.eligibleLineTotal))}</td>
+  </tr>`;
+}
+async function fetchLive(){
+  let lastErr = '';
+  dataSourceState.tried = [];
+  dataSourceState.succeeded = '';
+  dataSourceState.rows = 0;
+  dataSourceState.lastError = '';
+  dataSourceState.log = [];
+  updateDataSourceStatus();
+  for(const url of ENDPOINTS){
+    dataSourceState.tried.push(url);
+    fetchStatusEl.textContent = `Loading ${url}`;
+    addSourceLog('Trying: ' + url);
+    try{
+      const res = await fetch(url);
+      addSourceLog('Response ' + res.status + ' from ' + url);
+      if(!res.ok) throw new Error(`HTTP ${res.status}`);
+      const payload = await res.json();
+      const rows = toObjects(payload);
+      if(!rows.length) throw new Error('No rows returned');
+      state.activeEndpoint = url;
+      dataSourceState.succeeded = url;
+      dataSourceState.rows = rows.length;
+      dataSourceState.lastError = '';
+      addSourceLog('Success: loaded ' + rows.length + ' rows from ' + url);
+      updateDataSourceStatus();
+      loadRows(rows, true);
+      return;
+    }catch(err){
+      lastErr = String(err);
+      dataSourceState.lastError = lastErr;
+      addSourceLog('Failed: ' + url + ' | ' + lastErr);
+      updateDataSourceStatus();
+    }
+  }
+  fetchStatusEl.textContent = `Live load failed. This page works best when hosted on GitHub Pages or SharePoint. ${lastErr}`;
+}
+function csvToObjects(text){
+  const rows = []; let cur='', row=[], data=[], q=false;
+  for(let i=0;i<text.length;i++){
+    const ch = text[i], nx = text[i+1];
+    if(ch==='"'){
+      if(q && nx==='"'){ cur+='"'; i++; }
+      else q = !q;
+    } else if(ch===',' && !q){ row.push(cur); cur=''; }
+    else if((ch==='\n' || ch==='\r') && !q){ if(ch==='\r' && nx==='\n') i++; row.push(cur); data.push(row); row=[]; cur=''; }
+    else cur += ch;
+  }
+  if(cur.length || row.length){ row.push(cur); data.push(row); }
+  const headers = (data.shift() || []).map(h=>h.trim());
+  for(const r of data){ if(r.every(v=>String(v).trim()==='')) continue; rows.push(Object.fromEntries(headers.map((h,i)=>[h,r[i] ?? '']))); }
+  return rows;
+}
+function loadRows(rawRows, live=false){
+  state.rawRows = rawRows;
+  state.rows = rawRows.map(normalizeRow).filter(r => r.participant || r.frn || r.form471);
+  state.groups = buildGroups(state.rows);
+  state.loadedAt = new Date();
+  if(live){
+    dataSourceState.rows = rawRows.length;
+  }
+  populateFilters();
+  if(!el('statusFilter').value){
+    const hasCommitted = Array.from(el('statusFilter').options || []).some(o => o.value === 'Committed');
+    if(hasCommitted) el('statusFilter').value = 'Committed';
+  }
+  el('hideZeroCols').checked = true;
+  state.hideZeroCols = true;
+  applyFilters();
+  updateDataSourceStatus();
+  fetchStatusEl.textContent = `${intFmt(state.rows.length)} rows loaded${live ? ' from live source' : ' from imported file'}.`;
+}
+function exportCsv(){
+  const headers = ['Participant Name','Participant Type','State','Provider','Application Status','Version','Revised Date','471 Number','FRN','470 Number','Line Item Number','Make','Model','Type','Qty','Months','Monthly Product/Service','Monthly Install/Config','Monthly Tax','Monthly Ineligible','Monthly Eligible','Source Total Eligible Monthly','One-Time Product/Service','One-Time Install/Config','One-Time Tax','One-Time Ineligible','One-Time Eligible','Source Total Eligible One-Time','Line Total from Source Total Fields','Reported FRN Requested Amount','Reported FRN Current Committed Amount','Revised FCDL Date'];
+  const rows = [];
+  state.filteredGroups.forEach(g => g.frns.forEach(f => f.rows.forEach(r => rows.push([
+    g.participant,g.participantType,g.state,g.provider,g.applicationStatusLabel,g.versionLabel,g.revisedDateLabel,g.form471,f.frn,f.form470,r.lineNumber,r.lineMake,r.lineModel,r.lineType,
+    r.monthlyQty || r.oneTimeQty || '',r.months || '',r.monthlyProduct,r.monthlyInstall,r.monthlyTax,r.monthlyIneligible,r.monthlyEligible,r.totalEligibleMonthly,
+    r.oneTimeProduct,r.oneTimeInstall,r.oneTimeTax,r.oneTimeIneligible,r.oneTimeEligible,r.totalEligibleOneTime,r.eligibleLineTotal,
+    f.requestedAmount,f.committedAmount,f.revisedFcdlDate
+  ]))));
+  const esc = v => { const s = String(v ?? ''); return /[",\n]/.test(s) ? `"${s.replace(/"/g,'""')}"` : s; };
+  const csv = [headers, ...rows].map(r=>r.map(esc).join(',')).join('\n');
+  const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'erate_cyber_pilot_filtered_cards.csv'; a.click(); URL.revokeObjectURL(a.href);
+}
+
+function invoiceColsForRows(rows){
+  const visibleKeys = getVisibleAmountColumns(rows);
+  return visibleKeys;
+}
+function renderInvoiceTableRows(rows, visibleKeys){
+  return rows.map(r => {
+    const qty = r.monthlyQty || r.oneTimeQty || 0;
+    return `<tr>
+      <td>${escapeHtml(r.lineNumber || '')}</td>
+      <td>${escapeHtml(r.lineMake || '')}</td>
+      <td>${escapeHtml(r.lineModel || '')}</td>
+      <td>${escapeHtml(r.lineType || '')}</td>
+      <td>${escapeHtml(simpleDate(r.serviceStart) || '')}</td>
+      <td class="num">${qty ? intFmt(qty) : ''}</td>
+      <td class="num">${r.months ? intFmt(r.months) : ''}</td>
+      ${amountCell(r.monthlyProduct, visibleKeys, 'monthlyProduct')}
+      ${amountCell(r.monthlyInstall, visibleKeys, 'monthlyInstall')}
+      ${amountCell(r.monthlyTax, visibleKeys, 'monthlyTax')}
+      ${amountCell(r.monthlyIneligible, visibleKeys, 'monthlyIneligible')}
+      ${amountCell(r.monthlyEligible, visibleKeys, 'monthlyEligible')}
+      ${amountCell(r.totalEligibleMonthly, visibleKeys, 'totalEligibleMonthly')}
+      ${amountCell(r.oneTimeProduct, visibleKeys, 'oneTimeProduct')}
+      ${amountCell(r.oneTimeInstall, visibleKeys, 'oneTimeInstall')}
+      ${amountCell(r.oneTimeTax, visibleKeys, 'oneTimeTax')}
+      ${amountCell(r.oneTimeIneligible, visibleKeys, 'oneTimeIneligible')}
+      ${amountCell(r.oneTimeEligible, visibleKeys, 'oneTimeEligible')}
+      ${amountCell(r.totalEligibleOneTime, visibleKeys, 'totalEligibleOneTime')}
+      ${amountCell(r.eligibleLineTotal, visibleKeys, 'eligibleLineTotal')}
+      <td class="num invoice-col">${money(fundedShare90(r.eligibleLineTotal))}</td>
+      <td class="num invoice-col">${money(participantShare10(r.eligibleLineTotal))}</td>
+    </tr>`;
+  }).join('');
+}
+
+
+function safeFilePart(s){
+  return String(s || '').replace(/[\\\/:*?"<>|]+/g,' ').replace(/\s+/g,' ').trim();
+}
+function getInvoiceContext(group){
+  const keyBase = `invoice_ctx_${group.form471 || group.participant || 'group'}`;
+  const today = todayString();
+  const saved = {
+    spiNumber: localStorage.getItem(keyBase + '_spi') || '',
+    invoiceNumber: localStorage.getItem(keyBase + '_inv') || '',
+    originalCustomerInvoiceDate: localStorage.getItem(keyBase + '_cust_date') || today,
+    originalSpiDate: localStorage.getItem(keyBase + '_orig_spi_date') || today,
+    revisedSpiDate: localStorage.getItem(keyBase + '_rev_spi_date') || today
+  };
+  const spiNumber = prompt('Enter SPI number for the invoice output.', saved.spiNumber) ?? saved.spiNumber;
+  const invoiceNumber = prompt('Enter invoice number for the invoice output.', saved.invoiceNumber) ?? saved.invoiceNumber;
+  const originalCustomerInvoiceDate = prompt('Enter Original Customer Invoice Date.', saved.originalCustomerInvoiceDate) ?? saved.originalCustomerInvoiceDate;
+  const originalSpiDate = prompt('Enter Original SPI Date.', saved.originalSpiDate) ?? saved.originalSpiDate;
+  const revisedSpiDate = prompt('Enter Revised SPI Date.', saved.revisedSpiDate) ?? saved.revisedSpiDate;
+
+  const ctx = { spiNumber, invoiceNumber, originalCustomerInvoiceDate, originalSpiDate, revisedSpiDate };
+  localStorage.setItem(keyBase + '_spi', spiNumber);
+  localStorage.setItem(keyBase + '_inv', invoiceNumber);
+  localStorage.setItem(keyBase + '_cust_date', originalCustomerInvoiceDate);
+  localStorage.setItem(keyBase + '_orig_spi_date', originalSpiDate);
+  localStorage.setItem(keyBase + '_rev_spi_date', revisedSpiDate);
+  return ctx;
+}
+
+function renderInvoiceDoc(group, ctx){
+  const customerShare = participantShare10(group.eligibleLineTotal);
+  const usacShare = fundedShare90(group.eligibleLineTotal);
+  const frnSections = group.frns.map(f => {
+    const visibleKeys = getVisibleAmountColumns(f.rows);
+    return `
+      <div class="section-title">FRN ${escapeHtml(f.frn)}</div>
+      <div class="invoice-meta">
+        <div class="invoice-meta-box"><div class="k">FCC Form 470 Number</div><div class="v">${escapeHtml(f.form470 || '')}</div></div>
+        <div class="invoice-meta-box"><div class="k">FCDL Date</div><div class="v">${escapeHtml(simpleDate(f.fcdlDate) || '')}</div></div>
+        <div class="invoice-meta-box"><div class="k">Invoice Deadline Date</div><div class="v">${escapeHtml(simpleDate(f.invoiceDeadline) || '')}</div></div>
+        <div class="invoice-meta-box"><div class="k">SPI Number</div><div class="v">${escapeHtml(ctx.spiNumber || '')}</div></div>
+        <div class="invoice-meta-box"><div class="k">Revised Date</div><div class="v">${escapeHtml(simpleDate(f.revisedFcdlDate) || '')}</div></div>
+        <div class="invoice-meta-box"><div class="k">Reported Pre-Discount Eligible</div><div class="v">${money(f.totalPreDiscountEligible)}</div></div>
+        <div class="invoice-meta-box"><div class="k">Reported Requested Amount</div><div class="v">${money(f.requestedAmount)}</div></div>
+        <div class="invoice-meta-box"><div class="k">Reported Current Committed</div><div class="v">${money(f.committedAmount)}</div></div>
+        <div class="invoice-meta-box"><div class="k">Reported Participant Non-Discount</div><div class="v">${money(f.totalParticipantNonDiscount)}</div></div>
+      </div>
+      <table class="invoice-table">
+        <thead>
+          <tr>
+            <th>Line Item</th><th>Make</th><th>Model / Service</th><th>Type</th><th>Product Delivery Date</th><th>Qty</th><th>Months</th>
+            ${amountHeader('Monthly Product / Service', visibleKeys, 'monthlyProduct')}
+            ${amountHeader('Monthly Install / Config', visibleKeys, 'monthlyInstall')}
+            ${amountHeader('Monthly Tax', visibleKeys, 'monthlyTax')}
+            ${amountHeader('Monthly Ineligible', visibleKeys, 'monthlyIneligible')}
+            ${amountHeader('Monthly Eligible', visibleKeys, 'monthlyEligible')}
+            ${amountHeader('Source Total Eligible Monthly', visibleKeys, 'totalEligibleMonthly')}
+            ${amountHeader('One-Time Product / Service', visibleKeys, 'oneTimeProduct')}
+            ${amountHeader('One-Time Install / Config', visibleKeys, 'oneTimeInstall')}
+            ${amountHeader('One-Time Tax', visibleKeys, 'oneTimeTax')}
+            ${amountHeader('One-Time Ineligible', visibleKeys, 'oneTimeIneligible')}
+            ${amountHeader('One-Time Eligible', visibleKeys, 'oneTimeEligible')}
+            ${amountHeader('Source Total Eligible One-Time', visibleKeys, 'totalEligibleOneTime')}
+            ${amountHeader('Line Total from Source Total Fields', visibleKeys, 'eligibleLineTotal')}
+            <th class="invoice-head">USAC (90%)</th>
+            <th class="invoice-head">Participant (10%)</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${renderInvoiceTableRows(f.rows, visibleKeys)}
+          <tr class="invoice-total-row">
+            <td colspan="7">FRN subtotal</td>
+            ${amountCell(f.rows.reduce((s,r)=>s+r.monthlyProduct,0), visibleKeys, 'monthlyProduct')}
+            ${amountCell(f.rows.reduce((s,r)=>s+r.monthlyInstall,0), visibleKeys, 'monthlyInstall')}
+            ${amountCell(f.rows.reduce((s,r)=>s+r.monthlyTax,0), visibleKeys, 'monthlyTax')}
+            ${amountCell(f.rows.reduce((s,r)=>s+r.monthlyIneligible,0), visibleKeys, 'monthlyIneligible')}
+            ${amountCell(f.rows.reduce((s,r)=>s+r.monthlyEligible,0), visibleKeys, 'monthlyEligible')}
+            ${amountCell(f.rows.reduce((s,r)=>s+r.totalEligibleMonthly,0), visibleKeys, 'totalEligibleMonthly')}
+            ${amountCell(f.rows.reduce((s,r)=>s+r.oneTimeProduct,0), visibleKeys, 'oneTimeProduct')}
+            ${amountCell(f.rows.reduce((s,r)=>s+r.oneTimeInstall,0), visibleKeys, 'oneTimeInstall')}
+            ${amountCell(f.rows.reduce((s,r)=>s+r.oneTimeTax,0), visibleKeys, 'oneTimeTax')}
+            ${amountCell(f.rows.reduce((s,r)=>s+r.oneTimeIneligible,0), visibleKeys, 'oneTimeIneligible')}
+            ${amountCell(f.rows.reduce((s,r)=>s+r.oneTimeEligible,0), visibleKeys, 'oneTimeEligible')}
+            ${amountCell(f.rows.reduce((s,r)=>s+r.totalEligibleOneTime,0), visibleKeys, 'totalEligibleOneTime')}
+            ${amountCell(f.eligibleLineTotal, visibleKeys, 'eligibleLineTotal')}
+            <td class="num invoice-col usac-col">${money(fundedShare90(f.eligibleLineTotal))}</td>
+            <td class="num invoice-col participant-col">${money(participantShare10(f.eligibleLineTotal))}</td>
+          </tr>
+        </tbody>
+      </table>
+    `;
+  }).join('');
+
+  return `<!DOCTYPE html>
+  <html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Invoice</title>
+    <style>${document.querySelector('style').textContent}</style>
+  </head>
+  <body class="invoice-doc">
+    <div class="invoice-doc-header">
+      <div class="invoice-doc-title-block">
+        <div class="invoice-doc-kicker">SOLUTIONZ</div>
+        <div class="invoice-doc-title">E-Rate Cybersecurity Pilot Program Invoice${ctx.invoiceNumber ? ` # ${escapeHtml(ctx.invoiceNumber)}` : ''}</div>
+      </div>
+      <div class="invoice-top-right">
+        <div><strong>Participant Name:</strong> ${escapeHtml(group.participant || '')}</div>
+        <div><strong>Service Provider(s):</strong> ${escapeHtml(group.provider || '')}${group.spin ? ` (SPIN: ${escapeHtml(group.spin)})` : ''}</div>
+        <div><strong>Application Status:</strong> ${escapeHtml(group.applicationStatusLabel || '')}</div>
+        <div><strong>FCDL Version:</strong> ${escapeHtml(group.revisedDateLabel ? `Revised ${group.revisedDateLabel}` : group.versionLabel || '')}</div>
+        <div><strong>Original Customer Invoice Date:</strong> ${escapeHtml(ctx.originalCustomerInvoiceDate || '')}</div>
+        <div><strong>Original SPI Date:</strong> ${escapeHtml(ctx.originalSpiDate || '')}${ctx.spiNumber ? ` ${escapeHtml(ctx.spiNumber)}` : ''}</div>
+        <div><strong>Revised SPI Date:</strong> ${escapeHtml(ctx.revisedSpiDate || '')}</div>
+      </div>
+    </div>
+
+    <div class="invoice-address-grid">
+      <div class="invoice-address-box">
+        <div class="k">Please remit payment to</div>
+        <div class="v">ATTN: Accounts Receivable<br>Solutionz, Inc.<br>PO Box 671420<br>Dallas TX 75267-1420</div>
+      </div>
+      <div class="invoice-address-box">
+        <div class="k">Bill To / Participant</div>
+        <div class="v">${escapeHtml(group.participant || '')}<br>${escapeHtml(group.state || '')}</div>
+      </div>
+      <div class="invoice-address-box">
+        <div class="k">Invoice Total</div>
+        <div class="v"><strong>${money(group.eligibleLineTotal)}</strong></div>
+      </div>
+    </div>
+
+    <div class="invoice-banner">This invoice view separates the USAC SPI invoice portion from the Customer invoice portion while preserving the detailed line-item breakdown.</div>
+
+    <div class="invoice-split-grid">
+      <div class="invoice-split-box">
+        <h3>USAC SPI Invoice Portion</h3>
+        <p>Use the <strong>USAC (90%)</strong> column and the FRN-level reported requested / committed values to support SPI invoice preparation. This section is intended for the USAC reimbursement portion.</p>
+        <p style="margin-top:8px"><strong>USAC Total (90%):</strong> ${money(usacShare)}</p>
+      </div>
+      <div class="invoice-split-box">
+        <h3>Customer Invoice Portion</h3>
+        <p>Use the <strong>Participant (10%)</strong> column for the customer-share billing portion. This section is intended for the billed entity or participant customer invoice.</p>
+        <p style="margin-top:8px"><strong>Customer Total (10%):</strong> ${money(customerShare)}</p>
+      </div>
+    </div>
+
+    ${frnSections}
+
+    <div class="section-title">${escapeHtml(group.participant || 'Participant')} Grant Total</div>
+    <table class="invoice-table">
+      <tbody>
+        <tr class="invoice-total-row">
+          <td colspan="2"><strong>Customer Invoice Grand Total</strong></td>
+          <td class="num invoice-col participant-col grand-total-10">${money(customerShare)}</td>
+          <td><strong>USAC SPI Grand Total</strong></td>
+          <td class="num invoice-col usac-col grand-total-90">${money(usacShare)}</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="print-page-footer"></div>
+  </body>
+  </html>`;
+}
+function openCreateInvoice(cardKey){
+  const group = state.filteredGroups.find(g => g.key === cardKey) || state.groups.find(g => g.key === cardKey) || state.filteredGroups[0] || state.groups[0];
+  if(!group){ alert('No card available to create invoice.'); return; }
+
+  const w = window.open('', '_blank');
+  if(!w){
+    alert('Popup blocked. Please allow popups for this site and try again.');
+    return;
+  }
+
+  const ctx = getInvoiceContext(group);
+  const fileTitle = `${safeFilePart(group.participant || 'Participant')} ${safeFilePart(ctx.spiNumber || 'SPI')} Invoice`;
+
+  w.document.open();
+  w.document.write(renderInvoiceDoc(group, ctx));
+  w.document.close();
+  try{ w.document.title = fileTitle; }catch(e){}
+  w.focus();
+  setTimeout(()=>{ try{ w.print(); }catch(e){} }, 400);
+}
+
+function renderInvoiceTemplate(group){
+  const frnSections = group.frns.map(f => {
+    const visibleKeys = invoiceColsForRows(f.rows);
+    return `
+      <div class="invoice-section">FRN ${escapeHtml(f.frn)}</div>
+      <div class="invoice-meta">
+        <div class="invoice-meta-box"><div class="k">470 Number</div><div class="v">${escapeHtml(f.form470 || '')}</div></div>
+        <div class="invoice-meta-box"><div class="k">Application Status</div><div class="v">${escapeHtml(group.applicationStatusLabel || '')}</div></div>
+        <div class="invoice-meta-box"><div class="k">Version</div><div class="v">${escapeHtml(group.versionLabel || '')}</div></div>
+        <div class="invoice-meta-box"><div class="k">Service Provider</div><div class="v">${escapeHtml(group.provider || '')}</div></div>
+        <div class="invoice-meta-box"><div class="k">Reported Pre-Discount Eligible</div><div class="v">${money(f.totalPreDiscountEligible)}</div></div>
+        <div class="invoice-meta-box"><div class="k">Reported Requested Amount</div><div class="v">${money(f.requestedAmount)}</div></div>
+        <div class="invoice-meta-box"><div class="k">Reported Current Committed</div><div class="v">${money(f.committedAmount)}</div></div>
+        <div class="invoice-meta-box"><div class="k">Reported Participant Non-Discount</div><div class="v">${money(f.totalParticipantNonDiscount)}</div></div>
+        <div class="invoice-meta-box"><div class="k">FCDL Date</div><div class="v">${escapeHtml(simpleDate(f.fcdlDate) || '')}</div></div>
+        <div class="invoice-meta-box"><div class="k">Revised Date</div><div class="v">${escapeHtml(simpleDate(f.revisedFcdlDate) || '')}</div></div>
+        <div class="invoice-meta-box"><div class="k">Invoice Deadline Date</div><div class="v">${escapeHtml(simpleDate(f.invoiceDeadline) || '')}</div></div>
+      </div>
+      <table class="invoice-table">
+        <thead>
+          <tr>
+            <th>Line Item</th><th>Make</th><th>Model / Service</th><th>Type</th><th>Qty</th><th>Months</th>
+            ${amountHeader('Monthly Product / Service', visibleKeys, 'monthlyProduct')}
+            ${amountHeader('Monthly Install / Config', visibleKeys, 'monthlyInstall')}
+            ${amountHeader('Monthly Tax', visibleKeys, 'monthlyTax')}
+            ${amountHeader('Monthly Ineligible', visibleKeys, 'monthlyIneligible')}
+            ${amountHeader('Monthly Eligible', visibleKeys, 'monthlyEligible')}
+            ${amountHeader('Source Total Eligible Monthly', visibleKeys, 'totalEligibleMonthly')}
+            ${amountHeader('One-Time Product / Service', visibleKeys, 'oneTimeProduct')}
+            ${amountHeader('One-Time Install / Config', visibleKeys, 'oneTimeInstall')}
+            ${amountHeader('One-Time Tax', visibleKeys, 'oneTimeTax')}
+            ${amountHeader('One-Time Ineligible', visibleKeys, 'oneTimeIneligible')}
+            ${amountHeader('One-Time Eligible', visibleKeys, 'oneTimeEligible')}
+            ${amountHeader('Source Total Eligible One-Time', visibleKeys, 'totalEligibleOneTime')}
+            ${amountHeader('Line Total from Source Total Fields', visibleKeys, 'eligibleLineTotal')}
+            <th class="invoice-head">USAC (90%)</th>
+            <th class="invoice-head">Participant (10%)</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${renderInvoiceTableRows(f.rows, visibleKeys)}
+          <tr class="invoice-total-row">
+            <td colspan="6">FRN subtotal</td>
+            ${amountCell(f.rows.reduce((s,r)=>s+r.monthlyProduct,0), visibleKeys, 'monthlyProduct')}
+            ${amountCell(f.rows.reduce((s,r)=>s+r.monthlyInstall,0), visibleKeys, 'monthlyInstall')}
+            ${amountCell(f.rows.reduce((s,r)=>s+r.monthlyTax,0), visibleKeys, 'monthlyTax')}
+            ${amountCell(f.rows.reduce((s,r)=>s+r.monthlyIneligible,0), visibleKeys, 'monthlyIneligible')}
+            ${amountCell(f.rows.reduce((s,r)=>s+r.monthlyEligible,0), visibleKeys, 'monthlyEligible')}
+            ${amountCell(f.rows.reduce((s,r)=>s+r.totalEligibleMonthly,0), visibleKeys, 'totalEligibleMonthly')}
+            ${amountCell(f.rows.reduce((s,r)=>s+r.oneTimeProduct,0), visibleKeys, 'oneTimeProduct')}
+            ${amountCell(f.rows.reduce((s,r)=>s+r.oneTimeInstall,0), visibleKeys, 'oneTimeInstall')}
+            ${amountCell(f.rows.reduce((s,r)=>s+r.oneTimeTax,0), visibleKeys, 'oneTimeTax')}
+            ${amountCell(f.rows.reduce((s,r)=>s+r.oneTimeIneligible,0), visibleKeys, 'oneTimeIneligible')}
+            ${amountCell(f.rows.reduce((s,r)=>s+r.oneTimeEligible,0), visibleKeys, 'oneTimeEligible')}
+            ${amountCell(f.rows.reduce((s,r)=>s+r.totalEligibleOneTime,0), visibleKeys, 'totalEligibleOneTime')}
+            ${amountCell(f.eligibleLineTotal, visibleKeys, 'eligibleLineTotal')}
+            <td class="num invoice-col usac-col grand-total-90">${money(fundedShare90(f.eligibleLineTotal))}</td>
+            <td class="num invoice-col participant-col grand-total-10">${money(participantShare10(f.eligibleLineTotal))}</td>
+          </tr>
+        </tbody>
+      </table>
+          `;
+  }).join('');
+
+  return `<!DOCTYPE html>
+  <html><head><meta charset="UTF-8"><title>Reconcile Doc</title>
+  <style>${document.querySelector('style').textContent}</style>
+  </head><body class="invoice-template">
+    <div class="invoice-header">
+      <div>
+        <div class="invoice-title">Reconcile Doc</div>
+        <div class="invoice-sub">Generated from the E-Rate Cybersecurity Pilot Program viewer.</div>
+      </div>
+      <div class="invoice-sub">
+        <div><strong>Participant:</strong> ${escapeHtml(group.participant || '')}</div>
+        <div><strong>Service Provider(s):</strong> ${escapeHtml(group.provider || '')}</div>
+        <div><strong>State:</strong> ${escapeHtml(group.state || '')}</div>
+        <div><strong>471 Number:</strong> ${escapeHtml(group.form471 || '')}</div>
+      </div>
+    </div>
+    <div class="invoice-note">The USAC (90%) and Participant (10%) columns are reconciliation-use calculations and do not come from the Form 471 dataset.</div>
+    ${frnSections}
+    <div class="invoice-section">Grand Total</div>
+    <table class="invoice-table">
+      <tbody>
+        <tr class="invoice-total-row">
+          <td colspan="2"><strong>USAC (90%) Grand Total</strong></td>
+          <td class="num invoice-col usac-col grand-total-90">${money(fundedShare90(group.eligibleLineTotal))}</td>
+          <td><strong>Participant (10%) Grand Total</strong></td>
+          <td class="num invoice-col participant-col grand-total-10">${money(participantShare10(group.eligibleLineTotal))}</td>
+        </tr>
+      </tbody>
+    </table>
+  </body></html>`;
+}
+function openInvoiceTemplate(cardKey){
+  const group = state.filteredGroups.find(g => g.key === cardKey) || state.groups.find(g => g.key === cardKey) || state.filteredGroups[0] || state.groups[0];
+  if(!group){ alert('No card available to print.'); return; }
+  const w = window.open('', '_blank');
+  w.document.open();
+  w.document.write(renderInvoiceTemplate(group));
+  w.document.close();
+  w.focus();
+  setTimeout(()=>{ try{ w.print(); }catch(e){} }, 300);
+}
+
+
+function enableColumnResize(){
+  const tables = document.querySelectorAll('table.resizable');
+  tables.forEach(table => {
+    const headers = table.querySelectorAll('th.resizable-col');
+    headers.forEach((th, index) => {
+      if(th.dataset.resizeBound === '1') return;
+      th.dataset.resizeBound = '1';
+      th.addEventListener('mousemove', (e) => {
+        const rect = th.getBoundingClientRect();
+        th.style.cursor = (rect.right - e.clientX < 10) ? 'col-resize' : 'default';
+      });
+      th.addEventListener('mousedown', (e) => {
+        const rect = th.getBoundingClientRect();
+        if(rect.right - e.clientX >= 10) return;
+        e.preventDefault();
+        const startX = e.clientX;
+        const startWidth = th.offsetWidth;
+        const colIndex = Array.from(th.parentElement.children).indexOf(th) + 1;
+        const rows = table.querySelectorAll(`tr`);
+        document.body.style.cursor = 'col-resize';
+        function onMove(ev){
+          const newWidth = Math.max(48, startWidth + (ev.clientX - startX));
+          rows.forEach(row => {
+            const cell = row.children[colIndex - 1];
+            if(cell){
+              cell.style.width = newWidth + 'px';
+              cell.style.minWidth = newWidth + 'px';
+              cell.style.maxWidth = newWidth + 'px';
+            }
+          });
+        }
+        function onUp(){
+          document.removeEventListener('mousemove', onMove);
+          document.removeEventListener('mouseup', onUp);
+          document.body.style.cursor = '';
+        }
+        document.addEventListener('mousemove', onMove);
+        document.addEventListener('mouseup', onUp);
+      });
+    });
+  });
+}
+
+['searchBox','stateFilter','statusFilter','providerFilter','makeFilter','entityTypeFilter','versionFilter','sortBy'].forEach(id => el(id).addEventListener(id==='searchBox'?'input':'change', applyFilters));
+el('clearBtn').addEventListener('click',()=>{
+  ['searchBox','stateFilter','statusFilter','providerFilter','entityTypeFilter','versionFilter'].forEach(id=>el(id).value='');
+  Array.from(el('makeFilter').options || []).forEach(opt => opt.selected = false);
+  el('sortBy').value='amount_desc';
+  populateFilters();
+  applyFilters();
+});
+el('reloadBtn').addEventListener('click', fetchLive);
+el('exportBtn').addEventListener('click', exportCsv);
+el('printBtn').addEventListener('click', ()=> window.print());
+el('invoiceBtn').addEventListener('click', ()=> openInvoiceTemplate());
+el('createInvoiceBtn').addEventListener('click', ()=> openCreateInvoice());
+el('emailBtn').addEventListener('click', ()=>{
+  const subject = encodeURIComponent('E-Rate Cybersecurity Pilot Reconcile Doc');
+  const body = encodeURIComponent(window.location.href);
+  window.location.href = `mailto:?subject=${subject}&body=${body}`;
+});
+el('hideZeroCols').addEventListener('change', (e)=>{ state.hideZeroCols = !!e.target.checked; render(); });
+el('fileInput').addEventListener('change', async (e)=>{ const file = e.target.files[0]; if(!file) return; const text = await file.text(); const rows = file.name.toLowerCase().endsWith('.csv') ? csvToObjects(text) : toObjects(JSON.parse(text)); loadRows(rows,false); });
+render();
+</script>
+</body>
+</html>
+
+<script>window.addEventListener('load',()=>{ if(typeof fetchLive==='function'){ fetchLive(); } });</script>
