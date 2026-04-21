@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Funding Tracker - Management</title>
+  <style>
+    :root {
+      --bg: #f5f7fb;
+      --surface: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --line: #d9e2ef;
+      --primary: #1f4e79;
+      --primary-dark: #163a5a;
+      --shadow: 0 12px 30px rgba(31, 41, 55, 0.08);
+      --danger: #b91c1c;
+      --success: #0f766e;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: linear-gradient(180deg, #f7f9fc 0%, #eef3f9 100%);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    .wrap {
+      max-width: 1220px;
+      margin: 0 auto;
+      padding: 42px 24px 56px;
+    }
+
+    .header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 22px;
+      flex-wrap: wrap;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(1.8rem, 3.6vw, 2.4rem);
+      line-height: 1.1;
+      color: var(--primary-dark);
+    }
+
+    .subtext {
+      margin: 10px 0 0;
+      color: var(--muted);
+      line-height: 1.5;
+      max-width: 760px;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn, .btn-secondary, .btn-danger {
+      appearance: none;
+      border: 0;
+      padding: 11px 15px;
+      border-radius: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+      font-size: 0.95rem;
+    }
+
+    .btn {
+      background: linear-gradient(180deg, #215784 0%, #1f4e79 100%);
+      color: #fff;
+      box-shadow: 0 10px 22px rgba(31, 78, 121, 0.20);
+    }
+
+    .btn-secondary {
+      background: #eef4fb;
+      color: var(--primary-dark);
+      border: 1px solid #cdd9e8;
+    }
+
+    .btn-danger {
+      background: #fff1f2;
+      color: #9f1239;
+      border: 1px solid #fecdd3;
+    }
+
+    .panel {
+      background: rgba(255,255,255,0.94);
+      border: 1px solid rgba(219, 227, 238, 0.95);
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+      padding: 22px;
+      backdrop-filter: blur(6px);
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .stat {
+      background: linear-gradient(180deg, #ffffff 0%, #f9fbfe 100%);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 16px;
+    }
+
+    .stat-label {
+      color: var(--muted);
+      font-size: 0.85rem;
+      margin-bottom: 8px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .stat-value {
+      color: var(--primary-dark);
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+      border-radius: 14px;
+      overflow: hidden;
+    }
+
+    thead th {
+      background: #f1f6fb;
+      color: var(--primary-dark);
+      text-align: left;
+      font-size: 0.88rem;
+      padding: 12px 12px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    tbody td {
+      padding: 12px;
+      border-bottom: 1px solid #e6edf5;
+      vertical-align: top;
+      font-size: 0.93rem;
+    }
+
+    tbody tr:hover {
+      background: #fbfdff;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .badge-login {
+      background: #ecfdf5;
+      color: #065f46;
+    }
+
+    .badge-logout {
+      background: #fff7ed;
+      color: #9a3412;
+    }
+
+    .empty-state {
+      padding: 24px 8px 8px;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    .gate-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 20, 35, 0.52);
+      backdrop-filter: blur(6px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      z-index: 999;
+    }
+
+    .gate-card {
+      width: min(430px, 100%);
+      background: #fff;
+      border: 1px solid #dbe3ee;
+      border-radius: 22px;
+      box-shadow: 0 24px 60px rgba(15, 23, 42, 0.20);
+      padding: 28px 24px 24px;
+    }
+
+    .gate-card h2 {
+      margin: 0 0 8px;
+      color: var(--primary-dark);
+      font-size: 1.55rem;
+    }
+
+    .gate-card p {
+      margin: 0 0 18px;
+      color: var(--muted);
+      line-height: 1.5;
+      font-size: 0.95rem;
+    }
+
+    .field {
+      margin-bottom: 14px;
+    }
+
+    .field label {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #334155;
+      margin-bottom: 7px;
+    }
+
+    .field input {
+      width: 100%;
+      padding: 12px 13px;
+      border: 1px solid #cfd9e6;
+      border-radius: 12px;
+      font-size: 1rem;
+      outline: none;
+      background: #fff;
+    }
+
+    .field input:focus {
+      border-color: #7aa5cf;
+      box-shadow: 0 0 0 4px rgba(31, 78, 121, 0.08);
+    }
+
+    .error {
+      min-height: 1.2em;
+      color: var(--danger);
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
+    .hidden { display: none !important; }
+
+    @media (max-width: 920px) {
+      .stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 700px) {
+      .wrap {
+        padding: 24px 16px 42px;
+      }
+
+      .panel {
+        padding: 14px;
+      }
+
+      .table-wrap {
+        overflow-x: auto;
+      }
+
+      table {
+        min-width: 780px;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .stats {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="gateOverlay" class="gate-overlay">
+    <div class="gate-card">
+      <h2>Management Access</h2>
+      <p>Enter the management password to view login activity.</p>
+      <form id="gateForm">
+        <div class="field">
+          <label for="managementPassword">Password</label>
+          <input id="managementPassword" type="password" autocomplete="current-password" required />
+        </div>
+        <button class="btn" type="submit">Open Management</button>
+        <p id="gateError" class="error" aria-live="polite"></p>
+      </form>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="header-row">
+      <div>
+        <h1>Management</h1>
+        <p class="subtext">Login activity recorded by the site. This view is stored in the same browser for this website.</p>
+      </div>
+      <div class="btn-group">
+        <a class="btn-secondary" href="index.html">Back to Home</a>
+        <button id="exportBtn" class="btn-secondary" type="button">Export CSV</button>
+        <button id="clearBtn" class="btn-danger" type="button">Clear Log</button>
+      </div>
+    </div>
+
+    <section class="panel">
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-label">Total Events</div>
+          <div id="statTotal" class="stat-value">0</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">Logins</div>
+          <div id="statLogins" class="stat-value">0</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">Logouts</div>
+          <div id="statLogouts" class="stat-value">0</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">Unique Names</div>
+          <div id="statUsers" class="stat-value">0</div>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Date / Time</th>
+              <th>Name</th>
+              <th>Action</th>
+              <th>Page</th>
+              <th>Browser</th>
+            </tr>
+          </thead>
+          <tbody id="logTableBody"></tbody>
+        </table>
+      </div>
+      <div id="emptyState" class="empty-state hidden">No login activity has been recorded in this browser yet.</div>
+    </section>
+  </div>
+
+  <script>
+    const MANAGEMENT_PASSWORD = 'FSCbusiness';
+    const LOGIN_LOG_KEY = 'mft_login_log';
+    const AUTH_KEY = 'mft_management_access';
+
+    const gateOverlay = document.getElementById('gateOverlay');
+    const gateForm = document.getElementById('gateForm');
+    const gateError = document.getElementById('gateError');
+    const logTableBody = document.getElementById('logTableBody');
+    const emptyState = document.getElementById('emptyState');
+    const statTotal = document.getElementById('statTotal');
+    const statLogins = document.getElementById('statLogins');
+    const statLogouts = document.getElementById('statLogouts');
+    const statUsers = document.getElementById('statUsers');
+    const exportBtn = document.getElementById('exportBtn');
+    const clearBtn = document.getElementById('clearBtn');
+
+    function getLogs() {
+      try {
+        const parsed = JSON.parse(localStorage.getItem(LOGIN_LOG_KEY));
+        return Array.isArray(parsed) ? parsed : [];
+      } catch {
+        return [];
+      }
+    }
+
+    function setAuthorized(value) {
+      if (value) {
+        sessionStorage.setItem(AUTH_KEY, 'true');
+      } else {
+        sessionStorage.removeItem(AUTH_KEY);
+      }
+    }
+
+    function isAuthorized() {
+      return sessionStorage.getItem(AUTH_KEY) === 'true';
+    }
+
+    function friendlyDate(iso) {
+      if (!iso) return '';
+      const date = new Date(iso);
+      if (Number.isNaN(date.getTime())) return iso;
+      return date.toLocaleString();
+    }
+
+    function browserName(ua) {
+      if (!ua) return '';
+      if (ua.includes('Edg/')) return 'Edge';
+      if (ua.includes('Chrome/')) return 'Chrome';
+      if (ua.includes('Firefox/')) return 'Firefox';
+      if (ua.includes('Safari/') && !ua.includes('Chrome/')) return 'Safari';
+      return ua;
+    }
+
+    function renderTable() {
+      const logs = getLogs();
+      logTableBody.innerHTML = '';
+
+      statTotal.textContent = String(logs.length);
+      statLogins.textContent = String(logs.filter(item => item.action === 'login').length);
+      statLogouts.textContent = String(logs.filter(item => item.action === 'logout').length);
+      statUsers.textContent = String(new Set(logs.map(item => (item.name || '').trim()).filter(Boolean)).size);
+
+      if (!logs.length) {
+        emptyState.classList.remove('hidden');
+        return;
+      }
+
+      emptyState.classList.add('hidden');
+
+      for (const item of logs) {
+        const row = document.createElement('tr');
+        const badgeClass = item.action === 'logout' ? 'badge badge-logout' : 'badge badge-login';
+        row.innerHTML = `
+          <td>${friendlyDate(item.timestamp)}</td>
+          <td>${item.name || ''}</td>
+          <td><span class="${badgeClass}">${item.action || ''}</span></td>
+          <td>${item.page || ''}</td>
+          <td>${browserName(item.userAgent || '')}</td>
+        `;
+        logTableBody.appendChild(row);
+      }
+    }
+
+    gateForm.addEventListener('submit', function (event) {
+      event.preventDefault();
+      const password = document.getElementById('managementPassword').value;
+      if (password !== MANAGEMENT_PASSWORD) {
+        gateError.textContent = 'Incorrect password.';
+        return;
+      }
+      gateError.textContent = '';
+      setAuthorized(true);
+      gateOverlay.classList.add('hidden');
+      renderTable();
+    });
+
+    exportBtn.addEventListener('click', function () {
+      const logs = getLogs();
+      const rows = [
+        ['timestamp', 'name', 'action', 'page', 'browser'],
+        ...logs.map(item => [
+          item.timestamp || '',
+          item.name || '',
+          item.action || '',
+          item.page || '',
+          browserName(item.userAgent || '')
+        ])
+      ];
+
+      const csv = rows
+        .map(row => row.map(value => '"' + String(value).replaceAll('"', '""') + '"').join(','))
+        .join('\n');
+
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'myfundingtracker-login-log.csv';
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
+    });
+
+    clearBtn.addEventListener('click', function () {
+      const confirmed = window.confirm('Clear the stored login log for this browser?');
+      if (!confirmed) return;
+      localStorage.removeItem(LOGIN_LOG_KEY);
+      renderTable();
+    });
+
+    if (isAuthorized()) {
+      gateOverlay.classList.add('hidden');
+      renderTable();
+    }
+  </script>
+</body>
+</html>

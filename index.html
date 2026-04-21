@@ -15,6 +15,7 @@
       --primary-dark: #163a5a;
       --shadow: 0 12px 30px rgba(31, 41, 55, 0.08);
       --radius: 16px;
+      --danger: #b91c1c;
     }
 
     * { box-sizing: border-box; }
@@ -24,12 +25,51 @@
       font-family: Arial, Helvetica, sans-serif;
       background: linear-gradient(180deg, #f7f9fc 0%, #eef3f9 100%);
       color: var(--text);
+      min-height: 100vh;
+    }
+
+    .page-shell {
+      position: relative;
+      min-height: 100vh;
     }
 
     .wrap {
-      max-width: 1220px;
+      max-width: 1240px;
       margin: 0 auto;
       padding: 42px 24px 56px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      min-height: 50px;
+      margin-bottom: 8px;
+      gap: 12px;
+    }
+
+    .welcome {
+      color: var(--muted);
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+
+    .logout-btn {
+      appearance: none;
+      border: 0;
+      background: linear-gradient(180deg, #d63b3b 0%, #b91c1c 100%);
+      color: #fff;
+      padding: 12px 18px;
+      border-radius: 12px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 10px 22px rgba(185, 28, 28, 0.22);
+    }
+
+    .logout-btn:hover {
+      filter: brightness(1.03);
+      transform: translateY(-1px);
     }
 
     header {
@@ -46,21 +86,76 @@
     }
 
     .subtitle {
-      max-width: 760px;
+      max-width: 840px;
       margin: 14px auto 0;
       font-size: 1rem;
       line-height: 1.6;
       color: var(--muted);
     }
 
-    .hero-panel {
+    .public-note {
+      max-width: 980px;
+      margin: 20px auto 0;
       background: rgba(255,255,255,0.9);
+      border: 1px solid #dbe4f0;
+      border-radius: 16px;
+      padding: 13px 16px;
+      color: #49566a;
+      font-size: 0.94rem;
+      line-height: 1.5;
+      box-shadow: 0 8px 18px rgba(31, 41, 55, 0.05);
+    }
+
+    .hero-panel {
+      background: rgba(255,255,255,0.92);
       border: 1px solid rgba(219, 227, 238, 0.95);
       border-radius: 24px;
       box-shadow: var(--shadow);
-      padding: 18px;
-      margin-top: 22px;
+      padding: 24px 20px;
+      margin-top: 24px;
       backdrop-filter: blur(6px);
+    }
+
+    .category-section + .category-section {
+      margin-top: 28px;
+      padding-top: 26px;
+      border-top: 1px solid #e4ebf4;
+    }
+
+    .category-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 16px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
+
+    .category-title-wrap h2 {
+      margin: 0 0 6px;
+      font-size: 1.28rem;
+      color: var(--primary-dark);
+    }
+
+    .category-title-wrap p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.5;
+      max-width: 820px;
+    }
+
+    .category-badge {
+      font-size: 0.77rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--primary);
+      background: #edf4fb;
+      border: 1px solid #d5e4f3;
+      border-radius: 999px;
+      padding: 7px 10px;
+      white-space: nowrap;
     }
 
     .grid {
@@ -80,7 +175,7 @@
       color: inherit;
       box-shadow: 0 8px 20px rgba(31, 41, 55, 0.05);
       transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
-      min-height: 154px;
+      min-height: 156px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -114,7 +209,7 @@
       border-color: color-mix(in srgb, var(--accent, #1f4e79) 35%, #c9d6e6);
     }
 
-    .card h2 {
+    .card h3 {
       margin: 0 0 8px;
       font-size: 1.02rem;
       line-height: 1.3;
@@ -136,21 +231,158 @@
       font-size: 0.9rem;
     }
 
+    .coming-soon {
+      border-style: dashed;
+      background: linear-gradient(180deg, #fbfdff 0%, #f4f8fc 100%);
+    }
+
+    .coming-soon span {
+      color: #64748b;
+    }
+
     .rhtp { --accent: #1f4e79; }
     .rusdlt { --accent: #2563eb; }
     .slcgp { --accent: #0f766e; }
     .ecypp { --accent: #7c3aed; }
     .erate471 { --accent: #b45309; }
     .erate470 { --accent: #be123c; }
+    .afg { --accent: #64748b; }
+    .hrsa { --accent: #64748b; }
 
     footer {
       margin-top: 28px;
       text-align: center;
       color: var(--muted);
       font-size: 0.92rem;
+      line-height: 1.5;
     }
 
-    @media (max-width: 900px) {
+    .management-link-wrap {
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    .management-link {
+      color: #7a8699;
+      font-size: 0.78rem;
+      text-decoration: none;
+      letter-spacing: 0.02em;
+    }
+
+    .management-link:hover {
+      color: var(--primary-dark);
+      text-decoration: underline;
+    }
+
+    .login-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 20, 35, 0.50);
+      backdrop-filter: blur(6px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      z-index: 1000;
+    }
+
+    .login-card {
+      width: min(430px, 100%);
+      background: #fff;
+      border: 1px solid #dbe3ee;
+      border-radius: 22px;
+      box-shadow: 0 24px 60px rgba(15, 23, 42, 0.20);
+      padding: 28px 24px 24px;
+    }
+
+    .login-card h2 {
+      margin: 0 0 8px;
+      color: var(--primary-dark);
+      font-size: 1.55rem;
+    }
+
+    .login-card p {
+      margin: 0 0 18px;
+      color: var(--muted);
+      line-height: 1.5;
+      font-size: 0.95rem;
+    }
+
+    .field {
+      margin-bottom: 14px;
+    }
+
+    .field label {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #334155;
+      margin-bottom: 7px;
+    }
+
+    .field input {
+      width: 100%;
+      padding: 12px 13px;
+      border: 1px solid #cfd9e6;
+      border-radius: 12px;
+      font-size: 1rem;
+      outline: none;
+      background: #fff;
+    }
+
+    .field input:focus {
+      border-color: #7aa5cf;
+      box-shadow: 0 0 0 4px rgba(31, 78, 121, 0.08);
+    }
+
+    .login-actions {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      margin-top: 8px;
+    }
+
+    .login-btn {
+      appearance: none;
+      border: 0;
+      background: linear-gradient(180deg, #215784 0%, #1f4e79 100%);
+      color: #fff;
+      padding: 12px 18px;
+      border-radius: 12px;
+      font-size: 0.96rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 10px 22px rgba(31, 78, 121, 0.20);
+    }
+
+    .forgot-password-wrap {
+      margin-top: 12px;
+    }
+
+    .forgot-password-link {
+      color: var(--primary);
+      font-size: 0.88rem;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .forgot-password-link:hover {
+      text-decoration: underline;
+      color: var(--primary-dark);
+    }
+
+    .error {
+      min-height: 1.2em;
+      color: var(--danger);
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    @media (max-width: 980px) {
       .grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
@@ -158,11 +390,16 @@
 
     @media (max-width: 760px) {
       .wrap {
-        padding: 28px 16px 42px;
+        padding: 24px 16px 42px;
       }
 
       .hero-panel {
-        padding: 14px;
+        padding: 18px 14px;
+      }
+
+      .topbar {
+        justify-content: space-between;
+        flex-wrap: wrap;
       }
     }
 
@@ -170,73 +407,290 @@
       .grid {
         grid-template-columns: 1fr;
       }
+
+      .logout-btn {
+        width: 100%;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <header>
-      <h1>My Funding Tracker</h1>
-      <p class="subtitle">
-        A central hub for trackers and E-Rate tools. Select a tracker below to open the page you need.
-      </p>
-    </header>
-
-    <section class="hero-panel">
-      <div class="grid">
-        <a class="card rhtp" href="https://www.myfundingtracker.com/RHTP/">
-          <div>
-            <h2>RHTP Tracker</h2>
-            <p>Rural Health Transformation Program tracker and sales-ready opportunity details.</p>
+  <div class="page-shell">
+    <div id="loginOverlay" class="login-overlay">
+      <div class="login-card">
+        <h2>My Funding Tracker</h2>
+        <p>Please enter your name and password to access the site.</p>
+        <form id="loginForm">
+          <div class="field">
+            <label for="userName">Name</label>
+            <input id="userName" name="userName" type="text" autocomplete="name" required />
           </div>
-          <span>Open Tracker →</span>
-        </a>
-
-        <a class="card rusdlt" href="https://www.myfundingtracker.com/RUS-DLT/">
-          <div>
-            <h2>RUS DLT Lists</h2>
-            <p>Access RUS DLT prospect lists and related outreach-ready targeting information.</p>
+          <div class="field">
+            <label for="userPassword">Password</label>
+            <input id="userPassword" name="userPassword" type="password" autocomplete="current-password" required />
           </div>
-          <span>Open Lists →</span>
-        </a>
-
-        <a class="card slcgp" href="https://www.myfundingtracker.com/SLCGP/">
-          <div>
-            <h2>SLCGP Tracker</h2>
-            <p>State and Local Cybersecurity Grant Program tracker with procurement and engagement insights.</p>
+          <div class="login-actions">
+            <button class="login-btn" type="submit">Log In</button>
           </div>
-          <span>Open Tracker →</span>
-        </a>
-
-        <a class="card ecypp" href="https://www.myfundingtracker.com/ECYPP/">
-          <div>
-            <h2>ECYPP 471 Tracker</h2>
-            <p>Cybersecurity Pilot FCC Form 471 tracker for participant, FRN, and pricing analysis.</p>
+          <div class="forgot-password-wrap">
+            <a
+              class="forgot-password-link"
+              href="mailto:sdomenech@solutionzinc.com?subject=My%20Funding%20Tracker%20Password%20Request&body=Hello%2C%0A%0APlease%20send%20me%20the%20password%20for%20My%20Funding%20Tracker.%0A%0AName%3A%20"
+            >Forgot password?</a>
           </div>
-          <span>Open Tracker →</span>
-        </a>
-
-        <a class="card erate471" href="https://www.myfundingtracker.com/eRate-471/">
-          <div>
-            <h2>eRate 471 Search Tool</h2>
-            <p>Search and review E-Rate Form 471 data, line-item details, and pricing information.</p>
-          </div>
-          <span>Open Tool →</span>
-        </a>
-
-        <a class="card erate470" href="https://www.myfundingtracker.com/eRate-470/">
-          <div>
-            <h2>eRate 470 Search Tool</h2>
-            <p>Access Form 470 and RFP-related data to review bidding activity and sourcing opportunities.</p>
-          </div>
-          <span>Open Tool →</span>
-        </a>
+          <p id="loginError" class="error" aria-live="polite"></p>
+        </form>
       </div>
-    </section>
+    </div>
 
-    <footer>
-      Central access point for GPS funding and procurement tools. For additional support, contact Grant Program Services (GPS).
-    </footer>
+    <div class="wrap">
+      <div class="topbar">
+        <div id="welcomeText" class="welcome"></div>
+        <button id="logoutBtn" class="logout-btn hidden" type="button">Log Out</button>
+      </div>
+
+      <header>
+        <h1>My Funding Tracker</h1>
+        <p class="subtitle">
+          Central access point for GPS funding, procurement, search, and prospecting tools.
+        </p>
+        <div class="public-note">
+          All tools on this site are based on public information, including public funding notices, procurement records, open program data, and other publicly available source material.
+        </div>
+      </header>
+
+      <section class="hero-panel">
+        <section class="category-section">
+          <div class="category-head">
+            <div class="category-title-wrap">
+              <h2>State Trackers</h2>
+              <p>Track active program activity, timelines, procurement paths, and sales-facing details for major funding programs.</p>
+            </div>
+            <div class="category-badge">Program Tracking</div>
+          </div>
+
+          <div class="grid">
+            <a class="card rhtp" href="https://www.myfundingtracker.com/RHTP/">
+              <div>
+                <h3>RHTP Tracker</h3>
+                <p>Rural Health Transformation Program tracker with state activity, opportunity timing, and engagement guidance.</p>
+              </div>
+              <span>Open Tracker →</span>
+            </a>
+
+            <a class="card slcgp" href="https://www.myfundingtracker.com/SLCGP/">
+              <div>
+                <h3>SLCGP Tracker</h3>
+                <p>State and Local Cybersecurity Grant Program tracker with procurement access points, requirements, and prospecting insights.</p>
+              </div>
+              <span>Open Tracker →</span>
+            </a>
+
+          </div>
+        </section>
+
+        <section class="category-section">
+          <div class="category-head">
+            <div class="category-title-wrap">
+              <h2>Prospect Lists</h2>
+              <p>Access target lists and prospecting-ready views built to support outreach, account planning, and opportunity development.</p>
+            </div>
+            <div class="category-badge">Prospecting</div>
+          </div>
+
+          <div class="grid">
+            <a class="card rusdlt" href="https://www.myfundingtracker.com/RUS-DLT/">
+              <div>
+                <h3>RUS DLT Lists</h3>
+                <p>Prospect lists and targeting views for Rural K-12 &amp; Higher Ed, healthcare, and USDA Distance Learning and Telemedicine-related outreach and planning.</p>
+              </div>
+              <span>Open Lists →</span>
+            </a>
+
+            <div class="card afg coming-soon" aria-label="AFG Lists coming soon">
+              <div>
+                <h3>AFG Lists</h3>
+                <p>Additional public-source prospect lists for Assistance to Firefighters Grant activity are planned for this site.</p>
+              </div>
+              <span>Coming Soon</span>
+            </div>
+
+            <div class="card hrsa coming-soon" aria-label="HRSA Lists coming soon">
+              <div>
+                <h3>HRSA Lists</h3>
+                <p>More public-facing healthcare prospect lists and funding-related resources will be added here soon.</p>
+              </div>
+              <span>Coming Soon</span>
+            </div>
+
+            <div class="card coming-soon" aria-label="Libraries List coming soon">
+              <div>
+                <h3>Libraries List</h3>
+                <p>Public-source library prospect lists and funding-related research tools will be added here soon.</p>
+              </div>
+              <span>Coming Soon</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="category-section">
+          <div class="category-head">
+            <div class="category-title-wrap">
+              <h2>eRate Search Tools</h2>
+              <p>Search open program data and related procurement information to support pricing review, competitive analysis, and opportunity research.</p>
+            </div>
+            <div class="category-badge">Search Tools</div>
+          </div>
+
+          <div class="grid">
+            <a class="card ecypp" href="https://www.myfundingtracker.com/ECYPP/">
+              <div>
+                <h3>ECYPP 471 Tracker</h3>
+                <p>Cybersecurity Pilot FCC Form 471 tracker for participant review, FRN detail, and pricing analysis.</p>
+              </div>
+              <span>Open Tool →</span>
+            </a>
+
+            <a class="card erate471" href="https://www.myfundingtracker.com/eRate-471/">
+              <div>
+                <h3>eRate 471 Search Tool</h3>
+                <p>Search and review E-Rate Form 471 data, line-item detail, and pricing information.</p>
+              </div>
+              <span>Open Tool →</span>
+            </a>
+
+            <a class="card erate470" href="https://www.myfundingtracker.com/eRate-470/">
+              <div>
+                <h3>eRate 470 Search Tool</h3>
+                <p>Access Form 470 and RFP-related data to review bidding activity and sourcing opportunities.</p>
+              </div>
+              <span>Open Tool →</span>
+            </a>
+          </div>
+        </section>
+      </section>
+
+      <footer>
+        Central access point for GPS funding and procurement tools. For additional support, contact Grant Program Services (GPS).
+      </footer>
+
+      <div class="management-link-wrap">
+        <a class="management-link" href="management.html">Management</a>
+      </div>
+    </div>
   </div>
+
+  <script>
+    const SITE_PASSWORD = 'callsherri';
+    const SESSION_KEY = 'mft_active_session';
+    const LOGIN_LOG_KEY = 'mft_login_log';
+
+    const loginOverlay = document.getElementById('loginOverlay');
+    const loginForm = document.getElementById('loginForm');
+    const loginError = document.getElementById('loginError');
+    const logoutBtn = document.getElementById('logoutBtn');
+    const welcomeText = document.getElementById('welcomeText');
+    const userNameInput = document.getElementById('userName');
+    const userPasswordInput = document.getElementById('userPassword');
+
+    function getSession() {
+      try {
+        return JSON.parse(localStorage.getItem(SESSION_KEY)) || null;
+      } catch {
+        return null;
+      }
+    }
+
+    function setSession(session) {
+      localStorage.setItem(SESSION_KEY, JSON.stringify(session));
+    }
+
+    function clearSession() {
+      localStorage.removeItem(SESSION_KEY);
+    }
+
+    function getLogins() {
+      try {
+        const parsed = JSON.parse(localStorage.getItem(LOGIN_LOG_KEY));
+        return Array.isArray(parsed) ? parsed : [];
+      } catch {
+        return [];
+      }
+    }
+
+    function saveLogins(entries) {
+      localStorage.setItem(LOGIN_LOG_KEY, JSON.stringify(entries));
+    }
+
+    function addLogEntry(name, action) {
+      const entries = getLogins();
+      entries.unshift({
+        name,
+        action,
+        timestamp: new Date().toISOString(),
+        page: window.location.pathname,
+        userAgent: navigator.userAgent
+      });
+      saveLogins(entries.slice(0, 500));
+    }
+
+    function formatName(name) {
+      return (name || '').trim().replace(/\s+/g, ' ');
+    }
+
+    function renderSessionState() {
+      const session = getSession();
+      const isLoggedIn = !!(session && session.name);
+
+      if (isLoggedIn) {
+        loginOverlay.classList.add('hidden');
+        logoutBtn.classList.remove('hidden');
+        welcomeText.textContent = 'Logged in as ' + session.name;
+      } else {
+        loginOverlay.classList.remove('hidden');
+        logoutBtn.classList.add('hidden');
+        welcomeText.textContent = '';
+        userPasswordInput.value = '';
+      }
+    }
+
+    loginForm.addEventListener('submit', function (event) {
+      event.preventDefault();
+      const name = formatName(userNameInput.value);
+      const password = userPasswordInput.value;
+
+      if (!name) {
+        loginError.textContent = 'Please enter your name.';
+        return;
+      }
+
+      if (password !== SITE_PASSWORD) {
+        loginError.textContent = 'Incorrect password.';
+        return;
+      }
+
+      const session = {
+        name,
+        loggedInAt: new Date().toISOString()
+      };
+
+      setSession(session);
+      addLogEntry(name, 'login');
+      loginError.textContent = '';
+      userPasswordInput.value = '';
+      renderSessionState();
+    });
+
+    logoutBtn.addEventListener('click', function () {
+      const session = getSession();
+      if (session && session.name) {
+        addLogEntry(session.name, 'logout');
+      }
+      clearSession();
+      renderSessionState();
+    });
+
+    renderSessionState();
+  </script>
 </body>
 </html>
