@@ -27,7 +27,7 @@
     }
 
     .wrap {
-      max-width: 1380px;
+      max-width: 1220px;
       margin: 0 auto;
       padding: 42px 24px 56px;
     }
@@ -65,8 +65,8 @@
 
     .grid {
       display: grid;
-      grid-template-columns: repeat(5, minmax(0, 1fr));
-      gap: 14px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
       align-items: stretch;
     }
 
@@ -80,7 +80,7 @@
       color: inherit;
       box-shadow: 0 8px 20px rgba(31, 41, 55, 0.05);
       transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
-      min-height: 158px;
+      min-height: 154px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -137,6 +137,7 @@
     }
 
     .rhtp { --accent: #1f4e79; }
+    .rusdlt { --accent: #2563eb; }
     .slcgp { --accent: #0f766e; }
     .ecypp { --accent: #7c3aed; }
     .erate471 { --accent: #b45309; }
@@ -149,9 +150,9 @@
       font-size: 0.92rem;
     }
 
-    @media (max-width: 1100px) {
+    @media (max-width: 900px) {
       .grid {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
+        grid-template-columns: repeat(2, minmax(0, 1fr));
       }
     }
 
@@ -162,10 +163,6 @@
 
       .hero-panel {
         padding: 14px;
-      }
-
-      .grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
       }
     }
 
@@ -195,6 +192,14 @@
           <span>Open Tracker →</span>
         </a>
 
+        <a class="card rusdlt" href="https://www.myfundingtracker.com/RUS-DLT/">
+          <div>
+            <h2>RUS DLT Lists</h2>
+            <p>Access RUS DLT prospect lists and related outreach-ready targeting information.</p>
+          </div>
+          <span>Open Lists →</span>
+        </a>
+
         <a class="card slcgp" href="https://www.myfundingtracker.com/SLCGP/">
           <div>
             <h2>SLCGP Tracker</h2>
@@ -205,15 +210,15 @@
 
         <a class="card ecypp" href="https://www.myfundingtracker.com/ECYPP/">
           <div>
-            <h2>ECYPP 471 Tool</h2>
-            <p>Cybersecurity Pilot FCC Form 471 tool for participant, FRN, and pricing analysis.</p>
+            <h2>ECYPP 471 Tracker</h2>
+            <p>Cybersecurity Pilot FCC Form 471 tracker for participant, FRN, and pricing analysis.</p>
           </div>
-          <span>Open Tool →</span>
+          <span>Open Tracker →</span>
         </a>
 
         <a class="card erate471" href="https://www.myfundingtracker.com/eRate-471/">
           <div>
-            <h2>eRate 471 Tool</h2>
+            <h2>eRate 471 Search Tool</h2>
             <p>Search and review E-Rate Form 471 data, line-item details, and pricing information.</p>
           </div>
           <span>Open Tool →</span>
@@ -221,7 +226,7 @@
 
         <a class="card erate470" href="https://www.myfundingtracker.com/eRate-470/">
           <div>
-            <h2>eRate 470 Tool</h2>
+            <h2>eRate 470 Search Tool</h2>
             <p>Access Form 470 and RFP-related data to review bidding activity and sourcing opportunities.</p>
           </div>
           <span>Open Tool →</span>
