@@ -68,7 +68,7 @@
   .table-wrap { width: 100%; overflow-x: auto; }
   table { width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 11px; }
   colgroup col:nth-child(1) { width: 8%; }
-  colgroup col:nth-child(2) { width: 6%; }
+  colgroup col:nth-child(2) { width: 5%; min-width: 74px; }
   colgroup col:nth-child(3) { width: 5%; }
   colgroup col:nth-child(4) { width: 6%; }
   colgroup col:nth-child(5) { width: 12%; }
@@ -81,6 +81,7 @@
   colgroup col:nth-child(12) { width: 4%; }
   thead th { position: sticky; top: 0; background: #eff5fd; z-index: 2; text-align: left; padding: 8px 8px; border-bottom: 1px solid var(--line); color: #26405f; font-size: 10px; text-transform: uppercase; letter-spacing: .05em; vertical-align: bottom; }
   tbody td { padding: 8px 8px; border-bottom: 1px solid #e9eef5; vertical-align: top; line-height: 1.35; overflow-wrap: anywhere; word-break: break-word; }
+  td.status-cell { white-space: nowrap; }
   tbody tr:hover { background: #f9fbff; }
   .th-inner { position: relative; padding-right: 12px; }
   .help-tip { border-bottom: 1px dotted #8aa0bd; cursor: help; }
@@ -89,9 +90,11 @@
   th.sortable { cursor: pointer; user-select: none; }
   .sort-indicator { margin-left: 5px; font-size: 10px; color: var(--muted); }
   .resize-handle { position:absolute; top:-6px; right:-4px; width:10px; height:32px; cursor: col-resize; }
+  .resize-handle::after { content:""; position:absolute; top:6px; bottom:6px; right:4px; width:2px; border-radius:2px; background:#c6d4e6; }
+  th:hover .resize-handle::after, th.resizing .resize-handle::after { background: var(--blue); }
   th.resizing, th.resizing .th-label { color: var(--blue); }
   .state { font-weight: 800; font-size: 11.2px; margin-bottom: 4px; }
-  .region-chip, .status-chip, .conf-chip, .ptype-chip { display:inline-flex; align-items:center; gap:4px; border-radius:999px; padding:3px 7px; font-size:10px; font-weight:800; line-height:1.1; }
+  .region-chip, .status-chip, .conf-chip, .ptype-chip { display:inline-flex; align-items:center; gap:3px; border-radius:999px; padding:2px 6px; font-size:9px; font-weight:800; line-height:1; white-space:nowrap; }
   .region-chip.mid { background: #eef2ff; color: #4f46e5; }
   .region-chip.ne { background: #eefaf7; color: #0f766e; }
   .region-chip.se { background: #fff5ec; color: #b45309; }
@@ -328,7 +331,7 @@
 <h1>SLCGP 2026 State Windows, Procurement, Prior Awards, and FY/Match Tracker</h1>
 <div class="sub">Tracks state-level SLCGP subrecipient windows, likely procurement route, best drill-down source, prior-awards/applicant-data link, and a new FY / match / min-max summary column. Procurement type classifies the front-door access model by state, such as RFP, RFA, rolling application, first-come portal, or state page/TBD.</div>
 <div class="meta">
-<div><b>Last Refresh Date:</b> April 20, 2026</div>
+<div><b>Last Refresh Date:</b> April 22, 2026</div>
 <div><b>Created by:</b> GPS Team</div>
 <div><b>States:</b> 50</div>
 <div><b>Default Sort:</b> Window date ascending</div>
@@ -370,11 +373,19 @@
 <select id="procTypeFilter"><option value="">All types</option></select>
 </div>
 <button class="btn" id="resetBtn">Reset filters</button>
+<button class="btn" id="executiveSummaryBtn">Executive Summary</button>
 <button class="btn primary" id="pdfBtn">Export to PDF</button>
 </div>
 <div class="note btn-print-note">Tip: the PDF button prints the currently filtered and sorted view. Click any header to sort. Drag the right edge of a header to resize a column.</div>
-<div class="note">Method: official state program pages first; refreshed against current public state pages as of April 13, 2026. Official award notices, guidance packets, prior-round materials, and program pages used when a clean statewide awards list was not published. Forecasted/TBD means no clearly dated 2026 local window was found on the reviewed public source. The FY / match / min-max column uses the reviewed state page where it was explicit; otherwise it falls back to the federal year-based cost-share rules or marks the item as not publicly stated.</div>
-</section><section class="changes"><h2>What&#39;s changed since the last update</h2><ul><li><b>Florida</b>: moved to <b>Closed</b>. Florida&#39;s official SLCGP page and state one-pager now make clear that the posted application window ran <b>October 15, 2025 to December 15, 2025</b>, used the FDEM Grants Portal, and carried a <b>20% match</b>. <a href="https://www.floridadisaster.org/dem/finance/grants-unit/state-and-local-cybersecurity-grant-program/" target="_blank" rel="noopener">State page</a> | <a href="https://www.floridadisaster.org/globalassets/1/state-and-local-cybersecurity-grant-program-one-pager.pdf" target="_blank" rel="noopener">One-pager</a></li><li><b>Pennsylvania</b>: clarified <b>How to Access Funding</b>. The Commonwealth page now clearly says local governments will apply to the Commonwealth for committee-identified projects, cannot apply directly to the federal government, and should sign up for updates while additional application instructions are prepared. <a href="https://www.pa.gov/services/pema/cybersecurity-grant" target="_blank" rel="noopener">Source</a></li><li><b>West Virginia</b>: clarified state messaging. WVEMD&#39;s homepage and cybersecurity funding page actively encourage eligible agencies to apply and provide a dedicated contact email, but the reviewed official pages still do not post a clearly dated state-local application packet or deadline. <a href="https://emd.wv.gov/" target="_blank" rel="noopener">Homepage</a> | <a href="https://emd.wv.gov/cybersecurity-grant-funding" target="_blank" rel="noopener">Funding page</a></li><li><b>All other states</b>: after a fresh 50-state check using current official state program pages and, where useful, homepage/news/announcement layers, I did not confirm another material status change that required a row change in the tracker.</li></ul></section>
+<div class="note">Method: official state program pages first; refreshed against current public state pages as of April 22, 2026. Official award notices, guidance packets, prior-round materials, and program pages used when a clean statewide awards list was not published. Forecasted/TBD means no clearly dated 2026 local window was found on the reviewed public source. The FY / match / min-max column uses the reviewed state page where it was explicit; otherwise it falls back to the federal year-based cost-share rules or marks the item as not publicly stated.</div>
+</section><section class="changes"><h2>April 22 refresh highlights</h2><ul>
+<li><b>Missouri</b>: open <b>April 13–May 20, 2026</b> in WebGrants.</li>
+<li><b>South Carolina</b>: open; 2024 SLCGP applications are due <b>May 15, 2026</b>.</li>
+<li><b>Wyoming</b>: open; ZoomGrants applications are due <b>May 15, 2026</b>.</li>
+<li><b>Oregon</b>: state page confirms the program is <b>temporarily closed as of April 1, 2026</b>, with reopening anticipated in summer 2026.</li>
+<li><b>Washington</b>: still a <b>watch state</b>; WaTech lists a <b>late April 2026</b> expected release and <b>early June 2026</b> tentative deadline.</li>
+<li><b>Wisconsin</b> and <b>Kentucky</b>: no active local window confirmed on the reviewed state pages; Wisconsin says review/scoring are in progress and Kentucky still shows closed, with FFY 2025 SLCGP allocations noted as on hold in the KOHS annual report.</li>
+</ul></section>
 <section class="table-card">
 <div class="table-wrap">
 <table id="dataTable">
@@ -485,7 +496,7 @@ const data =[
     "Confidence": "High",
     "PriorLabel": "Alabama fact sheets page",
     "PriorURL": "https://slcgp.alabama.gov/apply/factsheets/",
-    "PriorNote": "Official project fact sheets for Alabama\u2019s SLCGP application rounds, including service and provider details.",
+    "PriorNote": "Official project fact sheets for Alabama’s SLCGP application rounds, including service and provider details.",
     "DrillDownLabel": "Alabama apply portal",
     "DrillDownURL": "https://slcgp.alabama.gov/apply/",
     "ProcurementProcess": "Open portal / first-come, first-served. Eligible locals start on the Alabama apply page. If funded, purchases follow grant conditions and local/state procurement rules.",
@@ -531,7 +542,7 @@ const data =[
     "Confidence": "Low",
     "PriorLabel": "Arizona Statewide Cyber Readiness Grant Program",
     "PriorURL": "https://aset.az.gov/programs/cyber-resources-local-and-tribal-governments",
-    "PriorNote": "Arizona\u2019s state-awarded cyber resources page for local and tribal governments; useful when no public subaward list is posted.",
+    "PriorNote": "Arizona’s state-awarded cyber resources page for local and tribal governments; useful when no public subaward list is posted.",
     "DrillDownLabel": "Arizona grant programs page",
     "DrillDownURL": "https://azdohs.gov/grants",
     "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
@@ -577,7 +588,7 @@ const data =[
     "Confidence": "High",
     "PriorLabel": "Cal OES SLCGP program page",
     "PriorURL": "https://www.caloes.ca.gov/office-of-the-director/policy-administration/finance-administration/grants-management/homeland-security-emergency-management-programs/state-and-local-cybersecurity-grant-program/",
-    "PriorNote": "Explains that individual projects named in California\u2019s approved Cybersecurity Plan drive disbursement and align later subrecipient applications.",
+    "PriorNote": "Explains that individual projects named in California’s approved Cybersecurity Plan drive disbursement and align later subrecipient applications.",
     "DrillDownLabel": "Cal OES RFP announcement and package",
     "DrillDownURL": "https://www.caloes.ca.gov/grant-announcement/ffy-2024-state-local-cybersecurity-grant-local-tribal-sl-rfp/",
     "ProcurementProcess": "Competitive state subrecipient RFP. Locals and tribes respond to the Cal OES RFP/NOI package during the state window. After award, buying follows applicable state/local procurement rules and grant conditions.",
@@ -623,7 +634,7 @@ const data =[
     "Confidence": "Medium",
     "PriorLabel": "Connecticut SLCGP guidance & closeout forms",
     "PriorURL": "https://portal.ct.gov/demhs/grants/state-and-local-cybersecurity-grant-program/guidance-and-forms",
-    "PriorNote": "Connecticut\u2019s official forms hub references quarterly reporting and closeout steps for awarded SLCGP projects.",
+    "PriorNote": "Connecticut’s official forms hub references quarterly reporting and closeout steps for awarded SLCGP projects.",
     "DrillDownLabel": "Connecticut SLCGP apply page",
     "DrillDownURL": "https://portal.ct.gov/demhs/grants/state-and-local-cybersecurity-grant-program/apply",
     "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
@@ -713,7 +724,7 @@ const data =[
     "SourceLabel": "Hawaii OHS grants page",
     "SourceURL": "https://law.hawaii.gov/ohs/grants/",
     "Confidence": "Medium",
-    "PriorLabel": "Hawai\u2018i statewide cybersecurity strategy",
+    "PriorLabel": "Hawai‘i statewide cybersecurity strategy",
     "PriorURL": "https://law.hawaii.gov/ohs/wp-content/uploads/sites/2/2024/01/Hawaii-Statewide-Cyber-Strategy-Plan-Final-1.pdf",
     "PriorNote": "Official statewide cybersecurity strategy and plan prepared under the SLCGP framework.",
     "DrillDownLabel": "Hawaii OHS grants page",
@@ -847,21 +858,21 @@ const data =[
     "Start": "",
     "End": "",
     "SortDate": "2099-12-31",
-    "Description": "Kentucky's homeland security grants page now explicitly says the State and Local Cyber Grant Program application is CLOSED; the same page still contains older 'Grant will return: Fall 2025' text and does not post a new dated 2026 reopening.",
-    "SourceLabel": "Kentucky Homeland Security grants page",
+    "Description": "Kentucky's grants page still shows the SLCGP application as closed, and the 2025 KOHS annual report says FFY 2025 SLCGP allocations have been placed on hold pending availability.",
+    "SourceLabel": "Kentucky grants page",
     "SourceURL": "https://homelandsecurity.ky.gov/Pages/Grants.aspx",
     "Confidence": "Medium",
-    "PriorLabel": "Kentucky cybersecurity grants page",
-    "PriorURL": "https://homelandsecurity.ky.gov/Pages/Cybersecurity.aspx",
-    "PriorNote": "Official Kentucky cyber-grants page noting SLCGP support for cybersecurity improvements since 2022.",
+    "PriorLabel": "Kentucky 2025 KOHS annual report",
+    "PriorURL": "https://homelandsecurity.ky.gov/About/Annual%20Reports/2025%20KOHS%20Annual%20Report%20-%20Final.pdf",
+    "PriorNote": "KOHS annual report states FFY 2025 SLCGP allocations have been placed on hold and confirms cost-share/pass-through context.",
     "DrillDownLabel": "Kentucky Homeland Security grants page",
     "DrillDownURL": "https://homelandsecurity.ky.gov/Pages/Grants.aspx",
-    "ProcurementProcess": "The current state page explicitly shows the SLCGP application as closed. No new dated 2026 reopening window was posted on the reviewed page. Monitor the Kentucky grants page for the next release.",
+    "ProcurementProcess": "The current grants page shows the SLCGP application as closed. The KOHS 2025 annual report also says FFY 2025 SLCGP allocations are on hold. Monitor the Kentucky grants page for a reopening or release notice.",
     "ProcurementType": "State application",
     "FYYear": "TBD on reviewed source",
     "MatchInfo": "TBD on reviewed source",
     "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "FY not labeled on reviewed page | Match: 30% on reviewed source | Min/Max: Not publicly stated on reviewed source"
+    "FYSummary": "FY not labeled on grants page | Match: 30% on grants page | Min/Max: Not publicly stated; FFY2025 allocation on hold per 2025 KOHS annual report"
   },
   {
     "State": "Louisiana",
@@ -881,10 +892,10 @@ const data =[
     "DrillDownURL": "https://wwwcfprd.doa.louisiana.gov/boardsandcommissions/MeetingMinutes/348_Regional%20Directors%20Meeting%20minutes-%20February%202026.pdf",
     "ProcurementProcess": "State-run application cycle. Applicants respond to Louisiana SLCGP priorities and guidance; funded entities then procure under Louisiana/local procurement rules and reporting requirements.",
     "ProcurementType": "State application",
-    "FYYear": "FY2023\u2013FY2025",
+    "FYYear": "FY2023–FY2025",
     "MatchInfo": "Varies by year: FY23 20/10; FY24 30/20; FY25 40/30",
     "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "FY2023\u2013FY2025 | Match: Varies by year: FY23 20/10; FY24 30/20; FY25 40/30 | Min/Max: Not publicly stated on reviewed source"
+    "FYSummary": "FY2023–FY2025 | Match: Varies by year: FY23 20/10; FY24 30/20; FY25 40/30 | Min/Max: Not publicly stated on reviewed source"
   },
   {
     "State": "Maine",
@@ -1203,10 +1214,10 @@ const data =[
     "DrillDownURL": "https://www.dhses.ny.gov/federal-programs",
     "ProcurementProcess": "New York uses a state-run Request for Applications tied to cybersecurity shared services rather than simple direct cash awards. The current combined FY2022/FY2023 application period is closed.",
     "ProcurementType": "RFA",
-    "FYYear": "FY2022\u2013FY2023 (combined)",
+    "FYYear": "FY2022–FY2023 (combined)",
     "MatchInfo": "FY22 10/0; FY23 20/10",
     "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "FY2022\u2013FY2023 (combined) | Match: FY22 10/0; FY23 20/10 | Min/Max: Not publicly stated on reviewed source"
+    "FYSummary": "FY2022–FY2023 (combined) | Match: FY22 10/0; FY23 20/10 | Min/Max: Not publicly stated on reviewed source"
   },
   {
     "State": "North Carolina",
@@ -1284,7 +1295,7 @@ const data =[
     "Start": "",
     "End": "2026-04-30",
     "SortDate": "2026-04-30",
-    "Description": "Oklahoma's grants page says the State and Local Cybersecurity Grant Program is now accepting new applications, with 2026 deadlines of January 30, April 30, July 31, and October 30. The same page notes funding is not currently accessible and additional funding is expected later in the year.",
+    "Description": "Oklahoma's grants page says the State and Local Cybersecurity Grant Program is now accepting new applications, with 2026 deadlines of January 30, April 30, July 31, and October 30.",
     "SourceLabel": "Oklahoma grants page",
     "SourceURL": "https://oklahoma.gov/homeland-security/grants.html",
     "Confidence": "Medium",
@@ -1295,10 +1306,10 @@ const data =[
     "DrillDownURL": "https://oklahoma.gov/homeland-security/grants.html",
     "ProcurementProcess": "Recurring state application process with multiple 2026 deadlines. Applicants review the one-page announcement, tie projects to the State Cyber Plan, and submit applications to hsgrants@okohs.ok.gov.",
     "ProcurementType": "Quarterly rolling application",
-    "FYYear": "TBD; page links FY22\u2013FY25 NOFOs",
+    "FYYear": "TBD; page links FY22–FY25 NOFOs",
     "MatchInfo": "Depends on linked NOFO year",
     "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "TBD; page links FY22\u2013FY25 NOFOs | Match: Depends on linked NOFO year | Min/Max: Not publicly stated on reviewed source"
+    "FYSummary": "TBD; page links FY22–FY25 NOFOs | Match: Depends on linked NOFO year | Min/Max: Not publicly stated on reviewed source"
   },
   {
     "State": "Oregon",
@@ -1307,7 +1318,7 @@ const data =[
     "Start": "",
     "End": "",
     "SortDate": "2026-04-01",
-    "Description": "Oregon's official SLCGP state page now says the funding opportunity is temporarily closed as of April 1, 2026 and that new applications are anticipated in Summer 2026.",
+    "Description": "Oregon's official SLCGP page says the funding opportunity is temporarily closed as of April 1, 2026, with new applications anticipated in Summer 2026.",
     "SourceLabel": "Oregon SLCGP state page",
     "SourceURL": "https://www.oregon.gov/oem/emresources/grants/pages/state-and-local-cybersecurity-grant-program.aspx",
     "Confidence": "High",
@@ -1316,7 +1327,7 @@ const data =[
     "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material.",
     "DrillDownLabel": "Oregon SLCGP state page",
     "DrillDownURL": "https://www.oregon.gov/oem/emresources/grants/pages/state-and-local-cybersecurity-grant-program.aspx",
-    "ProcurementProcess": "Official state page says the funding opportunity is temporarily closed as of April 1, 2026 and that new applications are anticipated in Summer 2026. Use this page to monitor the next release and application instructions.",
+    "ProcurementProcess": "Official state page says the funding opportunity is temporarily closed as of April 1, 2026, and that new applications are anticipated in Summer 2026. Use this page to monitor the next release and application instructions.",
     "ProcurementType": "State application",
     "FYYear": "Round 3; FY2024/FY2025 dependent",
     "MatchInfo": "FY24 may require 30% (waiver pending on cited guidance); FY25 40%",
@@ -1537,7 +1548,7 @@ const data =[
     "Start": "2026-04-25",
     "End": "2026-06-10",
     "SortDate": "2026-04-25",
-    "Description": "Washington's WaTech page says the current expected timeline for the last SLCGP round is a late April 2026 application release and an early June 2026 tentative application deadline.",
+    "Description": "Washington's WaTech page lists the current expected timeline for the last SLCGP round as a late April 2026 application release and an early June 2026 tentative deadline.",
     "SourceLabel": "Washington WaTech SLCGP page",
     "SourceURL": "https://watech.wa.gov/state-local-cybersecurity-grant-program",
     "Confidence": "High",
@@ -1546,7 +1557,7 @@ const data =[
     "PriorNote": "Official WaTech page noting more than $6.2M has already been allocated from FY22 and FY23 awards and outlining the expected final round timeline.",
     "DrillDownLabel": "Washington WaTech SLCGP page",
     "DrillDownURL": "https://watech.wa.gov/state-local-cybersecurity-grant-program",
-    "ProcurementProcess": "Washington is signaling another state-led solicitation round, with the application expected in late April 2026 and a tentative early June 2026 deadline. Use the WaTech page and preparedness.grants@mil.wa.gov to track release details.",
+    "ProcurementProcess": "Washington is signaling another state-led solicitation round, with the application expected in late April 2026 and a tentative early June 2026 deadline. Use the WaTech page to monitor release details.",
     "ProcurementType": "State application",
     "FYYear": "Expected final round; likely FY2025",
     "MatchInfo": "40% single / 30% multi-entity",
@@ -1583,7 +1594,7 @@ const data =[
     "Start": "2025-11-18",
     "End": "2026-01-30",
     "SortDate": "2025-11-18",
-    "Description": "Wisconsin says the FFY23 cycle-2 round-2 NOFO and grant application were open November 18, 2025 to January 30, 2026.",
+    "Description": "Wisconsin says the second cycle of FFY23 funds was open November 18, 2025 to January 30, 2026; application review and scoring remain in progress, and the page notes the federal shutdown is affecting FEMA response to the state.",
     "SourceLabel": "Wisconsin cybersecurity grants page",
     "SourceURL": "https://det.wi.gov/Pages/Cybersecurity_Grants.aspx",
     "Confidence": "High",
@@ -1592,7 +1603,7 @@ const data =[
     "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material.",
     "DrillDownLabel": "Wisconsin cybersecurity grants page",
     "DrillDownURL": "https://det.wi.gov/Pages/Cybersecurity_Grants.aspx",
-    "ProcurementProcess": "The primary state subrecipient window is closed. Use this official page to monitor the next cycle, RFP/RFA, or grants portal. After award, local procurement typically follows state/local purchasing rules.",
+    "ProcurementProcess": "The current state subrecipient window is closed. Wisconsin says review and scoring are in progress and notes the federal shutdown is affecting FEMA response. Monitor this page for awards or the next cycle.",
     "ProcurementType": "RFP",
     "FYYear": "FFY2023 cycle 2 / round 2",
     "MatchInfo": "FFY23 cost-share waiver approved; FFY24 30%; FFY25 40%",
@@ -1995,7 +2006,7 @@ function render() {
           <span class="region-chip ${regionClass(row.Region)}">${escapeHtml(row.Region)}</span>
         </button>
       </td>
-      <td><span class="status-chip status-${cssKey(row.Status)}">${escapeHtml(row.Status)}</span></td>
+      <td class="status-cell"><span class="status-chip status-${cssKey(row.Status)}">${escapeHtml(row.Status)}</span></td>
       <td>${escapeHtml(fmtDate(row.Start))}</td>
       <td>${escapeHtml(fmtDate(row.End))}</td>
       <td><div><strong>${escapeHtml(row.FYYear || '')}</strong></div><div class="small-note">Match: ${escapeHtml(row.MatchInfo || '')}</div><div class="small-note">Min/Max: ${escapeHtml(row.MinMaxInfo || '')}</div></td>
@@ -2084,6 +2095,59 @@ document.getElementById('resetBtn').addEventListener('click', () => {
   sortState = { key: 'SortDate', dir: 'asc', type: 'date' };
   render();
 });
+
+document.getElementById('executiveSummaryBtn').addEventListener('click', () => { window.location.href = 'SLCGP_Executive_Summary_Changes_Jan-Apr_2026_Compact_2026-04-22.html'; });
+
+(function enableColumnResize(){
+  const table = document.getElementById('dataTable');
+  const colgroup = document.getElementById('colgroup');
+  if (!table || !colgroup) return;
+  const cols = Array.from(colgroup.querySelectorAll('col'));
+  const ths = Array.from(table.querySelectorAll('thead th'));
+  if (!cols.length || !ths.length) return;
+
+  try {
+    const saved = JSON.parse(localStorage.getItem('slcgp-col-widths') || 'null');
+    if (Array.isArray(saved)) saved.forEach((w, i) => { if (cols[i] && w) cols[i].style.width = w; });
+  } catch(e) {}
+
+  ths.forEach((th, index) => {
+    const handle = th.querySelector('.resize-handle');
+    const col = cols[index];
+    if (!handle || !col) return;
+    let startX = 0;
+    let startWidth = 0;
+
+    const move = (e) => {
+      const x = e.touches ? e.touches[0].clientX : e.clientX;
+      const next = Math.max(70, startWidth + (x - startX));
+      col.style.width = `${next}px`;
+      th.style.width = `${next}px`;
+    };
+    const up = () => {
+      th.classList.remove('resizing');
+      window.removeEventListener('mousemove', move);
+      window.removeEventListener('mouseup', up);
+      window.removeEventListener('touchmove', move);
+      window.removeEventListener('touchend', up);
+      try {
+        localStorage.setItem('slcgp-col-widths', JSON.stringify(cols.map(c => c.style.width || '')));
+      } catch(e) {}
+    };
+    const down = (e) => {
+      e.preventDefault();
+      startX = e.touches ? e.touches[0].clientX : e.clientX;
+      startWidth = th.getBoundingClientRect().width;
+      th.classList.add('resizing');
+      window.addEventListener('mousemove', move);
+      window.addEventListener('mouseup', up);
+      window.addEventListener('touchmove', move, {passive:false});
+      window.addEventListener('touchend', up);
+    };
+    handle.addEventListener('mousedown', down);
+    handle.addEventListener('touchstart', down, {passive:false});
+  });
+})();
 
 document.getElementById('pdfBtn').addEventListener('click', () => window.print());
 printProspectBtn.addEventListener('click', printProspectDrawer);
