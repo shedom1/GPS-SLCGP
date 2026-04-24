@@ -324,6 +324,43 @@
   .changes ul { margin: 0; padding-left: 18px; color: var(--ink); }
   .changes li { margin: 0 0 6px; font-size: 12px; line-height: 1.4; }
   .changes .small { margin-top: 6px; font-size: 11px; color: var(--muted); }
+
+  .table-status-row td { padding: 18px 12px; }
+  .table-status-cell {
+    text-align: center;
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.45;
+    background: linear-gradient(180deg, #fbfdff 0%, #f5f9ff 100%);
+  }
+  .loading-inline {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+    color: var(--ink);
+  }
+  .loading-inline::before {
+    content: "";
+    width: 12px;
+    height: 12px;
+    border-radius: 999px;
+    border: 2px solid #c9d8ec;
+    border-top-color: var(--blue);
+    animation: slcgp-spin .8s linear infinite;
+    flex: 0 0 12px;
+  }
+  .table-status-sub {
+    display: block;
+    margin-top: 4px;
+    font-size: 11px;
+    color: var(--muted);
+    font-weight: 500;
+  }
+  @keyframes slcgp-spin {
+    to { transform: rotate(360deg); }
+  }
+
 </style>
 </head>
 <body>
@@ -410,7 +447,7 @@
 <th class="sortable" data-key="Confidence" data-type="confidence"><div class="th-inner"><span class="th-label"><span class="help-tip" title="How strong the public evidence is for the row based on the reviewed source. High means the state posted a clear current status or dates; Medium or Low means the public evidence is weaker or less direct.">Confidence</span></span><span class="sort-indicator"></span><span aria-hidden="true" class="resize-handle"></span></div></th>
 </tr>
 </thead>
-<tbody id="tbody"></tbody>
+<tbody id="tbody"><tr class="table-status-row"><td class="table-status-cell" colspan="14"><span class="loading-inline">Loading state data…</span><span class="table-status-sub">Please wait while the tracker renders.</span></td></tr></tbody>
 </table>
 </div>
 <div class="footer">Notes: “End / Next” shows the posted close date when available. For rolling or undated windows, it may show the next listed deadline or remain blank. “FY / Match / Min-Max” shows the funding year or round tied to the row where it was explicit, the best reviewed match requirement, and any published min/max signal if found. Links open the best official public source found in a new tab. Advisory committee and meetings/webinars links route to the official program page when no separate public page was posted.</div>
@@ -439,7 +476,52 @@
       <div class="prospect-mini"><div class="kicker">Window</div><div class="value" id="prospectWindow"></div></div>
       <div class="prospect-mini"><div class="kicker">Funding & match</div><div class="value" id="prospectFunding"></div></div>
     </div>
-    <section [
+    <section class="prospect-section">
+      <h3>SLCGP program overview</h3>
+      <p class="program-lead" id="prospectProgramOverview"></p>
+      <ul class="program-points" id="prospectProgramPoints"></ul>
+    </section>
+    <section class="prospect-section">
+      <h3>Timeline and application window</h3>
+      <ul class="timeline-list" id="prospectTimeline"></ul>
+    </section>
+    <section class="prospect-section">
+      <h3>Last open window</h3>
+      <div class="window-detail" id="prospectLastWindow"></div>
+    </section>
+    <section class="prospect-section">
+      <h3>Expected next open window</h3>
+      <div class="window-detail" id="prospectNextWindow"></div>
+    </section>
+    <section class="prospect-section">
+      <h3>How to access funding</h3>
+      <ol class="access-list" id="prospectAccess"></ol>
+    </section>
+    <section class="prospect-section">
+      <h3>Why this state matters now</h3>
+      <p id="prospectWhy"></p>
+    </section>
+    <section class="prospect-section">
+      <h3>Who to target first</h3>
+      <ul id="prospectTargets"></ul>
+    </section>
+    <section class="prospect-section">
+      <h3>Immediate next steps</h3>
+      <ol id="prospectSteps"></ol>
+    </section>
+    <section class="prospect-section">
+      <h3>Procurement path</h3>
+      <p id="prospectPath"></p>
+      <div class="prospect-muted" id="prospectPriorNote"></div>
+    </section>
+    <section class="prospect-section">
+      <h3>Best links</h3>
+      <div class="prospect-links" id="prospectLinks"></div>
+    </section>
+  </div>
+</aside>
+<script>
+const data =[
   {
     "State": "Alabama",
     "Region": "Southeast",
@@ -2162,6 +2244,14 @@ function updateSortIndicators() {
   });
 }
 
+
+function setTableStatus(message, subtext = '', kind = 'loading') {
+  const label = kind === 'loading'
+    ? `<span class="loading-inline">${escapeHtml(message)}</span>`
+    : `<span class="loading-inline" style="font-weight:800;"><span style="display:none;"></span>${escapeHtml(message)}</span>`;
+  tbody.innerHTML = `<tr class="table-status-row"><td class="table-status-cell" colspan="14">${label}${subtext ? `<span class="table-status-sub">${escapeHtml(subtext)}</span>` : ''}</td></tr>`;
+}
+
 function render() {
   const q = normalize(searchEl.value);
   const regionVal = regionFilter.value;
@@ -2179,6 +2269,18 @@ function render() {
   });
 
   filtered.sort(compareRows);
+
+  if (!filtered.length) {
+    setTableStatus('No states match the current filters.', 'Try resetting filters or broadening your search.', 'empty');
+    document.getElementById('visibleCount').textContent = '0';
+    document.getElementById('openCount').textContent = '0';
+    document.getElementById('closedCount').textContent = '0';
+    document.getElementById('forecastCount').textContent = '0';
+    document.getElementById('highCount').textContent = '0';
+    document.getElementById('priorCount').textContent = '0';
+    updateSortIndicators();
+    return;
+  }
 
   tbody.innerHTML = filtered.map(row => `
     <tr class="row-${cssKey(row.Status)}">
@@ -2354,7 +2456,8 @@ document.addEventListener('keydown', event => {
 
 setupSorting();
 setupResizableColumns();
-render();
+setTableStatus('Loading state data…', 'Please wait while the tracker renders.', 'loading');
+requestAnimationFrame(() => render());
 </script>
 </body>
 </html>
