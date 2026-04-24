@@ -67,18 +67,20 @@
   .table-card { border-radius: var(--radius); overflow: hidden; }
   .table-wrap { width: 100%; overflow-x: auto; }
   table { width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 11px; }
-  colgroup col:nth-child(1) { width: 8%; }
+  colgroup col:nth-child(1) { width: 7%; }
   colgroup col:nth-child(2) { width: 5%; min-width: 74px; }
-  colgroup col:nth-child(3) { width: 5%; }
-  colgroup col:nth-child(4) { width: 6%; }
-  colgroup col:nth-child(5) { width: 12%; }
-  colgroup col:nth-child(6) { width: 8%; }
-  colgroup col:nth-child(7) { width: 14%; }
-  colgroup col:nth-child(8) { width: 8%; }
-  colgroup col:nth-child(9) { width: 9%; }
-  colgroup col:nth-child(10) { width: 11%; }
-  colgroup col:nth-child(11) { width: 9%; }
-  colgroup col:nth-child(12) { width: 4%; }
+  colgroup col:nth-child(3) { width: 4%; }
+  colgroup col:nth-child(4) { width: 5%; }
+  colgroup col:nth-child(5) { width: 10%; }
+  colgroup col:nth-child(6) { width: 7%; }
+  colgroup col:nth-child(7) { width: 12%; }
+  colgroup col:nth-child(8) { width: 7%; }
+  colgroup col:nth-child(9) { width: 7%; }
+  colgroup col:nth-child(10) { width: 7%; }
+  colgroup col:nth-child(11) { width: 10%; }
+  colgroup col:nth-child(12) { width: 8%; }
+  colgroup col:nth-child(13) { width: 5%; }
+  colgroup col:nth-child(14) { width: 4%; }
   thead th { position: sticky; top: 0; background: #eff5fd; z-index: 2; text-align: left; padding: 8px 8px; border-bottom: 1px solid var(--line); color: #26405f; font-size: 10px; text-transform: uppercase; letter-spacing: .05em; vertical-align: bottom; }
   tbody td { padding: 8px 8px; border-bottom: 1px solid #e9eef5; vertical-align: top; line-height: 1.35; overflow-wrap: anywhere; word-break: break-word; }
   td.status-cell { white-space: nowrap; }
@@ -331,7 +333,7 @@
 <h1>SLCGP 2026 State Windows, Procurement, Prior Awards, and FY/Match Tracker</h1>
 <div class="sub">Tracks state-level SLCGP subrecipient windows, likely procurement route, best drill-down source, prior-awards/applicant-data link, and a new FY / match / min-max summary column. Procurement type classifies the front-door access model by state, such as RFP, RFA, rolling application, first-come portal, or state page/TBD.</div>
 <div class="meta">
-<div><b>Last Refresh Date:</b> April 22, 2026</div>
+<div><b>Last Refresh Date:</b> April 24, 2026</div>
 <div><b>Created by:</b> GPS Team</div>
 <div><b>States:</b> 50</div>
 <div><b>Default Sort:</b> Window date ascending</div>
@@ -376,21 +378,19 @@
 <button class="btn" id="executiveSummaryBtn">Executive Summary</button>
 <button class="btn primary" id="pdfBtn">Export to PDF</button>
 </div>
-<div class="note btn-print-note">Tip: the PDF button prints the currently filtered and sorted view. Click any header to sort. Drag the right edge of a header to resize a column.</div>
+<div class="note btn-print-note">Tip: the PDF button prints the currently filtered and sorted view. Click any header to sort. Drag the right edge of a header to resize a column. New advisory committee and meetings/webinars columns are included in the export.</div>
 <div class="note">Method: official state program pages first; refreshed against current public state pages as of April 22, 2026. Official award notices, guidance packets, prior-round materials, and program pages used when a clean statewide awards list was not published. Forecasted/TBD means no clearly dated 2026 local window was found on the reviewed public source. The FY / match / min-max column uses the reviewed state page where it was explicit; otherwise it falls back to the federal year-based cost-share rules or marks the item as not publicly stated.</div>
-</section><section class="changes"><h2>April 22 refresh highlights</h2><ul>
-<li><b>Missouri</b>: open <b>April 13–May 20, 2026</b> in WebGrants.</li>
-<li><b>South Carolina</b>: open; 2024 SLCGP applications are due <b>May 15, 2026</b>.</li>
-<li><b>Wyoming</b>: open; ZoomGrants applications are due <b>May 15, 2026</b>.</li>
-<li><b>Oregon</b>: state page confirms the program is <b>temporarily closed as of April 1, 2026</b>, with reopening anticipated in summer 2026.</li>
-<li><b>Washington</b>: still a <b>watch state</b>; WaTech lists a <b>late April 2026</b> expected release and <b>early June 2026</b> tentative deadline.</li>
-<li><b>Wisconsin</b> and <b>Kentucky</b>: no active local window confirmed on the reviewed state pages; Wisconsin says review/scoring are in progress and Kentucky still shows closed, with FFY 2025 SLCGP allocations noted as on hold in the KOHS annual report.</li>
-</ul></section>
+</section><section class="changes"><h2>What&#39;s changed in this refresh</h2><ul>
+<li><b>Washington</b>: removed the previously carried soft 2026 timing estimates. The current official WaTech SLCGP page does <b>not</b> post a clearly dated 2026 local application window, so the row now points users to the live state page, update subscription, and prior webinar instead of carrying unsupported dates.</li>
+<li><b>All 50 states</b>: added two new operational links per row — <b>Advisory Committee</b> and <b>Meetings / Webinars</b>. Where a separate public committee or meeting page was not clearly posted, the tracker routes to the best official SLCGP or state program page for monitoring.</li>
+<li><b>New Mexico</b>: added the public <b>Cybersecurity Planning Committee</b> page, which includes committee materials and public meeting notices/agendas.</li>
+<li><b>Missouri, South Carolina, Wyoming, and Washington</b>: added better public-facing meeting, workshop, charter, or monitoring links so reps and leadership can move from the tracker into the operational source faster.</li>
+</ul><div class="small">This update keeps the tracker format intact and tightens only the data layer and operational links.</div></section>
 <section class="table-card">
 <div class="table-wrap">
 <table id="dataTable">
 <colgroup id="colgroup">
-<col/><col/><col/><col/><col/><col/><col/><col/><col/><col/><col/><col/>
+<col/><col/><col/><col/><col/><col/><col/><col/><col/><col/><col/><col/><col/><col/>
 </colgroup>
 <thead>
 <tr>
@@ -403,6 +403,8 @@
 <th class="sortable" data-key="Description" data-type="text"><div class="th-inner"><span class="th-label"><span class="help-tip" title="Plain-English summary of the most important current state-specific program or application update.">Description</span></span><span class="sort-indicator"></span><span aria-hidden="true" class="resize-handle"></span></div></th>
 <th class="sortable" data-key="SourceLabel" data-type="text"><div class="th-inner"><span class="th-label"><span class="help-tip" title="The best official source used to support the current 2026 status shown in the row.">2026 source</span></span><span class="sort-indicator"></span><span aria-hidden="true" class="resize-handle"></span></div></th>
 <th class="sortable" data-key="DrillDownLabel" data-type="text"><div class="th-inner"><span class="th-label"><span class="help-tip" title="Best next official link for a rep to click to understand how the state process works and where to engage next, such as the application page, NOFO, grants portal, or detailed program page.">Best drill-down</span></span><span class="sort-indicator"></span><span aria-hidden="true" class="resize-handle"></span></div></th>
+<th class="sortable" data-key="CommitteeLabel" data-type="text"><div class="th-inner"><span class="th-label"><span class="help-tip" title="Best public committee or charter link located for the state’s cybersecurity planning, advisory, or governing body tied to SLCGP or the broader homeland security cyber governance structure.">Advisory committee</span></span><span class="sort-indicator"></span><span aria-hidden="true" class="resize-handle"></span></div></th>
+<th class="sortable" data-key="MeetingsLabel" data-type="text"><div class="th-inner"><span class="th-label"><span class="help-tip" title="Best public meeting, webinar, workshop, agenda, notices page, or monitoring page located for SLCGP-related updates. If no separate page was posted, this points to the official program page.">Meetings / webinars</span></span><span class="sort-indicator"></span><span aria-hidden="true" class="resize-handle"></span></div></th>
 <th class="sortable" data-key="ProcurementProcess" data-type="text"><div class="th-inner"><span class="th-label"><span class="help-tip" title="Short explanation of how a rep or applicant gets into the process, including whether the state uses an application, RFP/RFA, portal, rolling cycle, or later downstream procurement.">Procurement process</span></span><span class="sort-indicator"></span><span aria-hidden="true" class="resize-handle"></span></div></th>
 <th class="sortable" data-key="PriorLabel" data-type="text"><div class="th-inner"><span class="th-label"><span class="help-tip" title="Best official link found for prior awards, prior applicants, project summaries, prior-round materials, or related state evidence of earlier SLCGP activity.">Prior awards / applicant data</span></span><span class="sort-indicator"></span><span aria-hidden="true" class="resize-handle"></span></div></th>
 <th class="sortable" data-key="Confidence" data-type="confidence"><div class="th-inner"><span class="th-label"><span class="help-tip" title="How strong the public evidence is for the row based on the reviewed source. High means the state posted a clear current status or dates; Medium or Low means the public evidence is weaker or less direct.">Confidence</span></span><span class="sort-indicator"></span><span aria-hidden="true" class="resize-handle"></span></div></th>
@@ -411,7 +413,7 @@
 <tbody id="tbody"></tbody>
 </table>
 </div>
-<div class="footer">Notes: “End / Next” shows the posted close date when available. For rolling or undated windows, it may show the next listed deadline or remain blank. “FY / Match / Min-Max” shows the funding year or round tied to the row where it was explicit, the best reviewed match requirement, and any published min/max signal if found. Links open official sources in a new tab.</div>
+<div class="footer">Notes: “End / Next” shows the posted close date when available. For rolling or undated windows, it may show the next listed deadline or remain blank. “FY / Match / Min-Max” shows the funding year or round tied to the row where it was explicit, the best reviewed match requirement, and any published min/max signal if found. Links open the best official public source found in a new tab. Advisory committee and meetings/webinars links route to the official program page when no separate public page was posted.</div>
 </section>
 
 </div>
@@ -437,52 +439,7 @@
       <div class="prospect-mini"><div class="kicker">Window</div><div class="value" id="prospectWindow"></div></div>
       <div class="prospect-mini"><div class="kicker">Funding & match</div><div class="value" id="prospectFunding"></div></div>
     </div>
-    <section class="prospect-section">
-      <h3>SLCGP program overview</h3>
-      <p class="program-lead" id="prospectProgramOverview"></p>
-      <ul class="program-points" id="prospectProgramPoints"></ul>
-    </section>
-    <section class="prospect-section">
-      <h3>Timeline and application window</h3>
-      <ul class="timeline-list" id="prospectTimeline"></ul>
-    </section>
-    <section class="prospect-section">
-      <h3>Last open window</h3>
-      <div class="window-detail" id="prospectLastWindow"></div>
-    </section>
-    <section class="prospect-section">
-      <h3>Expected next open window</h3>
-      <div class="window-detail" id="prospectNextWindow"></div>
-    </section>
-    <section class="prospect-section">
-      <h3>How to access funding</h3>
-      <ol class="access-list" id="prospectAccess"></ol>
-    </section>
-    <section class="prospect-section">
-      <h3>Why this state matters now</h3>
-      <p id="prospectWhy"></p>
-    </section>
-    <section class="prospect-section">
-      <h3>Who to target first</h3>
-      <ul id="prospectTargets"></ul>
-    </section>
-    <section class="prospect-section">
-      <h3>Immediate next steps</h3>
-      <ol id="prospectSteps"></ol>
-    </section>
-    <section class="prospect-section">
-      <h3>Procurement path</h3>
-      <p id="prospectPath"></p>
-      <div class="prospect-muted" id="prospectPriorNote"></div>
-    </section>
-    <section class="prospect-section">
-      <h3>Best links</h3>
-      <div class="prospect-links" id="prospectLinks"></div>
-    </section>
-  </div>
-</aside>
-<script>
-const data =[
+    <section [
   {
     "State": "Alabama",
     "Region": "Southeast",
@@ -504,7 +461,11 @@ const data =[
     "FYYear": "Rounds 1-4 spanning FY2022-FY2025",
     "MatchInfo": "No direct cost to applicant on reviewed state page",
     "MinMaxInfo": "Statewide rounds: $3.07M / $6.27M / $4.73M / $1.55M",
-    "FYSummary": "Rounds 1-4 spanning FY2022-FY2025 | Match: No direct cost to applicant on reviewed state page | Min/Max: Statewide rounds: $3.07M / $6.27M / $4.73M / $1.55M"
+    "FYSummary": "Rounds 1-4 spanning FY2022-FY2025 | Match: No direct cost to applicant on reviewed state page | Min/Max: Statewide rounds: $3.07M / $6.27M / $4.73M / $1.55M",
+    "CommitteeLabel": "Planning Committee",
+    "CommitteeURL": "https://slcgp.alabama.gov/about/planning-committee-members-2/",
+    "MeetingsLabel": "Program page / updates",
+    "MeetingsURL": "https://slcgp.alabama.gov/apply/"
   },
   {
     "State": "Alaska",
@@ -527,7 +488,11 @@ const data =[
     "FYYear": "TBD on reviewed source",
     "MatchInfo": "TBD on reviewed source",
     "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
+    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source",
+    "CommitteeLabel": "Committee / program page",
+    "CommitteeURL": "https://ready.alaska.gov/Grants/CGP",
+    "MeetingsLabel": "Monitor official page",
+    "MeetingsURL": "https://ready.alaska.gov/Grants/CGP"
   },
   {
     "State": "Arizona",
@@ -550,7 +515,11 @@ const data =[
     "FYYear": "TBD on reviewed source",
     "MatchInfo": "TBD on reviewed source",
     "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
+    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source",
+    "CommitteeLabel": "Committee / program page",
+    "CommitteeURL": "https://azdohs.gov/grants",
+    "MeetingsLabel": "Monitor official page",
+    "MeetingsURL": "https://azdohs.gov/grants"
   },
   {
     "State": "Arkansas",
@@ -573,7 +542,11 @@ const data =[
     "FYYear": "TBD on reviewed source",
     "MatchInfo": "TBD on reviewed source",
     "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
+    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source",
+    "CommitteeLabel": "Committee / program page",
+    "CommitteeURL": "https://dps.arkansas.gov/emergency-management/adem/grants-funding/homeland-security-grant-program/",
+    "MeetingsLabel": "Monitor official page",
+    "MeetingsURL": "https://dps.arkansas.gov/emergency-management/adem/grants-funding/homeland-security-grant-program/"
   },
   {
     "State": "California",
@@ -596,7 +569,11 @@ const data =[
     "FYYear": "FY2024",
     "MatchInfo": "State supplement says FY2024 subrecipient match waived in full",
     "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "FY2024 | Match: State supplement says FY2024 subrecipient match waived in full | Min/Max: Not publicly stated on reviewed source"
+    "FYSummary": "FY2024 | Match: State supplement says FY2024 subrecipient match waived in full | Min/Max: Not publicly stated on reviewed source",
+    "CommitteeLabel": "Committee / program page",
+    "CommitteeURL": "https://www.caloes.ca.gov/grant-announcement/ffy-2024-state-local-cybersecurity-grant-local-tribal-sl-rfp/",
+    "MeetingsLabel": "Monitor official page",
+    "MeetingsURL": "https://www.caloes.ca.gov/grant-announcement/ffy-2024-state-local-cybersecurity-grant-local-tribal-sl-rfp/"
   },
   {
     "State": "Colorado",
@@ -619,7 +596,11 @@ const data =[
     "FYYear": "TBD on reviewed source",
     "MatchInfo": "TBD on reviewed source",
     "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
+    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source",
+    "CommitteeLabel": "Committee / program page",
+    "CommitteeURL": "https://www.fema.gov/grants/preparedness/about/state-administrative-agency-contacts",
+    "MeetingsLabel": "Monitor official page",
+    "MeetingsURL": "https://www.fema.gov/grants/preparedness/about/state-administrative-agency-contacts"
   },
   {
     "State": "Connecticut",
@@ -642,7 +623,11 @@ const data =[
     "FYYear": "TBD on reviewed source",
     "MatchInfo": "TBD on reviewed source",
     "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
+    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source",
+    "CommitteeLabel": "Committee / program page",
+    "CommitteeURL": "https://portal.ct.gov/demhs/grants/state-and-local-cybersecurity-grant-program",
+    "MeetingsLabel": "Monitor official page",
+    "MeetingsURL": "https://portal.ct.gov/demhs/grants/state-and-local-cybersecurity-grant-program"
   },
   {
     "State": "Delaware",
@@ -665,7 +650,11 @@ const data =[
     "FYYear": "TBD on reviewed source",
     "MatchInfo": "TBD on reviewed source",
     "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
+    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source",
+    "CommitteeLabel": "Committee / program page",
+    "CommitteeURL": "https://digiknow.dti.delaware.gov/grants/",
+    "MeetingsLabel": "Monitor official page",
+    "MeetingsURL": "https://digiknow.dti.delaware.gov/grants/"
   },
   {
     "State": "Florida",
@@ -688,7 +677,11 @@ const data =[
     "FYYear": "FY2025-26 state cycle / FY2023 federal funds",
     "MatchInfo": "20% on reviewed source",
     "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "FY2025-26 state cycle using FY2023 federal funds | Match: 20% on reviewed source | Min/Max: Not publicly stated on reviewed source"
+    "FYSummary": "FY2025-26 state cycle using FY2023 federal funds | Match: 20% on reviewed source | Min/Max: Not publicly stated on reviewed source",
+    "CommitteeLabel": "Committee / program page",
+    "CommitteeURL": "https://www.floridadisaster.org/dem/finance/grants-unit/state-and-local-cybersecurity-grant-program/",
+    "MeetingsLabel": "Monitor official page",
+    "MeetingsURL": "https://www.floridadisaster.org/dem/finance/grants-unit/state-and-local-cybersecurity-grant-program/"
   },
   {
     "State": "Georgia",
@@ -711,7 +704,11 @@ const data =[
     "FYYear": "FY2024",
     "MatchInfo": "30% single / 20% multi-entity",
     "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "FY2024 | Match: 30% single / 20% multi-entity | Min/Max: Not publicly stated on reviewed source"
+    "FYSummary": "FY2024 | Match: 30% single / 20% multi-entity | Min/Max: Not publicly stated on reviewed source",
+    "CommitteeLabel": "Committee / program page",
+    "CommitteeURL": "https://gema.georgia.gov/state-and-local-cybersecurity-grant-program",
+    "MeetingsLabel": "Monitor official page",
+    "MeetingsURL": "https://gema.georgia.gov/state-and-local-cybersecurity-grant-program"
   },
   {
     "State": "Hawaii",
@@ -734,30 +731,38 @@ const data =[
     "FYYear": "TBD on reviewed source",
     "MatchInfo": "TBD on reviewed source",
     "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
+    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source",
+    "CommitteeLabel": "Committee / program page",
+    "CommitteeURL": "https://law.hawaii.gov/ohs/grants/",
+    "MeetingsLabel": "Monitor official page",
+    "MeetingsURL": "https://law.hawaii.gov/ohs/grants/"
   },
   {
     "State": "Idaho",
     "Region": "West",
-    "Status": "Forecasted/TBD",
+    "Status": "Open",
     "Start": "",
     "End": "",
-    "SortDate": "2099-12-31",
-    "Description": "Idaho's Operation Cyber Idaho page confirms SLCGP-backed work continues through 2025-2026, but no dated 2026 local/subrecipient application window was publicly posted on the reviewed pages.",
+    "SortDate": "2026-04-21",
+    "Description": "Idaho's Operation Cyber Idaho page now includes an active 'Ready to Apply' path for cities, counties, school districts, tribes, and community partners to register for SLCGP-funded services, while program work is described as continuing through federal fiscal year 2025-2026.",
     "SourceLabel": "Operation Cyber Idaho",
     "SourceURL": "https://cybersecurity.idaho.gov/operation-cyber-idaho/",
-    "Confidence": "Medium",
+    "Confidence": "High",
     "PriorLabel": "Idaho SLCGP cybersecurity plan",
     "PriorURL": "https://ioem.idaho.gov/wp-content/uploads/2023/10/Idaho-Cybersecurity-Plan.pdf",
-    "PriorNote": "Official Idaho SLCGP implementation plan covering statewide priorities and future project execution.",
-    "DrillDownLabel": "Operation Cyber Idaho",
+    "PriorNote": "Official Idaho SLCGP implementation plan covering statewide priorities and project execution.",
+    "DrillDownLabel": "Operation Cyber Idaho participation page",
     "DrillDownURL": "https://cybersecurity.idaho.gov/operation-cyber-idaho/",
-    "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
-    "ProcurementType": "State page / TBD",
-    "FYYear": "TBD on reviewed source",
-    "MatchInfo": "TBD on reviewed source",
+    "ProcurementProcess": "Open participation-request model. Eligible local and tribal entities register through the Operation Cyber Idaho page to receive SLCGP-funded services and follow-on program instructions. Services are delivered through the state program rather than as a traditional local cash subaward.",
+    "ProcurementType": "Participation request forms",
+    "FYYear": "Program delivery for FFY 2025-2026 / services aligned to state execution",
+    "MatchInfo": "No direct cost to participant stated on reviewed source",
     "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
+    "FYSummary": "Program delivery for FFY 2025-2026 | Match: No direct cost to participant stated on reviewed source | Min/Max: Not publicly stated on reviewed source",
+    "CommitteeLabel": "Cybersecurity Grant Planning Committee / program page",
+    "CommitteeURL": "https://cybersecurity.idaho.gov/operation-cyber-idaho/",
+    "MeetingsLabel": "Monitor official page",
+    "MeetingsURL": "https://cybersecurity.idaho.gov/operation-cyber-idaho/"
   },
   {
     "State": "Illinois",
@@ -780,7 +785,11 @@ const data =[
     "FYYear": "TBD on reviewed source",
     "MatchInfo": "TBD on reviewed source",
     "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
+    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source",
+    "CommitteeLabel": "Committee / program page",
+    "CommitteeURL": "https://doit.illinois.gov/initiatives/cybersecurity/slcgp.html",
+    "MeetingsLabel": "Monitor official page",
+    "MeetingsURL": "https://doit.illinois.gov/initiatives/cybersecurity/slcgp.html"
   },
   {
     "State": "Indiana",
@@ -803,7 +812,11 @@ const data =[
     "FYYear": "TBD on reviewed source",
     "MatchInfo": "TBD on reviewed source",
     "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
+    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source",
+    "CommitteeLabel": "Committee / program page",
+    "CommitteeURL": "https://www.in.gov/iot/slcgp-committee/",
+    "MeetingsLabel": "Monitor official page",
+    "MeetingsURL": "https://www.in.gov/iot/slcgp-committee/"
   },
   {
     "State": "Iowa",
@@ -826,7 +839,11 @@ const data =[
     "FYYear": "TBD on reviewed source",
     "MatchInfo": "TBD on reviewed source",
     "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
+    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source",
+    "CommitteeLabel": "Committee / program page",
+    "CommitteeURL": "https://homelandsecurity.iowa.gov/grants/state-and-local-cybersecurity-grant-program-slcgp",
+    "MeetingsLabel": "Monitor official page",
+    "MeetingsURL": "https://homelandsecurity.iowa.gov/grants/state-and-local-cybersecurity-grant-program-slcgp"
   },
   {
     "State": "Kansas",
@@ -835,7 +852,7 @@ const data =[
     "Start": "2026-01-01",
     "End": "2026-02-28",
     "SortDate": "2026-01-01",
-    "Description": "Kansas's official SLCGP page now clearly lists a 2026 grant submission window opening January 1, 2026 and closing February 28, 2026.",
+    "Description": "Kansas's official SLCGP page lists a January 1, 2026 to February 28, 2026 submission window and now says Phase 2 applications are presently being reviewed by the State Cybersecurity Planning Committee before federal review and approval.",
     "SourceLabel": "Kansas SLCGP page",
     "SourceURL": "https://www.ebit.ks.gov/divisions/slcgp",
     "Confidence": "High",
@@ -849,7 +866,11 @@ const data =[
     "FYYear": "TBD on reviewed source",
     "MatchInfo": "TBD on reviewed source",
     "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "FY not labeled on reviewed page | Match: Not publicly stated on reviewed source | Min/Max: Not publicly stated on reviewed source"
+    "FYSummary": "FY not labeled on reviewed page | Match: Not publicly stated on reviewed source | Min/Max: Not publicly stated on reviewed source",
+    "CommitteeLabel": "Committee / program page",
+    "CommitteeURL": "https://www.ebit.ks.gov/divisions/slcgp",
+    "MeetingsLabel": "Program page / important dates",
+    "MeetingsURL": "https://www.ebit.ks.gov/divisions/slcgp"
   },
   {
     "State": "Kentucky",
@@ -872,7 +893,11 @@ const data =[
     "FYYear": "TBD on reviewed source",
     "MatchInfo": "TBD on reviewed source",
     "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "FY not labeled on grants page | Match: 30% on grants page | Min/Max: Not publicly stated; FFY2025 allocation on hold per 2025 KOHS annual report"
+    "FYSummary": "FY not labeled on grants page | Match: 30% on grants page | Min/Max: Not publicly stated; FFY2025 allocation on hold per 2025 KOHS annual report",
+    "CommitteeLabel": "Committee / program page",
+    "CommitteeURL": "https://homelandsecurity.ky.gov/Pages/Grants.aspx",
+    "MeetingsLabel": "Monitor official page",
+    "MeetingsURL": "https://homelandsecurity.ky.gov/Pages/Grants.aspx"
   },
   {
     "State": "Louisiana",
@@ -895,7 +920,11 @@ const data =[
     "FYYear": "FY2023–FY2025",
     "MatchInfo": "Varies by year: FY23 20/10; FY24 30/20; FY25 40/30",
     "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "FY2023–FY2025 | Match: Varies by year: FY23 20/10; FY24 30/20; FY25 40/30 | Min/Max: Not publicly stated on reviewed source"
+    "FYSummary": "FY2023–FY2025 | Match: Varies by year: FY23 20/10; FY24 30/20; FY25 40/30 | Min/Max: Not publicly stated on reviewed source",
+    "CommitteeLabel": "Committee / program page",
+    "CommitteeURL": "https://wwwcfprd.doa.louisiana.gov/boardsandcommissions/MeetingMinutes/348_Regional%20Directors%20Meeting%20minutes-%20February%202026.pdf",
+    "MeetingsLabel": "Monitor official page",
+    "MeetingsURL": "https://wwwcfprd.doa.louisiana.gov/boardsandcommissions/MeetingMinutes/348_Regional%20Directors%20Meeting%20minutes-%20February%202026.pdf"
   },
   {
     "State": "Maine",
@@ -903,22 +932,26 @@ const data =[
     "Status": "Forecasted/TBD",
     "Start": "",
     "End": "",
-    "SortDate": "2099-12-31",
-    "Description": "Maine's SLCGP page/program reference are live, but no dated 2026 local/subrecipient window was publicly posted on the reviewed page as of refresh.",
+    "SortDate": "2026-02-14",
+    "Description": "Maine's SLCGP page now explicitly says Year 1 (FY22) and Year 2 (FY23) participation windows are closed, projects are underway, and a temporary service-provider pause tied to the February 14, 2026 partial federal shutdown affects the KnowBe4 training program; the page directs local entities to contact MEMA for future program years.",
     "SourceLabel": "Maine SLCGP page",
     "SourceURL": "https://www.maine.gov/mema/grants/state-and-local-cybersecurity-grant-program",
-    "Confidence": "Medium",
+    "Confidence": "High",
     "PriorLabel": "Maine SLCGP page",
     "PriorURL": "https://www.maine.gov/mema/grants/state-and-local-cybersecurity-grant-program",
     "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material.",
     "DrillDownLabel": "Maine SLCGP page",
     "DrillDownURL": "https://www.maine.gov/mema/grants/state-and-local-cybersecurity-grant-program",
-    "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
+    "ProcurementProcess": "No dated 2026 local subrecipient window is posted. The page states Year 1 and Year 2 participation windows are closed and directs schools, municipalities, and counties to contact MEMA regarding future program years.",
     "ProcurementType": "State page / TBD",
     "FYYear": "TBD on reviewed source",
     "MatchInfo": "TBD on reviewed source",
     "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
+    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source",
+    "CommitteeLabel": "Committee / program page",
+    "CommitteeURL": "https://www.maine.gov/mema/grants/state-and-local-cybersecurity-grant-program",
+    "MeetingsLabel": "Monitor official page",
+    "MeetingsURL": "https://www.maine.gov/mema/grants/state-and-local-cybersecurity-grant-program"
   },
   {
     "State": "Maryland",
@@ -941,7 +974,11 @@ const data =[
     "FYYear": "FY2023 (second round open)",
     "MatchInfo": "20% single / 10% multi-entity",
     "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "FY2023 (second round open) | Match: 20% single / 10% multi-entity | Min/Max: Not publicly stated on reviewed source"
+    "FYSummary": "FY2023 (second round open) | Match: 20% single / 10% multi-entity | Min/Max: Not publicly stated on reviewed source",
+    "CommitteeLabel": "Committee / program page",
+    "CommitteeURL": "https://mdem.maryland.gov/pages/cyber-preparedness-funding.aspx",
+    "MeetingsLabel": "Monitor official page",
+    "MeetingsURL": "https://mdem.maryland.gov/pages/cyber-preparedness-funding.aspx"
   },
   {
     "State": "Massachusetts",
@@ -964,7 +1001,11 @@ const data =[
     "FYYear": "TBD on reviewed source",
     "MatchInfo": "TBD on reviewed source",
     "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
+    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source",
+    "CommitteeLabel": "Committee / program page",
+    "CommitteeURL": "https://www.mass.gov/info-details/state-and-local-cybersecurity-grant-program",
+    "MeetingsLabel": "Monitor official page",
+    "MeetingsURL": "https://www.mass.gov/info-details/state-and-local-cybersecurity-grant-program"
   },
   {
     "State": "Michigan",
@@ -987,7 +1028,11 @@ const data =[
     "FYYear": "FY2025 (dates TBD); FY2022-2024 awarded/closed",
     "MatchInfo": "FY2025: 40% single / 30% multi-entity",
     "MinMaxInfo": "FY2025 state allocation $2,346,859",
-    "FYSummary": "FY2025 (dates TBD); FY2022-2024 awarded/closed | Match: FY2025: 40% single / 30% multi-entity | Min/Max: FY2025 state allocation $2,346,859"
+    "FYSummary": "FY2025 (dates TBD); FY2022-2024 awarded/closed | Match: FY2025: 40% single / 30% multi-entity | Min/Max: FY2025 state allocation $2,346,859",
+    "CommitteeLabel": "Committee / program page",
+    "CommitteeURL": "https://www.michigan.gov/dtmb/services/cybersecurity/cyber-partners/state-and-local-cybersecurity-grant-program",
+    "MeetingsLabel": "Monitor official page",
+    "MeetingsURL": "https://www.michigan.gov/dtmb/services/cybersecurity/cyber-partners/state-and-local-cybersecurity-grant-program"
   },
   {
     "State": "Minnesota",
@@ -1010,7 +1055,11 @@ const data =[
     "FYYear": "TBD on reviewed source",
     "MatchInfo": "TBD on reviewed source",
     "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
+    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source",
+    "CommitteeLabel": "Committee / program page",
+    "CommitteeURL": "https://mn.gov/mnit/about-mnit/security/whole-of-state-cybersecurity-plan/wos/index.jsp",
+    "MeetingsLabel": "Monitor official page",
+    "MeetingsURL": "https://mn.gov/mnit/about-mnit/security/whole-of-state-cybersecurity-plan/wos/index.jsp"
   },
   {
     "State": "Mississippi",
@@ -1019,7 +1068,7 @@ const data =[
     "Start": "2026-01-15",
     "End": "2026-02-27",
     "SortDate": "2026-01-15",
-    "Description": "Mississippi posted a January 15, 2026 open date and February 27, 2026 close date for the SLCGP application.",
+    "Description": "Mississippi's official SLCGP page shows the 2026 application opened January 15, 2026 and closed February 27, 2026, notes grant-writing sessions held January 28 and February 10, and says Batch 4 participation has not yet been determined.",
     "SourceLabel": "Mississippi SLCGP announcements",
     "SourceURL": "https://www.homelandsecurity.ms.gov/grants/homeland-security-state-and-local-cybersecurity-grant-program-slcgp",
     "Confidence": "High",
@@ -1028,12 +1077,16 @@ const data =[
     "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material.",
     "DrillDownLabel": "Mississippi SLCGP announcements",
     "DrillDownURL": "https://www.homelandsecurity.ms.gov/grants/homeland-security-state-and-local-cybersecurity-grant-program-slcgp",
-    "ProcurementProcess": "The primary state subrecipient window is closed. Use this official page to monitor the next cycle, RFP/RFA, or grants portal. After award, local procurement typically follows state/local purchasing rules.",
-    "ProcurementType": "RFP",
+    "ProcurementProcess": "Competitive state application. Mississippi opened the FY2026 SLCGP application January 15, 2026 and closed it February 27, 2026. The page states Batch 4 participation has not yet been determined.",
+    "ProcurementType": "State application",
     "FYYear": "TBD on reviewed source",
     "MatchInfo": "TBD on reviewed source",
     "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
+    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source",
+    "CommitteeLabel": "Committee / program page",
+    "CommitteeURL": "https://www.homelandsecurity.ms.gov/grants/homeland-security-state-and-local-cybersecurity-grant-program-slcgp",
+    "MeetingsLabel": "Grant writing sessions / program page",
+    "MeetingsURL": "https://www.homelandsecurity.ms.gov/grants/homeland-security-state-and-local-cybersecurity-grant-program-slcgp"
   },
   {
     "State": "Missouri",
@@ -1056,7 +1109,11 @@ const data =[
     "FYYear": "FY2025",
     "MatchInfo": "40% cost share (cash or in-kind)",
     "MinMaxInfo": "Federal share capped at $200,000 per applicant; no minimum stated on reviewed source",
-    "FYSummary": "FY2025 | Match: 40% cost share (cash or in-kind) | Min/Max: Federal share capped at $200,000 per applicant; no minimum stated on reviewed source"
+    "FYSummary": "FY2025 | Match: 40% cost share (cash or in-kind) | Min/Max: Federal share capped at $200,000 per applicant; no minimum stated on reviewed source",
+    "CommitteeLabel": "Planning committee / workshop",
+    "CommitteeURL": "https://dps.mo.gov/dir/programs/dpsgrants/documents/sfy-slcgp-application-workshop.pdf",
+    "MeetingsLabel": "FY2025 application workshop",
+    "MeetingsURL": "https://dps.mo.gov/dir/programs/ohs/grantstraining/documents/fy2025-slcgp-application-workshop.pdf"
   },
   {
     "State": "Montana",
@@ -1079,7 +1136,11 @@ const data =[
     "FYYear": "TBD on reviewed source",
     "MatchInfo": "TBD on reviewed source",
     "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
+    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source",
+    "CommitteeLabel": "Committee / program page",
+    "CommitteeURL": "https://des.mt.gov/Grant-Programs/SLCGPApplicationInfo",
+    "MeetingsLabel": "Monitor official page",
+    "MeetingsURL": "https://des.mt.gov/Grant-Programs/SLCGPApplicationInfo"
   },
   {
     "State": "Nebraska",
@@ -1088,10 +1149,10 @@ const data =[
     "Start": "",
     "End": "",
     "SortDate": "2099-12-31",
-    "Description": "Nebraska's SLCGP landing page now explicitly says the 2024 Subrecipient Application submissions have ended and the form is closed, but no new dated 2026 local window was posted on the reviewed official page.",
+    "Description": "Nebraska's SLCGP site says the 2024 Subrecipient Application submissions have ended and the form is closed, and it continues to post committee materials and meeting listings rather than a new dated 2026 application window.",
     "SourceLabel": "Nebraska SLCGP landing page",
     "SourceURL": "https://slcg.nebraska.gov/",
-    "Confidence": "Medium",
+    "Confidence": "High",
     "PriorLabel": "Nebraska SLCGP landing page",
     "PriorURL": "https://slcg.nebraska.gov/",
     "PriorNote": "Official Nebraska landing page shows the subrecipient application is closed and links to award information and related documents.",
@@ -1102,7 +1163,11 @@ const data =[
     "FYYear": "TBD on reviewed source",
     "MatchInfo": "TBD on reviewed source",
     "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
+    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source",
+    "CommitteeLabel": "Committee members",
+    "CommitteeURL": "https://slcg.nebraska.gov/docs/committee-members.pdf",
+    "MeetingsLabel": "See all meetings",
+    "MeetingsURL": "https://slcg.nebraska.gov/"
   },
   {
     "State": "Nevada",
@@ -1125,7 +1190,11 @@ const data =[
     "FYYear": "TBD on reviewed source",
     "MatchInfo": "TBD on reviewed source",
     "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
+    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source",
+    "CommitteeLabel": "Committee / program page",
+    "CommitteeURL": "https://www.oem.nv.gov/agency-portfolio-sections-programs/grants-portfolio/",
+    "MeetingsLabel": "Monitor official page",
+    "MeetingsURL": "https://www.oem.nv.gov/agency-portfolio-sections-programs/grants-portfolio/"
   },
   {
     "State": "New Hampshire",
@@ -1148,7 +1217,11 @@ const data =[
     "FYYear": "TBD on reviewed source",
     "MatchInfo": "TBD on reviewed source",
     "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
+    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source",
+    "CommitteeLabel": "Committee / program page",
+    "CommitteeURL": "https://www.doit.nh.gov/state-and-local-cybersecurity-grant-program",
+    "MeetingsLabel": "Monitor official page",
+    "MeetingsURL": "https://www.doit.nh.gov/state-and-local-cybersecurity-grant-program"
   },
   {
     "State": "New Jersey",
@@ -1171,7 +1244,11 @@ const data =[
     "FYYear": "TBD on reviewed source",
     "MatchInfo": "TBD on reviewed source",
     "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
+    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source",
+    "CommitteeLabel": "Committee / program page",
+    "CommitteeURL": "https://www.cyber.nj.gov/grants-and-resources/grants/state-and-local-cybersecurity-grant-program-slcgp",
+    "MeetingsLabel": "Monitor official page",
+    "MeetingsURL": "https://www.cyber.nj.gov/grants-and-resources/grants/state-and-local-cybersecurity-grant-program-slcgp"
   },
   {
     "State": "New Mexico",
@@ -1194,7 +1271,11 @@ const data =[
     "FYYear": "State FY2027 services; federal FY not stated",
     "MatchInfo": "TBD on reviewed source",
     "MinMaxInfo": "First-come / funding available basis; no min/max stated",
-    "FYSummary": "State FY2027 services; federal FY not stated | Match: TBD on reviewed source | Min/Max: First-come / funding available basis; no min/max stated"
+    "FYSummary": "State FY2027 services; federal FY not stated | Match: TBD on reviewed source | Min/Max: First-come / funding available basis; no min/max stated",
+    "CommitteeLabel": "Cybersecurity Planning Committee",
+    "CommitteeURL": "https://www.doit.nm.gov/programs/cybersecurity/cybersecurity-planning-committee/",
+    "MeetingsLabel": "Public meeting notices / agendas",
+    "MeetingsURL": "https://www.doit.nm.gov/programs/cybersecurity/cybersecurity-planning-committee/"
   },
   {
     "State": "New York",
@@ -1217,7 +1298,11 @@ const data =[
     "FYYear": "FY2022–FY2023 (combined)",
     "MatchInfo": "FY22 10/0; FY23 20/10",
     "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "FY2022–FY2023 (combined) | Match: FY22 10/0; FY23 20/10 | Min/Max: Not publicly stated on reviewed source"
+    "FYSummary": "FY2022–FY2023 (combined) | Match: FY22 10/0; FY23 20/10 | Min/Max: Not publicly stated on reviewed source",
+    "CommitteeLabel": "Committee / program page",
+    "CommitteeURL": "https://www.dhses.ny.gov/federal-programs",
+    "MeetingsLabel": "Monitor official page",
+    "MeetingsURL": "https://www.dhses.ny.gov/federal-programs"
   },
   {
     "State": "North Carolina",
@@ -1240,7 +1325,11 @@ const data =[
     "FYYear": "FY2025",
     "MatchInfo": "40% single / 30% multi-entity",
     "MinMaxInfo": "No clear statewide min; state page gives 40% example for a $100,000 project",
-    "FYSummary": "FY2025 | Match: 40% single / 30% multi-entity | Min/Max: No clear statewide min; state page gives 40% example for a $100,000 project"
+    "FYSummary": "FY2025 | Match: 40% single / 30% multi-entity | Min/Max: No clear statewide min; state page gives 40% example for a $100,000 project",
+    "CommitteeLabel": "Committee / program page",
+    "CommitteeURL": "https://www.ncdps.gov/SLCGP",
+    "MeetingsLabel": "Monitor official page",
+    "MeetingsURL": "https://www.ncdps.gov/SLCGP"
   },
   {
     "State": "North Dakota",
@@ -1263,7 +1352,11 @@ const data =[
     "FYYear": "TBD on reviewed source",
     "MatchInfo": "TBD on reviewed source",
     "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
+    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source",
+    "CommitteeLabel": "Committee / program page",
+    "CommitteeURL": "https://www.des.nd.gov/news/nddes-issues-notice-intent-noi-apply-fy-2025-state-homeland-security-grant-program",
+    "MeetingsLabel": "Monitor official page",
+    "MeetingsURL": "https://www.des.nd.gov/news/nddes-issues-notice-intent-noi-apply-fy-2025-state-homeland-security-grant-program"
   },
   {
     "State": "Ohio",
@@ -1272,7 +1365,7 @@ const data =[
     "Start": "",
     "End": "2026-03-13",
     "SortDate": "2026-03-13",
-    "Description": "Ohio's Round 3 SLCGP .gov migration application guidance required project applications to be submitted by midnight on March 13, 2026.",
+    "Description": "Ohio's Round 3 .gov migration application guidance required local government applications to be submitted by midnight on March 13, 2026 and capped federal support at $9,500 per project with a 20% cost share.",
     "SourceLabel": "Ohio Round 3 SLCGP guidance",
     "SourceURL": "https://dam.assets.ohio.gov/image/upload/cyber.ohio.gov/Round_3_SLCGP_Grant_Application_Guidance.gov_Migration-Final.pdf",
     "Confidence": "High",
@@ -1284,9 +1377,13 @@ const data =[
     "ProcurementProcess": "The primary state subrecipient window is closed. Use this official page to monitor the next cycle, RFP/RFA, or grants portal. After award, local procurement typically follows state/local purchasing rules.",
     "ProcurementType": "RFP",
     "FYYear": "Round 3; federal FY not stated",
-    "MatchInfo": "TBD on reviewed source",
-    "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "Round 3; federal FY not stated | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
+    "MatchInfo": "20% cost share for Round 3 .gov migration projects",
+    "MinMaxInfo": "Federal support capped at $9,500 per project",
+    "FYSummary": "Round 3; federal FY not stated | Match: 20% cost share for Round 3 .gov migration projects | Min/Max: Federal support capped at $9,500 per project",
+    "CommitteeLabel": "Committee / program page",
+    "CommitteeURL": "https://dam.assets.ohio.gov/image/upload/cyber.ohio.gov/Round_3_SLCGP_Grant_Application_Guidance.gov_Migration-Final.pdf",
+    "MeetingsLabel": "Monitor official page",
+    "MeetingsURL": "https://dam.assets.ohio.gov/image/upload/cyber.ohio.gov/Round_3_SLCGP_Grant_Application_Guidance.gov_Migration-Final.pdf"
   },
   {
     "State": "Oklahoma",
@@ -1309,7 +1406,11 @@ const data =[
     "FYYear": "TBD; page links FY22–FY25 NOFOs",
     "MatchInfo": "Depends on linked NOFO year",
     "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "TBD; page links FY22–FY25 NOFOs | Match: Depends on linked NOFO year | Min/Max: Not publicly stated on reviewed source"
+    "FYSummary": "TBD; page links FY22–FY25 NOFOs | Match: Depends on linked NOFO year | Min/Max: Not publicly stated on reviewed source",
+    "CommitteeLabel": "Committee / program page",
+    "CommitteeURL": "https://oklahoma.gov/homeland-security/grants.html",
+    "MeetingsLabel": "Monitor official page",
+    "MeetingsURL": "https://oklahoma.gov/homeland-security/grants.html"
   },
   {
     "State": "Oregon",
@@ -1332,7 +1433,11 @@ const data =[
     "FYYear": "Round 3; FY2024/FY2025 dependent",
     "MatchInfo": "FY24 may require 30% (waiver pending on cited guidance); FY25 40%",
     "MinMaxInfo": "No statewide min/max stated; up to 2 projects per quarter",
-    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
+    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source",
+    "CommitteeLabel": "Committee / program page",
+    "CommitteeURL": "https://www.oregon.gov/oem/emresources/grants/pages/state-and-local-cybersecurity-grant-program.aspx",
+    "MeetingsLabel": "Monitor official page",
+    "MeetingsURL": "https://www.oregon.gov/oem/emresources/grants/pages/state-and-local-cybersecurity-grant-program.aspx"
   },
   {
     "State": "Pennsylvania",
@@ -1355,7 +1460,11 @@ const data =[
     "FYYear": "TBD on reviewed source",
     "MatchInfo": "TBD on reviewed source",
     "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
+    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source",
+    "CommitteeLabel": "Committee / program page",
+    "CommitteeURL": "https://www.pa.gov/services/pema/cybersecurity-grant",
+    "MeetingsLabel": "Monitor official page",
+    "MeetingsURL": "https://www.pa.gov/services/pema/cybersecurity-grant"
   },
   {
     "State": "Rhode Island",
@@ -1364,21 +1473,25 @@ const data =[
     "Start": "",
     "End": "",
     "SortDate": "2099-12-31",
-    "Description": "Rhode Island's grants hub was reviewed, but no clearly posted dated 2026 local/subrecipient SLCGP window was surfaced on the reviewed official pages as of refresh.",
+    "Description": "Rhode Island's grants page continues to post FY2024 SLCGP rollout materials dated December 17, 2025 and an application link, but the reviewed official page does not clearly state a current 2026 deadline or whether that application remains open.",
     "SourceLabel": "RIEMA non-disaster grants page",
     "SourceURL": "https://riema.ri.gov/fiscal-branch/non-disaster-grants",
-    "Confidence": "Low",
+    "Confidence": "Medium",
     "PriorLabel": "Rhode Island 2030 cybersecurity update",
     "PriorURL": "https://rhodeisland2030.ri.gov/ri-2030-priorities/advancing-infrastructure-and-energy/strengthening-cybersecurity-and-modernizing",
     "PriorNote": "Governor's RI 2030 page says that as of November 2025, more than 121 projects had been submitted by 33 municipalities, totaling over $10 million in cybersecurity improvements.",
     "DrillDownLabel": "RIEMA non-disaster grants page",
     "DrillDownURL": "https://riema.ri.gov/fiscal-branch/non-disaster-grants",
-    "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
+    "ProcurementProcess": "The grants hub posts FY2024 rollout materials and an application link, but no clearly current 2026 deadline or status is posted on the reviewed page. Use the RIEMA grants page to confirm before pursuing.",
     "ProcurementType": "State page / TBD",
     "FYYear": "TBD on reviewed source",
     "MatchInfo": "TBD on reviewed source",
     "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
+    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source",
+    "CommitteeLabel": "Committee / program page",
+    "CommitteeURL": "https://riema.ri.gov/fiscal-branch/non-disaster-grants",
+    "MeetingsLabel": "FY2024 rollout materials",
+    "MeetingsURL": "https://riema.ri.gov/fiscal-branch/non-disaster-grants"
   },
   {
     "State": "South Carolina",
@@ -1401,7 +1514,11 @@ const data =[
     "FYYear": "FY2024",
     "MatchInfo": "30% single / 20% multi-entity",
     "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "FY2024 | Match: 30% single / 20% multi-entity | Min/Max: Not publicly stated on reviewed source"
+    "FYSummary": "FY2024 | Match: 30% single / 20% multi-entity | Min/Max: Not publicly stated on reviewed source",
+    "CommitteeLabel": "HSAC / cyber committee charter",
+    "CommitteeURL": "https://www.sled.sc.gov/sites/sled/files/Charter%20HSAC%20June%202024%20Final%207.18.24%20w%20signatures.pdf",
+    "MeetingsLabel": "Monitor SAA page",
+    "MeetingsURL": "https://www.sled.sc.gov/departments/state-administrative-agency-saa-homeland-security"
   },
   {
     "State": "South Dakota",
@@ -1424,7 +1541,11 @@ const data =[
     "FYYear": "TBD on reviewed source",
     "MatchInfo": "TBD on reviewed source",
     "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
+    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source",
+    "CommitteeLabel": "Committee / program page",
+    "CommitteeURL": "https://www.sd.gov/cs?id=kb_article_view&sysparm_article=KB0043443",
+    "MeetingsLabel": "Monitor official page",
+    "MeetingsURL": "https://www.sd.gov/cs?id=kb_article_view&sysparm_article=KB0043443"
   },
   {
     "State": "Tennessee",
@@ -1447,7 +1568,11 @@ const data =[
     "FYYear": "FY2024 or prior round as posted by the state page",
     "MatchInfo": "Not explicitly stated on reviewed page",
     "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "Posted round closed | Match: Not explicitly stated on reviewed page | Min/Max: Not publicly stated on reviewed source"
+    "FYSummary": "Posted round closed | Match: Not explicitly stated on reviewed page | Min/Max: Not publicly stated on reviewed source",
+    "CommitteeLabel": "Committee / program page",
+    "CommitteeURL": "https://www.tn.gov/cybersecurity/state-and-local-cybersecurity-grant-program.html",
+    "MeetingsLabel": "Monitor official page",
+    "MeetingsURL": "https://www.tn.gov/cybersecurity/state-and-local-cybersecurity-grant-program.html"
   },
   {
     "State": "Texas",
@@ -1470,7 +1595,11 @@ const data =[
     "FYYear": "FY2024 (Year 3 RFA)",
     "MatchInfo": "30% single / 20% multi-entity",
     "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "FY2024 (Year 3 RFA) | Match: 30% single / 20% multi-entity | Min/Max: Not publicly stated on reviewed source"
+    "FYSummary": "FY2024 (Year 3 RFA) | Match: 30% single / 20% multi-entity | Min/Max: Not publicly stated on reviewed source",
+    "CommitteeLabel": "Committee / program page",
+    "CommitteeURL": "https://dir.texas.gov/information-security/state-and-local-cybersecurity-grant-program-slcgp",
+    "MeetingsLabel": "Monitor official page",
+    "MeetingsURL": "https://dir.texas.gov/information-security/state-and-local-cybersecurity-grant-program-slcgp"
   },
   {
     "State": "Utah",
@@ -1493,7 +1622,11 @@ const data =[
     "FYYear": "TBD on reviewed source",
     "MatchInfo": "TBD on reviewed source",
     "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
+    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source",
+    "CommitteeLabel": "Committee / program page",
+    "CommitteeURL": "https://le.utah.gov/interim/2026/pdf/00000702.pdf",
+    "MeetingsLabel": "Monitor official page",
+    "MeetingsURL": "https://le.utah.gov/interim/2026/pdf/00000702.pdf"
   },
   {
     "State": "Vermont",
@@ -1516,7 +1649,11 @@ const data =[
     "FYYear": "TBD on reviewed source",
     "MatchInfo": "TBD on reviewed source",
     "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
+    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source",
+    "CommitteeLabel": "Committee / program page",
+    "CommitteeURL": "https://legislature.vermont.gov/assets/Legislative-Reports/Cybersecurity-Advisory-Council-Annual-Report-2026.pdf",
+    "MeetingsLabel": "Monitor official page",
+    "MeetingsURL": "https://legislature.vermont.gov/assets/Legislative-Reports/Cybersecurity-Advisory-Council-Annual-Report-2026.pdf"
   },
   {
     "State": "Virginia",
@@ -1539,30 +1676,38 @@ const data =[
     "FYYear": "TBD on reviewed source",
     "MatchInfo": "TBD on reviewed source",
     "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
+    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source",
+    "CommitteeLabel": "Committee / program page",
+    "CommitteeURL": "https://www.vita.virginia.gov/security/cybersecurity-grants/",
+    "MeetingsLabel": "Monitor official page",
+    "MeetingsURL": "https://www.vita.virginia.gov/security/cybersecurity-grants/"
   },
   {
     "State": "Washington",
     "Region": "West",
     "Status": "Forecasted/TBD",
-    "Start": "2026-04-25",
-    "End": "2026-06-10",
-    "SortDate": "2026-04-25",
-    "Description": "Washington's WaTech page lists the current expected timeline for the last SLCGP round as a late April 2026 application release and an early June 2026 tentative deadline.",
-    "SourceLabel": "Washington WaTech SLCGP page",
+    "Start": "",
+    "End": "",
+    "SortDate": "2025-11-01",
+    "Description": "Washington's WaTech SLCGP page still carries a November 2025 update saying recommended recipients are being notified, lists the State Planning Committee, and links to a June 17, 2025 application webinar, but it does not post a clearly dated 2026 local application window.",
+    "SourceLabel": "WaTech SLCGP page",
     "SourceURL": "https://watech.wa.gov/state-local-cybersecurity-grant-program",
     "Confidence": "High",
     "PriorLabel": "Washington WaTech SLCGP page",
     "PriorURL": "https://watech.wa.gov/state-local-cybersecurity-grant-program",
     "PriorNote": "Official WaTech page noting more than $6.2M has already been allocated from FY22 and FY23 awards and outlining the expected final round timeline.",
-    "DrillDownLabel": "Washington WaTech SLCGP page",
+    "DrillDownLabel": "WaTech SLCGP page / alerts",
     "DrillDownURL": "https://watech.wa.gov/state-local-cybersecurity-grant-program",
-    "ProcurementProcess": "Washington is signaling another state-led solicitation round, with the application expected in late April 2026 and a tentative early June 2026 deadline. Use the WaTech page to monitor release details.",
+    "ProcurementProcess": "Monitor WaTech and send contact information to the address listed on the state page. The reviewed page does not currently post a clearly dated 2026 local application release; subscribe for updates and watch for the next solicitation notice.",
     "ProcurementType": "State application",
-    "FYYear": "Expected final round; likely FY2025",
-    "MatchInfo": "40% single / 30% multi-entity",
+    "FYYear": "Current local round not publicly dated on reviewed source",
+    "MatchInfo": "Not publicly stated on reviewed source",
     "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "Expected final round; likely FY2025 | Match: 40% single / 30% multi-entity | Min/Max: Not publicly stated on reviewed source"
+    "FYSummary": "Current local round not publicly dated on reviewed source | Match: Not publicly stated on reviewed source | Min/Max: Not publicly stated on reviewed source",
+    "CommitteeLabel": "State Planning Committee / program page",
+    "CommitteeURL": "https://watech.wa.gov/state-local-cybersecurity-grant-program",
+    "MeetingsLabel": "SLCGP application webinar",
+    "MeetingsURL": "https://www.youtube.com/watch?v=XYbe5NJxifw&feature=youtu.be"
   },
   {
     "State": "West Virginia",
@@ -1585,7 +1730,11 @@ const data =[
     "FYYear": "TBD on reviewed source",
     "MatchInfo": "TBD on reviewed source",
     "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source"
+    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source",
+    "CommitteeLabel": "Committee / program page",
+    "CommitteeURL": "https://emd.wv.gov/cybersecurity-grant-funding",
+    "MeetingsLabel": "Monitor official page",
+    "MeetingsURL": "https://emd.wv.gov/cybersecurity-grant-funding"
   },
   {
     "State": "Wisconsin",
@@ -1608,7 +1757,40 @@ const data =[
     "FYYear": "FFY2023 cycle 2 / round 2",
     "MatchInfo": "FFY23 cost-share waiver approved; FFY24 30%; FFY25 40%",
     "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "FFY2023 cycle 2 / round 2 | Match: FFY23 cost-share waiver approved; FFY24 30%; FFY25 40% | Min/Max: Not publicly stated on reviewed source"
+    "FYSummary": "FFY2023 cycle 2 / round 2 | Match: FFY23 cost-share waiver approved; FFY24 30%; FFY25 40% | Min/Max: Not publicly stated on reviewed source",
+    "CommitteeLabel": "Committee / program page",
+    "CommitteeURL": "https://det.wi.gov/Pages/Cybersecurity_Grants.aspx",
+    "MeetingsLabel": "Monitor official page",
+    "MeetingsURL": "https://det.wi.gov/Pages/Cybersecurity_Grants.aspx"
+  },
+  {
+    "State": "Wyoming",
+    "Region": "West",
+    "Status": "Open",
+    "Start": "2026-04-17",
+    "End": "2026-05-15",
+    "SortDate": "2026-04-17",
+    "Description": "Wyoming Homeland Security now says the SLCGP application period is open and that applications must be submitted in ZoomGrants by Friday, May 15, 2026.",
+    "SourceLabel": "Wyoming Homeland Security homepage",
+    "SourceURL": "https://hls.wyo.gov/",
+    "Confidence": "High",
+    "PriorLabel": "Wyoming grants page",
+    "PriorURL": "https://hls.wyo.gov/grants",
+    "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material.",
+    "DrillDownLabel": "Wyoming SLCGP homepage announcement",
+    "DrillDownURL": "https://hls.wyo.gov/",
+    "ProcurementProcess": "Open state proposal/application window. Wyoming says applicants should submit in ZoomGrants by May 15, 2026. If funded, purchases then follow applicable state/local procurement rules and grant conditions.",
+    "ProcurementType": "Proposal application",
+    "FYYear": "FY2025",
+    "MatchInfo": "40% cost share likely applies unless waived or otherwise stated in state materials",
+    "MinMaxInfo": "Not publicly stated on reviewed source",
+    "FYSummary": "FY2025 | Match: 40% cost share likely applies unless waived or otherwise stated in state materials | Min/Max: Not publicly stated on reviewed source",
+    "CommitteeLabel": "Program page / manager contact",
+    "CommitteeURL": "https://hls.wyo.gov/",
+    "MeetingsLabel": "SLCGP information sheet / office hours",
+    "MeetingsURL": "https://docs.google.com/document/d/1g4gk08XBHGh9s7M01z0mrjQ7HOATZ53K/edit?ouid=110282647533682114753&rtpof=true&sd=true&usp=drive_link"
+  }
+]-share waiver approved; FFY24 30%; FFY25 40% | Min/Max: Not publicly stated on reviewed source"
   },
   {
     "State": "Wyoming",
@@ -1988,7 +2170,7 @@ function render() {
   const procVal = procTypeFilter.value;
 
   let filtered = data.filter(row => {
-    const hay = [row.State, row.Region, row.Status, row.FYYear, row.MatchInfo, row.MinMaxInfo, row.ProcurementType, row.Description, row.SourceLabel, row.PriorLabel, row.PriorNote, row.Confidence].join(' ').toLowerCase();
+    const hay = [row.State, row.Region, row.Status, row.FYYear, row.MatchInfo, row.MinMaxInfo, row.ProcurementType, row.Description, row.SourceLabel, row.PriorLabel, row.PriorNote, row.CommitteeLabel, row.MeetingsLabel, row.Confidence].join(' ').toLowerCase();
     return (!q || hay.includes(q))
       && (!regionVal || row.Region === regionVal)
       && (!stateVal || row.State === stateVal)
@@ -2014,6 +2196,8 @@ function render() {
       <td>${escapeHtml(row.Description)}</td>
       <td><a href="${escapeHtml(row.SourceURL)}" target="_blank" rel="noopener noreferrer">${escapeHtml(row.SourceLabel)}</a></td>
       <td><a href="${escapeHtml(row.DrillDownURL)}" target="_blank" rel="noopener noreferrer">${escapeHtml(row.DrillDownLabel)}</a></td>
+      <td><a href="${escapeHtml(row.CommitteeURL)}" target="_blank" rel="noopener noreferrer">${escapeHtml(row.CommitteeLabel)}</a></td>
+      <td><a href="${escapeHtml(row.MeetingsURL)}" target="_blank" rel="noopener noreferrer">${escapeHtml(row.MeetingsLabel)}</a></td>
       <td><div class="proc-note">${escapeHtml(row.ProcurementProcess)}</div></td>
       <td><a href="${escapeHtml(row.PriorURL)}" target="_blank" rel="noopener noreferrer">${escapeHtml(row.PriorLabel)}</a><div class="small-note">${escapeHtml(row.PriorNote)}</div></td>
       <td><span class="conf-chip conf-${cssKey(row.Confidence)}">${escapeHtml(row.Confidence)}</span></td>
@@ -2096,7 +2280,7 @@ document.getElementById('resetBtn').addEventListener('click', () => {
   render();
 });
 
-document.getElementById('executiveSummaryBtn').addEventListener('click', () => { window.location.href = 'SLCGP_Executive_Summary_Changes_Jan-Apr_2026_Compact_2026-04-22.html'; });
+document.getElementById('executiveSummaryBtn').addEventListener('click', () => { window.location.href = 'SLCGP_Executive_Summary_Changes_Jan-Apr_2026_Compact_2026-04-24.html'; });
 
 (function enableColumnResize(){
   const table = document.getElementById('dataTable');
