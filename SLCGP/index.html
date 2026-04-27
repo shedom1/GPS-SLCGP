@@ -370,7 +370,7 @@
 <h1>SLCGP 2026 State Windows, Procurement, Prior Awards, and FY/Match Tracker</h1>
 <div class="sub">Tracks state-level SLCGP subrecipient windows, likely procurement route, best drill-down source, prior-awards/applicant-data link, and a new FY / match / min-max summary column. Procurement type classifies the front-door access model by state, such as RFP, RFA, rolling application, first-come portal, or state page/TBD.</div>
 <div class="meta">
-<div><b>Last Refresh Date:</b> April 24, 2026</div>
+<div><b>Last Refresh Date:</b> April 27, 2026</div>
 <div><b>Created by:</b> GPS Team</div>
 <div><b>States:</b> 50</div>
 <div><b>Default Sort:</b> Window date ascending</div>
@@ -418,11 +418,11 @@
 <div class="note btn-print-note">Tip: the PDF button prints the currently filtered and sorted view. Click any header to sort. Drag the right edge of a header to resize a column. New advisory committee and meetings/webinars columns are included in the export.</div>
 <div class="note">Method: official state program pages first; refreshed against current public state pages as of April 22, 2026. Official award notices, guidance packets, prior-round materials, and program pages used when a clean statewide awards list was not published. Forecasted/TBD means no clearly dated 2026 local window was found on the reviewed public source. The FY / match / min-max column uses the reviewed state page where it was explicit; otherwise it falls back to the federal year-based cost-share rules or marks the item as not publicly stated.</div>
 </section><section class="changes"><h2>What&#39;s changed in this refresh</h2><ul>
-<li><b>Washington</b>: removed the previously carried soft 2026 timing estimates. The current official WaTech SLCGP page does <b>not</b> post a clearly dated 2026 local application window, so the row now points users to the live state page, update subscription, and prior webinar instead of carrying unsupported dates.</li>
-<li><b>All 50 states</b>: added two new operational links per row — <b>Advisory Committee</b> and <b>Meetings / Webinars</b>. Where a separate public committee or meeting page was not clearly posted, the tracker routes to the best official SLCGP or state program page for monitoring.</li>
-<li><b>New Mexico</b>: added the public <b>Cybersecurity Planning Committee</b> page, which includes committee materials and public meeting notices/agendas.</li>
-<li><b>Missouri, South Carolina, Wyoming, and Washington</b>: added better public-facing meeting, workshop, charter, or monitoring links so reps and leadership can move from the tracker into the operational source faster.</li>
-</ul><div class="small">This update keeps the tracker format intact and tightens only the data layer and operational links.</div></section>
+<li><b>All 50 states</b>: completed a new official-source review as of <b>April 27, 2026</b>. Most rows validated without a status flip, so this refresh focuses on deadline validation, cleaner operational detail, and tighter late-April messaging.</li>
+<li><b>Georgia, Missouri, Oklahoma, Maryland, South Carolina, and Wyoming</b>: active application or rolling states were revalidated against their current official program pages so the tracker reflects the live late-April deadline picture.</li>
+<li><b>Michigan and Wisconsin</b>: tightened status language to reflect that prior rounds are awarded or under review while the next state release remains pending or to be determined.</li>
+<li><b>Nebraska, Maine, Oregon, and Washington</b>: refreshed watch-state rows to reflect the latest official state messaging, including closed prior participation windows, temporary pauses, committee activity, and states that still do not post a clearly dated new 2026 local window.</li>
+</ul><div class="small">This April 27 refresh keeps the tracker format intact and updates the data layer based on the most current public state pages and announcements reviewed.</div></section>
 <section class="table-card">
 <div class="table-wrap">
 <table id="dataTable">
@@ -772,7 +772,7 @@ const data =[
     "Start": "2026-04-01",
     "End": "2026-04-29",
     "SortDate": "2026-04-01",
-    "Description": "Georgia's official SLCGP page says applications are accepted online via the Georgia EM Grants Manager beginning April 1, 2026 and are due April 29, 2026; the March 25 release also announced an FY2025 opening on September 1, 2026.",
+    "Description": "Georgia's official SLCGP page continues to show the FY2024 application window open in Georgia EM Grants Manager beginning April 1, 2026, with applications due April 29, 2026; the March 25 release also announced an FY2025 opening on September 1, 2026.",
     "SourceLabel": "Georgia SLCGP program page",
     "SourceURL": "https://gema.georgia.gov/state-and-local-cybersecurity-grant-program",
     "Confidence": "High",
@@ -781,7 +781,7 @@ const data =[
     "PriorNote": "Official March 25, 2026 release announcing nearly $9.9M in awards to Georgia schools and local governments.",
     "DrillDownLabel": "Georgia SLCGP program / EM Grants Manager",
     "DrillDownURL": "https://gema.georgia.gov/state-and-local-cybersecurity-grant-program",
-    "ProcurementProcess": "Online state subrecipient application through Georgia EM Grants Manager during the posted window. Funded entities then procure under applicable procurement rules and grant terms.",
+    "ProcurementProcess": "Online state subrecipient application through Georgia EM Grants Manager during the posted window. As of the April 27 refresh, the state page still shows the April 29, 2026 deadline for FY2024 applications. Funded entities then procure under applicable procurement rules and grant terms.",
     "ProcurementType": "Online application window",
     "FYYear": "FY2024",
     "MatchInfo": "30% single / 20% multi-entity",
@@ -1015,7 +1015,7 @@ const data =[
     "Start": "",
     "End": "",
     "SortDate": "2026-02-14",
-    "Description": "Maine's SLCGP page now explicitly says Year 1 (FY22) and Year 2 (FY23) participation windows are closed, projects are underway, and a temporary service-provider pause tied to the February 14, 2026 partial federal shutdown affects the KnowBe4 training program; the page directs local entities to contact MEMA for future program years.",
+    "Description": "Maine's SLCGP page says Year 1 (FY22) and Year 2 (FY23) participation windows are closed, projects are underway, and a temporary service-provider pause tied to the February 14, 2026 partial federal shutdown affects the KnowBe4 training program; local entities are directed to contact MEMA regarding future program years.",
     "SourceLabel": "Maine SLCGP page",
     "SourceURL": "https://www.maine.gov/mema/grants/state-and-local-cybersecurity-grant-program",
     "Confidence": "High",
@@ -1096,7 +1096,7 @@ const data =[
     "Start": "",
     "End": "",
     "SortDate": "2099-12-31",
-    "Description": "Michigan's DTMB page says FY 2022, FY 2023, and FY 2024 subrecipient awards are closed or already awarded, while the FY 2025 application available date and submission deadline remain to be determined.",
+    "Description": "Michigan's DTMB SLCGP page says FY 2022, FY 2023, and FY 2024 subrecipient awards have been completed, while the FY 2025 application available date and submission deadline remain to be determined. The page also says the Advisory Board will review approved statewide plan and project areas for FY 2025 funds.",
     "SourceLabel": "Michigan SLCGP page",
     "SourceURL": "https://www.michigan.gov/dtmb/services/cybersecurity/cyber-partners/state-and-local-cybersecurity-grant-program",
     "Confidence": "High",
@@ -1105,7 +1105,7 @@ const data =[
     "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material.",
     "DrillDownLabel": "Michigan SLCGP page",
     "DrillDownURL": "https://www.michigan.gov/dtmb/services/cybersecurity/cyber-partners/state-and-local-cybersecurity-grant-program",
-    "ProcurementProcess": "No dated 2026 local subrecipient packet was publicly posted on the reviewed page. Use this official state page to monitor the next release. When opened, most states first run a subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
+    "ProcurementProcess": "No dated 2026 local subrecipient packet is posted. Michigan's current page says FY 2022-2024 awards are completed and FY 2025 application timing remains to be determined; interested entities are encouraged to subscribe for bulletins and monitor the Advisory Board / program page for the next release.",
     "ProcurementType": "State page / TBD",
     "FYYear": "FY2025 (dates TBD); FY2022-2024 awarded/closed",
     "MatchInfo": "FY2025: 40% single / 30% multi-entity",
@@ -1231,7 +1231,7 @@ const data =[
     "Start": "",
     "End": "",
     "SortDate": "2099-12-31",
-    "Description": "Nebraska's SLCGP site says the 2024 Subrecipient Application submissions have ended and the form is closed, and it continues to post committee materials and meeting listings rather than a new dated 2026 application window.",
+    "Description": "Nebraska's SLCGP site says the 2024 Subrecipient Application is closed, continues to post committee members and meeting listings, and does not yet show a new dated 2026 subrecipient application window on the reviewed official page.",
     "SourceLabel": "Nebraska SLCGP landing page",
     "SourceURL": "https://slcg.nebraska.gov/",
     "Confidence": "High",
@@ -1474,7 +1474,7 @@ const data =[
     "Start": "",
     "End": "2026-04-30",
     "SortDate": "2026-04-30",
-    "Description": "Oklahoma's grants page says the State and Local Cybersecurity Grant Program is now accepting new applications, with 2026 deadlines of January 30, April 30, July 31, and October 30.",
+    "Description": "Oklahoma's grants page says the State and Local Cybersecurity Grant Program is accepting new applications with 2026 deadlines of January 30, April 30, July 31, and October 30, while also noting that funding is not currently accessible and additional funding is expected later this year.",
     "SourceLabel": "Oklahoma grants page",
     "SourceURL": "https://oklahoma.gov/homeland-security/grants.html",
     "Confidence": "Medium",
@@ -1483,7 +1483,7 @@ const data =[
     "PriorNote": "Official Oklahoma grants page with current SLCGP application materials, deadlines, and procurement guidance links.",
     "DrillDownLabel": "Oklahoma grants page / SLCGP application materials",
     "DrillDownURL": "https://oklahoma.gov/homeland-security/grants.html",
-    "ProcurementProcess": "Recurring state application process with multiple 2026 deadlines. Applicants review the one-page announcement, tie projects to the State Cyber Plan, and submit applications to hsgrants@okohs.ok.gov.",
+    "ProcurementProcess": "Recurring state application process with multiple 2026 deadlines. Applicants review the one-page announcement, tie projects to the State Cyber Plan, and submit applications to hsgrants@okohs.ok.gov. The official page also notes that funding is not currently accessible and that additional funding is expected later in 2026.",
     "ProcurementType": "Quarterly rolling application",
     "FYYear": "TBD; page links FY22–FY25 NOFOs",
     "MatchInfo": "Depends on linked NOFO year",
@@ -1771,7 +1771,7 @@ const data =[
     "Start": "",
     "End": "",
     "SortDate": "2025-11-01",
-    "Description": "Washington's WaTech SLCGP page still carries a November 2025 update saying recommended recipients are being notified, lists the State Planning Committee, and links to a June 17, 2025 application webinar, but it does not post a clearly dated 2026 local application window.",
+    "Description": "Washington's WaTech SLCGP page still carries a November 2025 update saying recommended recipients are being notified, lists the State Planning Committee, and links to a June 17, 2025 application webinar, but it does not post a clearly dated 2026 local application window on the reviewed official page.",
     "SourceLabel": "WaTech SLCGP page",
     "SourceURL": "https://watech.wa.gov/state-local-cybersecurity-grant-program",
     "Confidence": "High",
@@ -1825,21 +1825,21 @@ const data =[
     "Start": "2025-11-18",
     "End": "2026-01-30",
     "SortDate": "2025-11-18",
-    "Description": "Wisconsin says the second cycle of FFY23 funds was open November 18, 2025 to January 30, 2026; application review and scoring remain in progress, and the page notes the federal shutdown is affecting FEMA response to the state.",
-    "SourceLabel": "Wisconsin cybersecurity grants page",
+    "Description": "Wisconsin's DET cyber grants page says FFY23 round-two applications ran from November 18, 2025 to January 30, 2026 and that review/scoring is in progress. It also says FFY22 and FFY23 cost-share waivers were approved, while FFY24 and FFY25 cost shares remain 30% and 40%, and users should watch for the FFY24 NOFO release.",
+    "SourceLabel": "Wisconsin DET cybersecurity grants page",
     "SourceURL": "https://det.wi.gov/Pages/Cybersecurity_Grants.aspx",
     "Confidence": "High",
     "PriorLabel": "Wisconsin cybersecurity grants page",
     "PriorURL": "https://det.wi.gov/Pages/Cybersecurity_Grants.aspx",
     "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material.",
-    "DrillDownLabel": "Wisconsin cybersecurity grants page",
+    "DrillDownLabel": "Wisconsin DET cybersecurity grants page",
     "DrillDownURL": "https://det.wi.gov/Pages/Cybersecurity_Grants.aspx",
-    "ProcurementProcess": "The current state subrecipient window is closed. Wisconsin says review and scoring are in progress and notes the federal shutdown is affecting FEMA response. Monitor this page for awards or the next cycle.",
+    "ProcurementProcess": "Wisconsin's current page says FFY23 round-two applications closed January 30, 2026 and are under review. The state asks users to check back regularly for the FFY24 NOFO release and provides the Wisconsin Emergency Management grants path for the next application cycle.",
     "ProcurementType": "RFP",
-    "FYYear": "FFY2023 cycle 2 / round 2",
-    "MatchInfo": "FFY23 cost-share waiver approved; FFY24 30%; FFY25 40%",
+    "FYYear": "FFY23 round 2 under review; FFY24 NOFO pending",
+    "MatchInfo": "FFY22 and FFY23 cost-share waivers approved; FFY24 30%; FFY25 40%",
     "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "FFY2023 cycle 2 / round 2 | Match: FFY23 cost-share waiver approved; FFY24 30%; FFY25 40% | Min/Max: Not publicly stated on reviewed source",
+    "FYSummary": "FFY23 round 2 under review; FFY24 NOFO pending | Match: FFY22 and FFY23 cost-share waivers approved; FFY24 30%; FFY25 40% | Min/Max: Not publicly stated on reviewed source",
     "CommitteeLabel": "Committee / program page",
     "CommitteeURL": "https://det.wi.gov/Pages/Cybersecurity_Grants.aspx",
     "MeetingsLabel": "Monitor official page",
@@ -2357,7 +2357,7 @@ document.getElementById('resetBtn').addEventListener('click', () => {
   render();
 });
 
-document.getElementById('executiveSummaryBtn').addEventListener('click', () => { window.location.href = 'SLCGP_Executive_Summary_Changes_Jan-Apr_2026_Compact_2026-04-24.html'; });
+document.getElementById('executiveSummaryBtn').addEventListener('click', () => { window.location.href = 'SLCGP_Executive_Summary_Changes_Jan-Apr_2026_Compact_2026-04-27.html'; });
 
 (function enableColumnResize(){
   const table = document.getElementById('dataTable');
