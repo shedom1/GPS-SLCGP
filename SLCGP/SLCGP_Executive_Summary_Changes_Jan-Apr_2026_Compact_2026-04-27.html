@@ -1,109 +1,124 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
 <title>SLCGP Executive Summary of Changes | January-April 2026</title>
-<style>
-:root{--bg:#f7fbff;--card:#fff;--ink:#172335;--muted:#5c6a80;--line:#d8e2ef;--blue:#2563eb;--green:#15803d;--amber:#a16207;--red:#b42318;--shadow:0 10px 24px rgba(18,33,53,.08);--radius:14px}
-*{box-sizing:border-box} body{margin:0;font-family:Inter,Arial,Helvetica,sans-serif;background:linear-gradient(180deg,#f7fbff 0%,#eef5fd 100%);color:var(--ink)}
-.wrap{width:min(100vw,1220px);margin:0 auto;padding:12px 12px 24px}
+<style>:root{--bg:#f7fbff;--card:#fff;--ink:#172335;--muted:#5c6a80;--line:#d8e2ef;--blue:#2563eb;--green:#15803d;--amber:#a16207;--red:#b42318;--shadow:0 10px 24px rgba(18,33,53,.08);--radius:14px}
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,Arial,Helvetica,sans-serif;background:linear-gradient(180deg,#f7fbff 0%,#eef5fd 100%);color:var(--ink)}
+.wrap{width:min(100vw,1180px);margin:0 auto;padding:12px 12px 24px}
 .hero,.toolbar,.month{background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow)}
-.hero{border-radius:18px;padding:14px 16px 12px;margin-bottom:8px;background:linear-gradient(135deg,#fff 0%,#f3f8ff 58%,#eefbf8 100%)}
+.hero{border-radius:18px;padding:15px 17px 13px;margin-bottom:8px;background:linear-gradient(135deg,#fff 0%,#f3f8ff 58%,#eefbf8 100%)}
 .eyebrow{font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--blue);margin-bottom:6px}
-h1{margin:0 0 6px;font-size:24px;line-height:1.08}.sub{color:var(--muted);font-size:12px;line-height:1.45;max-width:1050px}
-.meta{display:flex;flex-wrap:wrap;gap:8px 14px;margin-top:10px;color:var(--muted);font-size:11px}.meta b{color:var(--ink)}
+h1{margin:0 0 6px;font-size:24px;line-height:1.08}
+.sub{color:var(--muted);font-size:12px;line-height:1.48;max-width:1020px}
+.meta{display:flex;flex-wrap:wrap;gap:8px 14px;margin-top:10px;color:var(--muted);font-size:11px}
+.meta b{color:var(--ink)}
 .toolbar{border-radius:12px;padding:8px 10px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
-.btns{display:flex;gap:6px;flex-wrap:wrap}.btn{appearance:none;border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:8px;padding:6px 9px;font-size:11px;font-weight:800;text-decoration:none;cursor:pointer}.btn.primary{background:linear-gradient(135deg,#2f7bff 0%,var(--blue) 100%);border-color:var(--blue);color:#fff}
-.month{border-radius:14px;padding:10px 12px;margin-bottom:10px}.month h2{margin:0 0 8px;font-size:16px}.month-note{color:var(--muted);font-size:11px;margin:0 0 8px}
-.region{border-top:1px solid #e8eef7;padding-top:8px;margin-top:8px}.region:first-of-type{border-top:0;padding-top:0;margin-top:0}.region h3{margin:0 0 6px;font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:#26405f}
-.items{display:grid;gap:4px}.item{display:grid;grid-template-columns:132px 1fr auto;gap:10px;align-items:start;padding:4px 0;border-bottom:1px dotted #e6edf7}.item:last-child{border-bottom:0}
-.state{font-weight:800;font-size:12px}.desc{font-size:12px;line-height:1.38}.src a{font-size:11px;text-decoration:none;font-weight:700;color:var(--blue)}.src a:hover{text-decoration:underline}
+.btns{display:flex;gap:6px;flex-wrap:wrap}
+.btn{appearance:none;border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:8px;padding:6px 9px;font-size:11px;font-weight:800;text-decoration:none;cursor:pointer}
+.btn.primary{background:linear-gradient(135deg,#2f7bff 0%,var(--blue) 100%);border-color:var(--blue);color:#fff}
+.month{border-radius:14px;padding:11px 13px;margin-bottom:10px}
+.month h2{margin:0 0 8px;font-size:16px}
+.month-note{color:var(--muted);font-size:11.5px;line-height:1.5;margin:0 0 9px}
+.region{border-top:1px solid #e8eef7;padding-top:9px;margin-top:9px}
+.region:first-of-type{border-top:0;padding-top:0;margin-top:0}
+.region h3{margin:0 0 6px;font-size:13px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:#26405f}
+.items{display:grid;gap:3px;padding-left:16px}
+.item{display:grid;grid-template-columns:146px 1fr auto;gap:10px;align-items:start;padding:5px 0;border-bottom:1px dotted #e6edf7;position:relative}
+.item::before{content:"";position:absolute;left:-10px;top:11px;width:5px;height:5px;border-radius:999px;background:#9db5d6}
+.item:last-child{border-bottom:0}
+.state{font-weight:800;font-size:12px;line-height:1.45;padding-left:2px}
+.desc{font-size:12px;line-height:1.5}
+.src{padding-top:1px}
+.src a{font-size:11px;text-decoration:none;font-weight:700;color:var(--blue);white-space:nowrap}
+.src a:hover{text-decoration:underline}
 .footer{color:var(--muted);font-size:10.5px;line-height:1.45;padding:2px 2px 0}
-@media (max-width:800px){.item{grid-template-columns:1fr}.src{margin-top:2px}}
-@media print{body{background:#fff}.wrap{width:100%;max-width:none;padding:0}.hero,.toolbar,.month{box-shadow:none}.toolbar{display:none}.month{page-break-inside:avoid}}
-</style>
+@media (max-width:860px){.item{grid-template-columns:1fr}.items{padding-left:10px}.src{margin-top:2px}}
+@media print{body{background:#fff}.wrap{width:100%;max-width:none;padding:0}.hero,.toolbar,.month{box-shadow:none}.toolbar{display:none}.month{page-break-inside:avoid}}</style>
 </head>
 <body>
 <div class="wrap">
-  <section class="hero">
-    <div class="eyebrow">GPS Team | Executive brief</div>
-    <h1>SLCGP Executive Summary of Changes</h1>
-    <div class="sub">Condensed leadership view of material state-level tracker changes and verified current windows, grouped by month, then region, then state. Updated after a state-by-state refresh on April 27, 2026.</div>
-    <div class="meta"><div><b>Coverage:</b> January-April 2026</div><div><b>Last Refresh:</b> April 27, 2026</div><div><b>Focus:</b> material status changes, active windows, committee/process clarifications</div></div>
-  </section>
-  <section class="toolbar">
-    <div class="btns">
-      <button class="btn primary" onclick="window.print()">Print to PDF</button>
-      <a class="btn" href="mailto:?subject=SLCGP%20Executive%20Summary%20-%20April%2024%2C%202026&body=Attached%20or%20linked%20is%20the%20updated%20SLCGP%20Executive%20Summary.">Email</a>
-      <a class="btn" href="SLCGP_State_Tracker_Master_2026-04-27.html">Back to Tracker</a>
-    </div>
-    <div style="font-size:11px;color:var(--muted)">Newest month first.</div>
-  </section>
-  <section class="month">
-    <h2>April 2026</h2>
-    <p class="month-note">The April 27 refresh validated the late-April application picture across the states. The main theme is continuity rather than broad new openings: active states remain active, several watch states posted clearer operational language, and most unreleased states still do not show a new dated 2026 local window.</p>
-    <div class="region"><h3>Southeast</h3><div class="items">
-      <div class="item"><div class="state">Georgia</div><div class="desc">Georgia remains open through April 29, 2026 in Georgia EM Grants Manager for FY2024 SLCGP, and the state continues to point to a September 1, 2026 opening for FY2025.</div><div class="src"><a href="https://gema.georgia.gov/state-and-local-cybersecurity-grant-program" target="_blank" rel="noopener">Source</a></div></div>
-      <div class="item"><div class="state">South Carolina</div><div class="desc">South Carolina continues to show a live FY2024 application cycle that started March 20, 2026 and runs through May 15, 2026, with applications submitted to SLED.</div><div class="src"><a href="https://www.sled.sc.gov/departments/state-administrative-agency-saa-homeland-security" target="_blank" rel="noopener">Source</a></div></div>
-      <div class="item"><div class="state">Alabama</div><div class="desc">Alabama still operates on a first-come, first-served service-delivery model rather than a traditional local cash subaward model.</div><div class="src"><a href="https://slcgp.alabama.gov/apply/" target="_blank" rel="noopener">Source</a></div></div>
-      <div class="item"><div class="state">Mississippi</div><div class="desc">Mississippi’s January 15 to February 27, 2026 batch is closed; the state still says any further Batch 4 opportunity has not yet been determined.</div><div class="src"><a href="https://www.homelandsecurity.ms.gov/grants/homeland-security-state-and-local-cybersecurity-grant-program-slcgp" target="_blank" rel="noopener">Source</a></div></div>
-    </div></div>
-    <div class="region"><h3>Mid-Atlantic</h3><div class="items">
-      <div class="item"><div class="state">Maryland</div><div class="desc">Maryland continues to show an open rolling second-round FY2023 opportunity together with an additional short-term funding opportunity.</div><div class="src"><a href="https://mdem.maryland.gov/pages/cyber-preparedness-funding.aspx" target="_blank" rel="noopener">Source</a></div></div>
-      <div class="item"><div class="state">Virginia</div><div class="desc">Virginia continues to emphasize a committee-led shared-services model and directs entities to its VCPC meetings and VDEM listserv for future SLCGP notifications.</div><div class="src"><a href="https://www.vita.virginia.gov/security/cybersecurity-grants/" target="_blank" rel="noopener">Source</a></div></div>
-      <div class="item"><div class="state">Pennsylvania</div><div class="desc">Pennsylvania still directs local governments to the Commonwealth for committee-identified projects rather than a direct federal application path, with monitoring/sign-up language unchanged.</div><div class="src"><a href="https://www.pa.gov/services/pema/cybersecurity-grant" target="_blank" rel="noopener">Source</a></div></div>
-    </div></div>
-    <div class="region"><h3>Northeast</h3><div class="items">
-      <div class="item"><div class="state">Michigan</div><div class="desc">Michigan now clearly states that FY2022, FY2023, and FY2024 awards are completed, while the FY2025 application date and submission deadline remain to be determined and Advisory Board review continues.</div><div class="src"><a href="https://www.michigan.gov/dtmb/services/cybersecurity/cyber-partners/state-and-local-cybersecurity-grant-program" target="_blank" rel="noopener">Source</a></div></div>
-      <div class="item"><div class="state">Wisconsin</div><div class="desc">Wisconsin says FFY23 round-two applications closed January 30, 2026 and are under review; the state is telling users to watch for the FFY24 NOFO release.</div><div class="src"><a href="https://det.wi.gov/Pages/Cybersecurity_Grants.aspx" target="_blank" rel="noopener">Source</a></div></div>
-      <div class="item"><div class="state">Nebraska</div><div class="desc">Nebraska’s site shows the 2024 subrecipient application closed and continues to post committee members and meeting listings, but no new dated 2026 local window is posted.</div><div class="src"><a href="https://slcg.nebraska.gov/" target="_blank" rel="noopener">Source</a></div></div>
-      <div class="item"><div class="state">Maine</div><div class="desc">Maine continues to show FY22 and FY23 participation windows closed, projects underway, and a partial-shutdown service pause affecting the KnowBe4 training component.</div><div class="src"><a href="https://www.maine.gov/mema/grants/state-and-local-cybersecurity-grant-program" target="_blank" rel="noopener">Source</a></div></div>
-    </div></div>
-    <div class="region"><h3>West</h3><div class="items">
-      <div class="item"><div class="state">Idaho</div><div class="desc">Idaho remains open via an active participation-interest model for prospective FY2027 shared services offered through Operation Cyber Idaho.</div><div class="src"><a href="https://cybersecurity.idaho.gov/operation-cyber-idaho/" target="_blank" rel="noopener">Source</a></div></div>
-      <div class="item"><div class="state">Wyoming</div><div class="desc">Wyoming remains open; the public homepage says SLCGP applications are due May 15, 2026 through ZoomGrants.</div><div class="src"><a href="https://hls.wyo.gov/" target="_blank" rel="noopener">Source</a></div></div>
-      <div class="item"><div class="state">Oklahoma</div><div class="desc">Oklahoma continues to post quarterly 2026 deadlines, but the official page also says funding is not currently accessible and that additional funding is expected later this year.</div><div class="src"><a href="https://oklahoma.gov/homeland-security/grants.html" target="_blank" rel="noopener">Source</a></div></div>
-      <div class="item"><div class="state">Oregon</div><div class="desc">Oregon remains temporarily closed as of April 1, 2026 and continues to say it anticipates opening for new applications in summer 2026.</div><div class="src"><a href="https://www.oregon.gov/oem/emresources/grants/pages/state-and-local-cybersecurity-grant-program.aspx" target="_blank" rel="noopener">Source</a></div></div>
-      <div class="item"><div class="state">Washington</div><div class="desc">Washington still does not post a clearly dated 2026 local window; the state page continues to reference a November 2025 funding update and prior application webinar materials.</div><div class="src"><a href="https://watech.wa.gov/state-local-cybersecurity-grant-program" target="_blank" rel="noopener">Source</a></div></div>
-    </div></div>
-  </section>
-  <section class="month">
-    <h2>March 2026</h2>
-    <p class="month-note">March activity centered on newly announced windows, awards communications, and clarified next-cycle timing.</p>
-    <div class="region"><h3>Southeast</h3><div class="items">
-      <div class="item"><div class="state">Florida</div><div class="desc">Florida remained closed on the last posted cycle, which ran October 15 to December 15, 2025, while the state indicates a later 2026 FY24 release.</div><div class="src"><a href="https://www.floridadisaster.org/dem/finance/grants-unit/state-and-local-cybersecurity-grant-program/" target="_blank" rel="noopener">Source</a></div></div>
-      <div class="item"><div class="state">North Carolina</div><div class="desc">North Carolina’s FY2025 cycle remained closed, with awards estimated for spring 2026 or later because of federal shutdown-related delay.</div><div class="src"><a href="https://www.ncdps.gov/SLCGP" target="_blank" rel="noopener">Source</a></div></div>
-    </div></div>
-    <div class="region"><h3>West</h3><div class="items">
-      <div class="item"><div class="state">California</div><div class="desc">California’s FFY2024 Local & Tribal RFP closed March 13, 2026.</div><div class="src"><a href="https://www.caloes.ca.gov/grant-announcement/ffy-2024-state-local-cybersecurity-grant-local-tribal-sl-rfp/" target="_blank" rel="noopener">Source</a></div></div>
-      <div class="item"><div class="state">Ohio</div><div class="desc">Ohio’s Round 3 .gov migration application closed March 13, 2026 and capped federal support at $9,500 per project with a 20% cost share.</div><div class="src"><a href="https://dam.assets.ohio.gov/image/upload/cyber.ohio.gov/Round_3_SLCGP_Grant_Application_Guidance.gov_Migration-Final.pdf" target="_blank" rel="noopener">Source</a></div></div>
-    </div></div>
-  </section>
-  <section class="month">
-    <h2>February 2026</h2>
-    <p class="month-note">February reflected several late-winter close dates and additional process detail from state pages and meeting records.</p>
-    <div class="region"><h3>Southeast</h3><div class="items">
-      <div class="item"><div class="state">Louisiana</div><div class="desc">Louisiana meeting minutes state the FY23/FY24/FY25 SLCGP application period ran January 1 to February 28, 2026 and directed applicants to prioritize mitigation and training.</div><div class="src"><a href="https://wwwcfprd.doa.louisiana.gov/boardsandcommissions/MeetingMinutes/348_Regional%20Directors%20Meeting%20minutes-%20February%202026.pdf" target="_blank" rel="noopener">Source</a></div></div>
-      <div class="item"><div class="state">Mississippi</div><div class="desc">Mississippi’s official page shows the 2026 SLCGP window opened January 15 and closed February 27, 2026, with Batch 4 participation still undetermined.</div><div class="src"><a href="https://www.homelandsecurity.ms.gov/grants/homeland-security-state-and-local-cybersecurity-grant-program-slcgp" target="_blank" rel="noopener">Source</a></div></div>
-    </div></div>
-    <div class="region"><h3>Northeast</h3><div class="items">
-      <div class="item"><div class="state">Kansas</div><div class="desc">Kansas’s January 1 to February 28, 2026 submission window is now paired with language that Phase 2 applications are under committee and federal review.</div><div class="src"><a href="https://www.ebit.ks.gov/divisions/slcgp" target="_blank" rel="noopener">Source</a></div></div>
-      <div class="item"><div class="state">Maine</div><div class="desc">Maine clarified that Year 1 and Year 2 participation windows are closed, projects are underway, and a temporary shutdown-related pause affected a funded training service.</div><div class="src"><a href="https://www.maine.gov/mema/grants/state-and-local-cybersecurity-grant-program" target="_blank" rel="noopener">Source</a></div></div>
-    </div></div>
-  </section>
-  <section class="month">
-    <h2>January 2026</h2>
-    <p class="month-note">January activity captured early-year state openings and formal committee or planning updates.</p>
-    <div class="region"><h3>Northeast</h3><div class="items">
-      <div class="item"><div class="state">Nebraska</div><div class="desc">Nebraska’s SLCGP site shows the 2024 subrecipient application as closed and continues to post committee materials and meeting listings rather than a new 2026 opening.</div><div class="src"><a href="https://slcg.nebraska.gov/" target="_blank" rel="noopener">Source</a></div></div>
-      <div class="item"><div class="state">Connecticut</div><div class="desc">Connecticut continues to route eligible entities through a sub-application model under DEMHS, with no newly posted dated 2026 local window on the reviewed page.</div><div class="src"><a href="https://portal.ct.gov/demhs/grants/state-and-local-cybersecurity-grant-program" target="_blank" rel="noopener">Source</a></div></div>
-    </div></div>
-    <div class="region"><h3>West</h3><div class="items">
-      <div class="item"><div class="state">New Mexico</div><div class="desc">New Mexico’s FY2027 participation-interest and request-form model remained one of the clearest early-cycle service pathways in the tracker.</div><div class="src"><a href="https://www.doit.nm.gov/programs/cybersecurity/state-and-local-cybersecurity-grant-program-slcgp/" target="_blank" rel="noopener">Source</a></div></div>
-    </div></div>
-  </section>
-  <div class="footer">Built for management review. This page is intentionally limited to material updates, timing signals, and front-door application or service-delivery changes.</div>
+<section class="hero">
+<div class="eyebrow">GPS Team | Executive brief</div>
+<h1>SLCGP Executive Summary of Changes</h1>
+<div class="sub">Condensed leadership view of material state-level tracker changes and verified current windows, grouped by month, region, and state. Summaries focus on timing, access path, and decision-relevant changes confirmed through the April 27, 2026 refresh.</div>
+<div class="meta"><div><b>Coverage:</b> January-April 2026</div><div><b>Last Refresh:</b> April 27, 2026</div><div><b>Focus:</b> material status changes, active windows, committee/process clarifications</div></div>
+</section>
+<section class="toolbar">
+<div class="btns">
+<button class="btn primary" onclick="window.print()">Print to PDF</button>
+<a class="btn" href="mailto:?subject=SLCGP%20Executive%20Summary%20-%20April%2024%2C%202026&amp;body=Attached%20or%20linked%20is%20the%20updated%20SLCGP%20Executive%20Summary.">Email</a>
+<a class="btn" href="SLCGP_State_Tracker_Master_2026-04-27.html">Back to Tracker</a>
+</div>
+<div style="font-size:11px;color:var(--muted)">Newest month first.</div>
+</section>
+<section class="month">
+<h2>April 2026</h2>
+<p class="month-note">April remained a targeted execution month rather than a broad expansion month. Active states largely held their previously posted windows, while several watch states added clearer operational language without opening a new local cycle. The executive takeaway is that the near-term opportunity set is concentrated in a limited number of states with confirmed deadlines or rolling access.</p>
+<div class="region"><h3>Southeast</h3><div class="items">
+<div class="item"><div class="state">Georgia</div><div class="desc">Georgia remains one of the clearest near-term opportunities in the tracker. The FY2024 application window stays open through April 29, 2026 in Georgia EM Grants Manager, and the state is already signaling a September 1, 2026 opening for FY2025. For leadership, Georgia remains both a current-cycle and next-cycle planning state.</div><div class="src"><a href="https://gema.georgia.gov/state-and-local-cybersecurity-grant-program" rel="noopener" target="_blank">Source</a></div></div>
+<div class="item"><div class="state">South Carolina</div><div class="desc">South Carolina continues to present a live FY2024 opportunity with applications routed through SLED. The current cycle opened March 20, 2026 and runs through May 15, 2026. This keeps South Carolina in the active near-term pursuit group.</div><div class="src"><a href="https://www.sled.sc.gov/departments/state-administrative-agency-saa-homeland-security" rel="noopener" target="_blank">Source</a></div></div>
+<div class="item"><div class="state">Alabama</div><div class="desc">Alabama continues to operate through a first-come, first-served service-delivery model rather than a traditional local cash subaward approach. That makes the access path more operational and partner-driven than a typical competitive grant round. The state remains relevant, but the pursuit motion is different from a standard application window.</div><div class="src"><a href="https://slcgp.alabama.gov/apply/" rel="noopener" target="_blank">Source</a></div></div>
+<div class="item"><div class="state">Mississippi</div><div class="desc">Mississippi’s January 15 to February 27, 2026 batch is closed, and the state still says any further Batch 4 opportunity has not yet been determined. The current signal is operational pause rather than reopening. This remains a monitor state until the next batch is formally posted.</div><div class="src"><a href="https://www.homelandsecurity.ms.gov/grants/homeland-security-state-and-local-cybersecurity-grant-program-slcgp" rel="noopener" target="_blank">Source</a></div></div>
+</div></div>
+<div class="region"><h3>Mid-Atlantic</h3><div class="items">
+<div class="item"><div class="state">Maryland</div><div class="desc">Maryland continues to offer one of the more accessible current pathways in the tracker. The state shows an open rolling second-round FY2023 opportunity alongside an additional short-term funding opportunity. From a leadership standpoint, Maryland remains an actionable rolling-access state.</div><div class="src"><a href="https://mdem.maryland.gov/pages/cyber-preparedness-funding.aspx" rel="noopener" target="_blank">Source</a></div></div>
+<div class="item"><div class="state">Virginia</div><div class="desc">Virginia continues to emphasize a committee-led shared-services model rather than a broad open local competition. The state directs entities to VCPC meetings and the VDEM listserv for future SLCGP notifications. This remains a relationship and monitoring state with centralized signaling.</div><div class="src"><a href="https://www.vita.virginia.gov/security/cybersecurity-grants/" rel="noopener" target="_blank">Source</a></div></div>
+<div class="item"><div class="state">Pennsylvania</div><div class="desc">Pennsylvania continues to route local participation through Commonwealth-selected projects rather than a direct federal or broadly open application path. The public language remains steady and still emphasizes monitoring and sign-up. This keeps Pennsylvania in a controlled-access posture rather than an open-window posture.</div><div class="src"><a href="https://www.pa.gov/services/pema/cybersecurity-grant" rel="noopener" target="_blank">Source</a></div></div>
+</div></div>
+<div class="region"><h3>Northeast</h3><div class="items">
+<div class="item"><div class="state">Michigan</div><div class="desc">Michigan now clearly states that FY2022, FY2023, and FY2024 awards are complete. FY2025 timing, including the application date and submission deadline, remains to be determined while Advisory Board review continues. The practical takeaway is clarity on program maturity, but no immediate local opening.</div><div class="src"><a href="https://www.michigan.gov/dtmb/services/cybersecurity/cyber-partners/state-and-local-cybersecurity-grant-program" rel="noopener" target="_blank">Source</a></div></div>
+<div class="item"><div class="state">Wisconsin</div><div class="desc">Wisconsin states that FFY23 round-two applications closed on January 30, 2026 and remain under review. The state is telling stakeholders to watch for the FFY24 NOFO release. This remains a watch state with clearer sequencing but no open local window.</div><div class="src"><a href="https://det.wi.gov/Pages/Cybersecurity_Grants.aspx" rel="noopener" target="_blank">Source</a></div></div>
+<div class="item"><div class="state">Nebraska</div><div class="desc">Nebraska’s site continues to show the 2024 subrecipient application as closed while keeping committee members and meeting listings visible. That provides useful governance visibility, but no new dated 2026 local opening is posted. Nebraska remains better for monitoring than immediate pursuit.</div><div class="src"><a href="https://slcg.nebraska.gov/" rel="noopener" target="_blank">Source</a></div></div>
+<div class="item"><div class="state">Maine</div><div class="desc">Maine continues to show FY22 and FY23 participation windows closed, with projects underway. The page also references a partial-shutdown service pause affecting the KnowBe4 training component. Leadership should read this as implementation-stage activity rather than a live new-entry opportunity.</div><div class="src"><a href="https://www.maine.gov/mema/grants/state-and-local-cybersecurity-grant-program" rel="noopener" target="_blank">Source</a></div></div>
+</div></div>
+<div class="region"><h3>West</h3><div class="items">
+<div class="item"><div class="state">Idaho</div><div class="desc">Idaho remains open through an active participation-interest model tied to prospective FY2027 shared services under Operation Cyber Idaho. This is a meaningful access path even though it does not resemble a traditional competitive grant cycle. Idaho remains one of the clearer service-entry states in the West.</div><div class="src"><a href="https://cybersecurity.idaho.gov/operation-cyber-idaho/" rel="noopener" target="_blank">Source</a></div></div>
+<div class="item"><div class="state">Wyoming</div><div class="desc">Wyoming remains open and continues to post a clear due date of May 15, 2026 through ZoomGrants. That makes it one of the cleaner late-spring deadlines in the tracker. It stays in the active short-list for near-term action.</div><div class="src"><a href="https://hls.wyo.gov/" rel="noopener" target="_blank">Source</a></div></div>
+<div class="item"><div class="state">Oklahoma</div><div class="desc">Oklahoma continues to post quarterly 2026 deadlines, but the official page also says funding is not currently accessible and additional funding is expected later this year. The practical signal is mixed: there is structure on paper, but not a fully actionable funding path today. Oklahoma remains a monitor state unless access language improves.</div><div class="src"><a href="https://oklahoma.gov/homeland-security/grants.html" rel="noopener" target="_blank">Source</a></div></div>
+<div class="item"><div class="state">Oregon</div><div class="desc">Oregon remains temporarily closed as of April 1, 2026 and continues to say it anticipates reopening for new applications in summer 2026. That gives leadership a credible future timing signal without a current entry point. Oregon should stay on the summer watch list.</div><div class="src"><a href="https://www.oregon.gov/oem/emresources/grants/pages/state-and-local-cybersecurity-grant-program.aspx" rel="noopener" target="_blank">Source</a></div></div>
+<div class="item"><div class="state">Washington</div><div class="desc">Washington still does not post a clearly dated 2026 local application window on the reviewed page. The state continues to reference a November 2025 funding update and prior webinar materials, which helps with context but not with current actionability. Washington remains a monitoring state until a dated local cycle is posted.</div><div class="src"><a href="https://watech.wa.gov/state-local-cybersecurity-grant-program" rel="noopener" target="_blank">Source</a></div></div>
+</div></div>
+</section>
+<section class="month">
+<h2>March 2026</h2>
+<p class="month-note">March was defined by formal window announcements, award communications, and clearer direction on next-cycle timing. Several states moved from general monitoring to concrete application or post-award messaging. This was the month when the national picture became more actionable for near-term sales planning.</p>
+<div class="region"><h3>Southeast</h3><div class="items">
+<div class="item"><div class="state">Florida</div><div class="desc">Florida remains closed on the last posted cycle, which ran from October 15 to December 15, 2025. The state continues to indicate a later 2026 FY24 release. This keeps Florida in the next-cycle watch group rather than the current active group.</div><div class="src"><a href="https://www.floridadisaster.org/dem/finance/grants-unit/state-and-local-cybersecurity-grant-program/" rel="noopener" target="_blank">Source</a></div></div>
+<div class="item"><div class="state">North Carolina</div><div class="desc">North Carolina’s FY2025 cycle remains closed, with awards estimated for spring 2026 or later because of federal shutdown-related delay. The state remains relevant because of the expected award movement, but not because of an open application path. Leadership should treat this as a post-window monitoring state.</div><div class="src"><a href="https://www.ncdps.gov/SLCGP" rel="noopener" target="_blank">Source</a></div></div>
+</div></div>
+<div class="region"><h3>West</h3><div class="items">
+<div class="item"><div class="state">California</div><div class="desc">California’s FFY2024 Local and Tribal RFP closed on March 13, 2026. The state is no longer in an open pursuit phase for that cycle. California remains important as a recent close and follow-on monitoring state.</div><div class="src"><a href="https://www.caloes.ca.gov/grant-announcement/ffy-2024-state-local-cybersecurity-grant-local-tribal-sl-rfp/" rel="noopener" target="_blank">Source</a></div></div>
+<div class="item"><div class="state">Ohio</div><div class="desc">Ohio’s Round 3 .gov migration application closed on March 13, 2026. The state capped federal support at $9,500 per project with a 20% cost share, making the scope relatively defined and targeted. This is now a closed, specialized cycle rather than a broad current opportunity.</div><div class="src"><a href="https://dam.assets.ohio.gov/image/upload/cyber.ohio.gov/Round_3_SLCGP_Grant_Application_Guidance.gov_Migration-Final.pdf" rel="noopener" target="_blank">Source</a></div></div>
+</div></div>
+</section>
+<section class="month">
+<h2>February 2026</h2>
+<p class="month-note">February captured several late-winter close dates and a notable increase in detail from meeting records and state guidance pages. For leadership, the month primarily clarified where opportunities had already closed and where agencies were shifting into review or implementation. It also sharpened the distinction between true application windows and service-delivery models.</p>
+<div class="region"><h3>Southeast</h3><div class="items">
+<div class="item"><div class="state">Louisiana</div><div class="desc">Louisiana meeting minutes state that the FY23, FY24, and FY25 SLCGP application period ran from January 1 to February 28, 2026. The same materials directed applicants to prioritize mitigation and training. The state is better read as a recent-close environment with clear priority framing.</div><div class="src"><a href="https://wwwcfprd.doa.louisiana.gov/boardsandcommissions/MeetingMinutes/348_Regional%20Directors%20Meeting%20minutes-%20February%202026.pdf" rel="noopener" target="_blank">Source</a></div></div>
+<div class="item"><div class="state">Mississippi</div><div class="desc">Mississippi’s official page confirms the 2026 window opened January 15 and closed February 27, 2026, with Batch 4 participation still undetermined. This entry is important because it marks the formal close timing and preserves the state’s open question on the next access point. It remains a monitor state until the next batch is defined.</div><div class="src"><a href="https://www.homelandsecurity.ms.gov/grants/homeland-security-state-and-local-cybersecurity-grant-program-slcgp" rel="noopener" target="_blank">Source</a></div></div>
+</div></div>
+<div class="region"><h3>Northeast</h3><div class="items">
+<div class="item"><div class="state">Kansas</div><div class="desc">Kansas’s January 1 to February 28, 2026 submission window is now paired with language that Phase 2 applications are under committee and federal review. That gives stronger post-submission visibility than many states provide. Kansas is therefore a review-stage state, not an open-window state.</div><div class="src"><a href="https://www.ebit.ks.gov/divisions/slcgp" rel="noopener" target="_blank">Source</a></div></div>
+<div class="item"><div class="state">Maine</div><div class="desc">Maine clarified that Year 1 and Year 2 participation windows are closed and that projects are underway. The page also notes a temporary shutdown-related pause affecting a funded training service. This is a useful implementation signal, but not a current application opening.</div><div class="src"><a href="https://www.maine.gov/mema/grants/state-and-local-cybersecurity-grant-program" rel="noopener" target="_blank">Source</a></div></div>
+</div></div>
+</section>
+<section class="month">
+<h2>January 2026</h2>
+<p class="month-note">January established the early-year baseline for the tracker. Activity was concentrated in planning, committee visibility, and the first clearer signals on how states intended to route local participation. Most states were still in watch mode, but several began to show more concrete access pathways.</p>
+<div class="region"><h3>Northeast</h3><div class="items">
+<div class="item"><div class="state">Nebraska</div><div class="desc">Nebraska’s SLCGP site continues to show the 2024 subrecipient application as closed while keeping committee materials and meeting listings visible. That provides governance transparency but not a new 2026 opening. The state remains best categorized as a structured watch state.</div><div class="src"><a href="https://slcg.nebraska.gov/" rel="noopener" target="_blank">Source</a></div></div>
+<div class="item"><div class="state">Connecticut</div><div class="desc">Connecticut continues to route eligible entities through a DEMHS sub-application model. The reviewed page still does not post a newly dated 2026 local window. Connecticut remains structured and monitorable, but not currently open.</div><div class="src"><a href="https://portal.ct.gov/demhs/grants/state-and-local-cybersecurity-grant-program" rel="noopener" target="_blank">Source</a></div></div>
+</div></div>
+<div class="region"><h3>West</h3><div class="items">
+<div class="item"><div class="state">New Mexico</div><div class="desc">New Mexico’s FY2027 participation-interest and request-form model remains one of the clearest early-cycle service pathways in the tracker. The state is still notable because the access path is visible even without a traditional open competition. For leadership, New Mexico stays strategically important as an early-entry planning state.</div><div class="src"><a href="https://www.doit.nm.gov/programs/cybersecurity/state-and-local-cybersecurity-grant-program-slcgp/" rel="noopener" target="_blank">Source</a></div></div>
+</div></div>
+</section>
+<div class="footer">Built for management review. This page is intentionally limited to material updates, timing signals, and front-door application or service-delivery changes.</div>
 </div>
 </body>
 </html>
