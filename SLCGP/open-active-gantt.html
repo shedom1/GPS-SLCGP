@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>SLCGP Open / Active Gantt View | April 29, 2026</title>
+<style>
+
+:root{--bg:#f7fbff;--card:#fff;--ink:#172335;--muted:#5c6a80;--line:#d8e2ef;--blue:#2563eb;--green:#15803d;--green-soft:#eaf8ef;--amber:#a16207;--amber-soft:#fff4d8;--red:#b42318;--red-soft:#fdecec;--shadow:0 10px 24px rgba(18,33,53,.08);--radius:14px}
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,Arial,Helvetica,sans-serif;background:linear-gradient(180deg,#f7fbff 0%,#eef5fd 100%);color:var(--ink)}
+.wrap{width:min(100vw,1180px);margin:0 auto;padding:14px 12px 26px}
+.hero,.block,.region,.card{background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow)}
+.hero{border-radius:18px;padding:16px 18px 14px;margin-bottom:10px;background:linear-gradient(135deg,#fff 0%,#f3f8ff 58%,#eefbf8 100%)}
+.eyebrow{font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--blue);margin-bottom:6px}
+h1{margin:0 0 6px;font-size:24px;line-height:1.08}
+.sub{color:var(--muted);font-size:12px;line-height:1.5;max-width:980px}
+.meta{display:flex;flex-wrap:wrap;gap:8px 14px;margin-top:10px;font-size:11px;color:var(--muted)}
+.meta b{color:var(--ink)}
+.nav{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 12px}
+.btn{appearance:none;border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:10px;padding:7px 10px;font-size:11px;font-weight:800;cursor:pointer;text-decoration:none;line-height:1}
+.btn:hover{transform:translateY(-1px)}
+.btn.primary{background:linear-gradient(135deg,#2f7bff 0%,var(--blue) 100%);border-color:var(--blue);color:#fff}
+.badge{display:inline-flex;align-items:center;border-radius:999px;padding:3px 8px;font-size:10px;font-weight:800;line-height:1}
+.badge.open{background:var(--green-soft);color:var(--green)}
+.badge.upcoming{background:var(--amber-soft);color:var(--amber)}
+.badge.deadline{background:#eef3ff;color:#2847a8}
+.badge.watch{background:var(--red-soft);color:var(--red)}
+a{color:var(--blue);text-decoration:none;font-weight:700}
+a:hover{text-decoration:underline}
+.note{font-size:11px;color:var(--muted);line-height:1.45}
+@media print{
+  body{background:#fff}
+  .wrap{width:100%;max-width:none;padding:0}
+  .hero,.block,.region,.card{box-shadow:none}
+  .nav{display:none!important}
+}
+
+.block{border-radius:16px;padding:12px 14px;margin-bottom:10px}
+.axis{position:relative;height:34px;border:1px solid #edf2f8;border-radius:12px;background:#f9fbff;margin:10px 0 12px;overflow:hidden}
+.month-cell{position:absolute;top:0;bottom:0;border-left:1px solid #e7eef8;padding:8px 8px;font-size:10px;font-weight:800;color:var(--muted);white-space:nowrap}
+.g-row{display:grid;grid-template-columns:250px 1fr 270px;gap:12px;align-items:center;padding:10px 0;border-top:1px solid #edf2f8}
+.g-row:first-of-type{border-top:0;padding-top:0}
+.g-label .state-name{font-size:13px;font-weight:800;margin-bottom:3px}
+.g-meta{font-size:11px;color:var(--muted);line-height:1.35}
+.g-track{position:relative;height:18px;border-radius:999px;background:#f2f6fb;border:1px solid #e5edf7}
+.bar{position:absolute;top:2px;bottom:2px;border-radius:999px}
+.bar.open{background:linear-gradient(90deg,#bfe8c9 0%,#59b67a 100%)}
+.bar.upcoming{background:linear-gradient(90deg,#ffe7ae 0%,#d9a126 100%)}
+.milestone{position:absolute;top:1px;bottom:1px;width:12px;transform:translateX(-6px);border-radius:999px}
+.milestone.open{background:#15803d}
+.milestone.upcoming{background:#a16207}
+.g-notes{font-size:11px;line-height:1.4}
+.note-line{margin-bottom:4px}
+.note-links{font-size:11px}
+ul.watch{margin:8px 0 0;padding-left:18px}
+ul.watch li{margin-bottom:7px;font-size:12px;line-height:1.45}
+@media (max-width:1100px){
+  .g-row{grid-template-columns:1fr;gap:7px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <section class="hero">
+    <div class="eyebrow">GPS Team | SLCGP timeline view</div>
+    <h1>Open / Active Gantt View</h1>
+    <div class="sub"><b>Sales use:</b> a timeline-first view of live and near-term upcoming SLCGP activity. Use it to see which states need immediate action, which are approaching deadlines, and which upcoming windows should be monitored.</div>
+    <div class="meta">
+      <div><b>Refresh date:</b> April 29, 2026</div>
+      <div><b>States on timeline:</b> 11</div>
+      <div><b>Axis:</b> Apr. 07, 2026 to Sep. 01, 2026</div>
+    </div>
+  </section>
+  
+<div class="nav">
+  <button class="btn" onclick="window.print()">Print to PDF</button>
+  <a class="btn" href="index.html">Back to Tracker</a>
+  <a class="btn" href="open-active-email.html">Email View</a>
+  <a class="btn" href="open-active-gantt.html">Gantt View</a>
+  <a class="btn" href="open-active-cards.html">Card View</a>
+</div>
+
+  <section class="block">
+    <div class="axis"><div class="month-cell" style="left:0.00%;width:16.33%">Apr 2026</div><div class="month-cell" style="left:16.33%;width:21.09%">May 2026</div><div class="month-cell" style="left:37.41%;width:20.41%">Jun 2026</div><div class="month-cell" style="left:57.82%;width:21.09%">Jul 2026</div><div class="month-cell" style="left:78.91%;width:21.09%">Aug 2026</div><div class="month-cell" style="left:100.00%;width:5.00%">Sep 2026</div></div>
+    
+    <div class="g-row">
+      <div class="g-label">
+        <div class="state-name">New Mexico</div>
+        <div class="g-meta">West · Open / Active · Active now; no posted close date</div>
+      </div>
+      <div class="g-track">
+        <div class="milestone open" style="left:0.00%"></div>
+      </div>
+      <div class="g-notes">
+        <div class="note-line">Participation/request forms</div>
+        <div class="note-links"><a href="https://www.doit.nm.gov/programs/cybersecurity/state-and-local-cybersecurity-grant-program-slcgp/" target="_blank" rel="noopener">Source</a> · <a href="https://www.doit.nm.gov/programs/cybersecurity/state-and-local-cybersecurity-grant-program-slcgp/" target="_blank" rel="noopener">Program link</a></div>
+      </div>
+    </div>
+    
+    <div class="g-row">
+      <div class="g-label">
+        <div class="state-name">Alabama</div>
+        <div class="g-meta">Southeast · Open / Active · Active now; no posted close date</div>
+      </div>
+      <div class="g-track">
+        <div class="milestone open" style="left:1.36%"></div>
+      </div>
+      <div class="g-notes">
+        <div class="note-line">First-come portal</div>
+        <div class="note-links"><a href="https://slcgp.alabama.gov/apply/" target="_blank" rel="noopener">Source</a> · <a href="https://slcgp.alabama.gov/apply/" target="_blank" rel="noopener">Program link</a></div>
+      </div>
+    </div>
+    
+    <div class="g-row">
+      <div class="g-label">
+        <div class="state-name">Maryland</div>
+        <div class="g-meta">Mid-Atlantic · Open / Active · Active now; no posted close date</div>
+      </div>
+      <div class="g-track">
+        <div class="milestone open" style="left:1.36%"></div>
+      </div>
+      <div class="g-notes">
+        <div class="note-line">Rolling application</div>
+        <div class="note-links"><a href="https://mdem.maryland.gov/pages/cyber-preparedness-funding.aspx" target="_blank" rel="noopener">Source</a> · <a href="https://mdem.maryland.gov/pages/cyber-preparedness-funding.aspx" target="_blank" rel="noopener">Program link</a></div>
+      </div>
+    </div>
+    
+    <div class="g-row">
+      <div class="g-label">
+        <div class="state-name">Idaho</div>
+        <div class="g-meta">West · Open / Active · Active now; no posted close date</div>
+      </div>
+      <div class="g-track">
+        <div class="milestone open" style="left:9.52%"></div>
+      </div>
+      <div class="g-notes">
+        <div class="note-line">Participation request forms</div>
+        <div class="note-links"><a href="https://cybersecurity.idaho.gov/operation-cyber-idaho/" target="_blank" rel="noopener">Source</a> · <a href="https://cybersecurity.idaho.gov/operation-cyber-idaho/" target="_blank" rel="noopener">Program link</a></div>
+      </div>
+    </div>
+    
+    <div class="g-row">
+      <div class="g-label">
+        <div class="state-name">Georgia</div>
+        <div class="g-meta">Southeast · Open / Active · Deadline Apr. 29, 2026</div>
+      </div>
+      <div class="g-track">
+        <div class="bar open" style="left:-4.08%;width:19.05%"></div>
+      </div>
+      <div class="g-notes">
+        <div class="note-line">Online application window</div>
+        <div class="note-links"><a href="https://gema.georgia.gov/state-and-local-cybersecurity-grant-program" target="_blank" rel="noopener">Source</a> · <a href="https://gema.georgia.gov/state-and-local-cybersecurity-grant-program" target="_blank" rel="noopener">Program link</a></div>
+      </div>
+    </div>
+    
+    <div class="g-row">
+      <div class="g-label">
+        <div class="state-name">Oklahoma</div>
+        <div class="g-meta">West · Open / Active · Deadline Apr. 30, 2026</div>
+      </div>
+      <div class="g-track">
+        <div class="milestone open" style="left:15.65%"></div>
+      </div>
+      <div class="g-notes">
+        <div class="note-line">Quarterly rolling application</div>
+        <div class="note-links"><a href="https://oklahoma.gov/homeland-security/grants.html" target="_blank" rel="noopener">Source</a> · <a href="https://oklahoma.gov/homeland-security/grants.html" target="_blank" rel="noopener">Program link</a></div>
+      </div>
+    </div>
+    
+    <div class="g-row">
+      <div class="g-label">
+        <div class="state-name">Washington</div>
+        <div class="g-meta">West · Upcoming · Opens May. 04, 2026</div>
+      </div>
+      <div class="g-track">
+        <div class="bar upcoming" style="left:18.37%;width:26.53%"></div>
+      </div>
+      <div class="g-notes">
+        <div class="note-line">State application</div>
+        <div class="note-links"><a href="https://watech.wa.gov/state-local-cybersecurity-grant-program" target="_blank" rel="noopener">Source</a> · <a href="https://watech.wa.gov/state-local-cybersecurity-grant-program" target="_blank" rel="noopener">Program link</a></div>
+      </div>
+    </div>
+    
+    <div class="g-row">
+      <div class="g-label">
+        <div class="state-name">South Carolina</div>
+        <div class="g-meta">Southeast · Open / Active · Deadline May. 15, 2026</div>
+      </div>
+      <div class="g-track">
+        <div class="milestone open" style="left:25.85%"></div>
+      </div>
+      <div class="g-notes">
+        <div class="note-line">Proposal application</div>
+        <div class="note-links"><a href="https://www.sled.sc.gov/departments/state-administrative-agency-saa-homeland-security" target="_blank" rel="noopener">Source</a> · <a href="https://www.sled.sc.gov/sites/sled/files/forms/homeland/Grants/2024%20SLCGP%20Application%20Proposal%20Worksheet.pdf" target="_blank" rel="noopener">Program link</a></div>
+      </div>
+    </div>
+    
+    <div class="g-row">
+      <div class="g-label">
+        <div class="state-name">Montana</div>
+        <div class="g-meta">West · Upcoming · Opens May. 15, 2026</div>
+      </div>
+      <div class="g-track">
+        <div class="milestone upcoming" style="left:25.85%"></div>
+      </div>
+      <div class="g-notes">
+        <div class="note-line">State page / TBD</div>
+        <div class="note-links"><a href="https://des.mt.gov/Grant-Programs/SLCGPApplicationInfo" target="_blank" rel="noopener">Source</a> · <a href="https://des.mt.gov/Grant-Programs/SLCGPApplicationInfo" target="_blank" rel="noopener">Program link</a></div>
+      </div>
+    </div>
+    
+    <div class="g-row">
+      <div class="g-label">
+        <div class="state-name">Wyoming</div>
+        <div class="g-meta">West · Open / Active · Deadline May. 15, 2026</div>
+      </div>
+      <div class="g-track">
+        <div class="bar open" style="left:6.80%;width:19.05%"></div>
+      </div>
+      <div class="g-notes">
+        <div class="note-line">Proposal application</div>
+        <div class="note-links"><a href="https://hls.wyo.gov/" target="_blank" rel="noopener">Source</a> · <a href="https://hls.wyo.gov/" target="_blank" rel="noopener">Program link</a></div>
+      </div>
+    </div>
+    
+    <div class="g-row">
+      <div class="g-label">
+        <div class="state-name">Missouri</div>
+        <div class="g-meta">Northeast · Open / Active · Deadline May. 20, 2026</div>
+      </div>
+      <div class="g-track">
+        <div class="bar open" style="left:4.08%;width:25.17%"></div>
+      </div>
+      <div class="g-notes">
+        <div class="note-line">Online application window</div>
+        <div class="note-links"><a href="https://dps.mo.gov/dir/programs/ohs/grantstraining/documents/fy2025-slcgp-nofo.pdf" target="_blank" rel="noopener">Source</a> · <a href="https://dps.mo.gov/dir/programs/ohs/grantstraining/" target="_blank" rel="noopener">Program link</a></div>
+      </div>
+    </div>
+    
+  </section>
+  <section class="block">
+    <h3 style="margin:0 0 8px;font-size:14px">Watch list: signaled but not yet dated</h3>
+    <div class="note">These states reference a future cycle or reopening, but the public page does not yet provide a dated window suitable for timeline placement.</div>
+    <ul class="watch"><li><b>Florida</b> — Florida&#x27;s official SLCGP page and one-pager show the last posted application window ran October 15 to December 15, 2025 through the FDEM Grants Portal. The page says the FY24 program will be released later in 2026, but no new application dates are posted as of the April 29 refresh. <a href="https://www.floridadisaster.org/dem/finance/grants-unit/state-and-local-cybersecurity-grant-program/" target="_blank" rel="noopener">Source</a></li><li><b>Oregon</b> — Oregon&#x27;s official SLCGP page says the funding opportunity is temporarily closed as of April 1, 2026, with new applications anticipated in Summer 2026. <a href="https://www.oregon.gov/oem/emresources/grants/pages/state-and-local-cybersecurity-grant-program.aspx" target="_blank" rel="noopener">Source</a></li></ul>
+  </section>
+</div>
+</body>
+</html>

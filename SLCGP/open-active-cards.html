@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>SLCGP Open / Active Card View | April 29, 2026</title>
+<style>
+
+:root{--bg:#f7fbff;--card:#fff;--ink:#172335;--muted:#5c6a80;--line:#d8e2ef;--blue:#2563eb;--green:#15803d;--green-soft:#eaf8ef;--amber:#a16207;--amber-soft:#fff4d8;--red:#b42318;--red-soft:#fdecec;--shadow:0 10px 24px rgba(18,33,53,.08);--radius:14px}
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,Arial,Helvetica,sans-serif;background:linear-gradient(180deg,#f7fbff 0%,#eef5fd 100%);color:var(--ink)}
+.wrap{width:min(100vw,1180px);margin:0 auto;padding:14px 12px 26px}
+.hero,.block,.region,.card{background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow)}
+.hero{border-radius:18px;padding:16px 18px 14px;margin-bottom:10px;background:linear-gradient(135deg,#fff 0%,#f3f8ff 58%,#eefbf8 100%)}
+.eyebrow{font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--blue);margin-bottom:6px}
+h1{margin:0 0 6px;font-size:24px;line-height:1.08}
+.sub{color:var(--muted);font-size:12px;line-height:1.5;max-width:980px}
+.meta{display:flex;flex-wrap:wrap;gap:8px 14px;margin-top:10px;font-size:11px;color:var(--muted)}
+.meta b{color:var(--ink)}
+.nav{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 12px}
+.btn{appearance:none;border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:10px;padding:7px 10px;font-size:11px;font-weight:800;cursor:pointer;text-decoration:none;line-height:1}
+.btn:hover{transform:translateY(-1px)}
+.btn.primary{background:linear-gradient(135deg,#2f7bff 0%,var(--blue) 100%);border-color:var(--blue);color:#fff}
+.badge{display:inline-flex;align-items:center;border-radius:999px;padding:3px 8px;font-size:10px;font-weight:800;line-height:1}
+.badge.open{background:var(--green-soft);color:var(--green)}
+.badge.upcoming{background:var(--amber-soft);color:var(--amber)}
+.badge.deadline{background:#eef3ff;color:#2847a8}
+.badge.watch{background:var(--red-soft);color:var(--red)}
+a{color:var(--blue);text-decoration:none;font-weight:700}
+a:hover{text-decoration:underline}
+.note{font-size:11px;color:var(--muted);line-height:1.45}
+@media print{
+  body{background:#fff}
+  .wrap{width:100%;max-width:none;padding:0}
+  .hero,.block,.region,.card{box-shadow:none}
+  .nav{display:none!important}
+}
+
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.card{border-radius:16px;padding:13px 14px}
+.card-top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:8px}
+.card h2{margin:2px 0 0;font-size:18px;line-height:1.1}
+.region-tag{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:800}
+.stack{display:flex;flex-direction:column;gap:6px;align-items:flex-end}
+.desc{margin:0 0 9px;font-size:12px;line-height:1.52}
+.facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-bottom:8px}
+.facts div,.funding{font-size:11px;line-height:1.45;background:#f9fbff;border:1px solid #edf2f8;border-radius:10px;padding:8px 9px}
+.links{display:flex;flex-wrap:wrap;gap:10px;font-size:11px}
+@media (max-width:900px){.grid,.facts{grid-template-columns:1fr}.stack{align-items:flex-start}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <section class="hero">
+    <div class="eyebrow">GPS Team | SLCGP card view</div>
+    <h1>Open / Active Card View</h1>
+    <div class="sub"><b>Sales use:</b> a quick-scan card layout for the open and near-term upcoming states. Cards are sorted by timeline so the nearest action items surface first.</div>
+    <div class="meta">
+      <div><b>Refresh date:</b> April 29, 2026</div>
+      <div><b>States shown:</b> 11</div>
+      <div><b>Sort:</b> nearest timeline first</div>
+    </div>
+  </section>
+  
+<div class="nav">
+  <button class="btn" onclick="window.print()">Print to PDF</button>
+  <a class="btn" href="index.html">Back to Tracker</a>
+  <a class="btn" href="open-active-email.html">Email View</a>
+  <a class="btn" href="open-active-gantt.html">Gantt View</a>
+  <a class="btn" href="open-active-cards.html">Card View</a>
+</div>
+
+  <section class="grid">
+    
+    <article class="card">
+      <div class="card-top">
+        <div>
+          <div class="region-tag">West</div>
+          <h2>New Mexico</h2>
+        </div>
+        <div class="stack">
+          <span class="badge open">Open / Active</span>
+          <span class="badge deadline">Active now; no posted close date</span>
+        </div>
+      </div>
+      <p class="desc">New Mexico says its Cybersecurity Planning Committee is accepting participation interest and request forms now for prospective SLCGP-funded services covering State Fiscal Year 2027 (July 1, 2026 to June 30, 2027).</p>
+      <div class="facts">
+        <div><span class="k">Timeline</span>Active now; no posted close date</div>
+        <div><span class="k">Procurement</span>Participation/request forms</div>
+        <div><span class="k">Start</span>Not publicly posted</div>
+        <div><span class="k">End / next</span>Not publicly posted</div>
+      </div>
+      <div class="funding"><span class="k">Funding / match</span>State FY2027 services; federal FY not stated | Match: TBD on reviewed source | Min/Max: First-come / funding available basis; no min/max stated</div>
+      <div class="links">
+        <a href="https://www.doit.nm.gov/programs/cybersecurity/state-and-local-cybersecurity-grant-program-slcgp/" target="_blank" rel="noopener">Primary source</a>
+        <a href="https://www.doit.nm.gov/programs/cybersecurity/state-and-local-cybersecurity-grant-program-slcgp/" target="_blank" rel="noopener">Program / apply link</a>
+      </div>
+    </article>
+    
+    <article class="card">
+      <div class="card-top">
+        <div>
+          <div class="region-tag">Southeast</div>
+          <h2>Alabama</h2>
+        </div>
+        <div class="stack">
+          <span class="badge open">Open / Active</span>
+          <span class="badge deadline">Active now; no posted close date</span>
+        </div>
+      </div>
+      <p class="desc">Alabama&#x27;s official apply page says local government entities should apply online now on a first-come, first-served basis, and the page lists four rounds of statewide project funding spanning FY2022 through FY2025.</p>
+      <div class="facts">
+        <div><span class="k">Timeline</span>Active now; no posted close date</div>
+        <div><span class="k">Procurement</span>First-come portal</div>
+        <div><span class="k">Start</span>Not publicly posted</div>
+        <div><span class="k">End / next</span>Not publicly posted</div>
+      </div>
+      <div class="funding"><span class="k">Funding / match</span>Rounds 1-4 spanning FY2022-FY2025 | Match: No direct cost to applicant on reviewed state page | Min/Max: Statewide rounds: $3.07M / $6.27M / $4.73M / $1.55M</div>
+      <div class="links">
+        <a href="https://slcgp.alabama.gov/apply/" target="_blank" rel="noopener">Primary source</a>
+        <a href="https://slcgp.alabama.gov/apply/" target="_blank" rel="noopener">Program / apply link</a>
+      </div>
+    </article>
+    
+    <article class="card">
+      <div class="card-top">
+        <div>
+          <div class="region-tag">Mid-Atlantic</div>
+          <h2>Maryland</h2>
+        </div>
+        <div class="stack">
+          <span class="badge open">Open / Active</span>
+          <span class="badge deadline">Active now; no posted close date</span>
+        </div>
+      </div>
+      <p class="desc">Maryland&#x27;s cyber preparedness funding page says an additional funding opportunity for short-term projects has opened and confirms that a second-round application for FY2023 SLCGP funds is open on a rolling basis. The same page says FY2024 and FY2025 information is still to come.</p>
+      <div class="facts">
+        <div><span class="k">Timeline</span>Active now; no posted close date</div>
+        <div><span class="k">Procurement</span>Rolling application</div>
+        <div><span class="k">Start</span>Not publicly posted</div>
+        <div><span class="k">End / next</span>Not publicly posted</div>
+      </div>
+      <div class="funding"><span class="k">Funding / match</span>FY2023 (second round open) | Match: 20% single / 10% multi-entity | Min/Max: Not publicly stated on reviewed source</div>
+      <div class="links">
+        <a href="https://mdem.maryland.gov/pages/cyber-preparedness-funding.aspx" target="_blank" rel="noopener">Primary source</a>
+        <a href="https://mdem.maryland.gov/pages/cyber-preparedness-funding.aspx" target="_blank" rel="noopener">Program / apply link</a>
+      </div>
+    </article>
+    
+    <article class="card">
+      <div class="card-top">
+        <div>
+          <div class="region-tag">West</div>
+          <h2>Idaho</h2>
+        </div>
+        <div class="stack">
+          <span class="badge open">Open / Active</span>
+          <span class="badge deadline">Active now; no posted close date</span>
+        </div>
+      </div>
+      <p class="desc">Idaho&#x27;s Operation Cyber Idaho page includes an active &#x27;Ready to Apply&#x27; path for cities, counties, school districts, tribes, and community partners to register for SLCGP-funded services, while program work is described as continuing through federal fiscal year 2025-2026.</p>
+      <div class="facts">
+        <div><span class="k">Timeline</span>Active now; no posted close date</div>
+        <div><span class="k">Procurement</span>Participation request forms</div>
+        <div><span class="k">Start</span>Not publicly posted</div>
+        <div><span class="k">End / next</span>Not publicly posted</div>
+      </div>
+      <div class="funding"><span class="k">Funding / match</span>Program delivery for FFY 2025-2026 | Match: No direct cost to participant stated on reviewed source | Min/Max: Not publicly stated on reviewed source</div>
+      <div class="links">
+        <a href="https://cybersecurity.idaho.gov/operation-cyber-idaho/" target="_blank" rel="noopener">Primary source</a>
+        <a href="https://cybersecurity.idaho.gov/operation-cyber-idaho/" target="_blank" rel="noopener">Program / apply link</a>
+      </div>
+    </article>
+    
+    <article class="card">
+      <div class="card-top">
+        <div>
+          <div class="region-tag">Southeast</div>
+          <h2>Georgia</h2>
+        </div>
+        <div class="stack">
+          <span class="badge open">Open / Active</span>
+          <span class="badge deadline">Deadline Apr. 29, 2026</span>
+        </div>
+      </div>
+      <p class="desc">Georgia&#x27;s official SLCGP page continues to show the FY2024 application window open in Georgia EM Grants Manager beginning April 1, 2026, with applications due April 29, 2026; the March 25 state release also announced an FY2025 opening on September 1, 2026.</p>
+      <div class="facts">
+        <div><span class="k">Timeline</span>Deadline Apr. 29, 2026</div>
+        <div><span class="k">Procurement</span>Online application window</div>
+        <div><span class="k">Start</span>Apr. 01, 2026</div>
+        <div><span class="k">End / next</span>Apr. 29, 2026</div>
+      </div>
+      <div class="funding"><span class="k">Funding / match</span>FY2024 | Match: 30% single / 20% multi-entity | Min/Max: Not publicly stated on reviewed source</div>
+      <div class="links">
+        <a href="https://gema.georgia.gov/state-and-local-cybersecurity-grant-program" target="_blank" rel="noopener">Primary source</a>
+        <a href="https://gema.georgia.gov/state-and-local-cybersecurity-grant-program" target="_blank" rel="noopener">Program / apply link</a>
+      </div>
+    </article>
+    
+    <article class="card">
+      <div class="card-top">
+        <div>
+          <div class="region-tag">West</div>
+          <h2>Oklahoma</h2>
+        </div>
+        <div class="stack">
+          <span class="badge open">Open / Active</span>
+          <span class="badge deadline">Deadline Apr. 30, 2026</span>
+        </div>
+      </div>
+      <p class="desc">Oklahoma&#x27;s grants page says the State and Local Cybersecurity Grant Program is accepting new applications with 2026 deadlines of January 30, April 30, July 31, and October 30, while also noting that funding is not currently accessible and additional funding is expected later this year.</p>
+      <div class="facts">
+        <div><span class="k">Timeline</span>Deadline Apr. 30, 2026</div>
+        <div><span class="k">Procurement</span>Quarterly rolling application</div>
+        <div><span class="k">Start</span>Not publicly posted</div>
+        <div><span class="k">End / next</span>Apr. 30, 2026</div>
+      </div>
+      <div class="funding"><span class="k">Funding / match</span>TBD; page links FY22–FY25 NOFOs | Match: Depends on linked NOFO year | Min/Max: Not publicly stated on reviewed source</div>
+      <div class="links">
+        <a href="https://oklahoma.gov/homeland-security/grants.html" target="_blank" rel="noopener">Primary source</a>
+        <a href="https://oklahoma.gov/homeland-security/grants.html" target="_blank" rel="noopener">Program / apply link</a>
+      </div>
+    </article>
+    
+    <article class="card">
+      <div class="card-top">
+        <div>
+          <div class="region-tag">West</div>
+          <h2>Washington</h2>
+        </div>
+        <div class="stack">
+          <span class="badge upcoming">Upcoming</span>
+          <span class="badge deadline">Opens May. 04, 2026</span>
+        </div>
+      </div>
+      <p class="desc">Washington&#x27;s official WaTech SLCGP page now advertises the next round of SLCGP funding as opening May 4, 2026, with applications due June 12, 2026. The page also continues to reference the State Planning Committee and provides webinar resources for applicants.</p>
+      <div class="facts">
+        <div><span class="k">Timeline</span>Opens May. 04, 2026</div>
+        <div><span class="k">Procurement</span>State application</div>
+        <div><span class="k">Start</span>May. 04, 2026</div>
+        <div><span class="k">End / next</span>Jun. 12, 2026</div>
+      </div>
+      <div class="funding"><span class="k">Funding / match</span>Upcoming 2026 round opens May 4 | Match: Not publicly stated on reviewed source | Min/Max: Not publicly stated on reviewed source</div>
+      <div class="links">
+        <a href="https://watech.wa.gov/state-local-cybersecurity-grant-program" target="_blank" rel="noopener">Primary source</a>
+        <a href="https://watech.wa.gov/state-local-cybersecurity-grant-program" target="_blank" rel="noopener">Program / apply link</a>
+      </div>
+    </article>
+    
+    <article class="card">
+      <div class="card-top">
+        <div>
+          <div class="region-tag">Southeast</div>
+          <h2>South Carolina</h2>
+        </div>
+        <div class="stack">
+          <span class="badge open">Open / Active</span>
+          <span class="badge deadline">Deadline May. 15, 2026</span>
+        </div>
+      </div>
+      <p class="desc">South Carolina&#x27;s SAA page says the 2024 SLCGP application process started March 20, 2026 with solicitation emails, and applicants must submit the application by May 15, 2026, close of business. The page also notes five additional objectives in the updated proposal worksheet.</p>
+      <div class="facts">
+        <div><span class="k">Timeline</span>Deadline May. 15, 2026</div>
+        <div><span class="k">Procurement</span>Proposal application</div>
+        <div><span class="k">Start</span>Not publicly posted</div>
+        <div><span class="k">End / next</span>May. 15, 2026</div>
+      </div>
+      <div class="funding"><span class="k">Funding / match</span>FY2024 | Match: 30% single / 20% multi-entity | Min/Max: Not publicly stated on reviewed source</div>
+      <div class="links">
+        <a href="https://www.sled.sc.gov/departments/state-administrative-agency-saa-homeland-security" target="_blank" rel="noopener">Primary source</a>
+        <a href="https://www.sled.sc.gov/sites/sled/files/forms/homeland/Grants/2024%20SLCGP%20Application%20Proposal%20Worksheet.pdf" target="_blank" rel="noopener">Program / apply link</a>
+      </div>
+    </article>
+    
+    <article class="card">
+      <div class="card-top">
+        <div>
+          <div class="region-tag">West</div>
+          <h2>Montana</h2>
+        </div>
+        <div class="stack">
+          <span class="badge upcoming">Upcoming</span>
+          <span class="badge deadline">Opens May. 15, 2026</span>
+        </div>
+      </div>
+      <p class="desc">Montana says its most recent application window closed January 9, 2026 and that the next application window will open by late spring 2026.</p>
+      <div class="facts">
+        <div><span class="k">Timeline</span>Opens May. 15, 2026</div>
+        <div><span class="k">Procurement</span>State page / TBD</div>
+        <div><span class="k">Start</span>May. 15, 2026</div>
+        <div><span class="k">End / next</span>Not publicly posted</div>
+      </div>
+      <div class="funding"><span class="k">Funding / match</span>TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source</div>
+      <div class="links">
+        <a href="https://des.mt.gov/Grant-Programs/SLCGPApplicationInfo" target="_blank" rel="noopener">Primary source</a>
+        <a href="https://des.mt.gov/Grant-Programs/SLCGPApplicationInfo" target="_blank" rel="noopener">Program / apply link</a>
+      </div>
+    </article>
+    
+    <article class="card">
+      <div class="card-top">
+        <div>
+          <div class="region-tag">West</div>
+          <h2>Wyoming</h2>
+        </div>
+        <div class="stack">
+          <span class="badge open">Open / Active</span>
+          <span class="badge deadline">Deadline May. 15, 2026</span>
+        </div>
+      </div>
+      <p class="desc">Wyoming Homeland Security says the SLCGP application period is open and that applications must be submitted in ZoomGrants by Friday, May 15, 2026.</p>
+      <div class="facts">
+        <div><span class="k">Timeline</span>Deadline May. 15, 2026</div>
+        <div><span class="k">Procurement</span>Proposal application</div>
+        <div><span class="k">Start</span>Apr. 17, 2026</div>
+        <div><span class="k">End / next</span>May. 15, 2026</div>
+      </div>
+      <div class="funding"><span class="k">Funding / match</span>FY2025 | Match: 40% cost share likely applies unless waived or otherwise stated in state materials | Min/Max: Not publicly stated on reviewed source</div>
+      <div class="links">
+        <a href="https://hls.wyo.gov/" target="_blank" rel="noopener">Primary source</a>
+        <a href="https://hls.wyo.gov/" target="_blank" rel="noopener">Program / apply link</a>
+      </div>
+    </article>
+    
+    <article class="card">
+      <div class="card-top">
+        <div>
+          <div class="region-tag">Northeast</div>
+          <h2>Missouri</h2>
+        </div>
+        <div class="stack">
+          <span class="badge open">Open / Active</span>
+          <span class="badge deadline">Deadline May. 20, 2026</span>
+        </div>
+      </div>
+      <p class="desc">Missouri posted its FY2025 SLCGP Notice of Funding Opportunity and opened applications in WebGrants on April 13, 2026. Applications are due May 20, 2026 at 5:00 p.m. CST.</p>
+      <div class="facts">
+        <div><span class="k">Timeline</span>Deadline May. 20, 2026</div>
+        <div><span class="k">Procurement</span>Online application window</div>
+        <div><span class="k">Start</span>Apr. 13, 2026</div>
+        <div><span class="k">End / next</span>May. 20, 2026</div>
+      </div>
+      <div class="funding"><span class="k">Funding / match</span>FY2025 | Match: 40% cost share (cash or in-kind) | Min/Max: Federal share capped at $200,000 per applicant; no minimum stated on reviewed source</div>
+      <div class="links">
+        <a href="https://dps.mo.gov/dir/programs/ohs/grantstraining/documents/fy2025-slcgp-nofo.pdf" target="_blank" rel="noopener">Primary source</a>
+        <a href="https://dps.mo.gov/dir/programs/ohs/grantstraining/" target="_blank" rel="noopener">Program / apply link</a>
+      </div>
+    </article>
+    
+  </section>
+</div>
+</body>
+</html>
