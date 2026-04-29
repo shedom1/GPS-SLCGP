@@ -1,0 +1,2499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>SLCGP State Intelligence Tracker 2026 | Solutionz</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#060f1d;--s1:#0c1928;--s2:#102034;--bd:#1a3050;--bd2:#24445e;--ac:#00d4ff;--gr:#00e896;--am:#ffb800;--rd:#ff4455;--pu:#a855f7;--cy:#26d9c7;--or:#ff7043;--tx:#dce8f5;--mu:#526e8a;--mo:'IBM Plex Mono',monospace;--sa:'DM Sans',sans-serif}
+body.theme-day{--bg:#f4f6fa;--s1:#ffffff;--s2:#eef2f7;--bd:#dde4ed;--bd2:#c4cfdb;--ac:#0070b8;--gr:#008a5c;--am:#b87800;--rd:#c4283a;--pu:#7c3aed;--cy:#0891a8;--or:#d35a2a;--tx:#1a2533;--mu:#5e7388}
+body.theme-day .alert-bar{background:linear-gradient(90deg,rgba(196,40,58,.08),rgba(184,120,0,.06));border-bottom:1px solid rgba(184,120,0,.3)}
+body.theme-day .topbar{background:#fff;border-bottom:1px solid #dde4ed;box-shadow:0 1px 3px rgba(15,30,55,.04)}
+body.theme-day .ub{background:rgba(196,40,58,.04);border:1px solid rgba(184,120,0,.3)}
+body.theme-day th{background:#eef2f7;color:#5e7388;font-weight:600}
+body.theme-day thead{background:#eef2f7}
+body.theme-day tbody tr:hover{background:rgba(0,112,184,.04)}
+body.theme-day tbody tr.r-open{background:rgba(0,138,92,.06)}
+body.theme-day tbody tr.r-upcoming{background:rgba(184,120,0,.06)}
+body.theme-day .codebox{background:#f4f6fa;color:#5e7388}
+body.theme-day .ai-msgs{background:#eef2f7}
+body.theme-day .ai-u{background:rgba(0,112,184,.08)}
+body.theme-day .gcd{background:#fff;box-shadow:0 1px 2px rgba(15,30,55,.04)}
+body.theme-day .cli{background:#fff;box-shadow:0 1px 2px rgba(15,30,55,.04)}
+body.theme-day .cx-card{background:#fff;box-shadow:0 1px 2px rgba(15,30,55,.04)}
+body.theme-day .lc{background:#fff;box-shadow:0 8px 32px rgba(15,30,55,.08)}
+body.theme-day .toast{background:#fff;box-shadow:0 8px 32px rgba(15,30,55,.15)}
+body.theme-day .dpanel{background:#fff;box-shadow:-8px 0 32px rgba(15,30,55,.08)}
+body.theme-day .pill{background:#eef2f7}
+body.theme-day .b-open{background:rgba(0,138,92,.12);color:#008a5c;border-color:rgba(0,138,92,.3)}
+body.theme-day .b-upcoming{background:rgba(184,120,0,.14);color:#b87800;border-color:rgba(184,120,0,.3)}
+body.theme-day .b-closed{background:rgba(196,40,58,.1);color:#c4283a;border-color:rgba(196,40,58,.25)}
+body.theme-day .b-tbd{background:rgba(94,115,136,.1);color:#5e7388;border-color:rgba(94,115,136,.22)}
+body.theme-day .chip-y{background:rgba(0,138,92,.12);color:#008a5c;border-color:rgba(0,138,92,.3)}
+body.theme-day .chip-r{background:rgba(196,40,58,.1);color:#c4283a;border-color:rgba(196,40,58,.25)}
+body.theme-day .chip-b{background:rgba(0,112,184,.1);color:#0070b8;border-color:rgba(0,112,184,.25)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--sa);background:var(--bg);color:var(--tx);min-height:100vh;font-size:13px}
+/* LOGIN */
+#ls{position:fixed;inset:0;background:var(--bg);display:flex;align-items:center;justify-content:center;z-index:9999}
+.lc{background:var(--s1);border:1px solid var(--bd2);border-radius:14px;padding:2.5rem 3rem;width:430px}
+.lc .logo{font-family:var(--mo);font-size:10px;color:var(--ac);letter-spacing:3px;margin-bottom:6px}
+.lc h2{font-size:22px;font-weight:600;margin-bottom:4px}
+.lc .sub{font-size:12px;color:var(--mu);margin-bottom:1.75rem;line-height:1.5}
+.lc label{display:block;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--mu);font-family:var(--mo);margin-bottom:5px}
+.lc input[type=password]{width:100%;background:var(--bg);border:1px solid var(--bd2);border-radius:6px;padding:10px 14px;color:var(--tx);font-family:var(--mo);font-size:13px;margin-bottom:.875rem;outline:none;transition:border .2s}
+.lc input:focus{border-color:var(--ac)}
+.lbtn{width:100%;background:var(--ac);color:#000;border:none;border-radius:7px;padding:12px;font-family:var(--mo);font-size:11px;font-weight:500;cursor:pointer;letter-spacing:1px;text-transform:uppercase;transition:opacity .2s}
+.lbtn:hover{opacity:.85}
+.lerr{color:var(--rd);font-size:11px;margin-top:.4rem;display:none;font-family:var(--mo)}
+/* APP */
+#app{display:none}
+.alert-bar{background:linear-gradient(90deg,rgba(255,68,85,.12),rgba(255,184,0,.08));border-bottom:1px solid rgba(255,184,0,.3);padding:6px 1.5rem;font-size:11px;color:var(--am);display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.alert-bar strong{font-weight:600;color:var(--rd)}
+.alert-bar a{color:var(--am);font-family:var(--mo);font-size:10px;text-decoration:none}
+.alert-bar a:hover{text-decoration:underline}
+.topbar{background:var(--s1);border-bottom:1px solid var(--bd);padding:0 1.25rem;height:50px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:200}
+.brand{font-family:var(--mo);font-size:12px;color:var(--ac);letter-spacing:2px;font-weight:500}
+.brand em{color:var(--mu);font-style:normal}
+.tbl,.tbr{display:flex;align-items:center;gap:.5rem}
+.chip{font-family:var(--mo);font-size:9px;letter-spacing:1.2px;padding:3px 8px;border-radius:3px;text-transform:uppercase}
+.chip-y{background:rgba(0,229,160,.12);color:var(--gr);border:1px solid rgba(0,229,160,.28)}
+.chip-r{background:rgba(255,68,85,.1);color:var(--rd);border:1px solid rgba(255,68,85,.2)}
+.chip-b{background:rgba(0,212,255,.1);color:var(--ac);border:1px solid rgba(0,212,255,.2)}
+.ibtn{background:transparent;border:1px solid var(--bd2);border-radius:5px;color:var(--ac);padding:5px 10px;font-family:var(--mo);font-size:10px;cursor:pointer;text-transform:uppercase;letter-spacing:.8px;transition:all .2s}
+.ibtn:hover{background:rgba(0,212,255,.07);border-color:var(--ac)}
+.pill{font-size:11px;color:var(--mu);background:var(--s2);border:1px solid var(--bd);border-radius:20px;padding:3px 12px;cursor:pointer}
+.tabs{background:var(--s1);border-bottom:1px solid var(--bd);padding:0 1.25rem;display:flex}
+.tab{padding:10px 15px;font-size:10px;font-family:var(--mo);letter-spacing:.6px;cursor:pointer;color:var(--mu);border-bottom:2px solid transparent;transition:all .2s;text-transform:uppercase}
+.tab:hover{color:var(--tx)}
+.tab.active{color:var(--ac);border-bottom-color:var(--ac)}
+/* PAGES */
+.pg{padding:1rem 1.25rem;max-width:2000px;margin:0 auto}
+/* STATS */
+.srow{display:grid;grid-template-columns:repeat(8,1fr);gap:.625rem;margin-bottom:1rem}
+.sc{background:var(--s1);border:1px solid var(--bd);border-radius:8px;padding:.75rem .875rem}
+.sc-l{font-size:9px;color:var(--mu);letter-spacing:1.5px;text-transform:uppercase;font-family:var(--mo);margin-bottom:.35rem}
+.sc-v{font-size:20px;font-weight:600;font-family:var(--mo)}
+/* URGENT BANNER */
+.ub{background:rgba(255,68,85,.06);border:1px solid rgba(255,184,0,.3);border-radius:8px;padding:.875rem 1.125rem;margin-bottom:.875rem;display:flex;gap:.875rem;align-items:flex-start}
+.ub-title{font-family:var(--mo);font-size:10px;color:var(--rd);letter-spacing:1px;text-transform:uppercase;margin-bottom:.3rem}
+.ub-body{font-size:11.5px;color:var(--tx);line-height:1.55}
+.ub-body a{color:var(--ac);font-family:var(--mo);font-size:10px;text-decoration:none}
+.ub-body strong{color:var(--am)}
+/* CONTROLS */
+.ctrls{display:flex;gap:.4rem;margin-bottom:.75rem;align-items:center;flex-wrap:wrap}
+.si{background:var(--s1);border:1px solid var(--bd2);border-radius:6px;padding:6px 10px;color:var(--tx);font-size:12px;width:195px;outline:none;transition:border .2s}
+.si:focus{border-color:var(--ac)}
+.fsel{background:var(--s1);border:1px solid var(--bd2);border-radius:6px;padding:6px 10px;color:var(--tx);font-size:11px;outline:none;cursor:pointer;font-family:var(--sa)}
+.fsel option{background:#0c1928;color:#dce8f5}
+body.theme-day .fsel option{background:#ffffff;color:#1a2533}
+.ml{margin-left:auto}
+.abtn{background:var(--ac);color:#000;border:none;border-radius:6px;padding:6px 14px;font-family:var(--mo);font-size:10px;font-weight:500;letter-spacing:1px;text-transform:uppercase;cursor:pointer}
+.abtn:hover{opacity:.85}
+.gbtn{background:transparent;border:1px solid var(--gr);color:var(--gr);border-radius:6px;padding:6px 12px;font-family:var(--mo);font-size:10px;letter-spacing:.8px;text-transform:uppercase;cursor:pointer}
+.gbtn:hover{background:rgba(0,232,150,.06)}
+/* TABLE */
+.tw{background:var(--s1);border:1px solid var(--bd);border-radius:10px;overflow:auto;max-height:calc(100vh - 345px)}
+table{width:100%;border-collapse:collapse;min-width:1750px}
+thead{background:var(--s2);position:sticky;top:0;z-index:10}
+th{padding:7px 9px;text-align:left;font-family:var(--mo);font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--mu);border-bottom:1px solid var(--bd);white-space:nowrap;cursor:pointer;user-select:none}
+th:hover{color:var(--tx)}
+td{padding:7px 9px;border-bottom:1px solid rgba(26,48,80,.4);font-size:11.5px;vertical-align:middle}
+tbody tr{cursor:pointer;transition:background .1s}
+tbody tr:hover{background:rgba(255,255,255,.025)}
+tbody tr.r-open{background:rgba(0,232,150,.06)}
+tbody tr.r-open td:first-child{border-left:3px solid var(--gr)}
+tbody tr.r-upcoming{background:rgba(255,184,0,.055)}
+tbody tr.r-upcoming td:first-child{border-left:3px solid var(--am)}
+tbody tr.r-hot td:first-child{border-left:3px solid var(--rd)}
+tbody tr:last-child td{border-bottom:none}
+/* BADGES */
+.b{display:inline-flex;align-items:center;border-radius:4px;padding:2px 7px;font-family:var(--mo);font-size:9px;letter-spacing:.5px;text-transform:uppercase;white-space:nowrap}
+.b-open{background:rgba(0,232,150,.12);color:var(--gr);border:1px solid rgba(0,232,150,.3)}
+.b-closed{background:rgba(255,68,85,.09);color:var(--rd);border:1px solid rgba(255,68,85,.2)}
+.b-tbd{background:rgba(82,110,138,.12);color:var(--mu);border:1px solid rgba(82,110,138,.25)}
+.b-upcoming{background:rgba(255,184,0,.12);color:var(--am);border:1px solid rgba(255,184,0,.28)}
+.b-s1{background:rgba(255,112,67,.12);color:var(--or);border:1px solid rgba(255,112,67,.28)}
+.b-s2{background:rgba(0,212,255,.1);color:var(--ac);border:1px solid rgba(0,212,255,.22)}
+.b-s3{background:rgba(255,184,0,.12);color:var(--am);border:1px solid rgba(255,184,0,.28)}
+.b-s4{background:rgba(0,229,160,.12);color:var(--gr);border:1px solid rgba(0,229,160,.3)}
+.b-s5{background:rgba(168,85,247,.12);color:var(--pu);border:1px solid rgba(168,85,247,.28)}
+.b-ns{background:rgba(82,110,138,.1);color:var(--mu);border:1px solid rgba(82,110,138,.18)}
+.conf-H{font-family:var(--mo);font-size:9px;color:var(--gr)}
+.conf-M{font-family:var(--mo);font-size:9px;color:var(--am)}
+.conf-L{font-family:var(--mo);font-size:9px;color:var(--mu)}
+.pt-badge{font-size:9px;font-family:var(--mo);padding:2px 6px;border-radius:3px}
+.pt-rfa{background:rgba(0,212,255,.1);color:var(--ac);border:1px solid rgba(0,212,255,.22)}
+.pt-rolling{background:rgba(0,232,150,.1);color:var(--gr);border:1px solid rgba(0,232,150,.22)}
+.pt-first{background:rgba(255,112,67,.1);color:var(--or);border:1px solid rgba(255,112,67,.22)}
+.pt-part{background:rgba(168,85,247,.1);color:var(--pu);border:1px solid rgba(168,85,247,.22)}
+.pt-rfp{background:rgba(38,217,199,.1);color:var(--cy);border:1px solid rgba(38,217,199,.22)}
+.pt-tbd{background:rgba(82,110,138,.08);color:var(--mu);border:1px solid rgba(82,110,138,.18)}
+.dot{width:6px;height:6px;border-radius:50%;display:inline-block;margin-right:3px;vertical-align:middle}
+.dot-y{background:var(--gr)}.dot-n{background:var(--bd2)}.dot-p{background:var(--am)}
+.dt-hot{color:var(--rd);font-family:var(--mo);font-size:10px;font-weight:600}
+.dt-soon{color:var(--am);font-family:var(--mo);font-size:10px;font-weight:500}
+.dt-ok{color:var(--mu);font-family:var(--mo);font-size:10px}
+.dt-done{color:rgba(82,110,138,.5);font-family:var(--mo);font-size:10px}
+.dt-open{color:var(--gr);font-family:var(--mo);font-size:10px;font-weight:600}
+/* DETAIL PANEL */
+.dov{position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:500;display:none}
+.dov.open{display:block}
+.dpanel{position:fixed;top:0;right:0;width:620px;height:100vh;background:var(--s1);border-left:1px solid var(--bd2);z-index:501;overflow-y:auto;transform:translateX(100%);transition:transform .25s ease;display:flex;flex-direction:column}
+.dpanel.open{transform:translateX(0)}
+.dph{padding:1.25rem 1.25rem .875rem;border-bottom:1px solid var(--bd);display:flex;align-items:flex-start;justify-content:space-between;gap:.75rem}
+.dph-title{font-size:15px;font-weight:600;line-height:1.3;flex:1}
+.dph-close{background:none;border:none;color:var(--mu);cursor:pointer;font-size:22px;line-height:1;padding:0;flex-shrink:0}
+.dph-close:hover{color:var(--tx)}
+.dpbody{padding:1.25rem;flex:1}
+.dp-sec{font-family:var(--mo);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#0099cc;margin:1rem 0 .5rem;padding-bottom:3px;border-bottom:1px solid var(--bd)}
+.dp-row{display:flex;gap:.5rem;margin-bottom:.45rem;align-items:baseline}
+.dp-lbl{font-size:10px;color:var(--mu);font-family:var(--mo);min-width:120px;flex-shrink:0}
+.dp-val{font-size:12px;line-height:1.45;flex:1}
+.dp-val a{color:var(--ac);font-size:10px;font-family:var(--mo);text-decoration:none;display:block;margin-bottom:2px}
+.dp-val a:hover{text-decoration:underline}
+.dp-desc{font-size:11.5px;color:var(--tx);line-height:1.65;background:rgba(255,255,255,.02);border-radius:6px;padding:.75rem;margin:.75rem 0}
+.dp-forecast{font-size:11.5px;line-height:1.55;background:rgba(255,184,0,.05);border:1px solid rgba(255,184,0,.2);border-radius:6px;padding:.75rem;margin-bottom:.75rem;color:var(--am)}
+.dp-notes{font-size:11px;color:var(--gr);font-family:var(--mo);background:rgba(0,232,150,.04);border:1px solid rgba(0,232,150,.15);border-radius:6px;padding:.625rem;white-space:pre-wrap;margin-bottom:.75rem}
+.dp-edit{border-top:1px solid var(--bd);padding:1.25rem;flex-shrink:0}
+.dp-edit-title{font-family:var(--mo);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--ac);margin-bottom:.875rem}
+.eg{display:grid;grid-template-columns:1fr 1fr;gap:.625rem;margin-bottom:.625rem}
+.eg3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.625rem;margin-bottom:.625rem}
+.fg{display:flex;flex-direction:column;gap:3px}
+.fg.full{grid-column:1/-1}
+.fg label{font-size:9px;letter-spacing:1.2px;text-transform:uppercase;color:var(--mu);font-family:var(--mo)}
+.fg input,.fg select,.fg textarea{background:var(--bg);border:1px solid var(--bd2);border-radius:5px;padding:7px 9px;color:var(--tx);font-size:12px;outline:none;transition:border .2s;font-family:var(--sa)}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--ac)}
+.fg select option{background:#0c1928;color:#dce8f5}
+body.theme-day .fg select option{background:#ffffff;color:#1a2533}
+body.theme-day .fg input,body.theme-day .fg select,body.theme-day .fg textarea{background:#ffffff;border-color:#c4cfdb;color:#1a2533}
+body.theme-day .si{background:#ffffff;border-color:#c4cfdb;color:#1a2533}
+body.theme-day .fsel{background:#ffffff;border-color:#c4cfdb;color:#1a2533}
+body.theme-day input[type=password],body.theme-day input[type=text],body.theme-day input[type=email],body.theme-day input[type=url],body.theme-day input[type=date],body.theme-day textarea,body.theme-day select{background:#ffffff;color:#1a2533}
+body.theme-day .ai-in{background:#ffffff;color:#1a2533;border-color:#c4cfdb}
+body.theme-day .lc input[type=password]{background:#ffffff;color:#1a2533;border-color:#c4cfdb}
+.fg textarea{resize:vertical;min-height:56px}
+.dpfoot{display:flex;gap:.5rem;margin-top:.875rem}
+.bsv{background:var(--ac);color:#000;border:none;border-radius:5px;padding:7px 18px;font-family:var(--mo);font-size:10px;font-weight:500;letter-spacing:1px;text-transform:uppercase;cursor:pointer}
+.bsv:hover{opacity:.85}
+.bcn{background:transparent;color:var(--mu);border:1px solid var(--bd2);border-radius:5px;padding:7px 14px;font-family:var(--mo);font-size:10px;cursor:pointer}
+.bcn:hover{color:var(--tx);border-color:var(--ac)}
+/* AI TAB */
+.ai-wrap{max-width:880px}
+.ai-msgs{background:var(--s2);border:1px solid var(--bd);border-radius:8px;padding:1rem;min-height:280px;max-height:480px;overflow-y:auto;margin-bottom:.875rem}
+.ai-u{background:rgba(0,212,255,.08);border-radius:6px;padding:.625rem .875rem;margin-bottom:.75rem;font-size:12px}
+.ai-r{font-size:12px;color:var(--tx);line-height:1.7;white-space:pre-wrap;margin-bottom:.75rem}
+.ai-ir{display:flex;gap:.5rem}
+.ai-in{flex:1;background:var(--s2);border:1px solid var(--bd2);border-radius:6px;padding:9px 12px;color:var(--tx);font-size:12px;outline:none;transition:border .2s}
+.ai-in:focus{border-color:var(--ac)}
+.ai-go{background:var(--ac);color:#000;border:none;border-radius:6px;padding:9px 18px;font-family:var(--mo);font-size:10px;font-weight:500;cursor:pointer;white-space:nowrap}
+.ai-go:hover{opacity:.85}
+.ai-go:disabled{opacity:.4;cursor:not-allowed}
+.ai-quick{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:.875rem}
+.qi{background:transparent;border:1px solid var(--bd2);color:var(--ac);border-radius:5px;padding:5px 10px;font-size:10px;font-family:var(--mo);cursor:pointer;transition:all .15s}
+.qi:hover{border-color:var(--ac);background:rgba(0,212,255,.07)}
+.spin{display:inline-block;animation:sp .8s linear infinite}
+@keyframes sp{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+/* INTEL */
+.gcds{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:.875rem}
+.gcd{background:var(--s2);border:1px solid var(--bd);border-radius:8px;padding:1rem}
+.gcd-o{border-left:3px solid var(--gr)}.gcd-s{border-left:3px solid var(--am)}
+.gcd-c{border-left:3px solid var(--bd2)}.gcd-r{border-left:3px solid var(--rd)}
+.gcd-title{font-size:12px;font-weight:500;margin-bottom:.5rem}
+.gcd-row{display:flex;justify-content:space-between;margin-bottom:3px}
+.gcd-lbl{font-size:9px;color:var(--mu);font-family:var(--mo);letter-spacing:.8px;text-transform:uppercase}
+.gcd-val{font-size:10px;font-family:var(--mo);text-align:right}
+.gcd-desc{font-size:11px;color:var(--mu);line-height:1.5;margin-top:.5rem;padding-top:.5rem;border-top:1px solid var(--bd)}
+/* CHANGELOG */
+.cli{background:var(--s2);border:1px solid var(--bd);border-radius:6px;padding:.75rem .875rem;margin-bottom:.5rem}
+.cli-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:.25rem}
+.cli-s{font-weight:500;font-size:12px}
+.cli-t{font-family:var(--mo);font-size:9px;color:var(--mu)}
+.cli-d{font-size:11px;color:var(--mu);line-height:1.5}
+/* CODE */
+.codebox{background:var(--bg);border:1px solid var(--bd);border-radius:6px;padding:.875rem;font-family:var(--mo);font-size:10px;color:var(--mu);white-space:pre;overflow-x:auto;line-height:1.65;max-height:280px;overflow-y:auto}
+.ibox{background:rgba(0,212,255,.05);border:1px solid rgba(0,212,255,.18);border-radius:6px;padding:10px 12px;font-size:11px;color:#0099cc;line-height:1.6;margin-bottom:.75rem}
+.wbox{background:rgba(255,68,85,.05);border:1px solid rgba(255,68,85,.22);border-radius:6px;padding:10px 12px;font-size:11px;color:var(--rd);line-height:1.55;margin-bottom:.75rem}
+/* TOAST */
+.toast{position:fixed;bottom:1.25rem;right:1.25rem;z-index:9999;background:var(--s2);border:1px solid var(--bd2);border-radius:8px;padding:9px 16px;font-size:12px;display:flex;align-items:center;gap:7px;box-shadow:0 8px 32px rgba(0,0,0,.6);transform:translateX(140%);transition:transform .25s}
+.toast.show{transform:translateX(0)}
+.toast.ok{border-left:3px solid var(--gr)}.toast.info{border-left:3px solid var(--ac)}
+/* CONTRACTS TAB */
+.active-tog{background:transparent;border:1px solid var(--bd2);border-radius:6px;color:var(--mu);padding:6px 14px;font-family:var(--mo);font-size:10px;letter-spacing:.6px;text-transform:uppercase;cursor:pointer;transition:all .15s}
+.active-tog:hover{color:var(--tx);border-color:var(--ac)}
+.active-tog-on{background:rgba(0,212,255,.12);color:var(--ac);border-color:var(--ac)}
+.acard{background:var(--s1);border:1px solid var(--bd);border-radius:12px;padding:1.25rem;display:flex;flex-direction:column;gap:.625rem;transition:transform .15s,border-color .15s,box-shadow .15s}
+.acard:hover{transform:translateY(-2px);border-color:var(--bd2);box-shadow:0 8px 24px rgba(0,0,0,.25)}
+body.theme-day .acard:hover{box-shadow:0 8px 24px rgba(15,30,55,.1)}
+.acard.acard-open{border-left:5px solid var(--gr)}
+.acard.acard-upcoming{border-left:5px solid var(--am)}
+.acard.acard-hot{border-left:5px solid var(--rd);background:linear-gradient(180deg,rgba(255,68,85,.06),var(--s1))}
+.acard-head{display:flex;justify-content:space-between;align-items:flex-start;gap:.75rem}
+.acard-state{font-size:22px;font-weight:600;line-height:1.1;margin-bottom:.25rem}
+.acard-region{font-family:var(--mo);font-size:10px;color:var(--mu);letter-spacing:.8px;text-transform:uppercase}
+.acard-status{flex-shrink:0}
+.acard-deadline{background:rgba(255,184,0,.08);border:1px solid rgba(255,184,0,.25);border-radius:8px;padding:.625rem .75rem;display:flex;align-items:center;justify-content:space-between;gap:.5rem}
+.acard-deadline.urgent{background:rgba(255,68,85,.1);border-color:rgba(255,68,85,.3)}
+.acard-deadline.open-now{background:rgba(0,232,150,.08);border-color:rgba(0,232,150,.28)}
+.acard-deadline-lbl{font-family:var(--mo);font-size:9px;color:var(--mu);letter-spacing:1px;text-transform:uppercase}
+.acard-deadline-val{font-size:13px;font-weight:600;color:var(--am);font-family:var(--mo)}
+.acard-deadline.urgent .acard-deadline-val{color:var(--rd)}
+.acard-deadline.open-now .acard-deadline-val{color:var(--gr)}
+.acard-grid{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;font-size:11px}
+.acard-grid > div{display:flex;flex-direction:column;gap:2px}
+.acard-grid-lbl{font-family:var(--mo);font-size:9px;color:var(--mu);letter-spacing:.8px;text-transform:uppercase}
+.acard-grid-val{font-size:12px;color:var(--tx)}
+.acard-amount{color:var(--gr);font-family:var(--mo)}
+.acard-fy{color:var(--ac);font-family:var(--mo)}
+.acard-summary{font-size:11.5px;color:var(--mu);line-height:1.5;border-top:1px solid var(--bd);padding-top:.625rem}
+.acard-actions{display:flex;gap:.4rem;border-top:1px solid var(--bd);padding-top:.625rem;flex-wrap:wrap}
+.acard-btn{flex:1;min-width:fit-content;background:transparent;border:1px solid var(--bd2);color:var(--ac);border-radius:6px;padding:7px 10px;font-family:var(--mo);font-size:10px;cursor:pointer;text-align:center;letter-spacing:.5px;transition:all .15s;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:4px}
+.acard-btn:hover{background:rgba(0,212,255,.07);border-color:var(--ac)}
+.acard-btn-primary{background:var(--ac);color:#000;border-color:var(--ac);font-weight:500}
+.acard-btn-primary:hover{opacity:.85;background:var(--ac);color:#000}
+.acard-btn-email{color:var(--gr);border-color:rgba(0,232,150,.3)}
+.acard-btn-email:hover{background:rgba(0,232,150,.07);border-color:var(--gr)}
+@media print{
+ #tab-active .active-tog,#tab-active button.ibtn{display:none!important}
+ .acard{break-inside:avoid;page-break-inside:avoid}
+}
+/* CONTRACTS TAB */
+.cx-subnav{background:transparent;border:1px solid var(--bd2);border-radius:6px;color:var(--mu);padding:6px 14px;font-family:var(--mo);font-size:10px;letter-spacing:.8px;text-transform:uppercase;cursor:pointer;transition:all .15s}
+.cx-subnav:hover{color:var(--tx);border-color:var(--ac)}
+.cx-subnav.active-sub{background:rgba(0,212,255,.1);border-color:var(--ac);color:var(--ac)}
+.cx-card{background:var(--s2);border:1px solid var(--bd);border-radius:10px;padding:1.125rem;transition:border .2s}
+.cx-card:hover{border-color:var(--bd2)}
+.cx-card.status-active{border-left:4px solid var(--gr)}
+.cx-card.status-pending{border-left:4px solid var(--am)}
+.cx-card.status-not-on{border-left:4px solid var(--bd2)}
+.cx-card.status-evaluating{border-left:4px solid var(--ac)}
+.cx-card.status-expired{border-left:4px solid var(--rd)}
+.cx-card-name{font-size:14px;font-weight:600;margin-bottom:.35rem;line-height:1.25}
+.cx-card-cat{font-family:var(--mo);font-size:9px;color:var(--mu);letter-spacing:1px;text-transform:uppercase;margin-bottom:.875rem}
+.cx-card-row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:.3rem;gap:.5rem}
+.cx-card-lbl{font-size:10px;color:var(--mu);font-family:var(--mo)}
+.cx-card-val{font-size:11px;font-family:var(--mo);text-align:right;flex:1}
+.cx-status-badge{display:inline-flex;align-items:center;gap:4px;border-radius:5px;padding:3px 10px;font-family:var(--mo);font-size:10px;letter-spacing:.5px;font-weight:500}
+.cs-active{background:rgba(0,232,150,.12);color:var(--gr);border:1px solid rgba(0,232,150,.3)}
+.cs-pending{background:rgba(255,184,0,.12);color:var(--am);border:1px solid rgba(255,184,0,.28)}
+.cs-not-on{background:rgba(82,110,138,.12);color:var(--mu);border:1px solid rgba(82,110,138,.2)}
+.cs-evaluating{background:rgba(0,212,255,.1);color:var(--ac);border:1px solid rgba(0,212,255,.22)}
+.cs-expired{background:rgba(255,68,85,.1);color:var(--rd);border:1px solid rgba(255,68,85,.22)}
+.cx-card-notes{font-size:11px;color:var(--mu);line-height:1.55;margin-top:.75rem;padding-top:.625rem;border-top:1px solid var(--bd)}
+.cx-card-actions{display:flex;gap:.375rem;margin-top:.875rem}
+.cx-edit-btn{background:transparent;border:1px solid var(--bd2);color:var(--ac);border-radius:4px;padding:4px 10px;font-family:var(--mo);font-size:9px;cursor:pointer}
+.cx-edit-btn:hover{border-color:var(--ac);background:rgba(0,212,255,.07)}
+/* MATRIX */
+.cx-mtb th{padding:6px 8px;text-align:left;font-family:var(--mo);font-size:8px;letter-spacing:.8px;text-transform:uppercase;color:var(--mu);border-bottom:1px solid var(--bd);position:sticky;top:0;background:var(--s2);white-space:nowrap;z-index:5}
+.cx-mtb th:first-child{position:sticky;left:0;z-index:6;min-width:160px;background:var(--s2)}
+.cx-mtb td{padding:5px 8px;border-bottom:1px solid rgba(26,48,80,.35);font-size:11px;vertical-align:middle}
+.cx-mtb td:first-child{position:sticky;left:0;background:var(--s1);z-index:3;font-weight:500;font-size:11px;white-space:nowrap}
+.cx-mtb tr:hover td{background:rgba(255,255,255,.015)}
+.cx-mtb tr:hover td:first-child{background:rgba(255,255,255,.03)}
+.mx-cell{width:28px;height:24px;border-radius:4px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;font-size:11px;transition:opacity .15s;border:1px solid transparent}
+.mx-cell:hover{opacity:.7;border-color:rgba(255,255,255,.15)}
+.mx-active{background:rgba(0,232,150,.2);color:var(--gr);border-color:rgba(0,232,150,.35)}
+.mx-pending{background:rgba(255,184,0,.18);color:var(--am);border-color:rgba(255,184,0,.35)}
+.mx-not-on{background:rgba(82,110,138,.12);color:var(--mu)}
+.mx-na{background:rgba(26,48,80,.3);color:rgba(82,110,138,.3)}
+.mx-gap{background:rgba(255,68,85,.18);color:var(--rd);border-color:rgba(255,68,85,.35)}
+.gap-alert{background:rgba(255,68,85,.07);border:1px solid rgba(255,68,85,.3);border-radius:8px;padding:.875rem 1.125rem;display:flex;gap:.75rem;align-items:flex-start}
+.gap-alert-title{font-family:var(--mo);font-size:10px;color:var(--rd);letter-spacing:1px;text-transform:uppercase;margin-bottom:.3rem}
+
+.leg{display:flex;gap:.875rem;align-items:center;margin-bottom:.625rem;flex-wrap:wrap;font-size:10px;color:var(--mu);font-family:var(--mo)}
+.empty{text-align:center;padding:3rem 2rem;color:var(--mu)}
+.ssec{margin-bottom:1.25rem}
+.ssec h3{font-size:10px;font-family:var(--mo);letter-spacing:2px;text-transform:uppercase;color:var(--ac);margin-bottom:.625rem}
+@media print{
+ #ls,.tabs,.ctrls,.tbr,.dov,.dpanel,.toast,.alert-bar,.abtn,.gbtn,.ub{display:none!important}
+ .tw{max-height:none;overflow:visible}
+ body{background:#fff;color:#000;font-size:9px}
+ .topbar{position:relative;background:#fff;border-bottom:2px solid #000}
+ table{font-size:8px}
+ th,td{border:1px solid #ccc;padding:3px 5px!important}
+ thead{background:#eee}
+ tbody tr.r-open{background:#e6fff6!important;-webkit-print-color-adjust:exact}
+ tbody tr.r-upcoming{background:#fff9e0!important;-webkit-print-color-adjust:exact}
+ .srow{grid-template-columns:repeat(4,1fr)}
+}
+@media(max-width:1400px){.srow{grid-template-columns:repeat(4,1fr)}}
+</style>
+</head>
+<body>
+<script>
+// Apply saved theme as early as possible to avoid flash
+try{
+  const cfg=JSON.parse(localStorage.getItem('slcgpcfg')||'{}');
+  if(cfg.theme==='day')document.body.classList.add('theme-day');
+}catch(e){}
+</script>
+<div id="ls">
+ <div class="lc">
+  <div class="logo">Solutionz // GPS Team</div>
+  <h2>SLCGP State Intelligence Tracker</h2>
+  <div class="sub">All 50 States · 9 Open Windows · Washington Opening May 2026<br>Source: GPS Team Tracker + FEMA FY2024 NOFO · Refreshed Apr 29 2026</div>
+  <label>Team Access Code</label>
+  <input type="password" id="pw-in" placeholder="Enter access code" autocomplete="current-password">
+  <div class="lerr" id="lerr">Invalid code.</div>
+  <button class="lbtn" onclick="doLogin()">Access Intelligence →</button>
+ </div>
+</div>
+
+<div id="app">
+<div class="alert-bar">
+ <strong>⚡ URGENT (Apr 29):</strong>
+ Georgia closes <strong>TODAY ⏰</strong> · Oklahoma TOMORROW Apr 30 · Wyoming &amp; South Carolina May 15 · Missouri May 20 · <strong>NEW: Washington opens May 2026</strong> · Montana late spring 2026 · Oregon Summer 2026 · WI FFY24 NOFO pending. <strong>FY2026 = PILLAR Act under Congressional consideration.</strong>
+ <a href="https://www.fema.gov/grants/preparedness/state-local-cybersecurity-grant-program" target="_blank">FEMA →</a>
+ <a href="https://www.myfundingtracker.com/" target="_blank">myfundingtracker.com →</a>
+</div>
+<div class="topbar">
+ <div class="tbl">
+  <div class="brand">SLCGP<em>//</em>TRACKER <span style="font-size:9px;color:var(--mu)">2026</span></div>
+  <div class="chip chip-y">9 Open Windows</div>
+  <div class="chip chip-r">FY2025 = Final IIJA Year</div>
+  <div class="chip chip-b">Apr 29 2026 Refresh</div>
+ </div>
+ <div class="tbr">
+  <span style="font-size:10px;color:var(--mu);font-family:var(--mo)" id="syncd">—</span>
+  <button class="ibtn" onclick="toggleTheme()" id="theme-btn" title="Toggle day/night theme">🌙 Night</button>
+  <button class="ibtn" onclick="quickSync()" title="Sync to Google Sheets">⟳ Sync</button>
+  <button class="ibtn" onclick="window.print()">🖨 Print</button>
+  <div class="pill" onclick="logout()">🔐 Logout</div>
+ </div>
+</div>
+<div class="tabs">
+ <div class="tab active" onclick="switchTab('active')" id="tt-active">🔥 Active Now</div>
+ <div class="tab" onclick="switchTab('tracker')" id="tt-tracker">All 50 States</div>
+ <div class="tab" onclick="switchTab('ai')" id="tt-ai">🤖 AI Search</div>
+ <div class="tab" onclick="switchTab('intel')" id="tt-intel">Intelligence Cards</div>
+ <div class="tab" onclick="switchTab('changes')" id="tt-changes">Change Log</div>
+ <div class="tab" onclick="switchTab('contracts')" id="tt-contracts">📋 State Contracts</div>
+ <div class="tab" onclick="switchTab('sheets')" id="tt-sheets">🔒 Admin</div>
+ <div class="tab" onclick="switchTab('settings')" id="tt-settings">Settings</div>
+</div>
+<!-- ACTIVE NOW TAB -->
+<div id="tab-active">
+<div class="pg">
+ <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:.625rem">
+  <div>
+   <div style="font-family:var(--mo);font-size:10px;color:var(--ac);letter-spacing:2px;text-transform:uppercase;margin-bottom:.25rem">Active &amp; Upcoming Opportunities</div>
+   <div style="font-size:13px;color:var(--mu)" id="active-summary">Loading…</div>
+  </div>
+  <div style="display:flex;gap:.4rem">
+   <button id="active-filter-all" class="active-tog active-tog-on" onclick="setActiveFilter('all')">All</button>
+   <button id="active-filter-open" class="active-tog" onclick="setActiveFilter('open')">🟢 Open Only</button>
+   <button id="active-filter-upcoming" class="active-tog" onclick="setActiveFilter('upcoming')">⚡ Upcoming Only</button>
+   <button class="ibtn" onclick="window.print()" style="margin-left:.5rem">🖨 Print</button>
+  </div>
+ </div>
+ <div id="active-cards" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:1rem"></div>
+ <div id="active-empty" style="display:none;text-align:center;padding:3rem;color:var(--mu)">No states match the filter.</div>
+</div>
+</div>
+<!-- TRACKER TAB -->
+<div id="tab-tracker" style="display:none">
+<div class="pg">
+ <div class="srow" id="srow"></div>
+ <div class="ub">
+  <div style="font-size:20px;flex-shrink:0">🔥</div>
+  <div>
+   <div class="ub-title">Action Required — Open &amp; Urgent Windows (April 28, 2026)</div>
+   <div class="ub-body">
+    <strong>CLOSES TODAY:</strong> Georgia FY2024 (Apr 29, EM Grants Manager — last call!) ·
+    <strong>Apr 30:</strong> Oklahoma quarterly deadline (note: funding may not be immediately accessible) ·
+    <strong>May 15:</strong> Wyoming FY2025 (ZoomGrants) + South Carolina FY2024 (SLED/SAA) ·
+    <strong>May 20:</strong> Missouri FY2025 (WebGrants, $200K max) ·
+    <strong>Ongoing:</strong> Alabama first-come, Idaho participation, Maryland rolling, New Mexico participation forms ·
+    <strong>Watch:</strong> Montana "late spring 2026" + Oregon Summer 2026 + Wisconsin FFY24 pending (check <a href="https://det.wi.gov/Pages/Cybersecurity_Grants.aspx" target="_blank">det.wi.gov</a> daily) ·
+    <strong>⚠ On Hold:</strong> Kentucky FFY2025 allocations frozen per 2025 KOHS annual report.
+   </div>
+  </div>
+ </div>
+ <div class="ctrls">
+  <input class="si" id="srch" type="text" placeholder="Search state, region, notes..." oninput="rt()">
+  <select class="fsel" id="fw" onchange="rt()">
+   <option value="">All Windows</option>
+   <option value="open">🟢 Open Now</option>
+   <option value="upcoming">⚡ Upcoming</option>
+   <option value="closed">Closed</option>
+   <option value="tbd">TBD/Forecasted</option>
+  </select>
+  <select class="fsel" id="freg" onchange="rt()">
+   <option value="">All Regions</option>
+   <option value="Southeast">Southeast</option>
+   <option value="West">West</option>
+   <option value="Northeast">Northeast</option>
+   <option value="Mid-Atlantic">Mid-Atlantic</option>
+  </select>
+  <select class="fsel" id="fpt" onchange="rt()">
+   <option value="">All Procurement Types</option>
+   <option value="RFA">RFA</option>
+   <option value="RFP">RFP</option>
+   <option value="Rolling">Rolling Application</option>
+   <option value="First-come">First-Come Portal</option>
+   <option value="Participation">Participation/Request</option>
+   <option value="State application">State Application</option>
+   <option value="Proposal">Proposal Application</option>
+   <option value="Online">Online Window</option>
+  </select>
+  <select class="fsel" id="fconf" onchange="rt()">
+   <option value="">All Confidence</option>
+   <option value="High">High Confidence</option>
+   <option value="Medium">Medium</option>
+   <option value="Low">Low</option>
+  </select>
+  <select class="fsel" id="fsal" onchange="rt()">
+   <option value="">All Sales Status</option>
+   <option value="prospect">Prospect</option>
+   <option value="outreach">Outreach</option>
+   <option value="engaged">Engaged</option>
+   <option value="proposal">Proposal</option>
+   <option value="won">Won</option>
+  </select>
+  <div class="ml" style="display:flex;gap:.4rem">
+   <button class="gbtn" onclick="expCSV()">↓ CSV</button>
+   <button style="background:transparent;border:1px solid var(--pu);color:var(--pu);border-radius:6px;padding:6px 12px;font-family:var(--mo);font-size:10px;cursor:pointer" onclick="window.print()">🖨 PDF</button>
+  </div>
+ </div>
+ <div class="leg">
+  <span>Row:</span>
+  <span style="color:var(--gr)">■ Open window</span>
+  <span style="color:var(--am)">■ Upcoming/Watch</span>
+  <span style="color:var(--mu)">■ TBD or closed</span>
+  <span style="font-size:10px;font-family:var(--mo)">Conf: <span style="color:var(--gr)">High</span> / <span style="color:var(--am)">Med</span> / <span style="color:var(--mu)">Low</span></span>
+  <span style="color:var(--gr);font-family:var(--mo);font-size:10px">✉ = Email update to rep</span>
+  <span style="color:var(--mu)">Source: GPS Team SLCGP Tracker + FEMA FY2024 NOFO (Refreshed Apr 29 2026)</span>
+ </div>
+ <div class="tw">
+  <table>
+   <thead><tr>
+    <th onclick="srt('state')">State ↕</th>
+    <th onclick="srt('region')">Region ↕</th>
+    <th onclick="srt('window')">Status ↕</th>
+    <th onclick="srt('windowStart')">Opens</th>
+    <th onclick="srt('windowEnd')">Closes / Next</th>
+    <th onclick="srt('fy')">FY / Round</th>
+    <th>FY2024 Allocation</th>
+    <th>FY2025 Est.</th>
+    <th>Match</th>
+    <th>Max Award</th>
+    <th>Procurement</th>
+    <th>Confidence</th>
+    <th onclick="srt('sales')">Sales</th>
+    <th onclick="srt('marketing')">Mkt List</th>
+    <th>Source</th>
+    <th>Forecast / Intel</th>
+    <th>Notes</th>
+    <th>Actions</th>
+   </tr></thead>
+   <tbody id="tbody"></tbody>
+  </table>
+ </div>
+</div>
+</div>
+
+<!-- AI TAB -->
+<div id="tab-ai" style="display:none">
+<div class="pg">
+ <div class="ai-wrap">
+  <div style="display:flex;align-items:center;gap:.75rem;margin-bottom:.875rem">
+   <div style="font-family:var(--mo);font-size:10px;color:var(--ac);letter-spacing:2px;text-transform:uppercase">AI SLCGP Intelligence Search</div>
+   <div class="chip chip-b">Claude Powered</div>
+  </div>
+  <div class="ibox">Ask about any state's SLCGP status, open windows, procurement requirements, match percentages, advisory committees, or what to do next. Sourced from GPS Team tracker (Apr 27 2026) + FEMA FY2024 NOFO + verified state pages.</div>
+  <div class="ai-quick">
+   <button class="qi" onclick="aiAsk('What are the 9 confirmed open SLCGP windows right now as of April 28 2026? List each with deadline and how to apply.')">🔥 All 9 open windows?</button>
+   <button class="qi" onclick="aiAsk('What is happening with Wisconsin SLCGP? FFY24 and FFY25 windows, status, contacts, what to do now.')">🔍 Wisconsin FFY24/25 status?</button>
+   <button class="qi" onclick="aiAsk('Georgia SLCGP closes TOMORROW April 29 2026. What do I need to know to help a prospect apply? Match, portal, contacts.')">⚡ GA closes tomorrow — help!</button>
+   <button class="qi" onclick="aiAsk('Which states have upcoming or imminent SLCGP windows opening in May or Summer 2026? Montana, Oregon, Wisconsin — what is the intel?')">📅 Upcoming windows (May–Summer)?</button>
+   <button class="qi" onclick="aiAsk('What are the key differences between SLCGP FY2024 (30% match) and FY2025 (40% match)? What changed?')">📋 FY24 vs FY25 differences?</button>
+   <button class="qi" onclick="aiAsk('Draft a short email to a county IT director explaining that Georgia FY2024 SLCGP closes April 29 and they should apply now through EM Grants Manager.')">✉ Draft GA urgency email</button>
+   <button class="qi" onclick="aiAsk('Which states have the highest FY2024 SLCGP allocations? Rank top 10 and list confirmed allocations from the NOFO.')">💰 Top 10 allocations by state?</button>
+   <button class="qi" onclick="aiAsk('Kentucky SLCGP allocations are on HOLD. What does that mean and what should Solutionz do?')">⚠ Kentucky hold — what now?</button>
+  </div>
+  <div class="ai-msgs" id="ai-msgs">
+   <div style="color:var(--mu);font-size:11px;text-align:center;padding:2rem">Ask anything about SLCGP state windows, procurement, allocations, or sales strategy...</div>
+  </div>
+  <div class="ai-ir">
+   <input class="ai-in" id="ai-in" type="text" placeholder="Ask about any state, open window, match requirement, advisory committee..." onkeydown="if(event.key==='Enter')aiSend()">
+   <button class="ai-go" id="ai-btn" onclick="aiSend()">Ask →</button>
+  </div>
+ </div>
+</div>
+</div>
+
+<!-- INTEL TAB -->
+<div id="tab-intel" style="display:none">
+<div class="pg">
+ <div style="font-family:var(--mo);font-size:10px;color:var(--ac);letter-spacing:2px;text-transform:uppercase;margin-bottom:.875rem">Grant Intelligence Cards — Source: GPS Team Tracker + FEMA (Apr 27 2026)</div>
+ <div class="wbox">⚠ <strong>FY2025 is the FINAL authorized year of SLCGP under IIJA.</strong> FY2026 requires new Congressional legislation — NOT authorized as of April 28 2026. Do NOT promise FY2026 funding to prospects.</div>
+ <div class="gcds" id="gcards"></div>
+</div>
+</div>
+
+<!-- CHANGELOG TAB -->
+<div id="tab-changes" style="display:none">
+<div class="pg">
+ <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.875rem">
+  <div style="font-family:var(--mo);font-size:10px;color:var(--ac);letter-spacing:2px;text-transform:uppercase">Change Log</div>
+  <button class="gbtn" onclick="clearCL()">Clear</button>
+ </div>
+ <div id="cl-content"></div>
+</div>
+</div>
+
+<!-- SHEETS TAB -->
+<div id="tab-sheets" style="display:none">
+<div class="pg">
+
+<!-- ADMIN LOGIN GATE -->
+<div id="admin-gate" style="max-width:430px;margin:2rem auto;background:var(--s1);border:1px solid var(--bd2);border-radius:12px;padding:2rem 2.5rem">
+ <div style="font-family:var(--mo);font-size:10px;color:var(--ac);letter-spacing:2px;text-transform:uppercase;margin-bottom:.5rem">🔒 Admin Console</div>
+ <h3 style="font-size:18px;font-weight:600;margin-bottom:.4rem">Restricted Access</h3>
+ <div style="font-size:12px;color:var(--mu);margin-bottom:1.25rem;line-height:1.5">This area contains backend configuration including Google Apps Script code, Sheets URL credentials, and data integration tools. Admin password required.</div>
+ <label style="display:block;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--mu);font-family:var(--mo);margin-bottom:5px">Admin Password</label>
+ <input type="password" id="admin-pw-in" placeholder="Enter admin password" style="width:100%;background:var(--bg);border:1px solid var(--bd2);border-radius:6px;padding:10px 14px;color:var(--tx);font-family:var(--mo);font-size:13px;margin-bottom:.875rem;outline:none" onkeydown="if(event.key==='Enter')adminLogin()">
+ <div id="admin-err" style="color:var(--rd);font-size:11px;margin-bottom:.5rem;display:none;font-family:var(--mo)">Invalid admin password.</div>
+ <button class="lbtn" onclick="adminLogin()">Authenticate →</button>
+</div>
+
+<!-- ADMIN PANEL — hidden by default -->
+<div id="admin-panel" style="display:none">
+ <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem">
+  <div style="font-family:var(--mo);font-size:10px;color:var(--ac);letter-spacing:2px;text-transform:uppercase">🔓 Admin Console — Authenticated</div>
+  <button class="ibtn" onclick="adminLogout()">Lock Admin →</button>
+ </div>
+ <div class="ssec">
+  <h3>Google Sheets Sync URL</h3>
+  <div class="ibox">Apps Script Web App URL used by all team members for Push/Pull sync. Only admins can modify.</div>
+  <div style="display:flex;gap:.5rem;margin-bottom:.75rem">
+   <input type="text" id="sheet-url" placeholder="https://script.google.com/macros/s/YOUR_ID/exec" style="flex:1;background:var(--bg);border:1px solid var(--bd2);border-radius:6px;padding:8px 11px;color:var(--tx);font-size:12px;outline:none">
+   <button class="bsv" onclick="saveSheetURL()">Save URL</button>
+  </div>
+  <div style="display:flex;gap:.5rem;margin-bottom:.875rem">
+   <button class="gbtn" onclick="pushSheets()">↑ Test Push</button>
+   <button class="ibtn" onclick="pullSheets()">↓ Test Pull</button>
+   <button class="gbtn" style="border-color:var(--pu);color:var(--pu)" onclick="expCSV()">↓ CSV Export</button>
+  </div>
+ </div>
+ <div class="ssec">
+  <h3>Apps Script Code (paste into script.google.com)</h3>
+  <div class="codebox" id="appsscript"></div>
+ </div>
+ <div class="ssec">
+  <h3>Change Admin Password</h3>
+  <div style="font-size:11px;color:var(--mu);margin-bottom:.5rem">Default admin password is <span style="color:var(--ac);font-family:var(--mo)">slcgp-admin</span>. Change it now.</div>
+  <div style="display:flex;gap:.5rem">
+   <input type="password" id="admin-newpw" placeholder="New admin password (min 8 chars)" style="background:var(--bg);border:1px solid var(--bd2);border-radius:6px;padding:8px 11px;color:var(--tx);font-size:12px;width:280px;outline:none">
+   <button class="bsv" onclick="changeAdminPW()">Update</button>
+  </div>
+ </div>
+</div>
+
+</div>
+</div>
+
+<!-- SETTINGS TAB -->
+<!-- CONTRACTS TAB -->
+<div id="tab-contracts" style="display:none">
+<div class="pg">
+
+<!-- STATS ROW -->
+<div id="cx-stats" style="display:grid;grid-template-columns:repeat(6,1fr);gap:.625rem;margin-bottom:1rem"></div>
+
+<!-- URGENT GAP ALERTS -->
+<div id="cx-gaps" style="margin-bottom:1rem"></div>
+
+<!-- SUB-NAV -->
+<div style="display:flex;gap:4px;margin-bottom:1rem;align-items:center;flex-wrap:wrap">
+ <button id="cxb-portfolio" class="cx-subnav active-sub" onclick="cxTab('portfolio')">Contract Portfolio</button>
+ <button id="cxb-matrix" class="cx-subnav" onclick="cxTab('matrix')">State Coverage Matrix</button>
+ <button id="cxb-add" class="cx-subnav" onclick="cxTab('add')">+ Add Contract</button>
+ <div style="margin-left:auto;display:flex;gap:.4rem">
+  <button class="gbtn" onclick="expContractsCSV()">↓ CSV</button>
+  <button class="ibtn" onclick="window.print()">🖨 Print</button>
+ </div>
+</div>
+
+<!-- PORTFOLIO VIEW -->
+<div id="cx-portfolio">
+ <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:.875rem" id="cx-cards"></div>
+</div>
+
+<!-- MATRIX VIEW -->
+<div id="cx-matrix" style="display:none">
+ <div style="font-size:11px;color:var(--mu);margin-bottom:.625rem">Color: <span style="color:var(--gr)">■ Solutionz Active</span> · <span style="color:var(--am)">■ Pending/In Process</span> · <span style="color:var(--bd2)">■ Not On Contract</span> · <span style="color:var(--mu);opacity:.4">■ N/A for this state</span> · <span style="color:var(--rd)">■ Gap: open window, no coverage</span></div>
+ <div style="background:var(--s1);border:1px solid var(--bd);border-radius:10px;overflow:auto;max-height:calc(100vh - 300px)">
+  <table id="cx-matrix-tbl" style="min-width:1400px;border-collapse:collapse;width:100%"></table>
+ </div>
+</div>
+
+<!-- ADD/EDIT FORM -->
+<div id="cx-add" style="display:none;max-width:700px">
+ <div style="background:var(--s1);border:1px solid var(--bd);border-radius:10px;padding:1.25rem">
+  <div style="font-family:var(--mo);font-size:10px;color:var(--ac);letter-spacing:2px;text-transform:uppercase;margin-bottom:1rem">Add / Edit Contract</div>
+  <input type="hidden" id="cx-edit-id">
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:.75rem">
+   <div class="fg"><label>Contract Name</label><input type="text" id="cx-name" placeholder="e.g. NASPO ValuePoint Cybersecurity"></div>
+   <div class="fg"><label>Contract ID / Number</label><input type="text" id="cx-num" placeholder="e.g. #020218-NAV"></div>
+   <div class="fg"><label>Category</label>
+    <select id="cx-cat">
+     <option value="Multi-State Cooperative">Multi-State Cooperative</option>
+     <option value="State-Specific">State-Specific</option>
+     <option value="Federal Schedule">Federal Schedule</option>
+     <option value="Education Cooperative">Education Cooperative</option>
+     <option value="Other">Other</option>
+    </select>
+   </div>
+   <div class="fg"><label>Primary State(s)</label><input type="text" id="cx-states" placeholder="All states / TX only / CA only…"></div>
+   <div class="fg"><label>Solutionz Status</label>
+    <select id="cx-solz-status">
+     <option value="active">✅ Active Agreement</option>
+     <option value="pending">🔄 Pending / In Process</option>
+     <option value="not-on">❌ Not Currently On</option>
+     <option value="evaluating">🔍 Evaluating</option>
+     <option value="expired">⏰ Expired — Renewal Needed</option>
+    </select>
+   </div>
+   <div class="fg"><label>Solutionz Contract #</label><input type="text" id="cx-solz-num" placeholder="Our contract number on this vehicle"></div>
+   <div class="fg"><label>Expiration Date</label><input type="date" id="cx-expiry"></div>
+   <div class="fg"><label>Admin Contact</label><input type="text" id="cx-contact" placeholder="Name / email"></div>
+   <div class="fg"><label>Contract URL</label><input type="url" id="cx-url" placeholder="https://..."></div>
+   <div class="fg"><label>Annual Fee / Cost</label><input type="text" id="cx-fee" placeholder="e.g. $10,000/yr or None"></div>
+  </div>
+  <div class="fg" style="margin-bottom:.75rem"><label>Notes / Eligible Products</label><textarea id="cx-notes" rows="3" placeholder="Which Solutionz products are on this contract? Eligible categories? Key restrictions?..."></textarea></div>
+  <div style="display:flex;gap:.5rem;margin-top:.875rem">
+   <button class="bsv" onclick="saveCx()">Save Contract</button>
+   <button class="bcn" onclick="cxTab('portfolio')">Cancel</button>
+   <button id="cx-del-btn" style="display:none;background:rgba(255,68,85,.1);color:var(--rd);border:1px solid rgba(255,68,85,.3);border-radius:5px;padding:7px 14px;font-family:var(--mo);font-size:10px;cursor:pointer" onclick="delCx()">Delete</button>
+  </div>
+ </div>
+</div>
+
+</div>
+</div><!-- end tab-contracts -->
+
+<div id="tab-settings" style="display:none">
+<div class="pg" style="max-width:500px">
+ <div class="ssec">
+  <h3>Change Password</h3>
+  <div style="display:flex;gap:.5rem">
+   <input type="password" id="newpw" placeholder="New password (min 6 chars)" style="background:var(--bg);border:1px solid var(--bd2);border-radius:6px;padding:8px 11px;color:var(--tx);font-size:12px;width:240px;outline:none">
+   <button class="bsv" onclick="changePW()">Update</button>
+  </div>
+ </div>
+ <div class="ssec" style="margin-top:1.25rem">
+  <h3>Email Update Link</h3>
+  <div style="font-size:11px;color:var(--mu);margin-bottom:.5rem">URL inserted into the email body when sending row updates to reps. Defaults to GPS Team SLCGP tracker.</div>
+  <div style="display:flex;gap:.5rem">
+   <input type="url" id="siteUrlInput" placeholder="https://www.myfundingtracker.com/SLCGP/" style="background:var(--bg);border:1px solid var(--bd2);border-radius:6px;padding:8px 11px;color:var(--tx);font-size:12px;flex:1;outline:none">
+   <button class="bsv" onclick="saveSiteUrl()">Save</button>
+  </div>
+ </div>
+ <div class="ssec" style="margin-top:1.25rem">
+  <h3>Data</h3>
+  <div style="display:flex;gap:.5rem">
+   <button class="gbtn" onclick="expCSV()">↓ Export CSV</button>
+   <button style="background:rgba(255,68,85,.1);color:var(--rd);border:1px solid rgba(255,68,85,.3);border-radius:6px;padding:6px 12px;font-family:var(--mo);font-size:10px;cursor:pointer" onclick="if(confirm('Reset all sales data?')){localStorage.removeItem('slcgp50d');localStorage.removeItem('slcgp50cl');location.reload()}">⚠ Reset Sales Data</button>
+  </div>
+  <div style="margin-top:.5rem;font-size:11px;color:var(--mu)">Sales tracking data stored in browser localStorage. Use Google Sheets to sync across devices.</div>
+ </div>
+</div>
+</div>
+</div><!-- end #app -->
+
+<!-- DETAIL PANEL -->
+<div class="dov" id="dov" onclick="closeD()"></div>
+<div class="dpanel" id="dpanel">
+ <div class="dph">
+  <div>
+   <div class="dph-title" id="dp-title">State Detail</div>
+   <div style="margin-top:5px" id="dp-badges"></div>
+  </div>
+  <button class="dph-close" onclick="closeD()">×</button>
+ </div>
+ <div class="dpbody" id="dp-body"></div>
+ <div class="dp-edit">
+  <div class="dp-edit-title">Sales &amp; Engagement Tracking</div>
+  <div class="eg3">
+   <div class="fg"><label>Sales Status</label>
+    <select id="e-sales">
+     <option value="">Not Started</option><option value="prospect">Prospect</option>
+     <option value="outreach">Outreach</option><option value="engaged">Engaged</option>
+     <option value="proposal">Proposal</option><option value="won">Won</option>
+    </select>
+   </div>
+   <div class="fg"><label>Marketing List</label>
+    <select id="e-mkt">
+     <option value="no">Not Shared</option><option value="yes">Shared ✓</option><option value="pending">Pending</option>
+    </select>
+   </div>
+   <div class="fg"><label>Priority</label>
+    <select id="e-pri">
+     <option value="medium">Medium</option><option value="critical">Critical</option>
+     <option value="high">High</option><option value="low">Low</option><option value="watch">Watch</option>
+    </select>
+   </div>
+  </div>
+  <div class="eg">
+   <div class="fg"><label>State Contract Type</label>
+    <select id="e-ctype">
+     <option value="">None / Unknown</option><option value="NASPO ValuePoint">NASPO ValuePoint</option>
+     <option value="Sourcewell">Sourcewell</option><option value="TX DIR">TX DIR Contract</option>
+     <option value="NC State 240x">NC State 240x</option><option value="MiDEAL">MiDEAL (MI)</option>
+     <option value="CO OIT">CO OIT (CO)</option><option value="FL DMS STC">FL DMS STC</option>
+     <option value="CA DGS/CMAS">CA DGS/CMAS</option><option value="E&I Cooperative">E&amp;I Cooperative</option>
+     <option value="OMNIA Partners">OMNIA Partners</option><option value="State-specific">State-specific</option>
+    </select>
+   </div>
+   <div class="fg"><label>Solutionz on Contract?</label>
+    <select id="e-solz">
+     <option value="unknown">Unknown</option><option value="yes">Yes ✓</option>
+     <option value="no">No</option><option value="pending">Pending</option>
+    </select>
+   </div>
+  </div>
+  <div class="eg">
+   <div class="fg"><label>Advisory Cmte Status</label>
+    <select id="e-adv">
+     <option value="">Not Tracked</option><option value="identified">Identified</option>
+     <option value="requested">Requested</option><option value="accepted">Accepted</option>
+     <option value="signed-up">Signed Up</option><option value="active">Active Member</option>
+    </select>
+   </div>
+   <div class="fg"><label>Contact Email</label>
+    <input type="email" id="e-email" placeholder="contact@agency.gov">
+   </div>
+  </div>
+  <div class="fg full" style="margin-bottom:.5rem"><label>Internal Sales Notes</label><textarea id="e-notes" rows="3" placeholder="Intel, next steps, action items..."></textarea></div>
+  <div class="fg full"><label>CRM Reference</label><input type="text" id="e-listref" placeholder="Salesforce campaign ID, list name..."></div>
+  <div class="dpfoot">
+   <button class="bsv" onclick="saveD()">Save</button>
+   <button class="bcn" onclick="closeD()">Cancel</button>
+   <button id="e-email-btn" style="display:none;background:transparent;border:1px solid rgba(0,232,150,.3);color:var(--gr);border-radius:5px;padding:7px 12px;font-family:var(--mo);font-size:10px;cursor:pointer" onclick="emailAct()">✉ Email Action</button>
+  </div>
+ </div>
+</div>
+
+<div class="toast" id="toast"><span id="ti">✓</span><span id="tm">Saved</span></div>
+<script>
+// ============================================================
+// ALL 50 STATES + DC — VERIFIED DATA
+// Source 1: "SLCGP 2026 State Windows Tracker" PDF, last refreshed April 27, 2026
+// Source 2: FY2024 SLCGP NOFO (FEMA) — exact allocations
+// Source 3: State official program pages
+// FY2025 estimates = FY2024 allocation × (91.75 / 279.87) ≈ × 0.328
+// FY2024 allocations are VERIFIED from FEMA NOFO ($279,873,562 total)
+// ============================================================
+const ALL_STATES = [
+// ── REGION: SOUTHEAST ──────────────────────────────────────
+{state:"Alabama",abbr:"AL",region:"Southeast",
+window:"open",windowStart:"",windowEnd:"First-come / ongoing",
+fy:"FY2022–FY2025",fy24:"$5,825,678",fy25est:"~$1,910,000",
+match:"No direct cost to applicant (waived per state page)",maxAward:"Not stated",
+ptype:"First-come portal",
+desc:"Alabama's official apply page says local government entities should apply online now on a first-come, first-served basis. Page lists four rounds: FY2022 ($3.07M), FY2023 ($6.27M), FY2024 ($4.73M), FY2025 ($1.55M). OPEN — apply now.",
+source:"Alabama apply page",sourceUrl:"https://adem.alabama.gov",
+drillUrl:"https://adem.alabama.gov",
+advisory:"Program page / updates",procDetail:"Open portal / first-come, first-served. Start on the Alabama apply page. If funded, purchases follow grant conditions and local/state procurement rules.",
+priorUrl:"Alabama fact sheets page",confidence:"High",
+forecast:"Currently open first-come portal. Apply immediately; funds are limited and allocated until exhausted.",
+notes:"🔥 OPEN — first-come. Rounds 1-4 spanning FY2022-FY2025. No match required per state page."},
+
+{state:"Arkansas",abbr:"AR",region:"Southeast",
+window:"tbd",windowStart:"",windowEnd:"",
+fy:"FY2025",fy24:"$4,778,475",fy25est:"~$1,567,000",
+match:"TBD",maxAward:"Not stated",
+ptype:"State page / TBD",
+desc:"Arkansas homeland security/infrastructure grant pages reviewed — no dated 2026 local SLCGP window publicly posted on surfaced official pages as of April 2026 refresh.",
+source:"Arkansas homeland security grants page",sourceUrl:"https://www.dfa.arkansas.gov/offices/homeland-security/",
+drillUrl:"https://www.dfa.arkansas.gov/offices/homeland-security/",
+advisory:"Committee / program page",procDetail:"No dated 2026 local subrecipient packet posted. Monitor official state page.",
+priorUrl:"Arkansas homeland security grants page",confidence:"Low",
+forecast:"No dated window found. FY2026 requires new Congressional authorization. Monitor official state page.",
+notes:"No dated window found as of Apr 2026 tracker refresh."},
+
+{state:"Florida",abbr:"FL",region:"Southeast",
+window:"closed",windowStart:"2025-10-15",windowEnd:"2025-12-15",
+fy:"FY2023 federal funds / FY2025-26 state cycle",fy24:"$8,620,815",fy25est:"~$2,828,000",
+match:"20% (on reviewed source — lower than federal 40%)",maxAward:"Not stated",
+ptype:"State application",
+desc:"Florida's official SLCGP page and state one-pager confirm the application window ran October 15 to December 15, 2025 through the FDEM Grants Portal. This cycle uses FY2023 federal funding, allocates $11,997,340 to Florida. NOTE: FL next FY2024 release will come later in 2026.",
+source:"Florida SLCGP page",sourceUrl:"https://www.floridadisaster.org/grants/",
+drillUrl:"https://www.floridadisaster.org/grants/",
+advisory:"Committee / program page",procDetail:"State pass-through application through FDEM Grants Portal. Upload supporting documents in portal and follow state grant instructions.",
+priorUrl:"Florida SLCGP one-pager",confidence:"High",
+forecast:"Next FY2024 release expected later in 2026 per official state page. Monitor floridadisaster.org/grants.",
+notes:"CLOSED Dec 15 2025. FL uses 20% match (NOT 40%). FL FY2023 allocation: $11,997,340. FY2024 release coming later in 2026."},
+
+{state:"Georgia",abbr:"GA",region:"Southeast",
+window:"open",windowStart:"2026-04-01",windowEnd:"2026-04-29",
+fy:"FY2024",fy24:"$7,456,494",fy25est:"~$2,446,000",
+match:"30% single / 20% multi-entity",maxAward:"Not stated",
+ptype:"Online application window",
+desc:"Georgia's official SLCGP page continues to show the FY2024 application window open in Georgia EM Grants Manager beginning April 1, 2026, with applications DUE APRIL 29, 2026. A March 25, 2026 press release announced nearly $9.9M in awards to Georgia schools and local govts. Additionally, an FY2025 window opening September 1, 2026 was announced.",
+source:"Georgia SLCGP program page",sourceUrl:"https://gema.ga.gov",
+drillUrl:"https://gema.ga.gov",
+advisory:"Committee / program page",procDetail:"Online state subrecipient application through Georgia EM Grants Manager during posted window. Funded entities then procure under applicable procurement rules and grant terms.",
+priorUrl:"Georgia awards press release",confidence:"High",
+forecast:"🔥 CLOSES TODAY Apr 29 2026 (final hours)! FY2025 window opening September 1, 2026.",
+notes:"🔴 CLOSES TODAY — final hours. FY2024 open Apr 1–Apr 29 2026. FY2025 window: Sept 1 2026. $9.9M in awards already made."},
+
+{state:"Louisiana",abbr:"LA",region:"Southeast",
+window:"closed",windowStart:"2026-01-01",windowEnd:"2026-02-28",
+fy:"FY2023–FY2025",fy24:"$5,017,296",fy25est:"~$1,646,000",
+match:"Varies by year: FY23 20/10; FY24 30/20; FY25 40/30",maxAward:"Not stated",
+ptype:"State application",
+desc:"Louisiana officials stated the FY2023/FY2024/FY2025 SLCGP application period ran January 1 to February 28, 2026. Applicants focused on mitigation and training. SLCGP funds used for endpoint detection software per meeting minutes.",
+source:"Louisiana official meeting minutes",sourceUrl:"https://gohsep.la.gov",
+drillUrl:"https://gohsep.la.gov",
+advisory:"Committee / program page",procDetail:"State-run application cycle. Applicants respond to Louisiana SLCGP priorities and guidance; funded entities then procure under Louisiana/local procurement rules.",
+priorUrl:"Louisiana GOHSEP cyber funding meeting minutes",confidence:"High",
+forecast:"Window closed Feb 28 2026. Next window TBD. Monitor gohsep.la.gov.",
+notes:"CLOSED Feb 28 2026. Three FY years combined (FY23/24/25). Prior use: endpoint detection software."},
+
+{state:"Mississippi",abbr:"MS",region:"Southeast",
+window:"closed",windowStart:"2026-01-15",windowEnd:"2026-02-27",
+fy:"FY2025",fy24:"$4,975,106",fy25est:"~$1,631,000",
+match:"TBD on reviewed source",maxAward:"Not stated",
+ptype:"State application",
+desc:"Mississippi's official SLCGP page shows the 2026 application opened January 15, 2026 and closed February 27, 2026. Grant-writing sessions held January 28 and February 10. Batch 4 participation has not yet been determined.",
+source:"Mississippi SLCGP announcements",sourceUrl:"https://www.homelandsecurity.ms.gov/grants/homeland-security-state-and-local-cybersecurity-grant-program-slcgp",
+drillUrl:"https://www.homelandsecurity.ms.gov/grants/homeland-security-state-and-local-cybersecurity-grant-program-slcgp",
+advisory:"Committee / program page",procDetail:"Competitive state application. Application opened Jan 15, closed Feb 27 2026. Batch 4 participation TBD.",
+priorUrl:"Mississippi SLCGP announcements",confidence:"High",
+forecast:"CLOSED Feb 27 2026. Batch 4 status TBD. Contact mohsgrants@dps.ms.gov.",
+notes:"CLOSED. Batch 4 TBD. Contact mohsgrants@dps.ms.gov | 601-987-1278."},
+
+{state:"North Carolina",abbr:"NC",region:"Southeast",
+window:"closed",windowStart:"2025-11-01",windowEnd:"2025-11-30",
+fy:"FY2025",fy24:"$8,037,374",fy25est:"$2,638,773",
+match:"40% single / 30% multi-entity",maxAward:"No statewide min; 40% example on $100K project",
+ptype:"Online application window",
+desc:"North Carolina's FY2025 SLCGP application period ran November 1 to November 30, 2025 through the state's Salesforce grants portal. FY2025 federal award: $2,638,773 (verified). Subrecipient awards estimated for spring 2026 or later. NC publishes procurement Q&A including when state contract vehicles may be used.",
+source:"North Carolina SLCGP page",sourceUrl:"https://www.ncdps.gov/SLCGP",
+drillUrl:"https://www.ncdps.gov/our-organization/emergency-management/emergency-management-grants/state-and-local-cybersecurity-grant-program/state-and-local-cybersecurity-grant-program-qa",
+advisory:"Committee / program page",procDetail:"Competitive state subrecipient application via Salesforce portal. NC State Contract 240x eligible for local procurement in lieu of separate RFP.",
+priorUrl:"North Carolina SLCGP page",confidence:"High",
+forecast:"CLOSED Nov 30 2025. Awards expected spring 2026. FY2026 requires new legislation. Watch ncdps.gov/SLCGP.",
+notes:"CLOSED Nov 30 2025. FY2025: $2,638,773 VERIFIED. Awards pending. NC State Contract 240x eligible."},
+
+{state:"South Carolina",abbr:"SC",region:"Southeast",
+window:"open",windowStart:"2026-03-20",windowEnd:"2026-05-15",
+fy:"FY2024",fy24:"$5,454,484",fy25est:"~$1,789,000",
+match:"30% single / 20% multi-entity",maxAward:"Not stated",
+ptype:"Proposal application",
+desc:"South Carolina's SAA page says the 2024 SLCGP application process started March 20, 2026 with solicitation emails. Applicants must submit the application by May 15, 2026, close of business.",
+source:"South Carolina SAA homeland security page",sourceUrl:"https://www.sled.sc.gov",
+drillUrl:"https://www.sled.sc.gov",
+advisory:"HSAC / cyber committee charter",procDetail:"State proposal application distributed through SLED/SAA, with solicitation emails beginning March 20 2026. Proposals due May 15, 2026 COB. After award, local procurement follows SC/local rules.",
+priorUrl:"South Carolina SAA homeland security page",confidence:"High",
+forecast:"OPEN through May 15, 2026. Apply via SLED/SAA.",
+notes:"🔥 OPEN — due May 15 2026. Solicitation emails sent March 20. Contact SLED/SAA."},
+
+{state:"Tennessee",abbr:"TN",region:"Mid-Atlantic",
+window:"closed",windowStart:"",windowEnd:"2025-12-12",
+fy:"FY2024 or prior round",fy24:"$6,368,577",fy25est:"~$2,089,000",
+match:"Not explicitly stated",maxAward:"Not stated",
+ptype:"Proposal application",
+desc:"Tennessee's official SLCGP page lists an application deadline of December 12, 2025 for local government investment justifications submitted by email. Currently posted window is closed.",
+source:"Tennessee SLCGP page",sourceUrl:"https://www.tn.gov/finance/procurement/procurementgrants.html",
+drillUrl:"https://www.tn.gov/finance/procurement/procurementgrants.html",
+advisory:"Committee / program page",procDetail:"Eligible local entities complete the Local Government Investment Justification worksheet and submit by email to the state by posted deadline. Currently closed.",
+priorUrl:"Tennessee SLCGP reporting form hub",confidence:"High",
+forecast:"CLOSED Dec 12 2025. Next round TBD. Monitor official TN page.",
+notes:"CLOSED Dec 12 2025. Submit via email. Monitor for next round."},
+
+// ── REGION: WEST ──────────────────────────────────────────
+{state:"Alaska",abbr:"AK",region:"West",
+window:"tbd",windowStart:"",windowEnd:"",
+fy:"FY2025",fy24:"$3,399,745",fy25est:"~$1,115,000",
+match:"TBD",maxAward:"Not stated",
+ptype:"State page / TBD",
+desc:"Alaska's grants section lists SLCGP application/guidance resources, but no dated 2026 local/subrecipient window publicly posted on reviewed page as of April 2026 refresh.",
+source:"Alaska DHS&EM SLCGP page",sourceUrl:"https://dhs.alaska.gov",
+drillUrl:"https://dhs.alaska.gov",
+advisory:"Committee / program page",procDetail:"No dated 2026 packet posted. Monitor official state page. When opened, states run subrecipient application/RFA, then funded entities buy under state/local procurement rules.",
+priorUrl:"Alaska FY2023 SLCGP overview & guidelines",confidence:"Medium",
+forecast:"No dated window found. Monitor dhs.alaska.gov. FY2026 requires new legislation.",
+notes:"TBD. Monitor dhs.alaska.gov."},
+
+{state:"Arizona",abbr:"AZ",region:"West",
+window:"tbd",windowStart:"",windowEnd:"",
+fy:"FY2025",fy24:"$5,032,682",fy25est:"~$1,651,000",
+match:"TBD",maxAward:"Not stated",
+ptype:"State page / TBD",
+desc:"Arizona's official grants pages reviewed — no clearly labeled 2026 SLCGP local/subrecipient window publicly posted on surfaced pages as of April 2026 refresh.",
+source:"Arizona grant programs page",sourceUrl:"https://azdema.gov",
+drillUrl:"https://azdema.gov",
+advisory:"Committee / program page",procDetail:"No dated 2026 packet posted. Monitor official AZ page.",
+priorUrl:"Arizona's state-awarded cyber resources page",confidence:"Low",
+forecast:"No dated window found. FY2026 requires new legislation.",
+notes:"TBD. Monitor azdema.gov."},
+
+{state:"California",abbr:"CA",region:"West",
+window:"closed",windowStart:"2026-01-16",windowEnd:"2026-03-13",
+fy:"FY2024",fy24:"$11,845,702",fy25est:"~$3,885,000",
+match:"FY2024 subrecipient match waived in full (state supplement)",maxAward:"Not stated",
+ptype:"RFP",
+desc:"California posted a formal FFY2024 Local & Tribal SLCGP RFP with a due date of March 13, 2026. Match waived for FY2024 subrecipients per state supplement. Competitive state subrecipient RFP through Cal OES. Projects named in CA's approved Cybersecurity Plan drive disbursement.",
+source:"Cal OES Local & Tribal SLCGP RFP",sourceUrl:"https://www.caloes.ca.gov/office-of-the-director/policy-administration/finance-administration/grants-management/homeland-security-emergency-management-programs/state-and-local-cybersecurity-grant-program/",
+drillUrl:"https://www.caloes.ca.gov/office-of-the-director/policy-administration/finance-administration/grants-management/homeland-security-emergency-management-programs/state-and-local-cybersecurity-grant-program/",
+advisory:"Committee / program page",procDetail:"Competitive state subrecipient RFP. Locals and tribes respond to Cal OES RFP/NOI package during state window. After award, buying follows applicable state/local procurement rules.",
+priorUrl:"Cal OES SLCGP program page",confidence:"High",
+forecast:"CLOSED Mar 13 2026. FY2025 window TBD — subscribe: StateLocalProjects@caloes.ca.gov. FY2026 requires new legislation.",
+notes:"CLOSED Mar 13 2026. FY2024 match WAIVED. Cal OES email: StateLocalProjects@caloes.ca.gov. Largest state allocation."},
+
+{state:"Colorado",abbr:"CO",region:"West",
+window:"tbd",windowStart:"",windowEnd:"",
+fy:"FY2024",fy24:"$4,791,605",fy25est:"~$1,572,000",
+match:"TBD (FY2024 was 30%, reopened from 40%)",maxAward:"Not stated",
+ptype:"State page / TBD",
+desc:"No dated 2026 Colorado local/subrecipient SLCGP window publicly surfaced in reviewed official-state search results. FY2024 confirmed award: $3,874,878.40. Contact State Administrative Agency for latest release timing. Advisory: Cybersecurity CAC of HSAC — meets 1st Wednesday monthly.",
+source:"Colorado DHSEM SLCGP page",sourceUrl:"https://dhsem.colorado.gov/grants-management/grant-programs/state-and-local-cybersecurity-grant-program-slcgp",
+drillUrl:"https://dhsem.colorado.gov/grants-management/grant-programs/state-and-local-cybersecurity-grant-program-slcgp",
+advisory:"Cybersecurity CAC of HSAC — 1st Wed monthly 10-11am",procDetail:"No dated 2026 packet posted. Contact: cdps_slcgp@state.co.us | Liliya Levakin 720-656-4360",
+priorUrl:"FEMA State Administrative Agency contacts",confidence:"Low",
+forecast:"FY2024 closed Dec 12 2025. FY2025 window TBD. Contact cdps_slcgp@state.co.us.",
+notes:"FY2024 confirmed: $3,874,878.40 (66 recipients). FY2025 window TBD. cdps_slcgp@state.co.us | 720-656-4360."},
+
+{state:"Hawaii",abbr:"HI",region:"West",
+window:"tbd",windowStart:"",windowEnd:"",
+fy:"FY2025",fy24:"$3,469,262",fy25est:"~$1,138,000",
+match:"TBD",maxAward:"Not stated",
+ptype:"State page / TBD",
+desc:"Hawaii's Office of Homeland Security lists SLCGP, but no dated 2026 local/subrecipient window publicly posted on reviewed page as of April 2026 refresh.",
+source:"Hawaii OHS grants page",sourceUrl:"https://dod.hawaii.gov/hiema/",
+drillUrl:"https://dod.hawaii.gov/hiema/",
+advisory:"Committee / program page",procDetail:"No dated 2026 packet posted. Monitor official HI OHS page.",
+priorUrl:"Hawai'i statewide cybersecurity strategy",confidence:"Medium",
+forecast:"No dated window found. Monitor dod.hawaii.gov/hiema.",
+notes:"TBD. Monitor HI OHS page."},
+
+{state:"Idaho",abbr:"ID",region:"West",
+window:"open",windowStart:"",windowEnd:"Ongoing / FFY2025-2026",
+fy:"FFY2025-2026",fy24:"$3,899,009",fy25est:"~$1,279,000",
+match:"No direct cost to participant (per reviewed state page)",maxAward:"Not stated",
+ptype:"Participation request form",
+desc:"Idaho's Operation Cyber Idaho page includes an active 'Ready to Apply' path for cities, counties, school districts, tribes, and community partners to register for SLCGP-funded services. Program work continues through federal fiscal year 2025-2026. Open participation-request model — services delivered through state program rather than traditional local cash subaward.",
+source:"Operation Cyber Idaho",sourceUrl:"https://bhs.idaho.gov",
+drillUrl:"https://bhs.idaho.gov",
+advisory:"Cybersecurity Grant Planning Committee / program page",procDetail:"Open participation-request model. Eligible local and tribal entities register through Operation Cyber Idaho page to receive SLCGP-funded services and follow-on program instructions.",
+priorUrl:"Idaho SLCGP cybersecurity plan",confidence:"High",
+forecast:"OPEN — participation request ongoing through FFY2025-2026. No match required per state page.",
+notes:"🔥 OPEN — participation request form. No match required. Service delivery model (not cash sub-award)."},
+
+{state:"Montana",abbr:"MT",region:"West",
+window:"upcoming",windowStart:"",windowEnd:"By late spring 2026",
+fy:"FY2025",fy24:"$3,695,624",fy25est:"~$1,212,000",
+match:"TBD",maxAward:"Not stated",
+ptype:"State page / TBD",
+desc:"Montana says its most recent application window closed January 9, 2026 and that the next application window will open by late spring 2026. No dated local subrecipient packet publicly posted yet.",
+source:"Montana SLCGP application info",sourceUrl:"https://des.mt.gov",
+drillUrl:"https://des.mt.gov",
+advisory:"Committee / program page",procDetail:"No dated packet yet. Montana says window opens by late spring 2026. Monitor official state page.",
+priorUrl:"Montana SLCGP application info",confidence:"High",
+forecast:"⚡ UPCOMING — late spring 2026 per official state page. Monitor des.mt.gov immediately.",
+notes:"⚡ WATCH — 'next application window will open by late spring 2026' (official). Prior window closed Jan 9 2026."},
+
+{state:"Nevada",abbr:"NV",region:"West",
+window:"tbd",windowStart:"",windowEnd:"",
+fy:"FY2025",fy24:"$3,771,437",fy25est:"~$1,237,000",
+match:"TBD",maxAward:"Not stated",
+ptype:"State page / TBD",
+desc:"Nevada's grants portfolio confirms SLCGP administration, but no clearly posted dated 2026 local/subrecipient window surfaced in current official-page review.",
+source:"Nevada grants portfolio",sourceUrl:"https://dem.nv.gov",
+drillUrl:"https://dem.nv.gov",
+advisory:"Committee / program page",procDetail:"No dated 2026 packet posted. Monitor official NV page.",
+priorUrl:"Nevada grants portfolio",confidence:"Medium",
+forecast:"No dated window found. Monitor dem.nv.gov.",
+notes:"TBD. Monitor dem.nv.gov."},
+
+{state:"New Mexico",abbr:"NM",region:"West",
+window:"open",windowStart:"",windowEnd:"State FY2027 (Jul 1 2026–Jun 30 2027)",
+fy:"State FY2027 services",fy24:"$3,893,800",fy25est:"~$1,277,000",
+match:"TBD",maxAward:"First-come / funding available basis; no min/max stated",
+ptype:"Participation/request forms",
+desc:"New Mexico says its Cybersecurity Planning Committee is accepting participation interest and request forms NOW for prospective SLCGP-funded services covering State Fiscal Year 2027 (July 1, 2026 to June 30, 2027). Current process: participation/request forms for shared services.",
+source:"New Mexico SLCGP page",sourceUrl:"https://www.nmdhsem.nm.gov",
+drillUrl:"https://www.nmdhsem.nm.gov",
+advisory:"Cybersecurity Planning Committee / public meeting notices & agendas",procDetail:"Participation/request forms for SLCGP-funded shared services. Procurement may be state-managed for service offerings, with local participation routed through the program office.",
+priorUrl:"New Mexico SLCGP page",confidence:"High",
+forecast:"OPEN — accepting participation forms for SFY2027 services (Jul 1 2026–Jun 30 2027). First-come basis.",
+notes:"🔥 OPEN — participation/request forms being accepted NOW for SFY2027."},
+
+{state:"Oklahoma",abbr:"OK",region:"West",
+window:"open",windowStart:"",windowEnd:"2026-04-30",
+fy:"FY2022–FY2025 (quarterly rolling)",fy24:"$5,005,631",fy25est:"~$1,642,000",
+match:"Depends on linked NOFO year",maxAward:"Not stated",
+ptype:"Quarterly rolling application",
+desc:"Oklahoma's grants page says SLCGP is accepting new applications with 2026 deadlines of January 30, April 30, July 31, and October 30. NOTE: page also states 'funding is not currently accessible and additional funding is expected later this year.' Submit to hsgrants@okohs.ok.gov.",
+source:"Oklahoma grants page",sourceUrl:"https://www.oem.ok.gov",
+drillUrl:"https://www.oem.ok.gov",
+advisory:"Committee / program page",procDetail:"Recurring state application with multiple 2026 deadlines. Review one-page announcement, tie projects to State Cyber Plan, submit to hsgrants@okohs.ok.gov. Note: current funding accessibility unclear.",
+priorUrl:"Oklahoma grants page",confidence:"Medium",
+forecast:"Quarterly: next deadline Apr 30 2026, then Jul 31, Oct 30 2026. NOTE: 'funding not currently accessible; additional funding expected later in 2026'.",
+notes:"⚠ OPEN BUT — funding may not be immediately accessible per state page. Next deadline Apr 30. Submit to hsgrants@okohs.ok.gov."},
+
+{state:"Oregon",abbr:"OR",region:"West",
+window:"tbd",windowStart:"",windowEnd:"Summer 2026 (anticipated)",
+fy:"FY2024/FY2025",fy24:"$4,515,523",fy25est:"~$1,481,000",
+match:"FY24 may require 30% (waiver pending); FY25 40%",maxAward:"Up to 2 projects per quarter",
+ptype:"State application",
+desc:"Oregon's official SLCGP page says the funding opportunity is temporarily closed as of April 1, 2026, with new applications anticipated in Summer 2026.",
+source:"Oregon SLCGP state page",sourceUrl:"https://www.oregon.gov/oem/",
+drillUrl:"https://www.oregon.gov/oem/",
+advisory:"Committee / program page",procDetail:"Temporarily closed Apr 1 2026. New applications anticipated Summer 2026. Monitor official page for reopening.",
+priorUrl:"Oregon Round 3 program guidance",confidence:"High",
+forecast:"⚡ UPCOMING — temporarily closed Apr 1 2026; new applications SUMMER 2026 per official state page.",
+notes:"⚡ WATCH — 'temporarily closed as of April 1, 2026; new applications anticipated in Summer 2026' (official)."},
+
+{state:"Texas",abbr:"TX",region:"West",
+window:"closed",windowStart:"2025-12-15",windowEnd:"2026-02-12",
+fy:"FY2024 (Year 3 RFA)",fy24:"$12,616,798",fy25est:"~$4,138,000",
+match:"30% single / 20% multi-entity",maxAward:"Not stated",
+ptype:"RFA",
+desc:"Texas states its Year 3 Request for Applications opened December 15, 2025 and closed February 12, 2026. Four objective categories: Governance/Planning, Assessment/Evaluation, Mitigation, Workforce Development. SAA = OOG; Cybersecurity SME = TX DIR. Apr 29 update: TX DIR page now confirms 'state matching requirement for FY27 is 30%' — meaning Texas is positioning for an FY2026/FY27 cycle pending PILLAR Act federal reauthorization.",
+source:"Texas SLCGP page",sourceUrl:"https://dir.texas.gov/information-security/state-and-local-cybersecurity-grant-program-slcgp",
+drillUrl:"https://dir.texas.gov/information-security/state-and-local-cybersecurity-grant-program-slcgp",
+advisory:"Committee / program page",procDetail:"Objective-based state RFA via TX OOG eGrants. 4 solicitations. After award, procurement follows Texas/local purchasing rules. TX DIR contract available.",
+priorUrl:"Texas SLCGP page",confidence:"High",
+forecast:"CLOSED Feb 12 2026. ⚡ NEW: TX DIR confirms FY27 state matching requirement = 30% (positioning for next cycle pending federal reauthorization).",
+notes:"CLOSED Feb 12 2026. Largest state allocation. ⚡ FY27 match=30% per TX DIR. TX DIR contract for procurement."},
+
+{state:"Utah",abbr:"UT",region:"West",
+window:"tbd",windowStart:"",windowEnd:"",
+fy:"FY2025",fy24:"$3,947,782",fy25est:"~$1,295,000",
+match:"TBD",maxAward:"Not stated",
+ptype:"State page / TBD",
+desc:"Utah materials discussed cybersecurity support and legislative funding, but no clearly posted dated 2026 SLCGP local/subrecipient application window surfaced in current official-page review.",
+source:"Utah legislative cybersecurity support document",sourceUrl:"https://dem.utah.gov",
+drillUrl:"https://dem.utah.gov",
+advisory:"Committee / program page",procDetail:"No dated 2026 packet posted. Monitor dem.utah.gov.",
+priorUrl:"Utah legislative cybersecurity support document",confidence:"Low",
+forecast:"No dated window found. Monitor dem.utah.gov.",
+notes:"TBD. Monitor dem.utah.gov."},
+
+{state:"Washington",abbr:"WA",region:"West",
+window:"upcoming",windowStart:"",windowEnd:"May 2026 (anticipated)",
+fy:"FY2025 (final IIJA round)",fy24:"$5,546,984",fy25est:"~$1,819,000",
+match:"40% (FY2025 federal standard)",maxAward:"Not yet stated",
+ptype:"State application",
+desc:"⚡ NEW APR 29 2026 UPDATE: Washington's WaTech SLCGP page now says: 'The next round of funding for the State and Local Cybersecurity Grant Program (SLCGP) in Washington state is expected to open in May 2026.' This is currently the last year of four rounds of funding under the IIJA. Eligible entities include local governments, Tribal governments, K-12 school districts, and special purpose districts. WaTech also notes the PILLAR Act, which would renew the federal cybersecurity grant program, remains under consideration in Congress.",
+source:"WaTech SLCGP page",sourceUrl:"https://watech.wa.gov/state-local-cybersecurity-grant-program",
+drillUrl:"https://watech.wa.gov/state-local-cybersecurity-grant-program",
+advisory:"State Planning Committee / SLCGP interest list",procDetail:"Application instructions and materials will be posted on WaTech page when solicitation opens. Sign up for SLCGP interest list to receive notification.",
+priorUrl:"WaTech SLCGP page",confidence:"High",
+forecast:"⚡ HIGH PRIORITY — opening May 2026 per official WaTech page (updated). K-12, Tribal govts, special districts ALL eligible. Sign up for SLCGP interest list NOW.",
+notes:"⚡ NEW: May 2026 opening confirmed per WaTech page. Last IIJA round. Sign up for interest list."},
+
+{state:"Wyoming",abbr:"WY",region:"West",
+window:"open",windowStart:"2026-04-17",windowEnd:"2026-05-15",
+fy:"FY2025",fy24:"$3,345,507",fy25est:"~$1,097,000",
+match:"40% cost share likely applies",maxAward:"Not stated",
+ptype:"Proposal application",
+desc:"Wyoming Homeland Security says the SLCGP application period is open and applications must be submitted in ZoomGrants by Friday, May 15, 2026.",
+source:"Wyoming Homeland Security homepage",sourceUrl:"https://wyomingohls.wyo.gov",
+drillUrl:"https://wyomingohls.wyo.gov",
+advisory:"Program page / manager contact",procDetail:"Open state proposal/application window. Submit in ZoomGrants by May 15, 2026. If funded, purchases follow applicable state/local procurement rules.",
+priorUrl:"Wyoming grants page",confidence:"High",
+forecast:"OPEN through May 15, 2026. Submit via ZoomGrants.",
+notes:"🔥 OPEN — due May 15 2026. ZoomGrants. Contact WY Homeland Security."},
+
+// ── REGION: NORTHEAST ──────────────────────────────────────
+{state:"Connecticut",abbr:"CT",region:"Northeast",
+window:"tbd",windowStart:"",windowEnd:"",
+fy:"FY2025",fy24:"$4,122,302",fy25est:"~$1,352,000",
+match:"TBD",maxAward:"Not stated",
+ptype:"State page / TBD",
+desc:"Connecticut's official SLCGP overview says eligible state, tribal, and local entities must complete a sub-application and submit to DEMHS to be eligible as subrecipients. No dated 2026 local window publicly posted on reviewed page.",
+source:"Connecticut SLCGP overview",sourceUrl:"https://portal.ct.gov/DEMHS",
+drillUrl:"https://portal.ct.gov/DEMHS",
+advisory:"Committee / program page",procDetail:"No dated 2026 local subrecipient packet posted. Monitor CT DEMHS page.",
+priorUrl:"Connecticut SLCGP guidance & closeout forms",confidence:"Medium",
+forecast:"No dated window found. Monitor portal.ct.gov/DEMHS.",
+notes:"TBD. Sub-application to DEMHS required. Monitor CT DEMHS."},
+
+{state:"Illinois",abbr:"IL",region:"Northeast",
+window:"tbd",windowStart:"",windowEnd:"",
+fy:"FY2025",fy24:"$6,724,174",fy25est:"~$2,206,000",
+match:"TBD",maxAward:"Not stated",
+ptype:"State page / TBD",
+desc:"Illinois maintains an SLCGP page, but no dated 2026 local/subrecipient window publicly posted on reviewed page as of April 2026 refresh.",
+source:"Illinois SLCGP page",sourceUrl:"https://iema.illinois.gov",
+drillUrl:"https://iema.illinois.gov",
+advisory:"Committee / program page",procDetail:"No dated 2026 packet posted. Monitor iema.illinois.gov.",
+priorUrl:"Illinois SLCGP page",confidence:"Medium",
+forecast:"No dated window found. Monitor iema.illinois.gov.",
+notes:"TBD. Monitor iema.illinois.gov."},
+
+{state:"Indiana",abbr:"IN",region:"Northeast",
+window:"tbd",windowStart:"",windowEnd:"",
+fy:"FY2025",fy24:"$5,987,571",fy25est:"~$1,964,000",
+match:"TBD",maxAward:"Not stated",
+ptype:"State page / TBD",
+desc:"Indiana's SLCGP committee/resources are live, but no dated 2026 local/subrecipient window publicly posted on reviewed state pages as of April 2026 refresh.",
+source:"Indiana SLCGP committee page",sourceUrl:"https://www.in.gov/dhs/",
+drillUrl:"https://www.in.gov/dhs/",
+advisory:"Committee / program page",procDetail:"No dated 2026 packet posted. Monitor in.gov/dhs.",
+priorUrl:"Indiana SLCGP committee page",confidence:"Medium",
+forecast:"No dated window found. Monitor in.gov/dhs.",
+notes:"TBD. Monitor in.gov/dhs."},
+
+{state:"Iowa",abbr:"IA",region:"Northeast",
+window:"tbd",windowStart:"",windowEnd:"",
+fy:"FY2025",fy24:"$4,654,856",fy25est:"~$1,527,000",
+match:"TBD",maxAward:"Not stated",
+ptype:"State page / TBD",
+desc:"Iowa's SLCGP page is live, but no dated 2026 local/subrecipient window publicly posted on reviewed page as of April 2026 refresh.",
+source:"Iowa SLCGP page",sourceUrl:"https://homelandsecurity.iowa.gov",
+drillUrl:"https://homelandsecurity.iowa.gov",
+advisory:"Committee / program page",procDetail:"No dated 2026 packet posted. Monitor homelandsecurity.iowa.gov.",
+priorUrl:"Iowa SLCGP page",confidence:"Medium",
+forecast:"No dated window found. Monitor homelandsecurity.iowa.gov.",
+notes:"TBD. Monitor homelandsecurity.iowa.gov."},
+
+{state:"Kansas",abbr:"KS",region:"Northeast",
+window:"closed",windowStart:"2026-01-01",windowEnd:"2026-02-28",
+fy:"TBD on reviewed source",fy24:"$4,288,916",fy25est:"~$1,407,000",
+match:"TBD",maxAward:"Not stated",
+ptype:"State application",
+desc:"Kansas's official SLCGP page listed a January 1 to February 28, 2026 submission window. Phase 2 applications are presently being reviewed by the State Cybersecurity Planning Committee before federal review and approval.",
+source:"Kansas SLCGP page",sourceUrl:"https://www.kdem.ks.gov",
+drillUrl:"https://www.kdem.ks.gov",
+advisory:"Program page / important dates",procDetail:"State-run application window Jan 1–Feb 28 2026. Funded entities buy under applicable state/local procurement rules.",
+priorUrl:"Kansas SLCGP page",confidence:"High",
+forecast:"CLOSED Feb 28 2026. Phase 2 under review. Monitor kdem.ks.gov for next round.",
+notes:"CLOSED Feb 28 2026. Phase 2 under committee review. Monitor kdem.ks.gov."},
+
+{state:"Maine",abbr:"ME",region:"Northeast",
+window:"tbd",windowStart:"",windowEnd:"",
+fy:"FY2025",fy24:"$4,038,646",fy25est:"~$1,325,000",
+match:"TBD",maxAward:"Not stated",
+ptype:"State page / TBD",
+desc:"Maine's SLCGP page says Year 1 (FY22) and Year 2 (FY23) participation windows are closed, projects underway. A temporary service-provider pause tied to the February 14, 2026 partial federal shutdown affects the KnowBe4 training program. Local entities directed to contact MEMA regarding future program years.",
+source:"Maine SLCGP page",sourceUrl:"https://www.maine.gov/mema/",
+drillUrl:"https://www.maine.gov/mema/",
+advisory:"Committee / program page",procDetail:"No dated 2026 packet. Year 1 and Year 2 windows closed. Contact MEMA regarding future program years.",
+priorUrl:"Maine SLCGP page",confidence:"High",
+forecast:"No window found. Federal shutdown impacted KnowBe4 training. Contact MEMA for future years.",
+notes:"TBD. Federal shutdown pause noted. Contact MEMA for future years."},
+
+{state:"Massachusetts",abbr:"MA",region:"Northeast",
+window:"tbd",windowStart:"",windowEnd:"",
+fy:"FY2025",fy24:"$4,816,189",fy25est:"~$1,580,000",
+match:"TBD",maxAward:"Not stated",
+ptype:"State page / TBD",
+desc:"Massachusetts maintains a general SLCGP page, but no dated 2026 local/subrecipient window publicly posted on reviewed page as of April 2026 refresh.",
+source:"Massachusetts SLCGP page",sourceUrl:"https://www.mass.gov/orgs/massachusetts-emergency-management-agency",
+drillUrl:"https://www.mass.gov/orgs/massachusetts-emergency-management-agency",
+advisory:"Committee / program page",procDetail:"No dated 2026 packet posted. Monitor mass.gov/mema.",
+priorUrl:"Massachusetts SLCGP page",confidence:"Medium",
+forecast:"No dated window found. Monitor mass.gov/mema.",
+notes:"TBD. Monitor mass.gov/mema."},
+
+{state:"Michigan",abbr:"MI",region:"Northeast",
+window:"tbd",windowStart:"",windowEnd:"",
+fy:"FY2025 (FY22 PoP through Aug 2026; FY23 through Aug 2027; FY24 through Aug 2028)",fy24:"$7,178,365",fy25est:"$2,346,859",
+match:"FY22 10%, FY23 20%, FY24 30%, FY25 40%",maxAward:"FY2025 state allocation $2,346,859",
+ptype:"State page / TBD",
+desc:"Michigan's DTMB SLCGP page (Apr 29 2026 verified): FY2022, FY2023, and FY2024 subrecipient awards COMPLETED. PoP timelines: FY22 ends Aug 2026, FY23 ends Aug 2027, FY24 ends Aug 2028. FY2025 application date TBD - 40% match required. Advisory Board will review approved statewide plan for FY2025 funds. FY2025 allocation: $2,346,859. MiDEAL negotiated contractors explicitly eligible for cybersecurity assessments and penetration testing per state page.",
+source:"Michigan SLCGP page",sourceUrl:"https://www.michigan.gov/dtmb/services/cybersecurity/cyber-partners/state-and-local-cybersecurity-grant-program",
+drillUrl:"https://www.michigan.gov/dtmb/services/cybersecurity/cyber-partners/state-and-local-cybersecurity-grant-program",
+advisory:"SLCGP Advisory Board / program page",procDetail:"FY22-24 awards completed; FY2025 packet TBD. MiDEAL contractors eligible for assessments/pen testing. Backup software/cloud services categories named.",
+priorUrl:"Michigan SLCGP page",confidence:"High",
+forecast:"FY2025 application timing still TBD as of Apr 29. Subscribe to DTMB bulletins. MiDEAL preferred procurement path.",
+notes:"FY2025: $2,346,859 VERIFIED. FY22-24 awards COMPLETE. FY2025 window TBD. DTMB-CIP-SLCGP@michigan.gov. MiDEAL preferred."},
+
+{state:"Minnesota",abbr:"MN",region:"Northeast",
+window:"tbd",windowStart:"",windowEnd:"",
+fy:"FY2025",fy24:"$5,474,363",fy25est:"~$1,796,000",
+match:"TBD",maxAward:"Not stated",
+ptype:"State page / TBD",
+desc:"Minnesota's whole-of-state SLCGP plan and participant information pages are active, but no dated 2026 local application window publicly posted on reviewed pages as of April 2026 refresh.",
+source:"Minnesota whole-of-state participant information",sourceUrl:"https://hsem.dps.mn.gov",
+drillUrl:"https://hsem.dps.mn.gov",
+advisory:"Committee / program page",procDetail:"No dated 2026 packet posted. Monitor hsem.dps.mn.gov.",
+priorUrl:"Minnesota whole-of-state participant information",confidence:"Medium",
+forecast:"No dated window found. Monitor hsem.dps.mn.gov.",
+notes:"TBD. Monitor hsem.dps.mn.gov."},
+
+{state:"Missouri",abbr:"MO",region:"Northeast",
+window:"open",windowStart:"2026-04-13",windowEnd:"2026-05-20",
+fy:"FY2025",fy24:"$5,805,583",fy25est:"~$1,904,000",
+match:"40% cost share (cash or in-kind)",maxAward:"Federal share capped at $200,000 per applicant",
+ptype:"Online application window",
+desc:"Missouri posted its FY2025 SLCGP Notice of Funding Opportunity and opened applications in WebGrants on April 13, 2026. Applications are due May 20, 2026 at 5:00 p.m. CST. Align with Missouri Comprehensive Cybersecurity Plan and CISA CPG Assessment.",
+source:"Missouri FY2025 SLCGP NOFO",sourceUrl:"https://dps.mo.gov/dir/programs/ohs/grantstraining/",
+drillUrl:"https://dps.mo.gov/dir/programs/ohs/grantstraining/",
+advisory:"Planning committee / workshop / FY2025 application workshop",procDetail:"State-run online application through Missouri DPS WebGrants. Align request to Missouri Comprehensive Cybersecurity Plan and CISA CPG Assessment. Buy under applicable state/local procurement rules if awarded.",
+priorUrl:"Missouri grants and training portal",confidence:"High",
+forecast:"OPEN through May 20, 2026 at 5pm CST. WebGrants portal.",
+notes:"🔥 OPEN — due May 20 2026 at 5pm CST. WebGrants. Max $200K federal share per applicant. 40% match."},
+
+{state:"Nebraska",abbr:"NE",region:"Northeast",
+window:"tbd",windowStart:"",windowEnd:"",
+fy:"FY2025",fy24:"$3,864,098",fy25est:"~$1,267,000",
+match:"TBD",maxAward:"Not stated",
+ptype:"State page / TBD",
+desc:"Nebraska's SLCGP site says the 2024 Subrecipient Application is closed, continues to post committee members and meeting listings, and does not yet show a new dated 2026 subrecipient application window.",
+source:"Nebraska SLCGP landing page",sourceUrl:"https://nema.nebraska.gov",
+drillUrl:"https://nema.nebraska.gov",
+advisory:"Committee members / see all meetings",procDetail:"No dated 2026 packet posted. 2024 application closed. Monitor nema.nebraska.gov.",
+priorUrl:"Nebraska SLCGP landing page",confidence:"High",
+forecast:"No dated window. 2024 application closed. Monitor nema.nebraska.gov.",
+notes:"TBD. 2024 sub-application closed. Committee active. Monitor nema.nebraska.gov."},
+
+{state:"New Hampshire",abbr:"NH",region:"Northeast",
+window:"tbd",windowStart:"",windowEnd:"",
+fy:"FY2025",fy24:"$3,808,572",fy25est:"~$1,249,000",
+match:"TBD",maxAward:"Not stated",
+ptype:"State page / TBD",
+desc:"New Hampshire's SLCGP page is live and points to SLCGP contact mailbox. A March 2026 SLCGP bulletin highlights training and services, but no dated 2026 local application window surfaced on reviewed official pages.",
+source:"New Hampshire SLCGP page",sourceUrl:"https://www.nh.gov/safety/divisions/hsem/",
+drillUrl:"https://www.nh.gov/safety/divisions/hsem/",
+advisory:"Committee / program page",procDetail:"No dated 2026 local packet posted. Monitor NH HSEM page.",
+priorUrl:"New Hampshire SLCGP page",confidence:"Medium",
+forecast:"No dated window. March 2026 bulletin noted training/services. Monitor nh.gov/safety/divisions/hsem.",
+notes:"TBD. March 2026 bulletin: training and services highlighted. No dated application window."},
+
+{state:"New Jersey",abbr:"NJ",region:"Northeast",
+window:"closed",windowStart:"",windowEnd:"",
+fy:"FY2025",fy24:"$5,184,599",fy25est:"~$1,701,000",
+match:"TBD",maxAward:"Not stated",
+ptype:"State application",
+desc:"New Jersey's NJCCIC SLCGP page says the application window for SLCGP 2025 is closed.",
+source:"New Jersey SLCGP page",sourceUrl:"https://www.njccic.nj.gov",
+drillUrl:"https://www.njccic.nj.gov",
+advisory:"Committee / program page",procDetail:"State-run SLCGP application window currently closed. Monitor NJCCIC grants page for next cycle.",
+priorUrl:"New Jersey SLCGP page",confidence:"High",
+forecast:"CLOSED. Monitor njccic.nj.gov for next cycle announcement.",
+notes:"CLOSED. NJCCIC page confirms SLCGP 2025 window closed. Monitor for next cycle."},
+
+{state:"New York",abbr:"NY",region:"Northeast",
+window:"closed",windowStart:"",windowEnd:"2025-11-19",
+fy:"FY2022–FY2023 (combined)",fy24:"$8,723,252",fy25est:"~$2,861,000",
+match:"FY22 10/0; FY23 20/10",maxAward:"Not stated",
+ptype:"RFA",
+desc:"New York says the combined FY2022 and FY2023 SLCGP application period closed November 19, 2025. Uses shared services and state RFA for eligibility. Governor Hochul February 2, 2026 release: $9 million in SLCGP funding used to provide MFA hard tokens to 161 government entities statewide.",
+source:"New York federal programs page",sourceUrl:"https://www.dhses.ny.gov",
+drillUrl:"https://www.dhses.ny.gov",
+advisory:"Committee / program page",procDetail:"State-run RFA tied to cybersecurity shared services. Combined FY2022/FY2023 application period closed.",
+priorUrl:"New York awards release",confidence:"High",
+forecast:"CLOSED Nov 19 2025. $9M deployed for MFA tokens to 161 entities. Next round TBD. Monitor dhses.ny.gov.",
+notes:"CLOSED Nov 19 2025. $9M for MFA hard tokens to 161 govt entities (Feb 2 2026 press release)."},
+
+{state:"North Dakota",abbr:"ND",region:"Northeast",
+window:"tbd",windowStart:"",windowEnd:"",
+fy:"FY2025",fy24:"$3,454,693",fy25est:"~$1,133,000",
+match:"TBD",maxAward:"Not stated",
+ptype:"State page / TBD",
+desc:"North Dakota official materials reviewed showed prior SLCGP activity but no clearly posted dated 2026 local/subrecipient window on current official pages surfaced in search.",
+source:"North Dakota emergency services news page",sourceUrl:"https://www.des.nd.gov",
+drillUrl:"https://www.des.nd.gov",
+advisory:"Committee / program page",procDetail:"No dated 2026 packet posted. Monitor des.nd.gov.",
+priorUrl:"North Dakota emergency services news page",confidence:"Low",
+forecast:"No dated window. Monitor des.nd.gov.",
+notes:"TBD. Monitor des.nd.gov."},
+
+{state:"Ohio",abbr:"OH",region:"Northeast",
+window:"closed",windowStart:"",windowEnd:"2026-03-13",
+fy:"Round 3 (federal FY not stated)",fy24:"$7,598,799",fy25est:"~$2,492,000",
+match:"20% cost share for Round 3 .gov migration projects",maxAward:"Federal support capped at $9,500 per project",
+ptype:"RFP",
+desc:"Ohio's Round 3 .gov migration application guidance required local government applications submitted by midnight March 13, 2026. Federal support capped at $9,500 per project with 20% cost share. Unique focus on .gov domain migration.",
+source:"Ohio Round 3 SLCGP guidance",sourceUrl:"https://ema.ohio.gov",
+drillUrl:"https://ema.ohio.gov",
+advisory:"Committee / program page",procDetail:"Round 3 .gov migration window closed. Monitor ema.ohio.gov for next RFP/RFA release.",
+priorUrl:"Ohio Round 3 SLCGP guidance",confidence:"High",
+forecast:"CLOSED Mar 13 2026. Round 3 focused on .gov migration ($9,500 cap per project). Next round TBD. Monitor ema.ohio.gov.",
+notes:"CLOSED Mar 13 2026. Unique: $9,500 federal cap per project, 20% match, .gov domain migration focus."},
+
+{state:"Pennsylvania",abbr:"PA",region:"Northeast",
+window:"tbd",windowStart:"",windowEnd:"",
+fy:"FY2025",fy24:"$8,015,678",fy25est:"~$2,629,000",
+match:"TBD",maxAward:"Not stated",
+ptype:"State page / TBD",
+desc:"Pennsylvania's official cybersecurity grant page says local governments will be able to apply to the Commonwealth to participate in committee-identified cybersecurity projects. Cannot apply directly to federal government. Should sign up for updates while Commonwealth prepares additional application instructions.",
+source:"Pennsylvania cyber grant page",sourceUrl:"https://www.pema.pa.gov",
+drillUrl:"https://www.pema.pa.gov",
+advisory:"Committee / program page",procDetail:"Commonwealth-managed service/project model. Local govts participate when Commonwealth opens next state cycle and issues application instructions to eligible entities.",
+priorUrl:"Pennsylvania cyber grant page",confidence:"High",
+forecast:"No dated window. Committee-selected model. Sign up for PEMA updates. More application information coming later.",
+notes:"Committee-selected model. Local govts cannot apply directly. Sign up at pema.pa.gov for updates."},
+
+{state:"Rhode Island",abbr:"RI",region:"Northeast",
+window:"tbd",windowStart:"",windowEnd:"",
+fy:"FY2024",fy24:"$3,326,808",fy25est:"~$1,091,000",
+match:"TBD",maxAward:"Not stated",
+ptype:"State page / TBD",
+desc:"Rhode Island's grants page posts FY2024 SLCGP rollout materials dated December 17, 2025 and an application link, but reviewed official page does not clearly state a current 2026 deadline or whether that application remains open. RI 2030: 121 projects by 33 municipalities, $10M+ in cybersecurity improvements.",
+source:"RIEMA non-disaster grants page",sourceUrl:"https://riema.ri.gov",
+drillUrl:"https://riema.ri.gov",
+advisory:"Committee / program page",procDetail:"FY2024 rollout materials and application link posted but no clear 2026 deadline. Confirm status before pursuing.",
+priorUrl:"Rhode Island 2030 cybersecurity update",confidence:"Medium",
+forecast:"Status unclear. FY2024 materials posted Dec 17 2025. 121 projects, $10M+ submitted. Confirm at riema.ri.gov.",
+notes:"Unclear status. 121 projects, $10M+ submitted by 33 municipalities (RI 2030 page). Verify at riema.ri.gov."},
+
+{state:"South Dakota",abbr:"SD",region:"Northeast",
+window:"tbd",windowStart:"",windowEnd:"",
+fy:"FY2025",fy24:"$3,545,617",fy25est:"~$1,163,000",
+match:"TBD",maxAward:"Not stated",
+ptype:"State page / TBD",
+desc:"South Dakota's homeland security grants pages reviewed, but no clearly labeled 2026 SLCGP local/subrecipient window publicly posted on surfaced official pages as of April 2026 refresh.",
+source:"South Dakota homeland security grants page",sourceUrl:"https://oem.sd.gov",
+drillUrl:"https://oem.sd.gov",
+advisory:"Committee / program page",procDetail:"No dated 2026 packet posted. Monitor oem.sd.gov.",
+priorUrl:"South Dakota homeland security grants page",confidence:"Low",
+forecast:"No dated window. Monitor oem.sd.gov.",
+notes:"TBD. Monitor oem.sd.gov."},
+
+{state:"Vermont",abbr:"VT",region:"Northeast",
+window:"tbd",windowStart:"",windowEnd:"",
+fy:"FY2025",fy24:"$3,530,689",fy25est:"~$1,158,000",
+match:"TBD",maxAward:"Not stated",
+ptype:"State page / TBD",
+desc:"Vermont's 2026 Cybersecurity Advisory Council report confirms SLCGP support and matching-fund activity, but no dated 2026 local/subrecipient window publicly posted in reviewed official materials.",
+source:"Vermont Cybersecurity Advisory Council 2026 report",sourceUrl:"https://vem.vermont.gov",
+drillUrl:"https://vem.vermont.gov",
+advisory:"Committee / program page",procDetail:"No dated 2026 packet. Cybersecurity Advisory Council active. Monitor vem.vermont.gov.",
+priorUrl:"Vermont Cybersecurity Advisory Council 2026 report",confidence:"Medium",
+forecast:"No dated window. Advisory Council active. Monitor vem.vermont.gov.",
+notes:"TBD. Advisory Council report confirms SLCGP support. Monitor vem.vermont.gov."},
+
+{state:"Wisconsin",abbr:"WI",region:"Northeast",
+window:"tbd",windowStart:"",windowEnd:"FFY24 NOFO pending; FFY25 expected spring 2026",
+fy:"FFY23 Round 2 under review; FFY24 NOFO pending",fy24:"$5,806,564",fy25est:"~$1,905,000",
+match:"FFY22 0%; FFY23 0%; FFY24 30%; FFY25 40%",maxAward:"$100,000 per entity",
+ptype:"RFP / WEM eGrants",
+desc:"Wisconsin's DET page says FFY23 round-two applications ran November 18, 2025 to January 30, 2026 — review/scoring in progress. Cost-share waivers approved for FFY22 and FFY23. FFY24 and FFY25 cost shares remain 30% and 40%. Users should watch for FFY24 NOFO release. NOTE: Federal shutdown impacting FEMA response. WI Leg Fiscal Bureau: FFY25 sub-awards expected spring 2026.",
+source:"Wisconsin DET cybersecurity grants page",sourceUrl:"https://det.wi.gov/Pages/Cybersecurity_Grants.aspx",
+drillUrl:"https://det.wi.gov/Pages/Cybersecurity_Grants.aspx",
+advisory:"Committee / program page",procDetail:"WEM eGrants system (wem.egrants.us). FFY23 Round 2 closed Jan 30 2026, under review. FFY24 NOFO pending. Marc.couturier@widma.gov | SLCGP@wi.gov.",
+priorUrl:"Wisconsin cybersecurity grants page",confidence:"High",
+forecast:"🔥 FFY24 NOFO PENDING (check det.wi.gov daily). FFY25 sub-awards 'likely spring 2026' per WI Leg Fiscal Bureau. Federal shutdown causing delays.",
+notes:"🔥 WATCH: FFY24 pending. FFY25 expected spring 2026. Check det.wi.gov daily. Marc.couturier@widma.gov | 608-590-9112."},
+
+// ── REGION: MID-ATLANTIC ──────────────────────────────────
+{state:"Delaware",abbr:"DE",region:"Mid-Atlantic",
+window:"tbd",windowStart:"",windowEnd:"",
+fy:"FY2025",fy24:"$3,377,360",fy25est:"~$1,108,000",
+match:"TBD",maxAward:"Not stated",
+ptype:"State page / TBD",
+desc:"Delaware's official SLCGP page is live, but no dated 2026 local/subrecipient window publicly posted on reviewed page as of April 2026 refresh. State has managed $10.1M in SLCGP funds for state, local, and rural subrecipients.",
+source:"Delaware SLCGP page",sourceUrl:"https://dema.delaware.gov",
+drillUrl:"https://dema.delaware.gov",
+advisory:"Committee / program page",procDetail:"No dated 2026 packet posted. Monitor dema.delaware.gov.",
+priorUrl:"Delaware preparedness grants summary",confidence:"Medium",
+forecast:"No dated window. $10.1M managed historically. Monitor dema.delaware.gov.",
+notes:"$10.1M managed in SLCGP funds confirmed. No 2026 window dated. Monitor dema.delaware.gov."},
+
+{state:"District of Columbia",abbr:"DC",region:"Mid-Atlantic",
+window:"tbd",windowStart:"",windowEnd:"",
+fy:"FY2025",fy24:"$3,166,373",fy25est:"~$1,039,000",
+match:"40%",maxAward:"Not stated",
+ptype:"State page / TBD",
+desc:"DC HSEMA is SAA (treated as state under IIJA). DC receives 1% base allocation. No dated 2026 local/subrecipient window publicly posted on reviewed page.",
+source:"DC HSEMA",sourceUrl:"https://hsema.dc.gov",
+drillUrl:"https://hsema.dc.gov",
+advisory:"Committee / program page",procDetail:"No dated 2026 packet posted. Monitor hsema.dc.gov.",
+priorUrl:"DC HSEMA",confidence:"Medium",
+forecast:"No dated window. Monitor hsema.dc.gov.",
+notes:"DC treated as state. FY2024: $3,166,373. Monitor hsema.dc.gov."},
+
+{state:"Kentucky",abbr:"KY",region:"Mid-Atlantic",
+window:"closed",windowStart:"",windowEnd:"",
+fy:"FY2025",fy24:"$5,489,622",fy25est:"~$1,801,000",
+match:"TBD",maxAward:"Not stated",
+ptype:"State application",
+desc:"Kentucky's grants page shows the SLCGP application as closed. IMPORTANT: The 2025 KOHS annual report says FFY 2025 SLCGP allocations have been placed on HOLD pending availability. Monitor Kentucky grants page for a reopening or release notice.",
+source:"Kentucky grants page",sourceUrl:"https://kentucky.gov/Pages/Activity-stream.aspx",
+drillUrl:"https://kentucky.gov/Pages/Activity-stream.aspx",
+advisory:"Committee / program page",procDetail:"Current grants page shows application as closed. FFY2025 allocations on hold. Monitor for reopening.",
+priorUrl:"Kentucky 2025 KOHS annual report",confidence:"Medium",
+forecast:"CLOSED. ⚠ FFY2025 SLCGP allocations on HOLD pending availability per 2025 KOHS annual report.",
+notes:"⚠ FFY2025 ALLOCATIONS ON HOLD (confirmed in 2025 KOHS annual report). Monitor for reopening."},
+
+{state:"Maryland",abbr:"MD",region:"Mid-Atlantic",
+window:"open",windowStart:"",windowEnd:"Rolling / ongoing",
+fy:"FY2023 (second round)",fy24:"$4,924,161",fy25est:"~$1,615,000",
+match:"20% single / 10% multi-entity",maxAward:"Not stated",
+ptype:"Rolling application",
+desc:"Maryland's CPU funding page says an additional funding opportunity for short-term projects has opened and confirms a second-round application for FY2023 SLCGP funds is open on a rolling basis.",
+source:"Maryland CPU funding opportunities",sourceUrl:"https://mema.maryland.gov",
+drillUrl:"https://mema.maryland.gov",
+advisory:"Committee / program page",procDetail:"Rolling state application. Maryland's current page highlights additional short-term funding opportunity and says second-round FY2023 applications are open on rolling basis. Post-award purchases follow state/local procurement rules.",
+priorUrl:"Maryland CPU funding opportunities",confidence:"High",
+forecast:"OPEN on rolling basis. FY2023 second-round. Short-term projects eligible. Monitor mema.maryland.gov.",
+notes:"🔥 OPEN — rolling FY2023 second-round application. 20% match. Short-term projects. Monitor mema.maryland.gov."},
+
+{state:"Virginia",abbr:"VA",region:"Mid-Atlantic",
+window:"closed",windowStart:"",windowEnd:"",
+fy:"FY2025",fy24:"$6,446,009",fy25est:"~$2,114,000",
+match:"TBD",maxAward:"Not stated",
+ptype:"Online application window",
+desc:"Virginia's cybersecurity grants FAQ says the application window is now closed and directs users to the VDEM listserv for future notifications.",
+source:"Virginia cybersecurity grants page",sourceUrl:"https://www.vaemergency.gov",
+drillUrl:"https://www.vaemergency.gov",
+advisory:"Committee / program page",procDetail:"State application window currently closed. Use Virginia page and listserv to catch next subrecipient cycle.",
+priorUrl:"Virginia cybersecurity grants page",confidence:"High",
+forecast:"CLOSED. Sign up for VDEM listserv at vaemergency.gov for next cycle notifications.",
+notes:"CLOSED. Sign up for VDEM listserv for next cycle. vaemergency.gov."},
+
+{state:"West Virginia",abbr:"WV",region:"Mid-Atlantic",
+window:"tbd",windowStart:"",windowEnd:"",
+fy:"FY2025",fy24:"$4,232,345",fy25est:"~$1,388,000",
+match:"TBD",maxAward:"Not stated",
+ptype:"State page / TBD",
+desc:"West Virginia's WVEMD homepage and April 2026 funding page actively encourage eligible state and local agencies to apply for SLCGP funding and provide a dedicated contact email. However, reviewed official pages still do not post a clearly dated state-local application packet or deadline.",
+source:"WVEMD cybersecurity grant funding page",sourceUrl:"https://dhsem.wv.gov",
+drillUrl:"https://dhsem.wv.gov",
+advisory:"Committee / program page",procDetail:"WVEMD encouraging eligible agencies to pursue SLCGP funding. Contact WVEMD directly for current access instructions. No dated packet posted.",
+priorUrl:"West Virginia cybersecurity grant funding page",confidence:"Medium",
+forecast:"No dated window but WVEMD actively encouraging applications. Contact WVEMD directly at dhsem.wv.gov.",
+notes:"WVEMD actively encouraging applications but no dated packet. Contact dhsem.wv.gov directly."}
+];
+</script>
+<script>
+// ============================================================
+// AUTH & STORAGE
+// ============================================================
+const DPW=btoa('slcgp2026');
+const gh=p=>btoa(p);
+const gS=()=>{try{return JSON.parse(localStorage.getItem('slcgpcfg')||'{}')}catch{return{}}};
+const sS=s=>localStorage.setItem('slcgpcfg',JSON.stringify(s));
+const gD=()=>{try{return JSON.parse(localStorage.getItem('slcgp50d')||'[]')}catch{return[]}};
+const sD=d=>localStorage.setItem('slcgp50d',JSON.stringify(d));
+const gCL=()=>{try{return JSON.parse(localStorage.getItem('slcgp50cl')||'[]')}catch{return[]}};
+const sCL=c=>localStorage.setItem('slcgp50cl',JSON.stringify(c));
+
+document.getElementById('pw-in').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin()});
+function doLogin(){
+  const pw=document.getElementById('pw-in').value;
+  const s=gS();
+  if(gh(pw)===(s.pwh||DPW)){
+    document.getElementById('ls').style.display='none';
+    document.getElementById('app').style.display='block';
+    init();
+  } else {document.getElementById('lerr').style.display='block'}
+}
+function logout(){document.getElementById('app').style.display='none';document.getElementById('ls').style.display='flex';document.getElementById('pw-in').value=''}
+function changePW(){
+  const np=document.getElementById('newpw').value.trim();
+  if(!np||np.length<6){toast('Min 6 chars','info');return}
+  const s=gS();s.pwh=gh(np);sS(s);document.getElementById('newpw').value='';toast('Password updated','ok');
+}
+
+// ============================================================
+// INIT
+// ============================================================
+let sF='state',sD2=1,curId=null;
+function init(){
+  loadTheme();
+  seed();renderStats();rt();renderActive();renderIntel();renderCL();loadSiteUrl();updSync();
+}
+function loadTheme(){
+  const s=gS();
+  const t=s.theme||'night';
+  applyTheme(t);
+}
+function applyTheme(t){
+  const btn=document.getElementById('theme-btn');
+  if(t==='day'){
+    document.body.classList.add('theme-day');
+    if(btn)btn.textContent='☀ Day';
+  } else {
+    document.body.classList.remove('theme-day');
+    if(btn)btn.textContent='🌙 Night';
+  }
+}
+function toggleTheme(){
+  const s=gS();
+  const newTheme=s.theme==='day'?'night':'day';
+  s.theme=newTheme;sS(s);
+  applyTheme(newTheme);
+  toast(newTheme==='day'?'Day theme':'Night theme','ok');
+}
+// Data version tag — bump whenever ALL_STATES is updated to force refresh of program fields
+const DATA_VERSION='2026-04-29-v2';
+
+function seed(){
+  const stored=gD();
+  const cfg=gS();
+  const isFreshInstall=stored.length===0;
+  const isOlderVersion=cfg.dataVersion!==DATA_VERSION;
+
+  // Build lookup of existing rows by state name
+  const existing={};
+  stored.forEach(r=>{existing[r.state]=r});
+
+  // Sales/CRM fields are user-owned — preserve them across data refreshes
+  const SALES_FIELDS=['sales','marketing','priority','advisory_status','ctype','solutionz','email','listref','updated'];
+
+  const merged=ALL_STATES.map(s=>{
+    const old=existing[s.state]||{};
+    const sales={};
+    SALES_FIELDS.forEach(f=>{if(old[f]!==undefined)sales[f]=old[f]});
+    // Apply program data from ALL_STATES (overrides any older program intel)
+    return{
+      ...s,
+      sales:sales.sales||'',
+      marketing:sales.marketing||'no',
+      priority:sales.priority||'medium',
+      advisory_status:sales.advisory_status||'',
+      ctype:sales.ctype||'',
+      solutionz:sales.solutionz||'unknown',
+      email:sales.email||'',
+      listref:sales.listref||'',
+      updated:sales.updated||new Date().toISOString()
+    };
+  });
+
+  sD(merged);
+  cfg.dataVersion=DATA_VERSION;
+  sS(cfg);
+
+  if(!isFreshInstall&&isOlderVersion){
+    // Show toast after init completes
+    setTimeout(()=>toast('Refreshed with latest intel · Apr 29','ok'),500);
+  }
+}
+
+// ============================================================
+// STATS ROW
+// ============================================================
+function renderStats(){
+  const d=gD();
+  const open=d.filter(r=>r.window==='open').length;
+  const upcoming=d.filter(r=>r.window==='upcoming').length;
+  const closed=d.filter(r=>r.window==='closed').length;
+  const tbd=d.filter(r=>r.window==='tbd').length;
+  const eng=d.filter(r=>['engaged','proposal','won'].includes(r.sales)).length;
+  const mkt=d.filter(r=>r.marketing==='yes').length;
+  const hconf=d.filter(r=>r.confidence==='High').length;
+  const won=d.filter(r=>r.sales==='won').length;
+  document.getElementById('srow').innerHTML=`
+    <div class="sc"><div class="sc-l">Total States</div><div class="sc-v" style="color:var(--ac)">${d.length}</div></div>
+    <div class="sc"><div class="sc-l">🟢 Open Windows</div><div class="sc-v" style="color:var(--gr)">${open}</div></div>
+    <div class="sc"><div class="sc-l">⚡ Upcoming</div><div class="sc-v" style="color:var(--am)">${upcoming}</div></div>
+    <div class="sc"><div class="sc-l">Closed</div><div class="sc-v" style="color:var(--rd)">${closed}</div></div>
+    <div class="sc"><div class="sc-l">TBD/Forecasted</div><div class="sc-v" style="color:var(--mu)">${tbd}</div></div>
+    <div class="sc"><div class="sc-l">Active Engaged</div><div class="sc-v" style="color:var(--or)">${eng}</div></div>
+    <div class="sc"><div class="sc-l">Mkt Lists Shared</div><div class="sc-v" style="color:var(--pu)">${mkt}</div></div>
+    <div class="sc"><div class="sc-l">High Confidence</div><div class="sc-v" style="color:var(--cy)">${hconf}</div></div>`;
+}
+
+// ============================================================
+// TABLE RENDER
+// ============================================================
+function rt(){
+  let data=gD();
+  const q=(document.getElementById('srch').value||'').toLowerCase();
+  const fw=document.getElementById('fw').value;
+  const freg=document.getElementById('freg').value;
+  const fpt=document.getElementById('fpt').value;
+  const fconf=document.getElementById('fconf').value;
+  const fsal=document.getElementById('fsal').value;
+  if(q)data=data.filter(d=>[d.state,d.region,d.notes,d.desc,d.forecast,d.ptype,d.match,d.fy].some(v=>(v||'').toLowerCase().includes(q)));
+  if(fw)data=data.filter(d=>d.window===fw);
+  if(freg)data=data.filter(d=>d.region===freg);
+  if(fpt)data=data.filter(d=>(d.ptype||'').toLowerCase().includes(fpt.toLowerCase()));
+  if(fconf)data=data.filter(d=>d.confidence===fconf);
+  if(fsal)data=data.filter(d=>d.sales===fsal);
+
+  // Sort: open first, then upcoming, then by field
+  const wo={'open':0,'upcoming':1,'tbd':2,'closed':3};
+  data.sort((a,b)=>{
+    const wa=wo[a.window]??3, wb=wo[b.window]??3;
+    if(wa!==wb)return wa-wb;
+    const av=a[sF]||'', bv=b[sF]||'';
+    return av<bv?-sD2:av>bv?sD2:0;
+  });
+
+  const tbody=document.getElementById('tbody');
+  if(!data.length){tbody.innerHTML=`<tr><td colspan="18"><div class="empty">No records match filters.</div></td></tr>`;renderStats();return}
+
+  tbody.innerHTML=data.map(r=>{
+    const rc=r.window==='open'?'r-open':r.window==='upcoming'?'r-upcoming':(r.notes||'').includes('CLOSES')&&r.window==='open'?'r-hot':'';
+    const wb=wBadge(r.window);
+    const sb=sBadge(r.sales);
+    const mb=mkBadge(r.marketing);
+    const ptb=ptBadge(r.ptype||'');
+    const cfb=`<span class="conf-${(r.confidence||'L').charAt(0)}">${r.confidence||'?'}</span>`;
+    const cd=closeFmt(r.windowEnd);
+    const od=r.windowStart?`<span class="dt-ok">${r.windowStart}</span>`:`<span class="dt-done">—</span>`;
+    const fy24=`<span style="font-family:var(--mo);font-size:10px;color:#0099cc">${r.fy24||'—'}</span>`;
+    const fy25=`<span style="font-family:var(--mo);font-size:10px;color:var(--cy)">${r.fy25est||'—'}</span>`;
+    const srcHtml=r.sourceUrl?`<a href="${r.sourceUrl}" target="_blank" onclick="event.stopPropagation()" style="font-family:var(--mo);font-size:9px;color:var(--ac);text-decoration:none">${(r.source||'Source').slice(0,18)}…</a>`:'—';
+    const forecast=(r.forecast||'').slice(0,65)+((r.forecast||'').length>65?'…':'');
+    return`<tr class="${rc}" onclick="openD('${r.state.replace(/'/g,"\\'")}')">
+      <td><strong style="font-size:12px">${r.state}</strong><br><span style="font-family:var(--mo);font-size:9px;color:var(--mu)">${r.abbr}</span></td>
+      <td><span style="font-size:10px;color:var(--mu)">${r.region||'—'}</span></td>
+      <td>${wb}</td>
+      <td>${od}</td>
+      <td>${cd}</td>
+      <td><span style="font-family:var(--mo);font-size:9px;color:var(--mu)">${r.fy||'—'}</span></td>
+      <td>${fy24}</td>
+      <td>${fy25}</td>
+      <td style="font-family:var(--mo);font-size:9px;max-width:110px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${r.match||''}">${(r.match||'—').slice(0,28)}</td>
+      <td style="font-family:var(--mo);font-size:9px">${r.maxAward||'—'}</td>
+      <td>${ptb}</td>
+      <td>${cfb}</td>
+      <td>${sb}</td>
+      <td>${mb}</td>
+      <td onclick="event.stopPropagation()">${srcHtml}</td>
+      <td style="font-size:10px;color:var(--am);max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${(r.forecast||'')}"><em>${forecast||'—'}</em></td>
+      <td style="font-size:10px;font-family:var(--mo);max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:${r.notes&&(r.notes.includes('🔥')||r.notes.includes('⚡')||r.notes.includes('⚠'))?'var(--am)':'var(--mu)'}" title="${r.notes||''}">${(r.notes||'—').slice(0,35)}</td>
+      <td onclick="event.stopPropagation()"><div style="display:flex;gap:3px"><button onclick="openD('${r.state.replace(/'/g,"\\'")}');event.stopPropagation()" style="background:transparent;border:1px solid var(--bd2);color:var(--ac);border-radius:3px;padding:2px 7px;font-size:9px;font-family:var(--mo);cursor:pointer" title="Edit row">Edit</button><button onclick="emailUpdate('${r.state.replace(/'/g,"\\'")}');event.stopPropagation()" style="background:transparent;border:1px solid var(--gr);color:var(--gr);border-radius:3px;padding:2px 7px;font-size:9px;font-family:var(--mo);cursor:pointer" title="Email update to rep">✉</button></div></td>
+    </tr>`;
+  }).join('');
+  renderStats();
+}
+
+// ============================================================
+// EMAIL UPDATE — sends rep email about state changes
+// ============================================================
+function emailUpdate(stateName){
+  const r=gD().find(x=>x.state===stateName);
+  if(!r)return;
+  // Site URL — configurable in Settings
+  const cfg=gS();
+  const siteUrl=cfg.siteUrl||'https://www.myfundingtracker.com/SLCGP/';
+  // Status word
+  const statusWord={open:'🟢 OPEN NOW',upcoming:'⚡ UPCOMING',closed:'❌ CLOSED',tbd:'⏳ TBD'}[r.window]||r.window;
+  // Build "what's new" summary from forecast + notes
+  const whatsNew=r.forecast||r.notes||'See tracker for details.';
+  // Build email body
+  const subject=`SLCGP Update — ${r.state} (${statusWord})`;
+  const body=`Hi,
+
+Quick SLCGP intel update on ${r.state}:
+
+STATUS: ${statusWord}
+${r.windowStart?'WINDOW OPENS: '+r.windowStart+'\n':''}${r.windowEnd?'CLOSES / NEXT: '+r.windowEnd+'\n':''}FY / ROUND: ${r.fy||'—'}
+FY2024 ALLOCATION: ${r.fy24||'—'}
+MATCH: ${r.match||'—'}
+PROCUREMENT: ${r.ptype||'—'}
+
+WHAT'S NEW:
+${whatsNew}
+
+${r.notes&&r.notes!==whatsNew?'NOTES: '+r.notes+'\n\n':''}OFFICIAL SOURCE: ${r.sourceUrl||'—'}
+
+FULL TRACKER: ${siteUrl}
+
+Updated as of ${new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'})}.
+
+— Solutionz GPS Team`;
+
+  // Open default email client with prefilled message
+  const mailto=`mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  // Use anchor click pattern to be safe with long bodies
+  const a=document.createElement('a');
+  a.href=mailto;
+  a.click();
+  toast('Email draft opened','ok');
+}
+
+function wBadge(w){
+  if(w==='open')return`<span class="b b-open">● Open</span>`;
+  if(w==='upcoming')return`<span class="b b-upcoming">⚡ Soon</span>`;
+  if(w==='closed')return`<span class="b b-closed">Closed</span>`;
+  return`<span class="b b-tbd">TBD</span>`;
+}
+function ptBadge(p){
+  const pl=p.toLowerCase();
+  if(pl.includes('rfa'))return`<span class="pt-badge pt-rfa">RFA</span>`;
+  if(pl.includes('rfp'))return`<span class="pt-badge pt-rfp">RFP</span>`;
+  if(pl.includes('rolling'))return`<span class="pt-badge pt-rolling">Rolling</span>`;
+  if(pl.includes('first'))return`<span class="pt-badge pt-first">First-Come</span>`;
+  if(pl.includes('part'))return`<span class="pt-badge pt-part">Participation</span>`;
+  if(pl.includes('online'))return`<span class="pt-badge pt-rfa">Online Window</span>`;
+  if(pl.includes('proposal'))return`<span class="pt-badge pt-rolling">Proposal</span>`;
+  if(pl.includes('state'))return`<span class="pt-badge pt-rfp">State App</span>`;
+  return`<span class="pt-badge pt-tbd">${p.slice(0,14)||'TBD'}</span>`;
+}
+function sBadge(s){const m={prospect:['b-s1','Prospect'],outreach:['b-s2','Outreach'],engaged:['b-s3','Engaged'],proposal:['b-s4','Proposal'],won:['b-s5','Won']};if(!s||!m[s])return`<span class="b b-ns">—</span>`;return`<span class="b ${m[s][0]}">${m[s][1]}</span>`;}
+function mkBadge(v){if(v==='yes')return`<span style="color:var(--gr);font-family:var(--mo);font-size:9px"><span class="dot dot-y"></span>Shared</span>`;if(v==='pending')return`<span style="color:var(--am);font-family:var(--mo);font-size:9px"><span class="dot dot-p"></span>Pend</span>`;return`<span style="color:var(--mu);font-family:var(--mo);font-size:9px"><span class="dot dot-n"></span>No</span>`;}
+function closeFmt(d){
+  if(!d)return`<span class="dt-done">—</span>`;
+  if(d.toLowerCase().includes('ongoing')||d.toLowerCase().includes('rolling')||d.toLowerCase().includes('first-come'))return`<span class="dt-open">${d}</span>`;
+  const stripped=d.match(/\d{4}-\d{2}-\d{2}/);
+  if(stripped){
+    const dt=new Date(stripped[0]+'T00:00:00'), now=new Date();
+    const days=Math.ceil((dt-now)/86400000);
+    if(days<0)return`<span class="dt-done">${d} ✓</span>`;
+    if(days<=1)return`<span class="dt-hot">${d} (TOMORROW!)</span>`;
+    if(days<=7)return`<span class="dt-hot">${d} (${days}d)</span>`;
+    if(days<=21)return`<span class="dt-soon">${d} (${days}d)</span>`;
+    return`<span class="dt-ok">${d}</span>`;
+  }
+  return`<span class="dt-ok">${d}</span>`;
+}
+function srt(f){if(sF===f)sD2*=-1;else{sF=f;sD2=1}rt()}
+
+// ============================================================
+// DETAIL PANEL
+// ============================================================
+function openD(stateName){
+  curId=stateName;
+  const r=gD().find(x=>x.state===stateName);
+  if(!r)return;
+  document.getElementById('dp-title').textContent=`${r.state} (${r.abbr}) — ${r.region}`;
+  document.getElementById('dp-badges').innerHTML=`${wBadge(r.window)} <span style="font-family:var(--mo);font-size:9px;color:var(--mu)">${r.fy||''}</span> <span class="conf-${(r.confidence||'M').charAt(0)}">${r.confidence||'?'} Confidence</span>`;
+  const srcLinks=r.sourceUrl?`<a href="${r.sourceUrl}" target="_blank">→ ${r.source||'Primary Source'}</a>`:'No source linked';
+  const drillLink=r.drillUrl&&r.drillUrl!==r.sourceUrl?`<a href="${r.drillUrl}" target="_blank">→ Drill-Down / Application</a>`:'';
+  document.getElementById('dp-body').innerHTML=`
+    ${r.forecast?`<div class="dp-forecast">📊 ${r.forecast}</div>`:''}
+    ${r.notes?`<div class="dp-notes">${r.notes}</div>`:''}
+    <div class="dp-sec">Window &amp; Funding</div>
+    <div class="dp-row"><span class="dp-lbl">Window Status</span><span class="dp-val">${wBadge(r.window)}</span></div>
+    <div class="dp-row"><span class="dp-lbl">Window Open</span><span class="dp-val" style="font-family:var(--mo);font-size:11px">${r.windowStart||'—'}</span></div>
+    <div class="dp-row"><span class="dp-lbl">Deadline / Next</span><span class="dp-val">${closeFmt(r.windowEnd)}</span></div>
+    <div class="dp-row"><span class="dp-lbl">FY / Round</span><span class="dp-val" style="font-family:var(--mo)">${r.fy||'—'}</span></div>
+    <div class="dp-row"><span class="dp-lbl">FY2024 Allocation</span><span class="dp-val" style="font-family:var(--mo);color:#0099cc">${r.fy24||'—'}</span></div>
+    <div class="dp-row"><span class="dp-lbl">FY2025 Est.</span><span class="dp-val" style="font-family:var(--mo);color:var(--cy)">${r.fy25est||'—'}</span></div>
+    <div class="dp-row"><span class="dp-lbl">Match Required</span><span class="dp-val" style="font-family:var(--mo)">${r.match||'—'}</span></div>
+    <div class="dp-row"><span class="dp-lbl">Max Award</span><span class="dp-val">${r.maxAward||'—'}</span></div>
+    <div class="dp-sec">Procurement &amp; Access</div>
+    <div class="dp-row"><span class="dp-lbl">Procurement Type</span><span class="dp-val">${ptBadge(r.ptype||'')} ${r.ptype||'—'}</span></div>
+    <div class="dp-row"><span class="dp-lbl">Procurement Detail</span><span class="dp-val">${r.procDetail||'—'}</span></div>
+    <div class="dp-row"><span class="dp-lbl">Advisory Committee</span><span class="dp-val">${r.advisory||'—'}</span></div>
+    <div class="dp-sec">Verified Sources</div>
+    <div class="dp-val">${srcLinks}${drillLink?'<br>'+drillLink:''}</div>
+    <div class="dp-row" style="margin-top:.5rem"><span class="dp-lbl">Confidence</span><span class="dp-val"><span class="conf-${(r.confidence||'M').charAt(0)}">${r.confidence||'?'}</span></span></div>
+    <div class="dp-sec">Description</div>
+    <div class="dp-desc">${r.desc||'No description.'}</div>`;
+
+  document.getElementById('e-sales').value=r.sales||'';
+  document.getElementById('e-mkt').value=r.marketing||'no';
+  document.getElementById('e-pri').value=r.priority||'medium';
+  document.getElementById('e-ctype').value=r.ctype||'';
+  document.getElementById('e-solz').value=r.solutionz||'unknown';
+  document.getElementById('e-adv').value=r.advisory_status||'';
+  document.getElementById('e-email').value=r.email||'';
+  document.getElementById('e-notes').value=r.notes||'';
+  document.getElementById('e-listref').value=r.listref||'';
+  document.getElementById('e-email-btn').style.display=r.email?'block':'none';
+
+  document.getElementById('dov').classList.add('open');
+  document.getElementById('dpanel').classList.add('open');
+}
+function closeD(){
+  document.getElementById('dov').classList.remove('open');
+  document.getElementById('dpanel').classList.remove('open');
+  curId=null;
+}
+function saveD(){
+  if(!curId)return;
+  const old=gD().find(r=>r.state===curId);
+  const updated={...old,
+    sales:document.getElementById('e-sales').value,
+    marketing:document.getElementById('e-mkt').value,
+    priority:document.getElementById('e-pri').value,
+    ctype:document.getElementById('e-ctype').value,
+    solutionz:document.getElementById('e-solz').value,
+    advisory_status:document.getElementById('e-adv').value,
+    email:document.getElementById('e-email').value,
+    notes:document.getElementById('e-notes').value,
+    listref:document.getElementById('e-listref').value,
+    updated:new Date().toISOString()
+  };
+  const chg=[];
+  ['sales','marketing','solutionz','notes','ctype'].forEach(f=>{if((old[f]||'')!==(updated[f]||''))chg.push(f+': "'+( old[f]||'—')+'" → "'+(updated[f]||'—')+'"')});
+  if(chg.length){const cl=gCL();cl.unshift({ts:new Date().toISOString(),state:updated.state,region:updated.region,chg});sCL(cl.slice(0,500))}
+  const data=gD();const i=data.findIndex(r=>r.state===curId);if(i>=0)data[i]=updated;
+  sD(data);closeD();rt();toast('Saved','ok');
+}
+function emailAct(){
+  const r=gD().find(x=>x.state===curId);if(!r||!r.email)return;
+  window.location.href=`mailto:${r.email}?subject=SLCGP%20Inquiry%20—%20${encodeURIComponent(r.state)}&body=Hello%2C%0A%0AWe%20are%20reaching%20out%20regarding%20SLCGP%20funding%20in%20${encodeURIComponent(r.state)}.%0A%0A`;
+}
+
+// ============================================================
+// AI SEARCH
+// ============================================================
+let aiHist=[];
+async function aiSend(){
+  const inp=document.getElementById('ai-in');
+  const msg=inp.value.trim();if(!msg)return;
+  inp.value='';
+  aiMsg(msg,'user');
+  const btn=document.getElementById('ai-btn');btn.disabled=true;btn.textContent='⟳';
+  aiHist.push({role:'user',content:msg});
+  const loading=document.createElement('div');loading.className='ai-r';loading.id='ai-load';
+  loading.innerHTML='<span class="spin">⟳</span> Searching grant intelligence...';
+  document.getElementById('ai-msgs').appendChild(loading);scrollAi();
+  try{
+    const resp=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-20250514',max_tokens:1200,
+        system:`You are a SLCGP grant intelligence analyst for Solutionz (cybersecurity sales). You help the GPS sales team track SLCGP funding windows and act on opportunities.
+
+VERIFIED DATA (Source: GPS Team tracker refreshed April 29, 2026 + FEMA FY2024 NOFO):
+
+PROGRAM FACTS:
+- FY2025 = FINAL authorized SLCGP year under IIJA ($91.75M nationwide). FY2026 NOT authorized — needs PILLAR Act passage.
+- ⚡ NEW Apr 29: PILLAR Act (Protecting Information by Local Leaders for Agency Resilience) is under Congressional consideration to renew federal program past FY2025.
+- Federal SAA window closed ~Oct 2025. States distributing sub-awards now.
+- FY2024 NOFO total: $279,873,562. FY2025 total: $91,750,000.
+- Match schedule (FEMA NOFO): FY22=10%, FY23=20%, FY24=30%, FY25=40% (single entity). Multi-entity: 0/10/20/30%.
+
+9 OPEN STATE WINDOWS (as of Apr 29 2026):
+1. Alabama - First-come portal, FY2022-FY2025 Rounds 1-4 ($3.07M/$6.27M/$4.73M/$1.55M), no match required
+2. ⚡ Georgia - 🚨 CLOSES TODAY Apr 29 2026, FY2024, 30%/20% multi, EM Grants Manager (final hours!)
+3. Idaho - Ongoing FFY2025-2026, participation request form, no match (service delivery model)
+4. Maryland - Rolling/ongoing, FY2023 second round, 20%/10% multi, short-term projects
+5. Missouri - Apr 13-May 20 2026, FY2025, 40% match, WebGrants, $200K max federal share
+6. New Mexico - Ongoing, State FY2027 services (Jul 1 2026-Jun 30 2027), participation forms
+7. Oklahoma - Quarterly rolling: Apr 30/Jul 31/Oct 30 2026; note "funding not currently accessible"
+8. South Carolina - Mar 20-May 15 2026, FY2024, 30%/20% multi, SLED/SAA proposal
+9. Wyoming - Apr 17-May 15 2026, FY2025, 40% match, ZoomGrants
+
+UPCOMING WATCH (Updated Apr 29):
+- ⚡ Washington - NEW: "next round opens May 2026" per WaTech (last IIJA cycle, K-12 + tribal + special districts eligible)
+- Montana: "next window opens by late spring 2026" (official state page)
+- Oregon: temporarily closed Apr 1 2026; new applications Summer 2026
+- Wisconsin FFY24: $5,806,564 allocated, "check back for FFY24 NOFO" (federal shutdown causing delays — DET page unchanged Apr 29)
+- Wisconsin FFY25: "likely spring 2026" per WI Legislative Fiscal Bureau
+- Florida: next FY24 release "later in 2026" per state page
+
+KEY CLOSED:
+- California FY2024: Mar 13 2026 (match WAIVED for FY2024 subrecipients)
+- Texas Year 3 RFA: Feb 12 2026 (30% match, TX DIR contract). NEW Apr 29: TX DIR confirmed FY27 state matching = 30% (positioning for next cycle)
+- Michigan: FY22-FY24 awards ALL COMPLETE per DTMB. FY25 timing TBD. MiDEAL preferred procurement.
+- NC FY2025: Nov 30 2025 ($2,638,773 verified, awards spring 2026)
+- Wisconsin FFY23 R2: Jan 30 2026 (0% match, awards April 2026 expected)
+- Kentucky: CLOSED + FFY2025 allocations ON HOLD (2025 KOHS annual report)
+
+FY2024 TOP ALLOCATIONS (exact from NOFO):
+TX=$12,616,798 | CA=$11,845,702 | NY=$8,723,252 | FL=$8,620,815 | NC=$8,037,374 | PA=$8,015,678 | OH=$7,598,799 | MI=$7,178,365 | GA=$7,456,494 | IL=$6,724,174 | VA=$6,446,009 | TN=$6,368,577 | IN=$5,987,571 | WI=$5,806,564 | MO=$5,805,583
+
+CONTACTS: NC: SLCGP@NCDPS.gov | WI: SLCGP@wi.gov / Marc Couturier marc.couturier@widma.gov 608-590-9112 | CO: cdps_slcgp@state.co.us / Liliya Levakin 720-656-4360 | TX: eGrants@gov.texas.gov | MS: mohsgrants@dps.ms.gov | FEMA: FEMA-SLCGP@fema.dhs.gov
+
+Be concise, action-oriented, and cite sources. State what is verified vs estimated.`,
+        messages:aiHist
+      })
+    });
+    const data=await resp.json();
+    const text=data.content?.find(c=>c.type==='text')?.text||'No response';
+    const el=document.getElementById('ai-load');if(el)el.remove();
+    aiHist.push({role:'assistant',content:text});
+    aiMsg(text,'ai');
+  }catch(e){
+    const el=document.getElementById('ai-load');if(el)el.remove();
+    aiMsg('Error: '+e.message,'ai');
+  }
+  btn.disabled=false;btn.textContent='Ask →';
+}
+function aiAsk(q){document.getElementById('ai-in').value=q;aiSend()}
+function aiMsg(text,role){
+  const msgs=document.getElementById('ai-msgs');
+  const div=document.createElement('div');
+  div.className=role==='user'?'ai-u':'ai-r';
+  if(role==='user')div.innerHTML=`<strong style="color:var(--ac);font-family:var(--mo);font-size:10px">YOU: </strong>${esc(text)}`;
+  else div.innerHTML=text.replace(/\n/g,'<br>').replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>');
+  const ph=msgs.querySelector('div[style*="center"]');if(ph)ph.remove();
+  msgs.appendChild(div);scrollAi();
+}
+function scrollAi(){const m=document.getElementById('ai-msgs');m.scrollTop=m.scrollHeight}
+function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+
+// ============================================================
+// INTEL CARDS
+// ============================================================
+const INTEL=[
+{t:"🚨 Georgia FY2024 — CLOSES TODAY Apr 29",c:"gcd-r",fy:"FY2024",open:"Apr 1 2026",due:"Apr 29 2026 — TODAY",amt:"FY2024: $7,456,494",match:"30% single / 20% multi-entity",proc:"EM Grants Manager (online portal)",d:"FINAL HOURS. Georgia FY2024 SLCGP window CLOSES TODAY April 29, 2026. Apply via EM Grants Manager NOW. FY2025 window opens September 1, 2026.",src:"https://gema.ga.gov"},
+{t:"⚡ NEW: Washington — Opening May 2026",c:"gcd-s",fy:"FY2025 (last IIJA round)",open:"May 2026 (anticipated)",due:"TBD when posted",amt:"FY2024: $5,546,984",match:"40%",proc:"WaTech state application; sign up for SLCGP interest list",d:"⚡ APR 29 NEW INTEL: WaTech page now states next round opens May 2026. Eligible: local govts, Tribal govts, K-12 school districts, special districts. Last IIJA cycle. WaTech also flags PILLAR Act (which would renew federal program) is under Congressional consideration.",src:"https://watech.wa.gov/state-local-cybersecurity-grant-program"},
+{t:"📜 PILLAR Act — FY2026 Reauthorization Watch",c:"gcd-c",fy:"FY2026+",open:"Pending Congress",due:"TBD",amt:"TBD",match:"TBD",proc:"N/A (pre-legislation)",d:"NEW INTEL (per WaTech page): The Protecting Information by Local Leaders for Agency Resilience (PILLAR) Act would renew the federal SLCGP program past FY2025. Currently under consideration in Congress. NOT yet authorized as of April 29, 2026. Solutionz should monitor Congressional action — if PILLAR passes, FY2026+ funding becomes available.",src:"https://www.cisa.gov/cybergrants/slcgp"},
+{t:"⚡ Wyoming FY2025 — Open through May 15",c:"gcd-o",fy:"FY2025",open:"Apr 17 2026",due:"May 15 2026",amt:"FY2024: $3,345,507",match:"40% (likely)",proc:"ZoomGrants",d:"VERIFIED. Wyoming Homeland Security says SLCGP application period open. Submit in ZoomGrants by May 15, 2026.",src:"https://wyomingohls.wyo.gov"},
+{t:"⚡ South Carolina FY2024 — Open through May 15",c:"gcd-o",fy:"FY2024",open:"Mar 20 2026",due:"May 15 2026 COB",amt:"FY2024: $5,454,484",match:"30% single / 20% multi-entity",proc:"SLED/SAA proposal application",d:"VERIFIED. SC SAA page: solicitation emails began March 20 2026. Proposals due May 15 2026, close of business.",src:"https://www.sled.sc.gov"},
+{t:"⚡ Missouri FY2025 — Open through May 20",c:"gcd-o",fy:"FY2025",open:"Apr 13 2026",due:"May 20 2026 5pm CST",amt:"FY2024: $5,805,583",match:"40% (cash or in-kind)",proc:"WebGrants — Missouri DPS",d:"VERIFIED. Missouri posted FY2025 SLCGP NOFO on Apr 13 2026. Due May 20 at 5pm CST. Max $200K federal share per applicant. Align to MO Comprehensive Cybersecurity Plan.",src:"https://dps.mo.gov"},
+{t:"Alabama — First-Come Portal OPEN",c:"gcd-o",fy:"FY2022–FY2025",open:"Ongoing",due:"First-come / while funds last",amt:"$3.07M / $6.27M / $4.73M / $1.55M (4 rounds)",match:"No direct cost (waived)",proc:"Alabama online portal — first-come, first-served",d:"VERIFIED. Alabama apply page: eligible local govt entities apply online now on first-come, first-served basis. Four rounds spanning FY2022 through FY2025.",src:"https://adem.alabama.gov"},
+{t:"Idaho — Open Participation (No Match)",c:"gcd-o",fy:"FFY2025-2026",open:"Ongoing",due:"Program delivery FFY2025-2026",amt:"FY2024: $3,899,009",match:"No direct cost to participant",proc:"Operation Cyber Idaho — participation request",d:"VERIFIED. Operation Cyber Idaho page: active 'Ready to Apply' path. Service delivery model (not cash subaward). Cities, counties, school districts, tribes eligible.",src:"https://bhs.idaho.gov"},
+{t:"Maryland — Rolling FY2023 Second Round",c:"gcd-o",fy:"FY2023 Round 2",open:"Rolling / ongoing",due:"Rolling basis",amt:"FY2024: $4,924,161",match:"20% single / 10% multi-entity",proc:"Maryland CPU rolling application",d:"VERIFIED. Maryland CPU funding page: additional short-term funding opportunity opened, FY2023 second-round on rolling basis.",src:"https://mema.maryland.gov"},
+{t:"New Mexico — Participation Forms (SFY2027)",c:"gcd-o",fy:"State FY2027",open:"Accepting now",due:"Jul 1 2026–Jun 30 2027 services",amt:"FY2024: $3,893,800",match:"TBD",proc:"Participation/request forms — Cybersecurity Planning Committee",d:"VERIFIED. New Mexico Cybersecurity Planning Committee accepting participation forms NOW for State FY2027 services (Jul 1 2026–Jun 30 2027). First-come basis.",src:"https://www.nmdhsem.nm.gov"},
+{t:"⚡ Montana — Next Window 'Late Spring 2026'",c:"gcd-s",fy:"TBD",open:"'By late spring 2026' (official)",due:"TBD",amt:"FY2024: $3,695,624",match:"TBD",proc:"State application",d:"VERIFIED. Montana official page says most recent window closed Jan 9 2026 and next window will open 'by late spring 2026.' Monitor immediately.",src:"https://des.mt.gov"},
+{t:"⚡ Oregon — Temporarily Closed, Summer 2026",c:"gcd-s",fy:"FY2024/FY2025",open:"Temporarily closed Apr 1 2026",due:"Summer 2026 (anticipated)",amt:"FY2024: $4,515,523",match:"FY24 may require 30%; FY25 40%",proc:"State application",d:"VERIFIED. Oregon official page: 'funding opportunity temporarily closed as of April 1, 2026, with new applications anticipated in Summer 2026.'",src:"https://www.oregon.gov/oem/"},
+{t:"⚠ Wisconsin FFY24/25 — PENDING (Highest Value Watch)",c:"gcd-s",fy:"FFY24 + FFY25",open:"FFY24 NOFO pending; FFY25 spring 2026",due:"TBD (federal shutdown causing delays)",amt:"FY2024: $5,806,564",match:"FFY24: 30% / FFY25: 40%",proc:"WEM eGrants (wem.egrants.us)",d:"CRITICAL. DET page: 'check back for FFY24 NOFO.' Federal shutdown impacting FEMA. WI Leg Fiscal Bureau: FFY25 'likely spring 2026.' Two separate pools pending. Contact: SLCGP@wi.gov / Marc Couturier 608-590-9112.",src:"https://det.wi.gov/Pages/Cybersecurity_Grants.aspx"},
+{t:"⚠ Kentucky FFY2025 — Allocations ON HOLD",c:"gcd-s",fy:"FY2025",open:"CLOSED",due:"Hold pending availability",amt:"FY2024: $5,489,622",match:"TBD",proc:"Monitor KY grants page",d:"VERIFIED. Kentucky 2025 KOHS annual report explicitly states FFY2025 SLCGP allocations have been placed on HOLD pending availability. Do not promise funding to KY prospects.",src:"https://kentucky.gov"},
+{t:"Florida — FY24 Release 'Later in 2026'",c:"gcd-s",fy:"FY2024",open:"TBD later in 2026",due:"TBD",amt:"FY2023 allocation: $11,997,340",match:"20% (FL-specific — lower than federal 40%!)",proc:"FDEM Grants Portal",d:"VERIFIED. FL state page: FY2025-26 cycle (using FY2023 federal funds) ran Oct 15–Dec 15 2025 (CLOSED). 'The next FY24 release will come later in 2026.' $11,997,340 FL allocation. 20% match unique to FL.",src:"https://www.floridadisaster.org/grants/"},
+{t:"⚠ FY2026 SLCGP — Awaiting PILLAR Act Passage",c:"gcd-r",fy:"FY2026",open:"Not yet authorized",due:"Pending Congress",amt:"Unknown",match:"TBD",proc:"N/A",d:"FY2025 is the LAST authorized year of SLCGP under IIJA. FY2026 requires new legislation. The PILLAR Act (Protecting Information by Local Leaders for Agency Resilience) would renew federal cybersecurity grant program — currently under Congressional consideration as of April 29, 2026. Do NOT promise FY2026 funding to prospects until passage."   ,src:"https://www.cisa.gov/cybergrants/slcgp"}
+];
+
+function renderIntel(){
+  document.getElementById('gcards').innerHTML=INTEL.map(g=>`
+    <div class="gcd ${g.c}">
+     <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.5rem">
+      <div class="gcd-title">${g.t}</div>
+      <span style="font-family:var(--mo);font-size:9px;color:var(--mu);white-space:nowrap;margin-left:.5rem">${g.fy}</span>
+     </div>
+     <div class="gcd-row"><span class="gcd-lbl">Opens</span><span class="gcd-val">${g.open}</span></div>
+     <div class="gcd-row"><span class="gcd-lbl">Deadline</span><span class="gcd-val">${g.due}</span></div>
+     <div class="gcd-row"><span class="gcd-lbl">Allocation</span><span class="gcd-val" style="color:#0099cc">${g.amt}</span></div>
+     <div class="gcd-row"><span class="gcd-lbl">Match</span><span class="gcd-val">${g.match}</span></div>
+     <div class="gcd-row"><span class="gcd-lbl">Procurement</span><span class="gcd-val">${g.proc}</span></div>
+     <div class="gcd-desc">${g.d}</div>
+     <div style="margin-top:.625rem"><a href="${g.src}" target="_blank" style="color:var(--ac);font-size:9px;font-family:var(--mo);text-decoration:none">→ Official Source</a></div>
+    </div>`).join('');
+}
+
+// ============================================================
+// CHANGELOG
+// ============================================================
+function renderCL(){
+  const cl=gCL();const el=document.getElementById('cl-content');
+  if(!cl.length){el.innerHTML=`<div class="empty">No changes logged yet.</div>`;return}
+  el.innerHTML=cl.map(c=>`<div class="cli"><div class="cli-h"><div class="cli-s">📍 ${c.state}${c.region?' — '+c.region:''}</div><div class="cli-t">${new Date(c.ts).toLocaleString()}</div></div><div class="cli-d">${c.chg.map(ch=>'› '+ch).join('<br>')}</div></div>`).join('');
+}
+function clearCL(){if(confirm('Clear change log?')){sCL([]);renderCL();toast('Cleared','info')}}
+
+// ============================================================
+// EXPORT CSV
+// ============================================================
+function expCSV(){
+  const data=gD();if(!data.length){toast('No data','info');return}
+  const cols=['state','abbr','region','window','windowStart','windowEnd','fy','fy24','fy25est','match','maxAward','ptype','confidence','sales','marketing','solutionz','advisory','ctype','email','priority','forecast','notes','listref','sourceUrl','updated'];
+  const hdr=cols.join(',');
+  const rows=data.map(d=>cols.map(c=>`"${String(d[c]||'').replace(/"/g,'""')}"`).join(','));
+  const csv=[hdr,...rows].join('\n');
+  const a=document.createElement('a');
+  a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(csv);
+  a.download='SLCGP_50States_'+new Date().toISOString().slice(0,10)+'.csv';
+  a.click();toast('CSV exported','ok');
+}
+
+// ============================================================
+// SHEETS / SYNC
+// ============================================================
+// ============================================================
+// QUICK SYNC (home-screen one-click)
+// ============================================================
+function quickSync(){
+  const url=getSheetURL();
+  if(!url){toast('Sync not configured. Contact admin.','info');return}
+  toast('Syncing…','info');
+  fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'write',data:gD()}),mode:'no-cors'})
+    .then(()=>{const s=gS();s.lastSync=new Date().toISOString();sS(s);updSync();toast('✓ Sync successful','ok')})
+    .catch(()=>toast('✗ Sync error — try again or contact admin','info'));
+}
+
+// ============================================================
+// ADMIN AUTH GATE
+// ============================================================
+const DEFAULT_ADMIN_PW=btoa('slcgp-admin');
+let adminAuthed=false;
+function isAdminAuthed(){return adminAuthed}
+function adminLogin(){
+  const pw=document.getElementById('admin-pw-in').value;
+  const s=gS();
+  const adminHash=s.adminPwh||DEFAULT_ADMIN_PW;
+  if(btoa(pw)===adminHash){
+    adminAuthed=true;
+    document.getElementById('admin-gate').style.display='none';
+    document.getElementById('admin-panel').style.display='block';
+    document.getElementById('admin-pw-in').value='';
+    document.getElementById('admin-err').style.display='none';
+    loadSheetURL();renderAS();
+    toast('Admin authenticated','ok');
+  } else {
+    document.getElementById('admin-err').style.display='block';
+  }
+}
+function adminLogout(){
+  adminAuthed=false;
+  document.getElementById('admin-gate').style.display='block';
+  document.getElementById('admin-panel').style.display='none';
+  toast('Admin locked','info');
+}
+function changeAdminPW(){
+  const np=document.getElementById('admin-newpw').value.trim();
+  if(!np||np.length<8){toast('Min 8 chars for admin password','info');return}
+  const s=gS();s.adminPwh=btoa(np);sS(s);
+  document.getElementById('admin-newpw').value='';
+  toast('Admin password updated','ok');
+}
+
+function loadSheetURL(){const s=gS();const el=document.getElementById('sheet-url');if(el&&s.sheetUrl)el.value=s.sheetUrl}
+function loadSiteUrl(){const s=gS();const el=document.getElementById('siteUrlInput');if(el)el.value=s.siteUrl||'https://www.myfundingtracker.com/SLCGP/'}
+function saveSiteUrl(){const u=document.getElementById('siteUrlInput').value.trim();const s=gS();s.siteUrl=u||'https://www.myfundingtracker.com/SLCGP/';sS(s);toast('Site URL saved','ok')}
+function saveSheetURL(){const u=document.getElementById('sheet-url').value.trim();const s=gS();s.sheetUrl=u;sS(s);toast('URL saved','ok')}
+function getSheetURL(){return gS().sheetUrl||''}
+function pushSheets(){
+  const url=getSheetURL();if(!url){toast('Set Apps Script URL first','info');return}
+  fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'write',data:gD()}),mode:'no-cors'})
+    .then(()=>{const s=gS();s.lastSync=new Date().toISOString();sS(s);updSync();toast('Pushed','ok')})
+    .catch(()=>toast('Push failed','info'));
+}
+function pullSheets(){
+  const url=getSheetURL();if(!url){toast('Set Apps Script URL first','info');return}
+  fetch(url+'?action=read').then(r=>r.json()).then(d=>{if(d&&d.data){sD(d.data);rt();const s=gS();s.lastSync=new Date().toISOString();sS(s);updSync();toast('Pulled','ok')}}).catch(()=>toast('Pull failed','info'));
+}
+function updSync(){const s=gS();const el=document.getElementById('syncd');if(s.lastSync)el.textContent='Sync: '+new Date(s.lastSync).toLocaleString();else el.textContent='—'}
+function renderAS(){
+  const el=document.getElementById('appsscript');if(!el)return;
+  el.textContent=`// SLCGP 50-State Tracker — Google Apps Script
+// Deploy as Web App: Execute as Me | Access: Anyone
+const SHEET='SLCGP_States';
+function doGet(e){return e.parameter.action==='read'?readData():out({error:'Unknown'})}
+function doPost(e){const p=JSON.parse(e.postData.contents);return p.action==='write'?writeData(p.data):out({error:'Unknown'})}
+function getSheet(){const ss=SpreadsheetApp.getActiveSpreadsheet();let sh=ss.getSheetByName(SHEET);if(!sh){sh=ss.insertSheet(SHEET);sh.setFrozenRows(1)}return sh}
+function readData(){const sh=getSheet();const rows=sh.getDataRange().getValues();if(rows.length<=1)return out({data:[]});const hdrs=rows[0];return out({data:rows.slice(1).map(r=>{const o={};hdrs.forEach((h,i)=>o[h]=r[i]);return o})})}
+function writeData(data){const sh=getSheet();sh.clearContents();if(!data.length)return out({success:true,count:0});const keys=Object.keys(data[0]);sh.appendRow(keys);data.forEach(rec=>sh.appendRow(keys.map(k=>rec[k]||'')));return out({success:true,count:data.length})}
+function out(obj){return ContentService.createTextOutput(JSON.stringify(obj)).setMimeType(ContentService.MimeType.JSON)}`;
+}
+
+// ============================================================
+// TABS / TOAST
+// ============================================================
+const TABS=['active','tracker','ai','intel','changes','sheets','settings','contracts'];
+function switchTab(t){
+  TABS.forEach(n=>{
+    const el=document.getElementById('tt-'+n);if(el)el.classList.toggle('active',n===t);
+    const pg=document.getElementById('tab-'+n);if(pg)pg.style.display=n===t?'block':'none';
+  });
+  if(t==='active')renderActive();
+  if(t==='changes')renderCL();
+  if(t==='intel')renderIntel();
+  if(t==='contracts'){renderCxStats();renderCxCards();renderGapAlerts();}
+  if(t==='sheets'){
+    // Enforce admin gate
+    if(isAdminAuthed()){
+      document.getElementById('admin-gate').style.display='none';
+      document.getElementById('admin-panel').style.display='block';
+      loadSheetURL();renderAS();
+    } else {
+      document.getElementById('admin-gate').style.display='block';
+      document.getElementById('admin-panel').style.display='none';
+      setTimeout(()=>{const inp=document.getElementById('admin-pw-in');if(inp)inp.focus()},100);
+    }
+  }
+}
+
+// ============================================================
+// ACTIVE NOW VIEW
+// ============================================================
+let activeFilterMode='all';
+function setActiveFilter(mode){
+  activeFilterMode=mode;
+  ['all','open','upcoming'].forEach(m=>{
+    const btn=document.getElementById('active-filter-'+m);
+    if(btn)btn.classList.toggle('active-tog-on',m===mode);
+  });
+  renderActive();
+}
+
+function renderActive(){
+  const all=gD();
+  let states=all.filter(s=>s.window==='open'||s.window==='upcoming');
+  // Apply filter
+  if(activeFilterMode==='open')states=states.filter(s=>s.window==='open');
+  if(activeFilterMode==='upcoming')states=states.filter(s=>s.window==='upcoming');
+  // Sort: open first, then upcoming, then by deadline urgency
+  states.sort((a,b)=>{
+    const wo={'open':0,'upcoming':1};
+    const wa=wo[a.window]??2,wb=wo[b.window]??2;
+    if(wa!==wb)return wa-wb;
+    // Within same window status, sort by deadline
+    return urgencyScore(a)-urgencyScore(b);
+  });
+
+  // Update summary
+  const opens=all.filter(s=>s.window==='open').length;
+  const ups=all.filter(s=>s.window==='upcoming').length;
+  document.getElementById('active-summary').textContent=`${opens} open · ${ups} upcoming · ${states.length} shown · Refreshed ${new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})}`;
+
+  const container=document.getElementById('active-cards');
+  const empty=document.getElementById('active-empty');
+  if(!states.length){container.innerHTML='';empty.style.display='block';return}
+  empty.style.display='none';
+  container.innerHTML=states.map(s=>renderActiveCard(s)).join('');
+}
+
+function urgencyScore(s){
+  if(!s.windowEnd)return 9999;
+  const m=s.windowEnd.match(/\d{4}-\d{2}-\d{2}/);
+  if(!m)return 5000;
+  const dt=new Date(m[0]+'T00:00:00');
+  const days=Math.ceil((dt-new Date())/86400000);
+  return days<0?9000:days;
+}
+
+function renderActiveCard(s){
+  // Determine card style
+  let cardClass='acard-upcoming';
+  if(s.window==='open')cardClass='acard-open';
+  // Hot if closes within 3 days
+  const m=s.windowEnd&&s.windowEnd.match(/\d{4}-\d{2}-\d{2}/);
+  let isHot=false;
+  if(m){
+    const days=Math.ceil((new Date(m[0]+'T00:00:00')-new Date())/86400000);
+    if(s.window==='open'&&days<=3&&days>=0)isHot=true;
+  }
+  if(isHot)cardClass='acard-hot';
+
+  // Status badge
+  const statusBadge=s.window==='open'
+    ?`<span class="b b-open">● Open Now</span>`
+    :`<span class="b b-upcoming">⚡ Upcoming</span>`;
+
+  // Deadline display
+  let deadlineClass='',deadlineLbl='Deadline',deadlineVal=s.windowEnd||'TBD';
+  if(s.window==='open'){
+    if(m){
+      const days=Math.ceil((new Date(m[0]+'T00:00:00')-new Date())/86400000);
+      if(days<0){deadlineClass='open-now';deadlineLbl='Status';deadlineVal='Window passed — verify with state'}
+      else if(days===0){deadlineClass='urgent';deadlineLbl='Closes';deadlineVal='TODAY ⏰ '+s.windowEnd}
+      else if(days<=3){deadlineClass='urgent';deadlineLbl='Closes';deadlineVal=`In ${days} day${days>1?'s':''} (${s.windowEnd})`}
+      else if(days<=14){deadlineClass='';deadlineLbl='Closes';deadlineVal=`In ${days} days (${s.windowEnd})`}
+      else{deadlineClass='open-now';deadlineLbl='Closes';deadlineVal=s.windowEnd}
+    } else {
+      deadlineClass='open-now';deadlineLbl='Window';deadlineVal=s.windowEnd||'Open / ongoing'
+    }
+  } else {
+    deadlineLbl='Expected';deadlineVal=s.windowEnd||'TBD'
+  }
+
+  // What you need to know summary - prefer forecast, fallback to desc
+  const summary=s.forecast||s.notes||(s.desc||'').slice(0,200);
+
+  return`<div class="acard ${cardClass}">
+    <div class="acard-head">
+      <div>
+        <div class="acard-state">${s.state}</div>
+        <div class="acard-region">${s.region||''} · ${s.abbr}</div>
+      </div>
+      <div class="acard-status">${statusBadge}</div>
+    </div>
+    <div class="acard-deadline ${deadlineClass}">
+      <span class="acard-deadline-lbl">${deadlineLbl}</span>
+      <span class="acard-deadline-val">${deadlineVal}</span>
+    </div>
+    <div class="acard-grid">
+      <div><span class="acard-grid-lbl">FY / Round</span><span class="acard-grid-val acard-fy">${s.fy||'—'}</span></div>
+      <div><span class="acard-grid-lbl">Match Required</span><span class="acard-grid-val">${s.match||'—'}</span></div>
+      <div><span class="acard-grid-lbl">FY2024 Allocation</span><span class="acard-grid-val acard-amount">${s.fy24||'—'}</span></div>
+      <div><span class="acard-grid-lbl">How to Apply</span><span class="acard-grid-val">${s.ptype||'—'}</span></div>
+    </div>
+    ${summary?`<div class="acard-summary">${summary.length>240?summary.slice(0,240)+'…':summary}</div>`:''}
+    <div class="acard-actions">
+      <button class="acard-btn acard-btn-primary" onclick="openD('${s.state.replace(/'/g,"\\'")}')">View Details →</button>
+      ${s.sourceUrl?`<a class="acard-btn" href="${s.sourceUrl}" target="_blank" rel="noopener">→ Apply Page</a>`:''}
+      <button class="acard-btn acard-btn-email" onclick="emailUpdate('${s.state.replace(/'/g,"\\'")}')">✉ Share Update</button>
+    </div>
+  </div>`;
+}
+
+// ============================================================
+// STATE CONTRACTS MODULE
+// ============================================================
+// Storage keys
+const CX_KEY='slcgp_contracts';
+const CX_STATE_KEY='slcgp_cx_state';
+
+function getCx(){try{return JSON.parse(localStorage.getItem(CX_KEY)||'null')||DEFAULT_CONTRACTS.map(c=>({...c}))}catch{return DEFAULT_CONTRACTS.map(c=>({...c}))}}
+function saveCxStore(d){localStorage.setItem(CX_KEY,JSON.stringify(d))}
+function getCxState(){try{return JSON.parse(localStorage.getItem(CX_STATE_KEY)||'{}')}catch{return{}}}
+function saveCxState(d){localStorage.setItem(CX_STATE_KEY,JSON.stringify(d))}
+
+// ── DEFAULT CONTRACT PORTFOLIO ──────────────────────────────
+const DEFAULT_CONTRACTS=[
+{id:'naspo',name:'NASPO ValuePoint — Cybersecurity Solutions',category:'Multi-State Cooperative',states:'All 50 states + DC + territories eligible',
+ solutionzStatus:'not-on',contractNum:'',expiry:'',contact:'www.naspovaluepoint.org',url:'https://www.naspovaluepoint.org',fee:'Admin fee per state',
+ notes:'Largest multi-state cooperative. Covers cybersecurity software, services, hardware. State agencies and local govts can piggyback. Critical for multi-state SLCGP coverage.'},
+{id:'sourcewell',name:'Sourcewell Technology Solutions',category:'Multi-State Cooperative',states:'All 50 states + territories',
+ solutionzStatus:'not-on',contractNum:'',expiry:'',contact:'www.sourcewell-mn.gov',url:'https://www.sourcewell-mn.gov',fee:'Competitive bid to get on contract',
+ notes:'Widely accepted cooperative. Non-profit. Strong K-12 and local govt penetration. Covers IT, cybersecurity, managed services.'},
+{id:'omnia',name:'OMNIA Partners — IT & Cybersecurity',category:'Multi-State Cooperative',states:'All 50 states + territories',
+ solutionzStatus:'not-on',contractNum:'',expiry:'',contact:'www.omniapartners.com',url:'https://www.omniapartners.com',fee:'Varies by master contract',
+ notes:'Formerly National IPA. Large cooperative; public sector and higher ed focus. Multiple IT and cybersecurity categories available.'},
+{id:'ei',name:'E&I Cooperative Services',category:'Education Cooperative',states:'All states — education focus',
+ solutionzStatus:'not-on',contractNum:'',expiry:'',contact:'www.eandi.org',url:'https://www.eandi.org',fee:'None to eligible members',
+ notes:'Education-focused. Relevant for SLCGP school district subrecipients. Higher ed and K-12 primary buyers. Less relevant for county/city.'},
+{id:'tips',name:'TIPS-USA (The Interlocal Purchasing System)',category:'Multi-State Cooperative',states:'All states — local govt focus',
+ solutionzStatus:'not-on',contractNum:'',expiry:'',contact:'www.tips-usa.com',url:'https://www.tips-usa.com',fee:'None to members',
+ notes:'Texas-based but national reach. Broad local government acceptance. Good for smaller jurisdictions. IT and cybersecurity categories available.'},
+{id:'gsa',name:'GSA Multiple Award Schedule (MAS) — IT/Cybersecurity',category:'Federal Schedule',states:'State + local govts may use under cooperative purchasing',
+ solutionzStatus:'not-on',contractNum:'',expiry:'',contact:'www.gsa.gov/schedules',url:'https://www.gsa.gov/schedules',fee:'Industrial Funding Fee (IFF) ~0.75%',
+ notes:'FEMA NOFO explicitly allows GSA MAS for SLCGP procurement. States and local govts can use under cooperative purchasing authority. Broad coverage.'},
+{id:'carahsoft',name:'Carahsoft Technology — Reseller / Contract Vehicle',category:'Federal Schedule / State',states:'Multi-state via GSA, NASPO, and state contracts',
+ solutionzStatus:'not-on',contractNum:'',expiry:'',contact:'www.carahsoft.com',url:'https://www.carahsoft.com',fee:'Varies',
+ notes:'Major gov IT distributor. Holds multiple contract vehicles. If Solutionz products are available via Carahsoft, buyers can use multiple vehicles.'},
+{id:'txdir',name:'TX DIR — IT & Security Services/Products',category:'State-Specific',states:'Texas ONLY (state agencies + local govts)',
+ solutionzStatus:'not-on',contractNum:'',expiry:'',contact:'dir.texas.gov',url:'https://dir.texas.gov/purchasing',fee:'DIR fee (small %)',
+ notes:'Required/recommended for Texas SLCGP-funded procurement per TX OOG RFA guidance. TX DIR listed as Cybersecurity SME. Highest-value state allocation ($12.6M FY2024).'},
+{id:'nc240',name:'NC State Contract 240x (ITS)',category:'State-Specific',states:'North Carolina ONLY',
+ solutionzStatus:'not-on',contractNum:'',expiry:'',contact:'www.ips.state.nc.us',url:'https://www.ips.state.nc.us',fee:'Varies',
+ notes:'NC SLCGP Q&A explicitly cites NC State Contract 240x as eligible vehicle for local procurement. NC FY2024: $8,037,374. Awards spring 2026.'},
+{id:'fldms',name:'FL DMS State Term Contract (STC)',category:'State-Specific',states:'Florida ONLY (state agencies + local govts)',
+ solutionzStatus:'not-on',contractNum:'',expiry:'',contact:'www.dms.myflorida.com',url:'https://www.dms.myflorida.com/business_operations/state_purchasing/vendor_information/state_contracts_and_agreements',fee:'None',
+ notes:'Florida DMS STC is primary contract vehicle for FL agencies and local govts. FL FY2024: $8,620,815. FY2023 allocation $11,997,340. 20% match unique to FL.'},
+{id:'camas',name:'CA DGS CMAS (California Multiple Award Schedules)',category:'State-Specific',states:'California ONLY (state + local CA agencies)',
+ solutionzStatus:'not-on',contractNum:'',expiry:'',contact:'www.dgs.ca.gov',url:'https://www.dgs.ca.gov/PD/Resources/Page-Content/Procurement-Division-Resources-List-Folder/CMAS',fee:'Requires CA reseller or direct CMAS',
+ notes:'Cal OES RFP process for FY2024 SLCGP used standard CA procurement rules. CMAS is primary vehicle. CA FY2024 allocation: $11,845,702 (largest). Match WAIVED for FY2024.'},
+{id:'mideAL',name:'MiDEAL — Michigan Cooperative (DTMB)',category:'State-Specific',states:'Michigan ONLY',
+ solutionzStatus:'not-on',contractNum:'',expiry:'',contact:'www.michigan.gov/dtmb',url:'https://www.michigan.gov/dtmb/procurement/mideAL',fee:'Annual membership for agencies',
+ notes:'Michigan DTMB SLCGP page EXPLICITLY states MiDEAL negotiated contractors are eligible for SLCGP procurement. MI FY2025: $2,346,859 confirmed. Priority state.'},
+{id:'coit',name:'CO OIT — Colorado Office of Information Technology',category:'State-Specific',states:'Colorado ONLY',
+ solutionzStatus:'not-on',contractNum:'',expiry:'',contact:'cdps_slcgp@state.co.us',url:'https://oit.colorado.gov',fee:'OIT acts as purchasing agent',
+ notes:'Colorado GPS Team tracker: CO OIT acts as purchasing agent for SLCGP procurements, providing optimized pricing. 66 recipients FY2024. Advisory: CAC of HSAC meets 1st Wed monthly.'},
+{id:'costars',name:'PA COSTARS — PA Cooperative Purchasing Program',category:'State-Specific',states:'Pennsylvania ONLY',
+ solutionzStatus:'not-on',contractNum:'',expiry:'',contact:'www.dgs.pa.gov/costars',url:'https://www.dgs.pa.gov/costars',fee:'Small admin fee',
+ notes:'PA SLCGP uses committee-selection model. COSTARS is primary PA cooperative vehicle for local govt procurement. PA FY2024: $8,015,678. Sign up at pema.pa.gov for alerts.'},
+{id:'aepa',name:'AEPA — Association of Educational Purchasing Agencies',category:'Education Cooperative',states:'Multiple states via member agencies',
+ solutionzStatus:'not-on',contractNum:'',expiry:'',contact:'www.aepa.us',url:'https://www.aepa.us',fee:'Via member agency procurement',
+ notes:'Education-focused cooperative. Relevant for SLCGP school district and educational subrecipients. Bid through member state agency. Less common for county/city.'}
+];
+
+// ── PER-STATE CONTRACT STATUS ───────────────────────────────
+// Keys: stateAbbr → contractId → {status: 'active'|'pending'|'not-on'|'na', notes: ''}
+// status 'na' = contract not applicable/accepted in this state
+
+// Pre-populate known N/A relationships (state-specific contracts only valid in their state)
+function initCxStateData(){
+  const existing=getCxState();
+  // Only set defaults if not already set by user
+  const allStates=ALL_STATES.map(s=>s.abbr);
+  const stateSpecific={
+    'txdir': ['TX'],
+    'nc240': ['NC'],
+    'fldms': ['FL'],
+    'camas': ['CA'],
+    'mideAL': ['MI'],
+    'coit': ['CO'],
+    'costars': ['PA']
+  };
+  allStates.forEach(abbr=>{
+    if(!existing[abbr])existing[abbr]={};
+    Object.entries(stateSpecific).forEach(([cid,validStates])=>{
+      if(!existing[abbr][cid]){
+        existing[abbr][cid]={status:validStates.includes(abbr)?'not-on':'na',notes:''};
+      }
+    });
+  });
+  saveCxState(existing);
+  return existing;
+}
+
+// ── STATS ROW ───────────────────────────────────────────────
+function renderCxStats(){
+  const contracts=getCx();
+  const cxState=getCxState();
+  const active=contracts.filter(c=>c.solutionzStatus==='active').length;
+  const pending=contracts.filter(c=>c.solutionzStatus==='pending').length;
+  const expired=contracts.filter(c=>c.solutionzStatus==='expired').length;
+  const total=contracts.length;
+  // Coverage: count states where Solutionz has at least one active contract
+  const stateData=gD();
+  const openStates=stateData.filter(s=>s.window==='open'||s.window==='upcoming');
+  let coveredOpen=0,gapOpen=0;
+  openStates.forEach(s=>{
+    const abbr=s.abbr;const sc=cxState[abbr]||{};
+    const hasActive=contracts.some(c=>c.solutionzStatus==='active'&&(sc[c.id]?.status!=='na'));
+    if(hasActive)coveredOpen++;else gapOpen++;
+  });
+  document.getElementById('cx-stats').innerHTML=`
+    <div class="sc"><div class="sc-l">Contracts Tracked</div><div class="sc-v" style="color:var(--ac)">${total}</div></div>
+    <div class="sc"><div class="sc-l">✅ Solutionz Active</div><div class="sc-v" style="color:var(--gr)">${active}</div></div>
+    <div class="sc"><div class="sc-l">🔄 Pending</div><div class="sc-v" style="color:var(--am)">${pending}</div></div>
+    <div class="sc"><div class="sc-l">⏰ Expired</div><div class="sc-v" style="color:var(--rd)">${expired}</div></div>
+    <div class="sc"><div class="sc-l">Open Windows Covered</div><div class="sc-v" style="color:var(--gr)">${coveredOpen}</div></div>
+    <div class="sc"><div class="sc-l">⚠ Coverage Gaps</div><div class="sc-v" style="color:var(--rd)">${gapOpen}</div></div>`;
+}
+
+// ── GAP ALERTS ──────────────────────────────────────────────
+function renderGapAlerts(){
+  const contracts=getCx();
+  const cxState=initCxStateData();
+  const stateData=gD();
+  const openStates=stateData.filter(s=>s.window==='open'||s.window==='upcoming');
+  const gaps=[];
+  openStates.forEach(s=>{
+    const abbr=s.abbr;const sc=cxState[abbr]||{};
+    const hasActive=contracts.some(c=>c.solutionzStatus==='active'&&(sc[c.id]?.status==='active'));
+    const hasPending=contracts.some(c=>c.solutionzStatus==='active'&&(sc[c.id]?.status==='pending'));
+    if(!hasActive)gaps.push({...s,hasPending});
+  });
+  const el=document.getElementById('cx-gaps');
+  if(!gaps.length){el.innerHTML='';return}
+  el.innerHTML=`<div class="gap-alert">
+    <div style="font-size:18px;flex-shrink:0">⚠</div>
+    <div>
+      <div class="gap-alert-title">Contract Coverage Gaps — Open SLCGP Windows</div>
+      <div style="font-size:11.5px;color:var(--tx);line-height:1.6">${gaps.map(g=>`<strong>${g.state}</strong> (${g.window==='upcoming'?'⚡ Upcoming':'🟢 Open'}) — ${g.notes?g.notes.slice(0,60)+'…':'No active Solutionz contract on file for this state'}`).join(' · ')}</div>
+      <div style="margin-top:.5rem;font-size:10px;color:var(--mu);font-family:var(--mo)">Update contract status in the portfolio below, or add state-specific coverage in the Matrix view.</div>
+    </div>
+  </div>`;
+}
+
+// ── CONTRACT CARDS ──────────────────────────────────────────
+function renderCxCards(){
+  const contracts=getCx();
+  const statusLabel={active:'✅ Active Agreement',pending:'🔄 Pending / In Process','not-on':'❌ Not Currently On',evaluating:'🔍 Evaluating',expired:'⏰ Expired — Renewal Needed'};
+  const statusClass={active:'cs-active',pending:'cs-pending','not-on':'cs-not-on',evaluating:'cs-evaluating',expired:'cs-expired'};
+  const cardClass={active:'status-active',pending:'status-pending','not-on':'status-not-on',evaluating:'status-evaluating',expired:'status-expired'};
+  document.getElementById('cx-cards').innerHTML=contracts.map(c=>`
+    <div class="cx-card ${cardClass[c.solutionzStatus]||'status-not-on'}">
+      <div class="cx-card-name">${c.name}</div>
+      <div class="cx-card-cat">${c.category}</div>
+      <div class="cx-card-row"><span class="cx-card-lbl">Solutionz Status</span><span class="cx-status-badge ${statusClass[c.solutionzStatus]||'cs-not-on'}">${statusLabel[c.solutionzStatus]||'Unknown'}</span></div>
+      ${c.contractNum?`<div class="cx-card-row"><span class="cx-card-lbl">Contract #</span><span class="cx-card-val" style="color:var(--ac)">${c.contractNum}</span></div>`:''}
+      ${c.expiry?`<div class="cx-card-row"><span class="cx-card-lbl">Expires</span><span class="cx-card-val" style="color:${isExpiringSoon(c.expiry)?'var(--rd)':'var(--mu)'}">${c.expiry}${isExpiringSoon(c.expiry)?' ⚠':''}</span></div>`:''}
+      <div class="cx-card-row"><span class="cx-card-lbl">Eligible States</span><span class="cx-card-val" style="color:var(--mu)">${c.states}</span></div>
+      ${c.fee?`<div class="cx-card-row"><span class="cx-card-lbl">Fee/Cost</span><span class="cx-card-val" style="color:var(--mu)">${c.fee}</span></div>`:''}
+      ${c.notes?`<div class="cx-card-notes">${c.notes}</div>`:''}
+      <div class="cx-card-actions">
+        <button class="cx-edit-btn" onclick="editCx('${c.id}')">Edit</button>
+        ${c.url?`<a href="${c.url}" target="_blank" class="cx-edit-btn" style="text-decoration:none">→ Contract Page</a>`:''}
+      </div>
+    </div>`).join('');
+}
+function isExpiringSoon(d){if(!d)return false;const dt=new Date(d),now=new Date();return(dt-now)<(90*86400000)&&dt>now}
+
+// ── MATRIX RENDER ───────────────────────────────────────────
+function renderCxMatrix(){
+  const contracts=getCx();
+  const cxState=initCxStateData();
+  const stateData=gD();
+  const tbl=document.getElementById('cx-matrix-tbl');
+  if(!tbl)return;
+  // Header row
+  let html=`<thead><tr class="cx-mtb">
+    <th style="min-width:150px">State</th>
+    <th style="min-width:55px">Region</th>
+    <th style="min-width:55px">Window</th>
+    ${contracts.map(c=>`<th title="${c.name}" style="max-width:70px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${c.id.toUpperCase().slice(0,7)}</th>`).join('')}
+    <th>Notes</th>
+  </tr></thead><tbody>`;
+  const openW=new Set(['open','upcoming']);
+  stateData.sort((a,b)=>a.state<b.state?-1:1).forEach(s=>{
+    const sc=cxState[s.abbr]||{};
+    const isOpen=openW.has(s.window);
+    const rowColor=isOpen?'rgba(0,232,150,.04)':'';
+    html+=`<tr class="cx-mtb" style="background:${rowColor}">
+      <td style="font-size:11px"><strong>${s.state}</strong> <span style="font-family:var(--mo);font-size:9px;color:var(--mu)">${s.abbr}</span></td>
+      <td style="font-size:10px;color:var(--mu)">${s.region||'—'}</td>
+      <td>${wBadge(s.window)}</td>
+      ${contracts.map(c=>{
+        const cell=sc[c.id]||{status:'not-on'};
+        const solzActive=c.solutionzStatus==='active';
+        let cls='mx-not-on',icon='—';
+        if(cell.status==='na'){cls='mx-na';icon='·'}
+        else if(cell.status==='active'&&solzActive){cls='mx-active';icon='✓'}
+        else if(cell.status==='pending'||(solzActive&&cell.status!=='na')){cls='mx-pending';icon='~'}
+        else if(isOpen&&solzActive&&cell.status==='not-on'){cls='mx-gap';icon='!'}
+        return`<td><div class="mx-cell ${cls}" onclick="cycleCxCell('${s.abbr}','${c.id}')" title="${c.name} — ${s.state}: ${cell.status}">${icon}</div></td>`;
+      }).join('')}
+      <td style="font-size:10px;color:var(--mu);max-width:180px">${sc._notes||''}</td>
+    </tr>`;
+  });
+  html+='</tbody>';
+  tbl.innerHTML=html;
+}
+
+function cycleCxCell(abbr,contractId){
+  const cxState=getCxState();
+  if(!cxState[abbr])cxState[abbr]={};
+  const current=(cxState[abbr][contractId]?.status)||'not-on';
+  const cycle={'na':'na','not-on':'active','active':'pending','pending':'not-on'};
+  const next=cycle[current]||'not-on';
+  if(!cxState[abbr][contractId])cxState[abbr][contractId]={};
+  cxState[abbr][contractId].status=next;
+  saveCxState(cxState);
+  renderCxMatrix();renderCxStats();renderGapAlerts();
+  toast('Updated','ok');
+}
+
+// ── SUB-TAB SWITCHING ────────────────────────────────────────
+function cxTab(t){
+  ['portfolio','matrix','add'].forEach(n=>{
+    const btn=document.getElementById('cxb-'+n);
+    if(btn)btn.classList.toggle('active-sub',n===t);
+    const div=document.getElementById('cx-'+n);
+    if(div)div.style.display=n===t?'block':'none';
+  });
+  if(t==='matrix'){initCxStateData();renderCxMatrix();}
+  if(t==='portfolio'){renderCxCards();}
+  if(t==='add'){document.getElementById('cx-edit-id').value='';clearCxForm();document.getElementById('cx-del-btn').style.display='none';}
+}
+
+function clearCxForm(){
+  ['cx-name','cx-num','cx-states','cx-expiry','cx-contact','cx-url','cx-fee','cx-notes','cx-solz-num'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  document.getElementById('cx-cat').value='Multi-State Cooperative';
+  document.getElementById('cx-solz-status').value='not-on';
+}
+
+// ── ADD / EDIT ───────────────────────────────────────────────
+function editCx(id){
+  const contracts=getCx();
+  const c=contracts.find(x=>x.id===id);if(!c)return;
+  document.getElementById('cx-edit-id').value=id;
+  document.getElementById('cx-name').value=c.name||'';
+  document.getElementById('cx-num').value=c.contractNum||'';
+  document.getElementById('cx-cat').value=c.category||'Multi-State Cooperative';
+  document.getElementById('cx-states').value=c.states||'';
+  document.getElementById('cx-solz-status').value=c.solutionzStatus||'not-on';
+  document.getElementById('cx-solz-num').value=c.contractNum||'';
+  document.getElementById('cx-expiry').value=c.expiry||'';
+  document.getElementById('cx-contact').value=c.contact||'';
+  document.getElementById('cx-url').value=c.url||'';
+  document.getElementById('cx-fee').value=c.fee||'';
+  document.getElementById('cx-notes').value=c.notes||'';
+  document.getElementById('cx-del-btn').style.display='block';
+  cxTab('add');
+}
+
+function saveCx(){
+  const contracts=getCx();
+  const id=document.getElementById('cx-edit-id').value||('cx_'+Date.now());
+  const name=document.getElementById('cx-name').value.trim();
+  if(!name){toast('Name required','info');return}
+  const updated={
+    id,name,
+    category:document.getElementById('cx-cat').value,
+    states:document.getElementById('cx-states').value,
+    solutionzStatus:document.getElementById('cx-solz-status').value,
+    contractNum:document.getElementById('cx-num').value,
+    expiry:document.getElementById('cx-expiry').value,
+    contact:document.getElementById('cx-contact').value,
+    url:document.getElementById('cx-url').value,
+    fee:document.getElementById('cx-fee').value,
+    notes:document.getElementById('cx-notes').value,
+    updated:new Date().toISOString()
+  };
+  const idx=contracts.findIndex(c=>c.id===id);
+  if(idx>=0)contracts[idx]=updated;else contracts.push(updated);
+  saveCxStore(contracts);
+  cxTab('portfolio');renderCxStats();renderGapAlerts();toast('Contract saved','ok');
+}
+
+function delCx(){
+  const id=document.getElementById('cx-edit-id').value;
+  if(!id||!confirm('Delete this contract?'))return;
+  const contracts=getCx().filter(c=>c.id!==id);
+  saveCxStore(contracts);cxTab('portfolio');renderCxStats();toast('Deleted','info');
+}
+
+// ── CSV EXPORT ───────────────────────────────────────────────
+function expContractsCSV(){
+  const contracts=getCx();
+  const cols=['id','name','category','states','solutionzStatus','contractNum','expiry','contact','url','fee','notes'];
+  const hdr=cols.join(',');
+  const rows=contracts.map(c=>cols.map(k=>`"${String(c[k]||'').replace(/"/g,'""')}"`).join(','));
+  const csv=[hdr,...rows].join('\n');
+  const a=document.createElement('a');
+  a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(csv);
+  a.download='Solutionz_Contracts_'+new Date().toISOString().slice(0,10)+'.csv';
+  a.click();toast('CSV exported','ok');
+}
+function toast(msg,type='ok'){
+  const el=document.getElementById('toast');
+  document.getElementById('tm').textContent=msg;
+  document.getElementById('ti').textContent=type==='ok'?'✓':'ℹ';
+  el.className='toast '+type+' show';
+  setTimeout(()=>el.classList.remove('show'),3000);
+}
+</script>
+</body>
+</html>
