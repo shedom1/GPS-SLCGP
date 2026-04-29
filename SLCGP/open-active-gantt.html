@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>SLCGP Open / Active Gantt View | April 29, 2026</title>
+<title>SLCGP Open / Active Gantt View | 4-Month View</title>
 <style>
 
 :root{--bg:#f7fbff;--card:#fff;--ink:#172335;--muted:#5c6a80;--line:#d8e2ef;--blue:#2563eb;--green:#15803d;--green-soft:#eaf8ef;--amber:#a16207;--amber-soft:#fff4d8;--red:#b42318;--red-soft:#fdecec;--shadow:0 10px 24px rgba(18,33,53,.08);--radius:14px}
 *{box-sizing:border-box}
 body{margin:0;font-family:Inter,Arial,Helvetica,sans-serif;background:linear-gradient(180deg,#f7fbff 0%,#eef5fd 100%);color:var(--ink)}
-.wrap{width:min(100vw,1180px);margin:0 auto;padding:14px 12px 26px}
-.hero,.block,.region,.card{background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow)}
+.wrap{width:min(100vw,1240px);margin:0 auto;padding:14px 12px 26px}
+.hero,.block{background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow)}
 .hero{border-radius:18px;padding:16px 18px 14px;margin-bottom:10px;background:linear-gradient(135deg,#fff 0%,#f3f8ff 58%,#eefbf8 100%)}
 .eyebrow{font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--blue);margin-bottom:6px}
 h1{margin:0 0 6px;font-size:24px;line-height:1.08}
@@ -20,34 +20,40 @@ h1{margin:0 0 6px;font-size:24px;line-height:1.08}
 .nav{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 12px}
 .btn{appearance:none;border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:10px;padding:7px 10px;font-size:11px;font-weight:800;cursor:pointer;text-decoration:none;line-height:1}
 .btn:hover{transform:translateY(-1px)}
-.btn.primary{background:linear-gradient(135deg,#2f7bff 0%,var(--blue) 100%);border-color:var(--blue);color:#fff}
-.badge{display:inline-flex;align-items:center;border-radius:999px;padding:3px 8px;font-size:10px;font-weight:800;line-height:1}
-.badge.open{background:var(--green-soft);color:var(--green)}
-.badge.upcoming{background:var(--amber-soft);color:var(--amber)}
-.badge.deadline{background:#eef3ff;color:#2847a8}
-.badge.watch{background:var(--red-soft);color:var(--red)}
 a{color:var(--blue);text-decoration:none;font-weight:700}
 a:hover{text-decoration:underline}
 .note{font-size:11px;color:var(--muted);line-height:1.45}
+.block{border-radius:16px;padding:12px 14px;margin-bottom:10px}
 @media print{
   body{background:#fff}
   .wrap{width:100%;max-width:none;padding:0}
-  .hero,.block,.region,.card{box-shadow:none}
+  .hero,.block{box-shadow:none}
   .nav{display:none!important}
 }
 
-.block{border-radius:16px;padding:12px 14px;margin-bottom:10px}
-.axis{position:relative;height:34px;border:1px solid #edf2f8;border-radius:12px;background:#f9fbff;margin:10px 0 12px;overflow:hidden}
-.month-cell{position:absolute;top:0;bottom:0;border-left:1px solid #e7eef8;padding:8px 8px;font-size:10px;font-weight:800;color:var(--muted);white-space:nowrap}
-.g-row{display:grid;grid-template-columns:250px 1fr 270px;gap:12px;align-items:center;padding:10px 0;border-top:1px solid #edf2f8}
+.axis-row{display:grid;grid-template-columns:240px minmax(320px,1fr) 260px;gap:12px;align-items:center;margin:10px 0 12px}
+.axis-spacer,.axis-notes-spacer{min-height:1px}
+.axis-wrap{overflow-x:auto;padding-bottom:4px}
+.axis{position:relative;min-width:760px;height:38px;border:1px solid #edf2f8;border-radius:12px;background:#f9fbff;overflow:hidden}
+.month-cell{position:absolute;top:0;bottom:0;border-left:1px solid #e7eef8;padding:10px 8px 8px;font-size:10px;font-weight:800;color:var(--muted);white-space:nowrap}
+.today-line{position:absolute;top:0;bottom:0;width:2px;background:#2563eb;opacity:.8}
+.today-label{position:absolute;top:4px;transform:translateX(-50%);background:#2563eb;color:#fff;font-size:9px;font-weight:800;border-radius:999px;padding:2px 6px;white-space:nowrap}
+.legend{display:flex;flex-wrap:wrap;gap:12px;margin:-2px 0 8px;font-size:11px;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{display:inline-block;width:14px;height:8px;border-radius:999px}
+.legend .lg-open{background:linear-gradient(90deg,#bfe8c9 0%,#59b67a 100%)}
+.legend .lg-upcoming{background:linear-gradient(90deg,#ffe7ae 0%,#d9a126 100%)}
+.legend .lg-milestone{width:10px;height:10px;border-radius:999px;background:#4b5563}
+.g-row{display:grid;grid-template-columns:240px minmax(320px,1fr) 260px;gap:12px;align-items:center;padding:10px 0;border-top:1px solid #edf2f8}
 .g-row:first-of-type{border-top:0;padding-top:0}
 .g-label .state-name{font-size:13px;font-weight:800;margin-bottom:3px}
 .g-meta{font-size:11px;color:var(--muted);line-height:1.35}
-.g-track{position:relative;height:18px;border-radius:999px;background:#f2f6fb;border:1px solid #e5edf7}
-.bar{position:absolute;top:2px;bottom:2px;border-radius:999px}
+.g-track{position:relative;height:20px;border-radius:999px;background:#f2f6fb;border:1px solid #e5edf7;overflow:visible}
+.g-track::before{content:"";position:absolute;inset:0;border-radius:999px;background:repeating-linear-gradient(to right, transparent 0, transparent calc(25% - 1px), rgba(23,35,53,.04) calc(25% - 1px), rgba(23,35,53,.04) 25%)}
+.bar{position:absolute;top:2px;bottom:2px;border-radius:999px;min-width:12px}
 .bar.open{background:linear-gradient(90deg,#bfe8c9 0%,#59b67a 100%)}
 .bar.upcoming{background:linear-gradient(90deg,#ffe7ae 0%,#d9a126 100%)}
-.milestone{position:absolute;top:1px;bottom:1px;width:12px;transform:translateX(-6px);border-radius:999px}
+.milestone{position:absolute;top:50%;width:12px;height:12px;transform:translate(-6px,-50%);border-radius:999px;box-shadow:0 0 0 2px #fff}
 .milestone.open{background:#15803d}
 .milestone.upcoming{background:#a16207}
 .g-notes{font-size:11px;line-height:1.4}
@@ -56,7 +62,9 @@ a:hover{text-decoration:underline}
 ul.watch{margin:8px 0 0;padding-left:18px}
 ul.watch li{margin-bottom:7px;font-size:12px;line-height:1.45}
 @media (max-width:1100px){
+  .axis-row{grid-template-columns:1fr;gap:7px}
   .g-row{grid-template-columns:1fr;gap:7px}
+  .axis{min-width:680px}
 }
 </style>
 </head>
@@ -65,11 +73,11 @@ ul.watch li{margin-bottom:7px;font-size:12px;line-height:1.45}
   <section class="hero">
     <div class="eyebrow">GPS Team | SLCGP timeline view</div>
     <h1>Open / Active Gantt View</h1>
-    <div class="sub"><b>Sales use:</b> a timeline-first view of live and near-term upcoming SLCGP activity. Use it to see which states need immediate action, which are approaching deadlines, and which upcoming windows should be monitored.</div>
+    <div class="sub"><b>Sales use:</b> a fixed 4-month timeline view of live and near-term upcoming SLCGP activity. This version keeps the chart tighter and easier to read while still showing the current cycle clearly.</div>
     <div class="meta">
       <div><b>Refresh date:</b> April 29, 2026</div>
       <div><b>States on timeline:</b> 11</div>
-      <div><b>Axis:</b> Apr. 07, 2026 to Sep. 01, 2026</div>
+      <div><b>Axis:</b> Apr. 01, 2026 to Jul. 31, 2026</div>
     </div>
   </section>
   
@@ -82,7 +90,22 @@ ul.watch li{margin-bottom:7px;font-size:12px;line-height:1.45}
 </div>
 
   <section class="block">
-    <div class="axis"><div class="month-cell" style="left:0.00%;width:16.33%">Apr 2026</div><div class="month-cell" style="left:16.33%;width:21.09%">May 2026</div><div class="month-cell" style="left:37.41%;width:20.41%">Jun 2026</div><div class="month-cell" style="left:57.82%;width:21.09%">Jul 2026</div><div class="month-cell" style="left:78.91%;width:21.09%">Aug 2026</div><div class="month-cell" style="left:100.00%;width:5.00%">Sep 2026</div></div>
+    <div class="legend">
+      <span><i class="lg-open"></i> Open / active range</span>
+      <span><i class="lg-upcoming"></i> Upcoming dated window</span>
+      <span><i class="lg-milestone"></i> Single milestone / no posted range</span>
+    </div>
+    <div class="axis-row">
+      <div class="axis-spacer" aria-hidden="true"></div>
+      <div class="axis-wrap">
+        <div class="axis">
+        <div class="month-cell" style="left:0.00%;width:24.79%">Apr 2026</div><div class="month-cell" style="left:24.79%;width:25.62%">May 2026</div><div class="month-cell" style="left:50.41%;width:24.79%">Jun 2026</div><div class="month-cell" style="left:75.21%;width:24.79%">Jul 2026</div>
+        <div class="today-line" style="left:23.14%"></div>
+        <div class="today-label" style="left:23.14%">Today</div>
+        </div>
+      </div>
+      <div class="axis-notes-spacer" aria-hidden="true"></div>
+    </div>
     
     <div class="g-row">
       <div class="g-label">
@@ -90,7 +113,7 @@ ul.watch li{margin-bottom:7px;font-size:12px;line-height:1.45}
         <div class="g-meta">West · Open / Active · Active now; no posted close date</div>
       </div>
       <div class="g-track">
-        <div class="milestone open" style="left:0.00%"></div>
+        <div class="milestone open" style="left:4.96%"></div>
       </div>
       <div class="g-notes">
         <div class="note-line">Participation/request forms</div>
@@ -104,7 +127,7 @@ ul.watch li{margin-bottom:7px;font-size:12px;line-height:1.45}
         <div class="g-meta">Southeast · Open / Active · Active now; no posted close date</div>
       </div>
       <div class="g-track">
-        <div class="milestone open" style="left:1.36%"></div>
+        <div class="milestone open" style="left:6.61%"></div>
       </div>
       <div class="g-notes">
         <div class="note-line">First-come portal</div>
@@ -118,7 +141,7 @@ ul.watch li{margin-bottom:7px;font-size:12px;line-height:1.45}
         <div class="g-meta">Mid-Atlantic · Open / Active · Active now; no posted close date</div>
       </div>
       <div class="g-track">
-        <div class="milestone open" style="left:1.36%"></div>
+        <div class="milestone open" style="left:6.61%"></div>
       </div>
       <div class="g-notes">
         <div class="note-line">Rolling application</div>
@@ -132,7 +155,7 @@ ul.watch li{margin-bottom:7px;font-size:12px;line-height:1.45}
         <div class="g-meta">West · Open / Active · Active now; no posted close date</div>
       </div>
       <div class="g-track">
-        <div class="milestone open" style="left:9.52%"></div>
+        <div class="milestone open" style="left:16.53%"></div>
       </div>
       <div class="g-notes">
         <div class="note-line">Participation request forms</div>
@@ -146,7 +169,7 @@ ul.watch li{margin-bottom:7px;font-size:12px;line-height:1.45}
         <div class="g-meta">Southeast · Open / Active · Deadline Apr. 29, 2026</div>
       </div>
       <div class="g-track">
-        <div class="bar open" style="left:-4.08%;width:19.05%"></div>
+        <div class="bar open" style="left:0.80%;width:22.34%"></div>
       </div>
       <div class="g-notes">
         <div class="note-line">Online application window</div>
@@ -160,7 +183,7 @@ ul.watch li{margin-bottom:7px;font-size:12px;line-height:1.45}
         <div class="g-meta">West · Open / Active · Deadline Apr. 30, 2026</div>
       </div>
       <div class="g-track">
-        <div class="milestone open" style="left:15.65%"></div>
+        <div class="milestone open" style="left:23.97%"></div>
       </div>
       <div class="g-notes">
         <div class="note-line">Quarterly rolling application</div>
@@ -174,7 +197,7 @@ ul.watch li{margin-bottom:7px;font-size:12px;line-height:1.45}
         <div class="g-meta">West · Upcoming · Opens May. 04, 2026</div>
       </div>
       <div class="g-track">
-        <div class="bar upcoming" style="left:18.37%;width:26.53%"></div>
+        <div class="bar upcoming" style="left:27.27%;width:32.23%"></div>
       </div>
       <div class="g-notes">
         <div class="note-line">State application</div>
@@ -188,7 +211,7 @@ ul.watch li{margin-bottom:7px;font-size:12px;line-height:1.45}
         <div class="g-meta">Southeast · Open / Active · Deadline May. 15, 2026</div>
       </div>
       <div class="g-track">
-        <div class="milestone open" style="left:25.85%"></div>
+        <div class="milestone open" style="left:36.36%"></div>
       </div>
       <div class="g-notes">
         <div class="note-line">Proposal application</div>
@@ -202,7 +225,7 @@ ul.watch li{margin-bottom:7px;font-size:12px;line-height:1.45}
         <div class="g-meta">West · Upcoming · Opens May. 15, 2026</div>
       </div>
       <div class="g-track">
-        <div class="milestone upcoming" style="left:25.85%"></div>
+        <div class="milestone upcoming" style="left:36.36%"></div>
       </div>
       <div class="g-notes">
         <div class="note-line">State page / TBD</div>
@@ -216,7 +239,7 @@ ul.watch li{margin-bottom:7px;font-size:12px;line-height:1.45}
         <div class="g-meta">West · Open / Active · Deadline May. 15, 2026</div>
       </div>
       <div class="g-track">
-        <div class="bar open" style="left:6.80%;width:19.05%"></div>
+        <div class="bar open" style="left:13.22%;width:23.14%"></div>
       </div>
       <div class="g-notes">
         <div class="note-line">Proposal application</div>
@@ -230,7 +253,7 @@ ul.watch li{margin-bottom:7px;font-size:12px;line-height:1.45}
         <div class="g-meta">Northeast · Open / Active · Deadline May. 20, 2026</div>
       </div>
       <div class="g-track">
-        <div class="bar open" style="left:4.08%;width:25.17%"></div>
+        <div class="bar open" style="left:9.92%;width:30.58%"></div>
       </div>
       <div class="g-notes">
         <div class="note-line">Online application window</div>
@@ -242,7 +265,7 @@ ul.watch li{margin-bottom:7px;font-size:12px;line-height:1.45}
   <section class="block">
     <h3 style="margin:0 0 8px;font-size:14px">Watch list: signaled but not yet dated</h3>
     <div class="note">These states reference a future cycle or reopening, but the public page does not yet provide a dated window suitable for timeline placement.</div>
-    <ul class="watch"><li><b>Florida</b> — Florida&#x27;s official SLCGP page and one-pager show the last posted application window ran October 15 to December 15, 2025 through the FDEM Grants Portal. The page says the FY24 program will be released later in 2026, but no new application dates are posted as of the April 29 refresh. <a href="https://www.floridadisaster.org/dem/finance/grants-unit/state-and-local-cybersecurity-grant-program/" target="_blank" rel="noopener">Source</a></li><li><b>Oregon</b> — Oregon&#x27;s official SLCGP page says the funding opportunity is temporarily closed as of April 1, 2026, with new applications anticipated in Summer 2026. <a href="https://www.oregon.gov/oem/emresources/grants/pages/state-and-local-cybersecurity-grant-program.aspx" target="_blank" rel="noopener">Source</a></li></ul>
+    <ul class="watch"><li><b>Florida</b> — Florida&#x27;s official SLCGP page and one-pager show the last posted application window ran October 15 to December 15, 2025 through the FDEM Grants Portal. The page says the FY24 program will be released later in 2026, but no new application dates are posted as of the April 29 refresh. <a href="https://www.floridadisaster.org/dem/finance/grants-unit/state-and-local-cybersecurity-grant-program/" target="_blank" rel="noopener">Source</a></li><li><b>Kentucky</b> — Kentucky&#x27;s grants page still shows the SLCGP application as closed, and the 2025 KOHS annual report says FFY 2025 SLCGP allocations have been placed on hold pending availability. <a href="https://homelandsecurity.ky.gov/Pages/Grants.aspx" target="_blank" rel="noopener">Source</a></li><li><b>Oregon</b> — Oregon&#x27;s official SLCGP page says the funding opportunity is temporarily closed as of April 1, 2026, with new applications anticipated in Summer 2026. <a href="https://www.oregon.gov/oem/emresources/grants/pages/state-and-local-cybersecurity-grant-program.aspx" target="_blank" rel="noopener">Source</a></li></ul>
   </section>
 </div>
 </body>
