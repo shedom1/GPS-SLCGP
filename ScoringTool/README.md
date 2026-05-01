@@ -25,3 +25,11 @@ Upload the folder contents to your GitHub Pages repo. Set the Pages root to the 
 - The scoring worksheet uses a tighter font and lower row height for better on-screen density.
 - Click any sortable column heading to sort ascending/descending.
 - Drag the right edge of a column heading to resize the column while reviewing site lists.
+
+
+## Site designation updates
+
+- Use the **Default Site Designation** dropdown before importing/searching to add new rows as `End-User`, `Hub/End-User`, `Hub`, or `Proxy Hub`.
+- Use the **Designation** column to change each row individually.
+- Use the bulk dropdown above the worksheet to apply a designation to all currently included rows.
+- Fixed-project scoring averages `End-User` and `Hub/End-User` rows. Pure `Hub` rows are kept in the worksheet but excluded from the score unless the project is non-fixed/hybrid and uses a `Proxy Hub`.

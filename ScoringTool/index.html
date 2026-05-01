@@ -38,7 +38,7 @@
     .callout{border-left:5px solid var(--cyan);background:#eff6ff;border-radius:14px;padding:12px 14px;font-size:13px;line-height:1.45;color:#1e3a8a;margin:0 0 12px}.warn{border-left-color:var(--amber);background:#fff7ed;color:#7c2d12}.ok{border-left-color:var(--green);background:#ecfdf5;color:#064e3b}
     .tabs{display:flex;gap:8px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding:12px 16px 0;background:#f8fafc}.tab{padding:10px 13px;border:1px solid var(--line);border-bottom:0;border-radius:12px 12px 0 0;background:#eaf1f8;font-weight:800;font-size:13px;color:#334155}.tab.active{background:#fff;color:#0f172a}
     .panel{display:none}.panel.active{display:block}
-    .table-tools{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px}.table-hint{font-size:11px;color:var(--muted);line-height:1.25}
+    .table-tools{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px;flex-wrap:wrap}.compact-select{padding:7px 8px;border-radius:9px;border:1px solid var(--line);font-size:12px;background:white}.table-hint{font-size:11px;color:var(--muted);line-height:1.25}
     .table-wrap{overflow:auto;border:1px solid var(--line);border-radius:12px;background:white;max-height:680px}.table-wrap.small{max-height:360px}
     table{width:100%;border-collapse:separate;border-spacing:0;font-size:10.5px;min-width:1360px;table-layout:fixed}th,td{border-bottom:1px solid #e5edf5;border-right:1px solid #eef2f7;padding:4px 5px;vertical-align:middle;background:#fff;line-height:1.18}th{position:sticky;top:0;z-index:2;background:#f1f5f9;color:#334155;text-align:left;font-size:9.5px;text-transform:uppercase;letter-spacing:.035em;line-height:1.1;user-select:none;white-space:normal;overflow:hidden}.sortable{cursor:pointer}.sortable:hover{background:#e2e8f0}.sort-indicator{font-size:9px;color:#0f6db5;margin-left:3px}.th-inner{position:relative;display:flex;align-items:center;gap:2px;min-height:20px;padding-right:7px}.col-resizer{position:absolute;right:-4px;top:-4px;width:8px;height:calc(100% + 8px);cursor:col-resize;z-index:4}.col-resizer:hover{background:rgba(14,165,233,.25)}td{overflow:hidden}td input,td select{padding:4px 5px;border-radius:6px;font-size:10.5px;min-height:24px}td input{width:100%}td select{width:100%}td button{padding:4px 6px;border-radius:6px;font-size:10px}.num{text-align:right;font-variant-numeric:tabular-nums}.nowrap{white-space:nowrap}.truncate{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.pill{display:inline-flex;align-items:center;border-radius:999px;padding:2px 6px;font-weight:800;font-size:9.5px;background:#e2e8f0;color:#334155}.pill.green{background:#dcfce7;color:#166534}.pill.blue{background:#dbeafe;color:#1d4ed8}.pill.amber{background:#fef3c7;color:#92400e}.pill.red{background:#fee2e2;color:#991b1b}.pill.purple{background:#ede9fe;color:#5b21b6}
     .source-list{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.source-list a{display:block;border:1px solid var(--line);background:#fff;border-radius:12px;padding:10px;text-decoration:none;color:#0f172a}.source-list strong{display:block;font-size:13px}.source-list span{display:block;color:var(--muted);font-size:12px;margin-top:3px;line-height:1.35}
@@ -67,9 +67,10 @@
         <div class="body">
           <div class="callout warn"><strong>Important scoring note:</strong> Rurality cannot be fully automated from city population alone. USDA requires checking the site against the official DLT map for non-rural/contiguous urban areas. This tool calculates a provisional score and includes verification fields for the DLT map decision.</div>
           <div class="row">
-            <div class="col-3"><label>Project Type</label><select id="projectType"><option>Fixed</option><option>Hybrid</option><option>Non-fixed</option></select></div>
-            <div class="col-3"><label>State</label><select id="stateSelect"></select></div>
-            <div class="col-6"><label>Search Name / District / Organization / Institution</label><input id="searchTerm" placeholder="Example: Mitchell County Schools, Phoebe, Berry College" /></div>
+            <div class="col-2"><label>Project Type</label><select id="projectType"><option>Fixed</option><option>Hybrid</option><option>Non-fixed</option></select></div>
+            <div class="col-2"><label>State</label><select id="stateSelect"></select></div>
+            <div class="col-3"><label>Default Site Designation</label><select id="defaultDesignation"><option>End-User</option><option>Hub/End-User</option><option>Hub</option><option>Proxy Hub</option></select></div>
+            <div class="col-5"><label>Search Name / District / Organization / Institution</label><input id="searchTerm" placeholder="Example: Mitchell County Schools, Phoebe, Berry College" /></div>
           </div>
           <div class="btnrow">
             <button class="primary" onclick="searchK12()">Search K-12 District Schools</button>
@@ -86,7 +87,7 @@
         <h2>2) Project Score Snapshot</h2>
         <div class="body">
           <div class="metrics">
-            <div class="metric"><div class="k">Scored Sites</div><div id="metricSites" class="v">0</div><div class="s">end-user + hub/end-user + proxy</div></div>
+            <div class="metric"><div class="k">Scored Sites</div><div id="metricSites" class="v">0</div><div class="s">End-User + Hub/End-User + Proxy Hub</div></div>
             <div class="metric"><div class="k">D-1 Rurality</div><div id="metricRurality" class="v">—</div><div class="s">max 40 pts</div></div>
             <div class="metric"><div class="k">D-2 Economic</div><div id="metricEconomic" class="v">—</div><div class="s">max 30 pts</div></div>
             <div class="metric"><div class="k">D-3 Needs</div><input id="subjectiveScore" class="num" value="0" type="number" min="0" max="30" step="0.5" oninput="recalc()" /><div class="s">manual estimate, max 30</div></div>
@@ -118,6 +119,8 @@
           <div class="btnrow">
             <button class="ghost" onclick="selectAllSites(true)">Include All</button>
             <button class="ghost" onclick="selectAllSites(false)">Exclude All</button>
+            <select id="bulkDesignation" class="compact-select" title="Bulk update site designation for included rows"><option>End-User</option><option>Hub/End-User</option><option>Hub</option><option>Proxy Hub</option></select>
+            <button class="ghost" onclick="applyDesignationToIncluded()">Apply Designation to Included</button>
             <button class="amber" onclick="dedupeSites()">Deduplicate</button>
             <button class="danger" onclick="clearSites()">Clear All</button>
             <button class="ghost" onclick="openDLTMap()">Open USDA DLT Map</button>
@@ -134,7 +137,7 @@
         <div class="row">
           <div class="col-6">
             <label>Paste Manual CSV Rows</label>
-            <textarea id="csvPaste" placeholder="siteName,address,city,state,zip,county,countyFips,designation,type,sourceLocale,cityPopulation,saipePercent\nExample School,100 Main St,Albany,GA,31701,Dougherty,13095,End-user,K-12,,68559,24.1"></textarea>
+            <textarea id="csvPaste" placeholder="siteName,address,city,state,zip,county,countyFips,designation,type,sourceLocale,cityPopulation,saipePercent\nExample School,100 Main St,Albany,GA,31701,Dougherty,13095,End-User,K-12,,68559,24.1"></textarea>
           </div>
           <div class="col-3"><label>Upload CSV</label><input id="csvFile" type="file" accept=".csv,text/csv" /></div>
           <div class="col-3"><button class="primary" onclick="importCSV()">Import CSV</button></div>
@@ -157,7 +160,7 @@
               <tr><td>Over 20,000</td><td>Generally no / non-rural unless DLT map exception applies</td><td><span class="pill red">0</span></td></tr>
               <tr><td>No Census place match / Census Rural</td><td>No</td><td><span class="pill green">40</span></td></tr>
             </tbody></table>
-            <p class="smalltxt">Only end-user and hub/end-user sites are averaged for fixed projects. Pure hubs are listed but excluded unless the project is non-fixed/hybrid and the hub is the proxy serving non-fixed end users.</p>
+            <p class="smalltxt">Only End-User and Hub/End-User sites are averaged for fixed projects. Pure hubs are listed but excluded unless the project is non-fixed/hybrid and the hub is the proxy serving non-fixed end users.</p>
           </div>
           <div>
             <h3>D-2 Economic Need – Up to 30 points</h3>
@@ -199,7 +202,7 @@
           <div class="col-3"><label>County</label><input id="mCounty"></div>
           <div class="col-3"><label>County FIPS</label><input id="mCountyFips"></div>
           <div class="col-2"><label>Type</label><select id="mType"><option>K-12</option><option>Rural Health</option><option>Higher Ed</option><option>Other</option></select></div>
-          <div class="col-2"><label>Designation</label><select id="mDesignation"><option>End-user</option><option>Hub/End-user</option><option>Hub</option><option>Proxy Hub</option></select></div>
+          <div class="col-2"><label>Designation</label><select id="mDesignation"><option>End-User</option><option>Hub/End-User</option><option>Hub</option><option>Proxy Hub</option></select></div>
         </div>
         <div class="btnrow"><button class="primary" onclick="addManualSite()">Add Site</button><button onclick="document.getElementById('manualCard').remove()">Cancel</button></div>
       </div>
@@ -221,6 +224,7 @@ let saipeCache = {}; // state -> county lookup
 let lastSearchFeatures = [];
 let tableSort = {key:'', dir:'asc'};
 let columnWidths = {};
+const DESIGNATION_OPTIONS = ['End-User','Hub/End-User','Hub','Proxy Hub'];
 const TABLE_COLUMNS = [
   {key:'include', label:'Include', w:54, type:'bool'},
   {key:'rowNumber', label:'#', w:40, type:'number', noSort:true},
@@ -259,6 +263,19 @@ function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&l
 function sqlText(s){return String(s||'').replace(/'/g,"''").trim();}
 function norm(s){return String(s||'').toLowerCase().replace(/\b(county|parish|borough|municipality|city and borough|city|town|village|cdp|unified government|balance)\b/g,'').replace(/[^a-z0-9]+/g,' ').trim();}
 function onlyDigits(s){return String(s||'').replace(/\D/g,'');}
+
+function normalizeDesignation(val){
+  const raw=String(val||'').trim();
+  const v=raw.toLowerCase().replace(/[–—]/g,'-').replace(/\s+/g,' ');
+  if(['end-user','end user','enduser','end-user site','end user site'].includes(v)) return 'End-User';
+  if(['hub/end-user','hub/enduser','hub end-user','hub end user','hub/end user','hub/end-user site','hub/end user site'].includes(v)) return 'Hub/End-User';
+  if(['proxy hub','hub proxy','hub (proxy) serving end-user','hub proxy serving end-user','hub serving end-user','hub (proxy) serving end user'].includes(v)) return 'Proxy Hub';
+  if(['hub','pure hub','hub site'].includes(v)) return 'Hub';
+  return raw || 'End-User';
+}
+function getDefaultDesignation(){
+  return normalizeDesignation(document.getElementById('defaultDesignation')?.value || 'End-User');
+}
 function sourceLinkFor(site){
   if(site.lat && site.lon) return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(site.lat+','+site.lon)}`;
   return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent([site.address,site.city,site.state,site.zip].filter(Boolean).join(' '))}`;
@@ -317,7 +334,7 @@ async function searchK12(){
 }
 function addK12Rows(rows){
   const mapped=rows.map(f=>{const a=f.attributes; const g=f.geometry||{}; return {
-    id:crypto.randomUUID(), include:true, type:'K-12', source:'NCES CCD Public School Characteristics', sourceId:a.NCESSCH||'', organization:a.LEA_NAME||'', siteName:a.SCH_NAME||'', address:[a.LSTREET1,a.LSTREET2].filter(Boolean).join(' '), city:a.LCITY||'', state:a.LSTATE||a.STABR||'', zip:a.LZIP||'', county:a.NMCNTY||'', countyFips:cleanCountyFips(a.CNTY,a.STABR), phone:a.PHONE||'', sourceLocale:a.ULOCALE||'', enrollment:a.MEMBER||a.TOTAL||'', designation:'End-user', contiguous:'Unknown', outsideNonRural:'Unknown', censusRural:'Unknown', cityPopulation:'', saipePercent:'', ruralityScore:null, economicScore:null, lat:g.y||a.LATCOD||'', lon:g.x||a.LONCOD||'', notes:''
+    id:crypto.randomUUID(), include:true, type:'K-12', source:'NCES CCD Public School Characteristics', sourceId:a.NCESSCH||'', organization:a.LEA_NAME||'', siteName:a.SCH_NAME||'', address:[a.LSTREET1,a.LSTREET2].filter(Boolean).join(' '), city:a.LCITY||'', state:a.LSTATE||a.STABR||'', zip:a.LZIP||'', county:a.NMCNTY||'', countyFips:cleanCountyFips(a.CNTY,a.STABR), phone:a.PHONE||'', sourceLocale:a.ULOCALE||'', enrollment:a.MEMBER||a.TOTAL||'', designation:getDefaultDesignation(), contiguous:'Unknown', outsideNonRural:'Unknown', censusRural:'Unknown', cityPopulation:'', saipePercent:'', ruralityScore:null, economicScore:null, lat:g.y||a.LATCOD||'', lon:g.x||a.LONCOD||'', notes:''
   }}); addRows(mapped); setStatus(`<strong>${mapped.length}</strong> K-12 school sites added.`);
 }
 function cleanCountyFips(cnty, st){
@@ -336,7 +353,7 @@ async function searchHigherEd(){
 }
 function addHigherEdRows(rows){
   const mapped=rows.map(f=>{const a=f.attributes; const g=f.geometry||{}; return {
-    id:crypto.randomUUID(), include:true, type:'Higher Ed', source:'IPEDS / Colleges & Universities Feature Layer', sourceId:a.UNITID||'', organization:a.F1SYSNAM||a.INSTNM||'', siteName:a.INSTNM||'', address:a.ADDR||'', city:a.CITY||'', state:a.STABBR||'', zip:a.ZIP||'', county:a.COUNTYNM||'', countyFips:cleanCountyFips(a.COUNTYCD,a.STABBR), phone:a.GENTELE||'', website:a.WEBADDR||'', sourceLocale:a.LOCALE||'', enrollment:'', designation:'Hub/End-user', contiguous:'Unknown', outsideNonRural:'Unknown', censusRural:'Unknown', cityPopulation:'', saipePercent:'', ruralityScore:null, economicScore:null, lat:g.y||a.LATITUDE||'', lon:g.x||a.LONGITUD||'', notes:''
+    id:crypto.randomUUID(), include:true, type:'Higher Ed', source:'IPEDS / Colleges & Universities Feature Layer', sourceId:a.UNITID||'', organization:a.F1SYSNAM||a.INSTNM||'', siteName:a.INSTNM||'', address:a.ADDR||'', city:a.CITY||'', state:a.STABBR||'', zip:a.ZIP||'', county:a.COUNTYNM||'', countyFips:cleanCountyFips(a.COUNTYCD,a.STABBR), phone:a.GENTELE||'', website:a.WEBADDR||'', sourceLocale:a.LOCALE||'', enrollment:'', designation:getDefaultDesignation(), contiguous:'Unknown', outsideNonRural:'Unknown', censusRural:'Unknown', cityPopulation:'', saipePercent:'', ruralityScore:null, economicScore:null, lat:g.y||a.LATITUDE||'', lon:g.x||a.LONGITUD||'', notes:''
   }}); addRows(mapped); setStatus(`<strong>${mapped.length}</strong> higher-ed site(s) added.`);
 }
 
@@ -357,17 +374,23 @@ function hrsaToSite(obj){
   const state=(pick(obj,['Site State Abbreviation','Site State','State','State Abbreviation'])||'').toUpperCase();
   const siteName=pick(obj,['Site Name','Health Center Site Name','Name']);
   if(!siteName || !state) return null;
-  return {id:crypto.randomUUID(), include:true, type:'Rural Health', source:'HRSA Health Center Service Delivery and Look-Alike Sites', sourceId:pick(obj,['Site ID','BHCMIS ID','Grant Number']), organization:pick(obj,['Health Center Name','Organization Name','Awardee Name']), siteName, address:pick(obj,['Site Address','Address','Street Address']), city:pick(obj,['Site City','City']), state, zip:pick(obj,['Site Postal Code','ZIP','Zip Code']), county:pick(obj,['County Equivalent Name','County','Site County']), countyFips:'', phone:pick(obj,['Site Telephone Number','Phone','Telephone']), website:pick(obj,['Site Web Address','Website','Web Address']), sourceLocale:'', enrollment:'', designation:'End-user', contiguous:'Unknown', outsideNonRural:'Unknown', censusRural:'Unknown', cityPopulation:'', saipePercent:'', ruralityScore:null, economicScore:null, lat:pick(obj,['Latitude','Site Latitude']), lon:pick(obj,['Longitude','Site Longitude']), notes:''};
+  return {id:crypto.randomUUID(), include:true, type:'Rural Health', source:'HRSA Health Center Service Delivery and Look-Alike Sites', sourceId:pick(obj,['Site ID','BHCMIS ID','Grant Number']), organization:pick(obj,['Health Center Name','Organization Name','Awardee Name']), siteName, address:pick(obj,['Site Address','Address','Street Address']), city:pick(obj,['Site City','City']), state, zip:pick(obj,['Site Postal Code','ZIP','Zip Code']), county:pick(obj,['County Equivalent Name','County','Site County']), countyFips:'', phone:pick(obj,['Site Telephone Number','Phone','Telephone']), website:pick(obj,['Site Web Address','Website','Web Address']), sourceLocale:'', enrollment:'', designation:getDefaultDesignation(), contiguous:'Unknown', outsideNonRural:'Unknown', censusRural:'Unknown', cityPopulation:'', saipePercent:'', ruralityScore:null, economicScore:null, lat:pick(obj,['Latitude','Site Latitude']), lon:pick(obj,['Longitude','Site Longitude']), notes:''};
 }
 
 function addRows(rows){
-  rows.forEach(r=>{ if(!r.id) r.id=crypto.randomUUID(); if(r.include===undefined) r.include=true; sites.push(r); });
+  rows.forEach(r=>{
+    if(!r.id) r.id=crypto.randomUUID();
+    if(r.include===undefined) r.include=true;
+    r.designation=normalizeDesignation(r.designation);
+    sites.push(r);
+  });
   dedupeSites(false); renderTable(); recalc();
 }
 function showManualSite(){
   const tpl=document.getElementById('manualSiteTemplate').content.cloneNode(true);
   document.querySelector('main').insertBefore(tpl, document.querySelector('main').children[1]);
   document.getElementById('mState').value=document.getElementById('stateSelect').value;
+  document.getElementById('mDesignation').value=getDefaultDesignation();
 }
 function addManualSite(){
   addRows([{id:crypto.randomUUID(), include:true, type:document.getElementById('mType').value, source:'Manual', organization:'', siteName:document.getElementById('mName').value, address:document.getElementById('mAddress').value, city:document.getElementById('mCity').value, state:document.getElementById('mState').value.toUpperCase(), zip:document.getElementById('mZip').value, county:document.getElementById('mCounty').value, countyFips:document.getElementById('mCountyFips').value, phone:'', website:'', sourceLocale:'', enrollment:'', designation:document.getElementById('mDesignation').value, contiguous:'Unknown', outsideNonRural:'Unknown', censusRural:'Unknown', cityPopulation:'', saipePercent:'', ruralityScore:null, economicScore:null, lat:'', lon:'', notes:''}]);
@@ -380,6 +403,13 @@ function dedupeSites(showMsg=true){
 }
 function clearSites(){if(confirm('Clear all sites from the worksheet?')){sites=[]; renderTable(); recalc();}}
 function selectAllSites(val){sites.forEach(s=>s.include=val); renderTable(); recalc();}
+function applyDesignationToIncluded(){
+  const val=normalizeDesignation(document.getElementById('bulkDesignation')?.value || 'End-User');
+  let count=0;
+  sites.forEach(s=>{ if(s.include){s.designation=val; count++;} });
+  renderTable(); recalc();
+  setStatus(`${count} included site(s) updated to ${val}.`);
+}
 
 function renderTable(){
   const table=document.getElementById('siteTable');
@@ -393,7 +423,7 @@ function renderTable(){
       <td class="num">${i+1}</td>
       <td><input title="${esc(s.siteName)}" value="${esc(s.siteName)}" onchange="upd('${s.id}','siteName',this.value)"></td>
       <td><select onchange="upd('${s.id}','type',this.value)">${opts(['K-12','Rural Health','Higher Ed','Other'],s.type)}</select></td>
-      <td><select onchange="upd('${s.id}','designation',this.value)">${opts(['End-user','Hub/End-user','Hub','Proxy Hub'],s.designation)}</select></td>
+      <td><select onchange="upd('${s.id}','designation',this.value)">${opts(DESIGNATION_OPTIONS,normalizeDesignation(s.designation))}</select></td>
       <td><input title="${esc(s.address)}" value="${esc(s.address)}" onchange="upd('${s.id}','address',this.value)"></td>
       <td><input title="${esc(s.city)}" value="${esc(s.city)}" onchange="upd('${s.id}','city',this.value)"></td>
       <td><input value="${esc(s.state)}" maxlength="2" onchange="upd('${s.id}','state',this.value.toUpperCase())"></td>
@@ -494,8 +524,9 @@ function removeSite(id){sites=sites.filter(x=>x.id!==id); renderTable(); recalc(
 function isScoredSite(s){
   if(!s.include) return false;
   const pt=document.getElementById('projectType').value;
-  if(s.designation==='End-user' || s.designation==='Hub/End-user') return true;
-  if((pt==='Non-fixed' || pt==='Hybrid') && s.designation==='Proxy Hub') return true;
+  const designation=normalizeDesignation(s.designation);
+  if(designation==='End-User' || designation==='Hub/End-User') return true;
+  if((pt==='Non-fixed' || pt==='Hybrid') && designation==='Proxy Hub') return true;
   return false;
 }
 function econScore(p){
@@ -599,7 +630,7 @@ function importCSVText(text){
   const rows=parseCSV(text); if(rows.length<2){setStatus('CSV needs a header row and at least one data row.'); return;}
   const headers=rows[0]; const imported=[];
   rows.slice(1).forEach(r=>{const o=rowToObject(headers,r); const s={
-    id:crypto.randomUUID(), include:String(pick(o,['include','Include'])||'true').toLowerCase()!=='false', type:pick(o,['type','Type'])||'Other', source:pick(o,['source','Source'])||'CSV Import', sourceId:pick(o,['sourceId','ID','NCES ID','UnitID']), organization:pick(o,['organization','Organization','district','District']), siteName:pick(o,['siteName','Site Name','School Name','Institution','Name']), address:pick(o,['address','Address','Site Address','Street']), city:pick(o,['city','City','Site City']), state:(pick(o,['state','State','STABR'])||'').toUpperCase(), zip:pick(o,['zip','ZIP','Postal Code']), county:pick(o,['county','County','County Name']), countyFips:pick(o,['countyFips','County FIPS','CNTY','COUNTYCD']), phone:pick(o,['phone','Phone']), website:pick(o,['website','Website']), sourceLocale:pick(o,['sourceLocale','Locale','ULOCALE','LOCALE']), enrollment:pick(o,['enrollment','Enrollment','MEMBER']), designation:pick(o,['designation','Designation'])||'End-user', contiguous:pick(o,['contiguous','Contiguous'])||'Unknown', outsideNonRural:pick(o,['outsideNonRural','Outside Non-Rural','DLT Map Outside Non-Rural'])||'Unknown', censusRural:pick(o,['censusRural','Census Rural'])||'Unknown', cityPopulation:pick(o,['cityPopulation','2020 Population','Census Population']), saipePercent:pick(o,['saipePercent','SAIPE Poverty %','Poverty %']), ruralityScore:null, economicScore:null, lat:pick(o,['lat','Latitude']), lon:pick(o,['lon','Longitude']), notes:pick(o,['notes','Notes'])}; if(s.siteName) imported.push(s);});
+    id:crypto.randomUUID(), include:String(pick(o,['include','Include'])||'true').toLowerCase()!=='false', type:pick(o,['type','Type'])||'Other', source:pick(o,['source','Source'])||'CSV Import', sourceId:pick(o,['sourceId','ID','NCES ID','UnitID']), organization:pick(o,['organization','Organization','district','District']), siteName:pick(o,['siteName','Site Name','School Name','Institution','Name']), address:pick(o,['address','Address','Site Address','Street']), city:pick(o,['city','City','Site City']), state:(pick(o,['state','State','STABR'])||'').toUpperCase(), zip:pick(o,['zip','ZIP','Postal Code']), county:pick(o,['county','County','County Name']), countyFips:pick(o,['countyFips','County FIPS','CNTY','COUNTYCD']), phone:pick(o,['phone','Phone']), website:pick(o,['website','Website']), sourceLocale:pick(o,['sourceLocale','Locale','ULOCALE','LOCALE']), enrollment:pick(o,['enrollment','Enrollment','MEMBER']), designation:normalizeDesignation(pick(o,['designation','Designation'])||'End-User'), contiguous:pick(o,['contiguous','Contiguous'])||'Unknown', outsideNonRural:pick(o,['outsideNonRural','Outside Non-Rural','DLT Map Outside Non-Rural'])||'Unknown', censusRural:pick(o,['censusRural','Census Rural'])||'Unknown', cityPopulation:pick(o,['cityPopulation','2020 Population','Census Population']), saipePercent:pick(o,['saipePercent','SAIPE Poverty %','Poverty %']), ruralityScore:null, economicScore:null, lat:pick(o,['lat','Latitude']), lon:pick(o,['lon','Longitude']), notes:pick(o,['notes','Notes'])}; if(s.siteName) imported.push(s);});
   addRows(imported); setStatus(`<strong>${imported.length}</strong> CSV site rows imported.`);
 }
 function exportCSV(){
@@ -611,7 +642,7 @@ function csvCell(v){v=String(v??''); return /[",\n]/.test(v)?'"'+v.replace(/"/g,
 function download(name,content,type='text/plain'){const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([content],{type})); a.download=name; a.click(); URL.revokeObjectURL(a.href);}
 function downloadJSON(){download('RUS_DLT_FY2026_Scoring_Project.json',JSON.stringify({projectType:document.getElementById('projectType').value,subjectiveScore:document.getElementById('subjectiveScore').value,sites},null,2),'application/json');}
 function downloadTemplate(){
-  const csv='include,type,organization,siteName,address,city,state,zip,county,countyFips,designation,sourceLocale,cityPopulation,saipePercent,contiguous,outsideNonRural,censusRural,notes\ntrue,K-12,Example County Schools,Example Elementary,100 Main St,Exampletown,GA,30000,Example County,13000,End-user,,,,Unknown,Unknown,Unknown,\n';
+  const csv='include,type,organization,siteName,address,city,state,zip,county,countyFips,designation,sourceLocale,cityPopulation,saipePercent,contiguous,outsideNonRural,censusRural,notes\ntrue,K-12,Example County Schools,Example Elementary,100 Main St,Exampletown,GA,30000,Example County,13000,End-User,,,,Unknown,Unknown,Unknown,\n';
   download('RUS_DLT_Manual_Site_Template.csv',csv,'text/csv');
 }
 function copySummary(){
@@ -622,8 +653,8 @@ function copySummary(){
 function switchTab(name){document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active')); event.target.classList.add('active'); document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active')); document.getElementById('panel-'+name).classList.add('active');}
 function loadDemo(){
   addRows([
-    {id:crypto.randomUUID(),include:true,type:'K-12',source:'Demo',organization:'Example County Schools',siteName:'Example Elementary School',address:'100 Main St',city:'Camilla',state:'GA',zip:'31730',county:'Mitchell County',countyFips:'13205',designation:'End-user',sourceLocale:'43',cityPopulation:'5187',saipePercent:'27.3',contiguous:'No',outsideNonRural:'No',censusRural:'No',notes:'Demo row only'},
-    {id:crypto.randomUUID(),include:true,type:'Higher Ed',source:'Demo',organization:'Example College',siteName:'Example Rural Learning Hub',address:'200 College Dr',city:'Mount Berry',state:'GA',zip:'30149',county:'Floyd County',countyFips:'13115',designation:'Hub/End-user',sourceLocale:'41',cityPopulation:'',saipePercent:'16.9',contiguous:'Unknown',outsideNonRural:'Unknown',censusRural:'Unknown',notes:'Demo row only'}
+    {id:crypto.randomUUID(),include:true,type:'K-12',source:'Demo',organization:'Example County Schools',siteName:'Example Elementary School',address:'100 Main St',city:'Camilla',state:'GA',zip:'31730',county:'Mitchell County',countyFips:'13205',designation:'End-User',sourceLocale:'43',cityPopulation:'5187',saipePercent:'27.3',contiguous:'No',outsideNonRural:'No',censusRural:'No',notes:'Demo row only'},
+    {id:crypto.randomUUID(),include:true,type:'Higher Ed',source:'Demo',organization:'Example College',siteName:'Example Rural Learning Hub',address:'200 College Dr',city:'Mount Berry',state:'GA',zip:'30149',county:'Floyd County',countyFips:'13115',designation:'Hub/End-User',sourceLocale:'41',cityPopulation:'',saipePercent:'16.9',contiguous:'Unknown',outsideNonRural:'Unknown',censusRural:'Unknown',notes:'Demo row only'}
   ]);
 }
 
