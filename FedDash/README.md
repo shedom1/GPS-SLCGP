@@ -1,13 +1,10 @@
-# Key Funding Sources Dashboard v15
+# Key Funding Sources Dashboard - v16
 
-GitHub Pages-ready files.
+GitHub Pages setup:
 
-- `index.html` landing page
-- `federal-status.html` Federal Status view
-- `state-status.html` State Status view
+- `index.html` opens directly to the Federal Status dashboard.
+- `federal-status.html` is retained as a standalone Federal page for direct linking.
+- `state-status.html` is the standalone State Status page.
+- From the Federal page, click **State Status** to navigate to the state dashboard.
 
-Updates in v15:
-- Header chips reduced to Refresh Date only.
-- Added 2026 RUS-DLT open callout banner with 6-30-2026 deadline.
-- Added hover tooltips explaining Active only / Include Recently Closed checkbox logic.
-- Cleared stale browser/autofill search defaults such as SLCGPv2 on the State page.
+Publish all files in the same GitHub Pages directory.
