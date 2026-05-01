@@ -1,23 +1,61 @@
-# FY2026 RUS DLT Scoring Tool
+# FY2026 RUS DLT Scoring + Partner Radius Tool
 
-GitHub Pages-ready static HTML tool for preliminary FY2026 USDA RUS Distance Learning & Telemedicine scoring.
+GitHub Pages-ready static HTML tool for preliminary FY2026 USDA RUS Distance Learning & Telemedicine scoring and source-based partner radius prospecting.
 
 ## Files
 
-- `index.html` — high-tech/professional scoring workspace.
+- `index.html` — high-tech/professional scoring and partner radius workspace.
 - `guide.html` — standalone how-to guide and definitions page, accessible from the homepage/header button.
 - `sample_manual_sites.csv` — manual import template with example rows.
 
 ## What it does
 
 - Searches K-12 districts and can import the district administrative office as a Hub row plus all school locations from NCES public school and school district characteristics ArcGIS layers. For application-grade review, compare imported rows against the latest NCES CCD directory files.
-- Searches higher education institutions from a public colleges/universities ArcGIS feature layer.
+- Searches higher education institutions and technical-school style institutions from a public colleges/universities ArcGIS feature layer.
+- Builds a 50, 75, or 100 mile partner radius list around a selected anchor site, using official K-12, HRSA healthcare, and higher-ed source records.
 - Uses HRSA Health Center Service Delivery and Look-Alike Sites for the Healthcare/Rural Health workflow. The tool defaults to Georgia (`GA`) so the healthcare list stays manageable. Leave the search box blank to load all selected-state HRSA healthcare sites, or type an organization, site, city, county, or address to narrow results. If the browser blocks the live HRSA file, download the official HRSA XLSX and upload it under Import / Templates → Healthcare Lookup Dataset Fallback.
 - Adds manual locations for district offices, consortium hubs, partner clinics, higher-ed extension sites, libraries, or other custom project locations.
 - Enriches sites with 2020 Census place population and 2024 Census SAIPE county poverty rate.
 - Calculates provisional D-1 Rurality and D-2 Economic Need scores.
 - Allows row-level Hub / End-User / Hub-End-User / Proxy Hub designation.
-- Exports CSV/JSON and prints to PDF.
+- Exports CSV/JSON, exports Partner Radius CSV, and prints to PDF.
+
+
+## Partner radius updates in this version
+
+- Added a dedicated **50–100 Mile Partner Radius List** section on the homepage.
+- Workflow now supports starting with a seed organization:
+  - School district
+  - Health center / rural health organization
+  - Higher-ed institution or technical school
+- After adding the seed sites, choose an anchor location and search within 50, 75, or 100 miles for potential partners.
+- Partner source options include:
+  - K-12 schools from the NCES public school characteristics layer
+  - Healthcare sites from the HRSA Health Center Service Delivery and Look-Alike Sites dataset
+  - Higher-ed / technical institutions from the colleges and universities feature layer
+- Partner results include:
+  - Distance from anchor site
+  - Organization / site name
+  - Address and county
+  - 2020 Census place population when available
+  - County SAIPE poverty percentage when available
+  - D-1 / D-2 preliminary scores
+  - Objective-fit flag based on provisional D-1 + D-2 scoring
+  - Source-field description
+- Added **Export Partner CSV** for outreach/prospecting lists.
+- Added **Add Selected to Worksheet** and **Add High-Fit to Worksheet** actions. Partner rows are added as `include=false` by default so they do not affect scoring until reviewed.
+- Added a `Description` column to the scoring worksheet and exports. Descriptions are assembled from returned source fields only; the tool does not invent contacts, capabilities, needs, service lines, or eligibility facts.
+
+### Partner radius data integrity rules
+
+The partner finder is intentionally conservative:
+
+1. It only lists records returned by official public source datasets available to the browser.
+2. It does not create or infer facts that are not in the source record.
+3. It does not assume a partner is willing, eligible, or a good strategic fit just because it appears in the radius.
+4. The “High fit” flag is only a preliminary screening label based on available D-1 Rurality and D-2 Economic Need data.
+5. Added partner records are excluded from scoring until the user intentionally marks them included and verifies site designation.
+6. Rurality must still be checked against the USDA DLT map before final use.
 
 ## Healthcare updates in this version
 
