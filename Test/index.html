@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>RUS DLT Prospecting Dashboard</title>
+  <style>
+    :root{--bg:#f4f7fb;--card:#ffffff;--line:#dbe5ef;--text:#183042;--muted:#557085;--blue:#1d4ed8;--blue-soft:#dbeafe;--green:#0f766e;--green-soft:#ccfbf1;--amber:#a16207;--amber-soft:#fef3c7;--purple:#6d28d9;--purple-soft:#ede9fe;--slate:#475569;--slate-soft:#e2e8f0;--red:#b42318;}
+    *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,Helvetica,sans-serif;font-size:13px} .wrap{max-width:1640px;margin:0 auto;padding:10px} .card{background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:0 4px 14px rgba(15,23,42,.05)}
+    .topbar{display:flex;justify-content:space-between;gap:14px;align-items:flex-start;padding:10px 12px 8px;border-bottom:1px solid #e8eef5}.title{font-size:22px;font-weight:700;margin-bottom:2px}.subtitle{font-size:12px;color:var(--muted);max-width:900px;line-height:1.4}.actions{display:flex;gap:8px;flex-wrap:wrap}.btn{border:1px solid #c8d8ea;background:#fff;color:#27425a;border-radius:10px;padding:8px 12px;font-size:12px;font-weight:700;cursor:pointer}.btn:hover{background:#f8fbff}.btn.primary{background:var(--blue);border-color:var(--blue);color:#fff}.callout{margin:10px 12px 0;padding:10px 12px;border:1px solid #d7e2f0;border-radius:10px;background:#f8fbff;color:#355070;font-size:12px;line-height:1.45}
+    .legend{display:flex;gap:8px;flex-wrap:wrap;padding:10px 12px 6px}.legend .btn.active{box-shadow:inset 0 0 0 2px rgba(15,23,42,.14)} .tier-guide{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;padding:0 12px 8px}.tier-card{border:1px solid #e5edf5;border-radius:10px;padding:10px;min-height:108px}.tier-row{display:flex;gap:8px;align-items:center;margin-bottom:6px}.tier-dot{width:12px;height:12px;border-radius:999px;flex:0 0 12px}.tier-card strong{font-size:12px}.tier-text{font-size:12px;color:var(--muted);line-height:1.35}
+    .statgrid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;padding:0 12px 10px}.stat{padding:10px;border:1px solid #e5edf5;border-radius:10px}.stat .label{font-size:11px;text-transform:uppercase;letter-spacing:.03em;color:#6b7280}.stat .value{font-size:22px;font-weight:700;margin-top:5px}
+    .filters{display:flex;flex-wrap:wrap;gap:8px;padding:0 12px 10px}.field{display:flex;flex-direction:column;gap:4px}.field label{font-size:11px;font-weight:700;color:#66788a}.field input,.field select{min-width:130px;padding:7px 9px;border:1px solid #c9d6e4;border-radius:9px;background:#fff;font-size:12px;color:#183042}.field input{min-width:260px}
+    .status{padding:0 12px 8px;font-size:12px;color:var(--muted)} .status.error{color:var(--red);font-weight:700}
+    .table-wrap{overflow:auto;border-top:1px solid #eef2f7}.data-table{width:100%;border-collapse:separate;border-spacing:0;table-layout:fixed}.data-table thead th{position:sticky;top:0;background:#f7fafd;border-bottom:1px solid #dde7f0;z-index:4;font-size:11px;text-transform:uppercase;letter-spacing:.02em;color:#50677a;padding:8px 6px;text-align:left}.data-table tbody td{border-bottom:1px solid #edf2f7;padding:7px 6px;vertical-align:top;word-break:break-word;white-space:normal}.data-table tbody tr:nth-child(even) td{background:#fbfdff}.data-table tbody tr:hover td{background:#f4f9ff}.sticky1{position:sticky;left:0;z-index:3}.sticky2{position:sticky;left:80px;z-index:3}.data-table thead .sticky1,.data-table thead .sticky2{z-index:5}.data-table th.sticky1,.data-table td.sticky1{background:#f7fafd}.data-table tbody tr:nth-child(even) td.sticky1,.data-table tbody tr:nth-child(even) td.sticky2{background:#f8fbff}.data-table th.sticky2,.data-table td.sticky2{background:#fff}.data-table tbody tr:hover td.sticky1,.data-table tbody tr:hover td.sticky2{background:#eef6ff}
+    .tier-badge{display:inline-block;border-radius:999px;padding:4px 8px;font-size:11px;font-weight:700;white-space:nowrap}.allk12{background:var(--blue-soft);color:var(--blue)}.t1{background:var(--green-soft);color:var(--green)}.t2{background:var(--amber-soft);color:var(--amber)}.t3{background:var(--purple-soft);color:var(--purple)}.t4{background:var(--slate-soft);color:var(--slate)}
+    a{color:var(--blue);text-decoration:none} a:hover{text-decoration:underline}.linkbtn{border:none;background:none;color:var(--blue);padding:0;font:inherit;font-weight:700;cursor:pointer;text-align:left}.linkbtn:hover{text-decoration:underline}.empty{display:none;padding:18px;color:var(--muted);text-align:center}.empty.show{display:block}
+    .modal-backdrop{position:fixed;inset:0;background:rgba(15,23,42,.45);display:none;align-items:center;justify-content:center;padding:20px;z-index:999}.modal-backdrop.show{display:flex}.modal{width:min(980px,100%);max-height:86vh;overflow:auto;background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:0 18px 45px rgba(2,6,23,.25)}.modal-head{padding:14px 16px;border-bottom:1px solid #e6eef6;display:flex;justify-content:space-between;align-items:flex-start;gap:12px}.modal-title{font-size:18px;font-weight:700}.modal-sub{font-size:12px;color:var(--muted);margin-top:4px}.modal-body{padding:14px 16px}.detail-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.detail-item{border:1px solid #e8eef5;border-radius:10px;padding:10px}.detail-item .k{font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:.03em;margin-bottom:4px}.detail-item .v{font-size:13px;line-height:1.35;word-break:break-word}
+    .resize-handle{position:absolute;top:0;right:0;width:8px;height:100%;cursor:col-resize}.th-inner{position:relative;padding-right:10px}
+    @media (max-width:1400px){.tier-guide{grid-template-columns:repeat(3,minmax(0,1fr))}.statgrid{grid-template-columns:repeat(3,minmax(0,1fr))}} @media (max-width:980px){.tier-guide,.statgrid{grid-template-columns:repeat(2,minmax(0,1fr))}.sticky2{left:80px;min-width:220px;max-width:220px}.detail-grid{grid-template-columns:1fr}} @media print{body{background:#fff}.wrap{max-width:none;padding:0}.topbar,.filters,.legend,.tier-guide,.callout,.btn,.status,.modal-backdrop{display:none!important}.card{border:none;box-shadow:none}.table-wrap{overflow:visible}.sticky1,.sticky2,.data-table thead .sticky1,.data-table thead .sticky2{position:static!important;left:auto!important}}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card">
+    <div class="topbar">
+      <div>
+        <div class="title">RUS DLT Prospecting Dashboard</div>
+        <div class="subtitle">Read-only GitHub version. K-12 rows pull live from your public Google Sheet, while Tier 3 and Tier 4 higher-ed rows are packaged with the page.</div>
+      </div>
+      <div class="actions">
+        <button class="btn" id="refreshBtn">Refresh</button>
+        <button class="btn" id="exportBtn">Export CSV</button>
+        <button class="btn" id="printBtn">Save to PDF</button>
+      </div>
+    </div>
+    <div class="callout"><strong>Note:</strong> HubSpot is the official place sales reps should record sales activity. This tool is for culled grant prospecting and grant-target research.</div>
+    <div class="legend" id="tierButtons"></div>
+    <div class="tier-guide" id="tierGuide"></div>
+    <div class="statgrid">
+      <div class="stat"><div class="label">Visible Rows</div><div class="value" id="visibleCount">0</div></div>
+      <div class="stat"><div class="label">All K-12</div><div class="value" id="allK12Count">0</div></div>
+      <div class="stat"><div class="label">Tier 1</div><div class="value" id="tier1Count">0</div></div>
+      <div class="stat"><div class="label">Tier 2</div><div class="value" id="tier2Count">0</div></div>
+      <div class="stat"><div class="label">Tier 3</div><div class="value" id="tier3Count">0</div></div>
+      <div class="stat"><div class="label">Tier 4</div><div class="value" id="tier4Count">0</div></div>
+    </div>
+    <div class="filters">
+      <div class="field" style="flex:1 1 320px"><label for="searchBox">Search</label><input id="searchBox" type="text" placeholder="Organization, city, county, basis, outreach"></div>
+      <div class="field"><label for="regionFilter">Region</label><select id="regionFilter"></select></div>
+      <div class="field"><label for="stateFilter">State</label><select id="stateFilter"></select></div>
+      <div class="field"><label for="segmentFilter">Entity Type</label><select id="segmentFilter"></select></div>
+      <div class="field"><label for="localeFilter">Locale</label><select id="localeFilter"></select></div>
+      <div class="field"><label for="saipeFilter">SAIPE</label><select id="saipeFilter"></select></div>
+    </div>
+    <div class="status" id="statusMessage">Loading data…</div>
+    <div class="table-wrap">
+      <table class="data-table" id="dataTable"><thead id="thead"></thead><tbody id="tbody"></tbody></table>
+      <div class="empty" id="emptyState">No rows match the current filters.</div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-backdrop" id="detailModal">
+  <div class="modal">
+    <div class="modal-head">
+      <div>
+        <div class="modal-title" id="detailTitle">Record details</div>
+        <div class="modal-sub" id="detailSub"></div>
+      </div>
+      <button class="btn" id="closeModalBtn">Close</button>
+    </div>
+    <div class="modal-body">
+      <div class="detail-grid" id="detailGrid"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const CONFIG={
+  k12SheetId:'1eDW0C7vnnfT7dOjQIk-EHAWeFNdI2iYeiXxH6uy3hfY',
+  k12SheetName:'ELSI Export',
+  tierFilters:[
+    {key:'all_k12',short:'All K-12',label:'All K-12 (Locales 11–43)',color:'#1d4ed8',className:'allk12',description:'Shows every K-12 district from the live source sheet with locale codes 11 through 43.'},
+    {key:'tier1',short:'Tier 1',label:'Tier 1: K-12 Rural Remote, >30% SAIPE',color:'#0f766e',className:'t1',description:'Highest-priority K-12 call-out list: Locale 43 districts with SAIPE poverty at 30% or greater.'},
+    {key:'tier2',short:'Tier 2',label:'Tier 2: K-12 Rural Remote / SAIPE Unknown',color:'#a16207',className:'t2',description:'Locale 43 K-12 districts where SAIPE is not currently matched.'},
+    {key:'tier3',short:'Tier 3',label:'Tier 3: HigherEd Rural Remote',color:'#6d28d9',className:'t3',description:'Higher-ed hub candidates in Rural Remote settings.'},
+    {key:'tier4',short:'Tier 4',label:'Tier 4: Higher Ed Rural Outreach',color:'#475569',className:'t4',description:'Confirmed higher-ed institutions with rural outreach programs.'}
+  ],
+  regionMap:{'KY':'Mid-Atlantic','MD':'Mid-Atlantic','TN':'Mid-Atlantic','VA':'Mid-Atlantic','WV':'Mid-Atlantic','CT':'Northeast','DE':'Northeast','IL':'Northeast','IN':'Northeast','IA':'Northeast','KS':'Northeast','ME':'Northeast','MA':'Northeast','MI':'Northeast','MN':'Northeast','MO':'Northeast','NE':'Northeast','NH':'Northeast','NJ':'Northeast','NY':'Northeast','ND':'Northeast','OH':'Northeast','PA':'Northeast','RI':'Northeast','SD':'Northeast','VT':'Northeast','WI':'Northeast','AL':'Southeast','AR':'Southeast','FL':'Southeast','GA':'Southeast','LA':'Southeast','MS':'Southeast','NC':'Southeast','SC':'Southeast','AK':'West','AZ':'West','CA':'West','CO':'West','HI':'West','ID':'West','MT':'West','NV':'West','NM':'West','OK':'West','OR':'West','TX':'West','UT':'West','WA':'West','WY':'West'}
+};
+const state={rows:[],sortKey:'tier_order',sortDir:'asc',tierFilter:'all_k12'};
+const columns=[
+  {key:'tier_short',label:'Tier',width:80,sticky:1,sortable:true},
+  {key:'organization',label:'Organization',width:250,sticky:2,sortable:true,detail:true},
+  {key:'region',label:'Region',width:120,sortable:true},
+  {key:'state',label:'State',width:70,sortable:true},
+  {key:'segment',label:'Entity Type',width:110,sortable:true},
+  {key:'role_fit',label:'Role Fit',width:120,sortable:true},
+  {key:'city_county',label:'City / County',width:180,sortable:true},
+  {key:'locale_display',label:'Locale',width:120,sortable:true},
+  {key:'saipe_display',label:'SAIPE',width:90,sortable:true},
+  {key:'students',label:'Students',width:90,sortable:true},
+  {key:'school_count',label:'Schools',width:80,sortable:true},
+  {key:'basis',label:'Basis',width:250,sortable:false},
+  {key:'phone',label:'Phone',width:120,sortable:false},
+  {key:'website',label:'Website',width:180,sortable:false},
+  {key:'outreach_program',label:'Outreach Program',width:220,sortable:false}
+];
+const els={tierButtons:document.getElementById('tierButtons'),tierGuide:document.getElementById('tierGuide'),visibleCount:document.getElementById('visibleCount'),allK12Count:document.getElementById('allK12Count'),tier1Count:document.getElementById('tier1Count'),tier2Count:document.getElementById('tier2Count'),tier3Count:document.getElementById('tier3Count'),tier4Count:document.getElementById('tier4Count'),searchBox:document.getElementById('searchBox'),regionFilter:document.getElementById('regionFilter'),stateFilter:document.getElementById('stateFilter'),segmentFilter:document.getElementById('segmentFilter'),localeFilter:document.getElementById('localeFilter'),saipeFilter:document.getElementById('saipeFilter'),statusMessage:document.getElementById('statusMessage'),thead:document.getElementById('thead'),tbody:document.getElementById('tbody'),emptyState:document.getElementById('emptyState'),detailModal:document.getElementById('detailModal'),detailTitle:document.getElementById('detailTitle'),detailSub:document.getElementById('detailSub'),detailGrid:document.getElementById('detailGrid')};
+
+function slugify(str){return String(str||'').toLowerCase().trim().replace(/&/g,' and ').replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').replace(/-+/g,'-');}
+function esc(s){return String(s==null?'':s).replace(/[&<>"]+/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]||m));}
+function sortValue(v){if(v==null) return ''; if(typeof v==='number') return v; const n=parseFloat(String(v).replace(/[^0-9.-]/g,'')); if(!Number.isNaN(n) && String(v).match(/[0-9]/)) return n; return String(v).toLowerCase();}
+function compare(a,b){const dir=state.sortDir==='asc'?1:-1; const av=sortValue(a[state.sortKey]); const bv=sortValue(b[state.sortKey]); if(av<bv) return -1*dir; if(av>bv) return 1*dir; return String(a.organization).localeCompare(String(b.organization))*dir;}
+function saipeBand(row){if(row.saipe_numeric==null || row.saipe_numeric==='') return 'Unknown'; const n=Number(row.saipe_numeric); if(n>=30) return '>=30%'; if(n>=20) return '20% to 29.9%'; return '<20%';}
+function localeCodeValue(v){const n=parseInt(String(v||'').split('-')[0],10); return Number.isFinite(n)?n:null;}
+function tierClass(short){return short==='Tier 1'?'t1':short==='Tier 2'?'t2':short==='Tier 3'?'t3':short==='Tier 4'?'t4':'allk12';}
+
+function initUI(){
+  els.tierButtons.innerHTML=CONFIG.tierFilters.map(t=>`<button class="btn ${t.className==='allk12'?'':'soft'} ${state.tierFilter===t.key?'active':''}" data-tier="${t.key}" style="border-color:${t.color};color:${t.color};background:${t.className==='allk12'?'#dbeafe':'#fff'}">${esc(t.label)}</button>`).join('');
+  els.tierGuide.innerHTML=CONFIG.tierFilters.map(t=>`<div class="tier-card"><div class="tier-row"><span class="tier-dot" style="background:${t.color}"></span><strong>${esc(t.label)}</strong></div><div class="tier-text">${esc(t.description)}</div></div>`).join('');
+  els.tierButtons.querySelectorAll('button[data-tier]').forEach(btn=>btn.addEventListener('click',()=>{state.tierFilter=btn.dataset.tier; initUI(); render();}));
+  document.getElementById('refreshBtn').addEventListener('click',loadData);
+  document.getElementById('exportBtn').addEventListener('click',exportCsv);
+  document.getElementById('printBtn').addEventListener('click',()=>window.print());
+  document.getElementById('closeModalBtn').addEventListener('click',closeModal);
+  els.detailModal.addEventListener('click',e=>{if(e.target===els.detailModal) closeModal();});
+  [els.searchBox,els.regionFilter,els.stateFilter,els.segmentFilter,els.localeFilter,els.saipeFilter].forEach(el=>el.addEventListener('input',render));
+}
+
+function buildHeader(){
+  const tr=document.createElement('tr');
+  columns.forEach(col=>{
+    const th=document.createElement('th');
+    th.style.width=col.width+'px'; th.dataset.key=col.key; th.className=(col.sticky===1?'sticky1 ':'')+(col.sticky===2?'sticky2 ':'');
+    const inner=document.createElement('div'); inner.className='th-inner'; inner.innerHTML=`<span>${esc(col.label)}</span>`;
+    if(col.sortable){th.style.cursor='pointer'; th.addEventListener('click',()=>{if(state.sortKey===col.key){state.sortDir=state.sortDir==='asc'?'desc':'asc';} else {state.sortKey=col.key; state.sortDir='asc';} render();});}
+    const h=document.createElement('div'); h.className='resize-handle'; h.addEventListener('mousedown',e=>startResize(e,th,col)); inner.appendChild(h);
+    th.appendChild(inner); tr.appendChild(th);
+  });
+  els.thead.innerHTML=''; els.thead.appendChild(tr);
+}
+
+function startResize(e,th,col){e.preventDefault(); const startX=e.clientX; const startWidth=th.offsetWidth; function move(ev){const w=Math.max(60,startWidth+(ev.clientX-startX)); th.style.width=w+'px'; document.querySelectorAll(`th[data-key="${col.key}"]`).forEach(x=>x.style.width=w+'px'); columns.find(c=>c.key===col.key).width=w; render();} function up(){document.removeEventListener('mousemove',move); document.removeEventListener('mouseup',up);} document.addEventListener('mousemove',move); document.addEventListener('mouseup',up);}
+
+async function loadData(){
+  try{
+    els.statusMessage.textContent='Loading live K-12 data and packaged higher-ed data…'; els.statusMessage.className='status';
+    const [tierMap,higherEd,k12Rows]=await Promise.all([
+      fetch('data/k12_tier_map.json').then(r=>r.json()),
+      fetch('data/highered_rows.json').then(r=>r.json()),
+      loadK12FromSheet()
+    ]);
+    const k12=transformK12(k12Rows,tierMap);
+    state.rows=[...k12,...higherEd];
+    updateCounts();
+    populateFilters();
+    render();
+    els.statusMessage.textContent=`Loaded ${k12.length.toLocaleString()} live K-12 rows and ${higherEd.length.toLocaleString()} higher-ed rows.`;
+  }catch(err){
+    console.error(err); els.statusMessage.textContent='Could not load the live K-12 Google Sheet. Check that the sheet is shared publicly and the sheet name is still ELSI Export.'; els.statusMessage.className='status error';
+  }
+}
+
+function loadK12FromSheet(){
+  return new Promise((resolve,reject)=>{
+    const cb='__handleK12_'+Date.now();
+    const script=document.createElement('script');
+    const cleanup=()=>{if(script.parentNode) script.parentNode.removeChild(script); try{delete window[cb];}catch(_){window[cb]=undefined;}};
+    window[cb]=(response)=>{try{cleanup(); if(!response || !response.table) throw new Error('No table in Google response'); resolve(gvizRows(response.table));}catch(e){reject(e);}};
+    script.onerror=()=>{cleanup(); reject(new Error('Google Sheet script load failed'));};
+    script.src=`https://docs.google.com/spreadsheets/d/${CONFIG.k12SheetId}/gviz/tq?sheet=${encodeURIComponent(CONFIG.k12SheetName)}&tqx=out:json;responseHandler:${cb}`;
+    document.body.appendChild(script);
+  });
+}
+function gvizRows(table){
+  const headers=table.cols.map((c,i)=>c.label||c.id||('col'+i));
+  return (table.rows||[]).map(r=>{
+    const o={}; headers.forEach((h,i)=>{const cell=r.c[i]; o[h]=cell ? (cell.f!=null?cell.f:cell.v!=null?cell.v:'') : '';}); return o;
+  });
+}
+function detectK12Columns(headers){
+  const find=(patterns)=>headers.find(h=>patterns.some(p=>p.test(h)))||'';
+  return {
+    state_name:find([/State Name \[District\].*2024-25/i,/^State Name \[District\]/i]),
+    state_abbr:find([/State Abbr \[District\]/i]),
+    organization:find([/Agency Name \[District\].*2024-25/i,/^Agency Name \[District\]/i]),
+    nces_id:find([/Agency ID - NCES Assigned/i]),
+    county:find([/County Name \[District\]/i]),
+    website:find([/Web Site URL \[District\]/i]),
+    address1:find([/Location Address 1 \[District\]/i]),
+    address2:find([/Location Address 2 \[District\]/i]),
+    city:find([/Location City \[District\]/i]),
+    loc_state:find([/Location State Abbr \[District\]/i]),
+    zip:find([/Location ZIP \[District\]/i]),
+    phone:find([/Phone Number \[District\]/i]),
+    mailing_zip:find([/Mailing ZIP \[District\]/i]),
+    agency_type:find([/Agency Type \[District\]/i]),
+    locale:find([/Locale \[District\]/i]),
+    cbsa_name:find([/CBSA Name \[District\]/i]),
+    cbsa_id:find([/CBSA ID \[District\]/i]),
+    csa_name:find([/CSA Name \[District\]/i]),
+    latitude:find([/Latitude \[District\]/i]),
+    longitude:find([/Longitude \[District\]/i]),
+    metro_code:find([/Metro Micro Area Code \[District\]/i]),
+    students:find([/Total Students All Grades/i]),
+    school_count:find([/Total Number Operational Schools/i])
+  };
+}
+function transformK12(rawRows,tierMap){
+  if(!rawRows.length) return []; const cols=detectK12Columns(Object.keys(rawRows[0]));
+  return rawRows.map(raw=>{
+    const org=String(raw[cols.organization]||'').trim(); const state=String(raw[cols.state_abbr]||raw[cols.loc_state]||'').trim().toUpperCase(); const localeRaw=String(raw[cols.locale]||'').trim(); const locale_code=localeCodeValue(localeRaw);
+    if(!org || !state || !locale_code || locale_code<11 || locale_code>43) return null;
+    const key=`${state}|${slugify(org)}`; const hit=tierMap[key];
+    const tier_short=hit?hit.tier_short:'All K-12'; const tier_label=hit?hit.tier_label:'All K-12 (Locales 11–43)'; const tier_order=hit?(hit.tier_short==='Tier 1'?1:2):0;
+    const saipe_numeric=hit && hit.saipe_numeric!=null ? Number(hit.saipe_numeric) : null; const saipe_display=hit && hit.saipe_percent ? String(hit.saipe_percent) : '';
+    const students=String(raw[cols.students]||'').replace(/[^0-9]/g,''); const school_count=String(raw[cols.school_count]||'').replace(/[^0-9]/g,'');
+    const row={
+      externalKey:key,
+      tier_short,tier_label,tier_order,
+      segment:'K-12 District', role_fit:'Spoke Candidate', organization:org,
+      region:CONFIG.regionMap[state]||'', state, state_name:String(raw[cols.state_name]||'').trim(), city:String(raw[cols.city]||'').trim(), county:String(raw[cols.county]||'').trim(),
+      city_county:[String(raw[cols.city]||'').trim(),String(raw[cols.county]||'').trim()].filter(Boolean).join(' / '),
+      locale_code, locale_display:localeRaw, saipe_numeric, saipe_display, basis:hit?hit.basis:`Live K-12 source; Locale ${locale_code}`,
+      phone:String(raw[cols.phone]||'').trim(), website:String(raw[cols.website]||'').trim(), outreach_program:'', students:students?Number(students):'', school_count:school_count?Number(school_count):'', source:'Live Google Sheet',
+      detail:{
+        'Organization': org,'Tier': tier_label,'Region': CONFIG.regionMap[state]||'','State': state,'State Name': String(raw[cols.state_name]||''),'NCES ID': String(raw[cols.nces_id]||''),'County': String(raw[cols.county]||''),'Website': String(raw[cols.website]||''),
+        'Location Address 1': String(raw[cols.address1]||''),'Location Address 2': String(raw[cols.address2]||''),'City': String(raw[cols.city]||''),'Location State': String(raw[cols.loc_state]||''),'ZIP': String(raw[cols.zip]||''),'Mailing ZIP': String(raw[cols.mailing_zip]||''),'Phone': String(raw[cols.phone]||''),'Agency Type': String(raw[cols.agency_type]||''),
+        'Locale': localeRaw,'CBSA Name': String(raw[cols.cbsa_name]||''),'CBSA ID': String(raw[cols.cbsa_id]||''),'CSA Name': String(raw[cols.csa_name]||''),'Latitude': String(raw[cols.latitude]||''),'Longitude': String(raw[cols.longitude]||''),'Metro/Micro Area Code': String(raw[cols.metro_code]||''),'Students': students,'Operational Schools': school_count,'SAIPE': saipe_display,'Basis': hit?hit.basis:'',
+      }
+    };
+    return row;
+  }).filter(Boolean);
+}
+function updateCounts(){
+  const rows=state.rows; els.allK12Count.textContent=rows.filter(r=>r.segment==='K-12 District').length.toLocaleString(); els.tier1Count.textContent=rows.filter(r=>r.tier_short==='Tier 1').length.toLocaleString(); els.tier2Count.textContent=rows.filter(r=>r.tier_short==='Tier 2').length.toLocaleString(); els.tier3Count.textContent=rows.filter(r=>r.tier_short==='Tier 3').length.toLocaleString(); els.tier4Count.textContent=rows.filter(r=>r.tier_short==='Tier 4').length.toLocaleString();
+}
+function populateFilters(){
+  const opt=(arr,all='All')=>`<option value="">${all}</option>`+arr.map(v=>`<option value="${esc(v)}">${esc(v)}</option>`).join('');
+  const rows=state.rows; const states=[...new Set(rows.map(r=>r.state).filter(Boolean))].sort(); const regions=[...new Set(rows.map(r=>r.region).filter(Boolean))].sort(); const segments=[...new Set(rows.map(r=>r.segment).filter(Boolean))].sort(); const locales=[...new Set(rows.map(r=>String(r.locale_display||'')).filter(Boolean))].sort((a,b)=>localeCodeValue(a)-localeCodeValue(b));
+  els.regionFilter.innerHTML=opt(regions,'All Regions'); els.stateFilter.innerHTML=opt(states,'All States'); els.segmentFilter.innerHTML=opt(segments,'All Types'); els.localeFilter.innerHTML=opt(locales,'All Locales'); els.saipeFilter.innerHTML=opt(['Unknown','>=30%','20% to 29.9%','<20%'],'All SAIPE');
+}
+function passesTier(row){if(state.tierFilter==='all_k12') return row.segment==='K-12 District'; if(state.tierFilter==='tier1') return row.tier_short==='Tier 1'; if(state.tierFilter==='tier2') return row.tier_short==='Tier 2'; if(state.tierFilter==='tier3') return row.tier_short==='Tier 3'; if(state.tierFilter==='tier4') return row.tier_short==='Tier 4'; return true;}
+function currentRows(){const q=els.searchBox.value.trim().toLowerCase(); return state.rows.filter(row=>{if(!passesTier(row)) return false; if(els.regionFilter.value && row.region!==els.regionFilter.value) return false; if(els.stateFilter.value && row.state!==els.stateFilter.value) return false; if(els.segmentFilter.value && row.segment!==els.segmentFilter.value) return false; if(els.localeFilter.value && String(row.locale_display||'')!==els.localeFilter.value) return false; if(els.saipeFilter.value && saipeBand(row)!==els.saipeFilter.value) return false; if(q){const hay=[row.organization,row.region,row.state,row.segment,row.role_fit,row.city,row.county,row.locale_display,row.basis,row.outreach_program,row.website,row.phone].join(' ').toLowerCase(); if(!hay.includes(q)) return false;} return true;}).sort(compare);}
+function render(){const rows=currentRows(); els.visibleCount.textContent=rows.length.toLocaleString(); els.emptyState.classList.toggle('show',!rows.length); els.tbody.innerHTML=''; rows.forEach(row=>els.tbody.appendChild(renderRow(row)));}
+function renderRow(row){const tr=document.createElement('tr'); columns.forEach(col=>{const td=document.createElement('td'); td.style.width=col.width+'px'; td.className=(col.sticky===1?'sticky1 ':'')+(col.sticky===2?'sticky2 ':''); let v=row[col.key]; if(col.key==='tier_short'){td.innerHTML=`<span class="tier-badge ${tierClass(row.tier_short)}">${esc(row.tier_short||'All K-12')}</span>`;} else if(col.key==='organization'){const btn=document.createElement('button'); btn.className='linkbtn'; btn.textContent=row.organization||''; btn.addEventListener('click',()=>openDetail(row)); td.appendChild(btn);} else if(col.key==='website'){td.innerHTML=v?`<a href="${esc(v)}" target="_blank" rel="noopener">${esc(v)}</a>`:'';} else if(col.key==='outreach_program'){td.innerHTML=row.outreach_link?`<a href="${esc(row.outreach_link)}" target="_blank" rel="noopener">${esc(v||'Open link')}</a>`:esc(v||'');} else {td.textContent=v==null?'':v;} tr.appendChild(td);}); return tr;}
+function openDetail(row){els.detailTitle.textContent=row.organization||'Record'; els.detailSub.textContent=`${row.tier_label} • ${row.segment} • ${row.state}`; const detail=row.detail||{}; els.detailGrid.innerHTML=Object.entries(detail).filter(([,v])=>String(v||'').trim()!=='').map(([k,v])=>`<div class="detail-item"><div class="k">${esc(k)}</div><div class="v">${/^https?:\/\//.test(String(v))?`<a href="${esc(v)}" target="_blank" rel="noopener">${esc(v)}</a>`:esc(v)}</div></div>`).join(''); els.detailModal.classList.add('show');}
+function closeModal(){els.detailModal.classList.remove('show');}
+function exportCsv(){const rows=currentRows(); const fields=['tier_label','organization','region','state','segment','role_fit','city','county','locale_display','saipe_display','students','school_count','basis','phone','website','outreach_program']; const lines=[fields.join(',')]; rows.forEach(r=>{lines.push(fields.map(f=>csvCell(r[f])).join(','));}); const blob=new Blob([lines.join('\n')],{type:'text/csv;charset=utf-8;'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='RUS_DLT_Prospecting_Export.csv'; a.click(); URL.revokeObjectURL(a.href);}
+function csvCell(v){const s=String(v==null?'':v); return /[",\n]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s;}
+
+initUI(); buildHeader(); loadData();
+</script>
+</body>
+</html>
