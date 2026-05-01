@@ -1,0 +1,4 @@
+include,type,organization,siteName,address,city,state,zip,county,countyFips,designation,sourceLocale,cityPopulation,saipePercent,contiguous,outsideNonRural,censusRural,notes
+true,K-12,Example County Schools,Example Elementary School,100 Main St,Camilla,GA,31730,Mitchell County,13205,End-user,43,5187,27.3,No,No,No,Example only
+true,Rural Health,Example Health Center,Example Rural Clinic,250 Health Way,Colquitt,GA,39837,Miller County,13201,End-user,,1816,23.5,No,No,No,Example only
+true,Higher Ed,Example College,Example College Learning Hub,200 College Dr,Mount Berry,GA,30149,Floyd County,13115,Hub/End-user,41,,16.9,Unknown,Unknown,Unknown,Example only
