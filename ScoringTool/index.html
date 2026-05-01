@@ -3,59 +3,71 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>FY2026 RUS DLT Scoring Tool</title>
+  <title>FY2026 RUS DLT Scoring Tool | Professional Workspace</title>
   <style>
     :root{
-      --ink:#111827; --muted:#64748b; --line:#dbe3ee; --soft:#f4f7fb; --card:#ffffff;
-      --blue:#114b8b; --blue2:#0f6db5; --cyan:#0ea5e9; --green:#12805c; --amber:#b45309; --red:#b42318;
-      --purple:#5b21b6; --shadow:0 14px 36px rgba(15,23,42,.10); --radius:18px;
+      --bg0:#050b18; --bg1:#07182e; --bg2:#0c2f4f; --panel:#ffffff; --panel2:#f8fbff;
+      --ink:#102033; --muted:#60738b; --line:#d6e1ee; --line2:#e8eef6;
+      --blue:#1d4ed8; --blue2:#0ea5e9; --cyan:#22d3ee; --teal:#14b8a6;
+      --green:#0f8a5f; --amber:#b7791f; --red:#c2410c; --purple:#6d28d9;
+      --shadow:0 20px 55px rgba(8,22,48,.16); --shadow2:0 8px 24px rgba(8,22,48,.10);
+      --radius:20px;
     }
     *{box-sizing:border-box}
-    body{margin:0;font-family:Inter,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);background:linear-gradient(180deg,#eef6ff 0%,#f8fafc 36%,#ffffff 100%);}
-    a{color:var(--blue2)}
-    header{background:linear-gradient(135deg,#0b2545 0%,#114b8b 58%,#0ea5e9 100%);color:white;padding:24px 28px 18px;box-shadow:var(--shadow);}
-    .topbar{display:flex;justify-content:space-between;gap:18px;align-items:flex-start;max-width:1480px;margin:0 auto;}
-    h1{font-size:28px;line-height:1.1;margin:0 0 8px;font-weight:800;letter-spacing:-.02em}
-    .subtitle{font-size:14px;line-height:1.45;color:#dbeafe;max-width:960px}
-    .badge{display:inline-flex;align-items:center;gap:7px;padding:7px 10px;border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.12);border-radius:999px;font-size:12px;color:#fff;white-space:nowrap;margin-left:6px}
-    main{max-width:1480px;margin:18px auto 50px;padding:0 18px;}
-    .grid{display:grid;grid-template-columns:1.15fr .85fr;gap:16px;margin-bottom:16px;}
-    .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;}
-    .card h2{font-size:16px;margin:0;padding:16px 18px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#fff,#f8fafc);display:flex;align-items:center;justify-content:space-between;gap:12px}
-    .card .body{padding:16px 18px;}
-    label{display:block;font-size:12px;font-weight:700;color:#334155;margin-bottom:6px;}
-    input,select,textarea{width:100%;border:1px solid #cbd5e1;border-radius:10px;padding:10px 11px;background:#fff;font:inherit;color:var(--ink);}
-    input[type="checkbox"]{width:auto;transform:scale(1.05)}
-    textarea{min-height:72px;resize:vertical}
-    .row{display:grid;grid-template-columns:repeat(12,1fr);gap:10px;align-items:end;margin-bottom:10px;}
-    .col-2{grid-column:span 2}.col-3{grid-column:span 3}.col-4{grid-column:span 4}.col-5{grid-column:span 5}.col-6{grid-column:span 6}.col-7{grid-column:span 7}.col-8{grid-column:span 8}.col-12{grid-column:span 12}
-    button{border:0;border-radius:10px;padding:10px 13px;font-weight:800;cursor:pointer;background:#e2e8f0;color:#0f172a;transition:.15s ease;}
-    button:hover{filter:brightness(.97);transform:translateY(-1px)}
-    .primary{background:linear-gradient(135deg,var(--blue),var(--blue2));color:white}.accent{background:#cffafe;color:#075985}.green{background:#dcfce7;color:#166534}.amber{background:#fef3c7;color:#92400e}.danger{background:#fee2e2;color:#991b1b}.dark{background:#0f172a;color:white}.ghost{background:#f8fafc;border:1px solid var(--line)}
-    .btnrow{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.btnrow button{font-size:12px;padding:9px 11px}
-    .status{font-size:12px;color:var(--muted);margin-top:6px;min-height:18px}.status strong{color:var(--ink)}
-    .metrics{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}.metric{border:1px solid var(--line);border-radius:16px;padding:13px;background:linear-gradient(180deg,#fff,#f8fafc)}.metric .k{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:800}.metric .v{font-size:26px;font-weight:900;margin-top:4px;letter-spacing:-.03em}.metric .s{font-size:11px;color:var(--muted);margin-top:3px}.score-good{color:var(--green)}.score-mid{color:var(--amber)}.score-low{color:var(--red)}
-    .callout{border-left:5px solid var(--cyan);background:#eff6ff;border-radius:14px;padding:12px 14px;font-size:13px;line-height:1.45;color:#1e3a8a;margin:0 0 12px}.warn{border-left-color:var(--amber);background:#fff7ed;color:#7c2d12}.ok{border-left-color:var(--green);background:#ecfdf5;color:#064e3b}
-    .tabs{display:flex;gap:8px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding:12px 16px 0;background:#f8fafc}.tab{padding:10px 13px;border:1px solid var(--line);border-bottom:0;border-radius:12px 12px 0 0;background:#eaf1f8;font-weight:800;font-size:13px;color:#334155}.tab.active{background:#fff;color:#0f172a}
-    .panel{display:none}.panel.active{display:block}
-    .table-tools{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px;flex-wrap:wrap}.compact-select{padding:7px 8px;border-radius:9px;border:1px solid var(--line);font-size:12px;background:white}.table-hint{font-size:11px;color:var(--muted);line-height:1.25}
-    .table-wrap{overflow:auto;border:1px solid var(--line);border-radius:12px;background:white;max-height:680px}.table-wrap.small{max-height:360px}
-    table{width:100%;border-collapse:separate;border-spacing:0;font-size:10.5px;min-width:1360px;table-layout:fixed}th,td{border-bottom:1px solid #e5edf5;border-right:1px solid #eef2f7;padding:4px 5px;vertical-align:middle;background:#fff;line-height:1.18}th{position:sticky;top:0;z-index:2;background:#f1f5f9;color:#334155;text-align:left;font-size:9.5px;text-transform:uppercase;letter-spacing:.035em;line-height:1.1;user-select:none;white-space:normal;overflow:hidden}.sortable{cursor:pointer}.sortable:hover{background:#e2e8f0}.sort-indicator{font-size:9px;color:#0f6db5;margin-left:3px}.th-inner{position:relative;display:flex;align-items:center;gap:2px;min-height:20px;padding-right:7px}.col-resizer{position:absolute;right:-4px;top:-4px;width:8px;height:calc(100% + 8px);cursor:col-resize;z-index:4}.col-resizer:hover{background:rgba(14,165,233,.25)}td{overflow:hidden}td input,td select{padding:4px 5px;border-radius:6px;font-size:10.5px;min-height:24px}td input{width:100%}td select{width:100%}td button{padding:4px 6px;border-radius:6px;font-size:10px}.num{text-align:right;font-variant-numeric:tabular-nums}.nowrap{white-space:nowrap}.truncate{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.pill{display:inline-flex;align-items:center;border-radius:999px;padding:2px 6px;font-weight:800;font-size:9.5px;background:#e2e8f0;color:#334155}.pill.green{background:#dcfce7;color:#166534}.pill.blue{background:#dbeafe;color:#1d4ed8}.pill.amber{background:#fef3c7;color:#92400e}.pill.red{background:#fee2e2;color:#991b1b}.pill.purple{background:#ede9fe;color:#5b21b6}
-    .source-list{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.source-list a{display:block;border:1px solid var(--line);background:#fff;border-radius:12px;padding:10px;text-decoration:none;color:#0f172a}.source-list strong{display:block;font-size:13px}.source-list span{display:block;color:var(--muted);font-size:12px;margin-top:3px;line-height:1.35}
-    .hidden{display:none!important}.smalltxt{font-size:12px;color:var(--muted);line-height:1.45}.right{text-align:right}.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace}.search-results{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:10px}.result{border:1px solid var(--line);border-radius:12px;padding:10px;background:#fff}.result strong{font-size:13px}.result .meta{font-size:12px;color:var(--muted);margin:3px 0 8px;line-height:1.35}.result button{font-size:12px;padding:8px 9px}.footnote{font-size:11px;color:#64748b;margin-top:8px;line-height:1.35}
-    @media (max-width:1100px){.grid{grid-template-columns:1fr}.metrics{grid-template-columns:repeat(2,1fr)}.row{grid-template-columns:repeat(6,1fr)}.col-2,.col-3,.col-4,.col-5,.col-6,.col-7,.col-8{grid-column:span 6}.source-list,.search-results{grid-template-columns:1fr}.topbar{display:block}.badge{margin:8px 6px 0 0}}
-    @media print{body{background:#fff}header,.tabs,.btnrow,.no-print,.card.controls{display:none!important}main{max-width:none;margin:0;padding:0}.card{box-shadow:none;border:0;border-radius:0}.table-wrap{max-height:none;overflow:visible;border:0}table{font-size:9px;min-width:0}th,td{padding:4px}.grid{display:block}.metrics{grid-template-columns:repeat(5,1fr)}input,select{border:0;padding:0;background:transparent}.callout{border:1px solid #ddd}}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Inter,Segoe UI,Roboto,Arial,sans-serif;
+      color:var(--ink);
+      background:
+        radial-gradient(circle at 12% 0%, rgba(34,211,238,.18), transparent 26rem),
+        radial-gradient(circle at 85% 12%, rgba(29,78,216,.22), transparent 30rem),
+        linear-gradient(180deg,#06111f 0%,#0b1d33 330px,#edf4fb 331px,#f8fbff 100%);
+    }
+    a{color:#0b66c3;text-decoration:none}
+    a:hover{text-decoration:underline}
+    .app-header{color:white;padding:22px 26px 18px;position:relative;overflow:hidden;border-bottom:1px solid rgba(255,255,255,.12)}
+    .app-header:before{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.08),transparent 36%,rgba(34,211,238,.10));pointer-events:none}
+    .topbar{position:relative;z-index:1;display:flex;justify-content:space-between;gap:20px;align-items:flex-start;max-width:1540px;margin:0 auto 18px;}
+    .brand{display:flex;gap:13px;align-items:center;min-width:270px}.brand-mark{width:42px;height:42px;border-radius:14px;background:linear-gradient(135deg,var(--cyan),var(--blue));box-shadow:0 0 0 6px rgba(34,211,238,.10),0 16px 38px rgba(14,165,233,.35);display:grid;place-items:center;font-weight:950;letter-spacing:-.08em}.brand-title{font-size:13px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:#e0f2fe}.brand-subtitle{font-size:11px;color:#9cc8e8;margin-top:2px}
+    .nav-actions{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:9px}.nav-button,.button-link{display:inline-flex;align-items:center;gap:8px;border-radius:999px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.09);color:#f8fbff;padding:9px 12px;font-weight:850;font-size:12px;backdrop-filter:blur(10px);box-shadow:0 8px 18px rgba(0,0,0,.12)}.nav-button:hover,.button-link:hover{text-decoration:none;background:rgba(255,255,255,.16);transform:translateY(-1px)}.button-link{border-color:var(--line);background:#fff;color:#0f3760}.button-link.primary{background:linear-gradient(135deg,#154db4,#0ea5e9);color:white;border:0}
+    .hero{position:relative;z-index:1;max-width:1540px;margin:0 auto;display:grid;grid-template-columns:1.2fr .8fr;gap:20px;align-items:end}.eyebrow{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(34,211,238,.30);background:rgba(34,211,238,.09);color:#c7f9ff;border-radius:999px;padding:6px 10px;font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.08em}.eyebrow:before{content:"";width:7px;height:7px;border-radius:50%;background:#22d3ee;box-shadow:0 0 16px #22d3ee}h1{font-size:34px;line-height:1.02;margin:12px 0 9px;font-weight:950;letter-spacing:-.04em}.subtitle{font-size:14px;line-height:1.55;color:#c7d8ea;max-width:980px}.hero-chips{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap}.badge{display:inline-flex;align-items:center;gap:7px;padding:8px 10px;border:1px solid rgba(255,255,255,.20);background:rgba(255,255,255,.10);border-radius:999px;font-size:12px;color:#fff;white-space:nowrap}.badge strong{color:#cffafe}.right{text-align:right}
+    main{max-width:1540px;margin:-6px auto 56px;padding:0 18px}.grid{display:grid;grid-template-columns:1.15fr .85fr;gap:16px;margin-bottom:16px}.card{background:rgba(255,255,255,.96);border:1px solid rgba(208,222,238,.95);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;backdrop-filter:blur(10px)}.card h2{font-size:15px;margin:0;padding:14px 16px;border-bottom:1px solid var(--line2);background:linear-gradient(180deg,#ffffff,#f4f8fc);display:flex;align-items:center;justify-content:space-between;gap:12px;color:#0c2442;letter-spacing:-.01em}.card h2:before{content:"";width:8px;height:24px;border-radius:99px;background:linear-gradient(180deg,var(--cyan),var(--blue));box-shadow:0 0 16px rgba(34,211,238,.35)}.card h2 .smalltxt{margin-left:auto}.card .body{padding:14px 16px}.controls{border-top:3px solid #22d3ee}
+    label{display:block;font-size:11px;font-weight:850;color:#34465d;margin-bottom:5px;text-transform:uppercase;letter-spacing:.035em}input,select,textarea{width:100%;border:1px solid #c9d6e6;border-radius:11px;padding:9px 10px;background:#fff;font:inherit;color:var(--ink);box-shadow:inset 0 1px 0 rgba(255,255,255,.72)}input:focus,select:focus,textarea:focus{outline:2px solid rgba(14,165,233,.22);border-color:#38bdf8}input[type="checkbox"]{width:auto;transform:scale(1.03)}textarea{min-height:78px;resize:vertical}.row{display:grid;grid-template-columns:repeat(12,1fr);gap:10px;align-items:end;margin-bottom:10px}.col-2{grid-column:span 2}.col-3{grid-column:span 3}.col-4{grid-column:span 4}.col-5{grid-column:span 5}.col-6{grid-column:span 6}.col-7{grid-column:span 7}.col-8{grid-column:span 8}.col-12{grid-column:span 12}
+    button{border:0;border-radius:11px;padding:9px 12px;font-weight:850;cursor:pointer;background:#e5edf6;color:#102033;transition:.15s ease;box-shadow:0 1px 0 rgba(255,255,255,.7) inset}button:hover{filter:brightness(.985);transform:translateY(-1px);box-shadow:var(--shadow2)}.primary{background:linear-gradient(135deg,#1447a5,#0ea5e9);color:white}.accent{background:linear-gradient(135deg,#dff7ff,#bae6fd);color:#075985}.green{background:linear-gradient(135deg,#dffbed,#bcf7d2);color:#166534}.amber{background:linear-gradient(135deg,#fff3c4,#fde68a);color:#92400e}.danger{background:linear-gradient(135deg,#fee2e2,#fecaca);color:#991b1b}.dark{background:#0f172a;color:white}.ghost{background:#f8fbff;border:1px solid var(--line);color:#17324d}.btnrow{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.btnrow button,.btnrow .button-link{font-size:12px;padding:8px 10px}.status{font-size:12px;color:var(--muted);margin-top:7px;min-height:18px}.status strong{color:var(--ink)}
+    .metrics{display:grid;grid-template-columns:repeat(5,1fr);gap:9px}.metric{border:1px solid #d9e5f2;border-radius:17px;padding:12px;background:linear-gradient(180deg,#fff,#f5f9fe);box-shadow:0 10px 20px rgba(13,38,76,.05)}.metric .k{font-size:10px;text-transform:uppercase;letter-spacing:.07em;color:#667b91;font-weight:900}.metric .v{font-size:25px;font-weight:950;margin-top:4px;letter-spacing:-.04em}.metric .s{font-size:10.5px;color:var(--muted);margin-top:3px}.score-good{color:var(--green)}.score-mid{color:var(--amber)}.score-low{color:var(--red)}
+    .callout{border:1px solid #cfe8ff;border-left:5px solid var(--blue2);background:linear-gradient(180deg,#f0f8ff,#ffffff);border-radius:14px;padding:11px 13px;font-size:12.5px;line-height:1.45;color:#173a65;margin:0 0 12px}.warn{border-color:#fde4b4;border-left-color:#f59e0b;background:linear-gradient(180deg,#fff8eb,#ffffff);color:#78350f}.ok{border-color:#ccefdc;border-left-color:var(--green);background:linear-gradient(180deg,#effdf5,#ffffff);color:#064e3b}
+    .tabs{display:flex;gap:6px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding:10px 14px 0;background:#f4f8fc}.tab{padding:9px 12px;border:1px solid var(--line);border-bottom:0;border-radius:13px 13px 0 0;background:#e9f1fa;font-weight:850;font-size:12px;color:#334155}.tab.active{background:#fff;color:#0c2442;box-shadow:0 -8px 20px rgba(13,38,76,.04)}.panel{display:none}.panel.active{display:block}
+    .table-tools{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px;flex-wrap:wrap}.compact-select{padding:7px 8px;border-radius:9px;border:1px solid var(--line);font-size:12px;background:white}.table-hint{font-size:11px;color:var(--muted);line-height:1.25}.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:14px;background:white;max-height:690px;box-shadow:inset 0 1px 0 #fff}.table-wrap.small{max-height:360px}table{width:100%;border-collapse:separate;border-spacing:0;font-size:10px;min-width:1480px;table-layout:fixed}th,td{border-bottom:1px solid #e8eef5;border-right:1px solid #eef3f8;padding:3px 4px;vertical-align:middle;background:#fff;line-height:1.15}th{position:sticky;top:0;z-index:2;background:linear-gradient(180deg,#eaf2fb,#dde9f7);color:#334155;text-align:left;font-size:9px;text-transform:uppercase;letter-spacing:.035em;line-height:1.05;user-select:none;white-space:normal;overflow:hidden}tbody tr:hover td{background:#f8fbff}.sortable{cursor:pointer}.sortable:hover{background:#dbeafe}.sort-indicator{font-size:9px;color:#0f6db5;margin-left:3px}.th-inner{position:relative;display:flex;align-items:center;gap:2px;min-height:20px;padding-right:7px}.col-resizer{position:absolute;right:-4px;top:-4px;width:8px;height:calc(100% + 8px);cursor:col-resize;z-index:4}.col-resizer:hover{background:rgba(14,165,233,.25)}td{overflow:hidden}td input,td select{padding:3px 4px;border-radius:6px;font-size:10px;min-height:22px}td input{width:100%}td select{width:100%}td button{padding:4px 6px;border-radius:6px;font-size:10px}.num{text-align:right;font-variant-numeric:tabular-nums}.nowrap{white-space:nowrap}.truncate{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.pill{display:inline-flex;align-items:center;border-radius:999px;padding:2px 6px;font-weight:900;font-size:9px;background:#e2e8f0;color:#334155}.pill.green{background:#dcfce7;color:#166534}.pill.blue{background:#dbeafe;color:#1d4ed8}.pill.amber{background:#fef3c7;color:#92400e}.pill.red{background:#fee2e2;color:#991b1b}.pill.purple{background:#ede9fe;color:#5b21b6}.source-list{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.source-list a{display:block;border:1px solid var(--line);background:linear-gradient(180deg,#fff,#f8fbff);border-radius:14px;padding:11px;text-decoration:none;color:#0f172a}.source-list strong{display:block;font-size:13px}.source-list span{display:block;color:var(--muted);font-size:12px;margin-top:3px;line-height:1.35}.hidden{display:none!important}.smalltxt{font-size:12px;color:var(--muted);line-height:1.45}.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace}.search-results{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:10px}.result{border:1px solid var(--line);border-radius:14px;padding:10px;background:linear-gradient(180deg,#ffffff,#f8fbff);box-shadow:0 8px 18px rgba(13,38,76,.05)}.result strong{font-size:13px}.result .meta{font-size:12px;color:var(--muted);margin:3px 0 8px;line-height:1.35}.result button{font-size:12px;padding:8px 9px}.footnote{font-size:11px;color:#64748b;margin-top:8px;line-height:1.35}
+    @media (max-width:1100px){.hero,.grid{grid-template-columns:1fr}.metrics{grid-template-columns:repeat(2,1fr)}.row{grid-template-columns:repeat(6,1fr)}.col-2,.col-3,.col-4,.col-5,.col-6,.col-7,.col-8{grid-column:span 6}.source-list,.search-results{grid-template-columns:1fr}.topbar{display:block}.nav-actions{justify-content:flex-start;margin-top:12px}.hero-chips{justify-content:flex-start}.badge{margin:6px 6px 0 0}h1{font-size:28px}}
+    @media print{body{background:#fff}.app-header,.tabs,.btnrow,.no-print,.card.controls{display:none!important}main{max-width:none;margin:0;padding:0}.card{box-shadow:none;border:0;border-radius:0}.table-wrap{max-height:none;overflow:visible;border:0}table{font-size:9px;min-width:0}th,td{padding:4px}.grid{display:block}.metrics{grid-template-columns:repeat(5,1fr)}input,select{border:0;padding:0;background:transparent}.callout{border:1px solid #ddd}}
   </style>
 </head>
 <body>
-  <header>
+  <header class="app-header">
     <div class="topbar">
-      <div>
-        <h1>FY2026 RUS DLT Scoring Tool</h1>
-        <div class="subtitle">Prospecting and pre-application scoring workspace for Distance Learning & Telemedicine projects. Add K-12 district schools, rural health sites, higher-ed campuses, or manual sites; enrich with 2020 Census place population and 2024 county SAIPE poverty; calculate provisional D-1 Rurality and D-2 Economic Need scores.</div>
+      <div class="brand">
+        <div class="brand-mark">DLT</div>
+        <div><div class="brand-title">RUS DLT Scoring Workspace</div><div class="brand-subtitle">FY2026 prospecting + pre-application review</div></div>
       </div>
-      <div class="right">
-        <span class="badge">FY2026 Guidance</span><span class="badge">Deadline: 06/30/2026</span><span class="badge">Grant: $50k–$750k</span>
+      <nav class="nav-actions" aria-label="Primary navigation">
+        <a class="nav-button" href="index.html">Scoring Tool</a>
+        <a class="nav-button" href="guide.html">How to Use Guide</a>
+        <a class="nav-button" href="https://ruraldevelopment.maps.arcgis.com/apps/webappviewer/index.html?id=15a73830555645ae93d2fa773ed8e971" target="_blank">USDA DLT Map</a>
+        <a class="nav-button" href="https://www.rd.usda.gov/programs-services/telecommunications-programs/distance-learning-telemedicine-grants" target="_blank">USDA FY2026 Resources</a>
+      </nav>
+    </div>
+    <div class="hero">
+      <div>
+        <div class="eyebrow">High-confidence early scoring</div>
+        <h1>FY2026 RUS DLT Scoring Tool</h1>
+        <div class="subtitle">Build a site list for school districts, rural health organizations, higher-ed partners, or consortium projects. Enrich each location with Census place population and county SAIPE data, then review Rurality, Economic Need, and DLT map verification fields before exporting the scoring worksheet.</div>
+      </div>
+      <div class="hero-chips">
+        <span class="badge"><strong>Deadline</strong> 06/30/2026</span>
+        <span class="badge"><strong>Grant</strong> $50k–$750k</span>
+        <span class="badge"><strong>Match</strong> 15% minimum</span>
+        <span class="badge"><strong>Scoring</strong> 100 pts</span>
       </div>
     </div>
   </header>
@@ -63,7 +75,7 @@
   <main>
     <section class="grid">
       <div class="card controls">
-        <h2>1) Build a Site List <span class="smalltxt">K-12, Rural Health, Higher Ed, or Manual</span></h2>
+        <h2>1) Build a Site List <span class="smalltxt">K-12 District + Schools, Rural Health, Higher Ed, or Manual</span></h2>
         <div class="body">
           <div class="callout warn"><strong>Important scoring note:</strong> Rurality cannot be fully automated from city population alone. USDA requires checking the site against the official DLT map for non-rural/contiguous urban areas. This tool calculates a provisional score and includes verification fields for the DLT map decision.</div>
           <div class="row">
@@ -73,10 +85,11 @@
             <div class="col-5"><label>Search Name / District / Organization / Institution</label><input id="searchTerm" placeholder="Example: Mitchell County Schools, Phoebe, Berry College" /></div>
           </div>
           <div class="btnrow">
-            <button class="primary" onclick="searchK12()">Search K-12 District Schools</button>
+            <button class="primary" onclick="searchK12()">Search K-12 District + Schools</button>
             <button class="green" onclick="searchHigherEd()">Search Higher Ed</button>
             <button class="accent" onclick="searchHRSA()">Search HRSA Health Sites</button>
-            <button class="ghost" onclick="showManualSite()">Add Manual Site</button>
+            <button class="ghost" onclick="showManualSite()">Add Manual Location</button>
+            <a class="button-link primary" href="guide.html">Open How-to Guide</a>
           </div>
           <div id="searchStatus" class="status"></div>
           <div id="searchResults" class="search-results"></div>
@@ -100,6 +113,7 @@
             <button onclick="window.print()">Save/Print PDF</button>
             <button onclick="exportCSV()">Export CSV</button>
             <button onclick="downloadJSON()">Export JSON</button>
+            <a class="button-link" href="guide.html">Guide</a>
           </div>
           <div id="scoreWarnings" class="status"></div>
         </div>
@@ -121,6 +135,7 @@
             <button class="ghost" onclick="selectAllSites(false)">Exclude All</button>
             <select id="bulkDesignation" class="compact-select" title="Bulk update site designation for included rows"><option>End-User</option><option>Hub/End-User</option><option>Hub</option><option>Proxy Hub</option></select>
             <button class="ghost" onclick="applyDesignationToIncluded()">Apply Designation to Included</button>
+            <button class="green" onclick="showManualSite()">Add Manual Location</button>
             <button class="amber" onclick="dedupeSites()">Deduplicate</button>
             <button class="danger" onclick="clearSites()">Clear All</button>
             <button class="ghost" onclick="openDLTMap()">Open USDA DLT Map</button>
@@ -137,7 +152,7 @@
         <div class="row">
           <div class="col-6">
             <label>Paste Manual CSV Rows</label>
-            <textarea id="csvPaste" placeholder="siteName,address,city,state,zip,county,countyFips,designation,type,sourceLocale,cityPopulation,saipePercent\nExample School,100 Main St,Albany,GA,31701,Dougherty,13095,End-User,K-12,,68559,24.1"></textarea>
+            <textarea id="csvPaste" placeholder="organization,siteName,address,city,state,zip,county,countyFips,designation,type,sourceLocale,cityPopulation,saipePercent\nExample County Schools,Example School,100 Main St,Albany,GA,31701,Dougherty,13095,End-User,K-12,,68559,24.1"></textarea>
           </div>
           <div class="col-3"><label>Upload CSV</label><input id="csvFile" type="file" accept=".csv,text/csv" /></div>
           <div class="col-3"><button class="primary" onclick="importCSV()">Import CSV</button></div>
@@ -146,7 +161,7 @@
           <button onclick="downloadTemplate()">Download Manual Site Template</button>
           <button onclick="loadDemo()">Load Small Demo</button>
         </div>
-        <div class="callout"><strong>Recommended repeatable workflow:</strong> For K-12, search the district and import all schools. For rural health and higher ed, search the organization/institution or upload a curated project-site CSV. Then click <strong>Enrich Census + SAIPE</strong>, verify all DLT map flags, and export the scoring worksheet.</div>
+        <div class="callout"><strong>Recommended repeatable workflow:</strong> For K-12, search the district and import the district office plus all school locations. For rural health and higher ed, search the organization/institution or upload a curated project-site CSV. Then click <strong>Enrich Census + SAIPE</strong>, verify all DLT map flags, and export the scoring worksheet.</div>
       </div>
 
       <div id="panel-guide" class="panel body">
@@ -193,18 +208,25 @@
     <div class="card" style="margin-bottom:12px" id="manualCard">
       <h2>Add Manual Site</h2>
       <div class="body">
+        <div class="callout ok"><strong>Manual location entry:</strong> Use this for district offices, consortium hubs, partner clinics, higher-ed extension sites, or any location not returned by search. You can still enrich Census population and SAIPE after adding.</div>
         <div class="row">
-          <div class="col-4"><label>Site Name</label><input id="mName"></div>
+          <div class="col-4"><label>Organization / District</label><input id="mOrg" placeholder="Example County Schools"></div>
+          <div class="col-4"><label>Location / Site Name</label><input id="mName" placeholder="District Office, High School, Clinic, Campus"></div>
           <div class="col-4"><label>Address</label><input id="mAddress"></div>
           <div class="col-2"><label>City</label><input id="mCity"></div>
           <div class="col-2"><label>State</label><input id="mState" maxlength="2"></div>
           <div class="col-2"><label>ZIP</label><input id="mZip"></div>
-          <div class="col-3"><label>County</label><input id="mCounty"></div>
-          <div class="col-3"><label>County FIPS</label><input id="mCountyFips"></div>
-          <div class="col-2"><label>Type</label><select id="mType"><option>K-12</option><option>Rural Health</option><option>Higher Ed</option><option>Other</option></select></div>
+          <div class="col-2"><label>County</label><input id="mCounty"></div>
+          <div class="col-2"><label>County FIPS</label><input id="mCountyFips"></div>
+          <div class="col-2"><label>Type</label><select id="mType"><option>K-12</option><option>K-12 District Office</option><option>Rural Health</option><option>Higher Ed</option><option>Other</option></select></div>
           <div class="col-2"><label>Designation</label><select id="mDesignation"><option>End-User</option><option>Hub/End-User</option><option>Hub</option><option>Proxy Hub</option></select></div>
+          <div class="col-2"><label>Locale</label><input id="mLocale" placeholder="43"></div>
+          <div class="col-2"><label>City Pop</label><input id="mCityPopulation" type="number"></div>
+          <div class="col-2"><label>SAIPE %</label><input id="mSaipePercent" type="number" step="0.1"></div>
+          <div class="col-3"><label>Phone</label><input id="mPhone"></div>
+          <div class="col-5"><label>Website</label><input id="mWebsite"></div>
         </div>
-        <div class="btnrow"><button class="primary" onclick="addManualSite()">Add Site</button><button onclick="document.getElementById('manualCard').remove()">Cancel</button></div>
+        <div class="btnrow"><button class="primary" onclick="addManualSite()">Add Location</button><button onclick="document.getElementById('manualCard').remove()">Cancel</button></div>
       </div>
     </div>
   </template>
@@ -215,6 +237,7 @@ const STATE_FIPS = {
 };
 const STATE_NAMES = {AL:'Alabama',AK:'Alaska',AZ:'Arizona',AR:'Arkansas',CA:'California',CO:'Colorado',CT:'Connecticut',DE:'Delaware',DC:'District of Columbia',FL:'Florida',GA:'Georgia',HI:'Hawaii',ID:'Idaho',IL:'Illinois',IN:'Indiana',IA:'Iowa',KS:'Kansas',KY:'Kentucky',LA:'Louisiana',ME:'Maine',MD:'Maryland',MA:'Massachusetts',MI:'Michigan',MN:'Minnesota',MS:'Mississippi',MO:'Missouri',MT:'Montana',NE:'Nebraska',NV:'Nevada',NH:'New Hampshire',NJ:'New Jersey',NM:'New Mexico',NY:'New York',NC:'North Carolina',ND:'North Dakota',OH:'Ohio',OK:'Oklahoma',OR:'Oregon',PA:'Pennsylvania',RI:'Rhode Island',SC:'South Carolina',SD:'South Dakota',TN:'Tennessee',TX:'Texas',UT:'Utah',VT:'Vermont',VA:'Virginia',WA:'Washington',WV:'West Virginia',WI:'Wisconsin',WY:'Wyoming'};
 const NCES_SCHOOLS = 'https://services1.arcgis.com/Ua5sjt3LWTPigjyD/ArcGIS/rest/services/School_Characteristics_Current/FeatureServer/0/query';
+const NCES_DISTRICTS = 'https://services1.arcgis.com/Ua5sjt3LWTPigjyD/arcgis/rest/services/School_District_Characteristics_Current/FeatureServer/1/query';
 const HIGHER_ED = 'https://services2.arcgis.com/FiaPA4ga0iQKduv3/ArcGIS/rest/services/Colleges_and_Universities_View/FeatureServer/0/query';
 const HRSA_CSV = 'https://data.hrsa.gov/DataDownload/DD_Files/Health_Center_Service_Delivery_and_LookAlike_Sites.csv';
 const DLT_MAP = 'https://ruraldevelopment.maps.arcgis.com/apps/webappviewer/index.html?id=15a73830555645ae93d2fa773ed8e971';
@@ -228,8 +251,9 @@ const DESIGNATION_OPTIONS = ['End-User','Hub/End-User','Hub','Proxy Hub'];
 const TABLE_COLUMNS = [
   {key:'include', label:'Include', w:54, type:'bool'},
   {key:'rowNumber', label:'#', w:40, type:'number', noSort:true},
-  {key:'siteName', label:'Site Name', w:180, type:'text'},
-  {key:'type', label:'Type', w:92, type:'text'},
+  {key:'siteName', label:'Site Name', w:175, type:'text'},
+  {key:'organization', label:'Organization / District', w:160, type:'text'},
+  {key:'type', label:'Type', w:108, type:'text'},
   {key:'designation', label:'Designation', w:112, type:'text'},
   {key:'address', label:'Address', w:165, type:'text'},
   {key:'city', label:'City', w:95, type:'text'},
@@ -300,8 +324,10 @@ function showResults(features, kind){
     features.forEach(f=>{const a=f.attributes; const key=a.LEAID+'|'+a.LEA_NAME; (byDistrict[key] ||= []).push(f);});
     Object.entries(byDistrict).slice(0,8).forEach(([key,rows])=>{
       const a=rows[0].attributes; const div=document.createElement('div'); div.className='result';
-      div.innerHTML=`<strong>${esc(a.LEA_NAME)}</strong><div class="meta">${esc(a.STABR)} • NCES LEAID ${esc(a.LEAID)} • ${rows.length} school site(s) returned</div><button class="primary">Add all schools</button>`;
-      div.querySelector('button').onclick=()=>addK12Rows(rows);
+      div.innerHTML=`<strong>${esc(a.LEA_NAME)}</strong><div class="meta">${esc(a.STABR)} • NCES LEAID ${esc(a.LEAID)} • ${rows.length} school site(s) returned</div><div class="btnrow"><button class="primary" data-action="district-schools">Add district office + schools</button><button class="ghost" data-action="schools-only">Schools only</button><button class="amber" data-action="district-only">District office only</button></div>`;
+      div.querySelector('[data-action="district-schools"]').onclick=()=>addK12DistrictAndSchoolRows(a.LEAID, rows);
+      div.querySelector('[data-action="schools-only"]').onclick=()=>addK12Rows(rows);
+      div.querySelector('[data-action="district-only"]').onclick=()=>addK12DistrictRow(a.LEAID);
       box.appendChild(div);
     });
   } else if(kind==='HigherEd'){
@@ -329,13 +355,45 @@ async function searchK12(){
   setStatus('Searching NCES public school layer...'); document.getElementById('searchResults').innerHTML='';
   const where=`STABR='${state}' AND UPPER(LEA_NAME) LIKE '%${sqlText(term).toUpperCase()}%'`;
   const fields='NCESSCH,SURVYEAR,STABR,LEAID,LEA_NAME,SCH_NAME,LSTREET1,LSTREET2,LCITY,LSTATE,LZIP,PHONE,ULOCALE,NMCNTY,CNTY,TOTAL,MEMBER,LATCOD,LONCOD,SCHOOL_LEVEL,SY_STATUS_TEXT,SCHOOL_TYPE_TEXT';
-  try{const features=await arcgisQuery(NCES_SCHOOLS,where,fields); setStatus(`<strong>${features.length}</strong> school records found. Choose the district below.`); showResults(features,'K12');}
+  try{const features=await arcgisQuery(NCES_SCHOOLS,where,fields); setStatus(`<strong>${features.length}</strong> school records found. Choose the district below. Use “district office + schools” when the district office will function as a hub or project location.`); showResults(features,'K12');}
   catch(e){setStatus(`<span style="color:#b42318">NCES search failed: ${esc(e.message)}. Use CSV import as fallback.</span>`)}
 }
 function addK12Rows(rows){
   const mapped=rows.map(f=>{const a=f.attributes; const g=f.geometry||{}; return {
     id:crypto.randomUUID(), include:true, type:'K-12', source:'NCES CCD Public School Characteristics', sourceId:a.NCESSCH||'', organization:a.LEA_NAME||'', siteName:a.SCH_NAME||'', address:[a.LSTREET1,a.LSTREET2].filter(Boolean).join(' '), city:a.LCITY||'', state:a.LSTATE||a.STABR||'', zip:a.LZIP||'', county:a.NMCNTY||'', countyFips:cleanCountyFips(a.CNTY,a.STABR), phone:a.PHONE||'', sourceLocale:a.ULOCALE||'', enrollment:a.MEMBER||a.TOTAL||'', designation:getDefaultDesignation(), contiguous:'Unknown', outsideNonRural:'Unknown', censusRural:'Unknown', cityPopulation:'', saipePercent:'', ruralityScore:null, economicScore:null, lat:g.y||a.LATCOD||'', lon:g.x||a.LONCOD||'', notes:''
   }}); addRows(mapped); setStatus(`<strong>${mapped.length}</strong> K-12 school sites added.`);
+}
+async function getK12DistrictFeature(leaId){
+  const state=document.getElementById('stateSelect').value;
+  const where=`LEAID='${sqlText(leaId)}' AND LSTATE='${state}'`;
+  const fields='SURVYEAR,STATENAME,LEAID,ST_LEAID,LEA_NAME,LSTREET1,LSTREET2,LCITY,LSTATE,LZIP,LEA_TYPE_TEXT,SCH,MEMBER,LOCALE_TEXT,CONAME,COID,PHONE,Lat,Long';
+  const features=await arcgisQuery(NCES_DISTRICTS,where,fields);
+  return features[0] || null;
+}
+function districtFeatureToSite(feature){
+  if(!feature) return null;
+  const a=feature.attributes||{}; const g=feature.geometry||{};
+  return {id:crypto.randomUUID(), include:true, type:'K-12 District Office', source:'NCES School District Characteristics', sourceId:a.LEAID||'', organization:a.LEA_NAME||'', siteName:(a.LEA_NAME ? `${a.LEA_NAME} District Office` : 'District Office'), address:[a.LSTREET1,a.LSTREET2].filter(Boolean).join(' '), city:a.LCITY||'', state:a.LSTATE||'', zip:a.LZIP||'', county:a.CONAME||'', countyFips:cleanCountyFips(a.COID,a.LSTATE), phone:a.PHONE||'', website:'', sourceLocale:a.LOCALE_TEXT||'', enrollment:a.MEMBER||'', designation:'Hub', contiguous:'Unknown', outsideNonRural:'Unknown', censusRural:'Unknown', cityPopulation:'', saipePercent:'', ruralityScore:null, economicScore:null, lat:a.Lat||g.y||'', lon:a.Long||g.x||'', notes:'District administrative office. Verify whether this is a Hub, Hub/End-User, or non-scored administrative location.'};
+}
+async function addK12DistrictRow(leaId){
+  setStatus('Looking up district office location...');
+  try{
+    const feature=await getK12DistrictFeature(leaId);
+    const site=districtFeatureToSite(feature);
+    if(!site){setStatus('No district office location found. Use Add Manual Location.'); return;}
+    addRows([site]);
+    setStatus('<strong>1</strong> district office location added as Hub. Change designation if it should score as Hub/End-User.');
+  }catch(e){setStatus(`<span style="color:#b42318">District office lookup failed: ${esc(e.message)}. Use Add Manual Location.</span>`)}
+}
+async function addK12DistrictAndSchoolRows(leaId, schoolRows){
+  setStatus('Adding district office and school locations...');
+  let districtSite=null;
+  try{ districtSite=districtFeatureToSite(await getK12DistrictFeature(leaId)); }catch(e){ districtSite=null; }
+  const schoolSites=schoolRows.map(f=>{const a=f.attributes; const g=f.geometry||{}; return {
+    id:crypto.randomUUID(), include:true, type:'K-12', source:'NCES CCD Public School Characteristics', sourceId:a.NCESSCH||'', organization:a.LEA_NAME||'', siteName:a.SCH_NAME||'', address:[a.LSTREET1,a.LSTREET2].filter(Boolean).join(' '), city:a.LCITY||'', state:a.LSTATE||a.STABR||'', zip:a.LZIP||'', county:a.NMCNTY||'', countyFips:cleanCountyFips(a.CNTY,a.STABR), phone:a.PHONE||'', sourceLocale:a.ULOCALE||'', enrollment:a.MEMBER||a.TOTAL||'', designation:getDefaultDesignation(), contiguous:'Unknown', outsideNonRural:'Unknown', censusRural:'Unknown', cityPopulation:'', saipePercent:'', ruralityScore:null, economicScore:null, lat:g.y||a.LATCOD||'', lon:g.x||a.LONCOD||'', notes:''
+  }});
+  addRows((districtSite?[districtSite]:[]).concat(schoolSites));
+  setStatus(`<strong>${schoolSites.length + (districtSite?1:0)}</strong> K-12 location(s) added${districtSite ? ', including the district office as Hub.' : '. District office not found; use Add Manual Location if needed.'}`);
 }
 function cleanCountyFips(cnty, st){
   let d=onlyDigits(cnty); if(d.length===3 && st && STATE_FIPS[st]) d=STATE_FIPS[st]+d; return d.padStart(5,'0').slice(-5);
@@ -387,14 +445,18 @@ function addRows(rows){
   dedupeSites(false); renderTable(); recalc();
 }
 function showManualSite(){
+  const existing=document.getElementById('manualCard'); if(existing){existing.scrollIntoView({behavior:'smooth',block:'start'}); return;}
   const tpl=document.getElementById('manualSiteTemplate').content.cloneNode(true);
   document.querySelector('main').insertBefore(tpl, document.querySelector('main').children[1]);
   document.getElementById('mState').value=document.getElementById('stateSelect').value;
   document.getElementById('mDesignation').value=getDefaultDesignation();
 }
 function addManualSite(){
-  addRows([{id:crypto.randomUUID(), include:true, type:document.getElementById('mType').value, source:'Manual', organization:'', siteName:document.getElementById('mName').value, address:document.getElementById('mAddress').value, city:document.getElementById('mCity').value, state:document.getElementById('mState').value.toUpperCase(), zip:document.getElementById('mZip').value, county:document.getElementById('mCounty').value, countyFips:document.getElementById('mCountyFips').value, phone:'', website:'', sourceLocale:'', enrollment:'', designation:document.getElementById('mDesignation').value, contiguous:'Unknown', outsideNonRural:'Unknown', censusRural:'Unknown', cityPopulation:'', saipePercent:'', ruralityScore:null, economicScore:null, lat:'', lon:'', notes:''}]);
+  const siteName=document.getElementById('mName').value.trim();
+  if(!siteName){setStatus('Manual location needs a site/location name.'); return;}
+  addRows([{id:crypto.randomUUID(), include:true, type:document.getElementById('mType').value, source:'Manual', sourceId:'', organization:document.getElementById('mOrg').value, siteName, address:document.getElementById('mAddress').value, city:document.getElementById('mCity').value, state:document.getElementById('mState').value.toUpperCase(), zip:document.getElementById('mZip').value, county:document.getElementById('mCounty').value, countyFips:document.getElementById('mCountyFips').value, phone:document.getElementById('mPhone').value, website:document.getElementById('mWebsite').value, sourceLocale:document.getElementById('mLocale').value, enrollment:'', designation:document.getElementById('mDesignation').value, contiguous:'Unknown', outsideNonRural:'Unknown', censusRural:'Unknown', cityPopulation:document.getElementById('mCityPopulation').value, saipePercent:document.getElementById('mSaipePercent').value, ruralityScore:null, economicScore:null, lat:'', lon:'', notes:''}]);
   document.getElementById('manualCard').remove();
+  setStatus('Manual location added. Run Enrich Census + SAIPE or complete missing scoring fields manually.');
 }
 function dedupeSites(showMsg=true){
   const seen=new Set(); const clean=[];
@@ -422,7 +484,8 @@ function renderTable(){
       <td class="nowrap"><input type="checkbox" ${s.include?'checked':''} onchange="upd('${s.id}','include',this.checked)"></td>
       <td class="num">${i+1}</td>
       <td><input title="${esc(s.siteName)}" value="${esc(s.siteName)}" onchange="upd('${s.id}','siteName',this.value)"></td>
-      <td><select onchange="upd('${s.id}','type',this.value)">${opts(['K-12','Rural Health','Higher Ed','Other'],s.type)}</select></td>
+      <td><input title="${esc(s.organization||'')}" value="${esc(s.organization||'')}" onchange="upd('${s.id}','organization',this.value)"></td>
+      <td><select onchange="upd('${s.id}','type',this.value)">${opts(['K-12','K-12 District Office','Rural Health','Higher Ed','Other'],s.type)}</select></td>
       <td><select onchange="upd('${s.id}','designation',this.value)">${opts(DESIGNATION_OPTIONS,normalizeDesignation(s.designation))}</select></td>
       <td><input title="${esc(s.address)}" value="${esc(s.address)}" onchange="upd('${s.id}','address',this.value)"></td>
       <td><input title="${esc(s.city)}" value="${esc(s.city)}" onchange="upd('${s.id}','city',this.value)"></td>
@@ -442,7 +505,7 @@ function renderTable(){
       <td><button class="danger" onclick="removeSite('${s.id}')">X</button></td>`;
     body.appendChild(tr);
   });
-  if(!sites.length){body.innerHTML='<tr><td colspan="21" class="smalltxt">No sites added yet. Search a district/organization/institution or import a CSV.</td></tr>'}
+  if(!sites.length){body.innerHTML='<tr><td colspan="22" class="smalltxt">No sites added yet. Search a district/organization/institution, add a manual location, or import a CSV.</td></tr>'}
   initColumnResize(table);
 }
 function headerCell(c){
@@ -642,7 +705,7 @@ function csvCell(v){v=String(v??''); return /[",\n]/.test(v)?'"'+v.replace(/"/g,
 function download(name,content,type='text/plain'){const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([content],{type})); a.download=name; a.click(); URL.revokeObjectURL(a.href);}
 function downloadJSON(){download('RUS_DLT_FY2026_Scoring_Project.json',JSON.stringify({projectType:document.getElementById('projectType').value,subjectiveScore:document.getElementById('subjectiveScore').value,sites},null,2),'application/json');}
 function downloadTemplate(){
-  const csv='include,type,organization,siteName,address,city,state,zip,county,countyFips,designation,sourceLocale,cityPopulation,saipePercent,contiguous,outsideNonRural,censusRural,notes\ntrue,K-12,Example County Schools,Example Elementary,100 Main St,Exampletown,GA,30000,Example County,13000,End-User,,,,Unknown,Unknown,Unknown,\n';
+  const csv='include,type,organization,siteName,address,city,state,zip,county,countyFips,phone,website,designation,sourceLocale,cityPopulation,saipePercent,contiguous,outsideNonRural,censusRural,notes\ntrue,K-12 District Office,Example County Schools,Example County Schools District Office,200 Board Rd,Exampletown,GA,30000,Example County,13000,555-555-5555,https://www.example.org,Hub,,5187,18.4,Unknown,Unknown,Unknown,\ntrue,K-12,Example County Schools,Example Elementary,100 Main St,Exampletown,GA,30000,Example County,13000,555-555-1212,https://www.example.org,End-User,43,5187,18.4,Unknown,Unknown,Unknown,\n';
   download('RUS_DLT_Manual_Site_Template.csv',csv,'text/csv');
 }
 function copySummary(){
@@ -653,6 +716,7 @@ function copySummary(){
 function switchTab(name){document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active')); event.target.classList.add('active'); document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active')); document.getElementById('panel-'+name).classList.add('active');}
 function loadDemo(){
   addRows([
+    {id:crypto.randomUUID(),include:true,type:'K-12 District Office',source:'Demo',organization:'Example County Schools',siteName:'Example County Schools District Office',address:'200 Board Rd',city:'Camilla',state:'GA',zip:'31730',county:'Mitchell County',countyFips:'13205',designation:'Hub',sourceLocale:'',cityPopulation:'5187',saipePercent:'27.3',contiguous:'No',outsideNonRural:'No',censusRural:'No',notes:'Demo district office row - Hub only, not scored unless changed'},
     {id:crypto.randomUUID(),include:true,type:'K-12',source:'Demo',organization:'Example County Schools',siteName:'Example Elementary School',address:'100 Main St',city:'Camilla',state:'GA',zip:'31730',county:'Mitchell County',countyFips:'13205',designation:'End-User',sourceLocale:'43',cityPopulation:'5187',saipePercent:'27.3',contiguous:'No',outsideNonRural:'No',censusRural:'No',notes:'Demo row only'},
     {id:crypto.randomUUID(),include:true,type:'Higher Ed',source:'Demo',organization:'Example College',siteName:'Example Rural Learning Hub',address:'200 College Dr',city:'Mount Berry',state:'GA',zip:'30149',county:'Floyd County',countyFips:'13115',designation:'Hub/End-User',sourceLocale:'41',cityPopulation:'',saipePercent:'16.9',contiguous:'Unknown',outsideNonRural:'Unknown',censusRural:'Unknown',notes:'Demo row only'}
   ]);

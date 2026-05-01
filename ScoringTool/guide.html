@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FY2026 RUS DLT Scoring Tool | How to Use Guide</title>
+  <style>
+    :root{--bg0:#050b18;--bg1:#07182e;--panel:#ffffff;--panel2:#f8fbff;--ink:#102033;--muted:#60738b;--line:#d6e1ee;--line2:#e8eef6;--blue:#1d4ed8;--blue2:#0ea5e9;--cyan:#22d3ee;--green:#0f8a5f;--amber:#b7791f;--red:#c2410c;--purple:#6d28d9;--shadow:0 20px 55px rgba(8,22,48,.16);--radius:20px}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Inter,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);background:radial-gradient(circle at 12% 0%,rgba(34,211,238,.18),transparent 26rem),radial-gradient(circle at 85% 12%,rgba(29,78,216,.22),transparent 30rem),linear-gradient(180deg,#06111f 0%,#0b1d33 330px,#edf4fb 331px,#f8fbff 100%)}a{color:#0b66c3;text-decoration:none}a:hover{text-decoration:underline}.app-header{color:white;padding:22px 26px 22px;position:relative;overflow:hidden;border-bottom:1px solid rgba(255,255,255,.12)}.app-header:before{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.08),transparent 36%,rgba(34,211,238,.10));pointer-events:none}.topbar,.hero,main{position:relative;z-index:1;max-width:1240px;margin:0 auto}.topbar{display:flex;justify-content:space-between;gap:20px;align-items:flex-start;margin-bottom:20px}.brand{display:flex;gap:13px;align-items:center}.brand-mark{width:42px;height:42px;border-radius:14px;background:linear-gradient(135deg,var(--cyan),var(--blue));box-shadow:0 0 0 6px rgba(34,211,238,.10),0 16px 38px rgba(14,165,233,.35);display:grid;place-items:center;font-weight:950;letter-spacing:-.08em}.brand-title{font-size:13px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:#e0f2fe}.brand-subtitle{font-size:11px;color:#9cc8e8;margin-top:2px}.nav-actions{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:9px}.nav-button{display:inline-flex;align-items:center;gap:8px;border-radius:999px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.09);color:#f8fbff;padding:9px 12px;font-weight:850;font-size:12px;backdrop-filter:blur(10px)}.nav-button:hover{text-decoration:none;background:rgba(255,255,255,.16);transform:translateY(-1px)}.eyebrow{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(34,211,238,.30);background:rgba(34,211,238,.09);color:#c7f9ff;border-radius:999px;padding:6px 10px;font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.08em}.eyebrow:before{content:"";width:7px;height:7px;border-radius:50%;background:#22d3ee;box-shadow:0 0 16px #22d3ee}h1{font-size:34px;line-height:1.02;margin:12px 0 9px;font-weight:950;letter-spacing:-.04em}.subtitle{font-size:14px;line-height:1.55;color:#c7d8ea;max-width:960px}main{margin-top:18px;padding:0 18px 56px}.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}.span-12{grid-column:span 12}.span-8{grid-column:span 8}.span-6{grid-column:span 6}.span-4{grid-column:span 4}.card{background:rgba(255,255,255,.96);border:1px solid rgba(208,222,238,.95);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;backdrop-filter:blur(10px)}.card h2{font-size:16px;margin:0;padding:15px 17px;border-bottom:1px solid var(--line2);background:linear-gradient(180deg,#fff,#f4f8fc);display:flex;align-items:center;gap:10px;color:#0c2442;letter-spacing:-.01em}.card h2:before{content:"";width:8px;height:24px;border-radius:99px;background:linear-gradient(180deg,var(--cyan),var(--blue));box-shadow:0 0 16px rgba(34,211,238,.35)}.body{padding:16px 18px}.callout{border:1px solid #cfe8ff;border-left:5px solid var(--blue2);background:linear-gradient(180deg,#f0f8ff,#ffffff);border-radius:14px;padding:12px 14px;font-size:13px;line-height:1.5;color:#173a65}.warn{border-color:#fde4b4;border-left-color:#f59e0b;background:linear-gradient(180deg,#fff8eb,#ffffff);color:#78350f}.step{display:grid;grid-template-columns:34px 1fr;gap:11px;margin:0 0 14px}.step-num{width:34px;height:34px;border-radius:12px;background:linear-gradient(135deg,#1447a5,#0ea5e9);color:white;display:grid;place-items:center;font-weight:950;box-shadow:0 8px 18px rgba(14,165,233,.22)}.step strong{display:block;font-size:14px;color:#0c2442;margin-bottom:2px}.step p,.muted{font-size:13px;line-height:1.5;color:var(--muted);margin:0}.definition{border:1px solid var(--line);border-radius:16px;background:linear-gradient(180deg,#fff,#f8fbff);padding:13px;min-height:128px}.definition strong{display:block;font-size:14px;margin-bottom:5px;color:#0c2442}.definition p{margin:0;color:var(--muted);font-size:12.8px;line-height:1.45}.mini-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}table{width:100%;border-collapse:separate;border-spacing:0;font-size:12px;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:white}th,td{padding:9px 10px;border-bottom:1px solid #e8eef5;border-right:1px solid #eef3f8;text-align:left;vertical-align:top}th{background:linear-gradient(180deg,#eaf2fb,#dde9f7);font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:#334155}tr:last-child td{border-bottom:0}.pill{display:inline-flex;align-items:center;border-radius:999px;padding:3px 7px;font-weight:900;font-size:10.5px;background:#e2e8f0;color:#334155}.pill.green{background:#dcfce7;color:#166534}.pill.blue{background:#dbeafe;color:#1d4ed8}.pill.amber{background:#fef3c7;color:#92400e}.pill.red{background:#fee2e2;color:#991b1b}.pill.purple{background:#ede9fe;color:#5b21b6}.source-list{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.source-list a{display:block;border:1px solid var(--line);background:linear-gradient(180deg,#fff,#f8fbff);border-radius:14px;padding:11px;text-decoration:none;color:#0f172a}.source-list strong{display:block;font-size:13px}.source-list span{display:block;color:var(--muted);font-size:12px;margin-top:3px;line-height:1.35}.button-row{display:flex;flex-wrap:wrap;gap:9px;margin-top:12px}.button{display:inline-flex;align-items:center;border-radius:999px;background:linear-gradient(135deg,#154db4,#0ea5e9);color:white;font-weight:900;padding:9px 13px;text-decoration:none}.button.secondary{background:#fff;color:#0f3760;border:1px solid var(--line)}.button:hover{text-decoration:none;transform:translateY(-1px)}@media(max-width:900px){.topbar{display:block}.nav-actions{justify-content:flex-start;margin-top:12px}.grid{grid-template-columns:1fr}.span-4,.span-6,.span-8,.span-12{grid-column:span 1}.mini-grid,.source-list{grid-template-columns:1fr}h1{font-size:28px}}@media print{body{background:white}.app-header .nav-actions,.button-row{display:none}.app-header{color:#0f172a;background:white;border:0;padding:0 0 10px}.subtitle{color:#334155}main{padding:0;margin:0}.card{box-shadow:none;border:1px solid #ddd;margin-bottom:12px;break-inside:avoid}.grid{display:block}.body{padding:12px}.eyebrow{color:#0f172a;border-color:#ddd;background:#fff}}
+  </style>
+</head>
+<body>
+  <header class="app-header">
+    <div class="topbar">
+      <div class="brand"><div class="brand-mark">DLT</div><div><div class="brand-title">RUS DLT Scoring Workspace</div><div class="brand-subtitle">FY2026 how-to guide</div></div></div>
+      <nav class="nav-actions" aria-label="Primary navigation">
+        <a class="nav-button" href="index.html">Back to Scoring Tool</a>
+        <a class="nav-button" href="javascript:window.print()">Save/Print PDF</a>
+        <a class="nav-button" href="https://ruraldevelopment.maps.arcgis.com/apps/webappviewer/index.html?id=15a73830555645ae93d2fa773ed8e971" target="_blank">USDA DLT Map</a>
+        <a class="nav-button" href="https://www.rd.usda.gov/programs-services/telecommunications-programs/distance-learning-telemedicine-grants" target="_blank">USDA FY2026 Resources</a>
+      </nav>
+    </div>
+    <div class="hero">
+      <div class="eyebrow">Guide + scoring definitions</div>
+      <h1>How to Use the FY2026 RUS DLT Scoring Tool</h1>
+      <div class="subtitle">Use this page as the operating guide for building a site list, assigning Hub / End-User designations, interpreting Fixed vs Hybrid projects, and preparing a cleaner DLT scoring worksheet for grant review.</div>
+    </div>
+  </header>
+
+  <main>
+    <div class="grid">
+      <section class="card span-12">
+        <h2>What this tool is for</h2>
+        <div class="body">
+          <div class="callout warn"><strong>Important:</strong> This is a pre-application scoring and prospecting tool. It helps organize site addresses, Census place population, County SAIPE poverty, and provisional scores. USDA’s DLT map review and final application documentation still control the official score.</div>
+          <div class="button-row"><a class="button" href="index.html">Open the Scoring Tool</a><a class="button secondary" href="#steps">Jump to Step-by-Step</a><a class="button secondary" href="#definitions">Jump to Definitions</a></div>
+        </div>
+      </section>
+
+      <section class="card span-8" id="steps">
+        <h2>Step-by-step workflow</h2>
+        <div class="body">
+          <div class="step"><div class="step-num">1</div><div><strong>Choose the project type.</strong><p>Select Fixed, Hybrid, or Non-fixed. Most school district projects are Fixed unless the project also serves home-based, mobile, or changing end-user locations.</p></div></div>
+          <div class="step"><div class="step-num">2</div><div><strong>Select the state and default site designation.</strong><p>For K-12 schools, End-User is usually the default. District offices are usually Hub unless they also receive end-user benefit.</p></div></div>
+          <div class="step"><div class="step-num">3</div><div><strong>Search and add project locations.</strong><p>For a school district, use “Add district office + schools” when the district office is part of the network. For rural health or higher ed, search the organization or add curated/manual locations.</p></div></div>
+          <div class="step"><div class="step-num">4</div><div><strong>Add missing or special sites manually.</strong><p>Use Add Manual Location for district offices, consortium hubs, partner clinics, extension campuses, libraries, or other sites not returned by the data source.</p></div></div>
+          <div class="step"><div class="step-num">5</div><div><strong>Enrich with Census + SAIPE.</strong><p>Click Enrich Census + SAIPE to pull 2020 Census place population and 2024 county SAIPE poverty data where available.</p></div></div>
+          <div class="step"><div class="step-num">6</div><div><strong>Verify Rurality with the USDA DLT map.</strong><p>Open the DLT map and update the Contiguous / Non-Rural, Outside Non-Rural, and Census Rural fields. This is the most important manual quality-control step.</p></div></div>
+          <div class="step"><div class="step-num">7</div><div><strong>Review the score snapshot.</strong><p>Confirm the D-1 Rurality and D-2 Economic Need averages. Add a manual D-3 Need/Benefits estimate only after reviewing the narrative evidence and community need.</p></div></div>
+          <div class="step"><div class="step-num">8</div><div><strong>Export or print.</strong><p>Export CSV for worksheet review, JSON for saving the project data, or Save/Print PDF for a quick internal review package.</p></div></div>
+        </div>
+      </section>
+
+      <aside class="card span-4">
+        <h2>Fast quality checks</h2>
+        <div class="body">
+          <table>
+            <thead><tr><th>Check</th><th>Why it matters</th></tr></thead>
+            <tbody>
+              <tr><td>Site names match application naming</td><td>Keeps the site worksheet, budget, and TSP aligned.</td></tr>
+              <tr><td>Hub-only rows are not scoring by accident</td><td>Pure hubs are usually excluded from fixed-project scoring.</td></tr>
+              <tr><td>County FIPS / county names are clean</td><td>Economic Need depends on the correct SAIPE county.</td></tr>
+              <tr><td>DLT map fields are verified</td><td>City population alone is not enough for final Rurality.</td></tr>
+              <tr><td>Manual rows include full address</td><td>Improves map validation and final application documentation.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </aside>
+
+      <section class="card span-12" id="definitions">
+        <h2>Project type and site designation definitions</h2>
+        <div class="body">
+          <div class="mini-grid">
+            <div class="definition"><strong>Fixed Project</strong><p>End-user locations are specific, known physical sites where grant-funded equipment will be installed or placed. Example: a school district installing distance learning equipment in school buildings.</p></div>
+            <div class="definition"><strong>Hybrid Project</strong><p>The project includes both fixed sites and non-fixed users. Example: clinics receive equipment and the health system also supports home-based patient telemedicine kits.</p></div>
+            <div class="definition"><strong>Non-fixed Project</strong><p>The end-user locations change constantly, such as homes or mobile facilities. The hub serving those non-fixed users is used as the proxy location for scoring.</p></div>
+            <div class="definition"><strong>Hub</strong><p>A site that provides educational or medical services to other sites but receives no end-user benefit. Pure hubs are usually listed but excluded from Fixed-project scoring.</p></div>
+            <div class="definition"><strong>End-User</strong><p>A site where end users receive distance learning or telemedicine services, and where funded equipment is installed or placed. These sites count in Fixed-project scoring.</p></div>
+            <div class="definition"><strong>Hub/End-User</strong><p>A site that both provides services/content and receives end-user benefit. These sites count in Fixed-project scoring.</p></div>
+            <div class="definition"><strong>Proxy Hub</strong><p>A hub used as the scoring proxy for non-fixed end users in Hybrid or Non-fixed projects. Use only when the project includes mobile/home/changing end-user locations.</p></div>
+            <div class="definition"><strong>District Office</strong><p>Usually a Hub if it manages or originates services. Change it to Hub/End-User only if the office also receives direct end-user benefit from the funded equipment.</p></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="card span-6">
+        <h2>D-1 Rurality scoring table</h2>
+        <div class="body">
+          <table>
+            <thead><tr><th>Community / Census place population</th><th>Contiguous to urban &gt;50k?</th><th>Points</th></tr></thead>
+            <tbody>
+              <tr><td>5,000 and under</td><td>No</td><td><span class="pill green">40</span></td></tr>
+              <tr><td>5,001–10,000</td><td>No</td><td><span class="pill blue">30</span></td></tr>
+              <tr><td>10,001–20,000</td><td>No</td><td><span class="pill amber">20</span></td></tr>
+              <tr><td>Over 20,000</td><td>Generally non-rural / verify DLT map</td><td><span class="pill red">0</span></td></tr>
+              <tr><td>No Census place match / Census Rural</td><td>No</td><td><span class="pill green">40</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="card span-6">
+        <h2>D-2 Economic Need scoring table</h2>
+        <div class="body">
+          <table>
+            <thead><tr><th>County SAIPE poverty, all ages</th><th>Points</th></tr></thead>
+            <tbody>
+              <tr><td>30% or higher</td><td><span class="pill green">30</span></td></tr>
+              <tr><td>20% to under 30%</td><td><span class="pill blue">20</span></td></tr>
+              <tr><td>10% to under 20%</td><td><span class="pill amber">10</span></td></tr>
+              <tr><td>Under 10%</td><td><span class="pill red">0</span></td></tr>
+            </tbody>
+          </table>
+          <p class="muted" style="margin-top:10px">The tool uses county SAIPE poverty rate where available. Confirm the county and FIPS code before relying on the Economic Need score.</p>
+        </div>
+      </section>
+
+      <section class="card span-12">
+        <h2>What counts in the score?</h2>
+        <div class="body">
+          <table>
+            <thead><tr><th>Site designation</th><th>Fixed project</th><th>Hybrid project</th><th>Notes</th></tr></thead>
+            <tbody>
+              <tr><td><span class="pill blue">End-User</span></td><td>Counts</td><td>Counts</td><td>Actual service location receiving equipment / benefit.</td></tr>
+              <tr><td><span class="pill purple">Hub/End-User</span></td><td>Counts</td><td>Counts</td><td>Both originates service and receives end-user benefit.</td></tr>
+              <tr><td><span class="pill">Hub</span></td><td>Does not count</td><td>Does not count unless changed to Proxy Hub</td><td>Still list it for project completeness.</td></tr>
+              <tr><td><span class="pill amber">Proxy Hub</span></td><td>Usually not used</td><td>Counts for non-fixed portion</td><td>Use for hub serving home/mobile/changing end users.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="card span-12">
+        <h2>Official resources used by the tool</h2>
+        <div class="body source-list">
+          <a href="https://www.rd.usda.gov/programs-services/telecommunications-programs/distance-learning-telemedicine-grants" target="_blank"><strong>USDA RUS DLT FY2026 Resources</strong><span>Application guide, worksheets, checklist, SAIPE file, and program resources.</span></a>
+          <a href="https://ruraldevelopment.maps.arcgis.com/apps/webappviewer/index.html?id=15a73830555645ae93d2fa773ed8e971" target="_blank"><strong>USDA DLT Rurality Map</strong><span>Use to verify non-rural and contiguous-area status.</span></a>
+          <a href="https://services1.arcgis.com/Ua5sjt3LWTPigjyD/ArcGIS/rest/services/School_Characteristics_Current/FeatureServer/0" target="_blank"><strong>NCES Public School Characteristics</strong><span>School addresses, districts, locale, enrollment, and location fields.</span></a>
+          <a href="https://services1.arcgis.com/Ua5sjt3LWTPigjyD/arcgis/rest/services/School_District_Characteristics_Current/FeatureServer/1" target="_blank"><strong>NCES District Characteristics</strong><span>District office names, addresses, counties, phone numbers, and coordinates.</span></a>
+          <a href="https://data.hrsa.gov/data/download?titleFilter=Health+Center+Service+Delivery+and+Look%E2%80%93Alike+Sites" target="_blank"><strong>HRSA Health Center Sites</strong><span>Health center service delivery and look-alike site records.</span></a>
+          <a href="https://www.census.gov/data/developers/data-sets/Poverty-Statistics.html" target="_blank"><strong>Census SAIPE API</strong><span>County poverty data used for Economic Need scoring.</span></a>
+        </div>
+      </section>
+    </div>
+  </main>
+</body>
+</html>
