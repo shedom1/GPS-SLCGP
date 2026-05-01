@@ -12,12 +12,21 @@ GitHub Pages-ready static HTML tool for preliminary FY2026 USDA RUS Distance Lea
 
 - Searches K-12 districts and can import the district administrative office as a Hub row plus all school locations from NCES public school and school district characteristics ArcGIS layers. For application-grade review, compare imported rows against the latest NCES CCD directory files.
 - Searches higher education institutions from a public colleges/universities ArcGIS feature layer.
-- Attempts to search HRSA Health Center Service Delivery and Look-Alike Sites from the HRSA CSV data source. If the browser blocks the live CSV, download the HRSA CSV and import it manually.
+- Uses HRSA Health Center Service Delivery and Look-Alike Sites for the Healthcare/Rural Health workflow. The tool defaults to Georgia (`GA`) so the healthcare list stays manageable. Leave the search box blank to load all selected-state HRSA healthcare sites, or type an organization, site, city, county, or address to narrow results. If the browser blocks the live CSV, download the HRSA CSV and import it manually.
 - Adds manual locations for district offices, consortium hubs, partner clinics, higher-ed extension sites, libraries, or other custom project locations.
 - Enriches sites with 2020 Census place population and 2024 Census SAIPE county poverty rate.
 - Calculates provisional D-1 Rurality and D-2 Economic Need scores.
 - Allows row-level Hub / End-User / Hub-End-User / Proxy Hub designation.
 - Exports CSV/JSON and prints to PDF.
+
+## Healthcare updates in this version
+
+- Georgia is the default state on page load.
+- Added a **Load GA Healthcare** quick button.
+- HRSA Healthcare search no longer requires a search term; blank search loads the selected-state healthcare site list.
+- Healthcare results now include an **Add all returned healthcare sites** action and displays the first 100 records for easier review.
+- Added Phone, Website, and ZIP columns to the main worksheet table for healthcare and outreach use.
+- Enriched HRSA import mapping for county FIPS, site ID, phone, website, latitude, and longitude fields when available.
 
 ## Design updates in this version
 
@@ -30,7 +39,7 @@ GitHub Pages-ready static HTML tool for preliminary FY2026 USDA RUS Distance Lea
   - Scoring tables for Rurality and Economic Need.
   - Quality-control checklist and official resource links.
 - Added homepage/header buttons linking to the guide, USDA DLT map, and USDA FY2026 resource page.
-- Tightened table density further with smaller worksheet font, reduced row padding, sortable headers, and draggable column resizing.
+- Tightened table density further with smaller worksheet font, reduced row padding, sortable headers, draggable column resizing, and added ZIP / phone / website columns for healthcare review.
 
 ## Site designation guidance
 

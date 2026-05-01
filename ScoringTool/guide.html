@@ -42,7 +42,7 @@
         <div class="body">
           <div class="step"><div class="step-num">1</div><div><strong>Choose the project type.</strong><p>Select Fixed, Hybrid, or Non-fixed. Most school district projects are Fixed unless the project also serves home-based, mobile, or changing end-user locations.</p></div></div>
           <div class="step"><div class="step-num">2</div><div><strong>Select the state and default site designation.</strong><p>For K-12 schools, End-User is usually the default. District offices are usually Hub unless they also receive end-user benefit.</p></div></div>
-          <div class="step"><div class="step-num">3</div><div><strong>Search and add project locations.</strong><p>For a school district, use “Add district office + schools” when the district office is part of the network. For rural health or higher ed, search the organization or add curated/manual locations.</p></div></div>
+          <div class="step"><div class="step-num">3</div><div><strong>Search and add project locations.</strong><p>For a school district, use “Add district office + schools” when the district office is part of the network. For healthcare, Georgia is the default state; leave the search box blank to load the Georgia HRSA healthcare list, or type an organization, city, county, or site name to narrow it. For higher ed, search the institution or add curated/manual locations.</p></div></div>
           <div class="step"><div class="step-num">4</div><div><strong>Add missing or special sites manually.</strong><p>Use Add Manual Location for district offices, consortium hubs, partner clinics, extension campuses, libraries, or other sites not returned by the data source.</p></div></div>
           <div class="step"><div class="step-num">5</div><div><strong>Enrich with Census + SAIPE.</strong><p>Click Enrich Census + SAIPE to pull 2020 Census place population and 2024 county SAIPE poverty data where available.</p></div></div>
           <div class="step"><div class="step-num">6</div><div><strong>Verify Rurality with the USDA DLT map.</strong><p>Open the DLT map and update the Contiguous / Non-Rural, Outside Non-Rural, and Census Rural fields. This is the most important manual quality-control step.</p></div></div>
@@ -66,6 +66,20 @@
           </table>
         </div>
       </aside>
+
+
+      <section class="card span-12">
+        <h2>Healthcare workflow — GA default</h2>
+        <div class="body">
+          <div class="callout"><strong>Default healthcare source:</strong> The Healthcare button uses HRSA Health Center Service Delivery and Look-Alike Sites. The scoring workspace opens with Georgia selected, so leaving the search field blank will load the Georgia healthcare list first. Use a search term when you want to narrow the list by health center, clinic/site name, city, county, or address.</div>
+          <div class="mini-grid" style="margin-top:12px">
+            <div class="definition"><strong>When to use End-User</strong><p>Use for clinics, health centers, or hospital sites where telemedicine equipment will be installed or where patients/providers will directly receive telemedicine benefit.</p></div>
+            <div class="definition"><strong>When to use Hub</strong><p>Use for an administrative or provider-originating site that sends clinical services/content to end-user locations but does not itself receive end-user benefit.</p></div>
+            <div class="definition"><strong>When to use Hub/End-User</strong><p>Use for a healthcare location that both originates telemedicine services and also receives equipment/benefit as a patient or provider service site.</p></div>
+            <div class="definition"><strong>Manual cleanup</strong><p>After loading healthcare records, verify the site designation, address, county/FIPS, and whether the site is truly part of the proposed DLT project before exporting the worksheet.</p></div>
+          </div>
+        </div>
+      </section>
 
       <section class="card span-12" id="definitions">
         <h2>Project type and site designation definitions</h2>
@@ -137,7 +151,7 @@
           <a href="https://ruraldevelopment.maps.arcgis.com/apps/webappviewer/index.html?id=15a73830555645ae93d2fa773ed8e971" target="_blank"><strong>USDA DLT Rurality Map</strong><span>Use to verify non-rural and contiguous-area status.</span></a>
           <a href="https://services1.arcgis.com/Ua5sjt3LWTPigjyD/ArcGIS/rest/services/School_Characteristics_Current/FeatureServer/0" target="_blank"><strong>NCES Public School Characteristics</strong><span>School addresses, districts, locale, enrollment, and location fields.</span></a>
           <a href="https://services1.arcgis.com/Ua5sjt3LWTPigjyD/arcgis/rest/services/School_District_Characteristics_Current/FeatureServer/1" target="_blank"><strong>NCES District Characteristics</strong><span>District office names, addresses, counties, phone numbers, and coordinates.</span></a>
-          <a href="https://data.hrsa.gov/data/download?titleFilter=Health+Center+Service+Delivery+and+Look%E2%80%93Alike+Sites" target="_blank"><strong>HRSA Health Center Sites</strong><span>Health center service delivery and look-alike site records.</span></a>
+          <a href="https://data.hrsa.gov/data/download?titleFilter=Health+Center+Service+Delivery+and+Look%E2%80%93Alike+Sites" target="_blank"><strong>HRSA Health Center Sites</strong><span>Health Center Service Delivery and Look-Alike Sites. The scoring tool defaults this healthcare dataset to Georgia to keep the list manageable.</span></a>
           <a href="https://www.census.gov/data/developers/data-sets/Poverty-Statistics.html" target="_blank"><strong>Census SAIPE API</strong><span>County poverty data used for Economic Need scoring.</span></a>
         </div>
       </section>
