@@ -42,6 +42,7 @@
     @media (max-width:1100px){.hero,.grid{grid-template-columns:1fr}.metrics{grid-template-columns:repeat(2,1fr)}.row{grid-template-columns:repeat(6,1fr)}.col-2,.col-3,.col-4,.col-5,.col-6,.col-7,.col-8{grid-column:span 6}.source-list,.search-results{grid-template-columns:1fr}.topbar{display:block}.nav-actions{justify-content:flex-start;margin-top:12px}.hero-chips{justify-content:flex-start}.badge{margin:6px 6px 0 0}h1{font-size:28px}}
     @media print{body{background:#fff}.app-header,.tabs,.btnrow,.no-print,.card.controls{display:none!important}main{max-width:none;margin:0;padding:0}.card{box-shadow:none;border:0;border-radius:0}.table-wrap{max-height:none;overflow:visible;border:0}table{font-size:9px;min-width:0}th,td{padding:4px}.grid{display:block}.metrics{grid-template-columns:repeat(5,1fr)}input,select{border:0;padding:0;background:transparent}.callout{border:1px solid #ddd}}
   </style>
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 </head>
 <body>
   <header class="app-header">
@@ -87,13 +88,14 @@
           <div class="btnrow">
             <button class="primary" onclick="searchK12()">Search K-12 District + Schools</button>
             <button class="green" onclick="searchHigherEd()">Search Higher Ed</button>
-            <button class="accent" onclick="searchHRSA()">Load/Search Healthcare (HRSA)</button>
+            <button class="accent" onclick="searchHRSA()">Load/Search Healthcare (HRSA XLSX)</button>
             <button class="ghost" onclick="quickGeorgiaHealthcare()">Load GA Healthcare</button>
+            <a class="button-link" href="https://data.hrsa.gov/DataDownload/DD_Files/Health_Center_Service_Delivery_and_LookAlike_Sites.xlsx" target="_blank">Download HRSA XLSX</a>
             <button class="ghost" onclick="showManualSite()">Add Manual Location</button>
             <a class="button-link primary" href="guide.html">Open How-to Guide</a>
           </div>
           <div id="searchStatus" class="status"></div>
-          <div class="status"><strong>Healthcare workflow:</strong> Georgia is the default state. Leave the search box blank and click <strong>Load/Search Healthcare (HRSA)</strong> to load all HRSA health center service delivery and look-alike sites for the selected state, or type an organization, site, city, or county to narrow the results.</div>
+          <div class="status"><strong>Healthcare workflow:</strong> Georgia is the default state. The Healthcare button now tries HRSA’s XLSX file first. If the browser blocks the live file, download the official HRSA XLSX and upload it under <strong>Import / Templates → Healthcare Lookup Dataset Fallback</strong>.</div>
           <div id="searchResults" class="search-results"></div>
         </div>
       </div>
@@ -151,19 +153,36 @@
       </div>
 
       <div id="panel-import" class="panel body">
+        <div class="callout"><strong>Two different import types:</strong> Use <strong>Project Site List Import</strong> for locations you want scored. Use <strong>Healthcare Lookup Dataset Fallback</strong> only when the live HRSA healthcare lookup will not load.</div>
+        <h3>Project Site List Import</h3>
         <div class="row">
           <div class="col-6">
-            <label>Paste Manual CSV Rows</label>
-            <textarea id="csvPaste" placeholder="organization,siteName,address,city,state,zip,county,countyFips,designation,type,sourceLocale,cityPopulation,saipePercent\nExample County Schools,Example School,100 Main St,Albany,GA,31701,Dougherty,13095,End-User,K-12,,68559,24.1"></textarea>
+            <label>Paste Manual Project Site CSV Rows</label>
+            <textarea id="csvPaste" placeholder="organization,siteName,address,city,state,zip,county,countyFips,designation,type,sourceLocale,cityPopulation,saipePercent
+Example County Schools,Example School,100 Main St,Albany,GA,31701,Dougherty,13095,End-User,K-12,,68559,24.1"></textarea>
           </div>
-          <div class="col-3"><label>Upload CSV</label><input id="csvFile" type="file" accept=".csv,text/csv" /></div>
-          <div class="col-3"><button class="primary" onclick="importCSV()">Import CSV</button></div>
+          <div class="col-3"><label>Upload Project Site CSV</label><input id="csvFile" type="file" accept=".csv,text/csv" /></div>
+          <div class="col-3"><button class="primary" onclick="importCSV()">Import Project Sites</button></div>
         </div>
-        <div class="btnrow">
+        <div class="btnrow" style="margin-bottom:12px">
           <button onclick="downloadTemplate()">Download Manual Site Template</button>
           <button onclick="loadDemo()">Load Small Demo</button>
         </div>
-        <div class="callout"><strong>Recommended repeatable workflow:</strong> For K-12, search the district and import the district office plus all school locations. For healthcare, Georgia is the default state; leave search blank to load the selected-state HRSA list or enter an organization/city/county to narrow it. For higher ed, search the institution or upload a curated project-site CSV. Then click <strong>Enrich Census + SAIPE</strong>, verify all DLT map flags, and export the scoring worksheet.</div>
+
+        <h3>Healthcare Lookup Dataset Fallback</h3>
+        <div class="callout warn"><strong>Use this when HRSA live loading fails:</strong> Download the official HRSA <strong>Health Center Service Delivery and Look-Alike Sites</strong> XLSX, then upload it below. This loads the HRSA lookup dataset into the tool; it does not immediately score every site until you choose which results to add.</div>
+        <div class="row">
+          <div class="col-5"><label>Upload HRSA XLSX or CSV Lookup Dataset</label><input id="hrsaLookupFile" type="file" accept=".xlsx,.xls,.csv,text/csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel" /></div>
+          <div class="col-3"><label>Selected State Filter</label><select id="hrsaFallbackState"></select></div>
+          <div class="col-4"><label>Optional Healthcare Search Filter</label><input id="hrsaFallbackTerm" placeholder="organization, clinic, city, county" /></div>
+          <div class="col-12 btnrow">
+            <button class="accent" onclick="importHRSALookupFile()">Load HRSA Lookup File</button>
+            <a class="button-link" href="https://data.hrsa.gov/DataDownload/DD_Files/Health_Center_Service_Delivery_and_LookAlike_Sites.xlsx" target="_blank">Download HRSA XLSX</a>
+            <a class="button-link" href="https://data.hrsa.gov/data/download?titleFilter=Health+Center+Service+Delivery+and+Look%E2%80%93Alike+Sites" target="_blank">Open HRSA Download Page</a>
+          </div>
+        </div>
+        <div id="hrsaUploadStatus" class="status"></div>
+        <div class="callout"><strong>Recommended repeatable workflow:</strong> For K-12, search the district and import the district office plus all school locations. For healthcare, Georgia is the default state; leave search blank to load the selected-state HRSA list or upload the HRSA XLSX fallback file when live loading is blocked. For higher ed, search the institution or upload a curated project-site CSV. Then click <strong>Enrich Census + SAIPE</strong>, verify all DLT map flags, and export the scoring worksheet.</div>
       </div>
 
       <div id="panel-guide" class="panel body">
@@ -197,7 +216,7 @@
           <a href="https://www.rd.usda.gov/programs-services/telecommunications-programs/distance-learning-telemedicine-grants" target="_blank"><strong>USDA RUS DLT FY2026 Resources</strong><span>Application guide, sample worksheets, checklist, SAIPE poverty data, DLT map.</span></a>
           <a href="https://ruraldevelopment.maps.arcgis.com/apps/webappviewer/index.html?id=15a73830555645ae93d2fa773ed8e971" target="_blank"><strong>USDA DLT Rurality Mapping Tool</strong><span>Use to verify non-rural areas / contiguity to urban areas.</span></a>
           <a href="https://services1.arcgis.com/Ua5sjt3LWTPigjyD/ArcGIS/rest/services/School_Characteristics_Current/FeatureServer/0" target="_blank"><strong>NCES Public School Characteristics</strong><span>School name, district, physical address, county FIPS, NCES locale, enrollment, lat/long. For application-grade review, compare against the latest NCES CCD directory files if available.</span></a>
-          <a href="https://data.hrsa.gov/data/download?titleFilter=Health+Center+Service+Delivery+and+Look%E2%80%93Alike+Sites" target="_blank"><strong>HRSA Health Center Sites</strong><span>Health Center Service Delivery and Look-Alike Sites. The tool defaults this healthcare source to Georgia for a more manageable working list.</span></a>
+          <a href="https://data.hrsa.gov/DataDownload/DD_Files/Health_Center_Service_Delivery_and_LookAlike_Sites.xlsx" target="_blank"><strong>HRSA Health Center Sites XLSX</strong><span>Health Center Service Delivery and Look-Alike Sites. The tool defaults this healthcare source to Georgia and includes an upload fallback when live loading is blocked.</span></a>
           <a href="https://services2.arcgis.com/FiaPA4ga0iQKduv3/ArcGIS/rest/services/Colleges_and_Universities_View/FeatureServer/0" target="_blank"><strong>Higher Ed Colleges & Universities Layer</strong><span>IPEDS/NCES institution names, addresses, sector, locale, county, latitude/longitude.</span></a>
           <a href="https://www.census.gov/data/developers/data-sets/Poverty-Statistics.html" target="_blank"><strong>Census SAIPE API</strong><span>County poverty rate estimates used for Economic Need scoring.</span></a>
           <a href="https://api.census.gov/data/2020/dec/pl/variables/P1_001N.html" target="_blank"><strong>2020 Decennial Census API</strong><span>P1_001N total population for Census places.</span></a>
@@ -241,12 +260,15 @@ const STATE_NAMES = {AL:'Alabama',AK:'Alaska',AZ:'Arizona',AR:'Arkansas',CA:'Cal
 const NCES_SCHOOLS = 'https://services1.arcgis.com/Ua5sjt3LWTPigjyD/ArcGIS/rest/services/School_Characteristics_Current/FeatureServer/0/query';
 const NCES_DISTRICTS = 'https://services1.arcgis.com/Ua5sjt3LWTPigjyD/arcgis/rest/services/School_District_Characteristics_Current/FeatureServer/1/query';
 const HIGHER_ED = 'https://services2.arcgis.com/FiaPA4ga0iQKduv3/ArcGIS/rest/services/Colleges_and_Universities_View/FeatureServer/0/query';
+const HRSA_XLSX = 'https://data.hrsa.gov/DataDownload/DD_Files/Health_Center_Service_Delivery_and_LookAlike_Sites.xlsx';
 const HRSA_CSV = 'https://data.hrsa.gov/DataDownload/DD_Files/Health_Center_Service_Delivery_and_LookAlike_Sites.csv';
 const DLT_MAP = 'https://ruraldevelopment.maps.arcgis.com/apps/webappviewer/index.html?id=15a73830555645ae93d2fa773ed8e971';
 let sites = [];
 let placeCache = {}; // state -> map
 let saipeCache = {}; // state -> county lookup
 let lastSearchFeatures = [];
+let hrsaLookupCache = null;
+let hrsaLookupSourceLabel = 'HRSA live XLSX';
 let tableSort = {key:'', dir:'asc'};
 let columnWidths = {};
 const DESIGNATION_OPTIONS = ['End-User','Hub/End-User','Hub','Proxy Hub'];
@@ -284,6 +306,13 @@ function init(){
     const opt = document.createElement('option'); opt.value=abbr; opt.textContent=`${abbr} — ${STATE_NAMES[abbr]}`; stateSelect.appendChild(opt);
   });
   stateSelect.value='GA';
+  const hrsaFallbackState = document.getElementById('hrsaFallbackState');
+  if(hrsaFallbackState){
+    Object.keys(STATE_FIPS).filter(s=>STATE_NAMES[s]).forEach(abbr=>{
+      const opt=document.createElement('option'); opt.value=abbr; opt.textContent=`${abbr} — ${STATE_NAMES[abbr]}`; hrsaFallbackState.appendChild(opt);
+    });
+    hrsaFallbackState.value='GA';
+  }
   document.getElementById('csvFile').addEventListener('change', importCSV);
   renderTable(); recalc();
 }
@@ -437,17 +466,85 @@ function addHigherEdRows(rows){
 async function searchHRSA(){
   const state=document.getElementById('stateSelect').value || 'GA';
   const term=document.getElementById('searchTerm').value.trim().toLowerCase();
-  setStatus(`Loading HRSA Health Center Service Delivery and Look-Alike Sites CSV for <strong>${esc(state)}</strong>${term ? ` and filtering by “${esc(term)}”` : ''}...`);
   document.getElementById('searchResults').innerHTML='';
   try{
-    const res=await fetch(HRSA_CSV); if(!res.ok) throw new Error('HTTP '+res.status);
-    const text=await res.text(); const rows=parseCSV(text); if(rows.length<2) throw new Error('No rows returned.');
-    const headers=rows[0]; const items=rows.slice(1).map(r=>rowToObject(headers,r)).map(hrsaToSite).filter(Boolean);
-    const stateItems=items.filter(x=>x.state===state);
-    const matches=term ? stateItems.filter(x=>[x.organization,x.siteName,x.city,x.county,x.address].join(' ').toLowerCase().includes(term)) : stateItems;
-    setStatus(`<strong>${matches.length}</strong> HRSA healthcare site record(s) found for <strong>${esc(state)}</strong>${term ? ` matching “${esc(term)}”` : ''}. ${matches.length>100 ? 'Showing first 100; use the add-all button or narrow your search.' : ''}`);
-    showResults(matches,'HRSA');
-  } catch(e){setStatus(`<span style="color:#b42318">HRSA live CSV could not be loaded: ${esc(e.message)}. Download the HRSA CSV and import it on the Import tab.</span>`)}
+    let items=hrsaLookupCache;
+    let sourceLabel=hrsaLookupSourceLabel;
+    if(!items){
+      if(!window.XLSX) throw new Error('XLSX parser did not load. Use the Healthcare Lookup Dataset Fallback upload.');
+      setStatus(`Loading HRSA Health Center Service Delivery and Look-Alike Sites XLSX for <strong>${esc(state)}</strong>${term ? ` and filtering by “${esc(term)}”` : ''}...`);
+      const res=await fetch(HRSA_XLSX,{cache:'no-store'}); if(!res.ok) throw new Error('HTTP '+res.status);
+      const buf=await res.arrayBuffer();
+      const wb=XLSX.read(buf,{type:'array'});
+      items=workbookToHRSASites(wb);
+      hrsaLookupCache=items;
+      hrsaLookupSourceLabel='HRSA live XLSX';
+      sourceLabel=hrsaLookupSourceLabel;
+      if(!items.length) throw new Error('No usable HRSA site rows found in workbook.');
+    } else {
+      setStatus(`Using cached <strong>${esc(sourceLabel)}</strong> lookup data for <strong>${esc(state)}</strong>${term ? ` and filtering by “${esc(term)}”` : ''}...`);
+    }
+    showHRSAFilteredResults(items,state,term,sourceLabel);
+  } catch(e){
+    setStatus(`<span style="color:#b42318">HRSA live XLSX could not be loaded: ${esc(e.message)}. Download the official HRSA XLSX, then upload it under Import / Templates → Healthcare Lookup Dataset Fallback.</span>`);
+  }
+}
+function showHRSAFilteredResults(items,state,term,sourceLabel){
+  const stateItems=items.filter(x=>x.state===state);
+  const matches=term ? stateItems.filter(x=>[x.organization,x.siteName,x.city,x.county,x.address].join(' ').toLowerCase().includes(term)) : stateItems;
+  setStatus(`<strong>${matches.length}</strong> HRSA healthcare site record(s) found for <strong>${esc(state)}</strong>${term ? ` matching “${esc(term)}”` : ''} using <strong>${esc(sourceLabel)}</strong>. ${matches.length>100 ? 'Showing first 100; use the add-all button or narrow your search.' : ''}`);
+  showResults(matches,'HRSA');
+}
+function workbookToHRSASites(wb){
+  let best={score:-1, objects:[], sheetName:''};
+  wb.SheetNames.forEach(name=>{
+    const matrix=XLSX.utils.sheet_to_json(wb.Sheets[name],{header:1,defval:'',raw:false});
+    if(!matrix.length) return;
+    let headerIndex=matrix.findIndex(r=>{
+      const t=r.map(x=>String(x||'').toLowerCase()).join(' | ');
+      return (t.includes('site name') || t.includes('health center name')) && (t.includes('state') || t.includes('site state'));
+    });
+    if(headerIndex<0) headerIndex=0;
+    const headers=matrix[headerIndex].map(h=>String(h||'').trim());
+    const objects=matrix.slice(headerIndex+1).map(row=>{
+      const o={}; headers.forEach((h,i)=>{ if(h) o[h]=row[i]??''; }); return o;
+    }).filter(o=>Object.values(o).some(v=>String(v).trim()!==''));
+    const score=objects.length + headers.filter(h=>/site|health|center|state|county|address|phone|web/i.test(h)).length*1000;
+    if(score>best.score) best={score,objects,sheetName:name};
+  });
+  return best.objects.map(hrsaToSite).filter(Boolean);
+}
+function importHRSALookupFile(){
+  const file=document.getElementById('hrsaLookupFile')?.files?.[0];
+  if(!file){setStatus('Select the HRSA XLSX or CSV lookup file first.'); return;}
+  const state=document.getElementById('hrsaFallbackState')?.value || document.getElementById('stateSelect').value || 'GA';
+  const term=(document.getElementById('hrsaFallbackTerm')?.value || document.getElementById('searchTerm').value || '').trim().toLowerCase();
+  document.getElementById('stateSelect').value=state;
+  document.getElementById('searchTerm').value=term;
+  const lower=file.name.toLowerCase();
+  setStatus(`Loading uploaded HRSA lookup file: <strong>${esc(file.name)}</strong>...`);
+  const reader=new FileReader();
+  reader.onload=()=>{
+    try{
+      let items=[];
+      if(lower.endsWith('.csv')){
+        const rows=parseCSV(reader.result); if(rows.length<2) throw new Error('CSV needs a header row and at least one data row.');
+        const headers=rows[0]; items=rows.slice(1).map(r=>rowToObject(headers,r)).map(hrsaToSite).filter(Boolean);
+      } else {
+        if(!window.XLSX) throw new Error('XLSX parser did not load. Check internet access to the SheetJS CDN or use the CSV version.');
+        const wb=XLSX.read(reader.result,{type:'array'});
+        items=workbookToHRSASites(wb);
+      }
+      if(!items.length) throw new Error('No usable HRSA service delivery site rows found.');
+      hrsaLookupCache=items;
+      hrsaLookupSourceLabel=`uploaded ${file.name}`;
+      document.getElementById('hrsaUploadStatus').innerHTML=`Loaded <strong>${items.length}</strong> HRSA lookup record(s) from ${esc(file.name)}. Current display is filtered to ${esc(state)}.`;
+      showHRSAFilteredResults(items,state,term,hrsaLookupSourceLabel);
+      switchTabByName('sites');
+    }catch(e){setStatus(`<span style="color:#b42318">Could not read HRSA lookup file: ${esc(e.message)}</span>`);}
+  };
+  reader.onerror=()=>setStatus(`<span style="color:#b42318">Could not read file.</span>`);
+  if(lower.endsWith('.csv')) reader.readAsText(file); else reader.readAsArrayBuffer(file);
 }
 function pick(obj, names){for(const n of names){const k=Object.keys(obj).find(x=>norm(x)===norm(n)); if(k && obj[k]!==undefined) return obj[k];} return '';}
 function hrsaToSite(obj){
@@ -455,7 +552,7 @@ function hrsaToSite(obj){
   const siteName=pick(obj,['Site Name','Health Center Site Name','Name']);
   if(!siteName || !state) return null;
   const fips=cleanCountyFips(pick(obj,['County FIPS Code','County Equivalent FIPS Code','County Equivalent Code','County Code','County FIPS','Site County FIPS']), state);
-  return {id:crypto.randomUUID(), include:true, type:'Rural Health', source:'HRSA Health Center Service Delivery and Look-Alike Sites', sourceId:pick(obj,['Site ID','Site Number','BHCMIS ID','Grant Number','Health Center Number']), organization:pick(obj,['Health Center Name','Organization Name','Awardee Name']), siteName, address:pick(obj,['Site Address','Address','Street Address']), city:pick(obj,['Site City','City']), state, zip:pick(obj,['Site Postal Code','ZIP','Zip Code']), county:pick(obj,['County Equivalent Name','County','Site County']), countyFips:fips, phone:pick(obj,['Site Telephone Number','Phone','Telephone']), website:pick(obj,['Site Web Address','Website','Web Address']), sourceLocale:'', enrollment:'', designation:getDefaultDesignation(), contiguous:'Unknown', outsideNonRural:'Unknown', censusRural:'Unknown', cityPopulation:'', saipePercent:'', ruralityScore:null, economicScore:null, lat:pick(obj,['Latitude','Site Latitude','Site Latitude Number']), lon:pick(obj,['Longitude','Site Longitude','Site Longitude Number']), notes:'HRSA healthcare source; verify whether the site is an end-user, hub, or hub/end-user for the proposed telemedicine project.'};
+  return {id:crypto.randomUUID(), include:true, type:'Rural Health', source:'HRSA Health Center Service Delivery and Look-Alike Sites XLSX', sourceId:pick(obj,['Site ID','Site Number','BHCMIS ID','Grant Number','Health Center Number']), organization:pick(obj,['Health Center Name','Organization Name','Awardee Name']), siteName, address:pick(obj,['Site Address','Address','Street Address']), city:pick(obj,['Site City','City']), state, zip:pick(obj,['Site Postal Code','ZIP','Zip Code']), county:pick(obj,['County Equivalent Name','County','Site County']), countyFips:fips, phone:pick(obj,['Site Telephone Number','Phone','Telephone']), website:pick(obj,['Site Web Address','Website','Web Address']), sourceLocale:'', enrollment:'', designation:getDefaultDesignation(), contiguous:'Unknown', outsideNonRural:'Unknown', censusRural:'Unknown', cityPopulation:'', saipePercent:'', ruralityScore:null, economicScore:null, lat:pick(obj,['Latitude','Site Latitude','Site Latitude Number']), lon:pick(obj,['Longitude','Site Longitude','Site Longitude Number']), notes:'HRSA healthcare source; verify whether the site is an end-user, hub, or hub/end-user for the proposed telemedicine project.'};
 }
 
 function addRows(rows){
@@ -739,7 +836,19 @@ function copySummary(){
   const text=`FY2026 RUS DLT Provisional Score Summary\nScored Sites: ${scored.length}\nD-1 Rurality: ${ruralAvg.toFixed(2)} / 40\nD-2 Economic Need: ${econAvg.toFixed(2)} / 30\nD-3 Need/Benefits Estimate: ${subj.toFixed(2)} / 30\nTotal Provisional Score: ${(ruralAvg+econAvg+subj).toFixed(2)} / 100\nNote: DLT map verification is required before relying on rurality scores.`;
   navigator.clipboard.writeText(text).then(()=>setStatus('Score summary copied to clipboard.'));
 }
-function switchTab(name){document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active')); event.target.classList.add('active'); document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active')); document.getElementById('panel-'+name).classList.add('active');}
+function switchTab(name){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  if(typeof event !== 'undefined' && event && event.target) event.target.classList.add('active');
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('panel-'+name).classList.add('active');
+}
+function switchTabByName(name){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  const labels={sites:'Site Scoring Worksheet',import:'Import / Templates',guide:'Scoring Rules',sources:'Official Data Sources'};
+  document.querySelectorAll('.tab').forEach(t=>{if(t.textContent.trim()===labels[name]) t.classList.add('active')});
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('panel-'+name).classList.add('active');
+}
 function loadDemo(){
   addRows([
     {id:crypto.randomUUID(),include:true,type:'K-12 District Office',source:'Demo',organization:'Example County Schools',siteName:'Example County Schools District Office',address:'200 Board Rd',city:'Camilla',state:'GA',zip:'31730',county:'Mitchell County',countyFips:'13205',designation:'Hub',sourceLocale:'',cityPopulation:'5187',saipePercent:'27.3',contiguous:'No',outsideNonRural:'No',censusRural:'No',notes:'Demo district office row - Hub only, not scored unless changed'},

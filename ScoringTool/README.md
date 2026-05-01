@@ -12,7 +12,7 @@ GitHub Pages-ready static HTML tool for preliminary FY2026 USDA RUS Distance Lea
 
 - Searches K-12 districts and can import the district administrative office as a Hub row plus all school locations from NCES public school and school district characteristics ArcGIS layers. For application-grade review, compare imported rows against the latest NCES CCD directory files.
 - Searches higher education institutions from a public colleges/universities ArcGIS feature layer.
-- Uses HRSA Health Center Service Delivery and Look-Alike Sites for the Healthcare/Rural Health workflow. The tool defaults to Georgia (`GA`) so the healthcare list stays manageable. Leave the search box blank to load all selected-state HRSA healthcare sites, or type an organization, site, city, county, or address to narrow results. If the browser blocks the live CSV, download the HRSA CSV and import it manually.
+- Uses HRSA Health Center Service Delivery and Look-Alike Sites for the Healthcare/Rural Health workflow. The tool defaults to Georgia (`GA`) so the healthcare list stays manageable. Leave the search box blank to load all selected-state HRSA healthcare sites, or type an organization, site, city, county, or address to narrow results. If the browser blocks the live HRSA file, download the official HRSA XLSX and upload it under Import / Templates → Healthcare Lookup Dataset Fallback.
 - Adds manual locations for district offices, consortium hubs, partner clinics, higher-ed extension sites, libraries, or other custom project locations.
 - Enriches sites with 2020 Census place population and 2024 Census SAIPE county poverty rate.
 - Calculates provisional D-1 Rurality and D-2 Economic Need scores.
@@ -23,10 +23,22 @@ GitHub Pages-ready static HTML tool for preliminary FY2026 USDA RUS Distance Lea
 
 - Georgia is the default state on page load.
 - Added a **Load GA Healthcare** quick button.
+- The Healthcare button now tries the official HRSA **XLSX** file first instead of relying only on the CSV.
+- Added a separate **Healthcare Lookup Dataset Fallback** area under **Import / Templates** for uploading the downloaded HRSA XLSX or CSV when live loading is blocked.
+- Separated **Project Site List Import** from **Healthcare Lookup Dataset Fallback** so users know whether they are importing rows to score or loading a lookup dataset.
 - HRSA Healthcare search no longer requires a search term; blank search loads the selected-state healthcare site list.
 - Healthcare results now include an **Add all returned healthcare sites** action and displays the first 100 records for easier review.
 - Added Phone, Website, and ZIP columns to the main worksheet table for healthcare and outreach use.
 - Enriched HRSA import mapping for county FIPS, site ID, phone, website, latitude, and longitude fields when available.
+
+### HRSA fallback workflow
+
+1. Click **Download HRSA XLSX** on the scoring page or use: `https://data.hrsa.gov/DataDownload/DD_Files/Health_Center_Service_Delivery_and_LookAlike_Sites.xlsx`.
+2. Open **Import / Templates**.
+3. In **Healthcare Lookup Dataset Fallback**, upload the HRSA XLSX.
+4. Keep the state filter at `GA` or choose another state.
+5. Click **Load HRSA Lookup File**.
+6. Add selected healthcare results to the scoring worksheet.
 
 ## Design updates in this version
 
