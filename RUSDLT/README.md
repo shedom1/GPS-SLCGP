@@ -24,3 +24,7 @@ Required files:
 - HubSpot remains the official place for sales reps to log sales activity.
 - The `My Call` checkbox is not shared. It stores only in the local browser for the current user.
 - The live K-12 source depends on the public Google Sheet and the `ELSI Export` tab name staying the same.
+
+
+Included in this package:
+- `FY2026_DLT_Sales_Ready_Guide.html` — linked from the prospecting dashboard top bar for quick access to the FY2026 USDA DLT sales-ready guide.

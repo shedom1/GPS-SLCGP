@@ -27,6 +27,9 @@
     .btn.primary{background:linear-gradient(135deg,var(--brand),#2563eb);border-color:#2563eb;color:#fff}
     .btn.secondary{background:linear-gradient(135deg,#0ea5e9,#06b6d4);border-color:#0ea5e9;color:#fff}
     .banner-wrap{display:grid;grid-template-columns:1.25fr .85fr;gap:10px;padding:10px 16px 0}
+    .guide-link{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:12px;border:1px solid #c7d8ea;background:#fff;color:#20415c;font-size:12px;font-weight:800;text-decoration:none;transition:.18s ease}
+    .guide-link:hover{transform:translateY(-1px);box-shadow:0 6px 16px rgba(15,23,42,.08);background:#fafdff;text-decoration:none}
+    .guide-link .mini{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:999px;background:linear-gradient(135deg,#0f62fe,#06b6d4);color:#fff;font-size:11px;font-weight:900}
     .callout,.local-note{padding:11px 12px;border-radius:14px;border:1px solid #d6e4f2;font-size:12px;line-height:1.45}
     .callout{background:#f7fbff;color:#36516a}
     .local-note{background:linear-gradient(135deg,#fffef2,#fff7ed);border-color:#fde0b3;color:#7c4a03}
@@ -99,6 +102,7 @@
         <div class="subtitle">Professional read-only prospecting view for RUS DLT. K-12 rows pull live from the linked Google Sheet, while Tier 3 and Tier 4 higher-ed rows remain packaged with the page.</div>
       </div>
       <div class="actions">
+        <a class="guide-link" href="./FY2026_DLT_Sales_Ready_Guide.html" target="_blank" rel="noopener"><span class="mini">DLT</span> Open FY2026 RUS DLT Guide</a>
         <button class="btn primary" id="refreshBtn">Refresh</button>
         <button class="btn" id="exportBtn">Export CSV</button>
         <button class="btn secondary" id="printBtn">Save to PDF</button>
@@ -107,7 +111,7 @@
 
     <div class="banner-wrap">
       <div class="callout"><strong>Sales process note:</strong> HubSpot is the official place sales reps should record sales activity. This tool is for culled grant prospecting and grant-target research.</div>
-      <div class="local-note"><strong>User-only calling tracker:</strong> the <strong>My Call</strong> checkbox saves only in this browser on this device so a rep can work down a list without changing the shared dataset.</div>
+      <div class="local-note"><strong>Quick access:</strong> use the <strong>FY2026 RUS DLT Guide</strong> button above to open the linked sales-ready guide for qualification, readiness, and resource links. The <strong>My Call</strong> checkbox still saves only in this browser on this device.</div>
     </div>
 
     <div class="legend" id="tierButtons"></div>
@@ -170,7 +174,7 @@ const CONFIG={
   regionMap:{'KY':'Mid-Atlantic','MD':'Mid-Atlantic','TN':'Mid-Atlantic','VA':'Mid-Atlantic','WV':'Mid-Atlantic','CT':'Northeast','DE':'Northeast','IL':'Northeast','IN':'Northeast','IA':'Northeast','KS':'Northeast','ME':'Northeast','MA':'Northeast','MI':'Northeast','MN':'Northeast','MO':'Northeast','NE':'Northeast','NH':'Northeast','NJ':'Northeast','NY':'Northeast','ND':'Northeast','OH':'Northeast','PA':'Northeast','RI':'Northeast','SD':'Northeast','VT':'Northeast','WI':'Northeast','AL':'Southeast','AR':'Southeast','FL':'Southeast','GA':'Southeast','LA':'Southeast','MS':'Southeast','NC':'Southeast','SC':'Southeast','AK':'West','AZ':'West','CA':'West','CO':'West','HI':'West','ID':'West','MT':'West','NV':'West','NM':'West','OK':'West','OR':'West','TX':'West','UT':'West','WA':'West','WY':'West'}
 };
 
-const state={rows:[],sortKey:'tier_order',sortDir:'asc',tierFilter:'all_k12',checks:loadChecks()};
+const state={rows:[],sortKey:'tier_order',sortDir:'asc',tierFilter:'tier1',checks:loadChecks()};
 const columns=[
   {key:'my_call',label:'My Call',width:66,sticky:1,sortable:false,resizable:false},
   {key:'tier_short',label:'Tier',width:76,sticky:2,sortable:true,resizable:false},
