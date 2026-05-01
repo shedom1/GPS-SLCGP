@@ -1,0 +1,637 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>RUS DLT Prospecting Dashboard</title>
+  <style>
+    :root{
+      --bg:#f4f7fb;--card:#ffffff;--line:#d6e0ea;--ink:#17324d;--muted:#667085;
+      --blue:#2759c7;--blue-soft:#edf3ff;--green:#0f766e;--green-soft:#ecfdf5;
+      --amber:#9a6700;--amber-soft:#fff7e6;--purple:#6941c6;--purple-soft:#f4f0ff;
+      --slate:#475467;--slate-soft:#f3f5f8;--red:#b42318;--shadow:0 6px 18px rgba(16,24,40,.06);
+      --radius:12px;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--ink)}
+    .wrap{max-width:1900px;margin:0 auto;padding:10px}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
+    .topbar{padding:10px 14px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+    .title{font-size:20px;font-weight:700}
+    .subtitle{font-size:12px;color:var(--muted)}
+    .actions,.filters,.bulkbar,.legend{display:flex;gap:8px;flex-wrap:wrap;align-items:flex-end}
+    .tier-guide{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;padding:0 10px 10px}
+    .btn{border:1px solid #c8d4e0;background:#fff;border-radius:10px;padding:8px 12px;font-size:12px;cursor:pointer;color:var(--ink)}
+    .btn.primary{background:var(--blue);border-color:var(--blue);color:#fff}
+    .btn.soft{background:var(--blue-soft);border-color:#bfd0ff}
+    .btn.tier{font-weight:600}
+    .btn.tier.active{outline:2px solid rgba(39,89,199,.16)}
+    .btn.tier[data-key="all_k12"]{background:#edf3ff;border-color:#bfd0ff;color:#204aa8}
+    .btn.tier[data-key="tier1"]{background:#ecfdf5;border-color:#a7f3d0;color:#0f766e}
+    .btn.tier[data-key="tier2"]{background:#fff7e6;border-color:#f7d78a;color:#9a6700}
+    .btn.tier[data-key="tier3"]{background:#f4f0ff;border-color:#d9ccff;color:#6941c6}
+    .btn.tier[data-key="tier4"]{background:#f3f5f8;border-color:#d6dde7;color:#475467}
+    .grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px;padding:0 10px 10px}
+    .stat{padding:12px}
+    .stat .label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+    .stat .value{font-size:22px;font-weight:700;margin-top:2px}
+    .filters{padding:0 10px 10px}
+    .field{display:flex;flex-direction:column;gap:4px;min-width:120px}
+    .field label{font-size:11px;color:var(--muted);font-weight:700}
+    select,input,textarea{border:1px solid #c9d5e2;border-radius:8px;padding:7px 9px;font-size:12px;font-family:inherit;background:#fff;color:var(--ink)}
+    select,input{height:34px}
+    textarea{min-height:54px;resize:vertical;line-height:1.25}
+    .bulkbar{padding:0 10px 10px;border-top:1px solid #eef3f8;margin-top:4px;padding-top:10px}
+    .hint{font-size:11px;color:var(--muted)}
+    .table-wrap{overflow:auto;border-top:1px solid #e7edf4}
+    table{border-collapse:separate;border-spacing:0;width:max-content;min-width:100%}
+    thead th{position:sticky;top:0;z-index:5;background:#f8fafc;border-bottom:1px solid #d9e3ee;padding:8px 8px;font-size:11px;text-transform:uppercase;letter-spacing:.03em;color:#52647a;white-space:normal;vertical-align:bottom}
+    thead th.sortable{cursor:pointer}
+    tbody td{padding:6px 8px;border-bottom:1px solid #edf2f7;font-size:12px;vertical-align:top;white-space:normal;word-break:break-word;max-width:260px}
+    tbody tr:nth-child(even) td{background:#fbfdff}
+    tbody tr:hover td{background:#f4f9ff}
+    .sticky-1{position:sticky;left:0;z-index:4;background:inherit;min-width:86px;max-width:86px}
+    .sticky-2{position:sticky;left:86px;z-index:4;background:inherit;min-width:260px;max-width:260px}
+    thead .sticky-1, thead .sticky-2{z-index:6;background:#f8fafc}
+    .tier-guide-card{border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:#fff}
+    .tier-guide-title{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;margin-bottom:6px}
+    .tier-guide-text{font-size:12px;line-height:1.4;color:var(--muted)}
+    .tier-dot{width:12px;height:12px;border-radius:999px;display:inline-block;flex:0 0 12px}
+    .tier-badge{display:inline-block;border-radius:999px;padding:4px 8px;font-size:11px;font-weight:700;white-space:nowrap}
+    .tier-all{background:var(--blue-soft);color:var(--blue)}
+    .tier-1{background:var(--green-soft);color:var(--green)}
+    .tier-2{background:var(--amber-soft);color:var(--amber)}
+    .tier-3{background:var(--purple-soft);color:var(--purple)}
+    .tier-4{background:var(--slate-soft);color:var(--slate)}
+    .muted{color:var(--muted)}
+    .link{color:var(--blue);text-decoration:none}
+    .link:hover{text-decoration:underline}
+    .link-button{border:none;background:none;color:var(--blue);padding:0;font:inherit;font-weight:700;cursor:pointer;text-align:left}
+    .link-button:hover{text-decoration:underline}
+    .status-pill{display:inline-block;padding:2px 8px;border-radius:999px;background:#eef3ff;color:#33558d;font-size:11px;font-weight:700}
+    .error{color:var(--red);font-weight:700}
+    .success{color:var(--green);font-weight:700}
+    .hidden{display:none!important}
+    .note{padding:10px;font-size:12px;color:var(--muted)}
+    .callout-note{margin:0 10px 10px;padding:10px 12px;border:1px solid #d7e2f0;border-radius:10px;background:#f8fbff;font-size:12px;line-height:1.4;color:#355070}
+    .empty{padding:18px;text-align:center;color:var(--muted)}
+    .modal-backdrop{position:fixed;inset:0;background:rgba(15,23,42,.45);display:none;align-items:center;justify-content:center;padding:20px;z-index:999}
+    .modal-backdrop.show{display:flex}
+    .modal{width:min(900px,100%);max-height:85vh;overflow:auto;background:#fff;border-radius:16px;border:1px solid #d6e0ea;box-shadow:0 20px 50px rgba(2,6,23,.25)}
+    .modal-head{padding:14px 16px;border-bottom:1px solid #e6eef6;display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+    .modal-title{font-size:18px;font-weight:700}
+    .modal-subtitle{font-size:12px;color:var(--muted);margin-top:4px}
+    .modal-body{padding:14px 16px}
+    .detail-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+    .detail-item{border:1px solid #e8eef5;border-radius:10px;padding:10px}
+    .detail-item .k{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px}
+    .detail-item .v{font-size:13px;line-height:1.35;word-break:break-word}
+    @media (max-width:1200px){ .grid{grid-template-columns:repeat(2,minmax(0,1fr));} .tier-guide{grid-template-columns:repeat(2,minmax(0,1fr));} .sticky-2{min-width:220px;max-width:220px;left:86px;} .detail-grid{grid-template-columns:1fr;} }
+    @media print{
+      body{background:#fff}
+      .wrap{max-width:none;padding:0}
+      .topbar,.filters,.bulkbar,.note,.btn,.modal-backdrop{display:none!important}
+      .card{box-shadow:none;border:none}
+      .table-wrap{overflow:visible}
+      tbody td, thead th{font-size:10px;padding:4px 5px}
+      .sticky-1,.sticky-2, thead .sticky-1, thead .sticky-2{position:static!important;left:auto!important}
+    }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card">
+    <div class="topbar">
+      <div>
+        <div class="title">RUS DLT Prospecting Dashboard</div>
+        <div class="subtitle">Shared Google Sheets version. All K-12 now reads from the linked district source sheet, and clicking a school opens a source-data card.</div>
+      </div>
+      <div class="actions">
+        <button class="btn soft" id="refreshBtn">Refresh</button>
+        <button class="btn" id="exportBtn">Export CSV</button>
+        <button class="btn" id="printBtn">Save to PDF</button>
+      </div>
+    </div>
+
+    <div class="callout-note"><strong>Note:</strong> HubSpot is the official place sales reps should record sales activity. This tool is for culled grant prospecting and grant-target research.</div>
+
+    <div class="filters legend" id="tierButtons"></div>
+    <div class="tier-guide" id="tierGuide"></div>
+
+    <div class="grid">
+      <div class="card stat"><div class="label">Visible Rows</div><div class="value" id="visibleCount">0</div></div>
+      <div class="card stat"><div class="label">All K-12</div><div class="value" id="k12Count">0</div></div>
+      <div class="card stat"><div class="label">Tier 1</div><div class="value" id="tier1Count">0</div></div>
+      <div class="card stat"><div class="label">Tier 2</div><div class="value" id="tier2Count">0</div></div>
+      <div class="card stat"><div class="label">Tier 3</div><div class="value" id="tier3Count">0</div></div>
+      <div class="card stat"><div class="label">Tier 4</div><div class="value" id="tier4Count">0</div></div>
+    </div>
+
+    <div class="filters">
+      <div class="field" style="min-width:260px;flex:1 1 320px">
+        <label for="searchBox">Search</label>
+        <input id="searchBox" type="text" placeholder="Organization, state, basis, outreach program">
+      </div>
+      <div class="field">
+        <label for="regionFilter">Region</label>
+        <select id="regionFilter"></select>
+      </div>
+      <div class="field">
+        <label for="stateFilter">State</label>
+        <select id="stateFilter"></select>
+      </div>
+      <div class="field">
+        <label for="segmentFilter">Entity Type</label>
+        <select id="segmentFilter"></select>
+      </div>
+      <div class="field">
+        <label for="localeFilter">Locale</label>
+        <select id="localeFilter"></select>
+      </div>
+      <div class="field">
+        <label for="saipeBandFilter">SAIPE</label>
+        <select id="saipeBandFilter"></select>
+      </div>
+      <div class="field">
+        <label for="repFilter">Assigned Rep</label>
+        <select id="repFilter"></select>
+      </div>
+      <div class="field">
+        <label for="statusFilter">Status</label>
+        <select id="statusFilter"></select>
+      </div>
+    </div>
+
+    <div class="bulkbar">
+      <div class="field">
+        <label for="bulkRep">Bulk assign rep to current filtered rows</label>
+        <input id="bulkRep" type="text" placeholder="Rep name">
+      </div>
+      <div class="field">
+        <label for="bulkStatus">Optional status</label>
+        <select id="bulkStatus"></select>
+      </div>
+      <button class="btn primary" id="bulkApplyBtn">Apply to Filtered Rows</button>
+      <span class="hint" id="bulkHint">Assignment fields save to the shared Assignments sheet. Record formal sales activity in HubSpot.</span>
+    </div>
+
+    <div class="note" id="statusMessage">Loading shared data…</div>
+
+    <div class="table-wrap">
+      <table id="dataTable">
+        <thead id="thead"></thead>
+        <tbody id="tbody"></tbody>
+      </table>
+      <div class="empty hidden" id="emptyState">No rows match the current filters.</div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-backdrop" id="detailModal">
+  <div class="modal">
+    <div class="modal-head">
+      <div>
+        <div class="modal-title" id="detailTitle">Record details</div>
+        <div class="modal-subtitle" id="detailSubtitle"></div>
+      </div>
+      <button class="btn" id="closeModalBtn">Close</button>
+    </div>
+    <div class="modal-body">
+      <div class="note" id="detailStatus">Loading…</div>
+      <div class="detail-grid" id="detailGrid"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const state = {
+  rows: [],
+  sortKey: 'tier_order',
+  sortDir: 'asc',
+  tierFilter: 'all_k12',
+  config: null
+};
+
+const columns = [
+  {key:'tier_short', label:'Tier', width:86, sticky:1, sortable:true},
+  {key:'organization', label:'Organization', width:260, sticky:2, sortable:true, detail:true},
+  {key:'region', label:'Region', width:120, sortable:true},
+  {key:'state', label:'State', width:70, sortable:true},
+  {key:'segment', label:'Entity Type', width:120, sortable:true},
+  {key:'role_fit', label:'Role Fit', width:120, sortable:true},
+  {key:'city_county', label:'City / County', width:170, sortable:true},
+  {key:'locale_display', label:'Locale', width:110, sortable:true},
+  {key:'saipe_display', label:'SAIPE', width:90, sortable:true},
+  {key:'basis_flags', label:'Basis', width:260, sortable:false},
+  {key:'phone', label:'Phone', width:120, sortable:false},
+  {key:'website', label:'Website', width:180, sortable:false},
+  {key:'outreach_program', label:'Outreach Program', width:220, sortable:false},
+  {key:'assignedRep', label:'Assigned Rep', width:150, sortable:true, edit:true},
+  {key:'status', label:'Status', width:150, sortable:true, edit:true},
+  {key:'lastContact', label:'Last Contact', width:120, sortable:true, edit:true},
+  {key:'nextStep', label:'Next Step', width:220, sortable:false, edit:true},
+  {key:'notes', label:'Notes', width:240, sortable:false, edit:true},
+  {key:'actions', label:'Save', width:90, sortable:false}
+];
+
+const els = {
+  tierButtons: document.getElementById('tierButtons'),
+  tierGuide: document.getElementById('tierGuide'),
+  statusMessage: document.getElementById('statusMessage'),
+  visibleCount: document.getElementById('visibleCount'),
+  k12Count: document.getElementById('k12Count'),
+  tier1Count: document.getElementById('tier1Count'),
+  tier2Count: document.getElementById('tier2Count'),
+  tier3Count: document.getElementById('tier3Count'),
+  tier4Count: document.getElementById('tier4Count'),
+  searchBox: document.getElementById('searchBox'),
+  regionFilter: document.getElementById('regionFilter'),
+  stateFilter: document.getElementById('stateFilter'),
+  segmentFilter: document.getElementById('segmentFilter'),
+  localeFilter: document.getElementById('localeFilter'),
+  saipeBandFilter: document.getElementById('saipeBandFilter'),
+  repFilter: document.getElementById('repFilter'),
+  statusFilter: document.getElementById('statusFilter'),
+  bulkRep: document.getElementById('bulkRep'),
+  bulkStatus: document.getElementById('bulkStatus'),
+  bulkApplyBtn: document.getElementById('bulkApplyBtn'),
+  tbody: document.getElementById('tbody'),
+  thead: document.getElementById('thead'),
+  emptyState: document.getElementById('emptyState'),
+  refreshBtn: document.getElementById('refreshBtn'),
+  exportBtn: document.getElementById('exportBtn'),
+  printBtn: document.getElementById('printBtn'),
+  detailModal: document.getElementById('detailModal'),
+  detailTitle: document.getElementById('detailTitle'),
+  detailSubtitle: document.getElementById('detailSubtitle'),
+  detailGrid: document.getElementById('detailGrid'),
+  detailStatus: document.getElementById('detailStatus'),
+  closeModalBtn: document.getElementById('closeModalBtn')
+};
+
+function init() {
+  bindControls();
+  renderHeader();
+  loadData();
+}
+document.addEventListener('DOMContentLoaded', init);
+
+function bindControls() {
+  [els.searchBox, els.regionFilter, els.stateFilter, els.segmentFilter, els.localeFilter, els.saipeBandFilter, els.repFilter, els.statusFilter]
+    .forEach(el => el.addEventListener('input', render));
+  els.refreshBtn.addEventListener('click', loadData);
+  els.exportBtn.addEventListener('click', exportCsv);
+  els.printBtn.addEventListener('click', () => window.print());
+  els.bulkApplyBtn.addEventListener('click', bulkApply);
+  els.closeModalBtn.addEventListener('click', closeModal);
+  els.detailModal.addEventListener('click', (e) => { if (e.target === els.detailModal) closeModal(); });
+}
+
+function loadData() {
+  setMessage('Loading shared data…');
+  google.script.run
+    .withSuccessHandler(payload => {
+      state.rows = (payload.rows || []).map(row => ({ ...row }));
+      state.config = payload.config || {};
+      buildTierButtons();
+      buildFilterOptions();
+      render();
+      setMessage(`Loaded ${state.rows.length.toLocaleString()} rows. K-12 source sheet: ${state.config.setup ? state.config.setup.k12SourceSpreadsheetId : ''}`);
+    })
+    .withFailureHandler(err => setError(err))
+    .getInitialPayload();
+}
+
+function buildTierButtons() {
+  const filters = (state.config && state.config.tierFilters) || [];
+  els.tierButtons.innerHTML = '';
+  filters.forEach(filter => {
+    const btn = document.createElement('button');
+    btn.className = 'btn tier' + (state.tierFilter === filter.key ? ' active' : '');
+    btn.dataset.key = filter.key;
+    btn.textContent = filter.label;
+    btn.title = filter.description || filter.label;
+    btn.addEventListener('click', () => {
+      state.tierFilter = filter.key;
+      buildTierButtons();
+      render();
+    });
+    els.tierButtons.appendChild(btn);
+  });
+  buildTierGuide(filters);
+}
+
+function buildTierGuide(filters) {
+  els.tierGuide.innerHTML = '';
+  filters.forEach(filter => {
+    const card = document.createElement('div');
+    card.className = 'tier-guide-card';
+    const colorClass = filter.key === 'all_k12' ? 'tier-all' : filter.key === 'tier1' ? 'tier-1' : filter.key === 'tier2' ? 'tier-2' : filter.key === 'tier3' ? 'tier-3' : 'tier-4';
+    const badge = `<span class="tier-badge ${colorClass}">${escapeHtml(filter.shortLabel || filter.label)}</span>`;
+    card.innerHTML = `<div class="tier-guide-title">${badge}<span>${escapeHtml(filter.label)}</span></div><div class="tier-guide-text">${escapeHtml(filter.description || '')}</div>`;
+    els.tierGuide.appendChild(card);
+  });
+}
+
+function buildFilterOptions() {
+  fillSelect(els.regionFilter, ['All Regions', ...uniqueValues(state.rows, 'region')], 'All Regions');
+  fillSelect(els.stateFilter, ['All States', ...uniqueValues(state.rows, 'state')], 'All States');
+  fillSelect(els.segmentFilter, ['All Entity Types', ...uniqueValues(state.rows, 'segment')], 'All Entity Types');
+  fillSelect(els.localeFilter, ['All Locales', ...uniqueValues(state.rows, 'locale_display')], 'All Locales');
+  fillSelect(els.saipeBandFilter, ['All SAIPE', 'Unknown', 'Known', '>=30%', '20%-29.9%', '<20%'], 'All SAIPE');
+  fillSelect(els.repFilter, ['All Reps', ...uniqueValues(state.rows, 'assignedRep')], 'All Reps');
+  const statusOptions = ['All Statuses', ...((state.config && state.config.statusOptions) || [])];
+  fillSelect(els.statusFilter, statusOptions, 'All Statuses');
+  fillSelect(els.bulkStatus, ['','Not Started', ...((state.config && state.config.statusOptions) || [])], '');
+}
+
+function fillSelect(selectEl, values, defaultValue) {
+  const current = selectEl.value || defaultValue || values[0];
+  selectEl.innerHTML = '';
+  values.filter((v, i, a) => v !== '' && a.indexOf(v) === i).forEach(value => {
+    const opt = document.createElement('option');
+    opt.value = value;
+    opt.textContent = value === '' ? '—' : value;
+    selectEl.appendChild(opt);
+  });
+  selectEl.value = values.includes(current) ? current : (defaultValue || values[0]);
+}
+
+function uniqueValues(rows, key) {
+  return rows.map(row => row[key]).filter(Boolean).map(String).sort((a,b) => a.localeCompare(b));
+}
+
+function renderHeader() {
+  const tr = document.createElement('tr');
+  columns.forEach((col, idx) => {
+    const th = document.createElement('th');
+    th.textContent = col.label;
+    th.style.minWidth = `${col.width}px`;
+    th.style.maxWidth = `${col.width}px`;
+    if (col.sortable) {
+      th.classList.add('sortable');
+      th.addEventListener('click', () => toggleSort(col.key));
+    }
+    if (col.sticky === 1) th.classList.add('sticky-1');
+    if (col.sticky === 2) th.classList.add('sticky-2');
+    tr.appendChild(th);
+  });
+  els.thead.innerHTML = '';
+  els.thead.appendChild(tr);
+}
+
+function toggleSort(key) {
+  if (state.sortKey === key) state.sortDir = state.sortDir === 'asc' ? 'desc' : 'asc';
+  else { state.sortKey = key; state.sortDir = 'asc'; }
+  render();
+}
+
+function getFilteredRows() {
+  const search = els.searchBox.value.trim().toLowerCase();
+  return state.rows
+    .filter(row => {
+      if (state.tierFilter === 'all_k12') return row.segment === 'School District';
+      if (state.tierFilter === 'tier1') return row.tier_short === 'Tier 1';
+      if (state.tierFilter === 'tier2') return row.tier_short === 'Tier 2';
+      if (state.tierFilter === 'tier3') return row.tier_short === 'Tier 3';
+      if (state.tierFilter === 'tier4') return row.tier_short === 'Tier 4';
+      return true;
+    })
+    .filter(row => els.regionFilter.value === 'All Regions' || row.region === els.regionFilter.value)
+    .filter(row => els.stateFilter.value === 'All States' || row.state === els.stateFilter.value)
+    .filter(row => els.segmentFilter.value === 'All Entity Types' || row.segment === els.segmentFilter.value)
+    .filter(row => els.localeFilter.value === 'All Locales' || row.locale_display === els.localeFilter.value)
+    .filter(row => {
+      const filter = els.saipeBandFilter.value;
+      const val = parseFloat(row.saipe_numeric);
+      if (filter === 'All SAIPE') return true;
+      if (filter === 'Unknown') return Number.isNaN(val);
+      if (filter === 'Known') return !Number.isNaN(val);
+      if (filter === '>=30%') return !Number.isNaN(val) && val >= 30;
+      if (filter === '20%-29.9%') return !Number.isNaN(val) && val >= 20 && val < 30;
+      if (filter === '<20%') return !Number.isNaN(val) && val < 20;
+      return true;
+    })
+    .filter(row => els.repFilter.value === 'All Reps' || (row.assignedRep || '') === els.repFilter.value)
+    .filter(row => els.statusFilter.value === 'All Statuses' || (row.status || '') === els.statusFilter.value)
+    .filter(row => {
+      if (!search) return true;
+      const hay = [
+        row.organization,row.state,row.region,row.city,row.county,row.locale_display,row.saipe_display,row.basis_flags,row.outreach_program,row.assignedRep,row.status
+      ].join(' ').toLowerCase();
+      return hay.includes(search);
+    })
+    .sort((a,b) => compareValues(a[state.sortKey], b[state.sortKey], state.sortDir));
+}
+
+function compareValues(a, b, dir) {
+  const av = a == null ? '' : a;
+  const bv = b == null ? '' : b;
+  let result = 0;
+  if (!Number.isNaN(parseFloat(av)) && !Number.isNaN(parseFloat(bv))) result = parseFloat(av) - parseFloat(bv);
+  else result = String(av).localeCompare(String(bv), undefined, { numeric: true, sensitivity: 'base' });
+  return dir === 'asc' ? result : result * -1;
+}
+
+function render() {
+  const rows = getFilteredRows();
+  els.visibleCount.textContent = rows.length.toLocaleString();
+  els.k12Count.textContent = state.rows.filter(r => r.segment === 'School District').length.toLocaleString();
+  els.tier1Count.textContent = state.rows.filter(r => r.tier_short === 'Tier 1').length.toLocaleString();
+  els.tier2Count.textContent = state.rows.filter(r => r.tier_short === 'Tier 2').length.toLocaleString();
+  els.tier3Count.textContent = state.rows.filter(r => r.tier_short === 'Tier 3').length.toLocaleString();
+  els.tier4Count.textContent = state.rows.filter(r => r.tier_short === 'Tier 4').length.toLocaleString();
+
+  els.tbody.innerHTML = '';
+  els.emptyState.classList.toggle('hidden', rows.length !== 0);
+
+  rows.forEach(row => {
+    const tr = document.createElement('tr');
+    columns.forEach(col => {
+      const td = document.createElement('td');
+      if (col.sticky === 1) td.classList.add('sticky-1');
+      if (col.sticky === 2) td.classList.add('sticky-2');
+
+      if (col.key === 'tier_short') {
+        const tierClass = row.tier_short === 'Tier 1' ? 'tier-1' : row.tier_short === 'Tier 2' ? 'tier-2' : row.tier_short === 'Tier 3' ? 'tier-3' : row.tier_short === 'Tier 4' ? 'tier-4' : 'tier-all';
+        td.innerHTML = `<span class="tier-badge ${tierClass}">${escapeHtml(row.tier_short || 'All K-12')}</span>`;
+      } else if (col.detail) {
+        const btn = document.createElement('button');
+        btn.className = 'link-button';
+        btn.textContent = row.organization || '';
+        btn.addEventListener('click', () => openDetail(row));
+        td.appendChild(btn);
+      } else if (col.key === 'website') {
+        if (row.website) td.innerHTML = `<a class="link" href="${escapeAttr(row.website)}" target="_blank" rel="noopener">Open site</a>`;
+      } else if (col.edit) {
+        td.appendChild(createEditor(col.key, row));
+      } else if (col.key === 'actions') {
+        const btn = document.createElement('button');
+        btn.className = 'btn primary';
+        btn.textContent = 'Save';
+        btn.addEventListener('click', () => saveRow(row.externalKey));
+        td.appendChild(btn);
+      } else {
+        td.textContent = row[col.key] || '';
+      }
+      tr.appendChild(td);
+    });
+    els.tbody.appendChild(tr);
+  });
+}
+
+function createEditor(key, row) {
+  if (key === 'status') {
+    const select = document.createElement('select');
+    ['Not Started', ...((state.config && state.config.statusOptions) || [])].filter((v, i, a) => a.indexOf(v) === i).forEach(status => {
+      const opt = document.createElement('option');
+      opt.value = status;
+      opt.textContent = status;
+      select.appendChild(opt);
+    });
+    select.value = row.status || 'Not Started';
+    select.dataset.key = key;
+    select.dataset.externalKey = row.externalKey;
+    select.addEventListener('change', e => updateRowValue(row.externalKey, key, e.target.value));
+    return select;
+  }
+  const input = key === 'notes' || key === 'nextStep' ? document.createElement('textarea') : document.createElement('input');
+  if (key === 'lastContact') input.type = 'date';
+  input.value = row[key] || '';
+  input.dataset.key = key;
+  input.dataset.externalKey = row.externalKey;
+  input.addEventListener('input', e => updateRowValue(row.externalKey, key, e.target.value));
+  return input;
+}
+
+function updateRowValue(externalKey, key, value) {
+  const row = state.rows.find(r => r.externalKey === externalKey);
+  if (row) row[key] = value;
+}
+
+function saveRow(externalKey) {
+  const row = state.rows.find(r => r.externalKey === externalKey);
+  if (!row) return;
+  setMessage(`Saving ${row.organization}…`);
+  google.script.run
+    .withSuccessHandler(() => {
+      setMessage(`Saved ${row.organization}.`);
+      buildFilterOptions();
+      render();
+    })
+    .withFailureHandler(err => setError(err))
+    .saveRecord({
+      externalKey: externalKey,
+      assignedRep: row.assignedRep || '',
+      status: row.status || '',
+      lastContact: row.lastContact || '',
+      nextStep: row.nextStep || '',
+      notes: row.notes || ''
+    });
+}
+
+function bulkApply() {
+  const rows = getFilteredRows();
+  if (!rows.length) return setError('No filtered rows to update.');
+  const payload = { externalKeys: rows.map(r => r.externalKey) };
+  if (els.bulkRep.value.trim()) payload.assignedRep = els.bulkRep.value.trim();
+  if (els.bulkStatus.value) payload.status = els.bulkStatus.value;
+  if (!payload.assignedRep && !payload.status) return setError('Enter a rep and/or a status for bulk update.');
+
+  setMessage(`Updating ${rows.length.toLocaleString()} filtered rows…`);
+  google.script.run
+    .withSuccessHandler(resp => {
+      rows.forEach(r => {
+        if (payload.assignedRep) r.assignedRep = payload.assignedRep;
+        if (payload.status) r.status = payload.status;
+      });
+      buildFilterOptions();
+      render();
+      setMessage(`Updated ${resp.count.toLocaleString()} rows.`);
+    })
+    .withFailureHandler(err => setError(err))
+    .bulkAssign(payload);
+}
+
+function openDetail(row) {
+  els.detailModal.classList.add('show');
+  els.detailTitle.textContent = row.organization || 'Record detail';
+  els.detailSubtitle.textContent = row.segment === 'School District' ? 'Live K-12 source record' : (row.tier_label || 'Higher-ed source record');
+  els.detailGrid.innerHTML = '';
+  els.detailStatus.textContent = 'Loading source data…';
+
+  google.script.run
+    .withSuccessHandler(detail => {
+      els.detailTitle.textContent = detail.title || row.organization || 'Record detail';
+      els.detailSubtitle.textContent = detail.subtitle || '';
+      els.detailGrid.innerHTML = '';
+      (detail.fields || []).forEach(field => {
+        const item = document.createElement('div');
+        item.className = 'detail-item';
+        const val = formatDetailValue(field.value);
+        item.innerHTML = `<div class="k">${escapeHtml(field.label)}</div><div class="v">${val}</div>`;
+        els.detailGrid.appendChild(item);
+      });
+      els.detailStatus.textContent = `${(detail.fields || []).length} populated fields`;
+    })
+    .withFailureHandler(err => {
+      els.detailGrid.innerHTML = '';
+      els.detailStatus.innerHTML = `<span class="error">${escapeHtml(readError(err))}</span>`;
+    })
+    .getRecordDetail(row.externalKey);
+}
+
+function closeModal() {
+  els.detailModal.classList.remove('show');
+}
+
+function formatDetailValue(value) {
+  const text = String(value || '');
+  if (/^https?:\/\//i.test(text)) {
+    return `<a class="link" href="${escapeAttr(text)}" target="_blank" rel="noopener">${escapeHtml(text)}</a>`;
+  }
+  return escapeHtml(text);
+}
+
+function exportCsv() {
+  const rows = getFilteredRows();
+  const headers = columns.filter(c => c.key !== 'actions').map(c => c.label);
+  const keys = columns.filter(c => c.key !== 'actions').map(c => c.key);
+  const csv = [headers.join(',')].concat(rows.map(row => keys.map(key => csvEscape(row[key] || '')).join(','))).join('\n');
+  const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
+  const a = document.createElement('a');
+  const stamp = new Date().toISOString().slice(0,10);
+  a.href = URL.createObjectURL(blob);
+  a.download = `RUS_DLT_Prospects_${stamp}.csv`;
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+
+function csvEscape(val) {
+  const text = String(val).replace(/"/g, '""');
+  return `"${text}"`;
+}
+
+function setMessage(text) {
+  els.statusMessage.className = 'note success';
+  els.statusMessage.textContent = text;
+}
+function setError(err) {
+  els.statusMessage.className = 'note error';
+  els.statusMessage.textContent = readError(err);
+}
+function readError(err) {
+  return (err && err.message) || (typeof err === 'string' ? err : 'Something went wrong.');
+}
+function escapeHtml(text) {
+  return String(text == null ? '' : text)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+function escapeAttr(text) {
+  return escapeHtml(text);
+}
+</script>
+</body>
+</html>
