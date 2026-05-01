@@ -38,8 +38,9 @@
     .callout{border-left:5px solid var(--cyan);background:#eff6ff;border-radius:14px;padding:12px 14px;font-size:13px;line-height:1.45;color:#1e3a8a;margin:0 0 12px}.warn{border-left-color:var(--amber);background:#fff7ed;color:#7c2d12}.ok{border-left-color:var(--green);background:#ecfdf5;color:#064e3b}
     .tabs{display:flex;gap:8px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding:12px 16px 0;background:#f8fafc}.tab{padding:10px 13px;border:1px solid var(--line);border-bottom:0;border-radius:12px 12px 0 0;background:#eaf1f8;font-weight:800;font-size:13px;color:#334155}.tab.active{background:#fff;color:#0f172a}
     .panel{display:none}.panel.active{display:block}
-    .table-wrap{overflow:auto;border:1px solid var(--line);border-radius:14px;background:white;max-height:620px}.table-wrap.small{max-height:360px}
-    table{width:100%;border-collapse:separate;border-spacing:0;font-size:12px;min-width:1600px}th,td{border-bottom:1px solid #e5edf5;border-right:1px solid #eef2f7;padding:8px;vertical-align:middle;background:#fff}th{position:sticky;top:0;z-index:2;background:#f1f5f9;color:#334155;text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.04em}td input,td select{padding:7px 8px;border-radius:8px;font-size:12px}.num{text-align:right;font-variant-numeric:tabular-nums}.nowrap{white-space:nowrap}.pill{display:inline-flex;align-items:center;border-radius:999px;padding:4px 8px;font-weight:800;font-size:11px;background:#e2e8f0;color:#334155}.pill.green{background:#dcfce7;color:#166534}.pill.blue{background:#dbeafe;color:#1d4ed8}.pill.amber{background:#fef3c7;color:#92400e}.pill.red{background:#fee2e2;color:#991b1b}.pill.purple{background:#ede9fe;color:#5b21b6}
+    .table-tools{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px}.table-hint{font-size:11px;color:var(--muted);line-height:1.25}
+    .table-wrap{overflow:auto;border:1px solid var(--line);border-radius:12px;background:white;max-height:680px}.table-wrap.small{max-height:360px}
+    table{width:100%;border-collapse:separate;border-spacing:0;font-size:10.5px;min-width:1360px;table-layout:fixed}th,td{border-bottom:1px solid #e5edf5;border-right:1px solid #eef2f7;padding:4px 5px;vertical-align:middle;background:#fff;line-height:1.18}th{position:sticky;top:0;z-index:2;background:#f1f5f9;color:#334155;text-align:left;font-size:9.5px;text-transform:uppercase;letter-spacing:.035em;line-height:1.1;user-select:none;white-space:normal;overflow:hidden}.sortable{cursor:pointer}.sortable:hover{background:#e2e8f0}.sort-indicator{font-size:9px;color:#0f6db5;margin-left:3px}.th-inner{position:relative;display:flex;align-items:center;gap:2px;min-height:20px;padding-right:7px}.col-resizer{position:absolute;right:-4px;top:-4px;width:8px;height:calc(100% + 8px);cursor:col-resize;z-index:4}.col-resizer:hover{background:rgba(14,165,233,.25)}td{overflow:hidden}td input,td select{padding:4px 5px;border-radius:6px;font-size:10.5px;min-height:24px}td input{width:100%}td select{width:100%}td button{padding:4px 6px;border-radius:6px;font-size:10px}.num{text-align:right;font-variant-numeric:tabular-nums}.nowrap{white-space:nowrap}.truncate{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.pill{display:inline-flex;align-items:center;border-radius:999px;padding:2px 6px;font-weight:800;font-size:9.5px;background:#e2e8f0;color:#334155}.pill.green{background:#dcfce7;color:#166534}.pill.blue{background:#dbeafe;color:#1d4ed8}.pill.amber{background:#fef3c7;color:#92400e}.pill.red{background:#fee2e2;color:#991b1b}.pill.purple{background:#ede9fe;color:#5b21b6}
     .source-list{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.source-list a{display:block;border:1px solid var(--line);background:#fff;border-radius:12px;padding:10px;text-decoration:none;color:#0f172a}.source-list strong{display:block;font-size:13px}.source-list span{display:block;color:var(--muted);font-size:12px;margin-top:3px;line-height:1.35}
     .hidden{display:none!important}.smalltxt{font-size:12px;color:var(--muted);line-height:1.45}.right{text-align:right}.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace}.search-results{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:10px}.result{border:1px solid var(--line);border-radius:12px;padding:10px;background:#fff}.result strong{font-size:13px}.result .meta{font-size:12px;color:var(--muted);margin:3px 0 8px;line-height:1.35}.result button{font-size:12px;padding:8px 9px}.footnote{font-size:11px;color:#64748b;margin-top:8px;line-height:1.35}
     @media (max-width:1100px){.grid{grid-template-columns:1fr}.metrics{grid-template-columns:repeat(2,1fr)}.row{grid-template-columns:repeat(6,1fr)}.col-2,.col-3,.col-4,.col-5,.col-6,.col-7,.col-8{grid-column:span 6}.source-list,.search-results{grid-template-columns:1fr}.topbar{display:block}.badge{margin:8px 6px 0 0}}
@@ -113,12 +114,15 @@
       </div>
 
       <div id="panel-sites" class="panel active body">
-        <div class="btnrow no-print" style="margin-bottom:10px">
-          <button class="ghost" onclick="selectAllSites(true)">Include All</button>
-          <button class="ghost" onclick="selectAllSites(false)">Exclude All</button>
-          <button class="amber" onclick="dedupeSites()">Deduplicate</button>
-          <button class="danger" onclick="clearSites()">Clear All</button>
-          <button class="ghost" onclick="openDLTMap()">Open USDA DLT Map</button>
+        <div class="table-tools no-print">
+          <div class="btnrow">
+            <button class="ghost" onclick="selectAllSites(true)">Include All</button>
+            <button class="ghost" onclick="selectAllSites(false)">Exclude All</button>
+            <button class="amber" onclick="dedupeSites()">Deduplicate</button>
+            <button class="danger" onclick="clearSites()">Clear All</button>
+            <button class="ghost" onclick="openDLTMap()">Open USDA DLT Map</button>
+          </div>
+          <div class="table-hint">Click a column heading to sort. Drag heading edges to resize columns.</div>
         </div>
         <div class="table-wrap">
           <table id="siteTable"></table>
@@ -215,6 +219,31 @@ let sites = [];
 let placeCache = {}; // state -> map
 let saipeCache = {}; // state -> county lookup
 let lastSearchFeatures = [];
+let tableSort = {key:'', dir:'asc'};
+let columnWidths = {};
+const TABLE_COLUMNS = [
+  {key:'include', label:'Include', w:54, type:'bool'},
+  {key:'rowNumber', label:'#', w:40, type:'number', noSort:true},
+  {key:'siteName', label:'Site Name', w:180, type:'text'},
+  {key:'type', label:'Type', w:92, type:'text'},
+  {key:'designation', label:'Designation', w:112, type:'text'},
+  {key:'address', label:'Address', w:165, type:'text'},
+  {key:'city', label:'City', w:95, type:'text'},
+  {key:'state', label:'State', w:54, type:'text'},
+  {key:'county', label:'County', w:115, type:'text'},
+  {key:'countyFips', label:'County FIPS', w:82, type:'text'},
+  {key:'sourceLocale', label:'Locale', w:70, type:'text'},
+  {key:'cityPopulation', label:'2020 Pop', w:88, type:'number'},
+  {key:'contiguous', label:'Contiguous / Non-Rural?', w:112, type:'text'},
+  {key:'outsideNonRural', label:'Outside Non-Rural?', w:110, type:'text'},
+  {key:'censusRural', label:'Census Rural?', w:88, type:'text'},
+  {key:'ruralityScore', label:'D-1 Rurality', w:80, type:'number'},
+  {key:'saipePercent', label:'SAIPE %', w:78, type:'number'},
+  {key:'economicScore', label:'D-2 Economic', w:88, type:'number'},
+  {key:'notes', label:'Notes', w:170, type:'text'},
+  {key:'map', label:'Map', w:54, type:'text', noSort:true},
+  {key:'remove', label:'Remove', w:60, type:'text', noSort:true}
+];
 
 function init(){
   const stateSelect = document.getElementById('stateSelect');
@@ -354,36 +383,108 @@ function selectAllSites(val){sites.forEach(s=>s.include=val); renderTable(); rec
 
 function renderTable(){
   const table=document.getElementById('siteTable');
-  table.innerHTML=`<thead><tr>
-    <th>Include</th><th>#</th><th>Site Name</th><th>Type</th><th>Designation</th><th>Address</th><th>City</th><th>State</th><th>County</th><th>County FIPS</th><th>Source Locale</th><th>2020 City/Place Pop</th><th>Contiguous / Non-Rural?</th><th>DLT Map Outside Non-Rural?</th><th>Census Rural?</th><th>D-1 Rurality</th><th>SAIPE Poverty %</th><th>D-2 Economic</th><th>Notes</th><th>Map</th><th>Remove</th>
-  </tr></thead><tbody></tbody>`;
+  const columns=TABLE_COLUMNS;
+  table.innerHTML=`<colgroup>${columns.map(c=>`<col style="width:${columnWidths[c.key]||c.w}px">`).join('')}</colgroup><thead><tr>${columns.map(c=>headerCell(c)).join('')}</tr></thead><tbody></tbody>`;
   const body=table.querySelector('tbody');
-  sites.forEach((s,i)=>{
+  const rows=getSortedSites();
+  rows.forEach((s,i)=>{
     const tr=document.createElement('tr'); tr.innerHTML=`
       <td class="nowrap"><input type="checkbox" ${s.include?'checked':''} onchange="upd('${s.id}','include',this.checked)"></td>
       <td class="num">${i+1}</td>
-      <td><input value="${esc(s.siteName)}" onchange="upd('${s.id}','siteName',this.value)"></td>
+      <td><input title="${esc(s.siteName)}" value="${esc(s.siteName)}" onchange="upd('${s.id}','siteName',this.value)"></td>
       <td><select onchange="upd('${s.id}','type',this.value)">${opts(['K-12','Rural Health','Higher Ed','Other'],s.type)}</select></td>
       <td><select onchange="upd('${s.id}','designation',this.value)">${opts(['End-user','Hub/End-user','Hub','Proxy Hub'],s.designation)}</select></td>
-      <td><input value="${esc(s.address)}" onchange="upd('${s.id}','address',this.value)"></td>
-      <td><input value="${esc(s.city)}" onchange="upd('${s.id}','city',this.value)"></td>
-      <td><input value="${esc(s.state)}" style="width:56px" onchange="upd('${s.id}','state',this.value.toUpperCase())"></td>
-      <td><input value="${esc(s.county)}" onchange="upd('${s.id}','county',this.value)"></td>
-      <td><input value="${esc(s.countyFips||'')}" style="width:90px" onchange="upd('${s.id}','countyFips',this.value)"></td>
-      <td><input value="${esc(s.sourceLocale||'')}" style="width:90px" onchange="upd('${s.id}','sourceLocale',this.value)"></td>
-      <td><input class="num" value="${esc(s.cityPopulation||'')}" style="width:105px" onchange="upd('${s.id}','cityPopulation',this.value)"></td>
+      <td><input title="${esc(s.address)}" value="${esc(s.address)}" onchange="upd('${s.id}','address',this.value)"></td>
+      <td><input title="${esc(s.city)}" value="${esc(s.city)}" onchange="upd('${s.id}','city',this.value)"></td>
+      <td><input value="${esc(s.state)}" maxlength="2" onchange="upd('${s.id}','state',this.value.toUpperCase())"></td>
+      <td><input title="${esc(s.county)}" value="${esc(s.county)}" onchange="upd('${s.id}','county',this.value)"></td>
+      <td><input value="${esc(s.countyFips||'')}" onchange="upd('${s.id}','countyFips',this.value)"></td>
+      <td><input value="${esc(s.sourceLocale||'')}" onchange="upd('${s.id}','sourceLocale',this.value)"></td>
+      <td><input class="num" value="${esc(s.cityPopulation||'')}" onchange="upd('${s.id}','cityPopulation',this.value)"></td>
       <td><select onchange="upd('${s.id}','contiguous',this.value)">${opts(['Unknown','No','Yes'],s.contiguous)}</select></td>
       <td><select onchange="upd('${s.id}','outsideNonRural',this.value)">${opts(['Unknown','No','Yes'],s.outsideNonRural)}</select></td>
       <td><select onchange="upd('${s.id}','censusRural',this.value)">${opts(['Unknown','No','Yes'],s.censusRural)}</select></td>
       <td class="num">${scorePill(s.ruralityScore,40)}</td>
-      <td><input class="num" value="${esc(s.saipePercent||'')}" style="width:86px" onchange="upd('${s.id}','saipePercent',this.value)"></td>
+      <td><input class="num" value="${esc(s.saipePercent||'')}" onchange="upd('${s.id}','saipePercent',this.value)"></td>
       <td class="num">${scorePill(s.economicScore,30)}</td>
-      <td><input value="${esc(s.notes||'')}" onchange="upd('${s.id}','notes',this.value)"></td>
+      <td><input title="${esc(s.notes||'')}" value="${esc(s.notes||'')}" onchange="upd('${s.id}','notes',this.value)"></td>
       <td><a href="${sourceLinkFor(s)}" target="_blank">Map</a></td>
       <td><button class="danger" onclick="removeSite('${s.id}')">X</button></td>`;
     body.appendChild(tr);
   });
   if(!sites.length){body.innerHTML='<tr><td colspan="21" class="smalltxt">No sites added yet. Search a district/organization/institution or import a CSV.</td></tr>'}
+  initColumnResize(table);
+}
+function headerCell(c){
+  const active=tableSort.key===c.key;
+  const indicator=active ? `<span class="sort-indicator">${tableSort.dir==='asc'?'▲':'▼'}</span>` : '';
+  const cls=c.noSort?'':'sortable';
+  const click=c.noSort?'':`onclick="sortTable('${c.key}')"`;
+  return `<th class="${cls}" data-key="${c.key}" ${click}><div class="th-inner"><span>${c.label}</span>${indicator}<span class="col-resizer" data-key="${c.key}" title="Drag to resize"></span></div></th>`;
+}
+function sortTable(key){
+  const col=TABLE_COLUMNS.find(c=>c.key===key);
+  if(!col || col.noSort) return;
+  if(tableSort.key===key) tableSort.dir = tableSort.dir==='asc' ? 'desc' : 'asc';
+  else tableSort = {key, dir:'asc'};
+  renderTable();
+}
+function getSortedSites(){
+  const arr=[...sites];
+  const col=TABLE_COLUMNS.find(c=>c.key===tableSort.key);
+  if(!col || col.noSort) return arr;
+  const dir=tableSort.dir==='desc'?-1:1;
+  return arr.sort((a,b)=>compareValues(getSortValue(a,col), getSortValue(b,col), col.type)*dir);
+}
+function getSortValue(s,col){
+  if(col.key==='include') return s.include ? 1 : 0;
+  return s[col.key];
+}
+function compareValues(a,b,type){
+  const emptyA=(a===null||a===undefined||a==='');
+  const emptyB=(b===null||b===undefined||b==='');
+  if(emptyA && emptyB) return 0;
+  if(emptyA) return 1;
+  if(emptyB) return -1;
+  if(type==='number'){
+    const na=parseFloat(String(a).replace(/,/g,''));
+    const nb=parseFloat(String(b).replace(/,/g,''));
+    if(isNaN(na)&&isNaN(nb)) return 0;
+    if(isNaN(na)) return 1;
+    if(isNaN(nb)) return -1;
+    return na-nb;
+  }
+  if(type==='bool') return Number(a)-Number(b);
+  return String(a).localeCompare(String(b),undefined,{numeric:true,sensitivity:'base'});
+}
+function initColumnResize(table){
+  table.querySelectorAll('.col-resizer').forEach(handle=>{
+    handle.addEventListener('click',e=>e.stopPropagation());
+    handle.addEventListener('mousedown',e=>{
+      e.preventDefault(); e.stopPropagation();
+      const key=handle.dataset.key;
+      const th=handle.closest('th');
+      const startX=e.pageX;
+      const startW=th.offsetWidth;
+      document.body.style.cursor='col-resize';
+      document.body.style.userSelect='none';
+      const onMove=ev=>{
+        const next=Math.max(44,startW+(ev.pageX-startX));
+        columnWidths[key]=next;
+        const colIndex=TABLE_COLUMNS.findIndex(c=>c.key===key)+1;
+        const col=table.querySelector(`colgroup col:nth-child(${colIndex})`);
+        if(col) col.style.width=next+'px';
+      };
+      const onUp=()=>{
+        document.removeEventListener('mousemove',onMove);
+        document.removeEventListener('mouseup',onUp);
+        document.body.style.cursor='';
+        document.body.style.userSelect='';
+      };
+      document.addEventListener('mousemove',onMove);
+      document.addEventListener('mouseup',onUp);
+    });
+  });
 }
 function opts(arr,val){return arr.map(x=>`<option ${String(x)===String(val)?'selected':''}>${esc(x)}</option>`).join('');}
 function scorePill(v,max){ if(v===null||v===undefined||v==='') return '<span class="pill">—</span>'; const cls=v>=max*.75?'green':v>=max*.45?'amber':'red'; return `<span class="pill ${cls}">${Number(v).toFixed(2).replace(/\.00$/,'')}</span>`}
