@@ -6,7 +6,21 @@
   <title>RHTP Executive Summary | Change Log | Jan–May 2026</title>
   <style>
     :root{--navy:#12395b;--blue:#1f5f97;--line:#d8dee6;--bg:#f7f9fc;--ink:#1f2937;--muted:#5b6470;--amber:#b96a00}
-    *{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--ink);line-height:1.45}.page{max-width:1180px;margin:24px auto;background:#fff;border:1px solid var(--line);box-shadow:0 10px 30px rgba(18,57,91,.08)}.hero{padding:28px 34px 22px;background:linear-gradient(135deg,var(--navy),var(--blue));color:#fff}.hero h1{margin:0 0 8px;font-size:30px}.hero p{margin:0;max-width:900px;font-size:15px;opacity:.96}.hero-links,.main-nav{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}.hero-links a,.hero-links button,.main-nav a{display:inline-block;padding:8px 12px;border:1px solid rgba(255,255,255,.28);border-radius:999px;color:#fff;text-decoration:none;font-size:12px;background:rgba(255,255,255,.08);cursor:pointer}.main-nav{margin-top:0;padding:14px 34px;background:#0f3150}.main-nav a.active{background:#fff;color:var(--navy);border-color:#fff}.meta{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding:18px 34px;border-bottom:1px solid var(--line);background:#fbfdff;font-size:13px}.meta div{padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:#fff}.section{padding:22px 34px 8px}.section h2{margin:0 0 10px;color:var(--navy);font-size:20px}.section p{margin:0 0 14px;color:var(--muted);font-size:14px}.month{margin:0 34px 18px;padding:18px 18px 10px;border:1px solid var(--line);border-radius:14px;background:#fff}.month h3{margin:0 0 10px;color:var(--navy);font-size:20px;border-bottom:1px solid var(--line);padding-bottom:8px}.region{margin:0 0 12px;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:#fbfdff}.region h4{margin:0 0 8px;color:var(--navy);font-size:15px}ul{margin:0 0 0 18px;padding:0}li{margin:0 0 7px;color:var(--ink);font-size:13px}.state{font-weight:700;color:var(--navy)} .deadline{color:var(--amber);font-weight:700}.footer{padding:18px 34px 30px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}@media print{body{background:#fff}.page{margin:0;border:none;box-shadow:none}.hero-links,.main-nav{display:none!important}a{color:#000;text-decoration:underline}}@media (max-width:900px){.meta{grid-template-columns:1fr}}
+    *{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--ink);line-height:1.45}.page{max-width:1180px;margin:24px auto;background:#fff;border:1px solid var(--line);box-shadow:0 10px 30px rgba(18,57,91,.08)}.hero{padding:28px 34px 22px;background:linear-gradient(135deg,var(--navy),var(--blue));color:#fff}.hero h1{margin:0 0 8px;font-size:30px}.hero p{margin:0;max-width:900px;font-size:15px;opacity:.96}.hero-links,.main-nav{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}.hero-links a,.hero-links button,.main-nav a{display:inline-block;padding:8px 12px;border:1px solid rgba(255,255,255,.28);border-radius:999px;color:#fff;text-decoration:none;font-size:12px;background:rgba(255,255,255,.08);cursor:pointer}.main-nav{margin-top:0;padding:14px 34px;background:#0f3150}.main-nav a.active{background:#fff;color:var(--navy);border-color:#fff}.meta{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding:18px 34px;border-bottom:1px solid var(--line);background:#fbfdff;font-size:13px}.meta div{padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:#fff}.section{padding:22px 34px 8px}.section h2{margin:0 0 10px;color:var(--navy);font-size:20px}.section p{margin:0 0 14px;color:var(--muted);font-size:14px}.month{margin:0 34px 18px;padding:18px 18px 10px;border:1px solid var(--line);border-radius:14px;background:#fff}.month h3{margin:0 0 10px;color:var(--navy);font-size:20px;border-bottom:1px solid var(--line);padding-bottom:8px}.region{margin:0 0 12px;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:#fbfdff}.region h4{margin:0 0 8px;color:var(--navy);font-size:15px}ul{margin:0 0 0 18px;padding:0}li{margin:0 0 7px;color:var(--ink);font-size:13px}.state{font-weight:700;color:var(--navy)} .deadline{color:var(--amber);font-weight:700}.footer{padding:18px 34px 30px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}.regional-counts{margin:10px 34px 12px;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:#fbfdff}
+.regional-counts-header{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:8px}
+.regional-counts-title{font-size:13px;font-weight:800;color:var(--navy);letter-spacing:.15px}
+.regional-counts-total{font-size:11px;color:var(--muted)}
+.regional-count-grid{display:grid;grid-template-columns:repeat(4,minmax(150px,1fr));gap:8px}
+.regional-count-card{border:1px solid var(--line);border-radius:10px;background:#fff;padding:8px 10px}
+.regional-count-card button{all:unset;cursor:pointer;display:block;width:100%}
+.regional-count-region{font-size:11px;font-weight:800;color:var(--navy);margin-bottom:5px}
+.regional-count-values{display:flex;gap:8px;flex-wrap:wrap}
+.regional-count-pill{display:inline-flex;align-items:baseline;gap:4px;padding:4px 7px;border-radius:999px;font-size:10px;font-weight:800}
+.regional-count-pill.active-count{background:#e7f7ef;color:var(--green)}
+.regional-count-pill.soon-count{background:#fff4e5;color:var(--amber)}
+.regional-count-pill b{font-size:15px;line-height:1}
+@media (max-width:900px){.regional-count-grid{grid-template-columns:1fr 1fr}}
+@media (max-width:620px){.regional-count-grid{grid-template-columns:1fr}.regional-counts{margin:10px 18px 12px}}@media print{body{background:#fff}.page{margin:0;border:none;box-shadow:none}.hero-links,.main-nav{display:none!important}a{color:#000;text-decoration:underline}}@media (max-width:900px){.meta{grid-template-columns:1fr}}
   
 /* Compact density override added Apr. 30, 2026 */
 body{line-height:1.28}
@@ -65,6 +79,24 @@ li{margin:0 0 4px;font-size:12px}
   <div class="page">
     <div class="hero"><h1>Executive Summary | Change Log</h1><p>Month-by-month RHTP update log from January through May 2026. This page tracks changes only and keeps future deadlines inside the month when the update was posted.</p><div class="hero-verified">Last verified: May 1, 2026</div><div class="hero-links"><button type="button" onclick="window.print()">Print to PDF</button><button type="button" onclick="emailPage()">Email</button><button type="button" onclick="emailOpenActivity()">Email Open Activity</button><button type="button" onclick="requestRefresh()">Request Daily Refresh</button></div></div>
     <div class="main-nav"><a href="./index.html">State Tracker</a><a href="./events.html">Events &amp; Calendar</a><a href="./resources.html">Resources</a><a href="./rhtp-executive-summary-open-activity-may-01-2026.html" class="active">Executive Summary</a></div>
+  <div class="regional-counts" aria-label="Regional open activity counts">
+    <div class="regional-counts-header"><div class="regional-counts-title">Regional Open/Active + Coming Soon Counts</div><div class="regional-counts-total">Total: 23 open/active · 14 coming soon</div></div>
+    <div class="regional-count-grid">
+      <div class="regional-count-card">
+        <div class="regional-count-region">Mid-Atlantic</div>
+        <div class="regional-count-values"><span class="regional-count-pill active-count"><b>4</b> Open/Active</span><span class="regional-count-pill soon-count"><b>1</b> Coming Soon</span></div>
+      </div><div class="regional-count-card">
+        <div class="regional-count-region">Northeast</div>
+        <div class="regional-count-values"><span class="regional-count-pill active-count"><b>8</b> Open/Active</span><span class="regional-count-pill soon-count"><b>7</b> Coming Soon</span></div>
+      </div><div class="regional-count-card">
+        <div class="regional-count-region">Southeast</div>
+        <div class="regional-count-values"><span class="regional-count-pill active-count"><b>5</b> Open/Active</span><span class="regional-count-pill soon-count"><b>2</b> Coming Soon</span></div>
+      </div><div class="regional-count-card">
+        <div class="regional-count-region">West</div>
+        <div class="regional-count-values"><span class="regional-count-pill active-count"><b>6</b> Open/Active</span><span class="regional-count-pill soon-count"><b>4</b> Coming Soon</span></div>
+      </div>
+    </div>
+  </div>
     <div class="meta"><div><strong>Scope:</strong> Change tracking only</div><div><strong>Range:</strong> January 2026 to current month</div></div><div class="section"><h2>How this summary works</h2><p>This summary is a change log, not a restatement of the full tracker. Older items stay in the tracker unless they had a new posting, release, closure, or verified status refinement in the month shown below. No future month sections are included.</p></div>
 
     <div class="section"><h2>Email-ready update</h2><p>Use this format to send only new updates and currently open initiatives. Link: <a href="./index.html">RHTP State Tracker</a>.</p></div>
