@@ -7,6 +7,7 @@ This GitHub Pages package loads live K-12 district data from the linked public G
 - Tier filters with tier explanations
 - Region, state, entity type, locale, and SAIPE filters
 - Phone and website shown directly on the table
+- Tier 1 superintendent and district personnel contact overlays from uploaded contact files
 - Clickable organization name opens a full detail card
 - `My Call` checkbox saves locally in the browser for the individual user only
 - CSV export and browser Save to PDF
@@ -18,6 +19,7 @@ Required files:
 - `index.html`
 - `data/k12_tier_map.json`
 - `data/highered_rows.json`
+- `data/tier1_contacts.json`
 - `.nojekyll`
 
 ## Notes
@@ -28,3 +30,5 @@ Required files:
 
 Included in this package:
 - `FY2026_DLT_Sales_Ready_Guide.html` — linked from the prospecting dashboard top bar for quick access to the FY2026 USDA DLT sales-ready guide.
+
+- `data/tier1_contacts.json` overlays matched superintendent and other personnel contacts onto Tier 1 districts.

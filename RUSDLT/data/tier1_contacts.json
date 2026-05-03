@@ -1,0 +1,4023 @@
+{
+  "GA|hancock-county": {
+    "superintendent": {
+      "name": "Anton Anthony",
+      "title": "Superintendent",
+      "email": "aanthony@hancock.k12.ga.us",
+      "phone": "(706) 444-5775"
+    },
+    "other_personnel": [
+      {
+        "name": "Ernest Warren",
+        "title": "Information Technology Director",
+        "email": "ewarren@hancock.k12.ga.us",
+        "phone": "(706) 444-5775"
+      }
+    ],
+    "superintendent_contact": "Anton Anthony — Superintendent\naanthony@hancock.k12.ga.us • (706) 444-5775",
+    "other_contacts_summary": "Ernest Warren — Information Technology Director\newarren@hancock.k12.ga.us • (706) 444-5775",
+    "contact_count": 2
+  },
+  "OR|port-orford-langlois-sd-2cj": {
+    "superintendent": {
+      "name": "Aaron Miller",
+      "title": "Superintendent",
+      "email": "aaron.miller@2cj.k12.or.us",
+      "phone": "(541) 366-2111"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Aaron Miller — Superintendent\naaron.miller@2cj.k12.or.us • (541) 366-2111",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "MO|clearwater-r-i": {
+    "superintendent": {
+      "name": "Archie Derboven",
+      "title": "Superintendent",
+      "email": "aderboven@cwtigers.net",
+      "phone": "(573) 223-7426"
+    },
+    "other_personnel": [
+      {
+        "name": "Aaron Whitmer",
+        "title": "Information Technology Director",
+        "email": "awhitmer@cwtigers.net",
+        "phone": "(573) 223-7426"
+      }
+    ],
+    "superintendent_contact": "Archie Derboven — Superintendent\naderboven@cwtigers.net • (573) 223-7426",
+    "other_contacts_summary": "Aaron Whitmer — Information Technology Director\nawhitmer@cwtigers.net • (573) 223-7426",
+    "contact_count": 2
+  },
+  "CA|surprise-valley-joint-unified": {
+    "superintendent": {
+      "name": "Audra Evans",
+      "title": "Superintendent",
+      "email": "aevans@svjusd.org",
+      "phone": "(530) 279-6141"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Audra Evans — Superintendent\naevans@svjusd.org • (530) 279-6141",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "AK|southwest-region-school-district": {
+    "superintendent": {
+      "name": "Audra Finkenbinder",
+      "title": "Superintendent",
+      "email": "afinkenbinder@swrsd.org",
+      "phone": "(907) 842-5287"
+    },
+    "other_personnel": [
+      {
+        "name": "Amanda Trangmoe",
+        "title": "Chief Financial Officer",
+        "email": "atrangmoe@swrsd.org",
+        "phone": "(907) 842-5287"
+      },
+      {
+        "name": "Corey Evans",
+        "title": "Information Technology Director",
+        "email": "cevans@swrsd.org",
+        "phone": "(907) 842-5287"
+      }
+    ],
+    "superintendent_contact": "Audra Finkenbinder — Superintendent\nafinkenbinder@swrsd.org • (907) 842-5287",
+    "other_contacts_summary": "Amanda Trangmoe — Chief Financial Officer\natrangmoe@swrsd.org • (907) 842-5287\n\nCorey Evans — Information Technology Director\ncevans@swrsd.org • (907) 842-5287",
+    "contact_count": 3
+  },
+  "MS|jefferson-county-school-district": {
+    "superintendent": {
+      "name": "Adrian Hammitte",
+      "title": "Superintendent",
+      "email": "ahammitte@jcpsd.net",
+      "phone": "(601) 786-3721"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Adrian Hammitte — Superintendent\nahammitte@jcpsd.net • (601) 786-3721",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "MO|van-buren-r-i": {
+    "superintendent": {
+      "name": "Amy Jackson",
+      "title": "Superintendent",
+      "email": "ajackson@vanburen.k12.mo.us",
+      "phone": "(573) 323-4281"
+    },
+    "other_personnel": [
+      {
+        "name": "Brandy Tripp",
+        "title": "Information Technology Director",
+        "email": "btripp@vanburen.k12.mo.us",
+        "phone": "(573) 323-4281"
+      }
+    ],
+    "superintendent_contact": "Amy Jackson — Superintendent\najackson@vanburen.k12.mo.us • (573) 323-4281",
+    "other_contacts_summary": "Brandy Tripp — Information Technology Director\nbtripp@vanburen.k12.mo.us • (573) 323-4281",
+    "contact_count": 2
+  },
+  "GA|taliaferro-county": {
+    "superintendent": {
+      "name": "Andreana Jones",
+      "title": "Superintendent",
+      "email": "ajones@taliaferro.k12.ga.us",
+      "phone": "(706) 456-2575"
+    },
+    "other_personnel": [
+      {
+        "name": "Scott Arenal",
+        "title": "Information Technology Director",
+        "email": "sarenal@taliaferro.k12.ga.us",
+        "phone": "(706) 456-2575"
+      }
+    ],
+    "superintendent_contact": "Andreana Jones — Superintendent\najones@taliaferro.k12.ga.us • (706) 456-2575",
+    "other_contacts_summary": "Scott Arenal — Information Technology Director\nsarenal@taliaferro.k12.ga.us • (706) 456-2575",
+    "contact_count": 2
+  },
+  "GA|taylor-county": {
+    "superintendent": {
+      "name": "Jennifer Albritton",
+      "title": "Superintendent",
+      "email": "albritton.jennifer@taylorboe.org",
+      "phone": "(478) 862-5224"
+    },
+    "other_personnel": [
+      {
+        "name": "Denton Wainwright",
+        "title": "Information Technology Director",
+        "email": "wainwright.denton@taylorboe.org",
+        "phone": "(478) 862-5224"
+      }
+    ],
+    "superintendent_contact": "Jennifer Albritton — Superintendent\nalbritton.jennifer@taylorboe.org • (478) 862-5224",
+    "other_contacts_summary": "Denton Wainwright — Information Technology Director\nwainwright.denton@taylorboe.org • (478) 862-5224",
+    "contact_count": 2
+  },
+  "GA|wheeler-county": {
+    "superintendent": {
+      "name": "Alex Alvarez",
+      "title": "Superintendent",
+      "email": "alex.alvarez@wheeler.k12.ga.us",
+      "phone": "(912) 568-7198"
+    },
+    "other_personnel": [
+      {
+        "name": "Janet Brown",
+        "title": "Chief Financial Officer",
+        "email": "janet.brown@wheeler.k12.ga.us",
+        "phone": "(912) 568-7198"
+      },
+      {
+        "name": "Suzanne Couey",
+        "title": "Information Technology Director",
+        "email": "suzanne.couey@wheeler.k12.ga.us",
+        "phone": "(912) 568-7198"
+      }
+    ],
+    "superintendent_contact": "Alex Alvarez — Superintendent\nalex.alvarez@wheeler.k12.ga.us • (912) 568-7198",
+    "other_contacts_summary": "Janet Brown — Chief Financial Officer\njanet.brown@wheeler.k12.ga.us • (912) 568-7198\n\nSuzanne Couey — Information Technology Director\nsuzanne.couey@wheeler.k12.ga.us • (912) 568-7198",
+    "contact_count": 3
+  },
+  "TX|menard-isd": {
+    "superintendent": {
+      "name": "Amy Bannowsky",
+      "title": "Superintendent",
+      "email": "amy.bannowsky@menardisd.net",
+      "phone": "(325) 396-2404"
+    },
+    "other_personnel": [
+      {
+        "name": "Chance Squiers",
+        "title": "Information Technology Director",
+        "email": "chance.squiers@menardisd.net",
+        "phone": "(325) 396-2404"
+      }
+    ],
+    "superintendent_contact": "Amy Bannowsky — Superintendent\namy.bannowsky@menardisd.net • (325) 396-2404",
+    "other_contacts_summary": "Chance Squiers — Information Technology Director\nchance.squiers@menardisd.net • (325) 396-2404",
+    "contact_count": 2
+  },
+  "AL|wilcox-county": {
+    "superintendent": {
+      "name": "Andre Saulsberry",
+      "title": "Superintendent",
+      "email": "andre.saulsberry@wilcoxboe.org",
+      "phone": "(334) 682-4716"
+    },
+    "other_personnel": [
+      {
+        "name": "Marcus Lennon",
+        "title": "Chief Financial Officer",
+        "email": "marcus.lennon@wilcoxboe.org",
+        "phone": "(334) 682-4716"
+      }
+    ],
+    "superintendent_contact": "Andre Saulsberry — Superintendent\nandre.saulsberry@wilcoxboe.org • (334) 682-4716",
+    "other_contacts_summary": "Marcus Lennon — Chief Financial Officer\nmarcus.lennon@wilcoxboe.org • (334) 682-4716",
+    "contact_count": 2
+  },
+  "ND|warwick-29": {
+    "superintendent": {
+      "name": "Angela Brandt",
+      "title": "Superintendent",
+      "email": "angela.brandt@k12.nd.us",
+      "phone": "(701) 294-2561"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Angela Brandt — Superintendent\nangela.brandt@k12.nd.us • (701) 294-2561",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "NM|wagon-mound": {
+    "superintendent": {
+      "name": "Anita Romero",
+      "title": "Superintendent",
+      "email": "Anita.Romero@wm.k12.nm.us",
+      "phone": "(575) 666-3000"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Anita Romero — Superintendent\nAnita.Romero@wm.k12.nm.us • (575) 666-3000",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "TX|buena-vista-isd": {
+    "superintendent": {
+      "name": "Andrew Peters",
+      "title": "Superintendent",
+      "email": "apeters@bvisd.esc18.net",
+      "phone": "(432) 536-2225"
+    },
+    "other_personnel": [
+      {
+        "name": "Kevin Gomez",
+        "title": "Information Technology Director",
+        "email": "kgomez@bvisd.esc18.net",
+        "phone": "(432) 536-2225"
+      }
+    ],
+    "superintendent_contact": "Andrew Peters — Superintendent\napeters@bvisd.esc18.net • (432) 536-2225",
+    "other_contacts_summary": "Kevin Gomez — Information Technology Director\nkgomez@bvisd.esc18.net • (432) 536-2225",
+    "contact_count": 2
+  },
+  "LA|red-river-parish": {
+    "superintendent": {
+      "name": "Alison Strong",
+      "title": "Superintendent",
+      "email": "astrong@rrbulldogs.com",
+      "phone": "(318) 932-4081"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Alison Strong — Superintendent\nastrong@rrbulldogs.com • (318) 932-4081",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "CA|mountain-valley-unified": {
+    "superintendent": {
+      "name": "Anmarie Swanstrom",
+      "title": "Superintendent",
+      "email": "aswanstrom@mvusd.us",
+      "phone": "(530) 628-5265"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Anmarie Swanstrom — Superintendent\naswanstrom@mvusd.us • (530) 628-5265",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "MT|rosebud-k-12": {
+    "superintendent": {
+      "name": "Abby Tucker",
+      "title": "Superintendent",
+      "email": "atucker@rhs12.com",
+      "phone": "(406) 347-5353"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Abby Tucker — Superintendent\natucker@rhs12.com • (406) 347-5353",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "AK|pelican-city-school-district": {
+    "superintendent": {
+      "name": "Brett Agenbroad",
+      "title": "Superintendent",
+      "email": "bagenbroad@pelicanschool.org",
+      "phone": "(907) 735-2236"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Brett Agenbroad — Superintendent\nbagenbroad@pelicanschool.org • (907) 735-2236",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "AZ|concho-elementary-district-4160": {
+    "superintendent": {
+      "name": "Billie Bell",
+      "title": "Superintendent",
+      "email": "bbell@concho.k12.az.us",
+      "phone": "(928) 337-4665"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Billie Bell — Superintendent\nbbell@concho.k12.az.us • (928) 337-4665",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "OK|red-oak": {
+    "superintendent": {
+      "name": "Bryan Deatherage",
+      "title": "Superintendent",
+      "email": "bdeatherage@redoak.k12.ok.us",
+      "phone": "(918) 754-2426"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Bryan Deatherage — Superintendent\nbdeatherage@redoak.k12.ok.us • (918) 754-2426",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "MT|reichle-elem": {
+    "superintendent": {
+      "name": "Rebecca Jensen",
+      "title": "Superintendent",
+      "email": "beckyjensen.reichle@gmail.com",
+      "phone": "(406) 865-0353"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Rebecca Jensen — Superintendent\nbeckyjensen.reichle@gmail.com • (406) 865-0353",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "NM|dora": {
+    "superintendent": {
+      "name": "Brandon\tHays",
+      "title": "Superintendent",
+      "email": "bhays@doraschools.com",
+      "phone": "(575) 477-2211"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Brandon\tHays — Superintendent\nbhays@doraschools.com • (575) 477-2211",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "CA|laytonville-unified": {
+    "superintendent": {
+      "name": "Bruce Peters",
+      "title": "Superintendent",
+      "email": "Bpeters@Lhms.Us",
+      "phone": "(707) 984-6414"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Bruce Peters — Superintendent\nBpeters@Lhms.Us • (707) 984-6414",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "AR|brinkley-school-district": {
+    "superintendent": {
+      "name": "Brenda Poole",
+      "title": "Superintendent",
+      "email": "bpoole@btigers.org",
+      "phone": "(870) 734-5000"
+    },
+    "other_personnel": [
+      {
+        "name": "Shane Comer",
+        "title": "Information Technology Director",
+        "email": "scomer@btigers.org",
+        "phone": "(870) 734-5000"
+      }
+    ],
+    "superintendent_contact": "Brenda Poole — Superintendent\nbpoole@btigers.org • (870) 734-5000",
+    "other_contacts_summary": "Shane Comer — Information Technology Director\nscomer@btigers.org • (870) 734-5000",
+    "contact_count": 2
+  },
+  "ND|zeeland-4": {
+    "superintendent": {
+      "name": "Brandt Dick",
+      "title": "Superintendent",
+      "email": "brandt.dick@k12.nd.us",
+      "phone": "(701) 423-5429"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Brandt Dick — Superintendent\nbrandt.dick@k12.nd.us • (701) 423-5429",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "CO|la-veta-school-district-re-2": {
+    "superintendent": {
+      "name": "Bree Jones",
+      "title": "Superintendent",
+      "email": "bree.jones@lvk12.org",
+      "phone": "(719) 742-3562"
+    },
+    "other_personnel": [
+      {
+        "name": "Aron Northrup",
+        "title": "Information Technology Director",
+        "email": "aron.northrup@lvk12.org",
+        "phone": "(719) 742-3562"
+      }
+    ],
+    "superintendent_contact": "Bree Jones — Superintendent\nbree.jones@lvk12.org • (719) 742-3562",
+    "other_contacts_summary": "Aron Northrup — Information Technology Director\naron.northrup@lvk12.org • (719) 742-3562",
+    "contact_count": 2
+  },
+  "SD|dupree-school-district-64-2": {
+    "superintendent": {
+      "name": "Brent Mareska",
+      "title": "Superintendent",
+      "email": "brent.mareska@k12.sd.us",
+      "phone": "(605) 365-5140"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Brent Mareska — Superintendent\nbrent.mareska@k12.sd.us • (605) 365-5140",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "AZ|joseph-city-unified-district-4388": {
+    "superintendent": {
+      "name": "Bryan Fields",
+      "title": "Superintendent",
+      "email": "bryanf@jcusd.org",
+      "phone": "(928) 288-3307"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Bryan Fields — Superintendent\nbryanf@jcusd.org • (928) 288-3307",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "AZ|tonto-basin-elementary-district-4215": {
+    "superintendent": {
+      "name": "Bobbie Warren",
+      "title": "Superintendent",
+      "email": "bwarren@tontobasinschool.org",
+      "phone": "(928) 479-2277"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Bobbie Warren — Superintendent\nbwarren@tontobasinschool.org • (928) 479-2277",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "TX|ranger-isd": {
+    "superintendent": {
+      "name": "Bobby Wilhelm",
+      "title": "Superintendent",
+      "email": "bwilhelm@ranger.esc14.net",
+      "phone": "(254) 647-1187"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Bobby Wilhelm — Superintendent\nbwilhelm@ranger.esc14.net • (254) 647-1187",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "ND|solen-3": {
+    "superintendent": {
+      "name": "Cari Kramer",
+      "title": "Superintendent",
+      "email": "cari.kramer@k12.nd.us",
+      "phone": "(701) 445-3331"
+    },
+    "other_personnel": [
+      {
+        "name": "Kristen Henke",
+        "title": "Information Technology Director",
+        "email": "kristen.henke@k12.nd.us",
+        "phone": "(701) 445-3331"
+      }
+    ],
+    "superintendent_contact": "Cari Kramer — Superintendent\ncari.kramer@k12.nd.us • (701) 445-3331",
+    "other_contacts_summary": "Kristen Henke — Information Technology Director\nkristen.henke@k12.nd.us • (701) 445-3331",
+    "contact_count": 2
+  },
+  "TX|west-sabine-isd": {
+    "superintendent": {
+      "name": "Carnelius Gilder",
+      "title": "Superintendent",
+      "email": "carnelius.gilder@westsabineisd.net",
+      "phone": "(409) 584-2655"
+    },
+    "other_personnel": [
+      {
+        "name": "Daniel Havard",
+        "title": "Information Technology Director",
+        "email": "daniel.havard@westsabineisd.net",
+        "phone": "(409) 584-2655"
+      }
+    ],
+    "superintendent_contact": "Carnelius Gilder — Superintendent\ncarnelius.gilder@westsabineisd.net • (409) 584-2655",
+    "other_contacts_summary": "Daniel Havard — Information Technology Director\ndaniel.havard@westsabineisd.net • (409) 584-2655",
+    "contact_count": 2
+  },
+  "SD|bennett-county-school-district-03-1": {
+    "superintendent": {
+      "name": "Carol Galbraith",
+      "title": "Superintendent",
+      "email": "carol.galbraith@k12.sd.us",
+      "phone": "(605) 685-6112"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Carol Galbraith — Superintendent\ncarol.galbraith@k12.sd.us • (605) 685-6112",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "LA|claiborne-parish": {
+    "superintendent": {
+      "name": "Chris Brooks",
+      "title": "Superintendent",
+      "email": "cbrooks@cpsb.us",
+      "phone": "(318) 927-3502"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Chris Brooks — Superintendent\ncbrooks@cpsb.us • (318) 927-3502",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "TX|freer-isd": {
+    "superintendent": {
+      "name": "Conrad Cantu",
+      "title": "Superintendent",
+      "email": "ccantu@freerisd.net",
+      "phone": "(361) 394-6025"
+    },
+    "other_personnel": [
+      {
+        "name": "Frances Perez",
+        "title": "Assistant Superintendent",
+        "email": "fperez@freerisd.net",
+        "phone": "(361) 394-6025"
+      },
+      {
+        "name": "Russell Buhidar",
+        "title": "Chief Financial Officer",
+        "email": "rbuhidar@freerisd.net",
+        "phone": "(361) 394-6025"
+      },
+      {
+        "name": "Greg Perez",
+        "title": "Information Technology Director",
+        "email": "gperez@freerisd.net",
+        "phone": "(361) 394-6025"
+      }
+    ],
+    "superintendent_contact": "Conrad Cantu — Superintendent\nccantu@freerisd.net • (361) 394-6025",
+    "other_contacts_summary": "Frances Perez — Assistant Superintendent\nfperez@freerisd.net • (361) 394-6025\n\nRussell Buhidar — Chief Financial Officer\nrbuhidar@freerisd.net • (361) 394-6025\n\nGreg Perez — Information Technology Director\ngperez@freerisd.net • (361) 394-6025",
+    "contact_count": 4
+  },
+  "MO|ripley-co-r-iv": {
+    "superintendent": {
+      "name": "Carly Carter",
+      "title": "Superintendent",
+      "email": "ccarter@lonestar.k12.mo.us",
+      "phone": "(573) 996-7118"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Carly Carter — Superintendent\nccarter@lonestar.k12.mo.us • (573) 996-7118",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "OK|nashoba": {
+    "superintendent": {
+      "name": "Charles Caughern",
+      "title": "Superintendent",
+      "email": "ccaughern@nashoba.k12.ok.us",
+      "phone": "(918) 755-4343"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Charles Caughern — Superintendent\nccaughern@nashoba.k12.ok.us • (918) 755-4343",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "MS|newton-municipal-school-district": {
+    "superintendent": {
+      "name": "Cola Shelby",
+      "title": "Superintendent",
+      "email": "ccshelby@nmsd.us",
+      "phone": "(601) 683-2451"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Cola Shelby — Superintendent\nccshelby@nmsd.us • (601) 683-2451",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "MO|south-iron-co-r-i": {
+    "superintendent": {
+      "name": "Chad Middleton",
+      "title": "Superintendent",
+      "email": "chadmiddleton@sipanthers.k12.mo.us",
+      "phone": "(573) 598-4241"
+    },
+    "other_personnel": [
+      {
+        "name": "Lyndal Jenkins",
+        "title": "Information Technology Director",
+        "email": "ljenkins@sipanthers.k12.mo.us",
+        "phone": "(573) 598-4241"
+      }
+    ],
+    "superintendent_contact": "Chad Middleton — Superintendent\nchadmiddleton@sipanthers.k12.mo.us • (573) 598-4241",
+    "other_contacts_summary": "Lyndal Jenkins — Information Technology Director\nljenkins@sipanthers.k12.mo.us • (573) 598-4241",
+    "contact_count": 2
+  },
+  "CA|coffee-creek-elementary": {
+    "superintendent": {
+      "name": "Corey Helgesen",
+      "title": "Superintendent",
+      "email": "chelgesen@tcoek12.org",
+      "phone": "(530) 266-3344"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Corey Helgesen — Superintendent\nchelgesen@tcoek12.org • (530) 266-3344",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "KY|magoffin-county": {
+    "superintendent": {
+      "name": "Chris Meadows",
+      "title": "Superintendent",
+      "email": "chris.meadows@magoffin.kyschools.us",
+      "phone": "(606) 349-6117"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Chris Meadows — Superintendent\nchris.meadows@magoffin.kyschools.us • (606) 349-6117",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "GA|johnson-county": {
+    "superintendent": {
+      "name": "Chris Watkins",
+      "title": "Superintendent",
+      "email": "christopher_watkins@johnson.k12.ga.us",
+      "phone": "(478) 864-3302"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Chris Watkins — Superintendent\nchristopher_watkins@johnson.k12.ga.us • (478) 864-3302",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "NM|estancia": {
+    "superintendent": {
+      "name": "Cindy Sims",
+      "title": "Superintendent",
+      "email": "cindy.sims@emsdbears.us",
+      "phone": "(505) 384-2000"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Cindy Sims — Superintendent\ncindy.sims@emsdbears.us • (505) 384-2000",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "AZ|young-elementary-district-4213": {
+    "superintendent": {
+      "name": "Chad Knippen",
+      "title": "Superintendent",
+      "email": "cknippen@youngschool.org",
+      "phone": "(928) 462-3244"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Chad Knippen — Superintendent\ncknippen@youngschool.org • (928) 462-3244",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "KY|mccreary-county": {
+    "superintendent": {
+      "name": "Clint Taylor",
+      "title": "Superintendent",
+      "email": "clint.taylor@mccreary.kyschools.us",
+      "phone": "(606) 376-2591"
+    },
+    "other_personnel": [
+      {
+        "name": "Angela Corder",
+        "title": "Information Technology Director",
+        "email": "angela.corder@mccreary.kyschools.us",
+        "phone": "(606) 376-2591"
+      }
+    ],
+    "superintendent_contact": "Clint Taylor — Superintendent\nclint.taylor@mccreary.kyschools.us • (606) 376-2591",
+    "other_contacts_summary": "Angela Corder — Information Technology Director\nangela.corder@mccreary.kyschools.us • (606) 376-2591",
+    "contact_count": 2
+  },
+  "NM|house": {
+    "superintendent": {
+      "name": "Coby Norman",
+      "title": "Superintendent",
+      "email": "cnorman@houseschools.net",
+      "phone": "(505) 279-7353"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Coby Norman — Superintendent\ncnorman@houseschools.net • (505) 279-7353",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "MT|miami-elem": {
+    "superintendent": {
+      "name": "Jackie Christiaens",
+      "title": "Superintendent",
+      "email": "cntysuper@ponderacounty.org",
+      "phone": "(406)472-3350"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Jackie Christiaens — Superintendent\ncntysuper@ponderacounty.org • (406)472-3350",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "TX|la-pryor-isd": {
+    "superintendent": {
+      "name": "Cody Miller",
+      "title": "Superintendent",
+      "email": "cody.miller@lapryorisd.net",
+      "phone": "(830) 365-4000"
+    },
+    "other_personnel": [
+      {
+        "name": "Mario Carrillo",
+        "title": "Information Technology Director",
+        "email": "mario.carrillo@lapryorisd.net",
+        "phone": "(830) 365-4000"
+      }
+    ],
+    "superintendent_contact": "Cody Miller — Superintendent\ncody.miller@lapryorisd.net • (830) 365-4000",
+    "other_contacts_summary": "Mario Carrillo — Information Technology Director\nmario.carrillo@lapryorisd.net • (830) 365-4000",
+    "contact_count": 2
+  },
+  "NM|carrizozo": {
+    "superintendent": {
+      "name": "Cody Patterson",
+      "title": "Superintendent",
+      "email": "cody.patterson@carrizozogrizzlies.org",
+      "phone": "(575) 648-2346"
+    },
+    "other_personnel": [
+      {
+        "name": "Patrick Berry",
+        "title": "Information Technology Director",
+        "email": "patrick.berry@regionix.org",
+        "phone": "(575) 648-2346"
+      }
+    ],
+    "superintendent_contact": "Cody Patterson — Superintendent\ncody.patterson@carrizozogrizzlies.org • (575) 648-2346",
+    "other_contacts_summary": "Patrick Berry — Information Technology Director\npatrick.berry@regionix.org • (575) 648-2346",
+    "contact_count": 2
+  },
+  "TX|harrold-isd": {
+    "superintendent": {
+      "name": "Cody Patton",
+      "title": "Superintendent",
+      "email": "cody.patton@harroldisd.net",
+      "phone": "(940) 886-2213"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Cody Patton — Superintendent\ncody.patton@harroldisd.net • (940) 886-2213",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "TX|knox-city-o-brien-cisd": {
+    "superintendent": {
+      "name": "Colin Howeth",
+      "title": "Superintendent",
+      "email": "colin.howeth@knoxcityschools.net",
+      "phone": "(940) 657-3521"
+    },
+    "other_personnel": [
+      {
+        "name": "Aaron Massey",
+        "title": "Information Technology Director",
+        "email": "aaron.massey@knoxcityschools.net",
+        "phone": "(940) 657-3521"
+      }
+    ],
+    "superintendent_contact": "Colin Howeth — Superintendent\ncolin.howeth@knoxcityschools.net • (940) 657-3521",
+    "other_contacts_summary": "Aaron Massey — Information Technology Director\naaron.massey@knoxcityschools.net • (940) 657-3521",
+    "contact_count": 2
+  },
+  "SD|oglala-lakota-county-school-district-65-1": {
+    "superintendent": {
+      "name": "Connie Kaltenbach",
+      "title": "Superintendent",
+      "email": "connie.kaltenbach@k12.sd.us",
+      "phone": "(605) 288-1921"
+    },
+    "other_personnel": [
+      {
+        "name": "Thomas Cottier",
+        "title": "Information Technology Director",
+        "email": "Thomas.Cottier@k12.sd.us",
+        "phone": "(605) 288-1921"
+      }
+    ],
+    "superintendent_contact": "Connie Kaltenbach — Superintendent\nconnie.kaltenbach@k12.sd.us • (605) 288-1921",
+    "other_contacts_summary": "Thomas Cottier — Information Technology Director\nThomas.Cottier@k12.sd.us • (605) 288-1921",
+    "contact_count": 2
+  },
+  "AZ|pinon-unified-district-4390": {
+    "superintendent": {
+      "name": "Chris Ostgaard",
+      "title": "Superintendent",
+      "email": "costgaard@pusdatsa.org",
+      "phone": "(928) 725-3450"
+    },
+    "other_personnel": [
+      {
+        "name": "Farrah Slim",
+        "title": "Information Technology Director",
+        "email": "fslim@pusdatsa.org",
+        "phone": "(928) 725-2192"
+      }
+    ],
+    "superintendent_contact": "Chris Ostgaard — Superintendent\ncostgaard@pusdatsa.org • (928) 725-3450",
+    "other_contacts_summary": "Farrah Slim — Information Technology Director\nfslim@pusdatsa.org • (928) 725-2192",
+    "contact_count": 2
+  },
+  "TX|presidio-isd": {
+    "superintendent": {
+      "name": "Carmen Rubner",
+      "title": "Superintendent",
+      "email": "crubner@presidio-isd.net",
+      "phone": "(432) 229-3275"
+    },
+    "other_personnel": [
+      {
+        "name": "Raquel Baeza",
+        "title": "Chief Financial Officer",
+        "email": "rbaeza@presidio-isd.net",
+        "phone": "(432) 229-3275"
+      },
+      {
+        "name": "Izael Valdez",
+        "title": "Information Technology Director",
+        "email": "ivaldez@presidio-isd.net",
+        "phone": "(432) 229-3275"
+      }
+    ],
+    "superintendent_contact": "Carmen Rubner — Superintendent\ncrubner@presidio-isd.net • (432) 229-3275",
+    "other_contacts_summary": "Raquel Baeza — Chief Financial Officer\nrbaeza@presidio-isd.net • (432) 229-3275\n\nIzael Valdez — Information Technology Director\nivaldez@presidio-isd.net • (432) 229-3275",
+    "contact_count": 3
+  },
+  "AR|augusta-school-district": {
+    "superintendent": {
+      "name": "Cathy Tanner",
+      "title": "Superintendent",
+      "email": "ctanner@augustasd.org",
+      "phone": "(870) 347-2241"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Cathy Tanner — Superintendent\nctanner@augustasd.org • (870) 347-2241",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "TX|leakey-isd": {
+    "superintendent": {
+      "name": "Chris Yeschke",
+      "title": "Superintendent",
+      "email": "cyeschke@leakeyisd.net",
+      "phone": "(830) 232-5595"
+    },
+    "other_personnel": [
+      {
+        "name": "Rick Davis",
+        "title": "Information Technology Director",
+        "email": "rdavis@leakeyisd.net",
+        "phone": "(830) 232-6122"
+      }
+    ],
+    "superintendent_contact": "Chris Yeschke — Superintendent\ncyeschke@leakeyisd.net • (830) 232-5595",
+    "other_contacts_summary": "Rick Davis — Information Technology Director\nrdavis@leakeyisd.net • (830) 232-6122",
+    "contact_count": 2
+  },
+  "NC|washington-county-schools": {
+    "superintendent": {
+      "name": "David White",
+      "title": "Superintendent",
+      "email": "dawhite@wcsnc.org",
+      "phone": "(252) 793-5171"
+    },
+    "other_personnel": [
+      {
+        "name": "Daniel Smith",
+        "title": "Information Technology Director",
+        "email": "dsmith@wcsnc.org",
+        "phone": "(252) 793-5171"
+      }
+    ],
+    "superintendent_contact": "David White — Superintendent\ndawhite@wcsnc.org • (252) 793-5171",
+    "other_contacts_summary": "Daniel Smith — Information Technology Director\ndsmith@wcsnc.org • (252) 793-5171",
+    "contact_count": 2
+  },
+  "OK|mccurtain": {
+    "superintendent": {
+      "name": "Deward Palmer",
+      "title": "Superintendent",
+      "email": "deward.palmer@mccurtainschools.org",
+      "phone": "(918) 945-7237"
+    },
+    "other_personnel": [
+      {
+        "name": "Mark Culwell",
+        "title": "Information Technology Director",
+        "email": "mark.culwell@mccurtainschools.org",
+        "phone": "(918) 945-7237"
+      }
+    ],
+    "superintendent_contact": "Deward Palmer — Superintendent\ndeward.palmer@mccurtainschools.org • (918) 945-7237",
+    "other_contacts_summary": "Mark Culwell — Information Technology Director\nmark.culwell@mccurtainschools.org • (918) 945-7237",
+    "contact_count": 2
+  },
+  "MS|louisville-municipal-school-district": {
+    "superintendent": {
+      "name": "David Luke",
+      "title": "Superintendent",
+      "email": "dluke@louisville.k12.ms.us",
+      "phone": "(662) 773-3411"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "David Luke — Superintendent\ndluke@louisville.k12.ms.us • (662) 773-3411",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "OK|smithville": {
+    "superintendent": {
+      "name": "Delbert Mcbroom",
+      "title": "Superintendent",
+      "email": "dmcbroom@smithville.k12.ok.us",
+      "phone": "(580) 244-3333"
+    },
+    "other_personnel": [
+      {
+        "name": "Theresa Erickson",
+        "title": "Information Technology Director",
+        "email": "terickson@smithville.k12.ok.us",
+        "phone": "(580) 244-3333"
+      }
+    ],
+    "superintendent_contact": "Delbert Mcbroom — Superintendent\ndmcbroom@smithville.k12.ok.us • (580) 244-3333",
+    "other_contacts_summary": "Theresa Erickson — Information Technology Director\nterickson@smithville.k12.ok.us • (580) 244-3333",
+    "contact_count": 2
+  },
+  "MT|liberty-elem": {
+    "superintendent": {
+      "name": "Dan\tMcgee",
+      "title": "Superintendent",
+      "email": "dmcgee17911@gmail.com",
+      "phone": "(406) 432-5265"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Dan\tMcgee — Superintendent\ndmcgee17911@gmail.com • (406) 432-5265",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "AL|elba-city": {
+    "superintendent": {
+      "name": "Donny Powell",
+      "title": "Superintendent",
+      "email": "dpowell@elbaed.com",
+      "phone": "(334) 897-2801"
+    },
+    "other_personnel": [
+      {
+        "name": "Colby Capps",
+        "title": "Information Technology Director",
+        "email": "ccapps@elbaed.com",
+        "phone": "(334) 897-2801"
+      }
+    ],
+    "superintendent_contact": "Donny Powell — Superintendent\ndpowell@elbaed.com • (334) 897-2801",
+    "other_contacts_summary": "Colby Capps — Information Technology Director\nccapps@elbaed.com • (334) 897-2801",
+    "contact_count": 2
+  },
+  "WA|onion-creek-school-district": {
+    "superintendent": {
+      "name": "Daniel Read",
+      "title": "Superintendent",
+      "email": "dread@ocsd30.org",
+      "phone": "(509) 732-4240"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Daniel Read — Superintendent\ndread@ocsd30.org • (509) 732-4240",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "AZ|cedar-unified-district-4395": {
+    "superintendent": {
+      "name": "Dean Slaga",
+      "title": "Superintendent",
+      "email": "dslaga@cedarusd.org",
+      "phone": "(928) 738-2334"
+    },
+    "other_personnel": [
+      {
+        "name": "Kevin Campbell",
+        "title": "Information Technology Director",
+        "email": "kcampbell@cedarusd.org",
+        "phone": "(928) 738-2334"
+      }
+    ],
+    "superintendent_contact": "Dean Slaga — Superintendent\ndslaga@cedarusd.org • (928) 738-2334",
+    "other_contacts_summary": "Kevin Campbell — Information Technology Director\nkcampbell@cedarusd.org • (928) 738-2334",
+    "contact_count": 2
+  },
+  "AZ|hyder-elementary-district-4502": {
+    "superintendent": {
+      "name": "Deborah Stewart",
+      "title": "Superintendent",
+      "email": "dstewart@datelandschool.org",
+      "phone": "(928) 454-2242"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Deborah Stewart — Superintendent\ndstewart@datelandschool.org • (928) 454-2242",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "OK|sayre": {
+    "superintendent": {
+      "name": "Dee Wilhelm",
+      "title": "Superintendent",
+      "email": "dwilhelm@sayre.k12.ok.us",
+      "phone": "(580) 928-5531"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Dee Wilhelm — Superintendent\ndwilhelm@sayre.k12.ok.us • (580) 928-5531",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "KY|lee-county": {
+    "superintendent": {
+      "name": "Earl Shuler",
+      "title": "Superintendent",
+      "email": "earl.shuler@lee.kyschools.us",
+      "phone": "(606) 464-5000"
+    },
+    "other_personnel": [
+      {
+        "name": "Tina Lucas",
+        "title": "Chief Financial Officer",
+        "email": "tina.lucas@lee.kyschools.us",
+        "phone": "(606) 464-5000"
+      },
+      {
+        "name": "John Profitt",
+        "title": "Information Technology Director",
+        "email": "john.profitt@lee.kyschools.us",
+        "phone": "(606) 464-5000"
+      }
+    ],
+    "superintendent_contact": "Earl Shuler — Superintendent\nearl.shuler@lee.kyschools.us • (606) 464-5000",
+    "other_contacts_summary": "Tina Lucas — Chief Financial Officer\ntina.lucas@lee.kyschools.us • (606) 464-5000\n\nJohn Profitt — Information Technology Director\njohn.profitt@lee.kyschools.us • (606) 464-5000",
+    "contact_count": 3
+  },
+  "TX|sabinal-isd": {
+    "superintendent": {
+      "name": "Edgar Camacho",
+      "title": "Superintendent",
+      "email": "ecamacho@sabinalisd.net",
+      "phone": "(830) 988-2472"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Edgar Camacho — Superintendent\necamacho@sabinalisd.net • (830) 988-2472",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "CA|stony-creek-joint-unified": {
+    "superintendent": {
+      "name": "Emily Pendell",
+      "title": "Superintendent",
+      "email": "ependell@scjusd.org",
+      "phone": "(530) 968-5361"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Emily Pendell — Superintendent\nependell@scjusd.org • (530) 968-5361",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "MI|baldwin-community-schools": {
+    "superintendent": {
+      "name": "David Forrester",
+      "title": "Superintendent",
+      "email": "forresterd@bcsdmi.com",
+      "phone": "(231) 745-4791"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "David Forrester — Superintendent\nforresterd@bcsdmi.com • (231) 745-4791",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "NM|mesa-vista": {
+    "superintendent": {
+      "name": "Fred Trujillo",
+      "title": "Superintendent",
+      "email": "fred.trujillo@mesavista.org",
+      "phone": "(575) 583-2645"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Fred Trujillo — Superintendent\nfred.trujillo@mesavista.org • (575) 583-2645",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "KY|owsley-county": {
+    "superintendent": {
+      "name": "Gary Cornett",
+      "title": "Superintendent",
+      "email": "gary.cornett@owsley.kyschools.us",
+      "phone": "(606) 593-6363"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Gary Cornett — Superintendent\ngary.cornett@owsley.kyschools.us • (606) 593-6363",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "MT|pine-grove-elem": {
+    "superintendent": {
+      "name": "Heather\tGibson",
+      "title": "Superintendent",
+      "email": "gcsupt@midrivers.com",
+      "phone": "(406) 557-2471"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Heather\tGibson — Superintendent\ngcsupt@midrivers.com • (406) 557-2471",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "GA|wilcox-county": {
+    "superintendent": {
+      "name": "Nathan Gibbs",
+      "title": "Superintendent",
+      "email": "GibbsN@wilcoxcountyschools.org",
+      "phone": "(229) 467-2141"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Nathan Gibbs — Superintendent\nGibbsN@wilcoxcountyschools.org • (229) 467-2141",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "MT|lima-k-12-schools": {
+    "superintendent": {
+      "name": "Greg Iverson",
+      "title": "Superintendent",
+      "email": "giverson@limaschoolmt.org",
+      "phone": "(406) 276-3571"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Greg Iverson — Superintendent\ngiverson@limaschoolmt.org • (406) 276-3571",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "TX|dawson-isd": {
+    "superintendent": {
+      "name": "Gary Jones",
+      "title": "Superintendent",
+      "email": "gjones@esc17.net",
+      "phone": "(806) 489-7461"
+    },
+    "other_personnel": [
+      {
+        "name": "Cameron Shaw",
+        "title": "Information Technology Director",
+        "email": "cameron.shaw@dawsonisd.net",
+        "phone": "(806) 489-7461"
+      }
+    ],
+    "superintendent_contact": "Gary Jones — Superintendent\ngjones@esc17.net • (806) 489-7461",
+    "other_contacts_summary": "Cameron Shaw — Information Technology Director\ncameron.shaw@dawsonisd.net • (806) 489-7461",
+    "contact_count": 2
+  },
+  "AZ|wenden-elementary-district-4512": {
+    "superintendent": {
+      "name": "Gloria Dean",
+      "title": "Superintendent",
+      "email": "gloriadean@wendenk8.org",
+      "phone": "(928) 859-3806"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Gloria Dean — Superintendent\ngloriadean@wendenk8.org • (928) 859-3806",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "NM|dulce": {
+    "superintendent": {
+      "name": "Gilbert Martinez",
+      "title": "Superintendent",
+      "email": "gmartinez@dulceschools.com",
+      "phone": "(575) 759-3225"
+    },
+    "other_personnel": [
+      {
+        "name": "Felix Garcia",
+        "title": "Assistant Superintendent",
+        "email": "fgarcia@dulceschools.com",
+        "phone": "(575) 759-3225"
+      }
+    ],
+    "superintendent_contact": "Gilbert Martinez — Superintendent\ngmartinez@dulceschools.com • (575) 759-3225",
+    "other_contacts_summary": "Felix Garcia — Assistant Superintendent\nfgarcia@dulceschools.com • (575) 759-3225",
+    "contact_count": 2
+  },
+  "TX|burkeville-isd": {
+    "superintendent": {
+      "name": "Gordon Thomas",
+      "title": "Superintendent",
+      "email": "gthomas@burkevilleisd.org",
+      "phone": "(409) 565-2201"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Gordon Thomas — Superintendent\ngthomas@burkevilleisd.org • (409) 565-2201",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "TX|paducah-isd": {
+    "superintendent": {
+      "name": "Gary Waitman",
+      "title": "Superintendent",
+      "email": "gwaitman@paducahisd.org",
+      "phone": "(806) 492-3524"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Gary Waitman — Superintendent\ngwaitman@paducahisd.org • (806) 492-3524",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "TX|runge-isd": {
+    "superintendent": {
+      "name": "Hector Dominguez",
+      "title": "Superintendent",
+      "email": "hdominguez@rungeisd.org",
+      "phone": "(830) 239-4315"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Hector Dominguez — Superintendent\nhdominguez@rungeisd.org • (830) 239-4315",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "MS|kemper-county-school-district": {
+    "superintendent": {
+      "name": "Hilute Hudson",
+      "title": "Superintendent",
+      "email": "hhudson@kemper.k12.ms.us",
+      "phone": "(601) 743-2657"
+    },
+    "other_personnel": [
+      {
+        "name": "Brian Scott",
+        "title": "Information Technology Director",
+        "email": "bscott@kemper.k12.ms.us",
+        "phone": "(601) 743-2657"
+      }
+    ],
+    "superintendent_contact": "Hilute Hudson — Superintendent\nhhudson@kemper.k12.ms.us • (601) 743-2657",
+    "other_contacts_summary": "Brian Scott — Information Technology Director\nbscott@kemper.k12.ms.us • (601) 743-2657",
+    "contact_count": 2
+  },
+  "MS|winona-montgomery-consolidated-school-district": {
+    "superintendent": {
+      "name": "Howard Savage",
+      "title": "Superintendent",
+      "email": "howardsavage@wmsdk12.org",
+      "phone": "(662) 283-3731"
+    },
+    "other_personnel": [
+      {
+        "name": "Wesley King",
+        "title": "Information Technology Director",
+        "email": "wesleyking@wmsdk12.org",
+        "phone": "(662) 283-3731"
+      }
+    ],
+    "superintendent_contact": "Howard Savage — Superintendent\nhowardsavage@wmsdk12.org • (662) 283-3731",
+    "other_contacts_summary": "Wesley King — Information Technology Director\nwesleyking@wmsdk12.org • (662) 283-3731",
+    "contact_count": 2
+  },
+  "OK|wickliffe": {
+    "superintendent": {
+      "name": "Jamie Carney",
+      "title": "Superintendent",
+      "email": "jamie.carney@wickliffeschool.com",
+      "phone": "(918) 434-5558"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Jamie Carney — Superintendent\njamie.carney@wickliffeschool.com • (918) 434-5558",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "SD|kadoka-area-school-district-35-2": {
+    "superintendent": {
+      "name": "Jamie Hermann",
+      "title": "Superintendent",
+      "email": "jamie.hermann@k12.sd.us",
+      "phone": "(605) 837-2175"
+    },
+    "other_personnel": [
+      {
+        "name": "Chad Eisenbraun",
+        "title": "Information Technology Director",
+        "email": "chad.eisenbraun@k12.sd.us",
+        "phone": "(605) 837-2175"
+      }
+    ],
+    "superintendent_contact": "Jamie Hermann — Superintendent\njamie.hermann@k12.sd.us • (605) 837-2175",
+    "other_contacts_summary": "Chad Eisenbraun — Information Technology Director\nchad.eisenbraun@k12.sd.us • (605) 837-2175",
+    "contact_count": 2
+  },
+  "WV|webster-county-schools": {
+    "superintendent": {
+      "name": "Joseph Arbogast",
+      "title": "Superintendent",
+      "email": "jarbogast@k12.wv.us",
+      "phone": "(304) 847-5638"
+    },
+    "other_personnel": [
+      {
+        "name": "Tammy Holcomb",
+        "title": "Chief Financial Officer",
+        "email": "tholcomb@k12.wv.us",
+        "phone": "(304) 847-5638"
+      },
+      {
+        "name": "Stacey Williams",
+        "title": "Information Technology Director",
+        "email": "swilliams@k12.wv.us",
+        "phone": "(304) 847-5638"
+      }
+    ],
+    "superintendent_contact": "Joseph Arbogast — Superintendent\njarbogast@k12.wv.us • (304) 847-5638",
+    "other_contacts_summary": "Tammy Holcomb — Chief Financial Officer\ntholcomb@k12.wv.us • (304) 847-5638\n\nStacey Williams — Information Technology Director\nswilliams@k12.wv.us • (304) 847-5638",
+    "contact_count": 3
+  },
+  "MS|walthall-county-school-district": {
+    "superintendent": {
+      "name": "Bradley Brumfield",
+      "title": "Superintendent",
+      "email": "jbbrumfield@wcsd.k12.ms.us",
+      "phone": "(601) 876-3401"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Bradley Brumfield — Superintendent\njbbrumfield@wcsd.k12.ms.us • (601) 876-3401",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "AK|kashunamiut-school-district": {
+    "superintendent": {
+      "name": "Jeanne Campbell",
+      "title": "Superintendent",
+      "email": "jcampbell@chevakschool.org",
+      "phone": "(907) 858-7713"
+    },
+    "other_personnel": [
+      {
+        "name": "Lucienne Smith",
+        "title": "Chief Financial Officer",
+        "email": "lucienne.smith@akebs.com",
+        "phone": "(907) 858-7713"
+      }
+    ],
+    "superintendent_contact": "Jeanne Campbell — Superintendent\njcampbell@chevakschool.org • (907) 858-7713",
+    "other_contacts_summary": "Lucienne Smith — Chief Financial Officer\nlucienne.smith@akebs.com • (907) 858-7713",
+    "contact_count": 2
+  },
+  "CA|klamath-river-union-elementary": {
+    "superintendent": {
+      "name": "Jami Carver",
+      "title": "Superintendent",
+      "email": "jcarver@sisnet.ssku.k12.ca.us",
+      "phone": "(530) 496-3406"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Jami Carver — Superintendent\njcarver@sisnet.ssku.k12.ca.us • (530) 496-3406",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "KS|weskan": {
+    "superintendent": {
+      "name": "John Cox",
+      "title": "Superintendent",
+      "email": "jcox@weskanschools.org",
+      "phone": "(785) 943-5222"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "John Cox — Superintendent\njcox@weskanschools.org • (785) 943-5222",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "TN|oneida": {
+    "superintendent": {
+      "name": "Jeanny Phillips",
+      "title": "Superintendent",
+      "email": "jeanny.phillips@oneidaschools.org",
+      "phone": "(423) 569-8912"
+    },
+    "other_personnel": [
+      {
+        "name": "Zacch Brown",
+        "title": "Assistant Superintendent",
+        "email": "zacch.brown@oneidaschools.org",
+        "phone": "(423) 569-8912"
+      },
+      {
+        "name": "Matt Hicks",
+        "title": "Information Technology Director",
+        "email": "matt.hicks@oneidaschools.org",
+        "phone": "(423) 569-8912"
+      }
+    ],
+    "superintendent_contact": "Jeanny Phillips — Superintendent\njeanny.phillips@oneidaschools.org • (423) 569-8912",
+    "other_contacts_summary": "Zacch Brown — Assistant Superintendent\nzacch.brown@oneidaschools.org • (423) 569-8912\n\nMatt Hicks — Information Technology Director\nmatt.hicks@oneidaschools.org • (423) 569-8912",
+    "contact_count": 3
+  },
+  "MS|holmes-county-consolidated": {
+    "superintendent": {
+      "name": "Jennifer Wilson",
+      "title": "Superintendent",
+      "email": "jennifer.wilson@holmesccsd.org",
+      "phone": "(662) 834-2175"
+    },
+    "other_personnel": [
+      {
+        "name": "Bobby Williams",
+        "title": "Information Technology Director",
+        "email": "bwilliams@holmesccsd.org",
+        "phone": "(662) 834-2175"
+      }
+    ],
+    "superintendent_contact": "Jennifer Wilson — Superintendent\njennifer.wilson@holmesccsd.org • (662) 834-2175",
+    "other_contacts_summary": "Bobby Williams — Information Technology Director\nbwilliams@holmesccsd.org • (662) 834-2175",
+    "contact_count": 2
+  },
+  "NM|animas": {
+    "superintendent": {
+      "name": "Jeff Gephart",
+      "title": "Superintendent",
+      "email": "jgephart@animask12.net",
+      "phone": "(575) 548-2299"
+    },
+    "other_personnel": [
+      {
+        "name": "Robbie Coker",
+        "title": "Assistant Superintendent",
+        "email": "rcoker@animask12.net",
+        "phone": "(575) 548-2299"
+      }
+    ],
+    "superintendent_contact": "Jeff Gephart — Superintendent\njgephart@animask12.net • (575) 548-2299",
+    "other_contacts_summary": "Robbie Coker — Assistant Superintendent\nrcoker@animask12.net • (575) 548-2299",
+    "contact_count": 2
+  },
+  "TX|ft-hancock-isd": {
+    "superintendent": {
+      "name": "Jose Franco",
+      "title": "Superintendent",
+      "email": "jgfranco@fhisd.net",
+      "phone": "(915) 769-3811"
+    },
+    "other_personnel": [
+      {
+        "name": "Luis Martinez",
+        "title": "Information Technology Director",
+        "email": "lmartinez@fhisd.net",
+        "phone": "(915) 769-3811"
+      }
+    ],
+    "superintendent_contact": "Jose Franco — Superintendent\njgfranco@fhisd.net • (915) 769-3811",
+    "other_contacts_summary": "Luis Martinez — Information Technology Director\nlmartinez@fhisd.net • (915) 769-3811",
+    "contact_count": 2
+  },
+  "TX|utopia-isd": {
+    "superintendent": {
+      "name": "Joshua Ham",
+      "title": "Superintendent",
+      "email": "jham@utopiaisd.net",
+      "phone": "(830) 966-1928"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Joshua Ham — Superintendent\njham@utopiaisd.net • (830) 966-1928",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "AK|lower-yukon-school-district": {
+    "superintendent": {
+      "name": "John Hargis",
+      "title": "Superintendent",
+      "email": "jhargis@lysd.org",
+      "phone": "(907) 591-2411"
+    },
+    "other_personnel": [
+      {
+        "name": "Andrew Leavitt",
+        "title": "Chief Financial Officer",
+        "email": "aleavitt@lysd.org",
+        "phone": "(907) 591-2411"
+      }
+    ],
+    "superintendent_contact": "John Hargis — Superintendent\njhargis@lysd.org • (907) 591-2411",
+    "other_contacts_summary": "Andrew Leavitt — Chief Financial Officer\naleavitt@lysd.org • (907) 591-2411",
+    "contact_count": 2
+  },
+  "GA|jenkins-county": {
+    "superintendent": {
+      "name": "John Hearn",
+      "title": "Superintendent",
+      "email": "jhearn@jchs.com",
+      "phone": "(478) 982-6000"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "John Hearn — Superintendent\njhearn@jchs.com • (478) 982-6000",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "AL|barbour-county": {
+    "superintendent": {
+      "name": "Jimmie Fryer",
+      "title": "Superintendent",
+      "email": "jimmie.fryer@barbourschools.org",
+      "phone": "(334) 775-3453"
+    },
+    "other_personnel": [
+      {
+        "name": "Michelle Andrews",
+        "title": "Chief Financial Officer",
+        "email": "michelle.andrews@barbourschools.org",
+        "phone": "(334) 775-1008"
+      },
+      {
+        "name": "Geoff Jones",
+        "title": "Information Technology Director",
+        "email": "geoff.jones@barbourschools.org",
+        "phone": "(334) 775-3453"
+      }
+    ],
+    "superintendent_contact": "Jimmie Fryer — Superintendent\njimmie.fryer@barbourschools.org • (334) 775-3453",
+    "other_contacts_summary": "Michelle Andrews — Chief Financial Officer\nmichelle.andrews@barbourschools.org • (334) 775-1008\n\nGeoff Jones — Information Technology Director\ngeoff.jones@barbourschools.org • (334) 775-3453",
+    "contact_count": 3
+  },
+  "GA|screven-county": {
+    "superintendent": {
+      "name": "Jim Thompson",
+      "title": "Superintendent",
+      "email": "jimthomp@screven.k12.ga.us",
+      "phone": "(912) 564-7114"
+    },
+    "other_personnel": [
+      {
+        "name": "Brian Scott",
+        "title": "Assistant Superintendent",
+        "email": "bscott@screven.k12.ga.us",
+        "phone": "(912) 564-7114"
+      },
+      {
+        "name": "Holly Boykin",
+        "title": "Information Technology Director",
+        "email": "hboykin@screven.k12.ga.us",
+        "phone": "(912) 564-7114"
+      }
+    ],
+    "superintendent_contact": "Jim Thompson — Superintendent\njimthomp@screven.k12.ga.us • (912) 564-7114",
+    "other_contacts_summary": "Brian Scott — Assistant Superintendent\nbscott@screven.k12.ga.us • (912) 564-7114\n\nHolly Boykin — Information Technology Director\nhboykin@screven.k12.ga.us • (912) 564-7114",
+    "contact_count": 3
+  },
+  "TX|valentine-isd": {
+    "superintendent": {
+      "name": "Jason Inman",
+      "title": "Superintendent",
+      "email": "jinman@valentineisd.com",
+      "phone": "(432) 467-2671"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Jason Inman — Superintendent\njinman@valentineisd.com • (432) 467-2671",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "AL|choctaw-county": {
+    "superintendent": {
+      "name": "Jacquelyn James",
+      "title": "Superintendent",
+      "email": "jjames@choctawal.org",
+      "phone": "(205)459-3031"
+    },
+    "other_personnel": [
+      {
+        "name": "Tenika White",
+        "title": "Chief Financial Officer",
+        "email": "twhite@choctawal.org",
+        "phone": "(205)459-3031"
+      }
+    ],
+    "superintendent_contact": "Jacquelyn James — Superintendent\njjames@choctawal.org • (205)459-3031",
+    "other_contacts_summary": "Tenika White — Chief Financial Officer\ntwhite@choctawal.org • (205)459-3031",
+    "contact_count": 2
+  },
+  "TX|turkey-quitaque-isd": {
+    "superintendent": {
+      "name": "Jackie Jenkins",
+      "title": "Superintendent",
+      "email": "jjenkins@valleypatriots.com",
+      "phone": "(806) 455-1411"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Jackie Jenkins — Superintendent\njjenkins@valleypatriots.com • (806) 455-1411",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "TX|trinity-isd": {
+    "superintendent": {
+      "name": "John Kaufman",
+      "title": "Superintendent",
+      "email": "jkaufman@trinityisd.net",
+      "phone": "(936) 594-3569"
+    },
+    "other_personnel": [
+      {
+        "name": "Barry Coleman",
+        "title": "Information Technology Director",
+        "email": "bcoleman@trinityisd.net",
+        "phone": "(936) 594-3569"
+      }
+    ],
+    "superintendent_contact": "John Kaufman — Superintendent\njkaufman@trinityisd.net • (936) 594-3569",
+    "other_contacts_summary": "Barry Coleman — Information Technology Director\nbcoleman@trinityisd.net • (936) 594-3569",
+    "contact_count": 2
+  },
+  "OK|talihina": {
+    "superintendent": {
+      "name": "Jason Lockhart",
+      "title": "Superintendent",
+      "email": "jlockhart@talihina.k12.ok.us",
+      "phone": "(918) 567-2259"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Jason Lockhart — Superintendent\njlockhart@talihina.k12.ok.us • (918) 567-2259",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "MO|winona-r-iii": {
+    "superintendent": {
+      "name": "Jana Williams",
+      "title": "Superintendent",
+      "email": "jlwilliams@winonar3.org",
+      "phone": "(573) 325-8101"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Jana Williams — Superintendent\njlwilliams@winonar3.org • (573) 325-8101",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "MT|lustre-elem": {
+    "superintendent": {
+      "name": "Jeanne Matthyser",
+      "title": "Superintendent",
+      "email": "jmatthyser@lustregradeschool.k12.mt.us",
+      "phone": "(406)228-6226"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Jeanne Matthyser — Superintendent\njmatthyser@lustregradeschool.k12.mt.us • (406)228-6226",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "OK|hollis": {
+    "superintendent": {
+      "name": "Jennifer Mcqueen",
+      "title": "Superintendent",
+      "email": "jmcqueen@hollis.k12.ok.us",
+      "phone": "(580) 706-6400"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Jennifer Mcqueen — Superintendent\njmcqueen@hollis.k12.ok.us • (580) 706-6400",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "AK|iditarod-area-school-district": {
+    "superintendent": {
+      "name": "John Bruce",
+      "title": "Superintendent",
+      "email": "johnbruce@iditarodsd.org",
+      "phone": "(907) 524-3033"
+    },
+    "other_personnel": [
+      {
+        "name": "Chris Romine",
+        "title": "Information Technology Director",
+        "email": "cromine@iditarodsd.org",
+        "phone": "(907) 524-3033"
+      }
+    ],
+    "superintendent_contact": "John Bruce — Superintendent\njohnbruce@iditarodsd.org • (907) 524-3033",
+    "other_contacts_summary": "Chris Romine — Information Technology Director\ncromine@iditarodsd.org • (907) 524-3033",
+    "contact_count": 2
+  },
+  "KY|metcalfe-county": {
+    "superintendent": {
+      "name": "Josh Hurt",
+      "title": "Superintendent",
+      "email": "josh.hurt@metcalfe.kyschools.us",
+      "phone": "(270) 432-3171"
+    },
+    "other_personnel": [
+      {
+        "name": "Cheyenne Garmon",
+        "title": "Chief Financial Officer",
+        "email": "cheyenne.garmon@metcalfe.kyschools.us",
+        "phone": "(270) 432-3171"
+      },
+      {
+        "name": "Buddy Brown",
+        "title": "Information Technology Director",
+        "email": "buddy.brown@metcalfe.kyschools.us",
+        "phone": "(270) 432-3171"
+      },
+      {
+        "name": "Randy Lee",
+        "title": "Information Technology Director",
+        "email": "randy.lee@metcalfe.kyschools.us",
+        "phone": "(270) 432-3171"
+      }
+    ],
+    "superintendent_contact": "Josh Hurt — Superintendent\njosh.hurt@metcalfe.kyschools.us • (270) 432-3171",
+    "other_contacts_summary": "Cheyenne Garmon — Chief Financial Officer\ncheyenne.garmon@metcalfe.kyschools.us • (270) 432-3171\n\nBuddy Brown — Information Technology Director\nbuddy.brown@metcalfe.kyschools.us • (270) 432-3171\n\nRandy Lee — Information Technology Director\nrandy.lee@metcalfe.kyschools.us • (270) 432-3171",
+    "contact_count": 4
+  },
+  "KY|menifee-county": {
+    "superintendent": {
+      "name": "Joshua Kincaid",
+      "title": "Superintendent",
+      "email": "joshua.kincaid@menifee.kyschools.us",
+      "phone": "(606) 768-8002"
+    },
+    "other_personnel": [
+      {
+        "name": "Tonya Means",
+        "title": "Assistant Superintendent",
+        "email": "tonya.means@menifee.kyschools.us",
+        "phone": "(606) 768-8002"
+      },
+      {
+        "name": "Lorri Bartley",
+        "title": "Chief Financial Officer",
+        "email": "lorri.bartley@menifee.kyschools.us",
+        "phone": "(606) 768-8002"
+      }
+    ],
+    "superintendent_contact": "Joshua Kincaid — Superintendent\njoshua.kincaid@menifee.kyschools.us • (606) 768-8002",
+    "other_contacts_summary": "Tonya Means — Assistant Superintendent\ntonya.means@menifee.kyschools.us • (606) 768-8002\n\nLorri Bartley — Chief Financial Officer\nlorri.bartley@menifee.kyschools.us • (606) 768-8002",
+    "contact_count": 3
+  },
+  "OK|ryan": {
+    "superintendent": {
+      "name": "Jodie Roberts",
+      "title": "Superintendent",
+      "email": "jroberts@ryan.k12.ok.us",
+      "phone": "(580) 757-2308"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Jodie Roberts — Superintendent\njroberts@ryan.k12.ok.us • (580) 757-2308",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "LA|tensas-parish": {
+    "superintendent": {
+      "name": "Joyce Russ",
+      "title": "Superintendent",
+      "email": "jruss@tensaspsb.org",
+      "phone": "(318) 766-3269"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Joyce Russ — Superintendent\njruss@tensaspsb.org • (318) 766-3269",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "TX|rocksprings-isd": {
+    "superintendent": {
+      "name": "Justin Bosque",
+      "title": "Superintendent",
+      "email": "justin.delbosque@rockspringsisd.net",
+      "phone": "(830) 683-4137"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Justin Bosque — Superintendent\njustin.delbosque@rockspringsisd.net • (830) 683-4137",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "AZ|elfrida-elementary-district-4185": {
+    "superintendent": {
+      "name": "Justin Price",
+      "title": "Superintendent",
+      "email": "justin.price@elfridaschools.org",
+      "phone": "(520) 642-3428"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Justin Price — Superintendent\njustin.price@elfridaschools.org • (520) 642-3428",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "AZ|salome-consolidated-elementary-district-4514": {
+    "superintendent": {
+      "name": "Jennifer Walton",
+      "title": "Superintendent",
+      "email": "jwalton@salomek8.org",
+      "phone": "(928) 859-3339"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Jennifer Walton — Superintendent\njwalton@salomek8.org • (928) 859-3339",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "OK|calvin": {
+    "superintendent": {
+      "name": "Jerad Winningham",
+      "title": "Superintendent",
+      "email": "jwinningham@calvin.k12.ok.us",
+      "phone": "(405) 645-2411"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Jerad Winningham — Superintendent\njwinningham@calvin.k12.ok.us • (405) 645-2411",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "SD|eagle-butte-school-district-20-1": {
+    "superintendent": {
+      "name": "Kara Bear",
+      "title": "Superintendent",
+      "email": "kara.fourbear@k12.sd.us",
+      "phone": "(605) 964-8777"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Kara Bear — Superintendent\nkara.fourbear@k12.sd.us • (605) 964-8777",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "AZ|pine-strawberry-elementary-district-4214": {
+    "superintendent": {
+      "name": "Katie Ast",
+      "title": "Superintendent",
+      "email": "kast@pineesd.org",
+      "phone": "(928) 476-3283"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Katie Ast — Superintendent\nkast@pineesd.org • (928) 476-3283",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "AZ|bicentennial-union-high-school-district-4515": {
+    "superintendent": {
+      "name": "Kari Avila",
+      "title": "Superintendent",
+      "email": "kavila@salomehs.org",
+      "phone": "(928) 859-3453"
+    },
+    "other_personnel": [
+      {
+        "name": "Trevon Tapp",
+        "title": "Information Technology Director",
+        "email": "ttapp@salomehs.org",
+        "phone": "(928) 859-3453"
+      }
+    ],
+    "superintendent_contact": "Kari Avila — Superintendent\nkavila@salomehs.org • (928) 859-3453",
+    "other_contacts_summary": "Trevon Tapp — Information Technology Director\nttapp@salomehs.org • (928) 859-3453",
+    "contact_count": 2
+  },
+  "AZ|sanders-unified-district-4156": {
+    "superintendent": {
+      "name": "Kay Morris",
+      "title": "Superintendent",
+      "email": "kaymorris@sandersusd.net",
+      "phone": "(928) 688-4747"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Kay Morris — Superintendent\nkaymorris@sandersusd.net • (928) 688-4747",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "TX|culberson-county-allamoore-isd": {
+    "superintendent": {
+      "name": "Kenneth Baugh",
+      "title": "Superintendent",
+      "email": "kbaugh@ccaisd.net",
+      "phone": "(432) 283-2245"
+    },
+    "other_personnel": [
+      {
+        "name": "Lindsey Tyrrell",
+        "title": "Information Technology Director",
+        "email": "ltyrrell@ccaisd.net",
+        "phone": "(432) 283-2245"
+      }
+    ],
+    "superintendent_contact": "Kenneth Baugh — Superintendent\nkbaugh@ccaisd.net • (432) 283-2245",
+    "other_contacts_summary": "Lindsey Tyrrell — Information Technology Director\nltyrrell@ccaisd.net • (432) 283-2245",
+    "contact_count": 2
+  },
+  "OK|whitesboro": {
+    "superintendent": {
+      "name": "Katie Blagg",
+      "title": "Superintendent",
+      "email": "kblagg@whitesboro.k12.ok.us",
+      "phone": "(918) 567-2556"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Katie Blagg — Superintendent\nkblagg@whitesboro.k12.ok.us • (918) 567-2556",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "MO|lutie-r-vi": {
+    "superintendent": {
+      "name": "Kathalee Cole",
+      "title": "Superintendent",
+      "email": "kcole@lutieschool.com",
+      "phone": "(417) 273-4274"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Kathalee Cole — Superintendent\nkcole@lutieschool.com • (417) 273-4274",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "TX|dilley-isd": {
+    "superintendent": {
+      "name": "Kelli Dubose",
+      "title": "Superintendent",
+      "email": "kelli.dubose@dilleyisd.net",
+      "phone": "(830) 965-1912"
+    },
+    "other_personnel": [
+      {
+        "name": "Matthew Aguilar",
+        "title": "Information Technology Director",
+        "email": "matthew.aguilar@dilleyisd.net",
+        "phone": "(830) 965-1912"
+      }
+    ],
+    "superintendent_contact": "Kelli Dubose — Superintendent\nkelli.dubose@dilleyisd.net • (830) 965-1912",
+    "other_contacts_summary": "Matthew Aguilar — Information Technology Director\nmatthew.aguilar@dilleyisd.net • (830) 965-1912",
+    "contact_count": 2
+  },
+  "TX|junction-isd": {
+    "superintendent": {
+      "name": "Ken Wimberley",
+      "title": "Superintendent",
+      "email": "ken.wimberley@junctionisd.net",
+      "phone": "(325) 446-3510"
+    },
+    "other_personnel": [
+      {
+        "name": "Derek Watkins",
+        "title": "Information Technology Director",
+        "email": "derek.watkins@junctionisd.net",
+        "phone": "(325) 446-3510"
+      }
+    ],
+    "superintendent_contact": "Ken Wimberley — Superintendent\nken.wimberley@junctionisd.net • (325) 446-3510",
+    "other_contacts_summary": "Derek Watkins — Information Technology Director\nderek.watkins@junctionisd.net • (325) 446-3510",
+    "contact_count": 2
+  },
+  "KY|wolfe-county": {
+    "superintendent": {
+      "name": "Kenny Bell",
+      "title": "Superintendent",
+      "email": "kenny.bell@wolfe.kyschools.us",
+      "phone": "(606) 668-8002"
+    },
+    "other_personnel": [
+      {
+        "name": "Jeff Stamper",
+        "title": "Assistant Superintendent",
+        "email": "jeff.stamper@wolfe.kyschools.us",
+        "phone": "(606) 668-8002"
+      }
+    ],
+    "superintendent_contact": "Kenny Bell — Superintendent\nkenny.bell@wolfe.kyschools.us • (606) 668-8002",
+    "other_contacts_summary": "Jeff Stamper — Assistant Superintendent\njeff.stamper@wolfe.kyschools.us • (606) 668-8002",
+    "contact_count": 2
+  },
+  "CO|pritchett-school-district-no-re-3": {
+    "superintendent": {
+      "name": "Kevin Smith",
+      "title": "Superintendent",
+      "email": "kevin.smith@pritchettre3.org",
+      "phone": "(719) 523-4045"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Kevin Smith — Superintendent\nkevin.smith@pritchettre3.org • (719) 523-4045",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "MT|melstone-elem": {
+    "superintendent": {
+      "name": "Kevin Stjohn",
+      "title": "Superintendent",
+      "email": "kevin.stjohn@melstone.net",
+      "phone": "(406) 358-2352"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Kevin Stjohn — Superintendent\nkevin.stjohn@melstone.net • (406) 358-2352",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "MT|ovando-elem": {
+    "superintendent": {
+      "name": "Kerry\tGlisson",
+      "title": "Superintendent",
+      "email": "kglisson@powellcountymt.gov",
+      "phone": "(406)793-5722"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Kerry\tGlisson — Superintendent\nkglisson@powellcountymt.gov • (406)793-5722",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "CO|centennial-school-district-no-r-1": {
+    "superintendent": {
+      "name": "Kimba Rael",
+      "title": "Superintendent",
+      "email": "kimba.rael@centennial.k12.co.us",
+      "phone": "(719) 672-3322"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Kimba Rael — Superintendent\nkimba.rael@centennial.k12.co.us • (719) 672-3322",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "NM|magdalena": {
+    "superintendent": {
+      "name": "Kimberly Ortiz",
+      "title": "Superintendent",
+      "email": "kimberly.ortiz@magschools.us",
+      "phone": "(575) 854-2241"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Kimberly Ortiz — Superintendent\nkimberly.ortiz@magschools.us • (575) 854-2241",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "ND|marmarth-12": {
+    "superintendent": {
+      "name": "Kirby Baier",
+      "title": "Superintendent",
+      "email": "kirby.baier@k12.nd.us",
+      "phone": "(701)279-5521"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Kirby Baier — Superintendent\nkirby.baier@k12.nd.us • (701)279-5521",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "KY|cumberland-county": {
+    "superintendent": {
+      "name": "Kirk Biggerstaff",
+      "title": "Superintendent",
+      "email": "kirk.biggerstaff@cumberland.kyschools.us",
+      "phone": "(270) 864-3377"
+    },
+    "other_personnel": [
+      {
+        "name": "Kristi Willen",
+        "title": "Chief Financial Officer",
+        "email": "kristi.willen@cumberland.kyschools.us",
+        "phone": "(270) 864-3377"
+      },
+      {
+        "name": "Paige Lagrange",
+        "title": "Information Technology Director",
+        "email": "paige.lagrange@cumberland.kyschools.us",
+        "phone": "(270) 864-3377"
+      }
+    ],
+    "superintendent_contact": "Kirk Biggerstaff — Superintendent\nkirk.biggerstaff@cumberland.kyschools.us • (270) 864-3377",
+    "other_contacts_summary": "Kristi Willen — Chief Financial Officer\nkristi.willen@cumberland.kyschools.us • (270) 864-3377\n\nPaige Lagrange — Information Technology Director\npaige.lagrange@cumberland.kyschools.us • (270) 864-3377",
+    "contact_count": 3
+  },
+  "CO|sierra-grande-school-district-no-r-30": {
+    "superintendent": {
+      "name": "Kevin Jones",
+      "title": "Superintendent",
+      "email": "kjones@sierragrandeschool.net",
+      "phone": "(719) 379-3259"
+    },
+    "other_personnel": [
+      {
+        "name": "Leslie Corona",
+        "title": "Information Technology Director",
+        "email": "lcorona@sierragrandeschool.net",
+        "phone": "(719) 379-3259"
+      }
+    ],
+    "superintendent_contact": "Kevin Jones — Superintendent\nkjones@sierragrandeschool.net • (719) 379-3259",
+    "other_contacts_summary": "Leslie Corona — Information Technology Director\nlcorona@sierragrandeschool.net • (719) 379-3259",
+    "contact_count": 2
+  },
+  "TX|nueces-canyon-cisd": {
+    "superintendent": {
+      "name": "Kristi Powers",
+      "title": "Superintendent",
+      "email": "kpowers@nccisd.net",
+      "phone": "(830) 234-3514"
+    },
+    "other_personnel": [
+      {
+        "name": "Brett Vernor",
+        "title": "Information Technology Director",
+        "email": "bvernor@nccisd.net",
+        "phone": "(830) 234-3514"
+      }
+    ],
+    "superintendent_contact": "Kristi Powers — Superintendent\nkpowers@nccisd.net • (830) 234-3514",
+    "other_contacts_summary": "Brett Vernor — Information Technology Director\nbvernor@nccisd.net • (830) 234-3514",
+    "contact_count": 2
+  },
+  "AR|dermott-school-district": {
+    "superintendent": {
+      "name": "Kristi Ridgell",
+      "title": "Superintendent",
+      "email": "kristi.ridgell@dermott.k12.ar.us",
+      "phone": "(870) 538-1000"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Kristi Ridgell — Superintendent\nkristi.ridgell@dermott.k12.ar.us • (870) 538-1000",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "OK|ringling": {
+    "superintendent": {
+      "name": "Kent Southward",
+      "title": "Superintendent",
+      "email": "ksouthward@ringling.k12.ok.us",
+      "phone": "(580) 662-2385"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Kent Southward — Superintendent\nksouthward@ringling.k12.ok.us • (580) 662-2385",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "NM|des-moines": {
+    "superintendent": {
+      "name": "Kodi Sumpter",
+      "title": "Superintendent",
+      "email": "ksumpter@dmsk12.org",
+      "phone": "(575) 278-2611"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Kodi Sumpter — Superintendent\nksumpter@dmsk12.org • (575) 278-2611",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "MT|lambert-elem": {
+    "superintendent": {
+      "name": "Kara Triplett",
+      "title": "Superintendent",
+      "email": "ktriplett@lambertschool.net",
+      "phone": "(406) 774-3333"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Kara Triplett — Superintendent\nktriplett@lambertschool.net • (406) 774-3333",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "AZ|cochise-elementary-district-4177": {
+    "superintendent": {
+      "name": "Karl Uterhardt",
+      "title": "Superintendent",
+      "email": "kuterhardt@cochiseschool.org",
+      "phone": "(520) 384-2540"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Karl Uterhardt — Superintendent\nkuterhardt@cochiseschool.org • (520) 384-2540",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "TX|paint-creek-isd": {
+    "superintendent": {
+      "name": "Kevin White",
+      "title": "Superintendent",
+      "email": "kwhite@paintcreek.esc14.net",
+      "phone": "(940) 864-2868"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Kevin White — Superintendent\nkwhite@paintcreek.esc14.net • (940) 864-2868",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "MT|swan-lake-salmon-elem": {
+    "superintendent": {
+      "name": "Carolyn Hall",
+      "title": "Superintendent",
+      "email": "lacosupt@lakemt.gov",
+      "phone": "(406) 886-2374"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Carolyn Hall — Superintendent\nlacosupt@lakemt.gov • (406) 886-2374",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "AZ|ganado-unified-school-district-4157": {
+    "superintendent": {
+      "name": "Leandra Thomas",
+      "title": "Superintendent",
+      "email": "leandra.thomas@ganado.k12.az.us",
+      "phone": "(928) 755-1000"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Leandra Thomas — Superintendent\nleandra.thomas@ganado.k12.az.us • (928) 755-1000",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "OK|felt": {
+    "superintendent": {
+      "name": "Lewetta Hefley",
+      "title": "Superintendent",
+      "email": "lewetta.hefley@feltps.org",
+      "phone": "(580) 426-2220"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Lewetta Hefley — Superintendent\nlewetta.hefley@feltps.org • (580) 426-2220",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "GA|telfair-county": {
+    "superintendent": {
+      "name": "Lenard Harrelson",
+      "title": "Superintendent",
+      "email": "lharrelson@telfairschools.org",
+      "phone": "(229) 868-5661"
+    },
+    "other_personnel": [
+      {
+        "name": "Jennifer White",
+        "title": "Information Technology Director",
+        "email": "jwhite@telfairschools.org",
+        "phone": "(229) 868-5661"
+      }
+    ],
+    "superintendent_contact": "Lenard Harrelson — Superintendent\nlharrelson@telfairschools.org • (229) 868-5661",
+    "other_contacts_summary": "Jennifer White — Information Technology Director\njwhite@telfairschools.org • (229) 868-5661",
+    "contact_count": 2
+  },
+  "TX|haskell-cisd": {
+    "superintendent": {
+      "name": "Lonnie Hise",
+      "title": "Superintendent",
+      "email": "lhise@haskell.esc14.net",
+      "phone": "(940) 864-2602"
+    },
+    "other_personnel": [
+      {
+        "name": "John Rutkowski",
+        "title": "Information Technology Director",
+        "email": "jrutkowski@haskell.esc14.net",
+        "phone": "(940) 864-2602"
+      }
+    ],
+    "superintendent_contact": "Lonnie Hise — Superintendent\nlhise@haskell.esc14.net • (940) 864-2602",
+    "other_contacts_summary": "John Rutkowski — Information Technology Director\njrutkowski@haskell.esc14.net • (940) 864-2602",
+    "contact_count": 2
+  },
+  "OK|buffalo-valley": {
+    "superintendent": {
+      "name": "Lyndon Howze",
+      "title": "Superintendent",
+      "email": "lhowze@bvpsd.org",
+      "phone": "(918) 522-4426"
+    },
+    "other_personnel": [
+      {
+        "name": "Jerry Mathews",
+        "title": "Information Technology Director",
+        "email": "jmathews@bvpsd.org",
+        "phone": "(918) 522-4426"
+      }
+    ],
+    "superintendent_contact": "Lyndon Howze — Superintendent\nlhowze@bvpsd.org • (918) 522-4426",
+    "other_contacts_summary": "Jerry Mathews — Information Technology Director\njmathews@bvpsd.org • (918) 522-4426",
+    "contact_count": 2
+  },
+  "AR|mcgehee-school-district": {
+    "superintendent": {
+      "name": "Linda Tullos",
+      "title": "Superintendent",
+      "email": "linda.tullos@mcgeheeschools.org",
+      "phone": "(870) 222-3670"
+    },
+    "other_personnel": [
+      {
+        "name": "Justin Holt",
+        "title": "Assistant Superintendent",
+        "email": "justin.holt@mcgeheeschools.org",
+        "phone": "(870) 222-3670"
+      },
+      {
+        "name": "Debbi Minchew",
+        "title": "Information Technology Director",
+        "email": "debbi.minchew@mcgeheeschools.org",
+        "phone": "(870) 222-3670"
+      }
+    ],
+    "superintendent_contact": "Linda Tullos — Superintendent\nlinda.tullos@mcgeheeschools.org • (870) 222-3670",
+    "other_contacts_summary": "Justin Holt — Assistant Superintendent\njustin.holt@mcgeheeschools.org • (870) 222-3670\n\nDebbi Minchew — Information Technology Director\ndebbi.minchew@mcgeheeschools.org • (870) 222-3670",
+    "contact_count": 3
+  },
+  "SD|mclaughlin-school-district-15-2": {
+    "superintendent": {
+      "name": "Lisa Alive",
+      "title": "Superintendent",
+      "email": "lisa.takenalive@k12.sd.us",
+      "phone": "(605) 823-4484"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Lisa Alive — Superintendent\nlisa.takenalive@k12.sd.us • (605) 823-4484",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "AZ|whiteriver-unified-district-4394": {
+    "superintendent": {
+      "name": "Leeann Lacapa",
+      "title": "Superintendent",
+      "email": "llacapa@wusd.us",
+      "phone": "(928) 358-5800"
+    },
+    "other_personnel": [
+      {
+        "name": "Pierre Dehombreux",
+        "title": "Information Technology Director",
+        "email": "pdehombreux@wusd.us",
+        "phone": "(928) 358-5800"
+      }
+    ],
+    "superintendent_contact": "Leeann Lacapa — Superintendent\nllacapa@wusd.us • (928) 358-5800",
+    "other_contacts_summary": "Pierre Dehombreux — Information Technology Director\npdehombreux@wusd.us • (928) 358-5800",
+    "contact_count": 2
+  },
+  "OR|spray-sd-1": {
+    "superintendent": {
+      "name": "Lou Lyon",
+      "title": "Superintendent",
+      "email": "llyon@spray.k12.or.us",
+      "phone": "(541) 468-2226"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Lou Lyon — Superintendent\nllyon@spray.k12.or.us • (541) 468-2226",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "TX|sierra-blanca-isd": {
+    "superintendent": {
+      "name": "Leeann Mcgraw",
+      "title": "Superintendent",
+      "email": "lmcgraw@sierrablancaisd.net",
+      "phone": "(915) 369-3741"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Leeann Mcgraw — Superintendent\nlmcgraw@sierrablancaisd.net • (915) 369-3741",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "SD|white-river-school-district-47-1": {
+    "superintendent": {
+      "name": "Louie Krogman",
+      "title": "Superintendent",
+      "email": "louie.krogman@k12.sd.us",
+      "phone": "(605) 259-3311"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Louie Krogman — Superintendent\nlouie.krogman@k12.sd.us • (605) 259-3311",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "NM|vaughn": {
+    "superintendent": {
+      "name": "Lyndsey Padilla",
+      "title": "Superintendent",
+      "email": "lpadilla@vmsd.us",
+      "phone": "(505) 584-2283"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Lyndsey Padilla — Superintendent\nlpadilla@vmsd.us • (505) 584-2283",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "AK|kuspuk-school-district": {
+    "superintendent": {
+      "name": "Madeline Aguillard",
+      "title": "Superintendent",
+      "email": "maguillard@kuspuk.org",
+      "phone": "(907) 675-4250"
+    },
+    "other_personnel": [
+      {
+        "name": "Pete Vraspir",
+        "title": "Information Technology Director",
+        "email": "pete@lynxak.com",
+        "phone": "(907) 675-4250"
+      }
+    ],
+    "superintendent_contact": "Madeline Aguillard — Superintendent\nmaguillard@kuspuk.org • (907) 675-4250",
+    "other_contacts_summary": "Pete Vraspir — Information Technology Director\npete@lynxak.com • (907) 675-4250",
+    "contact_count": 2
+  },
+  "TX|morton-isd": {
+    "superintendent": {
+      "name": "Mario Aguirre",
+      "title": "Superintendent",
+      "email": "mario.aguirre@mortonisd.net",
+      "phone": "(806) 266-5505"
+    },
+    "other_personnel": [
+      {
+        "name": "Rina Ramos",
+        "title": "Assistant Superintendent",
+        "email": "rina.ramos@mortonisd.net",
+        "phone": "(806) 266-5505"
+      },
+      {
+        "name": "Angelica Aguirre",
+        "title": "Information Technology Director",
+        "email": "angelica.aguirre@mortonisd.net",
+        "phone": "(806) 266-5505"
+      }
+    ],
+    "superintendent_contact": "Mario Aguirre — Superintendent\nmario.aguirre@mortonisd.net • (806) 266-5505",
+    "other_contacts_summary": "Rina Ramos — Assistant Superintendent\nrina.ramos@mortonisd.net • (806) 266-5505\n\nAngelica Aguirre — Information Technology Director\nangelica.aguirre@mortonisd.net • (806) 266-5505",
+    "contact_count": 3
+  },
+  "GA|seminole-county": {
+    "superintendent": {
+      "name": "Mark Earnest",
+      "title": "Superintendent",
+      "email": "mark.earnest@seminole.k12.ga.us",
+      "phone": "(229) 524-2433"
+    },
+    "other_personnel": [
+      {
+        "name": "Kristy Johnson",
+        "title": "Information Technology Director",
+        "email": "kristy.johnson@seminole.k12.ga.us",
+        "phone": "(229) 524-2433"
+      }
+    ],
+    "superintendent_contact": "Mark Earnest — Superintendent\nmark.earnest@seminole.k12.ga.us • (229) 524-2433",
+    "other_contacts_summary": "Kristy Johnson — Information Technology Director\nkristy.johnson@seminole.k12.ga.us • (229) 524-2433",
+    "contact_count": 2
+  },
+  "VA|charlotte-county-public-schools": {
+    "superintendent": {
+      "name": "Robbie Mason",
+      "title": "Superintendent",
+      "email": "masonr@ccps.k12.va.us",
+      "phone": "(434) 542-5151"
+    },
+    "other_personnel": [
+      {
+        "name": "Rodney Hudson",
+        "title": "Information Technology Director",
+        "email": "hudsonre@ccps.k12.va.us",
+        "phone": "(434) 542-4933"
+      }
+    ],
+    "superintendent_contact": "Robbie Mason — Superintendent\nmasonr@ccps.k12.va.us • (434) 542-5151",
+    "other_contacts_summary": "Rodney Hudson — Information Technology Director\nhudsonre@ccps.k12.va.us • (434) 542-4933",
+    "contact_count": 2
+  },
+  "LA|east-carroll-parish": {
+    "superintendent": {
+      "name": "Meagan Brown",
+      "title": "Superintendent",
+      "email": "mbrown@ecarrollschools.org",
+      "phone": "(318) 559-2222"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Meagan Brown — Superintendent\nmbrown@ecarrollschools.org • (318) 559-2222",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "OK|erick": {
+    "superintendent": {
+      "name": "Mike Broyles",
+      "title": "Superintendent",
+      "email": "mbroyles@erick.k12.ok.us",
+      "phone": "(580) 526-3476"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Mike Broyles — Superintendent\nmbroyles@erick.k12.ok.us • (580) 526-3476",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "AL|sumter-county": {
+    "superintendent": {
+      "name": "Marcy Burroughs",
+      "title": "Superintendent",
+      "email": "mburroughs@sumter.k12.al.us",
+      "phone": "(205) 652-9605"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Marcy Burroughs — Superintendent\nmburroughs@sumter.k12.al.us • (205) 652-9605",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "MS|quitman-school-district": {
+    "superintendent": {
+      "name": "Minnie Dace",
+      "title": "Superintendent",
+      "email": "mdace@qsdk12.org",
+      "phone": "(601) 776-2186"
+    },
+    "other_personnel": [
+      {
+        "name": "Matthew Champion",
+        "title": "Information Technology Director",
+        "email": "mchampion@qsdk12.org",
+        "phone": "(601) 776-2186"
+      }
+    ],
+    "superintendent_contact": "Minnie Dace — Superintendent\nmdace@qsdk12.org • (601) 776-2186",
+    "other_contacts_summary": "Matthew Champion — Information Technology Director\nmchampion@qsdk12.org • (601) 776-2186",
+    "contact_count": 2
+  },
+  "OK|eufaula": {
+    "superintendent": {
+      "name": "Monty Guthrie",
+      "title": "Superintendent",
+      "email": "mguthrie@eufaula.k12.ok.us",
+      "phone": "(918) 689-2152"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Monty Guthrie — Superintendent\nmguthrie@eufaula.k12.ok.us • (918) 689-2152",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "AR|lee-county-school-district": {
+    "superintendent": {
+      "name": "Micheal Stone",
+      "title": "Superintendent",
+      "email": "micheal.stone@lcsdtrojans.net",
+      "phone": "(870) 295-7100"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Micheal Stone — Superintendent\nmicheal.stone@lcsdtrojans.net • (870) 295-7100",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "FL|dixie": {
+    "superintendent": {
+      "name": "Mike Thomas",
+      "title": "Superintendent",
+      "email": "mikethomas@dixie.k12.fl.us",
+      "phone": "(352) 498-6131"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Mike Thomas — Superintendent\nmikethomas@dixie.k12.fl.us • (352) 498-6131",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "CA|junction-elementary": {
+    "superintendent": {
+      "name": "Mike Matheson",
+      "title": "Superintendent",
+      "email": "mmatheson@siskiyoucoe.net",
+      "phone": "(530) 469-3373"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Mike Matheson — Superintendent\nmmatheson@siskiyoucoe.net • (530) 469-3373",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "NC|hyde-county-schools": {
+    "superintendent": {
+      "name": "Melanie Shaver",
+      "title": "Superintendent",
+      "email": "mshaver@hyde.k12.nc.us",
+      "phone": "(252) 926-3281"
+    },
+    "other_personnel": [
+      {
+        "name": "Shelby Gibbs",
+        "title": "Information Technology Director",
+        "email": "sgibbs@hyde.k12.nc.us",
+        "phone": "(252) 926-3281"
+      }
+    ],
+    "superintendent_contact": "Melanie Shaver — Superintendent\nmshaver@hyde.k12.nc.us • (252) 926-3281",
+    "other_contacts_summary": "Shelby Gibbs — Information Technology Director\nsgibbs@hyde.k12.nc.us • (252) 926-3281",
+    "contact_count": 2
+  },
+  "AL|perry-county": {
+    "superintendent": {
+      "name": "Marcia Smiley",
+      "title": "Superintendent",
+      "email": "msmiley@perrycountyal.org",
+      "phone": "(334) 683-6528"
+    },
+    "other_personnel": [
+      {
+        "name": "Tressa Johnson",
+        "title": "Chief Financial Officer",
+        "email": "tbjohnson@perrycountyal.org",
+        "phone": "(334) 683-6528"
+      },
+      {
+        "name": "Tressa Johnson",
+        "title": "Chief Financial Officer",
+        "email": "tjohnson@perrycountyal.org",
+        "phone": "(334) 683-6528"
+      }
+    ],
+    "superintendent_contact": "Marcia Smiley — Superintendent\nmsmiley@perrycountyal.org • (334) 683-6528",
+    "other_contacts_summary": "Tressa Johnson — Chief Financial Officer\ntbjohnson@perrycountyal.org • (334) 683-6528\n\nTressa Johnson — Chief Financial Officer\ntjohnson@perrycountyal.org • (334) 683-6528",
+    "contact_count": 3
+  },
+  "GA|atkinson-county": {
+    "superintendent": {
+      "name": "Melissa Wilbanks",
+      "title": "Superintendent",
+      "email": "mwilbanks@atkinson.k12.ga.us",
+      "phone": "(912) 422-7373"
+    },
+    "other_personnel": [
+      {
+        "name": "Jeffery Harrell",
+        "title": "Information Technology Director",
+        "email": "jharrell@atkinson.k12.ga.us",
+        "phone": "(912) 422-7373"
+      }
+    ],
+    "superintendent_contact": "Melissa Wilbanks — Superintendent\nmwilbanks@atkinson.k12.ga.us • (912) 422-7373",
+    "other_contacts_summary": "Jeffery Harrell — Information Technology Director\njharrell@atkinson.k12.ga.us • (912) 422-7373",
+    "contact_count": 2
+  },
+  "AZ|grand-canyon-unified-district-4194": {
+    "superintendent": {
+      "name": "Matthew Yost",
+      "title": "Superintendent",
+      "email": "myost@grandcanyonschool.org",
+      "phone": "(928) 638-2461"
+    },
+    "other_personnel": [
+      {
+        "name": "Derrick Tutt",
+        "title": "Information Technology Director",
+        "email": "dtutt@grandcanyonschool.org",
+        "phone": "(928) 638-2461"
+      }
+    ],
+    "superintendent_contact": "Matthew Yost — Superintendent\nmyost@grandcanyonschool.org • (928) 638-2461",
+    "other_contacts_summary": "Derrick Tutt — Information Technology Director\ndtutt@grandcanyonschool.org • (928) 638-2461",
+    "contact_count": 2
+  },
+  "MT|lavina-k-12-schools": {
+    "superintendent": {
+      "name": "Nicole Hanson",
+      "title": "Superintendent",
+      "email": "nhanson@lavinapublicschools.com",
+      "phone": "(406) 636-2761"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Nicole Hanson — Superintendent\nnhanson@lavinapublicschools.com • (406) 636-2761",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "TX|rule-isd": {
+    "superintendent": {
+      "name": "Paul Harris",
+      "title": "Superintendent",
+      "email": "paulharris@rule.esc14.net",
+      "phone": "(940) 997-2521"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Paul Harris — Superintendent\npaulharris@rule.esc14.net • (940) 997-2521",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "TX|clarksville-isd": {
+    "superintendent": {
+      "name": "Pamela Bryant",
+      "title": "Superintendent",
+      "email": "pbryant@clarksvilleisd.org",
+      "phone": "(903) 427-3891"
+    },
+    "other_personnel": [
+      {
+        "name": "Vivian Jackson",
+        "title": "Information Technology Director",
+        "email": "vajackson@clarksvilleisd.org",
+        "phone": "(903) 427-3891"
+      }
+    ],
+    "superintendent_contact": "Pamela Bryant — Superintendent\npbryant@clarksvilleisd.org • (903) 427-3891",
+    "other_contacts_summary": "Vivian Jackson — Information Technology Director\nvajackson@clarksvilleisd.org • (903) 427-3891",
+    "contact_count": 2
+  },
+  "NM|mountainair": {
+    "superintendent": {
+      "name": "Pedro Vallejo",
+      "title": "Superintendent",
+      "email": "pedro.vallejo@mpschools.net",
+      "phone": "(505) 847-2333"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Pedro Vallejo — Superintendent\npedro.vallejo@mpschools.net • (505) 847-2333",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "OK|hobart": {
+    "superintendent": {
+      "name": "Natika Peterson",
+      "title": "Superintendent",
+      "email": "petersonn@hobart.k12.ok.us",
+      "phone": "(580) 726-5691"
+    },
+    "other_personnel": [
+      {
+        "name": "Corey White",
+        "title": "Information Technology Director",
+        "email": "whitec@hobart.k12.ok.us",
+        "phone": "(580) 726-5691"
+      }
+    ],
+    "superintendent_contact": "Natika Peterson — Superintendent\npetersonn@hobart.k12.ok.us • (580) 726-5691",
+    "other_contacts_summary": "Corey White — Information Technology Director\nwhitec@hobart.k12.ok.us • (580) 726-5691",
+    "contact_count": 2
+  },
+  "KY|breathitt-county": {
+    "superintendent": {
+      "name": "Phillip Watts",
+      "title": "Superintendent",
+      "email": "Phillip.Watts@breathitt.kyschools.us",
+      "phone": "(606) 666-2491"
+    },
+    "other_personnel": [
+      {
+        "name": "William Noble",
+        "title": "Information Technology Director",
+        "email": "william.noble@breathitt.kyschools.us",
+        "phone": "(606) 666-2491"
+      }
+    ],
+    "superintendent_contact": "Phillip Watts — Superintendent\nPhillip.Watts@breathitt.kyschools.us • (606) 666-2491",
+    "other_contacts_summary": "William Noble — Information Technology Director\nwilliam.noble@breathitt.kyschools.us • (606) 666-2491",
+    "contact_count": 2
+  },
+  "AR|kirby-school-district": {
+    "superintendent": {
+      "name": "Pike Palmer",
+      "title": "Superintendent",
+      "email": "pike.palmer@kirbytrojans.net",
+      "phone": "(870) 398-4212"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Pike Palmer — Superintendent\npike.palmer@kirbytrojans.net • (870) 398-4212",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "AZ|bouse-elementary-district-4513": {
+    "superintendent": {
+      "name": "Paul Martin",
+      "title": "Superintendent",
+      "email": "pmartin@bouseschool.org",
+      "phone": "(928) 851-2213"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Paul Martin — Superintendent\npmartin@bouseschool.org • (928) 851-2213",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "WI|granton-area-school-district": {
+    "superintendent": {
+      "name": "Nancy Popp",
+      "title": "Superintendent",
+      "email": "poppn@granton.k12.wi.us",
+      "phone": "(715) 238-7292"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Nancy Popp — Superintendent\npoppn@granton.k12.wi.us • (715) 238-7292",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "IL|cairo-usd-1": {
+    "superintendent": {
+      "name": "Pamela Rizkallah",
+      "title": "Superintendent",
+      "email": "prizkallah@cairoschooldistrict1.com",
+      "phone": "(618) 734-4102"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Pamela Rizkallah — Superintendent\nprizkallah@cairoschooldistrict1.com • (618) 734-4102",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "AZ|chinle-unified-district-4158": {
+    "superintendent": {
+      "name": "Quincy Natay",
+      "title": "Superintendent",
+      "email": "quincy@chinleusd.k12.az.us",
+      "phone": "(928) 674-9600"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Quincy Natay — Superintendent\nquincy@chinleusd.k12.az.us • (928) 674-9600",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "TX|patton-springs-isd": {
+    "superintendent": {
+      "name": "Sandra Ramirez",
+      "title": "Superintendent",
+      "email": "ramirezs@pattonsprings.net",
+      "phone": "(806) 689-2220"
+    },
+    "other_personnel": [
+      {
+        "name": "Michael Vaughan",
+        "title": "Information Technology Director",
+        "email": "vaughanm@pattonsprings.net",
+        "phone": "(806) 689-2220"
+      }
+    ],
+    "superintendent_contact": "Sandra Ramirez — Superintendent\nramirezs@pattonsprings.net • (806) 689-2220",
+    "other_contacts_summary": "Michael Vaughan — Information Technology Director\nvaughanm@pattonsprings.net • (806) 689-2220",
+    "contact_count": 2
+  },
+  "TX|cotulla-isd": {
+    "superintendent": {
+      "name": "Ramiro Nava",
+      "title": "Superintendent",
+      "email": "ramiro.nava@cotullaisd.net",
+      "phone": "(830) 879-3073"
+    },
+    "other_personnel": [
+      {
+        "name": "Joseph Yanez",
+        "title": "Information Technology Director",
+        "email": "joseph.yanez@cotullaisd.net",
+        "phone": "(830) 879-3073"
+      }
+    ],
+    "superintendent_contact": "Ramiro Nava — Superintendent\nramiro.nava@cotullaisd.net • (830) 879-3073",
+    "other_contacts_summary": "Joseph Yanez — Information Technology Director\njoseph.yanez@cotullaisd.net • (830) 879-3073",
+    "contact_count": 2
+  },
+  "NM|zuni": {
+    "superintendent": {
+      "name": "Randy Stickney",
+      "title": "Superintendent",
+      "email": "randy.stickney@zpsd.org",
+      "phone": "(505) 782-5511"
+    },
+    "other_personnel": [
+      {
+        "name": "Martin Romine",
+        "title": "Chief Financial Officer",
+        "email": "martin.romine@zpsd.org",
+        "phone": "(505) 782-5511"
+      }
+    ],
+    "superintendent_contact": "Randy Stickney — Superintendent\nrandy.stickney@zpsd.org • (505) 782-5511",
+    "other_contacts_summary": "Martin Romine — Chief Financial Officer\nmartin.romine@zpsd.org • (505) 782-5511",
+    "contact_count": 2
+  },
+  "NM|cuba": {
+    "superintendent": {
+      "name": "Rhiannon Chavez",
+      "title": "Superintendent",
+      "email": "rchavez@cuba.k12.nm.us",
+      "phone": "(575) 289-3211"
+    },
+    "other_personnel": [
+      {
+        "name": "Judy Atencio",
+        "title": "Assistant Superintendent",
+        "email": "jatencio@cuba.k12.nm.us",
+        "phone": "(575) 289-3211"
+      },
+      {
+        "name": "Tim Chavez",
+        "title": "Information Technology Director",
+        "email": "tchavez@cuba.k12.nm.us",
+        "phone": "(575) 289-3211"
+      }
+    ],
+    "superintendent_contact": "Rhiannon Chavez — Superintendent\nrchavez@cuba.k12.nm.us • (575) 289-3211",
+    "other_contacts_summary": "Judy Atencio — Assistant Superintendent\njatencio@cuba.k12.nm.us • (575) 289-3211\n\nTim Chavez — Information Technology Director\ntchavez@cuba.k12.nm.us • (575) 289-3211",
+    "contact_count": 3
+  },
+  "MO|wheatland-r-ii": {
+    "superintendent": {
+      "name": "Randy Dougherty",
+      "title": "Superintendent",
+      "email": "rdougherty@wheatland.k12.mo.us",
+      "phone": "(417) 282-6433"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Randy Dougherty — Superintendent\nrdougherty@wheatland.k12.mo.us • (417) 282-6433",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "OK|clayton": {
+    "superintendent": {
+      "name": "Randall Erwin",
+      "title": "Superintendent",
+      "email": "rerwin@clayton.k12.ok.us",
+      "phone": "(918) 569-4492"
+    },
+    "other_personnel": [
+      {
+        "name": "Jerry Alexander",
+        "title": "Information Technology Director",
+        "email": "claytontechdept@clayton.k12.ok.us",
+        "phone": "(918) 569-4492"
+      }
+    ],
+    "superintendent_contact": "Randall Erwin — Superintendent\nrerwin@clayton.k12.ok.us • (918) 569-4492",
+    "other_contacts_summary": "Jerry Alexander — Information Technology Director\nclaytontechdept@clayton.k12.ok.us • (918) 569-4492",
+    "contact_count": 2
+  },
+  "SD|todd-county-school-district-66-1": {
+    "superintendent": {
+      "name": "Roberta Bizardie",
+      "title": "Superintendent",
+      "email": "roberta.bizardie@k12.sd.us",
+      "phone": "(605) 856-3501"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Roberta Bizardie — Superintendent\nroberta.bizardie@k12.sd.us • (605) 856-3501",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "MO|weaubleau-r-iii": {
+    "superintendent": {
+      "name": "Rodney Delmont",
+      "title": "Superintendent",
+      "email": "rodney.delmont@weaubleau.k12.mo.us",
+      "phone": "(417) 428-3317"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Rodney Delmont — Superintendent\nrodney.delmont@weaubleau.k12.mo.us • (417) 428-3317",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "TX|waelder-isd": {
+    "superintendent": {
+      "name": "Ron Lilie",
+      "title": "Superintendent",
+      "email": "ronlilie@waelderisd.org",
+      "phone": "(830) 788-7161"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Ron Lilie — Superintendent\nronlilie@waelderisd.org • (830) 788-7161",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "TX|stamford-isd": {
+    "superintendent": {
+      "name": "Robbie Phillips",
+      "title": "Superintendent",
+      "email": "rphillips@stamfordisd.net",
+      "phone": "(325) 773-2705"
+    },
+    "other_personnel": [
+      {
+        "name": "Michael Burfiend",
+        "title": "Chief Financial Officer",
+        "email": "mburfiend@stamfordisd.net",
+        "phone": "(325) 773-2705"
+      }
+    ],
+    "superintendent_contact": "Robbie Phillips — Superintendent\nrphillips@stamfordisd.net • (325) 773-2705",
+    "other_contacts_summary": "Michael Burfiend — Chief Financial Officer\nmburfiend@stamfordisd.net • (325) 773-2705",
+    "contact_count": 2
+  },
+  "MS|east-tallahatchie-school-district": {
+    "superintendent": {
+      "name": "Raymond Russell",
+      "title": "Superintendent",
+      "email": "rrussell@etsdk12.org",
+      "phone": "(662) 647-5524"
+    },
+    "other_personnel": [
+      {
+        "name": "Darren Cleark",
+        "title": "Information Technology Director",
+        "email": "dcleark@etsdk12.org",
+        "phone": "(662) 647-5524"
+      }
+    ],
+    "superintendent_contact": "Raymond Russell — Superintendent\nrrussell@etsdk12.org • (662) 647-5524",
+    "other_contacts_summary": "Darren Cleark — Information Technology Director\ndcleark@etsdk12.org • (662) 647-5524",
+    "contact_count": 2
+  },
+  "OK|carnegie": {
+    "superintendent": {
+      "name": "Randy Turney",
+      "title": "Superintendent",
+      "email": "rturney@carnegie.k12.ok.us",
+      "phone": "(580) 654-1470"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Randy Turney — Superintendent\nrturney@carnegie.k12.ok.us • (580) 654-1470",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "AZ|san-carlos-unified-district-4210": {
+    "superintendent": {
+      "name": "Shawn Pietila",
+      "title": "Superintendent",
+      "email": "s.pietila@sancarlos.k12.az.us",
+      "phone": "(928) 475-2315"
+    },
+    "other_personnel": [
+      {
+        "name": "Nicholas Ferro",
+        "title": "Chief Financial Officer",
+        "email": "n.ferro@sancarlos.k12.az.us",
+        "phone": "(928) 475-2315"
+      },
+      {
+        "name": "John Bernabe",
+        "title": "Information Technology Director",
+        "email": "j.bernabe@sancarlos.k12.az.us",
+        "phone": "(928) 475-2315"
+      }
+    ],
+    "superintendent_contact": "Shawn Pietila — Superintendent\ns.pietila@sancarlos.k12.az.us • (928) 475-2315",
+    "other_contacts_summary": "Nicholas Ferro — Chief Financial Officer\nn.ferro@sancarlos.k12.az.us • (928) 475-2315\n\nJohn Bernabe — Information Technology Director\nj.bernabe@sancarlos.k12.az.us • (928) 475-2315",
+    "contact_count": 3
+  },
+  "AK|yupiit-school-district": {
+    "superintendent": {
+      "name": "Scott Ballard",
+      "title": "Superintendent",
+      "email": "sballard@yupiit.org",
+      "phone": "(907) 825-3600"
+    },
+    "other_personnel": [
+      {
+        "name": "Adam Swenson",
+        "title": "Information Technology Director",
+        "email": "aswenson@yupiit.org",
+        "phone": "(907) 825-3600"
+      }
+    ],
+    "superintendent_contact": "Scott Ballard — Superintendent\nsballard@yupiit.org • (907) 825-3600",
+    "other_contacts_summary": "Adam Swenson — Information Technology Director\naswenson@yupiit.org • (907) 825-3600",
+    "contact_count": 2
+  },
+  "MN|cass-lake-bena-public-schools": {
+    "superintendent": {
+      "name": "Sue Chase",
+      "title": "Superintendent",
+      "email": "schase@isd115.net",
+      "phone": "(218) 335-2204"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Sue Chase — Superintendent\nschase@isd115.net • (218) 335-2204",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "AR|mccrory-school-district": {
+    "superintendent": {
+      "name": "Scott Waymire",
+      "title": "Superintendent",
+      "email": "scott.waymire@mccroryschools.org",
+      "phone": "(870) 731-2535"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Scott Waymire — Superintendent\nscott.waymire@mccroryschools.org • (870) 731-2535",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "AZ|window-rock-unified-district-4154": {
+    "superintendent": {
+      "name": "Shannon Goodsell",
+      "title": "Superintendent",
+      "email": "sgoodsell@wrschool.net",
+      "phone": "(928) 729-6706"
+    },
+    "other_personnel": [
+      {
+        "name": "Sheldon Yazzie",
+        "title": "Information Technology Director",
+        "email": "sheldony@wrschool.net",
+        "phone": "(928) 729-6724"
+      }
+    ],
+    "superintendent_contact": "Shannon Goodsell — Superintendent\nsgoodsell@wrschool.net • (928) 729-6706",
+    "other_contacts_summary": "Sheldon Yazzie — Information Technology Director\nsheldony@wrschool.net • (928) 729-6724",
+    "contact_count": 2
+  },
+  "CA|manchester-union-elementary": {
+    "superintendent": {
+      "name": "Stephanie Herrera",
+      "title": "Superintendent",
+      "email": "sherrera@muesd.us",
+      "phone": "(707) 882-2374"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Stephanie Herrera — Superintendent\nsherrera@muesd.us • (707) 882-2374",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "WA|orient-school-district": {
+    "superintendent": {
+      "name": "Sherry Cowbrough",
+      "title": "Superintendent",
+      "email": "sherry.cowbrough@orientsd.org",
+      "phone": "(509) 684-6873"
+    },
+    "other_personnel": [
+      {
+        "name": "Jair Mendes",
+        "title": "Information Technology Director",
+        "email": "jair.mendes@orientsd.org",
+        "phone": "(509) 684-6873"
+      }
+    ],
+    "superintendent_contact": "Sherry Cowbrough — Superintendent\nsherry.cowbrough@orientsd.org • (509) 684-6873",
+    "other_contacts_summary": "Jair Mendes — Information Technology Director\njair.mendes@orientsd.org • (509) 684-6873",
+    "contact_count": 2
+  },
+  "AZ|vernon-elementary-district-4162": {
+    "superintendent": {
+      "name": "Shad Housley",
+      "title": "Superintendent",
+      "email": "shousley@vernon.k12.az.us",
+      "phone": "(928) 537-5463"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Shad Housley — Superintendent\nshousley@vernon.k12.az.us • (928) 537-5463",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "WA|lamont-school-district": {
+    "superintendent": {
+      "name": "Shannon Hughes",
+      "title": "Superintendent",
+      "email": "shughes@lamont.wednet.edu",
+      "phone": "(509) 257-2463"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Shannon Hughes — Superintendent\nshughes@lamont.wednet.edu • (509) 257-2463",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "CA|leggett-valley-unified": {
+    "superintendent": {
+      "name": "Sierra Lahera",
+      "title": "Superintendent",
+      "email": "sierralahera@leggett.k12.ca.us",
+      "phone": "(707) 925-6285"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Sierra Lahera — Superintendent\nsierralahera@leggett.k12.ca.us • (707) 925-6285",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "SD|smee-school-district-15-3": {
+    "superintendent": {
+      "name": "Silas Blaine",
+      "title": "Superintendent",
+      "email": "silas.blaine@k12.sd.us",
+      "phone": "(605) 845-3040"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Silas Blaine — Superintendent\nsilas.blaine@k12.sd.us • (605) 845-3040",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "MS|south-delta-school-district": {
+    "superintendent": {
+      "name": "Sammy Ivy",
+      "title": "Superintendent",
+      "email": "sivy@southdelta.k12.ms.us",
+      "phone": "(662) 873-4302"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Sammy Ivy — Superintendent\nsivy@southdelta.k12.ms.us • (662) 873-4302",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "MS|hollandale": {
+    "superintendent": {
+      "name": "Sarah Bailey",
+      "title": "Superintendent",
+      "email": "sjbailey@hollandalesd.org",
+      "phone": "(662) 827-2276"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Sarah Bailey — Superintendent\nsjbailey@hollandalesd.org • (662) 827-2276",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "NM|lordsburg": {
+    "superintendent": {
+      "name": "Stephen Lucas",
+      "title": "Superintendent",
+      "email": "slucas@lmsed.org",
+      "phone": "(505) 542-9361"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Stephen Lucas — Superintendent\nslucas@lmsed.org • (505) 542-9361",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "AZ|congress-elementary-district-4479": {
+    "superintendent": {
+      "name": "Stephanie Miller",
+      "title": "Superintendent",
+      "email": "smiller@congressdistrict.org",
+      "phone": "(928) 427-9850"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Stephanie Miller — Superintendent\nsmiller@congressdistrict.org • (928) 427-9850",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "GA|wilkes-county": {
+    "superintendent": {
+      "name": "Michelle Smith",
+      "title": "Superintendent",
+      "email": "smithm@wilkes.k12.ga.us",
+      "phone": "(706) 678-2718"
+    },
+    "other_personnel": [
+      {
+        "name": "Jonathan Rogers",
+        "title": "Information Technology Director",
+        "email": "rogersj@wilkes.k12.ga.us",
+        "phone": "(706) 678-2718"
+      }
+    ],
+    "superintendent_contact": "Michelle Smith — Superintendent\nsmithm@wilkes.k12.ga.us • (706) 678-2718",
+    "other_contacts_summary": "Jonathan Rogers — Information Technology Director\nrogersj@wilkes.k12.ga.us • (706) 678-2718",
+    "contact_count": 2
+  },
+  "MS|claiborne-county-public-schools": {
+    "superintendent": {
+      "name": "Sandra Nash",
+      "title": "Superintendent",
+      "email": "snash@claiborne.k12.ms.us",
+      "phone": "(601) 437-4232"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Sandra Nash — Superintendent\nsnash@claiborne.k12.ms.us • (601) 437-4232",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "TX|jim-hogg-county-isd": {
+    "superintendent": {
+      "name": "Susana Garza",
+      "title": "Superintendent",
+      "email": "spgarza@jhcisdpk12.org",
+      "phone": "(361) 527-3203"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Susana Garza — Superintendent\nspgarza@jhcisdpk12.org • (361) 527-3203",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "MS|wilkinson-county-school-district": {
+    "superintendent": {
+      "name": "Shemekia Rankin",
+      "title": "Superintendent",
+      "email": "srankin@wilkinson.k12.ms.us",
+      "phone": "(601) 888-3582"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Shemekia Rankin — Superintendent\nsrankin@wilkinson.k12.ms.us • (601) 888-3582",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "MT|mccormick-elem": {
+    "superintendent": {
+      "name": "Suzy Rios",
+      "title": "Superintendent",
+      "email": "srios@libby.org",
+      "phone": "(406) 295-4982"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Suzy Rios — Superintendent\nsrios@libby.org • (406) 295-4982",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "CA|douglas-city-elementary": {
+    "superintendent": {
+      "name": "Shannon Ross",
+      "title": "Superintendent",
+      "email": "sross@dcesd.org",
+      "phone": "(530) 623-6350"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Shannon Ross — Superintendent\nsross@dcesd.org • (530) 623-6350",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "MT|ryegate-k-12-schools": {
+    "superintendent": {
+      "name": "Seth Shifley",
+      "title": "Superintendent",
+      "email": "sshifley@ryegate.k12.mt.us",
+      "phone": "(406) 568-2211"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Seth Shifley — Superintendent\nsshifley@ryegate.k12.mt.us • (406) 568-2211",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "AZ|ash-fork-joint-unified-district-4471": {
+    "superintendent": {
+      "name": "Seth Staples",
+      "title": "Superintendent",
+      "email": "sstaples@afjusd.org",
+      "phone": "(928) 637-2561"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Seth Staples — Superintendent\nsstaples@afjusd.org • (928) 637-2561",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "GA|treutlen-county": {
+    "superintendent": {
+      "name": "Susan Stone",
+      "title": "Superintendent",
+      "email": "sstone@treutlen.k12.ga.us",
+      "phone": "(912) 529-7101"
+    },
+    "other_personnel": [
+      {
+        "name": "Ana Daughtry",
+        "title": "Information Technology Director",
+        "email": "adaughtry@treutlen.k12.ga.us",
+        "phone": "(912) 529-7101"
+      }
+    ],
+    "superintendent_contact": "Susan Stone — Superintendent\nsstone@treutlen.k12.ga.us • (912) 529-7101",
+    "other_contacts_summary": "Ana Daughtry — Information Technology Director\nadaughtry@treutlen.k12.ga.us • (912) 529-7101",
+    "contact_count": 2
+  },
+  "TX|dell-city-isd": {
+    "superintendent": {
+      "name": "Michael Steck",
+      "title": "Superintendent",
+      "email": "steckm@dellcityisd.com",
+      "phone": "(915) 964-2663"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Michael Steck — Superintendent\nsteckm@dellcityisd.com • (915) 964-2663",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "MO|eminence-r-i": {
+    "superintendent": {
+      "name": "Stephanie Barbagiovanni",
+      "title": "Superintendent",
+      "email": "stephanie.barbagiovanni@redwingsk12.org",
+      "phone": "(573) 226-3251"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Stephanie Barbagiovanni — Superintendent\nstephanie.barbagiovanni@redwingsk12.org • (573) 226-3251",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "AR|blevins-school-district": {
+    "superintendent": {
+      "name": "Stephanie Dixon",
+      "title": "Superintendent",
+      "email": "stephanie.dixon@blevinshornets.org",
+      "phone": "(870) 874-2801"
+    },
+    "other_personnel": [
+      {
+        "name": "Brittney Nabors",
+        "title": "Information Technology Director",
+        "email": "brittney.nabors@blevinshornets.org",
+        "phone": "(870) 874-2801"
+      }
+    ],
+    "superintendent_contact": "Stephanie Dixon — Superintendent\nstephanie.dixon@blevinshornets.org • (870) 874-2801",
+    "other_contacts_summary": "Brittney Nabors — Information Technology Director\nbrittney.nabors@blevinshornets.org • (870) 874-2801",
+    "contact_count": 2
+  },
+  "TX|hemphill-isd": {
+    "superintendent": {
+      "name": "Stephen English",
+      "title": "Superintendent",
+      "email": "stephen.english@hemphillisd.net",
+      "phone": "(409) 787-3371"
+    },
+    "other_personnel": [
+      {
+        "name": "Eric Heslip",
+        "title": "Information Technology Director",
+        "email": "eric.heslip@hemphillisd.net",
+        "phone": "(409) 787-3371"
+      }
+    ],
+    "superintendent_contact": "Stephen English — Superintendent\nstephen.english@hemphillisd.net • (409) 787-3371",
+    "other_contacts_summary": "Eric Heslip — Information Technology Director\neric.heslip@hemphillisd.net • (409) 787-3371",
+    "contact_count": 2
+  },
+  "SC|bamberg-03": {
+    "superintendent": {
+      "name": "Denny Ulmer",
+      "title": "Superintendent",
+      "email": "superintendent@bambergschools.org",
+      "phone": "(803)793-3346"
+    },
+    "other_personnel": [
+      {
+        "name": "Denny Ulmer",
+        "title": "Assistant Superintendent",
+        "email": "assistantsuperintendent@bambergschools.org",
+        "phone": "(803)793-3346"
+      },
+      {
+        "name": "Denny Ulmer",
+        "title": "Assistant Superintendent",
+        "email": "dulmer@bambergschools.org",
+        "phone": "(803)793-3346"
+      },
+      {
+        "name": "Devon Furr",
+        "title": "Chief Financial Officer",
+        "email": "dfurr@bambergschools.org",
+        "phone": "(803)793-3346"
+      },
+      {
+        "name": "Ricky Padgett",
+        "title": "Information Technology Director",
+        "email": "padgettr@bambergschools.org",
+        "phone": "(803)793-3346"
+      },
+      {
+        "name": "Ricky Padgett",
+        "title": "Information Technology Director",
+        "email": "rpadgett@bambergschools.org",
+        "phone": "(803)793-3346"
+      }
+    ],
+    "superintendent_contact": "Denny Ulmer — Superintendent\nsuperintendent@bambergschools.org • (803)793-3346",
+    "other_contacts_summary": "Denny Ulmer — Assistant Superintendent\nassistantsuperintendent@bambergschools.org • (803)793-3346\n\nDenny Ulmer — Assistant Superintendent\ndulmer@bambergschools.org • (803)793-3346\n\nDevon Furr — Chief Financial Officer\ndfurr@bambergschools.org • (803)793-3346\n\n+ 2 more contacts",
+    "contact_count": 6
+  },
+  "MT|frazer-elem": {
+    "superintendent": {
+      "name": "Sarah Ruff",
+      "title": "Superintendent",
+      "email": "superintendent@frazer.k12.mt.us",
+      "phone": "(406) 695-2241"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Sarah Ruff — Superintendent\nsuperintendent@frazer.k12.mt.us • (406) 695-2241",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "CA|southern-humboldt-joint-unified": {
+    "superintendent": {
+      "name": "Stephanie Davis",
+      "title": "Superintendent",
+      "email": "supt@sohumusd.com",
+      "phone": "(707) 943-1789"
+    },
+    "other_personnel": [
+      {
+        "name": "Jeff Weber",
+        "title": "Information Technology Director",
+        "email": "jeffweber@sohumusd.com",
+        "phone": "(707) 943-1789"
+      }
+    ],
+    "superintendent_contact": "Stephanie Davis — Superintendent\nsupt@sohumusd.com • (707) 943-1789",
+    "other_contacts_summary": "Jeff Weber — Information Technology Director\njeffweber@sohumusd.com • (707) 943-1789",
+    "contact_count": 2
+  },
+  "MO|humansville-r-iv": {
+    "superintendent": {
+      "name": "Tammy Erwin",
+      "title": "Superintendent",
+      "email": "tammy.erwin@humansville.k12.mo.us",
+      "phone": "(417) 754-2535"
+    },
+    "other_personnel": [
+      {
+        "name": "Jamie Root",
+        "title": "Information Technology Director",
+        "email": "jamie.root@humansville.k12.mo.us",
+        "phone": "(417) 754-2535"
+      }
+    ],
+    "superintendent_contact": "Tammy Erwin — Superintendent\ntammy.erwin@humansville.k12.mo.us • (417) 754-2535",
+    "other_contacts_summary": "Jamie Root — Information Technology Director\njamie.root@humansville.k12.mo.us • (417) 754-2535",
+    "contact_count": 2
+  },
+  "GA|randolph-county": {
+    "superintendent": {
+      "name": "Tangela Madge",
+      "title": "Superintendent",
+      "email": "tangela.madge@sowegak12.org",
+      "phone": "(229) 732-2641"
+    },
+    "other_personnel": [
+      {
+        "name": "Donna Drakeford",
+        "title": "Assistant Superintendent",
+        "email": "donna.drakeford@sowegak12.org",
+        "phone": "(229) 732-2641"
+      },
+      {
+        "name": "Darlene Wingler",
+        "title": "Chief Financial Officer",
+        "email": "darlene.wingler@sowegak12.org",
+        "phone": "(229) 732-2641"
+      },
+      {
+        "name": "Jim Cobb",
+        "title": "Information Technology Director",
+        "email": "james.cobb@sowegak12.org",
+        "phone": "(229) 732-2641"
+      }
+    ],
+    "superintendent_contact": "Tangela Madge — Superintendent\ntangela.madge@sowegak12.org • (229) 732-2641",
+    "other_contacts_summary": "Donna Drakeford — Assistant Superintendent\ndonna.drakeford@sowegak12.org • (229) 732-2641\n\nDarlene Wingler — Chief Financial Officer\ndarlene.wingler@sowegak12.org • (229) 732-2641\n\nJim Cobb — Information Technology Director\njames.cobb@sowegak12.org • (229) 732-2641",
+    "contact_count": 4
+  },
+  "NM|floyd": {
+    "superintendent": {
+      "name": "Todd Burleson",
+      "title": "Superintendent",
+      "email": "tburleson@floydbroncos.com",
+      "phone": "(575) 478-2211"
+    },
+    "other_personnel": [
+      {
+        "name": "Chase Gossett",
+        "title": "Information Technology Director",
+        "email": "cgossett@floydbroncos.com",
+        "phone": "(575) 478-2211"
+      }
+    ],
+    "superintendent_contact": "Todd Burleson — Superintendent\ntburleson@floydbroncos.com • (575) 478-2211",
+    "other_contacts_summary": "Chase Gossett — Information Technology Director\ncgossett@floydbroncos.com • (575) 478-2211",
+    "contact_count": 2
+  },
+  "NM|elida": {
+    "superintendent": {
+      "name": "Tandee Delk",
+      "title": "Superintendent",
+      "email": "tdelk@elidaschools.net",
+      "phone": "(575) 274-6211"
+    },
+    "other_personnel": [
+      {
+        "name": "Phillip Lemke",
+        "title": "Assistant Superintendent",
+        "email": "plemke@elidaschools.net",
+        "phone": "(575) 274-6211"
+      }
+    ],
+    "superintendent_contact": "Tandee Delk — Superintendent\ntdelk@elidaschools.net • (575) 274-6211",
+    "other_contacts_summary": "Phillip Lemke — Assistant Superintendent\nplemke@elidaschools.net • (575) 274-6211",
+    "contact_count": 2
+  },
+  "OR|monument-sd-8": {
+    "superintendent": {
+      "name": "Laura Thomas",
+      "title": "Superintendent",
+      "email": "thomasl@monumentsd.org",
+      "phone": "(541) 934-2646"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Laura Thomas — Superintendent\nthomasl@monumentsd.org • (541) 934-2646",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "MO|thornfield-r-i": {
+    "superintendent": {
+      "name": "Michael Wallace",
+      "title": "Superintendent",
+      "email": "thornfieldr1school@gmail.com",
+      "phone": "(417) 265-3212"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Michael Wallace — Superintendent\nthornfieldr1school@gmail.com • (417) 265-3212",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "TX|hedley-isd": {
+    "superintendent": {
+      "name": "Tracey Langford",
+      "title": "Superintendent",
+      "email": "tlangford@hedleyisd.net",
+      "phone": "(806) 856-5323"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Tracey Langford — Superintendent\ntlangford@hedleyisd.net • (806) 856-5323",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "MN|red-lake-public-school-district": {
+    "superintendent": {
+      "name": "Tim Lutz",
+      "title": "Superintendent",
+      "email": "tlutz@redlake.k12.mn.us",
+      "phone": "(218) 679-3353"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Tim Lutz — Superintendent\ntlutz@redlake.k12.mn.us • (218) 679-3353",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "AK|saint-mary-s-school-district": {
+    "superintendent": {
+      "name": "Troy Poage",
+      "title": "Superintendent",
+      "email": "tpoage@smcsd.us",
+      "phone": "(907) 438-2411"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Troy Poage — Superintendent\ntpoage@smcsd.us • (907) 438-2411",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "TX|munday-cisd": {
+    "superintendent": {
+      "name": "Troy Parton",
+      "title": "Superintendent",
+      "email": "troy.parton@mundaycisd.net",
+      "phone": "(940) 422-4321"
+    },
+    "other_personnel": [
+      {
+        "name": "Kim Bowman",
+        "title": "Information Technology Director",
+        "email": "kim.bowman@mundaycisd.net",
+        "phone": "(940) 422-4321"
+      }
+    ],
+    "superintendent_contact": "Troy Parton — Superintendent\ntroy.parton@mundaycisd.net • (940) 422-4321",
+    "other_contacts_summary": "Kim Bowman — Information Technology Director\nkim.bowman@mundaycisd.net • (940) 422-4321",
+    "contact_count": 2
+  },
+  "AL|linden-city": {
+    "superintendent": {
+      "name": "Timothy Thurman",
+      "title": "Superintendent",
+      "email": "tthurman@lindencity.org",
+      "phone": "(334) 295-8802"
+    },
+    "other_personnel": [
+      {
+        "name": "Lakendra Raby",
+        "title": "Chief Financial Officer",
+        "email": "lraby@lindencity.org",
+        "phone": "(334) 295-8106"
+      }
+    ],
+    "superintendent_contact": "Timothy Thurman — Superintendent\ntthurman@lindencity.org • (334) 295-8802",
+    "other_contacts_summary": "Lakendra Raby — Chief Financial Officer\nlraby@lindencity.org • (334) 295-8106",
+    "contact_count": 2
+  },
+  "TX|fannindel-isd": {
+    "superintendent": {
+      "name": "Travis Waddell",
+      "title": "Superintendent",
+      "email": "twaddell@fannindel.net",
+      "phone": "(903) 367-7251"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Travis Waddell — Superintendent\ntwaddell@fannindel.net • (903) 367-7251",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "SD|mcintosh-school-district-15-1": {
+    "superintendent": {
+      "name": "Tyler Mareska",
+      "title": "Superintendent",
+      "email": "tyler.mareska@k12.sd.us",
+      "phone": "(605) 273-4298"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Tyler Mareska — Superintendent\ntyler.mareska@k12.sd.us • (605) 273-4298",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "AR|clarendon-school-district": {
+    "superintendent": {
+      "name": "Lee Vent",
+      "title": "Superintendent",
+      "email": "ventl@lions.grsc.k12.ar.us",
+      "phone": "(870) 747-3351"
+    },
+    "other_personnel": [
+      {
+        "name": "Jeff Vent",
+        "title": "Information Technology Director",
+        "email": "jvent@lions.grsc.k12.ar.us",
+        "phone": "(870) 747-3351"
+      }
+    ],
+    "superintendent_contact": "Lee Vent — Superintendent\nventl@lions.grsc.k12.ar.us • (870) 747-3351",
+    "other_contacts_summary": "Jeff Vent — Information Technology Director\njvent@lions.grsc.k12.ar.us • (870) 747-3351",
+    "contact_count": 2
+  },
+  "MT|lame-deer-elem": {
+    "superintendent": {
+      "name": "Victoria Down",
+      "title": "Superintendent",
+      "email": "victoria.fallsdown@lamedeer.k12.mt.us",
+      "phone": "(406) 477-6308"
+    },
+    "other_personnel": [
+      {
+        "name": "Brandon Bull",
+        "title": "Information Technology Director",
+        "email": "b.tallbull@lamedeer.k12.mt.us",
+        "phone": "(406) 477-6308"
+      }
+    ],
+    "superintendent_contact": "Victoria Down — Superintendent\nvictoria.fallsdown@lamedeer.k12.mt.us • (406) 477-6308",
+    "other_contacts_summary": "Brandon Bull — Information Technology Director\nb.tallbull@lamedeer.k12.mt.us • (406) 477-6308",
+    "contact_count": 2
+  },
+  "TX|san-augustine-isd": {
+    "superintendent": {
+      "name": "Virginia Liepman",
+      "title": "Superintendent",
+      "email": "vliepman@saisd.us",
+      "phone": "(936) 275-2306"
+    },
+    "other_personnel": [
+      {
+        "name": "Marc Griffin",
+        "title": "Assistant Superintendent",
+        "email": "mgriffin@saisd.us",
+        "phone": "(936) 275-2306"
+      },
+      {
+        "name": "Jacy Daugherty",
+        "title": "Chief Financial Officer",
+        "email": "jdaugherty@saisd.us",
+        "phone": "(936) 275-2306"
+      },
+      {
+        "name": "Tom Schmieder",
+        "title": "Information Technology Director",
+        "email": "taschmieder@saisd.us",
+        "phone": "(936) 275-2306"
+      }
+    ],
+    "superintendent_contact": "Virginia Liepman — Superintendent\nvliepman@saisd.us • (936) 275-2306",
+    "other_contacts_summary": "Marc Griffin — Assistant Superintendent\nmgriffin@saisd.us • (936) 275-2306\n\nJacy Daugherty — Chief Financial Officer\njdaugherty@saisd.us • (936) 275-2306\n\nTom Schmieder — Information Technology Director\ntaschmieder@saisd.us • (936) 275-2306",
+    "contact_count": 4
+  },
+  "AL|thomasville-city": {
+    "superintendent": {
+      "name": "Vickie Morris",
+      "title": "Superintendent",
+      "email": "vmorris@thomasvilleschools.org",
+      "phone": "(334) 636-9955"
+    },
+    "other_personnel": [
+      {
+        "name": "Anjelica Gibson",
+        "title": "Chief Financial Officer",
+        "email": "depkr@lotsch.org",
+        "phone": "(334) 636-9955"
+      },
+      {
+        "name": "Kate Huggins",
+        "title": "Information Technology Director",
+        "email": "khuggins@thomasvilleschools.org",
+        "phone": "(334) 636-9955"
+      }
+    ],
+    "superintendent_contact": "Vickie Morris — Superintendent\nvmorris@thomasvilleschools.org • (334) 636-9955",
+    "other_contacts_summary": "Anjelica Gibson — Chief Financial Officer\ndepkr@lotsch.org • (334) 636-9955\n\nKate Huggins — Information Technology Director\nkhuggins@thomasvilleschools.org • (334) 636-9955",
+    "contact_count": 3
+  },
+  "OR|long-creek-sd-17": {
+    "superintendent": {
+      "name": "Joan Walczyk",
+      "title": "Superintendent",
+      "email": "walczykj@grantesd.k12.or.us",
+      "phone": "(541) 421-3896"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Joan Walczyk — Superintendent\nwalczykj@grantesd.k12.or.us • (541) 421-3896",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "TX|memphis-isd": {
+    "superintendent": {
+      "name": "William Alexander",
+      "title": "Superintendent",
+      "email": "walexander@memphisisd.net",
+      "phone": "(806) 259-5900"
+    },
+    "other_personnel": [
+      {
+        "name": "Kitsy Pepper",
+        "title": "Information Technology Director",
+        "email": "kpepper@memphisisd.net",
+        "phone": "(806) 259-5900"
+      }
+    ],
+    "superintendent_contact": "William Alexander — Superintendent\nwalexander@memphisisd.net • (806) 259-5900",
+    "other_contacts_summary": "Kitsy Pepper — Information Technology Director\nkpepper@memphisisd.net • (806) 259-5900",
+    "contact_count": 2
+  },
+  "MS|quitman-county-school-district": {
+    "superintendent": {
+      "name": "Walter Atkins",
+      "title": "Superintendent",
+      "email": "walteratkins@qcsd.k12.ms.us",
+      "phone": "(662) 326-5451"
+    },
+    "other_personnel": [
+      {
+        "name": "Timothy Strickland",
+        "title": "Information Technology Director",
+        "email": "timothystrickland@qcsd.k12.ms.us",
+        "phone": "(662) 326-5451"
+      }
+    ],
+    "superintendent_contact": "Walter Atkins — Superintendent\nwalteratkins@qcsd.k12.ms.us • (662) 326-5451",
+    "other_contacts_summary": "Timothy Strickland — Information Technology Director\ntimothystrickland@qcsd.k12.ms.us • (662) 326-5451",
+    "contact_count": 2
+  },
+  "KY|clinton-county": {
+    "superintendent": {
+      "name": "Wayne Ackerman",
+      "title": "Superintendent",
+      "email": "wayne.ackerman@clinton.kyschools.us",
+      "phone": "(606) 387-6480"
+    },
+    "other_personnel": [
+      {
+        "name": "Courtney Norris",
+        "title": "Chief Financial Officer",
+        "email": "courtney.norris@clinton.kyschools.us",
+        "phone": "(606) 387-6480"
+      }
+    ],
+    "superintendent_contact": "Wayne Ackerman — Superintendent\nwayne.ackerman@clinton.kyschools.us • (606) 387-6480",
+    "other_contacts_summary": "Courtney Norris — Chief Financial Officer\ncourtney.norris@clinton.kyschools.us • (606) 387-6480",
+    "contact_count": 2
+  },
+  "KY|jackson-independent": {
+    "superintendent": {
+      "name": "Wayne Sizemore",
+      "title": "Superintendent",
+      "email": "wayne.sizemore@jacksonind.kyschools.us",
+      "phone": "(606) 666-4979"
+    },
+    "other_personnel": [
+      {
+        "name": "Charles Coots",
+        "title": "Information Technology Director",
+        "email": "jeff.coots@jacksonind.kyschools.us",
+        "phone": "(606) 666-4979"
+      }
+    ],
+    "superintendent_contact": "Wayne Sizemore — Superintendent\nwayne.sizemore@jacksonind.kyschools.us • (606) 666-4979",
+    "other_contacts_summary": "Charles Coots — Information Technology Director\njeff.coots@jacksonind.kyschools.us • (606) 666-4979",
+    "contact_count": 2
+  },
+  "AZ|seligman-unified-district-4472": {
+    "superintendent": {
+      "name": "Wanda Burton",
+      "title": "Superintendent",
+      "email": "wburton@seligman.k12.az.us",
+      "phone": "(928) 216-4123"
+    },
+    "other_personnel": [
+      {
+        "name": "Jim Flynn",
+        "title": "Information Technology Director",
+        "email": "jflynn@seligman.k12.az.us",
+        "phone": "(928) 216-4123"
+      }
+    ],
+    "superintendent_contact": "Wanda Burton — Superintendent\nwburton@seligman.k12.az.us • (928) 216-4123",
+    "other_contacts_summary": "Jim Flynn — Information Technology Director\njflynn@seligman.k12.az.us • (928) 216-4123",
+    "contact_count": 2
+  },
+  "MS|noxubee-county-school-district": {
+    "superintendent": {
+      "name": "Washington Cole",
+      "title": "Superintendent",
+      "email": "wcole@ourncsd.org",
+      "phone": "(662) 726-4527"
+    },
+    "other_personnel": [
+      {
+        "name": "Pam Norris",
+        "title": "Chief Financial Officer",
+        "email": "pnorris@ourncsd.org",
+        "phone": "(662) 726-4527"
+      }
+    ],
+    "superintendent_contact": "Washington Cole — Superintendent\nwcole@ourncsd.org • (662) 726-4527",
+    "other_contacts_summary": "Pam Norris — Chief Financial Officer\npnorris@ourncsd.org • (662) 726-4527",
+    "contact_count": 2
+  },
+  "MI|beaver-island-community-school": {
+    "superintendent": {
+      "name": "Wil Cwikiel",
+      "title": "Superintendent",
+      "email": "wilc@beaverisland.k12.mi.us",
+      "phone": "(231) 448-2744"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Wil Cwikiel — Superintendent\nwilc@beaverisland.k12.mi.us • (231) 448-2744",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "KY|clay-county": {
+    "superintendent": {
+      "name": "William Sexton",
+      "title": "Superintendent",
+      "email": "william.sexton@clay.kyschools.us",
+      "phone": "(606) 598-2168"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "William Sexton — Superintendent\nwilliam.sexton@clay.kyschools.us • (606) 598-2168",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "WA|curlew-school-district": {
+    "superintendent": {
+      "name": "Wyatt Ladiges",
+      "title": "Superintendent",
+      "email": "wladiges@curlewsd.org",
+      "phone": "(509) 779-4931"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Wyatt Ladiges — Superintendent\nwladiges@curlewsd.org • (509) 779-4931",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "OK|fanshawe": {
+    "superintendent": {
+      "name": "Wes Mcgowen",
+      "title": "Superintendent",
+      "email": "wmcgowen@fanshawe.k12.ok.us",
+      "phone": "(918)659-2341"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Wes Mcgowen — Superintendent\nwmcgowen@fanshawe.k12.ok.us • (918)659-2341",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "TN|lake-county": {
+    "superintendent": {
+      "name": "Woody Burton",
+      "title": "Superintendent",
+      "email": "woody.burton@lcfalcons.net",
+      "phone": "(731) 253-6601"
+    },
+    "other_personnel": [],
+    "superintendent_contact": "Woody Burton — Superintendent\nwoody.burton@lcfalcons.net • (731) 253-6601",
+    "other_contacts_summary": "",
+    "contact_count": 1
+  },
+  "NY|jasper-troupsburg-central-school-district": {
+    "superintendent": null,
+    "other_personnel": [
+      {
+        "name": "Adam Button",
+        "title": "Chief Financial Officer",
+        "email": "abutton@jtcsd.org",
+        "phone": "(607) 792-3675"
+      }
+    ],
+    "superintendent_contact": "",
+    "other_contacts_summary": "Adam Button — Chief Financial Officer\nabutton@jtcsd.org • (607) 792-3675",
+    "contact_count": 1
+  },
+  "AZ|kayenta-unified-school-district-27-4396": {
+    "superintendent": null,
+    "other_personnel": [
+      {
+        "name": "Fernando Begay",
+        "title": "Information Technology Director",
+        "email": "fernando.begay@kayenta.k12.az.us",
+        "phone": "(928) 697-3251"
+      }
+    ],
+    "superintendent_contact": "",
+    "other_contacts_summary": "Fernando Begay — Information Technology Director\nfernando.begay@kayenta.k12.az.us • (928) 697-3251",
+    "contact_count": 1
+  },
+  "TX|dew-isd": {
+    "superintendent": null,
+    "other_personnel": [
+      {
+        "name": "Nolan Glass",
+        "title": "Chief Financial Officer",
+        "email": "nolan.glass@dewisd.org",
+        "phone": "(903) 389-2828"
+      }
+    ],
+    "superintendent_contact": "",
+    "other_contacts_summary": "Nolan Glass — Chief Financial Officer\nnolan.glass@dewisd.org • (903) 389-2828",
+    "contact_count": 1
+  },
+  "MS|leake-county-school-district": {
+    "superintendent": null,
+    "other_personnel": [
+      {
+        "name": "Shernise Wilson",
+        "title": "Assistant Superintendent",
+        "email": "shernisewilson@leakesd.org",
+        "phone": "(601) 267-4579"
+      }
+    ],
+    "superintendent_contact": "",
+    "other_contacts_summary": "Shernise Wilson — Assistant Superintendent\nshernisewilson@leakesd.org • (601) 267-4579",
+    "contact_count": 1
+  }
+}
