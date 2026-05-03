@@ -1,34 +1,33 @@
 # RUS DLT Prospecting Dashboard
 
-This GitHub Pages package loads live K-12 district data from the linked public Google Sheet and combines it with packaged Tier 3 and Tier 4 higher-ed rows.
+This GitHub Pages package loads:
 
-## Included features
-- Brighter, tighter professional dashboard layout
-- Tier filters with tier explanations
-- Region, state, entity type, locale, and SAIPE filters
-- Phone and website shown directly on the table
-- Tier 1 superintendent and district personnel contact overlays from uploaded contact files
-- Clickable organization name opens a full detail card
-- `My Call` checkbox saves locally in the browser for the individual user only
-- CSV export and browser Save to PDF
+- live K-12 district rows from the public Google Sheet tab **ELSI Export**
+- packaged higher-ed rows from `data/highered_rows.json`
+- Tier 1 contact overlays from `data/tier1_contacts.json`
 
-## Deploy
-Upload the contents of this folder to the `/RUS-DLT/` folder in your GitHub Pages repo.
+## Optional shared tracker fields
 
-Required files:
-- `index.html`
-- `data/k12_tier_map.json`
-- `data/highered_rows.json`
-- `data/tier1_contacts.json`
-- `.nojekyll`
+The page includes **Status**, **Assigned To**, and **Notes** columns.
 
-## Notes
-- HubSpot remains the official place for sales reps to log sales activity.
-- The `My Call` checkbox is not shared. It stores only in the local browser for the current user.
-- The live K-12 source depends on the public Google Sheet and the `ELSI Export` tab name staying the same.
+Those fields are designed to load from a public Google Sheet tab named **Prospect Tracker** in the same spreadsheet.
 
+Required tracker headers:
 
-Included in this package:
-- `FY2026_DLT_Sales_Ready_Guide.html` — linked from the prospecting dashboard top bar for quick access to the FY2026 USDA DLT sales-ready guide.
+- `externalKey`
+- `status`
+- `assigned_to`
+- `notes`
 
-- `data/tier1_contacts.json` overlays matched superintendent and other personnel contacts onto Tier 1 districts.
+Use the included `Prospect_Tracker_Template.csv` to create that tab.
+
+This page **reads** tracker values from Google Sheets. It does **not** write changes back from the GitHub page itself.
+
+## Other updates
+
+- default view opens on Tier 1
+- page-size slider supports 10–100 rows at a time
+- Prev / Next paging controls
+- phone and website are shown in the table
+- My Call remains local to the browser/device
+- guide link is included

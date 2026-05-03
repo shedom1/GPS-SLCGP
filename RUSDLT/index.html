@@ -95,6 +95,50 @@
 .contact-line a{color:#0b63ce;text-decoration:none;font-weight:600}
 .contact-line a:hover{text-decoration:underline}
 
+
+    .topbar{padding:10px 12px 7px}
+    .title{font-size:19px}
+    .subtitle{font-size:10px}
+    .btn,.guide-link{font-size:10px;padding:6px 9px;border-radius:10px}
+    .callout,.local-note{font-size:10px;padding:9px 10px}
+    .legend{padding-top:8px}
+    .tier-filter{font-size:9px;padding:6px 9px}
+    .tier-card{min-height:70px;padding:7px 8px}
+    .tier-text{font-size:9px}
+    .statgrid .stat{padding:8px 9px}
+    .stat .label{font-size:9px}
+    .stat .value{font-size:17px}
+    .filters{gap:6px;padding:7px 14px 4px}
+    .field label{font-size:9px}
+    .field input,.field select{font-size:10px;padding:6px 8px;border-radius:10px}
+    .status{font-size:10px;padding:7px 14px}
+    .pagerbar{display:grid;grid-template-columns:1fr auto auto;gap:10px;align-items:center;padding:6px 14px 10px;border-top:1px solid #e7eef7}
+    .pager-left,.pager-right{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+    .pager-middle{display:flex;align-items:center;gap:8px;justify-content:center;min-width:280px}
+    .pager-middle label{font-size:10px;font-weight:800;color:var(--muted)}
+    .pager-chip{display:inline-flex;align-items:center;gap:4px;padding:5px 8px;border:1px solid #d9e5f1;border-radius:999px;background:#fff;font-size:10px;color:#35516a}
+    .pager-chip strong{font-size:11px;color:var(--text)}
+    .pager-size-value{min-width:26px;text-align:center;font-size:11px;font-weight:800;color:var(--brand)}
+    #pageSizeRange{width:160px;accent-color:var(--brand)}
+    .pager-indicator{min-width:88px;justify-content:center}
+    .data-table th{font-size:9px;padding:6px 7px}
+    .data-table td{font-size:10px;padding:5px 7px;line-height:1.28}
+    .contact-line{font-size:10px;line-height:1.25}
+    .site-link,.phone-link{font-size:9px}
+    .linkbtn{font-size:10px}
+    .mycheck{width:13px;height:13px}
+    .status-badge{display:inline-flex;align-items:center;padding:2px 7px;border-radius:999px;font-size:9px;font-weight:800;border:1px solid #d5e3ef;background:#f8fbff;color:#28455f}
+    .status-badge.open{background:#e8f5ff;border-color:#cde4ff;color:#1454a6}
+    .status-badge.progress{background:#fff7e8;border-color:#f6deb5;color:#9a6200}
+    .status-badge.closed{background:#eef6ee;border-color:#d5ead6;color:#0b7a32}
+    .status-badge.pending{background:#f3f4f6;border-color:#e2e8f0;color:#475569}
+    .note-cell{max-width:230px;white-space:normal}
+    .assign-cell{font-weight:700;color:#24415c}
+    @media(max-width:1200px){
+      .pagerbar{grid-template-columns:1fr;justify-items:start}
+      .pager-middle{justify-content:flex-start}
+    }
+
 </style>
 </head>
 <body>
@@ -110,6 +154,7 @@
       </div>
       <div class="actions">
         <a class="guide-link" href="./FY2026_DLT_Sales_Ready_Guide.html" target="_blank" rel="noopener"><span class="mini">DLT</span> Open FY2026 RUS DLT Guide</a>
+        <a class="btn" id="trackerBtn" href="https://docs.google.com/spreadsheets/d/1eDW0C7vnnfT7dOjQIk-EHAWeFNdI2iYeiXxH6uy3hfY/edit" target="_blank" rel="noopener">Open Tracker Sheet</a>
         <button class="btn primary" id="refreshBtn">Refresh</button>
         <button class="btn" id="exportBtn">Export CSV</button>
         <button class="btn secondary" id="printBtn">Save to PDF</button>
@@ -118,7 +163,7 @@
 
     <div class="banner-wrap">
       <div class="callout"><strong>Sales process note:</strong> HubSpot is the official place sales reps should record sales activity. This tool is for culled grant prospecting and grant-target research.</div>
-      <div class="local-note"><strong>Quick access:</strong> use the <strong>FY2026 RUS DLT Guide</strong> button above to open the linked sales-ready guide for qualification, readiness, and resource links. The <strong>My Call</strong> checkbox is a personal check-off tool to mark rows as you work through calls. It saves only in this browser on this device.</div>
+      <div class="local-note"><strong>Quick access:</strong> use the <strong>FY2026 RUS DLT Guide</strong> button above to open the linked sales-ready guide for qualification, readiness, and resource links. The <strong>My Call</strong> checkbox is a personal check-off tool to mark rows as you work through calls. It saves only in this browser on this device. <strong>Status</strong>, <strong>Assigned To</strong>, and <strong>Notes</strong> are designed to load from a public Google Sheet tab named <strong>Prospect Tracker</strong>; update the sheet, then refresh this page.</div>
     </div>
 
     <div class="legend" id="tierButtons"></div>
@@ -142,7 +187,25 @@
       <div class="field"><label for="saipeFilter">SAIPE</label><select id="saipeFilter"></select></div>
     </div>
 
+    
     <div class="status" id="statusMessage">Loading data…</div>
+
+    <div class="pagerbar">
+      <div class="pager-left">
+        <div class="pager-chip">Filtered rows: <strong id="filteredCount">0</strong></div>
+        <div class="pager-chip">Showing: <strong id="rangeIndicator">0–0</strong></div>
+      </div>
+      <div class="pager-middle">
+        <label for="pageSizeRange">Rows per page</label>
+        <input id="pageSizeRange" type="range" min="10" max="100" step="10" value="30">
+        <span class="pager-size-value" id="pageSizeValue">30</span>
+      </div>
+      <div class="pager-right">
+        <button class="btn" id="prevPageBtn" type="button">Prev</button>
+        <div class="pager-chip pager-indicator" id="pageIndicator">Page 1 of 1</div>
+        <button class="btn" id="nextPageBtn" type="button">Next</button>
+      </div>
+    </div>
 
     <div class="table-wrap">
       <table class="data-table" id="dataTable"><thead id="thead"></thead><tbody id="tbody"></tbody></table>
@@ -166,11 +229,16 @@
   </div>
 </div>
 
+
 <script>
 const CONFIG={
   k12SheetId:'1eDW0C7vnnfT7dOjQIk-EHAWeFNdI2iYeiXxH6uy3hfY',
   k12SheetName:'ELSI Export',
+  trackerSheetId:'1eDW0C7vnnfT7dOjQIk-EHAWeFNdI2iYeiXxH6uy3hfY',
+  trackerSheetName:'Prospect Tracker',
+  trackerEditUrl:'https://docs.google.com/spreadsheets/d/1eDW0C7vnnfT7dOjQIk-EHAWeFNdI2iYeiXxH6uy3hfY/edit',
   localChecksKey:'rus_dlt_mycall_checks_v1',
+  localPageSizeKey:'rus_dlt_page_size_v1',
   tierFilters:[
     {key:'all_k12',short:'All K-12',label:'All K-12 (Locales 11–43)',color:'#0f62fe',className:'allk12',description:'Shows every K-12 district from the live source sheet with locale codes 11 through 43.'},
     {key:'tier1',short:'Tier 1',label:'Tier 1: K-12 Rural Remote, >30% SAIPE',color:'#047857',className:'t1',description:'Highest-priority K-12 call-out list: Locale 43 districts with SAIPE poverty at 30% or greater.'},
@@ -180,61 +248,88 @@ const CONFIG={
   ],
   regionMap:{'KY':'Mid-Atlantic','MD':'Mid-Atlantic','TN':'Mid-Atlantic','VA':'Mid-Atlantic','WV':'Mid-Atlantic','CT':'Northeast','DE':'Northeast','IL':'Northeast','IN':'Northeast','IA':'Northeast','KS':'Northeast','ME':'Northeast','MA':'Northeast','MI':'Northeast','MN':'Northeast','MO':'Northeast','NE':'Northeast','NH':'Northeast','NJ':'Northeast','NY':'Northeast','ND':'Northeast','OH':'Northeast','PA':'Northeast','RI':'Northeast','SD':'Northeast','VT':'Northeast','WI':'Northeast','AL':'Southeast','AR':'Southeast','FL':'Southeast','GA':'Southeast','LA':'Southeast','MS':'Southeast','NC':'Southeast','SC':'Southeast','AK':'West','AZ':'West','CA':'West','CO':'West','HI':'West','ID':'West','MT':'West','NV':'West','NM':'West','OK':'West','OR':'West','TX':'West','UT':'West','WA':'West','WY':'West'}
 };
-
-const state={rows:[],sortKey:'tier_order',sortDir:'asc',tierFilter:'tier1',checks:loadChecks()};
+const state={rows:[],sortKey:'tier_order',sortDir:'asc',tierFilter:'tier1',checks:loadChecks(),page:1,pageSize:loadPageSize(),trackerLoaded:false,trackerRows:0};
 const columns=[
-  {key:'my_call',label:'My Call',width:58,sticky:1,sortable:false,resizable:false},
-  {key:'tier_short',label:'Tier',width:76,sticky:2,sortable:true,resizable:false},
-  {key:'organization',label:'Organization',width:250,sticky:3,sortable:true,detail:true},
-  {key:'superintendent_contact',label:'Superintendent Contact',width:240,sortable:false},
-  {key:'other_contacts',label:'Other Personnel Contacts',width:290,sortable:false},
-  {key:'phone',label:'District Phone #',width:128,sortable:false},
-  {key:'website',label:'Website',width:154,sortable:false},
-  {key:'region',label:'Region',width:118,sortable:true},
-  {key:'state',label:'State',width:68,sortable:true},
-  {key:'segment',label:'Entity Type',width:112,sortable:true},
-  {key:'role_fit',label:'Role Fit',width:112,sortable:true},
-  {key:'city_county',label:'City / County',width:176,sortable:true},
-  {key:'locale_display',label:'Locale',width:116,sortable:true},
-  {key:'saipe_display',label:'SAIPE',width:90,sortable:true},
-  {key:'students',label:'Students',width:88,sortable:true},
-  {key:'school_count',label:'Schools',width:78,sortable:true},
-  {key:'basis',label:'Basis',width:220,sortable:false},
-  {key:'outreach_program',label:'Outreach Program',width:210,sortable:false}
+  {key:'my_call',label:'My Call',width:54,sticky:1,sortable:false,resizable:false},
+  {key:'tier_short',label:'Tier',width:72,sticky:2,sortable:true,resizable:false},
+  {key:'organization',label:'Organization',width:220,sticky:3,sortable:true,detail:true},
+  {key:'status',label:'Status',width:110,sortable:true},
+  {key:'assigned_to',label:'Assigned To',width:110,sortable:true},
+  {key:'notes',label:'Notes',width:220,sortable:false},
+  {key:'superintendent_contact',label:'Superintendent Contact',width:220,sortable:false},
+  {key:'other_contacts',label:'Secondary Contact / Other Personnel',width:260,sortable:false},
+  {key:'phone',label:'District Phone #',width:122,sortable:false},
+  {key:'website',label:'Website',width:148,sortable:false},
+  {key:'region',label:'Region',width:116,sortable:true},
+  {key:'state',label:'State',width:64,sortable:true},
+  {key:'segment',label:'Entity Type',width:108,sortable:true},
+  {key:'role_fit',label:'Role Fit',width:108,sortable:true},
+  {key:'city_county',label:'City / County',width:168,sortable:true},
+  {key:'locale_display',label:'Locale',width:112,sortable:true},
+  {key:'saipe_display',label:'SAIPE',width:88,sortable:true},
+  {key:'students',label:'Students',width:84,sortable:true},
+  {key:'school_count',label:'Schools',width:74,sortable:true},
+  {key:'basis',label:'Basis',width:210,sortable:false},
+  {key:'outreach_program',label:'Outreach Program',width:190,sortable:false}
 ];
-
 const els={
-  tierButtons:document.getElementById('tierButtons'),tierGuide:document.getElementById('tierGuide'),visibleCount:document.getElementById('visibleCount'),allK12Count:document.getElementById('allK12Count'),tier1Count:document.getElementById('tier1Count'),tier2Count:document.getElementById('tier2Count'),tier3Count:document.getElementById('tier3Count'),tier4Count:document.getElementById('tier4Count'),
-  searchBox:document.getElementById('searchBox'),regionFilter:document.getElementById('regionFilter'),stateFilter:document.getElementById('stateFilter'),segmentFilter:document.getElementById('segmentFilter'),localeFilter:document.getElementById('localeFilter'),saipeFilter:document.getElementById('saipeFilter'),statusMessage:document.getElementById('statusMessage'),thead:document.getElementById('thead'),tbody:document.getElementById('tbody'),emptyState:document.getElementById('emptyState'),detailModal:document.getElementById('detailModal'),detailTitle:document.getElementById('detailTitle'),detailSub:document.getElementById('detailSub'),detailGrid:document.getElementById('detailGrid')
+  tierButtons:document.getElementById('tierButtons'),
+  tierGuide:document.getElementById('tierGuide'),
+  visibleCount:document.getElementById('visibleCount'),
+  filteredCount:document.getElementById('filteredCount'),
+  rangeIndicator:document.getElementById('rangeIndicator'),
+  pageIndicator:document.getElementById('pageIndicator'),
+  allK12Count:document.getElementById('allK12Count'),
+  tier1Count:document.getElementById('tier1Count'),
+  tier2Count:document.getElementById('tier2Count'),
+  tier3Count:document.getElementById('tier3Count'),
+  tier4Count:document.getElementById('tier4Count'),
+  searchBox:document.getElementById('searchBox'),
+  regionFilter:document.getElementById('regionFilter'),
+  stateFilter:document.getElementById('stateFilter'),
+  segmentFilter:document.getElementById('segmentFilter'),
+  localeFilter:document.getElementById('localeFilter'),
+  saipeFilter:document.getElementById('saipeFilter'),
+  statusMessage:document.getElementById('statusMessage'),
+  thead:document.getElementById('thead'),
+  tbody:document.getElementById('tbody'),
+  emptyState:document.getElementById('emptyState'),
+  detailModal:document.getElementById('detailModal'),
+  detailTitle:document.getElementById('detailTitle'),
+  detailSub:document.getElementById('detailSub'),
+  detailGrid:document.getElementById('detailGrid'),
+  pageSizeRange:document.getElementById('pageSizeRange'),
+  pageSizeValue:document.getElementById('pageSizeValue'),
+  prevPageBtn:document.getElementById('prevPageBtn'),
+  nextPageBtn:document.getElementById('nextPageBtn'),
+  trackerBtn:document.getElementById('trackerBtn'),
+  closeModalBtn:document.getElementById('closeModalBtn'),
 };
-
 function loadChecks(){try{return JSON.parse(localStorage.getItem(CONFIG.localChecksKey)||'{}')||{};}catch(_){return {};}}
 function saveChecks(){localStorage.setItem(CONFIG.localChecksKey,JSON.stringify(state.checks));}
 function isChecked(row){return !!state.checks[row.externalKey];}
 function setChecked(row,checked){if(checked) state.checks[row.externalKey]=1; else delete state.checks[row.externalKey]; saveChecks();}
+function loadPageSize(){const n=parseInt(localStorage.getItem(CONFIG.localPageSizeKey)||'30',10); return Number.isFinite(n)?Math.min(100,Math.max(10,n)):30;}
+function savePageSize(){localStorage.setItem(CONFIG.localPageSizeKey,String(state.pageSize));}
 function slugify(str){return String(str||'').toLowerCase().trim().replace(/&/g,' and ').replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').replace(/-+/g,'-');}
-function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]||m));}
-function sortValue(v){if(v==null) return ''; if(typeof v==='number') return v; const n=parseFloat(String(v).replace(/[^0-9.-]/g,'')); if(!Number.isNaN(n) && String(v).match(/[0-9]/)) return n; return String(v).toLowerCase();}
-function compare(a,b){const dir=state.sortDir==='asc'?1:-1; const av=sortValue(a[state.sortKey]); const bv=sortValue(b[state.sortKey]); if(av<bv) return -1*dir; if(av>bv) return 1*dir; return String(a.organization).localeCompare(String(b.organization))*dir;}
+function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function sortValue(v){if(v==null || v==='') return ''; const n=Number(String(v).replace(/[%,$]/g,'')); return Number.isFinite(n)&&String(v).trim()!==''?n:String(v).toLowerCase();}
+function compare(a,b){const dir=state.sortDir==='asc'?1:-1; const av=sortValue(a[state.sortKey]); const bv=sortValue(b[state.sortKey]); if(av<bv) return -1*dir; if(av>bv) return 1*dir; return String(a.organization).localeCompare(String(b.organization));}
 function saipeBand(row){if(row.saipe_numeric==null || row.saipe_numeric==='') return 'Unknown'; const n=Number(row.saipe_numeric); if(n>=30) return '>=30%'; if(n>=20) return '20% to 29.9%'; return '<20%';}
 function localeCodeValue(v){const n=parseInt(String(v||'').split('-')[0],10); return Number.isFinite(n)?n:null;}
 function tierClass(short){return short==='Tier 1'?'t1':short==='Tier 2'?'t2':short==='Tier 3'?'t3':short==='Tier 4'?'t4':'allk12';}
 function stickyLeft(stickyOrder){let left=0; columns.forEach(c=>{if(c.sticky && c.sticky<stickyOrder) left+=c.width;}); return left;}
 function applyCellLayout(cell,col,isHeader){cell.style.width=col.width+'px'; if(col.sticky){cell.classList.add('sticky-col'); cell.style.left=stickyLeft(col.sticky)+'px';} if(isHeader) cell.dataset.key=col.key;}
 function shortSite(url){try{const u=new URL(url); return u.hostname.replace(/^www\./,'');}catch(_){return url;}}
-
-function initUI(){
-  els.tierButtons.innerHTML=CONFIG.tierFilters.map(t=>`<button class="tier-filter ${state.tierFilter===t.key?'active':''}" data-tier="${t.key}" style="background:${state.tierFilter===t.key?t.color+'18':'#fff'};border-color:${t.color};color:${t.color}">${esc(t.label)}</button>`).join('');
-  els.tierGuide.innerHTML=CONFIG.tierFilters.map(t=>`<div class="tier-card" style="--accent:${t.color}"><div class="tier-row"><span class="tier-dot" style="background:${t.color}"></span><strong>${esc(t.label)}</strong></div><div class="tier-text">${esc(t.description)}</div></div>`).join('');
-  els.tierButtons.querySelectorAll('button[data-tier]').forEach(btn=>btn.addEventListener('click',()=>{state.tierFilter=btn.dataset.tier; initUI(); render();}));
-  document.getElementById('refreshBtn').addEventListener('click',loadData);
-  document.getElementById('exportBtn').addEventListener('click',exportCsv);
-  document.getElementById('printBtn').addEventListener('click',()=>window.print());
-  document.getElementById('closeModalBtn').addEventListener('click',closeModal);
-  els.detailModal.addEventListener('click',e=>{if(e.target===els.detailModal) closeModal();});
-  [els.searchBox,els.regionFilter,els.stateFilter,els.segmentFilter,els.localeFilter,els.saipeFilter].forEach(el=>el.addEventListener('input',render));
+function normalizeTrackerKey(v){return String(v||'').toLowerCase().replace(/[^a-z0-9]+/g,'');}
+function trackerStatusClass(v){
+  const s=String(v||'').toLowerCase();
+  if(!s) return 'pending';
+  if(/qualified|meeting|contacted/.test(s)) return 'open';
+  if(/assigned|research|working|active|progress/.test(s)) return 'progress';
+  if(/closed|won|lost|done|complete/.test(s)) return 'closed';
+  return 'pending';
 }
-
 function buildHeader(){
   const tr=document.createElement('tr');
   columns.forEach(col=>{
@@ -247,48 +342,52 @@ function buildHeader(){
   });
   els.thead.innerHTML=''; els.thead.appendChild(tr);
 }
-
 function startResize(e,th,col){
   e.preventDefault(); const startX=e.clientX; const startWidth=col.width;
   function move(ev){col.width=Math.max(60,startWidth+(ev.clientX-startX)); buildHeader(); render();}
   function up(){document.removeEventListener('mousemove',move); document.removeEventListener('mouseup',up);}
   document.addEventListener('mousemove',move); document.addEventListener('mouseup',up);
 }
-
-async function loadData(){
-  try{
-    els.statusMessage.textContent='Loading live K-12 data and packaged higher-ed data…'; els.statusMessage.className='status';
-    const [tierMap,higherEd,contactMap,k12Rows]=await Promise.all([
-      fetch('data/k12_tier_map.json').then(r=>r.json()),
-      fetch('data/highered_rows.json').then(r=>r.json()),
-      fetch('data/tier1_contacts.json').then(r=>r.json()),
-      loadK12FromSheet()
-    ]);
-    const k12=transformK12(k12Rows,tierMap,contactMap);
-    state.rows=[...k12,...higherEd];
-    updateCounts();
-    populateFilters();
-    render();
-    els.statusMessage.textContent=`Loaded ${k12.length.toLocaleString()} live K-12 rows, ${higherEd.length.toLocaleString()} higher-ed rows, and matched uploaded contacts for ${Object.keys(contactMap).length.toLocaleString()} Tier 1 districts.`;
-  }catch(err){
-    console.error(err); els.statusMessage.textContent='Could not load the live K-12 Google Sheet. Check that the sheet is shared publicly and the sheet name is still ELSI Export.'; els.statusMessage.className='status error';
-  }
-}
-
-function loadK12FromSheet(){
+function loadSheetRows(sheetId, sheetName){
   return new Promise((resolve,reject)=>{
-    const cb='__handleK12_'+Date.now();
+    const cb='__sheetcb_'+Math.random().toString(36).slice(2);
     const script=document.createElement('script');
     const cleanup=()=>{if(script.parentNode) script.parentNode.removeChild(script); try{delete window[cb];}catch(_){window[cb]=undefined;}};
-    window[cb]=(response)=>{try{cleanup(); if(!response || !response.table) throw new Error('No table in Google response'); resolve(gvizRows(response.table));}catch(e){reject(e);}};
+    window[cb]=(response)=>{try{cleanup(); if(!response||!response.table) throw new Error('No table returned'); resolve(gvizRows(response.table));}catch(err){reject(err);}};
     script.onerror=()=>{cleanup(); reject(new Error('Google Sheet script load failed'));};
-    script.src=`https://docs.google.com/spreadsheets/d/${CONFIG.k12SheetId}/gviz/tq?sheet=${encodeURIComponent(CONFIG.k12SheetName)}&tqx=out:json;responseHandler:${cb}`;
+    script.src=`https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?sheet=${encodeURIComponent(sheetName)}&tqx=out:json;responseHandler:${cb}`;
     document.body.appendChild(script);
   });
+}
+async function loadOptionalTracker(){
+  if(!CONFIG.trackerSheetId || !CONFIG.trackerSheetName) return {map:{}, loaded:false, rows:0, message:'Tracker sheet not configured.'};
+  try{
+    const rows=await loadSheetRows(CONFIG.trackerSheetId, CONFIG.trackerSheetName);
+    const map=buildTrackerMap(rows);
+    return {map, loaded:true, rows:Object.keys(map).length, message:`Loaded ${Object.keys(map).length.toLocaleString()} tracker rows from Google Sheet.`};
+  }catch(err){
+    return {map:{}, loaded:false, rows:0, message:`Tracker sheet not found yet. Add a public tab named "${CONFIG.trackerSheetName}" in the linked Google Sheet to populate Status, Assigned To, and Notes.`};
+  }
 }
 function gvizRows(table){
   const headers=table.cols.map((c,i)=>c.label||c.id||('col'+i));
   return (table.rows||[]).map(r=>{const o={}; headers.forEach((h,i)=>{const cell=r.c[i]; o[h]=cell ? (cell.f!=null?cell.f:cell.v!=null?cell.v:'') : '';}); return o;});
+}
+function buildTrackerMap(rows){
+  if(!rows || !rows.length) return {};
+  const headers=Object.keys(rows[0]);
+  const find=(keys)=>headers.find(h=>keys.includes(normalizeTrackerKey(h)));
+  const keyCol=find(['externalkey','key','id']);
+  const statusCol=find(['status','pipeline','grantstatus']);
+  const assignedCol=find(['assignedto','assignedrep','owner','rep']);
+  const notesCol=find(['notes','note','comment','comments']);
+  const out={};
+  rows.forEach(raw=>{
+    const key=String(raw[keyCol]||'').trim();
+    if(!key) return;
+    out[key]={status:String(raw[statusCol]||'').trim(),assigned_to:String(raw[assignedCol]||'').trim(),notes:String(raw[notesCol]||'').trim()};
+  });
+  return out;
 }
 function detectK12Columns(headers){
   const find=(patterns)=>headers.find(h=>patterns.some(p=>p.test(h)))||'';
@@ -318,19 +417,40 @@ function detectK12Columns(headers){
     school_count:find([/Total Number Operational Schools/i])
   };
 }
-function transformK12(rawRows,tierMap,contactMap){
+function applyTracker(row, trackerMap){
+  const t=trackerMap[row.externalKey]||{};
+  row.status=t.status||'';
+  row.assigned_to=t.assigned_to||'';
+  row.notes=t.notes||'';
+  row.detail=row.detail||{};
+  row.detail['Status']=row.status;
+  row.detail['Assigned To']=row.assigned_to;
+  row.detail['Notes']=row.notes;
+  return row;
+}
+function transformK12(rawRows,tierMap,contactMap,trackerMap){
   if(!rawRows.length) return [];
   const cols=detectK12Columns(Object.keys(rawRows[0]));
   return rawRows.map(raw=>{
-    const org=String(raw[cols.organization]||'').trim(); const stateCode=String(raw[cols.state_abbr]||raw[cols.loc_state]||'').trim().toUpperCase(); const localeRaw=String(raw[cols.locale]||'').trim(); const locale_code=localeCodeValue(localeRaw);
+    const org=String(raw[cols.organization]||'').trim();
+    const stateCode=String(raw[cols.state_abbr]||raw[cols.loc_state]||'').trim().toUpperCase();
+    const localeRaw=String(raw[cols.locale]||'').trim();
+    const locale_code=localeCodeValue(localeRaw);
     if(!org || !stateCode || !locale_code || locale_code<11 || locale_code>43) return null;
-    const key=`${stateCode}|${slugify(org)}`; const hit=tierMap[key];
-    const tier_short=hit?hit.tier_short:'All K-12'; const tier_label=hit?hit.tier_label:'All K-12 (Locales 11–43)'; const tier_order=hit?(hit.tier_short==='Tier 1'?1:2):0;
-    const saipe_numeric=hit && hit.saipe_numeric!=null ? Number(hit.saipe_numeric) : null; const saipe_display=hit && hit.saipe_percent ? String(hit.saipe_percent) : '';
-    const students=String(raw[cols.students]||'').replace(/[^0-9]/g,''); const school_count=String(raw[cols.school_count]||'').replace(/[^0-9]/g,'');
-    const contact=(contactMap && contactMap[key]) ? contactMap[key] : null; const superintendent=contact && contact.superintendent ? contact.superintendent : null; const otherPersonnel=contact && contact.other_personnel ? contact.other_personnel : [];
+    const key=`${stateCode}|${slugify(org)}`;
+    const hit=tierMap[key];
+    const tier_short=hit?hit.tier_short:'All K-12';
+    const tier_label=hit?hit.tier_label:'All K-12 (Locales 11–43)';
+    const tier_order=hit?(hit.tier_short==='Tier 1'?1:hit.tier_short==='Tier 2'?2:0):0;
+    const saipe_numeric=hit && hit.saipe_numeric!=null ? Number(hit.saipe_numeric) : null;
+    const saipe_display=hit && hit.saipe_percent ? String(hit.saipe_percent) : '';
+    const students=String(raw[cols.students]||'').replace(/[^0-9]/g,'');
+    const school_count=String(raw[cols.school_count]||'').replace(/[^0-9]/g,'');
+    const contact=(contactMap && contactMap[key]) ? contactMap[key] : null;
+    const superintendent=contact && contact.superintendent ? contact.superintendent : null;
+    const otherPersonnel=contact && contact.other_personnel ? contact.other_personnel : [];
     const otherPersonnelDetail=otherPersonnel.map(c=>[`${c.name||''}${c.title?` — ${c.title}`:''}`.trim(), [c.email||'',c.phone||''].filter(Boolean).join(' • ')].filter(Boolean).join('\n')).join('\n\n');
-    return {
+    const row={
       externalKey:key,
       tier_short,tier_label,tier_order,
       segment:'K-12 District', role_fit:'Spoke Candidate', organization:org,
@@ -341,22 +461,43 @@ function transformK12(rawRows,tierMap,contactMap){
       phone:String(raw[cols.phone]||'').trim(), website:String(raw[cols.website]||'').trim(), outreach_program:'', students:students?Number(students):'', school_count:school_count?Number(school_count):'', source:'Live Google Sheet',
       detail:{
         'Organization': org,'Tier': tier_label,'Region': CONFIG.regionMap[stateCode]||'','State': stateCode,'State Name': String(raw[cols.state_name]||''),'NCES ID': String(raw[cols.nces_id]||''),'County': String(raw[cols.county]||''),'Website': String(raw[cols.website]||''),'District Phone': String(raw[cols.phone]||''),'Superintendent': superintendent && superintendent.name ? superintendent.name : '','Superintendent Email': superintendent && superintendent.email ? superintendent.email : '','Superintendent Phone': superintendent && superintendent.phone ? superintendent.phone : '','Other Personnel Contacts': otherPersonnelDetail,
-        'Location Address 1': String(raw[cols.address1]||''),'Location Address 2': String(raw[cols.address2]||''),'City': String(raw[cols.city]||''),'Location State': String(raw[cols.loc_state]||''),'ZIP': String(raw[cols.zip]||''),'Mailing ZIP': String(raw[cols.mailing_zip]||''),'Phone': String(raw[cols.phone]||''),'Agency Type': String(raw[cols.agency_type]||''),
-        'Locale': localeRaw,'CBSA Name': String(raw[cols.cbsa_name]||''),'CBSA ID': String(raw[cols.cbsa_id]||''),'CSA Name': String(raw[cols.csa_name]||''),'Latitude': String(raw[cols.latitude]||''),'Longitude': String(raw[cols.longitude]||''),'Metro/Micro Area Code': String(raw[cols.metro_code]||''),'Students': students,'Operational Schools': school_count,'SAIPE': saipe_display,'Basis': hit?hit.basis:'',
+        'Location Address 1': String(raw[cols.address1]||''),'Location Address 2': String(raw[cols.address2]||''),'City': String(raw[cols.city]||''),'Location State': String(raw[cols.loc_state]||''),'ZIP': String(raw[cols.zip]||''),'Mailing ZIP': String(raw[cols.mailing_zip]||''),'Phone': String(raw[cols.phone]||''),'Agency Type': String(raw[cols.agency_type]||''),'Locale': localeRaw,'CBSA Name': String(raw[cols.cbsa_name]||''),'CBSA ID': String(raw[cols.cbsa_id]||''),'CSA Name': String(raw[cols.csa_name]||''),'Latitude': String(raw[cols.latitude]||''),'Longitude': String(raw[cols.longitude]||''),'Metro/Micro Area Code': String(raw[cols.metro_code]||''),'Students': students,'Operational Schools': school_count,'SAIPE': saipe_display,'Basis': hit?hit.basis:'',
       }
     };
+    return applyTracker(row, trackerMap);
   }).filter(Boolean);
 }
+function enrichHigherEd(rows, trackerMap){ return rows.map(row=>applyTracker(row, trackerMap)); }
 function updateCounts(){
-  const rows=state.rows; els.allK12Count.textContent=rows.filter(r=>r.segment==='K-12 District').length.toLocaleString(); els.tier1Count.textContent=rows.filter(r=>r.tier_short==='Tier 1').length.toLocaleString(); els.tier2Count.textContent=rows.filter(r=>r.tier_short==='Tier 2').length.toLocaleString(); els.tier3Count.textContent=rows.filter(r=>r.tier_short==='Tier 3').length.toLocaleString(); els.tier4Count.textContent=rows.filter(r=>r.tier_short==='Tier 4').length.toLocaleString();
+  const rows=state.rows;
+  els.allK12Count.textContent=rows.filter(r=>r.segment==='K-12 District').length.toLocaleString();
+  els.tier1Count.textContent=rows.filter(r=>r.tier_short==='Tier 1').length.toLocaleString();
+  els.tier2Count.textContent=rows.filter(r=>r.tier_short==='Tier 2').length.toLocaleString();
+  els.tier3Count.textContent=rows.filter(r=>r.tier_short==='Tier 3').length.toLocaleString();
+  els.tier4Count.textContent=rows.filter(r=>r.tier_short==='Tier 4').length.toLocaleString();
 }
 function populateFilters(){
   const opt=(arr,all='All')=>`<option value="">${all}</option>`+arr.map(v=>`<option value="${esc(v)}">${esc(v)}</option>`).join('');
-  const rows=state.rows; const states=[...new Set(rows.map(r=>r.state).filter(Boolean))].sort(); const regions=[...new Set(rows.map(r=>r.region).filter(Boolean))].sort(); const segments=[...new Set(rows.map(r=>r.segment).filter(Boolean))].sort(); const locales=[...new Set(rows.map(r=>String(r.locale_display||'')).filter(Boolean))].sort((a,b)=>localeCodeValue(a)-localeCodeValue(b));
-  els.regionFilter.innerHTML=opt(regions,'All Regions'); els.stateFilter.innerHTML=opt(states,'All States'); els.segmentFilter.innerHTML=opt(segments,'All Types'); els.localeFilter.innerHTML=opt(locales,'All Locales'); els.saipeFilter.innerHTML=opt(['Unknown','>=30%','20% to 29.9%','<20%'],'All SAIPE');
+  const rows=state.rows;
+  const states=[...new Set(rows.map(r=>r.state).filter(Boolean))].sort();
+  const regions=[...new Set(rows.map(r=>r.region).filter(Boolean))].sort();
+  const segments=[...new Set(rows.map(r=>r.segment).filter(Boolean))].sort();
+  const locales=[...new Set(rows.map(r=>String(r.locale_display||'')).filter(Boolean))].sort((a,b)=>localeCodeValue(a)-localeCodeValue(b));
+  els.regionFilter.innerHTML=opt(regions,'All Regions');
+  els.stateFilter.innerHTML=opt(states,'All States');
+  els.segmentFilter.innerHTML=opt(segments,'All Types');
+  els.localeFilter.innerHTML=opt(locales,'All Locales');
+  els.saipeFilter.innerHTML=opt(['Unknown','>=30%','20% to 29.9%','<20%'],'All SAIPE');
 }
-function passesTier(row){if(state.tierFilter==='all_k12') return row.segment==='K-12 District'; if(state.tierFilter==='tier1') return row.tier_short==='Tier 1'; if(state.tierFilter==='tier2') return row.tier_short==='Tier 2'; if(state.tierFilter==='tier3') return row.tier_short==='Tier 3'; if(state.tierFilter==='tier4') return row.tier_short==='Tier 4'; return true;}
-function currentRows(){
+function passesTier(row){
+  if(state.tierFilter==='all_k12') return row.segment==='K-12 District';
+  if(state.tierFilter==='tier1') return row.tier_short==='Tier 1';
+  if(state.tierFilter==='tier2') return row.tier_short==='Tier 2';
+  if(state.tierFilter==='tier3') return row.tier_short==='Tier 3';
+  if(state.tierFilter==='tier4') return row.tier_short==='Tier 4';
+  return true;
+}
+function filteredRows(){
   const q=els.searchBox.value.trim().toLowerCase();
   return state.rows.filter(row=>{
     if(!passesTier(row)) return false;
@@ -365,16 +506,40 @@ function currentRows(){
     if(els.segmentFilter.value && row.segment!==els.segmentFilter.value) return false;
     if(els.localeFilter.value && String(row.locale_display||'')!==els.localeFilter.value) return false;
     if(els.saipeFilter.value && saipeBand(row)!==els.saipeFilter.value) return false;
-    if(q){const hay=[row.organization,row.region,row.state,row.segment,row.role_fit,row.city,row.county,row.locale_display,row.basis,row.outreach_program,row.website,row.phone].join(' ').toLowerCase(); if(!hay.includes(q)) return false;}
+    if(q){
+      const hay=[row.organization,row.region,row.state,row.segment,row.role_fit,row.city,row.county,row.locale_display,row.basis,row.outreach_program,row.website,row.phone,row.superintendent_contact,row.other_contacts,row.status,row.assigned_to,row.notes].join(' ').toLowerCase();
+      if(!hay.includes(q)) return false;
+    }
     return true;
   }).sort(compare);
 }
+function pageRows(rows){
+  const total=rows.length;
+  const pageCount=Math.max(1,Math.ceil(total/state.pageSize));
+  if(state.page>pageCount) state.page=pageCount;
+  if(state.page<1) state.page=1;
+  const start=(state.page-1)*state.pageSize;
+  return rows.slice(start, start+state.pageSize);
+}
+function updatePager(total){
+  const pageCount=Math.max(1,Math.ceil(total/state.pageSize));
+  const start=total?((state.page-1)*state.pageSize)+1:0;
+  const end=Math.min(total, (state.page-1)*state.pageSize+state.pageSize);
+  els.filteredCount.textContent=total.toLocaleString();
+  els.rangeIndicator.textContent=`${start.toLocaleString()}–${end.toLocaleString()}`;
+  els.pageIndicator.textContent=`Page ${state.page} of ${pageCount}`;
+  els.prevPageBtn.disabled=state.page<=1;
+  els.nextPageBtn.disabled=state.page>=pageCount;
+  els.pageSizeRange.value=String(state.pageSize);
+  els.pageSizeValue.textContent=String(state.pageSize);
+}
 function render(){
-  const rows=currentRows();
+  const rows=filteredRows();
+  updatePager(rows.length);
   els.visibleCount.textContent=rows.length.toLocaleString();
   els.emptyState.classList.toggle('show',!rows.length);
   els.tbody.innerHTML='';
-  rows.forEach(row=>els.tbody.appendChild(renderRow(row)));
+  pageRows(rows).forEach(row=>els.tbody.appendChild(renderRow(row)));
 }
 function renderRow(row){
   const tr=document.createElement('tr');
@@ -382,10 +547,15 @@ function renderRow(row){
   columns.forEach(col=>{
     const td=document.createElement('td');
     applyCellLayout(td,col,false);
-    let v=row[col.key];
+    const v=row[col.key];
     if(col.key==='my_call'){
-      td.classList.add('check-cell');
-      const cb=document.createElement('input'); cb.type='checkbox'; cb.className='mycheck'; cb.checked=isChecked(row); cb.title='Personal check-off for your calling progress on this device'; cb.setAttribute('aria-label','Personal check-off for your calling progress on this device'); cb.addEventListener('change',()=>{setChecked(row,cb.checked); tr.classList.toggle('checked-row',cb.checked);}); td.appendChild(cb);
+      td.className='check-cell';
+      const cb=document.createElement('input');
+      cb.type='checkbox'; cb.className='mycheck'; cb.checked=isChecked(row);
+      cb.title='Personal check-off for your calling progress on this device';
+      cb.setAttribute('aria-label','Personal check-off for your calling progress on this device');
+      cb.addEventListener('change',()=>{setChecked(row,cb.checked); tr.classList.toggle('checked-row',cb.checked);});
+      td.appendChild(cb);
     } else if(col.key==='tier_short'){
       td.innerHTML=`<span class="tier-badge ${tierClass(row.tier_short)}">${esc(row.tier_short||'All K-12')}</span>`;
     } else if(col.key==='organization'){
@@ -396,9 +566,17 @@ function renderRow(row){
       td.innerHTML=v?`<a class="phone-link" href="tel:${esc(String(v).replace(/[^0-9+]/g,''))}">${esc(v)}</a>`:'';
     } else if(col.key==='superintendent_contact' || col.key==='other_contacts'){
       td.innerHTML=contactBlockHtml(v||'');
+    } else if(col.key==='status'){
+      td.innerHTML=v?`<span class="status-badge ${trackerStatusClass(v)}">${esc(v)}</span>`:'';
+    } else if(col.key==='assigned_to'){
+      td.classList.add('assign-cell'); td.textContent=v||'';
+    } else if(col.key==='notes'){
+      td.classList.add('note-cell'); td.textContent=v||'';
     } else if(col.key==='outreach_program'){
       td.innerHTML=row.outreach_link?`<a href="${esc(row.outreach_link)}" target="_blank" rel="noopener">${esc(v||'Open link')}</a>`:esc(v||'');
-    } else {td.textContent=v==null?'':v;}
+    } else {
+      td.textContent=v==null?'':v;
+    }
     tr.appendChild(td);
   });
   return tr;
@@ -416,10 +594,7 @@ function contactBlockHtml(text){
   const blocks=String(text).split(/\n{2,}/).map(block=>block.split('\n').filter(Boolean)).filter(lines=>lines.length);
   return blocks.map(lines=>`<div class="contact-block">${lines.map(line=>`<div class="contact-line">${linkifyText(line)}</div>`).join('')}</div>`).join('');
 }
-function detailValueHtml(value){
-  if(value==null) return '';
-  return linkifyText(String(value)).replace(/\n/g,'<br>');
-}
+function detailValueHtml(value){ if(value==null) return ''; return linkifyText(String(value)).replace(/\n/g,'<br>'); }
 function openDetail(row){
   els.detailTitle.textContent=row.organization||'Record';
   els.detailSub.textContent=`${row.tier_label} • ${row.segment} • ${row.state}`;
@@ -429,23 +604,57 @@ function openDetail(row){
 }
 function closeModal(){els.detailModal.classList.remove('show');}
 function exportCsv(){
-  const rows=currentRows();
-  const fields=['tier_label','organization','superintendent_name','superintendent_email','superintendent_phone','other_contacts','phone','website','region','state','segment','role_fit','city','county','locale_display','saipe_display','students','school_count','basis','outreach_program'];
+  const rows=filteredRows();
+  const fields=['tier_label','organization','status','assigned_to','notes','superintendent_name','superintendent_email','superintendent_phone','other_contacts','phone','website','region','state','segment','role_fit','city','county','locale_display','saipe_display','students','school_count','basis','outreach_program'];
   const lines=[fields.join(',')];
   rows.forEach(r=>{lines.push(fields.map(f=>csvCell(r[f])).join(','));});
   const blob=new Blob([lines.join('\n')],{type:'text/csv;charset=utf-8;'});
   const a=document.createElement('a');
-  a.href=URL.createObjectURL(blob);
-  a.download='RUS_DLT_Prospecting_Export.csv';
-  a.click();
-  URL.revokeObjectURL(a.href);
+  a.href=URL.createObjectURL(blob); a.download='RUS_DLT_Prospecting_Export.csv'; a.click();
+  setTimeout(()=>URL.revokeObjectURL(a.href),500);
 }
-function csvCell(v){
-  const s=String(v==null?'':v);
-  return /[",\n]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s;
+function csvCell(v){ const s=String(v==null?'':v); return /[",\n]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s; }
+function initUI(){
+  els.tierButtons.innerHTML=CONFIG.tierFilters.map(t=>`<button class="tier-filter ${state.tierFilter===t.key?'active':''}" data-tier="${t.key}" style="background:${state.tierFilter===t.key?t.color+'18':'#fff'};border-color:${t.color};color:${t.color}">${esc(t.label)}</button>`).join('');
+  els.tierGuide.innerHTML=CONFIG.tierFilters.map(t=>`<div class="tier-card" style="--accent:${t.color}"><div class="tier-row"><span class="tier-dot" style="background:${t.color}"></span><strong>${esc(t.label)}</strong></div><div class="tier-text">${esc(t.description)}</div></div>`).join('');
+  els.tierButtons.querySelectorAll('button[data-tier]').forEach(btn=>btn.addEventListener('click',()=>{state.tierFilter=btn.dataset.tier; state.page=1; initUI(); render();}));
+  document.getElementById('refreshBtn').addEventListener('click',loadData);
+  document.getElementById('exportBtn').addEventListener('click',exportCsv);
+  document.getElementById('printBtn').addEventListener('click',()=>window.print());
+  els.closeModalBtn.addEventListener('click',closeModal);
+  els.detailModal.addEventListener('click',e=>{if(e.target===els.detailModal) closeModal();});
+  [els.searchBox,els.regionFilter,els.stateFilter,els.segmentFilter,els.localeFilter,els.saipeFilter].forEach(el=>el.addEventListener('input',()=>{state.page=1; render();}));
+  els.pageSizeRange.addEventListener('input',()=>{state.pageSize=parseInt(els.pageSizeRange.value,10)||30; savePageSize(); state.page=1; render();});
+  els.prevPageBtn.addEventListener('click',()=>{state.page=Math.max(1,state.page-1); render();});
+  els.nextPageBtn.addEventListener('click',()=>{const total=filteredRows().length; const pageCount=Math.max(1,Math.ceil(total/state.pageSize)); state.page=Math.min(pageCount,state.page+1); render();});
+  if(els.trackerBtn) els.trackerBtn.href=CONFIG.trackerEditUrl;
 }
-
+async function loadData(){
+  try{
+    els.statusMessage.textContent='Loading live K-12 data, higher-ed rows, tracker fields, and Tier 1 contacts…'; els.statusMessage.className='status';
+    const [tierMap,higherEdRaw,contactMap,k12Rows,trackerResult]=await Promise.all([
+      fetch('data/k12_tier_map.json').then(r=>r.json()),
+      fetch('data/highered_rows.json').then(r=>r.json()),
+      fetch('data/tier1_contacts.json').then(r=>r.json()),
+      loadSheetRows(CONFIG.k12SheetId, CONFIG.k12SheetName),
+      loadOptionalTracker()
+    ]);
+    state.trackerLoaded=trackerResult.loaded;
+    state.trackerRows=trackerResult.rows;
+    const higherEd=enrichHigherEd(higherEdRaw, trackerResult.map);
+    const k12=transformK12(k12Rows,tierMap,contactMap,trackerResult.map);
+    state.rows=[...k12,...higherEd];
+    updateCounts(); populateFilters(); state.page=1; render();
+    const trackerNote=trackerResult.loaded ? ` Tracker fields are loading from ${trackerResult.rows.toLocaleString()} Google Sheet rows.` : ` ${trackerResult.message}`;
+    els.statusMessage.textContent=`Loaded ${k12.length.toLocaleString()} live K-12 rows, ${higherEd.length.toLocaleString()} higher-ed rows, and matched uploaded/public contacts for Tier 1 districts.${trackerNote}`;
+  }catch(err){
+    console.error(err);
+    els.statusMessage.textContent='Could not load the live K-12 Google Sheet. Check that the sheet is shared publicly and the sheet name is still ELSI Export.';
+    els.statusMessage.className='status error';
+  }
+}
 initUI(); buildHeader(); loadData();
 </script>
+
 </body>
 </html>
