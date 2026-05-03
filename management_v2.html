@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Funding Tracker Management</title>
+  <style>
+    :root {
+      --bg: #f4f7fb;
+      --surface: #ffffff;
+      --text: #1f2937;
+      --muted: #64748b;
+      --line: #d9e2ef;
+      --primary: #1f4e79;
+      --primary-dark: #163a5a;
+      --danger: #b91c1c;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: linear-gradient(180deg, #f7f9fc 0%, #edf3fa 100%);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    .wrap {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 22px 18px 26px;
+    }
+
+    .panel {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      box-shadow: 0 10px 22px rgba(31, 41, 55, 0.06);
+      padding: 18px 18px;
+    }
+
+    h1 {
+      margin: 0 0 5px;
+      color: var(--primary-dark);
+      font-size: 1.7rem;
+    }
+
+    .sub {
+      margin: 0 0 16px;
+      color: var(--muted);
+      line-height: 1.45;
+      font-size: 0.92rem;
+    }
+
+    .field {
+      margin-bottom: 10px;
+    }
+
+    .field label {
+      display: block;
+      font-size: 0.84rem;
+      font-weight: 700;
+      margin-bottom: 7px;
+      color: #334155;
+    }
+
+    .field input {
+      width: 100%;
+      padding: 11px 12px;
+      border: 1px solid #cfd9e6;
+      border-radius: 10px;
+      font-size: 0.95rem;
+    }
+
+    .btn {
+      appearance: none;
+      border: 0;
+      background: var(--primary);
+      color: #ffffff;
+      padding: 10px 14px;
+      border-radius: 10px;
+      font-size: 0.92rem;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn.secondary {
+      background: #e8eef6;
+      color: var(--primary-dark);
+      border: 1px solid #d2dbe8;
+    }
+
+    .error {
+      min-height: 1.2em;
+      color: var(--danger);
+      font-size: 0.84rem;
+      font-weight: 700;
+      margin-top: 10px;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .section + .section {
+      margin-top: 14px;
+    }
+
+    .card {
+      border: 1px solid #dce5f0;
+      border-radius: 14px;
+      background: #fbfdff;
+      padding: 14px 14px;
+    }
+
+    .card h2 {
+      margin: 0 0 7px;
+      font-size: 1rem;
+      color: var(--primary-dark);
+    }
+
+    .card p, .card li {
+      color: #46566b;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    ul {
+      padding-left: 18px;
+      margin: 8px 0 0;
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+
+    .note {
+      margin-top: 8px;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="panel">
+      <div id="loginSection">
+        <h1>Management</h1>
+        <p class="sub">Enter the management password to access the Google Sheets login log controls.</p>
+
+        <form id="adminForm">
+          <div class="field">
+            <label for="adminPassword">Management Password</label>
+            <input id="adminPassword" name="adminPassword" type="password" autocomplete="current-password" required />
+          </div>
+          <button class="btn" type="submit">Open Management</button>
+          <div id="adminError" class="error" aria-live="polite"></div>
+        </form>
+      </div>
+
+      <div id="contentSection" class="hidden">
+        <h1>Management</h1>
+        <p class="sub">This page is set up to work with the shared Google Sheets login log.</p>
+
+        <div class="section card">
+          <h2>Login Log</h2>
+          <p>Use the Google Sheet as the shared audit log for site activity. The homepage writes login and logout events to that sheet through the Google Apps Script web app.</p>
+          <div class="actions">
+            <a id="sheetLink" class="btn" href="#" target="_blank" rel="noopener noreferrer">Open Google Sheet</a>
+            <a class="btn secondary" href="index.html">Back to Homepage</a>
+          </div>
+          <p class="note">Update the <strong>GOOGLE_SHEET_URL</strong> constant in this file after you create the sheet.</p>
+        </div>
+
+        <div class="section card">
+          <h2>What this setup records</h2>
+          <ul>
+            <li>Name entered at login</li>
+            <li>Login or logout action</li>
+            <li>Reason, including 24-hour session expiration</li>
+            <li>Timestamp</li>
+            <li>Page URL</li>
+            <li>Browser user agent</li>
+          </ul>
+        </div>
+
+        <div class="section card">
+          <h2>Deployment reminder</h2>
+          <p>Keep this page discreet at the bottom of the homepage, and use the Apps Script deployment URL in the homepage file so all users write to the same shared sheet.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const MANAGEMENT_PASSWORD = 'FSCbusiness';
+    const GOOGLE_SHEET_URL = 'https://docs.google.com/spreadsheets/d/1N4BR14dEJp9QpbGFbuuyCBa8eZoOrc0t5CIYvFeNt7U/edit?gid=0#gid=0';
+
+    const adminForm = document.getElementById('adminForm');
+    const adminPassword = document.getElementById('adminPassword');
+    const adminError = document.getElementById('adminError');
+    const loginSection = document.getElementById('loginSection');
+    const contentSection = document.getElementById('contentSection');
+    const sheetLink = document.getElementById('sheetLink');
+
+    if (GOOGLE_SHEET_URL && !GOOGLE_SHEET_URL.includes('https://docs.google.com/spreadsheets/d/1N4BR14dEJp9QpbGFbuuyCBa8eZoOrc0t5CIYvFeNt7U/edit?gid=0#gid=0')) {
+      sheetLink.href = GOOGLE_SHEET_URL;
+    } else {
+      sheetLink.href = '#';
+      sheetLink.addEventListener('click', function (event) {
+        event.preventDefault();
+      });
+    }
+
+    adminForm.addEventListener('submit', function (event) {
+      event.preventDefault();
+      if (adminPassword.value !== MANAGEMENT_PASSWORD) {
+        adminError.textContent = 'Incorrect password.';
+        return;
+      }
+      adminError.textContent = '';
+      loginSection.classList.add('hidden');
+      contentSection.classList.remove('hidden');
+    });
+  </script>
+</body>
+</html>

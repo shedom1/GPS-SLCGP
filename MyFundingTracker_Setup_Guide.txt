@@ -1,0 +1,48 @@
+My Funding Tracker - Google Sheets Login Tracking Setup
+
+Files included:
+1. my_funding_tracker_homepage_v16.html
+2. management_v2.html
+3. Code.gs
+
+How to set it up:
+
+1) Create a Google Sheet
+- Name it something like: My Funding Tracker Login Log
+
+2) Open Extensions > Apps Script
+- Delete any starter code
+- Paste in the contents of Code.gs
+- Save
+
+3) Deploy the Apps Script as a Web App
+- Click Deploy > New deployment
+- Type: Web app
+- Execute as: Me
+- Who has access: Anyone
+- Deploy
+- Copy the Web App URL
+
+4) Update the homepage
+- Open my_funding_tracker_homepage_v16.html
+- Replace:
+  PASTE_YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE
+  with your deployed Apps Script URL
+
+5) Update the management page
+- Open management_v2.html
+- Replace:
+  PASTE_YOUR_GOOGLE_SHEET_URL_HERE
+  with your Google Sheet URL
+
+6) Publish to GitHub Pages
+- Rename my_funding_tracker_homepage_v16.html to index.html
+- Upload management_v2.html beside it
+- Keep your existing folder structure for the tracker tiles
+
+Notes:
+- The site password is: callsherri
+- The management password is: FSCbusiness
+- Sessions expire after 24 hours automatically
+- Login and logout events are written to the shared Google Sheet
+- This is still lightweight access control, not enterprise authentication

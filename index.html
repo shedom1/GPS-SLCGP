@@ -6,16 +6,15 @@
   <title>My Funding Tracker</title>
   <style>
     :root {
-      --bg: #f5f7fb;
+      --bg: #eef3f9;
       --surface: #ffffff;
       --text: #1f2937;
-      --muted: #6b7280;
-      --line: #d9e2ef;
+      --muted: #64748b;
+      --line: #d7e0eb;
       --primary: #1f4e79;
       --primary-dark: #163a5a;
-      --shadow: 0 12px 30px rgba(31, 41, 55, 0.08);
-      --radius: 16px;
       --danger: #b91c1c;
+      --radius: 14px;
     }
 
     * { box-sizing: border-box; }
@@ -23,102 +22,101 @@
     body {
       margin: 0;
       font-family: Arial, Helvetica, sans-serif;
-      background: linear-gradient(180deg, #f7f9fc 0%, #eef3f9 100%);
+      background: linear-gradient(180deg, #f6f9fc 0%, #ebf1f8 100%);
       color: var(--text);
       min-height: 100vh;
     }
 
     .page-shell {
-      position: relative;
       min-height: 100vh;
     }
 
     .wrap {
-      max-width: 1240px;
+      max-width: 1260px;
       margin: 0 auto;
-      padding: 18px 24px 34px;
+      padding: 14px 22px 24px;
     }
 
     .topbar {
       display: flex;
       justify-content: flex-end;
       align-items: center;
-      min-height: 40px;
-      margin-bottom: 2px;
-      gap: 12px;
+      gap: 10px;
+      min-height: 36px;
+      margin-bottom: 0;
     }
 
     .welcome {
       color: var(--muted);
-      font-size: 0.83rem;
-      font-weight: 600;
+      font-size: 0.82rem;
+      font-weight: 700;
     }
 
     .logout-btn {
       appearance: none;
       border: 0;
       background: #b91c1c;
-      color: #fff;
-      padding: 9px 14px;
-      border-radius: 10px;
-      font-size: 0.83rem;
+      color: #ffffff;
+      padding: 8px 13px;
+      border-radius: 9px;
+      font-size: 0.82rem;
       font-weight: 700;
       cursor: pointer;
-      box-shadow: 0 4px 10px rgba(185, 28, 28, 0.16);
+      box-shadow: 0 4px 10px rgba(185, 28, 28, 0.18);
     }
 
     .logout-btn:hover {
-      filter: brightness(1.03);
       transform: translateY(-1px);
+      filter: brightness(1.03);
     }
 
     header {
       text-align: center;
-      padding: 2px 0 10px;
+      padding: 2px 0 8px;
     }
 
     h1 {
       margin: 0;
-      font-size: clamp(1.8rem, 3.2vw, 2.35rem);
+      font-size: clamp(1.8rem, 3vw, 2.35rem);
       line-height: 1.1;
-      font-weight: 700;
+      font-weight: 800;
       color: var(--primary-dark);
+      letter-spacing: -0.02em;
     }
 
     .subtitle {
-      max-width: 840px;
-      margin: 8px auto 0;
-      font-size: 0.96rem;
-      line-height: 1.5;
+      max-width: 860px;
+      margin: 7px auto 0;
+      font-size: 0.95rem;
+      line-height: 1.45;
       color: var(--muted);
     }
 
     .public-note {
       max-width: 980px;
-      margin: 10px auto 0;
-      background: rgba(255,255,255,0.9);
-      border: 1px solid #dbe4f0;
-      border-radius: 14px;
-      padding: 10px 14px;
+      margin: 9px auto 0;
+      background: rgba(255,255,255,0.95);
+      border: 1px solid #dbe4ef;
+      border-radius: 12px;
+      padding: 9px 12px;
       color: #49566a;
-      font-size: 0.94rem;
-      line-height: 1.5;
+      font-size: 0.88rem;
+      line-height: 1.45;
       box-shadow: 0 4px 10px rgba(31, 41, 55, 0.04);
     }
 
     .hero-panel {
-      background: rgba(255,255,255,0.97);
+      background: rgba(255,255,255,0.98);
       border: 1px solid rgba(219, 227, 238, 0.95);
-      border-radius: 18px;
-      box-shadow: 0 8px 20px rgba(31, 41, 55, 0.06);
-      padding: 14px 16px;
-      margin-top: 10px;
-      backdrop-filter: blur(6px);
+      border-radius: 16px;
+      box-shadow: 0 10px 22px rgba(31, 41, 55, 0.06);
+      padding: 12px 14px;
+      margin-top: 8px;
     }
 
     .category-section + .category-section {
-      margin-top: 18px;
-      padding-top: 14px;
+      margin-top: 14px;
+      padding-top: 12px;
       border-top: 1px solid #e4ebf4;
     }
 
@@ -127,32 +125,32 @@
       justify-content: space-between;
       align-items: flex-end;
       gap: 10px;
-      margin-bottom: 8px;
+      margin-bottom: 7px;
       flex-wrap: wrap;
     }
 
     .category-title-wrap h2 {
-      margin: 0 0 3px;
-      font-size: 1.12rem;
+      margin: 0 0 2px;
+      font-size: 1.08rem;
       color: var(--primary-dark);
     }
 
     .category-title-wrap p {
       margin: 0;
       color: var(--muted);
-      font-size: 0.83rem;
-      line-height: 1.5;
-      max-width: 820px;
+      font-size: 0.82rem;
+      line-height: 1.42;
+      max-width: 840px;
     }
 
     .category-badge {
-      font-size: 0.77rem;
-      font-weight: 700;
+      font-size: 0.74rem;
+      font-weight: 800;
       letter-spacing: 0.06em;
       text-transform: uppercase;
-      color: var(--primary);
-      background: #edf4fb;
-      border: 1px solid #d5e4f3;
+      color: #4b6075;
+      background: #f4f7fa;
+      border: 1px solid #dbe3ea;
       border-radius: 999px;
       padding: 5px 9px;
       white-space: nowrap;
@@ -160,22 +158,22 @@
 
     .grid {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 10px;
       align-items: stretch;
     }
 
     .card {
       position: relative;
-      background: #ffffff;
-      border: 1px solid var(--line);
       border-radius: var(--radius);
-      padding: 12px 12px;
+      padding: 11px 12px;
       text-decoration: none;
       color: inherit;
+      border: 1px solid var(--card-border, #d9e2ec);
+      background: #ffffff;
       box-shadow: 0 3px 8px rgba(31, 41, 55, 0.04);
       transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
-      min-height: 122px;
+      min-height: 120px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -185,80 +183,182 @@
     .card::before {
       content: "";
       position: absolute;
-      inset: 0 auto auto 0;
-      width: 100%;
+      top: 0;
+      left: 0;
+      width: 78px;
       height: 4px;
       background: var(--accent, #1f4e79);
+      border-radius: 0 0 6px 0;
     }
 
     .card::after {
       content: "";
       position: absolute;
-      right: -18px;
-      bottom: -18px;
-      width: 54px;
-      height: 54px;
+      right: -16px;
+      bottom: -16px;
+      width: 52px;
+      height: 52px;
       border-radius: 50%;
-      background: color-mix(in srgb, var(--accent, #1f4e79) 12%, white);
+      background: var(--circle-bg, rgba(31, 78, 121, 0.08));
       pointer-events: none;
     }
 
     .card:hover {
       transform: translateY(-2px);
-      box-shadow: 0 8px 16px rgba(31, 41, 55, 0.08);
-      border-color: color-mix(in srgb, var(--accent, #1f4e79) 35%, #c9d6e6);
+      box-shadow: 0 10px 18px rgba(31, 41, 55, 0.07);
+      border-color: var(--accent, #1f4e79);
     }
 
     .card h3 {
       margin: 0 0 5px;
-      font-size: 0.95rem;
-      line-height: 1.3;
-      color: var(--primary-dark);
+      font-size: 0.96rem;
+      line-height: 1.25;
+      color: var(--card-heading, #163a5a);
     }
 
     .card p {
       margin: 0;
-      color: var(--muted);
-      line-height: 1.38;
-      font-size: 0.83rem;
+      color: var(--card-text, #314155);
+      line-height: 1.36;
+      font-size: 0.82rem;
     }
 
     .card span {
       display: inline-block;
-      margin-top: 10px;
-      font-weight: 700;
-      color: var(--accent, var(--primary));
-      font-size: 0.84rem;
+      margin-top: 9px;
+      font-weight: 800;
+      color: var(--card-link, var(--accent, var(--primary)));
+      font-size: 0.82rem;
     }
 
     .coming-soon {
       border-style: dashed;
-      background: linear-gradient(180deg, #fbfdff 0%, #f4f8fc 100%);
+      opacity: 0.96;
     }
 
     .coming-soon span {
-      color: #64748b;
+      color: var(--card-text, #475569);
     }
 
-    .rhtp { --accent: #1f4e79; }
-    .rusdlt { --accent: #2563eb; }
-    .slcgp { --accent: #0f766e; }
-    .ecypp { --accent: #7c3aed; }
-    .erate471 { --accent: #b45309; }
-    .erate470 { --accent: #be123c; }
-    .afg { --accent: #64748b; }
-    .hrsa { --accent: #64748b; }
+    .feddash {
+      --accent: #335f8a;
+      --card-border: #d5e1ec;
+      --card-heading: #1f3f5f;
+      --card-text: #4d6175;
+      --card-link: #335f8a;
+      --circle-bg: rgba(51, 95, 138, 0.10);
+    }
+
+    .rhtp {
+      --accent: #3f6f69;
+      --card-border: #d6e4e1;
+      --card-heading: #284943;
+      --card-text: #516560;
+      --card-link: #3f6f69;
+      --circle-bg: rgba(63, 111, 105, 0.10);
+    }
+
+    .slcgp {
+      --accent: #8a5a45;
+      --card-border: #e7d8d0;
+      --card-heading: #5c3b2d;
+      --card-text: #6d5a52;
+      --card-link: #8a5a45;
+      --circle-bg: rgba(138, 90, 69, 0.10);
+    }
+
+    .slcgpv2 {
+      --accent: #6a5f86;
+      --card-border: #e1dced;
+      --card-heading: #47405c;
+      --card-text: #666072;
+      --card-link: #6a5f86;
+      --circle-bg: rgba(106, 95, 134, 0.10);
+    }
+
+    .rusdlt {
+      --accent: #44627f;
+      --card-border: #d7e1ea;
+      --card-heading: #294258;
+      --card-text: #506273;
+      --card-link: #44627f;
+      --circle-bg: rgba(68, 98, 127, 0.10);
+    }
+
+    .afg {
+      --accent: #7a6254;
+      --card-border: #e3dad4;
+      --card-heading: #4e4037;
+      --card-text: #675b54;
+      --card-link: #7a6254;
+      --circle-bg: rgba(122, 98, 84, 0.10);
+    }
+
+    .hrsa {
+      --accent: #7b5c68;
+      --card-border: #e4d9de;
+      --card-heading: #533d46;
+      --card-text: #695860;
+      --card-link: #7b5c68;
+      --circle-bg: rgba(123, 92, 104, 0.10);
+    }
+
+    .libraries {
+      --accent: #5d6980;
+      --card-border: #dde3ea;
+      --card-heading: #3f4958;
+      --card-text: #5d6672;
+      --card-link: #5d6980;
+      --circle-bg: rgba(93, 105, 128, 0.10);
+    }
+
+    .ecypp {
+      --accent: #3e6b68;
+      --card-border: #d5e3e0;
+      --card-heading: #284744;
+      --card-text: #506362;
+      --card-link: #3e6b68;
+      --circle-bg: rgba(62, 107, 104, 0.10);
+    }
+
+    .erate471 {
+      --accent: #8b6a47;
+      --card-border: #e7ddd1;
+      --card-heading: #5c4730;
+      --card-text: #706152;
+      --card-link: #8b6a47;
+      --circle-bg: rgba(139, 106, 71, 0.10);
+    }
+
+    .erate470 {
+      --accent: #4a6582;
+      --card-border: #d7e0ea;
+      --card-heading: #31465d;
+      --card-text: #556676;
+      --card-link: #4a6582;
+      --circle-bg: rgba(74, 101, 130, 0.10);
+    }
 
     footer {
-      margin-top: 18px;
+      margin-top: 14px;
       text-align: center;
       color: var(--muted);
-      font-size: 0.92rem;
-      line-height: 1.5;
+      font-size: 0.88rem;
+      line-height: 1.45;
+    }
+
+    .footnote {
+      margin-top: 8px;
+      font-size: 0.76rem;
+      line-height: 1.45;
+      color: #6b7280;
+      max-width: 980px;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     .management-link-wrap {
-      margin-top: 12px;
+      margin-top: 10px;
       text-align: center;
     }
 
@@ -277,7 +377,7 @@
     .login-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(10, 20, 35, 0.50);
+      background: rgba(10, 20, 35, 0.52);
       backdrop-filter: blur(6px);
       display: flex;
       align-items: center;
@@ -288,29 +388,27 @@
 
     .login-card {
       width: min(430px, 100%);
-      background: #fff;
+      background: #ffffff;
       border: 1px solid #dbe3ee;
-      border-radius: 22px;
+      border-radius: 20px;
       box-shadow: 0 24px 60px rgba(15, 23, 42, 0.20);
-      padding: 28px 24px 24px;
+      padding: 24px 22px 20px;
     }
 
     .login-card h2 {
       margin: 0 0 5px;
       color: var(--primary-dark);
-      font-size: 1.55rem;
+      font-size: 1.48rem;
     }
 
     .login-card p {
-      margin: 0 0 18px;
+      margin: 0 0 16px;
       color: var(--muted);
-      line-height: 1.5;
-      font-size: 0.83rem;
+      line-height: 1.45;
+      font-size: 0.84rem;
     }
 
-    .field {
-      margin-bottom: 8px;
-    }
+    .field { margin-bottom: 8px; }
 
     .field label {
       display: block;
@@ -322,12 +420,12 @@
 
     .field input {
       width: 100%;
-      padding: 12px 13px;
+      padding: 11px 12px;
       border: 1px solid #cfd9e6;
       border-radius: 10px;
-      font-size: 0.96rem;
+      font-size: 0.95rem;
       outline: none;
-      background: #fff;
+      background: #ffffff;
     }
 
     .field input:focus {
@@ -346,13 +444,13 @@
       appearance: none;
       border: 0;
       background: #1f4e79;
-      color: #fff;
+      color: #ffffff;
       padding: 9px 14px;
       border-radius: 10px;
-      font-size: 0.96rem;
+      font-size: 0.95rem;
       font-weight: 700;
       cursor: pointer;
-      box-shadow: 0 10px 22px rgba(31, 78, 121, 0.20);
+      box-shadow: 0 8px 18px rgba(31, 78, 121, 0.18);
     }
 
     .forgot-password-wrap {
@@ -363,7 +461,7 @@
       color: var(--primary);
       font-size: 0.83rem;
       text-decoration: none;
-      font-weight: 600;
+      font-weight: 700;
     }
 
     .forgot-password-link:hover {
@@ -374,7 +472,7 @@
     .error {
       min-height: 1.2em;
       color: var(--danger);
-      font-size: 0.84rem;
+      font-size: 0.83rem;
       font-weight: 700;
     }
 
@@ -382,19 +480,19 @@
       display: none !important;
     }
 
-    @media (max-width: 980px) {
+    @media (max-width: 1120px) {
       .grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-columns: repeat(3, minmax(0, 1fr));
       }
     }
 
-    @media (max-width: 760px) {
-      .wrap {
-        padding: 16px 14px 28px;
+    @media (max-width: 820px) {
+      .grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
       }
 
-      .hero-panel {
-        padding: 12px 12px;
+      .wrap {
+        padding: 14px 14px 22px;
       }
 
       .topbar {
@@ -403,7 +501,7 @@
       }
     }
 
-    @media (max-width: 520px) {
+    @media (max-width: 540px) {
       .grid {
         grid-template-columns: 1fr;
       }
@@ -470,8 +568,7 @@
           </div>
 
           <div class="grid">
-
-            <a class="card rhtp" href="https://www.myfundingtracker.com/FedDash/">
+            <a class="card feddash" href="https://www.myfundingtracker.com/FedDash/">
               <div>
                 <h3>Federal/State Dashboard</h3>
                 <p>High-level dashboard of federal and state funding activity, windows, and status views across major programs.</p>
@@ -479,7 +576,8 @@
               <span>Open Dashboard →</span>
             </a>
 
-            <a class="card rhtp" href="https://www.myfundingtracker.com/RHTP/">              <div>
+            <a class="card rhtp" href="https://www.myfundingtracker.com/RHTP/">
+              <div>
                 <h3>RHTP Tracker</h3>
                 <p>Rural Health Transformation Program tracker with state activity, opportunity timing, and engagement guidance.</p>
               </div>
@@ -494,14 +592,13 @@
               <span>Open Tracker →</span>
             </a>
 
-            <a class="card slcgp soon" href="https://www.myfundingtracker.com/SLCGPv2/">
+            <a class="card slcgpv2 coming-soon" href="https://www.myfundingtracker.com/SLCGPv2/">
               <div>
                 <h3>SLCGPv2</h3>
-                <p>Coming Soon</p>
+                <p>Next-generation state tracker view and refinements are planned here.</p>
               </div>
               <span>Coming Soon →</span>
             </a>
-
           </div>
         </section>
 
@@ -539,7 +636,7 @@
               <span>Coming Soon</span>
             </div>
 
-            <div class="card coming-soon" aria-label="Libraries List coming soon">
+            <div class="card libraries coming-soon" aria-label="Libraries List coming soon">
               <div>
                 <h3>Libraries List</h3>
                 <p>Public-source library prospect lists and funding-related research tools will be added here soon.</p>
@@ -588,10 +685,13 @@
 
       <footer>
         Central access point for GPS funding and procurement tools. For additional support, contact Grant Program Services (GPS).
+        <div class="footnote">
+          This website was independently created by a third-party representative and is not owned or operated by Solutionz, Inc. The content has not been reviewed or verified by Solutionz, Inc. and is intended for general informational use by Solutionz, Inc. employees only.
+        </div>
       </footer>
 
       <div class="management-link-wrap">
-        <a class="management-link" href="management.html">Management</a>
+        <a class="management-link" href="management_v2.html">Management</a>
       </div>
     </div>
   </div>
@@ -599,7 +699,10 @@
   <script>
     const SITE_PASSWORD = 'callsherri';
     const SESSION_KEY = 'mft_active_session';
-    const LOGIN_LOG_KEY = 'mft_login_log';
+    const SESSION_DURATION_MS = 24 * 60 * 60 * 1000;
+
+    // Replace this with your deployed Google Apps Script Web App URL.
+    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzc75sHr6OTqUYAvR0vOm61oQevtbGPiZeCiG6QIFzJvBGdAgISStaUGoH_BtB5yjb3mg/exec';
 
     const loginOverlay = document.getElementById('loginOverlay');
     const loginForm = document.getElementById('loginForm');
@@ -608,6 +711,10 @@
     const welcomeText = document.getElementById('welcomeText');
     const userNameInput = document.getElementById('userName');
     const userPasswordInput = document.getElementById('userPassword');
+
+    function nowIso() {
+      return new Date().toISOString();
+    }
 
     function getSession() {
       try {
@@ -625,38 +732,65 @@
       localStorage.removeItem(SESSION_KEY);
     }
 
-    function getLogins() {
-      try {
-        const parsed = JSON.parse(localStorage.getItem(LOGIN_LOG_KEY));
-        return Array.isArray(parsed) ? parsed : [];
-      } catch {
-        return [];
-      }
-    }
-
-    function saveLogins(entries) {
-      localStorage.setItem(LOGIN_LOG_KEY, JSON.stringify(entries));
-    }
-
-    function addLogEntry(name, action) {
-      const entries = getLogins();
-      entries.unshift({
-        name,
-        action,
-        timestamp: new Date().toISOString(),
-        page: window.location.pathname,
-        userAgent: navigator.userAgent
-      });
-      saveLogins(entries.slice(0, 500));
-    }
-
     function formatName(name) {
       return (name || '').trim().replace(/\s+/g, ' ');
     }
 
-    function renderSessionState() {
+    function isAppsScriptConfigured() {
+      return APPS_SCRIPT_URL && !APPS_SCRIPT_URL.includes('https://script.google.com/macros/s/AKfycbzc75sHr6OTqUYAvR0vOm61oQevtbGPiZeCiG6QIFzJvBGdAgISStaUGoH_BtB5yjb3mg/exec');
+    }
+
+    function sendLogToGoogleSheets(payload) {
+      try {
+        localStorage.setItem('mft_last_log_backup', JSON.stringify(payload));
+      } catch {}
+
+      if (!isAppsScriptConfigured()) return;
+
+      fetch(APPS_SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: {
+          'Content-Type': 'text/plain;charset=utf-8'
+        },
+        body: JSON.stringify(payload)
+      }).catch(() => {});
+    }
+
+    function addLogEntry(name, action, reason) {
+      const payload = {
+        name,
+        action,
+        reason: reason || '',
+        timestamp: nowIso(),
+        page: window.location.href,
+        userAgent: navigator.userAgent
+      };
+      sendLogToGoogleSheets(payload);
+    }
+
+    function isSessionExpired(session) {
+      if (!session || !session.loggedInAt) return true;
+      const loggedInAtMs = new Date(session.loggedInAt).getTime();
+      if (Number.isNaN(loggedInAtMs)) return true;
+      return (Date.now() - loggedInAtMs) > SESSION_DURATION_MS;
+    }
+
+    function expireSessionIfNeeded() {
       const session = getSession();
-      const isLoggedIn = !!(session && session.name);
+      if (session && session.name && isSessionExpired(session)) {
+        addLogEntry(session.name, 'logout', '24-hour session expired');
+        clearSession();
+        return true;
+      }
+      return false;
+    }
+
+    function renderSessionState() {
+      expireSessionIfNeeded();
+
+      const session = getSession();
+      const isLoggedIn = !!(session && session.name && !isSessionExpired(session));
 
       if (isLoggedIn) {
         loginOverlay.classList.add('hidden');
@@ -668,6 +802,21 @@
         welcomeText.textContent = '';
         userPasswordInput.value = '';
       }
+    }
+
+    function scheduleExpiryCheck() {
+      const session = getSession();
+      if (!session || !session.loggedInAt) return;
+
+      const msRemaining = SESSION_DURATION_MS - (Date.now() - new Date(session.loggedInAt).getTime());
+      if (msRemaining <= 0) {
+        renderSessionState();
+        return;
+      }
+
+      window.setTimeout(() => {
+        renderSessionState();
+      }, Math.min(msRemaining + 250, 2147483647));
     }
 
     loginForm.addEventListener('submit', function (event) {
@@ -687,26 +836,28 @@
 
       const session = {
         name,
-        loggedInAt: new Date().toISOString()
+        loggedInAt: nowIso()
       };
 
       setSession(session);
-      addLogEntry(name, 'login');
+      addLogEntry(name, 'login', 'manual login');
       loginError.textContent = '';
       userPasswordInput.value = '';
       renderSessionState();
+      scheduleExpiryCheck();
     });
 
     logoutBtn.addEventListener('click', function () {
       const session = getSession();
       if (session && session.name) {
-        addLogEntry(session.name, 'logout');
+        addLogEntry(session.name, 'logout', 'manual logout');
       }
       clearSession();
       renderSessionState();
     });
 
     renderSessionState();
+    scheduleExpiryCheck();
   </script>
 </body>
 </html>
