@@ -737,7 +737,7 @@
     }
 
     function isAppsScriptConfigured() {
-      return APPS_SCRIPT_URL && !APPS_SCRIPT_URL.includes('https://script.google.com/macros/s/AKfycbyh-DaenTmARHaC9fQeJ-RPP4Y_jbHDStv2JtrbrLqZr-sVnYJpKhZTWBzONDfXGYD8SA/exec');
+      return !!APPS_SCRIPT_URL;
     }
 
     function sendLogToGoogleSheets(payload) {
