@@ -1,0 +1,40 @@
+My Funding Tracker - Google Sheets Login Tracking Setup
+
+Files included:
+1. index.html
+2. management_v2.html
+3. Code.gs
+
+Configured:
+- Homepage Apps Script Web App URL:
+  https://script.google.com/macros/s/AKfycbyh-DaenTmARHaC9fQeJ-RPP4Y_jbHDStv2JtrbrLqZr-sVnYJpKhZTWBzONDfXGYD8SA/exec
+- Management Google Sheet URL:
+  https://docs.google.com/spreadsheets/d/1N4BR14dEJp9QpbGFbuuyCBa8eZoOrc0t5CIYvFeNt7U/edit?usp=sharing
+
+How to use:
+
+1) Upload index.html and management_v2.html to the root of your GitHub Pages site.
+
+2) Keep your existing tracker folders in place:
+- /RHTP/
+- /SLCGP/
+- /SLCGPv2/
+- /FedDash/
+- /RUS-DLT/
+- /ECYPP/
+- /eRate-471/
+- /eRate-470/
+
+3) In the linked Google Sheet, open Extensions > Apps Script
+- Paste in Code.gs if needed
+- Save
+- Deploy as a Web App
+- Execute as: Me
+- Who has access: Anyone
+
+Notes:
+- Site password: callsherri
+- Management password: FSCbusiness
+- Sessions expire after 24 hours automatically
+- Login and logout events are written to the shared Google Sheet
+- The script writes to a tab named: Login Log

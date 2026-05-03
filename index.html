@@ -702,7 +702,7 @@
     const SESSION_DURATION_MS = 24 * 60 * 60 * 1000;
 
     // Replace this with your deployed Google Apps Script Web App URL.
-    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzc75sHr6OTqUYAvR0vOm61oQevtbGPiZeCiG6QIFzJvBGdAgISStaUGoH_BtB5yjb3mg/exec';
+    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyh-DaenTmARHaC9fQeJ-RPP4Y_jbHDStv2JtrbrLqZr-sVnYJpKhZTWBzONDfXGYD8SA/exec';
 
     const loginOverlay = document.getElementById('loginOverlay');
     const loginForm = document.getElementById('loginForm');
@@ -737,7 +737,7 @@
     }
 
     function isAppsScriptConfigured() {
-      return APPS_SCRIPT_URL && !APPS_SCRIPT_URL.includes('https://script.google.com/macros/s/AKfycbzc75sHr6OTqUYAvR0vOm61oQevtbGPiZeCiG6QIFzJvBGdAgISStaUGoH_BtB5yjb3mg/exec');
+      return APPS_SCRIPT_URL && !APPS_SCRIPT_URL.includes('https://script.google.com/macros/s/AKfycbyh-DaenTmARHaC9fQeJ-RPP4Y_jbHDStv2JtrbrLqZr-sVnYJpKhZTWBzONDfXGYD8SA/exec');
     }
 
     function sendLogToGoogleSheets(payload) {
