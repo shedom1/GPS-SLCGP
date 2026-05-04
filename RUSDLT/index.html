@@ -48,7 +48,7 @@
     .stat .label{font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:#64748b;font-weight:700}
     .stat .value{font-size:24px;font-weight:800;letter-spacing:-.03em;margin-top:4px}
     .stat.primary{background:linear-gradient(135deg,#e8f0ff,#f7fbff)}
-    .filters{display:grid;grid-template-columns:1.5fr repeat(5,minmax(110px,1fr));gap:7px;padding:0 14px 8px}
+    .filters{display:grid;grid-template-columns:1.5fr repeat(6,minmax(108px,1fr));gap:7px;padding:0 14px 8px}
     .field{display:flex;flex-direction:column;gap:3px}
     .field label{font-size:9px;font-weight:800;color:#64748b;text-transform:uppercase;letter-spacing:.05em}
     .field input,.field select{min-width:0;width:100%;padding:7px 9px;border:1px solid #cddaea;border-radius:10px;background:#fff;font-size:11px;color:var(--text);outline:none}
@@ -181,6 +181,7 @@
     <div class="filters">
       <div class="field"><label for="searchBox">Search</label><input id="searchBox" type="text" placeholder="School, city, county, basis, website, phone"></div>
       <div class="field"><label for="regionFilter">Region</label><select id="regionFilter"></select></div>
+      <div class="field"><label for="keyStateFilter">Key States</label><select id="keyStateFilter"></select></div>
       <div class="field"><label for="stateFilter">State</label><select id="stateFilter"></select></div>
       <div class="field"><label for="segmentFilter">Entity Type</label><select id="segmentFilter"></select></div>
       <div class="field"><label for="localeFilter">Locale</label><select id="localeFilter"></select></div>
@@ -246,9 +247,12 @@ const CONFIG={
     {key:'tier3',short:'Tier 3',label:'Tier 3: HigherEd Rural Remote',color:'#7c3aed',className:'t3',description:'Higher-ed hub candidates in Rural Remote settings.'},
     {key:'tier4',short:'Tier 4',label:'Tier 4: Higher Ed Rural Outreach',color:'#475569',className:'t4',description:'Confirmed higher-ed institutions with rural outreach programs.'}
   ],
+  keyStateCodes:['MS','IL','NC','AK','OH','OR','ID','AZ','SD','FL','NE','AR','NM','WI','IA','NV','UT','IN','MT','ND','NH','WY','MA','HI'],
+  keyStateLabel:'Round 1 Callouts',
   regionMap:{'KY':'Mid-Atlantic','MD':'Mid-Atlantic','TN':'Mid-Atlantic','VA':'Mid-Atlantic','WV':'Mid-Atlantic','CT':'Northeast','DE':'Northeast','IL':'Northeast','IN':'Northeast','IA':'Northeast','KS':'Northeast','ME':'Northeast','MA':'Northeast','MI':'Northeast','MN':'Northeast','MO':'Northeast','NE':'Northeast','NH':'Northeast','NJ':'Northeast','NY':'Northeast','ND':'Northeast','OH':'Northeast','PA':'Northeast','RI':'Northeast','SD':'Northeast','VT':'Northeast','WI':'Northeast','AL':'Southeast','AR':'Southeast','FL':'Southeast','GA':'Southeast','LA':'Southeast','MS':'Southeast','NC':'Southeast','SC':'Southeast','AK':'West','AZ':'West','CA':'West','CO':'West','HI':'West','ID':'West','MT':'West','NV':'West','NM':'West','OK':'West','OR':'West','TX':'West','UT':'West','WA':'West','WY':'West'}
 };
 const state={rows:[],sortKey:'tier_order',sortDir:'asc',tierFilter:'tier1',checks:loadChecks(),page:1,pageSize:loadPageSize(),trackerLoaded:false,trackerRows:0};
+const KEY_STATE_SET=new Set(CONFIG.keyStateCodes);
 const columns=[
   {key:'my_call',label:'My Call',width:54,sticky:1,sortable:false,resizable:false},
   {key:'tier_short',label:'Tier',width:72,sticky:2,sortable:true,resizable:false},
@@ -286,6 +290,7 @@ const els={
   tier4Count:document.getElementById('tier4Count'),
   searchBox:document.getElementById('searchBox'),
   regionFilter:document.getElementById('regionFilter'),
+  keyStateFilter:document.getElementById('keyStateFilter'),
   stateFilter:document.getElementById('stateFilter'),
   segmentFilter:document.getElementById('segmentFilter'),
   localeFilter:document.getElementById('localeFilter'),
@@ -484,6 +489,7 @@ function populateFilters(){
   const segments=[...new Set(rows.map(r=>r.segment).filter(Boolean))].sort();
   const locales=[...new Set(rows.map(r=>String(r.locale_display||'')).filter(Boolean))].sort((a,b)=>localeCodeValue(a)-localeCodeValue(b));
   els.regionFilter.innerHTML=opt(regions,'All Regions');
+  els.keyStateFilter.innerHTML=`<option value="">All States</option><option value="key_only">${CONFIG.keyStateLabel} Only</option><option value="non_key">Non-Key States</option>`;
   els.stateFilter.innerHTML=opt(states,'All States');
   els.segmentFilter.innerHTML=opt(segments,'All Types');
   els.localeFilter.innerHTML=opt(locales,'All Locales');
@@ -502,6 +508,8 @@ function filteredRows(){
   return state.rows.filter(row=>{
     if(!passesTier(row)) return false;
     if(els.regionFilter.value && row.region!==els.regionFilter.value) return false;
+    if(els.keyStateFilter.value==='key_only' && !row.is_key_state) return false;
+    if(els.keyStateFilter.value==='non_key' && row.is_key_state) return false;
     if(els.stateFilter.value && row.state!==els.stateFilter.value) return false;
     if(els.segmentFilter.value && row.segment!==els.segmentFilter.value) return false;
     if(els.localeFilter.value && String(row.locale_display||'')!==els.localeFilter.value) return false;
@@ -605,7 +613,7 @@ function openDetail(row){
 function closeModal(){els.detailModal.classList.remove('show');}
 function exportCsv(){
   const rows=filteredRows();
-  const fields=['tier_label','organization','status','assigned_to','notes','superintendent_name','superintendent_email','superintendent_phone','other_contacts','phone','website','region','state','segment','role_fit','city','county','locale_display','saipe_display','students','school_count','basis','outreach_program'];
+  const fields=['tier_label','key_state','organization','status','assigned_to','notes','superintendent_name','superintendent_email','superintendent_phone','other_contacts','phone','website','region','state','segment','role_fit','city','county','locale_display','saipe_display','students','school_count','basis','outreach_program'];
   const lines=[fields.join(',')];
   rows.forEach(r=>{lines.push(fields.map(f=>csvCell(r[f])).join(','));});
   const blob=new Blob([lines.join('\n')],{type:'text/csv;charset=utf-8;'});
@@ -623,7 +631,8 @@ function initUI(){
   document.getElementById('printBtn').addEventListener('click',()=>window.print());
   els.closeModalBtn.addEventListener('click',closeModal);
   els.detailModal.addEventListener('click',e=>{if(e.target===els.detailModal) closeModal();});
-  [els.searchBox,els.regionFilter,els.stateFilter,els.segmentFilter,els.localeFilter,els.saipeFilter].forEach(el=>el.addEventListener('input',()=>{state.page=1; render();}));
+  [els.searchBox,els.regionFilter,els.keyStateFilter,els.stateFilter,els.segmentFilter,els.localeFilter,els.saipeFilter].forEach(el=>el.addEventListener('input',()=>{state.page=1; render();}));
+  if(els.keyStateFilter) els.keyStateFilter.title='Round 1 callout states: Mississippi, Illinois, North Carolina, Alaska, Ohio, Oregon, Idaho, Arizona, South Dakota, Florida, Nebraska, Arkansas, New Mexico, Wisconsin, Iowa, Nevada, Utah, Indiana, Montana, North Dakota, New Hampshire, Wyoming, Massachusetts, Hawaii.';
   els.pageSizeRange.addEventListener('input',()=>{state.pageSize=parseInt(els.pageSizeRange.value,10)||30; savePageSize(); state.page=1; render();});
   els.prevPageBtn.addEventListener('click',()=>{state.page=Math.max(1,state.page-1); render();});
   els.nextPageBtn.addEventListener('click',()=>{const total=filteredRows().length; const pageCount=Math.max(1,Math.ceil(total/state.pageSize)); state.page=Math.min(pageCount,state.page+1); render();});
@@ -643,7 +652,11 @@ async function loadData(){
     state.trackerRows=trackerResult.rows;
     const higherEd=enrichHigherEd(higherEdRaw, trackerResult.map);
     const k12=transformK12(k12Rows,tierMap,contactMap,trackerResult.map);
-    state.rows=[...k12,...higherEd];
+    state.rows=[...k12,...higherEd].map(r=>({
+      ...r,
+      is_key_state: KEY_STATE_SET.has(r.state),
+      key_state: KEY_STATE_SET.has(r.state) ? CONFIG.keyStateLabel : ''
+    }));
     updateCounts(); populateFilters(); state.page=1; render();
     const trackerNote=trackerResult.loaded ? ` Tracker fields are loading from ${trackerResult.rows.toLocaleString()} Google Sheet rows.` : ` ${trackerResult.message}`;
     els.statusMessage.textContent=`Loaded ${k12.length.toLocaleString()} live K-12 rows, ${higherEd.length.toLocaleString()} higher-ed rows, and matched uploaded/public contacts for Tier 1 districts.${trackerNote}`;
