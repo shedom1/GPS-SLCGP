@@ -33,11 +33,12 @@ const STATUS_OPTIONS = [
 
 const state = {
   tier: "tier1",
-  view: "cards",
+  view: "table",
   offset: 0,
   rows: [],
   totalMatched: 0,
   selected: null,
+  dashboard: null,
   loading: false,
   filters: {
     q: "",
@@ -111,6 +112,7 @@ function bindEvents() {
   $("cardsViewBtn").addEventListener("click", () => switchView("cards"));
   $("tableViewBtn").addEventListener("click", () => switchView("table"));
   $("refreshBtn").addEventListener("click", () => loadData(true));
+  $("dashboardRefreshBtn")?.addEventListener("click", () => loadDashboard(true));
   $("exportBtn").addEventListener("click", exportVisibleCsv);
 }
 
@@ -159,6 +161,7 @@ async function loadData(force = false) {
     state.totalMatched = payload.totalMatched ?? payload.total ?? state.rows.length;
     state.selected = null;
     renderResults();
+    loadDashboard(force);
   } catch (err) {
     showToast(err.message || String(err));
     $("cardsContainer").innerHTML = `<div class="setup-warning"><strong>Could not load data.</strong><br>${escapeHtml(err.message || String(err))}</div>`;
@@ -183,6 +186,80 @@ function renderResults() {
   renderTable();
   switchView(state.view, false);
   renderDetail(null);
+}
+
+async function loadDashboard(force = false) {
+  const panel = $("dashboardPanel");
+  if (!panel) return;
+  if (state.tier === "hrsa") {
+    panel.classList.add("hidden");
+    return;
+  }
+  panel.classList.remove("hidden");
+  $("dashboardContent").innerHTML = `<div class="loading">Refreshing dashboard summary…</div>`;
+  try {
+    const payload = await api("dashboard", {
+      tier: state.tier,
+      q: state.filters.q,
+      state: state.filters.state,
+      status: state.filters.status,
+      assigned: state.filters.assigned,
+      keyStatesOnly: state.filters.keyStatesOnly ? "1" : "0",
+      ruralOnly: state.filters.ruralOnly ? "1" : "0",
+      locale: state.filters.locale,
+      force: force ? "1" : "0"
+    });
+    if (!payload.ok) throw new Error(payload.error || "Dashboard summary failed.");
+    state.dashboard = payload;
+    renderDashboard(payload);
+  } catch (err) {
+    $("dashboardKpis").innerHTML = "";
+    $("dashboardContent").innerHTML = `<div class="setup-warning"><strong>Dashboard unavailable.</strong><br>${escapeHtml(err.message || String(err))}</div>`;
+  }
+}
+
+function renderDashboard(d) {
+  const k = d.kpis || {};
+  $("dashboardSubtitle").textContent = `${tierLabel(state.tier)} summary • ${state.filters.keyStatesOnly ? "Key states only" : "All states"}${state.filters.state ? " • " + state.filters.state : ""}${state.filters.status ? " • " + state.filters.status : ""}`;
+  $("dashboardKpis").innerHTML = [
+    ["Matched", k.total || 0],
+    ["Assigned", k.assigned || 0],
+    ["Unassigned", k.unassigned || 0],
+    ["Touched", k.touched || 0],
+    ["Overdue", k.overdue || 0],
+    ["Next 7 Days", k.next7 || 0]
+  ].map(([label, value]) => `<div class="dashboard-kpi"><span>${escapeHtml(label)}</span><strong>${escapeHtml(value)}</strong></div>`).join("");
+
+  $("dashboardContent").innerHTML = `
+    ${dashboardTable("By Assigned Rep", ["Rep", "Total", "Open", "FU", "High"], (d.byAssigned || []).map(r => [r.label, r.total, r.open, r.follow_up, r.high_priority]), false)}
+    ${dashboardTable("By State", ["State", "Count", "%"], withPercent(d.byState || [], k.total), true)}
+    ${dashboardTable("By Status", ["Status", "Count", "%"], withPercent(d.byStatus || [], k.total), false)}
+    ${dashboardTable("Next Follow-Up", ["Bucket", "Count", "%"], withPercent(d.byFollowUp || [], k.total), false)}
+    ${dashboardTable("Priority", ["Priority", "Count", "%"], withPercent(d.byPriority || [], k.total), false)}
+  `;
+}
+
+function dashboardTable(title, headers, rows, useBars) {
+  if (!rows.length) return `<div class="dashboard-card"><h3>${escapeHtml(title)}</h3><div class="empty">No activity yet.</div></div>`;
+  return `
+    <div class="dashboard-card">
+      <h3>${escapeHtml(title)}</h3>
+      <table>
+        <thead><tr>${headers.map(h => `<th>${escapeHtml(h)}</th>`).join("")}${useBars ? "<th>Load</th>" : ""}</tr></thead>
+        <tbody>${rows.slice(0, 12).map(row => {
+          const pct = row[row.length - 1];
+          return `<tr>${row.map(cell => `<td>${escapeHtml(cell)}</td>`).join("")}${useBars ? `<td><div class="mini-bar"><span style="width:${Math.min(Number(String(pct).replace("%", "")) || 0,100)}%"></span></div></td>` : ""}</tr>`;
+        }).join("")}</tbody>
+      </table>
+    </div>`;
+}
+
+function withPercent(rows, total) {
+  const denom = Number(total) || 1;
+  return rows.map(r => {
+    const pct = Math.round((Number(r.count || r.total || 0) / denom) * 100);
+    return [r.label, r.count || r.total || 0, `${pct}%`];
+  });
 }
 
 function renderCards() {
@@ -226,22 +303,28 @@ function renderCards() {
 }
 
 function renderTable() {
-  const rows = state.rows.map((r, idx) => `
-    <tr>
-      <td class="table-name" data-idx="${idx}">${escapeHtml(r.name || "Unnamed")}</td>
-      <td>${escapeHtml(r.state_abbr || r.state || "")}</td>
-      <td>${escapeHtml(r.county || "")}</td>
-      <td>${escapeHtml(r.city || "")}</td>
-      <td>${escapeHtml(r.locale || "")}</td>
-      <td>${escapeHtml(r.saipe || "")}</td>
-      <td>${escapeHtml(r.activity?.assigned_to || "")}</td>
-      <td>${escapeHtml(r.activity?.status || "Not Started")}</td>
-      <td>${escapeHtml(r.activity?.next_follow_up || "")}</td>
-    </tr>
-  `).join("");
+  const rows = state.rows.map((r, idx) => {
+    const a = r.activity || {};
+    const priority = a.priority || "";
+    const priorityClass = priority ? `table-priority-${priority.toLowerCase()}` : "";
+    return `
+      <tr>
+        <td class="table-name" data-idx="${idx}">${escapeHtml(r.name || "Unnamed")}</td>
+        <td class="table-nowrap">${escapeHtml(r.state_abbr || r.state || "")}</td>
+        <td>${escapeHtml(r.county || "")}</td>
+        <td>${escapeHtml(r.city || "")}</td>
+        <td class="table-nowrap">${escapeHtml(r.locale || "")}</td>
+        <td class="table-nowrap">${escapeHtml(r.saipe || "")}</td>
+        <td>${escapeHtml(a.assigned_to || "")}</td>
+        <td class="table-status">${escapeHtml(a.status || "Not Started")}</td>
+        <td class="${priorityClass}">${escapeHtml(priority)}</td>
+        <td class="table-nowrap">${escapeHtml(toDateInput(a.next_follow_up) || a.next_follow_up || "")}</td>
+        <td class="table-tight-note" title="${escapeAttr(a.notes || "")}">${escapeHtml(a.notes || "")}</td>
+      </tr>`;
+  }).join("");
   $("tableContainer").innerHTML = `
     <table>
-      <thead><tr><th>Name</th><th>State</th><th>County</th><th>City</th><th>Locale</th><th>SAIPE</th><th>Assigned</th><th>Status</th><th>Next Follow-Up</th></tr></thead>
+      <thead><tr><th>Name</th><th>State</th><th>County</th><th>City</th><th>Locale</th><th>SAIPE</th><th>Assigned</th><th>Status</th><th>Priority</th><th>Next Follow-Up</th><th>Notes</th></tr></thead>
       <tbody>${rows}</tbody>
     </table>
   `;

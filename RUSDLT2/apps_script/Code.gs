@@ -44,6 +44,7 @@ function doGet(e) {
     validateToken_(e);
     var action = (e.parameter.action || 'list').toString();
     if (action === 'list') return listProspects_(e.parameter);
+    if (action === 'dashboard') return dashboard_(e.parameter);
     if (action === 'hrsaLookup') return hrsaLookup_(e.parameter);
     if (action === 'config') return getPublicConfig_();
     if (action === 'ping') return { ok: true, timestamp: new Date().toISOString() };
@@ -148,6 +149,86 @@ function listProspects_(params) {
   }
 
   return { ok: true, tier: tier, source_sheet: sheetName, rows: rows, totalMatched: totalMatched, limit: limit, offset: offset, generated_at: new Date().toISOString() };
+}
+
+
+function dashboard_(params) {
+  var tier = params.tier || 'tier1';
+  if (tier === 'hrsa') return { ok: true, tier: tier, kpis: {}, byAssigned: [], byState: [], byStatus: [], byFollowUp: [], byPriority: [], generated_at: new Date().toISOString() };
+  var sheetName = CONFIG.SOURCE_SHEETS[tier];
+  if (!sheetName) throw new Error('No source sheet configured for tier: ' + tier);
+  var sourceSs = getSourceSs_();
+  var sheet = getSheetByNameLoose_(sourceSs, sheetName);
+  if (!sheet) throw new Error('Source tab not found: ' + sheetName);
+
+  var read = readSheetObjects_(sheet);
+  var activityMap = getActivityMap_();
+  var stateFilter = normalizeStateParam_(params.state || '');
+  var query = norm_(params.q || '');
+  var statusFilter = norm_(params.status || '');
+  var assignedFilter = norm_(params.assigned || '');
+  var keyStatesOnly = String(params.keyStatesOnly || '0') === '1';
+  var ruralOnly = String(params.ruralOnly || '0') === '1';
+  var localeFilter = parseLocaleFilter_(params.locale || '');
+
+  var byAssigned = {}, byState = {}, byStatus = {}, byPriority = {}, byFollowUp = {};
+  var kpis = { total: 0, assigned: 0, unassigned: 0, touched: 0, overdue: 0, today: 0, next7: 0, future: 0, no_follow_up: 0 };
+
+  for (var i = 0; i < read.rows.length; i++) {
+    var rec = normalizeProspectRecord_(tier, sheetName, read.headers, read.rows[i].values, read.rows[i].rowNumber);
+    if (!rec.name && !rec.state && !rec.state_abbr) continue;
+    mergeActivity_(rec, activityMap);
+
+    if (keyStatesOnly && !isKeyState_(rec.state_abbr || rec.state)) continue;
+    if (stateFilter && normalizeStateParam_(rec.state_abbr || rec.state) !== stateFilter) continue;
+    if (statusFilter && norm_(rec.activity.status || 'Not Started') !== statusFilter) continue;
+    if (assignedFilter && norm_(rec.activity.assigned_to || '').indexOf(assignedFilter) === -1) continue;
+    if (ruralOnly && !localeIn_(rec.locale, [41,42,43])) continue;
+    if (localeFilter.length && !localeIn_(rec.locale, localeFilter)) continue;
+    if (query && !recordSearchBlob_(rec).match(query)) continue;
+
+    var a = rec.activity || {};
+    var assigned = cleanLabel_(a.assigned_to, 'Unassigned');
+    var status = cleanLabel_(a.status, 'Not Started');
+    var priority = cleanLabel_(a.priority, 'No Priority');
+    var st = rec.state_abbr || normalizeStateParam_(rec.state) || 'Unknown';
+    var bucket = followUpBucket_(a.next_follow_up);
+    var isOpen = ['Not a Fit','Do Not Contact','Submitted to Rep'].indexOf(status) === -1;
+    var touched = status !== 'Not Started' || assigned !== 'Unassigned' || Boolean(a.notes || a.last_contact_date || a.updated_at);
+
+    kpis.total++;
+    if (assigned === 'Unassigned') kpis.unassigned++; else kpis.assigned++;
+    if (touched) kpis.touched++;
+    if (bucket.key === 'overdue') kpis.overdue++;
+    if (bucket.key === 'today') kpis.today++;
+    if (bucket.key === 'next7') kpis.next7++;
+    if (bucket.key === 'future') kpis.future++;
+    if (bucket.key === 'none') kpis.no_follow_up++;
+
+    incCount_(byState, st);
+    incCount_(byStatus, status);
+    incCount_(byPriority, priority);
+    incCount_(byFollowUp, bucket.label);
+
+    if (!byAssigned[assigned]) byAssigned[assigned] = { label: assigned, total: 0, open: 0, follow_up: 0, high_priority: 0 };
+    byAssigned[assigned].total++;
+    if (isOpen) byAssigned[assigned].open++;
+    if (status === 'Follow Up' || bucket.key === 'overdue' || bucket.key === 'today' || bucket.key === 'next7') byAssigned[assigned].follow_up++;
+    if (priority === 'High') byAssigned[assigned].high_priority++;
+  }
+
+  return {
+    ok: true,
+    tier: tier,
+    source_sheet: sheetName,
+    kpis: kpis,
+    byAssigned: sortObjects_(byAssigned, 'total'),
+    byState: sortCounts_(byState),
+    byStatus: sortCounts_(byStatus),
+    byPriority: sortCounts_(byPriority),
+    byFollowUp: orderFollowUp_(byFollowUp),
+    generated_at: new Date().toISOString()
+  };
 }
 
 function hrsaLookup_(params) {
@@ -491,6 +572,72 @@ function getSheetByNameLoose_(ss, desired) {
     if (n.indexOf(target) !== -1 || target.indexOf(n) !== -1) return sheets[j];
   }
   return null;
+}
+
+
+function cleanLabel_(value, fallback) {
+  var s = String(value || '').trim();
+  return s || fallback;
+}
+
+function incCount_(obj, label) {
+  label = cleanLabel_(label, 'Unknown');
+  if (!obj[label]) obj[label] = { label: label, count: 0 };
+  obj[label].count++;
+}
+
+function sortCounts_(obj) {
+  return Object.keys(obj).map(function(k) { return obj[k]; }).sort(function(a, b) {
+    return (b.count || 0) - (a.count || 0) || String(a.label).localeCompare(String(b.label));
+  });
+}
+
+function sortObjects_(obj, numericField) {
+  return Object.keys(obj).map(function(k) { return obj[k]; }).sort(function(a, b) {
+    return (b[numericField] || 0) - (a[numericField] || 0) || String(a.label).localeCompare(String(b.label));
+  });
+}
+
+function followUpBucket_(value) {
+  var d = parseDateOnly_(value);
+  if (!d) return { key: 'none', label: 'No Follow-Up Date' };
+  var today = new Date();
+  today.setHours(0, 0, 0, 0);
+  var diff = Math.round((d.getTime() - today.getTime()) / 86400000);
+  if (diff < 0) return { key: 'overdue', label: 'Overdue' };
+  if (diff === 0) return { key: 'today', label: 'Due Today' };
+  if (diff <= 7) return { key: 'next7', label: 'Next 7 Days' };
+  return { key: 'future', label: 'Future' };
+}
+
+function parseDateOnly_(value) {
+  if (!value) return null;
+  if (value instanceof Date) {
+    var d0 = new Date(value.getTime());
+    d0.setHours(0, 0, 0, 0);
+    return isNaN(d0.getTime()) ? null : d0;
+  }
+  var s = String(value).trim();
+  if (!s) return null;
+  var m = s.match(/^(\d{4})-(\d{1,2})-(\d{1,2})/);
+  var d;
+  if (m) d = new Date(Number(m[1]), Number(m[2]) - 1, Number(m[3]));
+  else d = new Date(s);
+  if (isNaN(d.getTime())) return null;
+  d.setHours(0, 0, 0, 0);
+  return d;
+}
+
+function orderFollowUp_(obj) {
+  var order = ['Overdue', 'Due Today', 'Next 7 Days', 'Future', 'No Follow-Up Date'];
+  var out = [];
+  order.forEach(function(label) {
+    if (obj[label]) out.push(obj[label]);
+  });
+  Object.keys(obj).forEach(function(label) {
+    if (order.indexOf(label) === -1) out.push(obj[label]);
+  });
+  return out;
 }
 
 function parsePayload_(params) {

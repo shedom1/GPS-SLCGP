@@ -25,7 +25,7 @@
       <strong>Setup needed:</strong> paste your deployed Google Apps Script Web App URL into <code>config.js</code>. The app will read the source workbook through Apps Script and save rep activity to the tracking Google Sheet.
     </section>
 
-    <section class="top-grid">
+    <section class="top-grid top-grid-compact">
       <div class="metric-card">
         <span class="metric-label">Current View</span>
         <strong id="metricTier">Tier 1</strong>
@@ -93,11 +93,25 @@
           </select>
         </label>
         <div class="view-toggle" role="group" aria-label="View type">
-          <button id="cardsViewBtn" class="active" type="button">Cards</button>
-          <button id="tableViewBtn" type="button">Table</button>
+          <button id="cardsViewBtn" type="button">Cards</button>
+          <button id="tableViewBtn" class="active" type="button">Table</button>
         </div>
       </div>
       <div id="keyStatesList" class="key-states-list"></div>
+    </section>
+
+    <section id="dashboardPanel" class="dashboard-panel">
+      <div class="dashboard-head">
+        <div>
+          <h2>Callout Progress Dashboard</h2>
+          <p id="dashboardSubtitle">Summary by rep, state, status, follow-up date, and priority.</p>
+        </div>
+        <button id="dashboardRefreshBtn" class="small-button" type="button">Refresh Dashboard</button>
+      </div>
+      <div id="dashboardKpis" class="dashboard-kpis"></div>
+      <div id="dashboardContent" class="dashboard-content">
+        <div class="loading">Dashboard will load after the tracker connects to Apps Script.</div>
+      </div>
     </section>
 
     <main class="content-grid">

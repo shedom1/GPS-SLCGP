@@ -12,7 +12,7 @@ This package creates a GitHub Pages-friendly HTML tracker that reads the RUS DLT
   - `T4: Higher Ed-Rural Outreach`
   - `All K-12`
   - `SITE_FQHC_FQHC_LAL_DD_VX` for HRSA/FQHC lookup
-- Defaults to the first-round key states filter.
+- Defaults to the first-round key states filter and **Table** view for faster callout scanning.
 - Lets reps update:
   - Assigned To
   - Status
@@ -24,6 +24,7 @@ This package creates a GitHub Pages-friendly HTML tracker that reads the RUS DLT
   - Contact source / verification note
   - Rep notes
 - Saves updates to a `Rep Activity` tab and logs changes in `Activity Log`.
+- Includes a progress dashboard showing counts by assigned rep, state, status, next follow-up bucket, and priority.
 - Includes HRSA/FQHC lookup by state, county/city, and approximate distance when coordinates are available.
 
 ## File structure
@@ -134,8 +135,9 @@ Important:
 3. Open a card.
 4. Save assignment/status and contact updates.
 5. Use **Find Nearby HRSA/FQHC** to identify possible healthcare partners for hub-and-spoke DLT discussions.
-6. Move prospects from `Not Started` to `Assigned`, `Contacted`, `Interested`, `Follow Up`, or `Not a Fit`.
-7. Use the `Rep Activity` Google Sheet tab for management review and pivot reporting.
+6. Use the **Callout Progress Dashboard** to monitor workload by rep, state, status, follow-up timing, and priority.
+7. Move prospects from `Not Started` to `Assigned`, `Contacted`, `Interested`, `Follow Up`, or `Not a Fit`.
+8. Use the `Rep Activity` Google Sheet tab for management review and pivot reporting.
 
 ## First-round key states
 
