@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>RUS DLT 2026 Callout Dashboard</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell dashboard-page">
+    <header class="hero">
+      <div>
+        <div class="eyebrow">Solutionz GPS • RUS DLT 2026</div>
+        <h1>Callout Progress Dashboard</h1>
+        <p class="hero-copy">Management view for progress by assigned rep, state, status, next follow-up, and priority.</p>
+      </div>
+      <div class="hero-actions">
+        <a class="ghost-button" href="index.html">Tracker</a>
+        <a class="ghost-button" href="followups.html">Follow-Up View</a>
+        <a id="sourceLink" class="ghost-button" target="_blank" rel="noreferrer">Open Source Sheet</a>
+        <button id="refreshBtn" class="primary-button" type="button">Refresh Dashboard</button>
+      </div>
+    </header>
+
+    <section id="setupWarning" class="setup-warning hidden">
+      <strong>Setup needed:</strong> paste your deployed Google Apps Script Web App URL into <code>config.js</code>.
+    </section>
+
+    <section class="filters-panel dashboard-filters">
+      <div class="filter-row dashboard-filter-row">
+        <label>
+          <span>Tier</span>
+          <select id="tierFilter"></select>
+        </label>
+        <label>
+          <span>State</span>
+          <select id="stateFilter"></select>
+        </label>
+        <label>
+          <span>Status</span>
+          <select id="statusFilter"></select>
+        </label>
+        <label>
+          <span>Assigned To</span>
+          <input id="assignedFilter" type="text" placeholder="Rep name" />
+        </label>
+        <label>
+          <span>Search</span>
+          <input id="searchInput" type="search" placeholder="District, college, county, city…" />
+        </label>
+      </div>
+      <div class="filter-row compact-row dashboard-compact-row">
+        <label class="toggle-label"><input id="keyStateToggle" type="checkbox" checked /> Key states only</label>
+        <label class="toggle-label"><input id="ruralLocaleToggle" type="checkbox" /> Rural locales only 41–43</label>
+        <label>
+          <span>Locale</span>
+          <select id="localeFilter">
+            <option value="">All locales</option>
+            <option value="11,12,13">City 11–13</option>
+            <option value="21,22,23">Suburb 21–23</option>
+            <option value="31,32,33">Town 31–33</option>
+            <option value="41,42,43">Rural 41–43</option>
+            <option value="43">43 Rural: Remote</option>
+          </select>
+        </label>
+      </div>
+    </section>
+
+    <section id="dashboardPanel" class="dashboard-panel standalone-dashboard">
+      <div class="dashboard-head">
+        <div>
+          <h2 id="dashboardTitle">Progress Dashboard</h2>
+          <p id="dashboardSubtitle">Loading summary…</p>
+        </div>
+      </div>
+      <div id="dashboardKpis" class="dashboard-kpis"></div>
+      <div id="dashboardContent" class="dashboard-content"></div>
+    </section>
+  </div>
+
+  <div id="toast" class="toast hidden"></div>
+  <script src="config.js"></script>
+  <script src="dashboard.js"></script>
+</body>
+</html>

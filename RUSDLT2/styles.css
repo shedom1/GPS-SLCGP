@@ -586,3 +586,43 @@ td { max-width: 220px; }
   .dashboard-head { align-items: stretch; flex-direction: column; }
   .dashboard-kpis, .dashboard-content { grid-template-columns: 1fr; }
 }
+
+/* v3: separate dashboard, follow-up view, sortable/resizable dense tables */
+.hero-actions a.ghost-button { white-space: nowrap; }
+.full-width-panel { margin-top: 10px; }
+.data-table { table-layout: fixed; min-width: 1120px; }
+.data-table th { user-select: none; }
+th.sortable { cursor: pointer; position: sticky; }
+th.sortable span:first-child { display: inline-block; padding-right: 10px; }
+.col-resizer {
+  position: absolute;
+  top: 0;
+  right: -3px;
+  width: 7px;
+  height: 100%;
+  cursor: col-resize;
+  z-index: 3;
+}
+.col-resizer:hover { background: rgba(45, 117, 184, .20); }
+.is-resizing { cursor: col-resize !important; user-select: none; }
+.table-name-static { font-weight: 850; color: var(--brand); }
+.bucket-overdue { color: var(--danger); font-weight: 900; }
+.bucket-today { color: var(--warn); font-weight: 900; }
+.bucket-next { color: var(--success); font-weight: 900; }
+.dashboard-page .hero, .followups-page .hero { margin-bottom: 10px; }
+.dashboard-filter-row { grid-template-columns: 1fr 1fr 1fr 1fr 2fr; }
+.dashboard-compact-row { grid-template-columns: auto auto 1fr; }
+.followup-filter-row { grid-template-columns: 2fr .8fr .8fr 1fr .9fr 1fr; }
+.followup-compact-row { grid-template-columns: auto auto 110px; }
+.followups-page .table-wrap { max-height: 74vh; }
+.standalone-dashboard .dashboard-kpis { grid-template-columns: repeat(8, minmax(0, 1fr)); }
+.standalone-dashboard .dashboard-content { grid-template-columns: 1.35fr 1fr 1fr 1fr 1fr; }
+@media (max-width: 1320px) {
+  .standalone-dashboard .dashboard-kpis { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .standalone-dashboard .dashboard-content { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .dashboard-filter-row, .followup-filter-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 760px) {
+  .standalone-dashboard .dashboard-kpis, .standalone-dashboard .dashboard-content { grid-template-columns: 1fr; }
+  .dashboard-filter-row, .dashboard-compact-row, .followup-filter-row, .followup-compact-row { grid-template-columns: 1fr; }
+}

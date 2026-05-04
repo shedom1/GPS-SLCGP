@@ -45,6 +45,7 @@ function doGet(e) {
     var action = (e.parameter.action || 'list').toString();
     if (action === 'list') return listProspects_(e.parameter);
     if (action === 'dashboard') return dashboard_(e.parameter);
+    if (action === 'followups') return followups_(e.parameter);
     if (action === 'hrsaLookup') return hrsaLookup_(e.parameter);
     if (action === 'config') return getPublicConfig_();
     if (action === 'ping') return { ok: true, timestamp: new Date().toISOString() };
@@ -244,11 +245,14 @@ function hrsaLookup_(params) {
   var query = norm_(params.q || '');
   var lat = parseNumber_(params.lat);
   var lng = parseNumber_(params.lng);
+  var keyStatesOnly = String(params.keyStatesOnly || '0') === '1';
 
   var rows = [];
+  var totalMatched = 0;
   for (var i = 0; i < read.rows.length; i++) {
     var rec = normalizeHrsaRecord_(read.headers, read.rows[i].values, read.rows[i].rowNumber);
     if (!rec.name && !rec.organization) continue;
+    if (keyStatesOnly && !stateFilter && !isKeyState_(rec.state_abbr || rec.state)) continue;
     if (stateFilter && normalizeStateParam_(rec.state_abbr || rec.state) !== stateFilter) continue;
     if (county && norm_(rec.county).indexOf(county) === -1 && !query) {
       // Keep city/distance options alive; don't hard drop if lat/lng are provided.
@@ -268,11 +272,79 @@ function hrsaLookup_(params) {
       }
     }
     rows.push(rec);
+    totalMatched++;
   }
 
   rows.sort(function(a, b) { return (a._score || 9999) - (b._score || 9999); });
   rows = rows.slice(0, limit).map(function(r) { delete r._score; return r; });
-  return { ok: true, rows: rows, totalMatched: rows.length, limit: limit, generated_at: new Date().toISOString() };
+  return { ok: true, rows: rows, totalMatched: totalMatched, limit: limit, generated_at: new Date().toISOString() };
+}
+
+function followups_(params) {
+  var ss = getTrackerSs_();
+  var sheet = ensureSheet_(ss, 'Rep Activity', CONFIG.ACTIVITY_HEADERS);
+  var values = sheet.getDataRange().getValues();
+  var limit = Math.min(Number(params.limit || CONFIG.MAX_LIMIT), CONFIG.MAX_LIMIT);
+  var tierFilter = norm_(params.tier || '');
+  var stateFilter = normalizeStateParam_(params.state || '');
+  var statusFilter = norm_(params.status || '');
+  var assignedFilter = norm_(params.assigned || '');
+  var priorityFilter = norm_(params.priority || '');
+  var query = norm_(params.q || '');
+  var keyStatesOnly = String(params.keyStatesOnly || '0') === '1';
+  var includeNoDate = String(params.includeNoDate || '0') === '1';
+  var headers = values.length ? values[0].map(String) : CONFIG.ACTIVITY_HEADERS;
+  var rows = [];
+
+  for (var i = 1; i < values.length; i++) {
+    var obj = rowObject_(headers, values[i]);
+    if (!obj.record_id && !obj.entity_name) continue;
+    var stateAbbr = normalizeStateParam_(obj.state || '');
+    var bucket = followUpBucket_(obj.next_follow_up);
+    if (!includeNoDate && bucket.key === 'none') continue;
+    if (tierFilter && norm_(obj.tier_key || '') !== tierFilter) continue;
+    if (keyStatesOnly && !isKeyState_(stateAbbr || obj.state)) continue;
+    if (stateFilter && stateAbbr !== stateFilter) continue;
+    if (statusFilter && norm_(obj.status || 'Not Started') !== statusFilter) continue;
+    if (assignedFilter && norm_(obj.assigned_to || '').indexOf(assignedFilter) === -1) continue;
+    if (priorityFilter && norm_(obj.priority || 'No Priority') !== priorityFilter) continue;
+    if (query && norm_(JSON.stringify(obj)).indexOf(query) === -1) continue;
+    rows.push({
+      record_id: obj.record_id || '',
+      entity_name: obj.entity_name || '',
+      tier_key: obj.tier_key || '',
+      source_sheet: obj.source_sheet || '',
+      state: stateAbbr || obj.state || '',
+      county: obj.county || '',
+      city: obj.city || '',
+      zip: obj.zip || '',
+      assigned_to: obj.assigned_to || '',
+      status: obj.status || 'Not Started',
+      priority: obj.priority || '',
+      next_follow_up: obj.next_follow_up || '',
+      follow_up_bucket: bucket.label,
+      last_contact_date: obj.last_contact_date || '',
+      superintendent_name: obj.superintendent_name || '',
+      superintendent_email: obj.superintendent_email || '',
+      other_contact_name: obj.other_contact_name || '',
+      other_contact_title: obj.other_contact_title || '',
+      other_contact_email: obj.other_contact_email || '',
+      notes: obj.notes || '',
+      updated_by: obj.updated_by || '',
+      updated_at: obj.updated_at || ''
+    });
+  }
+
+  rows.sort(function(a, b) {
+    var ad = parseFollowUpDate_(a.next_follow_up);
+    var bd = parseFollowUpDate_(b.next_follow_up);
+    if (ad && bd) return ad.getTime() - bd.getTime();
+    if (ad && !bd) return -1;
+    if (!ad && bd) return 1;
+    return String(a.entity_name || '').localeCompare(String(b.entity_name || ''));
+  });
+
+  return { ok: true, rows: rows.slice(0, limit), totalMatched: rows.length, limit: limit, generated_at: new Date().toISOString() };
 }
 
 function saveActivity_(payload) {

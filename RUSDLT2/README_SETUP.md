@@ -13,6 +13,10 @@ This package creates a GitHub Pages-friendly HTML tracker that reads the RUS DLT
   - `All K-12`
   - `SITE_FQHC_FQHC_LAL_DD_VX` for HRSA/FQHC lookup
 - Defaults to the first-round key states filter and **Table** view for faster callout scanning.
+- Includes sortable and resizable table columns on the main tracker and follow-up view.
+- Moves the dashboard to its own `dashboard.html` management view.
+- Adds a separate `followups.html` view sorted by next follow-up date, with filtering and CSV export.
+- Defaults HRSA/FQHC lookup rows to the first-round key states when no specific state is selected.
 - Lets reps update:
   - Assigned To
   - Status
@@ -30,9 +34,13 @@ This package creates a GitHub Pages-friendly HTML tracker that reads the RUS DLT
 ## File structure
 
 ```text
-index.html              Main GitHub Pages app
+index.html              Main tracker app, default table view
+dashboard.html          Separate management dashboard view
+followups.html          Separate follow-up date view
 styles.css              Visual styling
-app.js                  Front-end logic
+app.js                  Main tracker front-end logic
+dashboard.js            Dashboard front-end logic
+followups.js            Follow-up view front-end logic
 config.js               Edit this with your Apps Script Web App URL
 apps_script/Code.gs     Google Apps Script backend
 schema/                 Optional reference CSV templates
@@ -94,8 +102,12 @@ with your deployed Web App URL.
 Upload these files to the GitHub Pages folder or repo root:
 
 - `index.html`
+- `dashboard.html`
+- `followups.html`
 - `styles.css`
 - `app.js`
+- `dashboard.js`
+- `followups.js`
 - `config.js`
 
 The `apps_script` and `schema` folders do not need to be hosted publicly, but keep them in the repo for maintenance.
@@ -135,10 +147,22 @@ Important:
 3. Open a card.
 4. Save assignment/status and contact updates.
 5. Use **Find Nearby HRSA/FQHC** to identify possible healthcare partners for hub-and-spoke DLT discussions.
-6. Use the **Callout Progress Dashboard** to monitor workload by rep, state, status, follow-up timing, and priority.
-7. Move prospects from `Not Started` to `Assigned`, `Contacted`, `Interested`, `Follow Up`, or `Not a Fit`.
-8. Use the `Rep Activity` Google Sheet tab for management review and pivot reporting.
+6. Use `dashboard.html` to monitor workload by rep, state, status, follow-up timing, and priority.
+7. Use `followups.html` for the date-sorted callback list; click column headers to sort and drag header edges to resize.
+8. Move prospects from `Not Started` to `Assigned`, `Contacted`, `Interested`, `Follow Up`, or `Not a Fit`.
+9. Use the `Rep Activity` Google Sheet tab for management review and pivot reporting.
 
 ## First-round key states
 
 Mississippi, Illinois, North Carolina, Alaska, Ohio, Oregon, Idaho, Arizona, South Dakota, Florida, Nebraska, Arkansas, New Mexico, Wisconsin, Iowa, Nevada, Utah, Indiana, Montana, North Dakota, New Hampshire, Wyoming, Massachusetts, Hawaii.
+
+## v3 layout changes
+
+- The main tracker no longer embeds the dashboard. Use the top navigation button or open `dashboard.html`.
+- The main tracker defaults to the dense table view. Cards remain available for reps who prefer a card workflow.
+- Main tracker and follow-up tables now support:
+  - Click-to-sort column headers
+  - Drag-to-resize column edges
+  - Dense cell padding for high-volume callouts
+- `followups.html` calls the new Apps Script action `followups` and sorts by `next_follow_up` by default.
+- The HRSA tab now respects the key-state default when loading the HRSA view without a specific state filter.

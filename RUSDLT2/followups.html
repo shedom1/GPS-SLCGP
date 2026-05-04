@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>RUS DLT 2026 Follow-Up View</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell followups-page">
+    <header class="hero">
+      <div>
+        <div class="eyebrow">Solutionz GPS • RUS DLT 2026</div>
+        <h1>Follow-Up View</h1>
+        <p class="hero-copy">Date-sorted call-back list from the Rep Activity sheet. Defaults to upcoming or overdue follow-ups, with sortable and resizable columns.</p>
+      </div>
+      <div class="hero-actions">
+        <a class="ghost-button" href="index.html">Tracker</a>
+        <a class="ghost-button" href="dashboard.html">Dashboard</a>
+        <button id="exportBtn" class="ghost-button" type="button">Export CSV</button>
+        <button id="refreshBtn" class="primary-button" type="button">Refresh Follow-Ups</button>
+      </div>
+    </header>
+
+    <section id="setupWarning" class="setup-warning hidden">
+      <strong>Setup needed:</strong> paste your deployed Google Apps Script Web App URL into <code>config.js</code>.
+    </section>
+
+    <section class="top-grid followup-kpis">
+      <div class="metric-card"><span class="metric-label">Matched Follow-Ups</span><strong id="metricMatched">—</strong><small>after filters</small></div>
+      <div class="metric-card"><span class="metric-label">Overdue</span><strong id="metricOverdue">—</strong><small>needs attention</small></div>
+      <div class="metric-card"><span class="metric-label">Next 7 Days</span><strong id="metricNext7">—</strong><small>upcoming</small></div>
+      <div class="metric-card"><span class="metric-label">Key State Focus</span><strong id="metricKeyStates">ON</strong><small>first-round states</small></div>
+    </section>
+
+    <section class="filters-panel followups-filters">
+      <div class="filter-row followup-filter-row">
+        <label><span>Search</span><input id="searchInput" type="search" placeholder="Entity, notes, rep, contact, city…" /></label>
+        <label><span>Tier</span><select id="tierFilter"></select></label>
+        <label><span>State</span><select id="stateFilter"></select></label>
+        <label><span>Status</span><select id="statusFilter"></select></label>
+        <label><span>Priority</span><select id="priorityFilter"></select></label>
+        <label><span>Assigned To</span><input id="assignedFilter" type="text" placeholder="Rep name" /></label>
+      </div>
+      <div class="filter-row compact-row followup-compact-row">
+        <label class="toggle-label"><input id="keyStateToggle" type="checkbox" checked /> Key states only</label>
+        <label class="toggle-label"><input id="includeNoDateToggle" type="checkbox" /> Include records with no follow-up date</label>
+        <label><span>Rows</span><select id="limitFilter"><option value="100">100</option><option value="200">200</option><option value="500" selected>500</option></select></label>
+      </div>
+    </section>
+
+    <section class="results-panel full-width-panel">
+      <div class="panel-head">
+        <div>
+          <h2>Follow-Ups</h2>
+          <p id="resultsSubtitle">Sorted by Next Follow-Up date. Click any header to re-sort; drag header edges to resize columns.</p>
+        </div>
+      </div>
+      <div id="loading" class="loading hidden">Loading follow-up rows…</div>
+      <div id="tableContainer" class="table-wrap"></div>
+    </section>
+  </div>
+
+  <div id="toast" class="toast hidden"></div>
+  <script src="config.js"></script>
+  <script src="followups.js"></script>
+</body>
+</html>
