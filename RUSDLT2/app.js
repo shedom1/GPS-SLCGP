@@ -40,6 +40,7 @@ const state = {
   selected: null,
   dashboard: null,
   loading: false,
+  sort: { key: "", dir: "asc" },
   filters: {
     q: "",
     state: "",
@@ -303,32 +304,117 @@ function renderCards() {
 }
 
 function renderTable() {
-  const rows = state.rows.map((r, idx) => {
-    const a = r.activity || {};
-    const priority = a.priority || "";
-    const priorityClass = priority ? `table-priority-${priority.toLowerCase()}` : "";
-    return `
-      <tr>
-        <td class="table-name" data-idx="${idx}">${escapeHtml(r.name || "Unnamed")}</td>
-        <td class="table-nowrap">${escapeHtml(r.state_abbr || r.state || "")}</td>
-        <td>${escapeHtml(r.county || "")}</td>
-        <td>${escapeHtml(r.city || "")}</td>
-        <td class="table-nowrap">${escapeHtml(r.locale || "")}</td>
-        <td class="table-nowrap">${escapeHtml(r.saipe || "")}</td>
-        <td>${escapeHtml(a.assigned_to || "")}</td>
-        <td class="table-status">${escapeHtml(a.status || "Not Started")}</td>
-        <td class="${priorityClass}">${escapeHtml(priority)}</td>
-        <td class="table-nowrap">${escapeHtml(toDateInput(a.next_follow_up) || a.next_follow_up || "")}</td>
-        <td class="table-tight-note" title="${escapeAttr(a.notes || "")}">${escapeHtml(a.notes || "")}</td>
-      </tr>`;
+  const columns = tableColumnsForTier(state.tier);
+  const displayRows = getDisplayRows(columns);
+  const colgroup = columns.map(c => `<col style="width:${c.width || 120}px">`).join("");
+  const header = columns.map(c => sortableHeader(c)).join("");
+  const rows = displayRows.map(({ row: r, idx }) => {
+    return `<tr>${columns.map(c => {
+      const value = c.value(r);
+      const cls = [c.className || "", c.nowrap ? "table-nowrap" : "", c.key === "notes" ? "table-tight-note" : "", c.key === "name" ? "table-name" : ""].filter(Boolean).join(" ");
+      const attrs = c.key === "name" ? ` data-idx="${idx}"` : "";
+      const title = c.key === "notes" ? ` title="${escapeAttr(value)}"` : "";
+      return `<td class="${cls}"${attrs}${title}>${escapeHtml(value)}</td>`;
+    }).join("")}</tr>`;
   }).join("");
   $("tableContainer").innerHTML = `
-    <table>
-      <thead><tr><th>Name</th><th>State</th><th>County</th><th>City</th><th>Locale</th><th>SAIPE</th><th>Assigned</th><th>Status</th><th>Priority</th><th>Next Follow-Up</th><th>Notes</th></tr></thead>
+    <table class="data-table resizable-table">
+      <colgroup>${colgroup}</colgroup>
+      <thead><tr>${header}</tr></thead>
       <tbody>${rows}</tbody>
     </table>
   `;
   $("tableContainer").querySelectorAll(".table-name").forEach(cell => cell.addEventListener("click", () => selectRow(Number(cell.dataset.idx))));
+  $("tableContainer").querySelectorAll("th.sortable").forEach(th => th.addEventListener("click", (e) => {
+    if (e.target.classList.contains("col-resizer")) return;
+    const key = th.dataset.sortKey;
+    if (state.sort.key === key) state.sort.dir = state.sort.dir === "asc" ? "desc" : "asc";
+    else state.sort = { key, dir: "asc" };
+    renderTable();
+  }));
+  attachColumnResizers($("tableContainer"));
+}
+
+function tableColumnsForTier(tier) {
+  if (tier === "hrsa") {
+    return [
+      { key: "name", label: "Site", width: 260, value: r => r.name || r.organization || "Unnamed" },
+      { key: "organization", label: "Organization", width: 220, value: r => r.organization || "" },
+      { key: "state", label: "State", width: 70, nowrap: true, value: r => r.state_abbr || r.state || "" },
+      { key: "county", label: "County", width: 140, value: r => r.county || "" },
+      { key: "city", label: "City", width: 130, value: r => r.city || "" },
+      { key: "zip", label: "ZIP", width: 80, nowrap: true, value: r => r.zip || "" },
+      { key: "phone", label: "Phone", width: 120, nowrap: true, value: r => r.phone || "" },
+      { key: "type", label: "Type", width: 160, value: r => r.site_type || "" }
+    ];
+  }
+  return [
+    { key: "name", label: "Name", width: 260, value: r => r.name || "Unnamed" },
+    { key: "state", label: "State", width: 70, nowrap: true, value: r => r.state_abbr || r.state || "" },
+    { key: "county", label: "County", width: 135, value: r => r.county || "" },
+    { key: "city", label: "City", width: 120, value: r => r.city || "" },
+    { key: "locale", label: "Locale", width: 80, nowrap: true, value: r => r.locale || "" },
+    { key: "saipe", label: "SAIPE", width: 80, nowrap: true, value: r => r.saipe || "" },
+    { key: "assigned", label: "Assigned", width: 125, value: r => r.activity?.assigned_to || "" },
+    { key: "status", label: "Status", width: 130, className: "table-status", value: r => r.activity?.status || "Not Started" },
+    { key: "priority", label: "Priority", width: 95, value: r => r.activity?.priority || "" },
+    { key: "next_follow_up", label: "Next Follow-Up", width: 120, nowrap: true, value: r => toDateInput(r.activity?.next_follow_up) || r.activity?.next_follow_up || "" },
+    { key: "notes", label: "Notes", width: 300, value: r => r.activity?.notes || "" }
+  ];
+}
+
+function sortableHeader(c) {
+  const active = state.sort.key === c.key;
+  const arrow = active ? (state.sort.dir === "asc" ? " ▲" : " ▼") : "";
+  return `<th class="sortable" data-sort-key="${escapeAttr(c.key)}"><span>${escapeHtml(c.label)}${arrow}</span><span class="col-resizer" title="Drag to resize"></span></th>`;
+}
+
+function getDisplayRows(columns) {
+  const rows = state.rows.map((row, idx) => ({ row, idx }));
+  if (!state.sort.key) return rows;
+  const col = columns.find(c => c.key === state.sort.key);
+  if (!col) return rows;
+  rows.sort((a, b) => compareValues(col.value(a.row), col.value(b.row), state.sort.dir));
+  return rows;
+}
+
+function compareValues(a, b, dir) {
+  const mult = dir === "desc" ? -1 : 1;
+  const av = a == null ? "" : String(a).trim();
+  const bv = b == null ? "" : String(b).trim();
+  const ad = Date.parse(av), bd = Date.parse(bv);
+  if (!isNaN(ad) && !isNaN(bd) && /\d{4}-\d{2}-\d{2}/.test(av + bv)) return (ad - bd) * mult;
+  const an = Number(av.replace(/[^0-9.-]/g, ""));
+  const bn = Number(bv.replace(/[^0-9.-]/g, ""));
+  if (av !== "" && bv !== "" && !isNaN(an) && !isNaN(bn)) return (an - bn) * mult;
+  return av.localeCompare(bv, undefined, { numeric: true, sensitivity: "base" }) * mult;
+}
+
+function attachColumnResizers(container) {
+  const table = container.querySelector("table");
+  const colgroup = table?.querySelector("colgroup");
+  if (!table || !colgroup) return;
+  table.querySelectorAll("th .col-resizer").forEach((handle, index) => {
+    handle.addEventListener("mousedown", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const col = colgroup.children[index];
+      const startX = e.pageX;
+      const startWidth = parseInt(col.style.width, 10) || table.querySelectorAll("th")[index].offsetWidth;
+      document.body.classList.add("is-resizing");
+      const onMove = (moveEvent) => {
+        const next = Math.max(55, startWidth + (moveEvent.pageX - startX));
+        col.style.width = `${next}px`;
+      };
+      const onUp = () => {
+        document.body.classList.remove("is-resizing");
+        document.removeEventListener("mousemove", onMove);
+        document.removeEventListener("mouseup", onUp);
+      };
+      document.addEventListener("mousemove", onMove);
+      document.addEventListener("mouseup", onUp);
+    });
+  });
 }
 
 function switchView(view, updateButtons = true) {
@@ -504,7 +590,7 @@ function updateMetricLabels() {
   $("metricMatched").textContent = state.loading ? "…" : String(state.totalMatched || "—");
   $("metricKeyStates").textContent = state.filters.keyStatesOnly ? "ON" : "OFF";
   $("resultsTitle").textContent = state.tier === "hrsa" ? "HRSA / FQHC Lookup" : `${t.label}: ${t.title}`;
-  $("resultsSubtitle").textContent = t.description;
+  $("resultsSubtitle").textContent = t.description + " Click table headers to sort; drag header edges to resize columns.";
 }
 
 function renderEmptySetup() {
