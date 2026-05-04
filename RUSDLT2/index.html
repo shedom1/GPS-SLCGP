@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>RUS DLT 2026 Tiered Callout Tracker</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="hero">
+      <div>
+        <div class="eyebrow">Solutionz GPS • RUS DLT 2026</div>
+        <h1>Tiered Callout Tracker</h1>
+        <p class="hero-copy">Filter priority prospects, assign outreach, update contacts, save rep notes, and identify nearby HRSA/FQHC partners from the shared Google Sheet source.</p>
+      </div>
+      <div class="hero-actions">
+        <a id="sourceLink" class="ghost-button" target="_blank" rel="noreferrer">Open Source Sheet</a>
+        <button id="exportBtn" class="ghost-button" type="button">Export Visible CSV</button>
+        <button id="refreshBtn" class="primary-button" type="button">Refresh Data</button>
+      </div>
+    </header>
+
+    <section id="setupWarning" class="setup-warning hidden">
+      <strong>Setup needed:</strong> paste your deployed Google Apps Script Web App URL into <code>config.js</code>. The app will read the source workbook through Apps Script and save rep activity to the tracking Google Sheet.
+    </section>
+
+    <section class="top-grid">
+      <div class="metric-card">
+        <span class="metric-label">Current View</span>
+        <strong id="metricTier">Tier 1</strong>
+        <small id="metricSubtitle">Very Rural K-12 with &gt;30% SAIPE</small>
+      </div>
+      <div class="metric-card">
+        <span class="metric-label">Matched Rows</span>
+        <strong id="metricMatched">—</strong>
+        <small>after filters</small>
+      </div>
+      <div class="metric-card">
+        <span class="metric-label">Key State Focus</span>
+        <strong id="metricKeyStates">ON</strong>
+        <small>24 first-round states</small>
+      </div>
+      <div class="metric-card">
+        <span class="metric-label">Save Target</span>
+        <strong>Google Sheet</strong>
+        <small>Rep Activity + Activity Log</small>
+      </div>
+    </section>
+
+    <nav id="tierTabs" class="tier-tabs" aria-label="Tier views"></nav>
+
+    <section class="filters-panel">
+      <div class="filter-row">
+        <label>
+          <span>Search</span>
+          <input id="searchInput" type="search" placeholder="District, college, county, city, contact, ZIP…" />
+        </label>
+        <label>
+          <span>State</span>
+          <select id="stateFilter"></select>
+        </label>
+        <label>
+          <span>Status</span>
+          <select id="statusFilter"></select>
+        </label>
+        <label>
+          <span>Assigned To</span>
+          <input id="assignedFilter" type="text" placeholder="Rep name" />
+        </label>
+      </div>
+      <div class="filter-row compact-row">
+        <label class="toggle-label"><input id="keyStateToggle" type="checkbox" checked /> Key states only</label>
+        <label class="toggle-label"><input id="ruralLocaleToggle" type="checkbox" /> Rural locales only 41–43</label>
+        <label>
+          <span>Locale</span>
+          <select id="localeFilter">
+            <option value="">All locales</option>
+            <option value="11,12,13">City 11–13</option>
+            <option value="21,22,23">Suburb 21–23</option>
+            <option value="31,32,33">Town 31–33</option>
+            <option value="41,42,43">Rural 41–43</option>
+            <option value="43">43 Rural: Remote</option>
+          </select>
+        </label>
+        <label>
+          <span>Rows</span>
+          <select id="limitFilter">
+            <option value="50">50</option>
+            <option value="100" selected>100</option>
+            <option value="200">200</option>
+            <option value="500">500</option>
+          </select>
+        </label>
+        <div class="view-toggle" role="group" aria-label="View type">
+          <button id="cardsViewBtn" class="active" type="button">Cards</button>
+          <button id="tableViewBtn" type="button">Table</button>
+        </div>
+      </div>
+      <div id="keyStatesList" class="key-states-list"></div>
+    </section>
+
+    <main class="content-grid">
+      <section class="results-panel">
+        <div class="panel-head">
+          <div>
+            <h2 id="resultsTitle">Prospects</h2>
+            <p id="resultsSubtitle">Use cards for callout workflow; switch to table for scanning.</p>
+          </div>
+          <div id="pager" class="pager"></div>
+        </div>
+        <div id="loading" class="loading hidden">Loading current sheet data…</div>
+        <div id="cardsContainer" class="cards-container"></div>
+        <div id="tableContainer" class="table-wrap hidden"></div>
+      </section>
+
+      <aside id="detailPanel" class="detail-panel">
+        <div class="empty-detail">
+          <h2>Select a prospect</h2>
+          <p>Open a card to assign outreach, update superintendent/contact data, add notes, and look up nearby HRSA/FQHC sites.</p>
+        </div>
+      </aside>
+    </main>
+  </div>
+
+  <div id="toast" class="toast hidden"></div>
+
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
