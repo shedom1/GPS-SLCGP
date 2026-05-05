@@ -56,7 +56,7 @@ button.primary{background:var(--blue);border-color:var(--blue);color:#fff;box-sh
 .invoice-header{display:flex;justify-content:space-between;gap:16px;margin-bottom:12px}
 .invoice-title{font-size:22px;font-weight:800}
 .invoice-sub{font-size:12px;line-height:1.35;color:#333}
-.invoice-meta{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:10px 0 14px}
+.invoice-meta{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 0 14px}
 .invoice-meta-box{border:1px solid #d6d6d6;padding:8px;border-radius:8px}
 .invoice-meta-box .k{font-size:10px;font-weight:800;text-transform:uppercase;color:#555;margin-bottom:3px}
 .invoice-meta-box .v{font-size:11px;font-weight:700;line-height:1.2}
@@ -239,7 +239,7 @@ thead th,
       <button id="reloadBtn" class="primary">Load Live USAC Data</button>
       <button id="printBtn">Print to PDF</button>
       <button id="invoiceBtn">Print Reconcile Doc</button>
-      <button id="createInvoiceBtn">Create Invoice</button>
+      <button id="createInvoiceBtn">Draft Inv Temp</button>
       <button id="emailBtn">Email</button>
       <button id="clearBtn">Clear Filters</button>
       <button id="exportBtn">Export Filtered CSV</button>
@@ -364,6 +364,7 @@ const F = {
  contractType:['Type of Contract','type_of_contract'],
  contractAward:['Contract Award Date','contract_award_date'],
  contractExp:['Contract Expiration Date','contract_expiration_date'],
+ serviceEnd:['Contract Expiration Date','contract_expiration_date'],
  invoiceMethod:['Invoicing Method','invoicing_method'],
  discountRate:['Discount Rate','discount_rate'],
  serviceStart:['Pilot FCC Form 471 FRN Service Start Date','pilot_fcc_form_471_frn_service','service_start_date'],
@@ -400,6 +401,79 @@ const F = {
  totalEligibleOneTime:['Line Item Total Eligible One-time Costs','line_item_total_eligible_1','line_item_total_eligible_one_time_costs'],
  lastUpdated:['Last Updated Date/Time','last_updated_date_time']
 };
+
+const FIELD_DESCRIPTIONS = {
+  'application_status':'Application status, including certified, committed, or cancelled.',
+  'service_delivery_deadline':'Services must be installed or equipment must be delivered on or before this date.',
+  'invoice_deadline_date_last':'Last day to submit an invoice for the FRN.',
+  'invoice_deadline_date_last_date_to_invoice':'Last day to submit an invoice for the FRN.',
+  'billed_entity_number':'Unique billed entity number (BEN) of the participant.',
+  'participant_address':'Participant street address.',
+  'participant_city':'Participant city.',
+  'participant_zip_code':'Participant zip code.',
+  'participant_zip_code_extension':'Participant zip code extension.',
+  'participant_name':'Name of the participant.',
+  'participant_type':'Participant entity type for the Pilot FCC Form 471.',
+  'participant_state':'Participant state.',
+  'consultant_registration_number':'Consulting firm/consultant registration number.',
+  'consultant_name':'Consulting firm/consultant name.',
+  'fcc_registration_number':'FCC registration number.',
+  'pilot_fcc_form_471_number':'Unique application number for the Pilot FCC Form 471.',
+  'form_pdf':'Link to the submitted Pilot FCC Form 471 PDF.',
+  'form_version':'Current vs original version of form.',
+  'last_updated_date_time':'When the Pilot FCC Form 471 was last modified.',
+  'window_status':'Whether the application was certified during the filing window.',
+  'pilot_fcc_form_471_nickname':'Participant nickname for the Pilot FCC Form 471.',
+  'frn':'Funding request number associated with the Pilot FCC Form 471.',
+  'frn_status':'Funding request status, including pending, funded, denied, or cancelled.',
+  'type_of_contract':'Type of agreement for the FRN.',
+  'fcc_form_470_number':'Corresponding E-Rate or Pilot FCC Form 470 number.',
+  'contract_award_date':'Date the contract was awarded.',
+  'service_provider_name':'Service provider associated with the FRN.',
+  'spin':'Service provider identification number.',
+  'pilot_fcc_form_471_frn_service':'Current service start date for the FRN.',
+  'contract_expiration_date':'Contract expiration date or service end date for the FRN.',
+  'total_pre_discount_eligible':'Pre-discount eligible cost amount prior to the discount.',
+  'total_participant_non_discount':'Total amount the participant is responsible to pay.',
+  'frn_category_of_service_type':'Category of service for the FRN.',
+  'frn_line_item_number':'Unique line item identifier.',
+  'line_item_type_of_equipment':'Sub-category of equipment/service for the line item.',
+  'line_item_make':'Service or product make.',
+  'line_item_model':'Service or product model.',
+  'line_item_installation':'Whether installation is included in the price.',
+  'lease_or_non_purchase':'Whether the item is provided under a lease or non-purchase agreement.',
+  'line_item_monthly_tax_cost':'Total pre-discount monthly tax cost.',
+  'line_item_monthly_installation':'Total pre-discount monthly installation/activation/configuration cost.',
+  'line_item_monthly_product_service_cost':'Total pre-discount monthly product/service cost.',
+  'line_item_monthly_ineligible':'Total pre-discount monthly ineligible cost.',
+  'line_item_monthly_eligible':'Total pre-discount monthly eligible cost.',
+  'line_item_months_of_service':'Number of months the service is provided.',
+  'line_item_monthly_quantity':'Monthly quantity.',
+  'line_item_total_eligible':'Total pre-discounted eligible recurring monthly charges for the funding request line item.',
+  'line_item_one_time_tax_cost':'Total pre-discount one-time tax cost.',
+  'line_item_one_time':'Total pre-discount one-time installation/activation/configuration cost.',
+  'line_item_one_time_product':'Total pre-discount one-time product/service cost.',
+  'line_item_one_time_ineligible':'Total pre-discount one-time ineligible cost.',
+  'line_item_one_time_eligible':'Total pre-discount one-time eligible cost.',
+  'line_item_one_time_quantity':'One-time quantity.',
+  'line_item_total_eligible_1':'Total pre-discounted eligible one-time charges for the funding request line item.',
+  'frn_requested_amount':'Original amount requested for the FRN after the discount rate is applied.',
+  'frn_current_committed_amount':'Current amount committed after application review and any post-commitment changes.',
+  'discount_rate':'Current FRN discount rate.',
+  'invoicing_method':'Whether invoicing is through the participant or service provider.',
+  'fcdl_date':'Date the funding commitment decision letter was issued.',
+  'revised_fcdl_date':'Date the FCDL was revised.',
+  'total_disbursement_amount':'Total net amount disbursed.',
+  'pilot_fcc_form_471_certified':'Date/time when the form was certified.',
+  'fulltime_enrollment':'Full-time enrollment count.',
+  'nslp_count':'Number of eligible NSLP students.',
+  'nslp_percentage':'Percentage of NSLP students.',
+  'urban_rural_status':'Urban/rural status of the billed entity.'
+};
+function getFieldDescription(key){
+  return FIELD_DESCRIPTIONS[String(key || '').trim().toLowerCase()] || '';
+}
+
 function normalizeRow(obj){
   const discountRate = parseNumber(getByAliases(obj,F.discountRate));
   const requestedAmount = parseNumber(getByAliases(obj,F.requestedAmount));
@@ -431,6 +505,7 @@ function normalizeRow(obj){
     contractType: compact(getByAliases(obj,F.contractType)),
     contractAward: compact(getByAliases(obj,F.contractAward)),
     contractExp: compact(getByAliases(obj,F.contractExp)),
+    serviceEnd: compact(getByAliases(obj,F.serviceEnd)),
     invoiceMethod: compact(getByAliases(obj,F.invoiceMethod)),
     discountRate: discountRate,
     serviceStart: compact(getByAliases(obj,F.serviceStart)),
@@ -622,7 +697,7 @@ function renderCard(g){
         <div class="kpi"><div class="k">Version</div><div class="v">${escapeHtml(g.versionLabel || '')}</div></div>
         <div class="kpi"><div class="k">Revised Date</div><div class="v">${escapeHtml(g.revisedDateLabel || '')}</div></div>
       </div>
-      <div class="note">Analysis: ${escapeHtml(note)}</div><div style="padding:8px 12px 0;display:flex;gap:8px;flex-wrap:wrap"><button class="invoice-card-btn" data-card-key="${escapeHtml(g.key)}">Print This Reconcile Doc</button><button class="create-invoice-card-btn" data-card-key="${escapeHtml(g.key)}">Create Invoice</button></div>
+      <div class="note">Analysis: ${escapeHtml(note)}</div><div style="padding:8px 12px 0;display:flex;gap:8px;flex-wrap:wrap"><button class="invoice-card-btn" data-card-key="${escapeHtml(g.key)}">Print This Reconcile Doc</button><button class="create-invoice-card-btn" data-card-key="${escapeHtml(g.key)}">Draft Inv Temp</button></div>
       ${g.frns.map(renderFrnBlock).join('')}
       <section class="frn-block">
         <div class="frn-head">${escapeHtml(g.participant || "Participant")} Grant Total</div>
@@ -641,7 +716,7 @@ function renderCard(g){
       </section>
       <div class=\"raw-toggle\">
         <details><summary>Show raw source fields</summary>
-          <div class="raw-grid">${Object.entries(g.rawRows[0] || {}).map(([k,v])=>`<div class="raw-item"><div class="k">${escapeHtml(k)}</div><div class="v">${escapeHtml(v)}</div></div>`).join('')}</div>
+          <div class="raw-grid">${Object.entries(g.rawRows[0] || {}).map(([k,v])=>`<div class="raw-item"><div class="k">${escapeHtml(k)}</div><div class="v">${escapeHtml(v)}</div>${getFieldDescription(k) ? `<div class="small-note" style="margin-top:4px">${escapeHtml(getFieldDescription(k))}</div>` : ''}</div>`).join('')}</div>
         </details>
       </div>
     </div>
@@ -742,6 +817,8 @@ function renderFrnBlock(f){
       <div class="frn-box"><div class="k">Invoicing Method</div><div class="v">${escapeHtml(f.invoiceMethod || '')}</div></div>
       <div class="frn-box"><div class="k">FCDL Date</div><div class="v">${escapeHtml(simpleDate(f.fcdlDate) || '')}</div></div>
       <div class="frn-box"><div class="k">Revised FCDL Date</div><div class="v">${escapeHtml(simpleDate(f.revisedFcdlDate) || '')}</div></div>
+      <div class="frn-box"><div class="k">FRN Service Date</div><div class="v">${escapeHtml(simpleDate(f.rows[0]?.serviceStart) || '')}</div></div>
+      <div class="frn-box"><div class="k">End Date</div><div class="v">${escapeHtml(simpleDate(f.rows[0]?.serviceEnd) || '')}</div></div>
       <div class="frn-box"><div class="k">Invoice Deadline Date</div><div class="v">${escapeHtml(simpleDate(f.invoiceDeadline) || '')}</div></div>
     </div>
     ${renderDiscrepancyBox(f)}
@@ -1037,14 +1114,14 @@ function renderInvoiceDoc(group, ctx){
   <html>
   <head>
     <meta charset="UTF-8">
-    <title>Invoice</title>
+    <title>DRAFT INV TEMPLATE</title>
     <style>${document.querySelector('style').textContent}</style>
   </head>
   <body class="invoice-doc">
     <div class="invoice-doc-header">
       <div class="invoice-doc-title-block">
         <div class="invoice-doc-kicker">SOLUTIONZ</div>
-        <div class="invoice-doc-title">E-Rate Cybersecurity Pilot Program Invoice${ctx.invoiceNumber ? ` # ${escapeHtml(ctx.invoiceNumber)}` : ''}</div>
+        <div class="invoice-doc-title">E-Rate Cybersecurity Pilot Program DRAFT INV TEMPLATE${ctx.invoiceNumber ? ` # ${escapeHtml(ctx.invoiceNumber)}` : ''}</div>
       </div>
       <div class="invoice-top-right">
         <div><strong>Participant Name:</strong> ${escapeHtml(group.participant || '')}</div>
@@ -1072,7 +1149,7 @@ function renderInvoiceDoc(group, ctx){
       </div>
     </div>
 
-    <div class="invoice-banner">This invoice view separates the USAC SPI invoice portion from the Customer invoice portion while preserving the detailed line-item breakdown.</div>
+    <div class="invoice-banner"><strong>DRAFT TEMPLATE ONLY — NOT AN APPROVED INVOICE.</strong> This draft template separates the USAC SPI invoice portion from the Customer invoice portion while preserving the detailed line-item breakdown.</div>
 
     <div class="invoice-split-grid">
       <div class="invoice-split-box">
