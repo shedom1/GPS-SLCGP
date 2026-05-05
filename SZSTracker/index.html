@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>SzS State Involvement Tracker</title>
+  <style>
+    :root{
+      --bg:#f7fbff;--card:#fff;--ink:#172335;--muted:#5c6a80;--line:#d8e2ef;--blue:#2563eb;
+      --green:#15803d;--green-soft:#eaf8ef;--amber:#a16207;--amber-soft:#fff4d8;--red:#b42318;
+      --red-soft:#fdecec;--shadow:0 10px 24px rgba(18,33,53,.08);--radius:16px
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Inter,Arial,Helvetica,sans-serif;background:linear-gradient(180deg,#f7fbff 0%,#eef5fd 100%);color:var(--ink)}
+    .wrap{width:min(100vw,1480px);margin:0 auto;padding:16px 12px 26px}
+    .hero,.toolbar,.cards,.table-card,.panel{background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow)}
+    .hero{border-radius:18px;padding:16px 18px 14px;margin-bottom:12px;background:linear-gradient(135deg,#fff 0%,#f3f8ff 58%,#eefbf8 100%)}
+    .eyebrow{font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--blue);margin-bottom:6px}
+    h1{margin:0 0 6px;font-size:26px;line-height:1.08}
+    .sub{color:var(--muted);font-size:12px;line-height:1.5;max-width:980px}
+    .meta{display:flex;flex-wrap:wrap;gap:8px 14px;margin-top:10px;font-size:11px;color:var(--muted)}
+    .meta b{color:var(--ink)}
+    .cards{border-radius:16px;padding:12px;margin-bottom:12px}
+    .cards-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px}
+    .card{border:1px solid var(--line);border-radius:14px;padding:10px 12px;background:#fff}
+    .card .label{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:800;margin-bottom:6px}
+    .card .value{font-size:22px;font-weight:800;line-height:1}
+    .toolbar{border-radius:16px;padding:12px;margin-bottom:12px}
+    .controls{display:grid;grid-template-columns:1.2fr .9fr .9fr .9fr .9fr auto auto;gap:8px;align-items:end}
+    .field label{display:block;font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:5px;font-weight:800}
+    input[type="search"],select,input[type="date"],input[type="text"],textarea{width:100%;padding:8px 9px;border-radius:10px;border:1px solid var(--line);background:#fff;color:var(--ink);font-size:12px;min-height:36px}
+    textarea{min-height:58px;resize:vertical}
+    .btn{appearance:none;border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:10px;padding:8px 11px;font-size:12px;font-weight:800;cursor:pointer;min-height:36px}
+    .btn.primary{background:linear-gradient(135deg,#2f7bff 0%,var(--blue) 100%);border-color:var(--blue);color:#fff}
+    .btn:hover{transform:translateY(-1px)}
+    .toolbar-note{margin-top:8px;font-size:11px;color:var(--muted);line-height:1.45}
+    .toolbar-note code{background:#f3f8ff;padding:1px 5px;border-radius:6px}
+    .layout{display:grid;grid-template-columns:1fr 320px;gap:12px}
+    .table-card{border-radius:16px;overflow:hidden}
+    .table-wrap{width:100%;overflow:auto;max-height:70vh}
+    table{width:100%;border-collapse:collapse;table-layout:fixed;font-size:11px}
+    th{position:sticky;top:0;background:#eff5fd;z-index:2;text-align:left;padding:8px 8px;border-bottom:1px solid var(--line);color:#26405f;font-size:10px;text-transform:uppercase;letter-spacing:.05em;vertical-align:bottom}
+    td{padding:8px 8px;border-bottom:1px solid #e9eef5;vertical-align:top;line-height:1.35}
+    tbody tr:hover{background:#f9fbff}
+    tbody tr.dirty{background:#fff9eb}
+    .checkbox-wrap{display:flex;justify-content:center}
+    .checkbox-wrap input{transform:scale(1.05)}
+    .save-row{white-space:nowrap}
+    .panel{border-radius:16px;padding:12px}
+    .panel h2{margin:0 0 8px;font-size:14px}
+    .assignee-list,.followup-list{display:grid;gap:8px}
+    .mini{border:1px solid var(--line);border-radius:12px;padding:8px 9px;background:#f9fbff}
+    .mini b{display:block;font-size:11px;margin-bottom:3px}
+    .loading{display:flex;align-items:center;justify-content:center;gap:10px;padding:18px;font-size:12px;color:var(--muted)}
+    .loading::before{content:'';width:12px;height:12px;border-radius:999px;border:2px solid #c9d8ec;border-top-color:var(--blue);animation:spin .8s linear infinite}
+    .error{padding:14px 16px;color:var(--red);font-size:12px;line-height:1.45;background:#fff5f5;border:1px solid #f1c7c7;border-radius:12px}
+    .footer-note{padding:10px 12px 12px;font-size:10.5px;color:var(--muted)}
+    .status-pill{display:inline-flex;align-items:center;border-radius:999px;padding:3px 8px;font-size:10px;font-weight:800;line-height:1}
+    .status-yes{background:var(--green-soft);color:var(--green)}
+    .status-no{background:var(--red-soft);color:var(--red)}
+    .status-in-progress{background:var(--amber-soft);color:var(--amber)}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    @media (max-width:1200px){
+      .cards-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+      .controls{grid-template-columns:repeat(3,minmax(0,1fr))}
+      .layout{grid-template-columns:1fr}
+    }
+    @media print{
+      body{background:#fff}
+      .wrap{width:100%;max-width:none;padding:0}
+      .hero,.toolbar,.cards,.table-card,.panel{box-shadow:none}
+      .toolbar,.panel{display:none}
+      .table-wrap{max-height:none}
+      th,td{padding:5px 5px}
+    }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <section class="hero">
+    <div class="eyebrow">SzS | State involvement tracker</div>
+    <h1 id="appTitle">SzS State Involvement Tracker</h1>
+    <div class="sub" id="appSubtitle">GitHub-hosted frontend connected to a Google Sheet through an Apps Script web app.</div>
+    <div class="meta">
+      <div><b>Frontend:</b> GitHub Pages</div>
+      <div><b>Data store:</b> Google Sheet</div>
+      <div><b>Backend:</b> Apps Script web app</div>
+      <div><b>Pennsylvania region:</b> Northeast</div>
+      <div><b>Last sync:</b> <span id="lastSync">Loading…</span></div>
+    </div>
+  </section>
+
+  <section class="cards">
+    <div class="cards-grid">
+      <div class="card"><div class="label">States</div><div class="value" id="countStates">0</div></div>
+      <div class="card"><div class="label">Contract Yes</div><div class="value" id="countYes">0</div></div>
+      <div class="card"><div class="label">In Progress</div><div class="value" id="countProgress">0</div></div>
+      <div class="card"><div class="label">Committee Members</div><div class="value" id="countCommittee">0</div></div>
+      <div class="card"><div class="label">Registered Vendors</div><div class="value" id="countVendor">0</div></div>
+      <div class="card"><div class="label">Update Emails</div><div class="value" id="countUpdates">0</div></div>
+    </div>
+  </section>
+
+  <section class="toolbar">
+    <div class="controls">
+      <div class="field">
+        <label for="search">Search</label>
+        <input id="search" type="search" placeholder="Search state, contract, notes, assignee..." />
+      </div>
+      <div class="field">
+        <label for="regionFilter">Region</label>
+        <select id="regionFilter">
+          <option value="">All regions</option>
+          <option value="Mid-Atlantic">Mid-Atlantic</option>
+          <option value="Northeast">Northeast</option>
+          <option value="Southeast">Southeast</option>
+          <option value="West">West</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="statusFilter">Buying contract</label>
+        <select id="statusFilter">
+          <option value="">All statuses</option>
+          <option value="Yes">Yes</option>
+          <option value="No">No</option>
+          <option value="In Progress">In Progress</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="assigneeFilter">Assigned to</label>
+        <select id="assigneeFilter"><option value="">All assignees</option></select>
+      </div>
+      <div class="field">
+        <label for="engagementFilter">Engagement filter</label>
+        <select id="engagementFilter">
+          <option value="">All</option>
+          <option value="committee">Committee member</option>
+          <option value="vendor">Registered vendor</option>
+          <option value="updates">Registered for updates email</option>
+          <option value="followup">Follow-up due</option>
+        </select>
+      </div>
+      <button class="btn" id="resetBtn" type="button">Reset filters</button>
+      <button class="btn primary" id="saveAllBtn" type="button">Save all changes</button>
+    </div>
+    <div class="toolbar-note">
+      Set your deployed Apps Script URL in <code>config.js</code>. This GitHub page then reads and writes the Google Sheet through the Apps Script web app.
+    </div>
+  </section>
+
+  <div class="layout">
+    <section class="table-card">
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th style="width:9%">State</th>
+              <th style="width:7%">Region</th>
+              <th style="width:8%">Contract Status</th>
+              <th style="width:11%">Buying Contract Name</th>
+              <th style="width:8%">Follow-Up</th>
+              <th style="width:8%">Assigned To</th>
+              <th style="width:6%">Committee?</th>
+              <th style="width:8%">Date Joined</th>
+              <th style="width:6%">Vendor?</th>
+              <th style="width:8%">Date Registered</th>
+              <th style="width:7%">Updates Email?</th>
+              <th style="width:10%">Updates Email Address</th>
+              <th style="width:12%">Notes</th>
+              <th style="width:6%">Action</th>
+            </tr>
+          </thead>
+          <tbody id="tbody">
+            <tr><td colspan="14"><div class="loading">Loading tracker data…</div></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="footer-note">Editable GitHub-hosted view connected to Google Sheets through the Apps Script web app endpoint.</div>
+    </section>
+
+    <aside class="panel">
+      <h2>Assigned To</h2>
+      <div class="assignee-list" id="assigneeList"><div class="mini">Loading…</div></div>
+      <h2 style="margin-top:12px;">Upcoming Follow-Ups</h2>
+      <div class="followup-list" id="followupList"><div class="mini">Loading…</div></div>
+    </aside>
+  </div>
+</div>
+
+<script src="config.js"></script>
+<script>
+const CONFIG = window.SZS_TRACKER_CONFIG || {};
+const API_BASE_URL = (CONFIG.apiBaseUrl || '').trim();
+
+document.getElementById('appTitle').textContent = CONFIG.appTitle || 'SzS State Involvement Tracker';
+document.getElementById('appSubtitle').textContent = CONFIG.appSubtitle || 'GitHub-hosted frontend connected to a Google Sheet through an Apps Script web app.';
+
+let allRows = [];
+let filteredRows = [];
+let dirtyStates = new Set();
+
+const tbody = document.getElementById('tbody');
+const searchInput = document.getElementById('search');
+const regionFilter = document.getElementById('regionFilter');
+const statusFilter = document.getElementById('statusFilter');
+const assigneeFilter = document.getElementById('assigneeFilter');
+const engagementFilter = document.getElementById('engagementFilter');
+
+function escapeHtml(value) {
+  return String(value ?? '').replace(/[&<>"']/g, s => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;', "'":'&#39;'}[s]));
+}
+
+function setError(message) {
+  tbody.innerHTML = `<tr><td colspan="14"><div class="error">${escapeHtml(message)}</div></td></tr>`;
+}
+
+function updateMeta(updatedAt) {
+  const el = document.getElementById('lastSync');
+  if (!updatedAt) {
+    el.textContent = 'Just now';
+    return;
+  }
+  const d = new Date(updatedAt);
+  el.textContent = isNaN(d) ? 'Just now' : d.toLocaleString();
+}
+
+function pillClass(status) {
+  const key = String(status || '').toLowerCase().replace(/\s+/g,'-');
+  return `status-${key}`;
+}
+
+async function apiGet(action) {
+  const url = new URL(API_BASE_URL);
+  url.searchParams.set('action', action);
+  url.searchParams.set('t', String(Date.now()));
+  const response = await fetch(url.toString(), { method: 'GET', credentials: 'omit' });
+  if (!response.ok) throw new Error(`HTTP ${response.status}`);
+  return await response.json();
+}
+
+async function apiPost(action, payload) {
+  const response = await fetch(API_BASE_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+    body: JSON.stringify({ action, payload })
+  });
+  if (!response.ok) throw new Error(`HTTP ${response.status}`);
+  return await response.json();
+}
+
+async function bootstrap() {
+  if (!API_BASE_URL || API_BASE_URL.includes('PASTE_APPS_SCRIPT_WEB_APP_URL_HERE')) {
+    setError('Set your deployed Apps Script web app URL in config.js first.');
+    return;
+  }
+  try {
+    const payload = await apiGet('bootstrap');
+    handleBootstrap(payload);
+  } catch (err) {
+    setError('Unable to load tracker data from the Apps Script backend. Verify the deployed web app URL in config.js and confirm the web app is deployed with access for the intended users.');
+  }
+}
+
+function handleBootstrap(payload) {
+  allRows = (payload.rows || []).map(r => ({ ...r }));
+  populateAssigneeFilter(payload.assignees || []);
+  render();
+  updateMeta(payload.updatedAt);
+}
+
+function populateAssigneeFilter(assignees) {
+  const current = assigneeFilter.value;
+  assigneeFilter.innerHTML = '<option value="">All assignees</option>' + assignees.map(a => `<option value="${escapeHtml(a)}">${escapeHtml(a)}</option>`).join('');
+  assigneeFilter.value = current;
+}
+
+function getFilteredRows() {
+  const term = searchInput.value.trim().toLowerCase();
+  const region = regionFilter.value;
+  const status = statusFilter.value;
+  const assignee = assigneeFilter.value;
+  const engagement = engagementFilter.value;
+  const today = new Date().toISOString().slice(0,10);
+
+  return allRows.filter(row => {
+    if (region && row['Region'] !== region) return false;
+    if (status && row['Buying Contract Status'] !== status) return false;
+    if (assignee && row['Assigned To'] !== assignee) return false;
+    if (engagement === 'committee' && !row['Cybersecurity Committee Member']) return false;
+    if (engagement === 'vendor' && !row['Registered Vendor']) return false;
+    if (engagement === 'updates' && !row['Registered for Updates Email']) return false;
+    if (engagement === 'followup' && (!row['Follow-Up Date'] || row['Follow-Up Date'] < today)) return false;
+
+    if (term) {
+      const hay = [
+        row['State'], row['Region'], row['Buying Contract Status'], row['Buying Contract Name'],
+        row['Assigned To'], row['Notes'], row['Updates Email Address']
+      ].join(' ').toLowerCase();
+      if (!hay.includes(term)) return false;
+    }
+    return true;
+  }).sort((a,b) => {
+    const da = a['Follow-Up Date'] || '9999-12-31';
+    const db = b['Follow-Up Date'] || '9999-12-31';
+    return da.localeCompare(db) || a['State'].localeCompare(b['State']);
+  });
+}
+
+function render() {
+  filteredRows = getFilteredRows();
+  updateCards();
+  renderSidePanel();
+
+  if (!filteredRows.length) {
+    tbody.innerHTML = `<tr><td colspan="14"><div class="loading">No states match the current filters.</div></td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML = filteredRows.map(row => {
+    const isDirty = dirtyStates.has(row['State']);
+    return `
+      <tr data-state="${escapeHtml(row['State'])}" class="${isDirty ? 'dirty' : ''}">
+        <td><b>${escapeHtml(row['State'])}</b></td>
+        <td>${escapeHtml(row['Region'])}</td>
+        <td>
+          <select data-field="Buying Contract Status">
+            <option value="Yes" ${row['Buying Contract Status']==='Yes'?'selected':''}>Yes</option>
+            <option value="No" ${row['Buying Contract Status']==='No'?'selected':''}>No</option>
+            <option value="In Progress" ${row['Buying Contract Status']==='In Progress'?'selected':''}>In Progress</option>
+          </select>
+          <div style="margin-top:6px"><span class="status-pill ${pillClass(row['Buying Contract Status'])}">${escapeHtml(row['Buying Contract Status'])}</span></div>
+        </td>
+        <td><input type="text" data-field="Buying Contract Name" value="${escapeHtml(row['Buying Contract Name'])}" /></td>
+        <td><input type="date" data-field="Follow-Up Date" value="${escapeHtml(row['Follow-Up Date'])}" /></td>
+        <td><input type="text" data-field="Assigned To" value="${escapeHtml(row['Assigned To'])}" /></td>
+        <td><div class="checkbox-wrap"><input type="checkbox" data-field="Cybersecurity Committee Member" ${row['Cybersecurity Committee Member'] ? 'checked' : ''} /></div></td>
+        <td><input type="date" data-field="Date Joined" value="${escapeHtml(row['Date Joined'])}" /></td>
+        <td><div class="checkbox-wrap"><input type="checkbox" data-field="Registered Vendor" ${row['Registered Vendor'] ? 'checked' : ''} /></div></td>
+        <td><input type="date" data-field="Date Registered" value="${escapeHtml(row['Date Registered'])}" /></td>
+        <td><div class="checkbox-wrap"><input type="checkbox" data-field="Registered for Updates Email" ${row['Registered for Updates Email'] ? 'checked' : ''} /></div></td>
+        <td><input type="text" data-field="Updates Email Address" value="${escapeHtml(row['Updates Email Address'])}" placeholder="name@domain.com" /></td>
+        <td><textarea data-field="Notes" placeholder="Notes, blockers, next steps">${escapeHtml(row['Notes'])}</textarea></td>
+        <td class="save-row"><button class="btn" data-action="save-row">Save Row</button></td>
+      </tr>
+    `;
+  }).join('');
+
+  wireRowEvents();
+}
+
+function renderSidePanel() {
+  const assigneeMap = {};
+  allRows.forEach(row => {
+    const name = (row['Assigned To'] || '').trim();
+    if (!name) return;
+    assigneeMap[name] = (assigneeMap[name] || 0) + 1;
+  });
+  const assigneeList = Object.entries(assigneeMap).sort((a,b) => b[1]-a[1] || a[0].localeCompare(b[0]));
+  document.getElementById('assigneeList').innerHTML = assigneeList.length
+    ? assigneeList.map(([name,count]) => `<div class="mini"><b>${escapeHtml(name)}</b>${count} state${count===1?'':'s'} assigned</div>`).join('')
+    : '<div class="mini">No assignees yet.</div>';
+
+  const today = new Date().toISOString().slice(0,10);
+  const followups = [...allRows]
+    .filter(r => r['Follow-Up Date'] && r['Follow-Up Date'] >= today)
+    .sort((a,b) => a['Follow-Up Date'].localeCompare(b['Follow-Up Date']) || a['State'].localeCompare(b['State']))
+    .slice(0,10);
+
+  document.getElementById('followupList').innerHTML = followups.length
+    ? followups.map(r => `<div class="mini"><b>${escapeHtml(r['State'])}</b>${escapeHtml(r['Follow-Up Date'])}<br><span style="color:#5c6a80">${escapeHtml(r['Assigned To'] || 'Unassigned')}</span></div>`).join('')
+    : '<div class="mini">No upcoming follow-ups.</div>';
+}
+
+function updateCards() {
+  document.getElementById('countStates').textContent = String(allRows.length);
+  document.getElementById('countYes').textContent = String(allRows.filter(r => r['Buying Contract Status']==='Yes').length);
+  document.getElementById('countProgress').textContent = String(allRows.filter(r => r['Buying Contract Status']==='In Progress').length);
+  document.getElementById('countCommittee').textContent = String(allRows.filter(r => r['Cybersecurity Committee Member']).length);
+  document.getElementById('countVendor').textContent = String(allRows.filter(r => r['Registered Vendor']).length);
+  document.getElementById('countUpdates').textContent = String(allRows.filter(r => r['Registered for Updates Email']).length);
+}
+
+function wireRowEvents() {
+  tbody.querySelectorAll('input, textarea, select').forEach(el => {
+    el.addEventListener('change', markDirtyFromElement);
+    el.addEventListener('input', (e) => {
+      if (e.target.tagName === 'TEXTAREA' || e.target.type === 'text') markDirtyFromElement(e);
+    });
+  });
+
+  tbody.querySelectorAll('[data-action="save-row"]').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const tr = btn.closest('tr');
+      await saveRows([rowFromTr(tr)]);
+    });
+  });
+}
+
+function markDirtyFromElement(e) {
+  const tr = e.target.closest('tr');
+  const state = tr.dataset.state;
+  applyTrToRow(tr);
+  dirtyStates.add(state);
+  tr.classList.add('dirty');
+  renderSidePanel();
+  updateCards();
+}
+
+function applyTrToRow(tr) {
+  const row = allRows.find(r => r['State'] === tr.dataset.state);
+  if (!row) return;
+  tr.querySelectorAll('[data-field]').forEach(el => {
+    const field = el.dataset.field;
+    row[field] = el.type === 'checkbox' ? el.checked : el.value;
+  });
+}
+
+function rowFromTr(tr) {
+  applyTrToRow(tr);
+  return allRows.find(r => r['State'] === tr.dataset.state);
+}
+
+async function saveRows(rows) {
+  if (!rows || !rows.length) return;
+  try {
+    const payload = await apiPost('saveRows', rows);
+    dirtyStates = new Set();
+    handleBootstrap(payload);
+  } catch (err) {
+    alert('Unable to save changes. Confirm the Apps Script web app URL is correct and that the deployment has access for your users.');
+  }
+}
+
+document.getElementById('saveAllBtn').addEventListener('click', async () => {
+  const rows = allRows.filter(r => dirtyStates.has(r['State']));
+  if (!rows.length) {
+    alert('No unsaved changes.');
+    return;
+  }
+  await saveRows(rows);
+});
+
+document.getElementById('resetBtn').addEventListener('click', () => {
+  searchInput.value = '';
+  regionFilter.value = '';
+  statusFilter.value = '';
+  assigneeFilter.value = '';
+  engagementFilter.value = '';
+  render();
+});
+
+[searchInput, regionFilter, statusFilter, assigneeFilter, engagementFilter].forEach(el => {
+  el.addEventListener('input', render);
+  el.addEventListener('change', render);
+});
+
+bootstrap();
+</script>
+</body>
+</html>
