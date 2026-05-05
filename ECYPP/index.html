@@ -818,7 +818,7 @@ function renderFrnBlock(f){
       <div class="frn-box"><div class="k">FCDL Date</div><div class="v">${escapeHtml(simpleDate(f.fcdlDate) || '')}</div></div>
       <div class="frn-box"><div class="k">Revised FCDL Date</div><div class="v">${escapeHtml(simpleDate(f.revisedFcdlDate) || '')}</div></div>
       <div class="frn-box"><div class="k">FRN Service Date</div><div class="v">${escapeHtml(simpleDate(f.rows[0]?.serviceStart) || '')}</div></div>
-      <div class="frn-box"><div class="k">End Date</div><div class="v">${escapeHtml(simpleDate(f.rows[0]?.serviceEnd) || '')}</div></div>
+      <div class="frn-box"><div class="k">FRN Service End Date</div><div class="v">${escapeHtml(simpleDate(f.rows[0]?.serviceEnd) || '')}</div></div>
       <div class="frn-box"><div class="k">Invoice Deadline Date</div><div class="v">${escapeHtml(simpleDate(f.invoiceDeadline) || '')}</div></div>
     </div>
     ${renderDiscrepancyBox(f)}
@@ -848,7 +848,7 @@ function renderFrnBlock(f){
         <tbody>
           ${f.rows.map(r => renderLineRow(r, visibleKeys)).join('')}
           <tr class="total-row">
-            <td colspan="6">FRN line subtotal</td>
+            <td colspan="8">FRN line subtotal</td>
             ${amountCell(f.rows.reduce((s,r)=>s+r.monthlyProduct,0), visibleKeys, 'monthlyProduct')}
             ${amountCell(f.rows.reduce((s,r)=>s+r.monthlyInstall,0), visibleKeys, 'monthlyInstall')}
             ${amountCell(f.rows.reduce((s,r)=>s+r.monthlyTax,0), visibleKeys, 'monthlyTax')}
@@ -878,6 +878,8 @@ function renderLineRow(r, visibleKeys){
     <td>${escapeHtml(r.lineMake || '')}</td>
     <td class="line-desc">${escapeHtml(modelText)}</td>
     <td>${escapeHtml(r.lineType || '')}</td>
+    <td>${escapeHtml(simpleDate(r.serviceStart) || '')}</td>
+    <td>${escapeHtml(simpleDate(r.serviceEnd) || '')}</td>
     <td class="num">${qty ? intFmt(qty) : ''}</td>
     <td class="num">${r.months ? intFmt(r.months) : ''}</td>
     ${amountCell(r.monthlyProduct, visibleKeys, 'monthlyProduct')}
@@ -996,6 +998,7 @@ function renderInvoiceTableRows(rows, visibleKeys){
       <td>${escapeHtml(r.lineModel || '')}</td>
       <td>${escapeHtml(r.lineType || '')}</td>
       <td>${escapeHtml(simpleDate(r.serviceStart) || '')}</td>
+      <td>${escapeHtml(simpleDate(r.serviceEnd) || '')}</td>
       <td class="num">${qty ? intFmt(qty) : ''}</td>
       <td class="num">${r.months ? intFmt(r.months) : ''}</td>
       ${amountCell(r.monthlyProduct, visibleKeys, 'monthlyProduct')}
@@ -1067,7 +1070,7 @@ function renderInvoiceDoc(group, ctx){
       <table class="invoice-table">
         <thead>
           <tr>
-            <th>Line Item</th><th>Make</th><th>Model / Service</th><th>Type</th><th>Product Delivery Date</th><th>Qty</th><th>Months</th>
+            <th>Line Item</th><th>Make</th><th>Model / Service</th><th>Type</th><th>FRN Service Date</th><th>FRN Service End Date</th><th>Qty</th><th>Months</th>
             ${amountHeader('Monthly Product / Service', visibleKeys, 'monthlyProduct')}
             ${amountHeader('Monthly Install / Config', visibleKeys, 'monthlyInstall')}
             ${amountHeader('Monthly Tax', visibleKeys, 'monthlyTax')}
@@ -1088,7 +1091,7 @@ function renderInvoiceDoc(group, ctx){
         <tbody>
           ${renderInvoiceTableRows(f.rows, visibleKeys)}
           <tr class="invoice-total-row">
-            <td colspan="7">FRN subtotal</td>
+            <td colspan="8">FRN subtotal</td>
             ${amountCell(f.rows.reduce((s,r)=>s+r.monthlyProduct,0), visibleKeys, 'monthlyProduct')}
             ${amountCell(f.rows.reduce((s,r)=>s+r.monthlyInstall,0), visibleKeys, 'monthlyInstall')}
             ${amountCell(f.rows.reduce((s,r)=>s+r.monthlyTax,0), visibleKeys, 'monthlyTax')}
