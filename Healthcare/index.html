@@ -3,205 +3,158 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>FQHC Prospect Lookup</title>
+  <title>FQHC Prospect Lookup Tracker</title>
   <link rel="stylesheet" href="assets/styles.css" />
+  <script src="config.js"></script>
 </head>
 <body>
   <header class="topbar">
     <div>
-      <p class="eyebrow">GPS Prospecting Tool</p>
-      <h1>FQHC Prospect Lookup</h1>
-      <p class="subtitle">Static GitHub Pages lookup for HRSA FQHC/service delivery sites with rural/RUCA filters, CMS enrichment, and rep notes.</p>
+      <p class="eyebrow">GPS Prospecting Lookup</p>
+      <h1>FQHC Prospect Tracker</h1>
+      <p class="subhead">HRSA primary site list + CMS enrollment/ownership + RUCA/FORHP rural enrichment. No rep source mapping required.</p>
     </div>
     <div class="top-actions no-print">
-      <button id="refreshBtn" class="btn primary">Load Data</button>
-      <button id="sourceBtn" class="btn">Data Sources</button>
-      <button id="printBtn" class="btn">Save to PDF</button>
+      <button id="loadBtn" class="btn primary">Load Data</button>
+      <button id="refreshBtn" class="btn">Refresh Sources</button>
       <button id="exportBtn" class="btn">Export CSV</button>
+      <button id="printBtn" class="btn">Save PDF</button>
     </div>
   </header>
 
   <main>
-    <section id="statusPanel" class="status-panel">
-      <div class="loader-dot"></div>
-      <div>
-        <strong id="statusTitle">Ready</strong>
-        <p id="statusText">Click Load Data. This version loads local files from <code>/data/</code> first so GitHub Pages does not depend on blocked browser fetches.</p>
-      </div>
+    <section id="setupWarning" class="setup-warning hidden no-print">
+      <strong>Setup needed:</strong> paste your Google Apps Script Web App URL into <code>config.js</code>. Reps should not map files or sources manually.
     </section>
 
-    <section id="noDataPanel" class="warning-panel hidden">
-      <strong>No official FQHC dataset is loaded yet.</strong>
-      <p>The notes template is not the FQHC source data. Add <code>data/hrsa_sites.csv</code> by running the included GitHub Action/script, or upload the HRSA sites CSV below.</p>
-    </section>
+    <section id="statusPanel" class="status-grid no-print" aria-live="polite"></section>
 
-    <section class="source-status-panel">
-      <div class="panel-title-row">
-        <h2>Data Source Status</h2>
-        <span id="lastUpdated" class="muted"></span>
-      </div>
-      <div id="sourceStatusGrid" class="source-status-grid"></div>
+    <section class="dashboard no-print">
+      <div class="metric"><span id="metricTotal">0</span><label>Total Loaded</label></div>
+      <div class="metric"><span id="metricFiltered">0</span><label>Filtered</label></div>
+      <div class="metric"><span id="metricRural">0</span><label>Rural / Likely Rural</label></div>
+      <div class="metric"><span id="metricFollowup">0</span><label>Follow-ups Due</label></div>
     </section>
-
-    <section class="source-upload-panel no-print">
-      <details>
-        <summary>Fallback uploads / notes import</summary>
-        <div class="upload-grid">
-          <label>HRSA FQHC / Health Center Sites CSV
-            <input type="file" id="hrsaFile" accept=".csv" />
-          </label>
-          <label>USDA RUCA ZIP XLSX/CSV
-            <input type="file" id="rucaFile" accept=".xlsx,.xls,.csv" />
-          </label>
-          <label>HRSA FORHP Rural ZIP XLSX/CSV
-            <input type="file" id="forhpFile" accept=".xlsx,.xls,.csv" />
-          </label>
-          <label>Rep Notes CSV Import
-            <input type="file" id="notesFile" accept=".csv" />
-          </label>
-        </div>
-        <p class="hint">Use uploads only when local <code>/data/</code> files are missing. Rep notes save to this browser and can be exported/imported.</p>
-      </details>
-    </section>
-
-    <section class="metrics" id="metrics"></section>
 
     <section class="filters no-print">
-      <div class="field wide">
-        <label for="searchInput">Search name, city, county, ZIP, phone, website, contact, notes</label>
-        <input id="searchInput" type="search" placeholder="Search FQHCs, counties, contacts, websites, notes..." />
-      </div>
-      <div class="field">
-        <label for="regionFilter">Region</label>
-        <select id="regionFilter"></select>
-      </div>
-      <div class="field">
-        <label for="stateFilter">State</label>
-        <select id="stateFilter"></select>
-      </div>
-      <div class="field">
-        <label for="ruralFilter">Rural</label>
-        <select id="ruralFilter">
-          <option value="all">All</option>
-          <option value="rural">Rural only</option>
-          <option value="not-rural">Not rural</option>
-          <option value="unknown">Unknown</option>
-        </select>
-      </div>
-      <div class="field ruca-field">
-        <label class="label-with-help">
-          RUCA
-          <span class="help-icon" tabindex="0" aria-label="RUCA description">?
-            <span class="tooltip-card">
-              <strong>RUCA = Rural-Urban Commuting Area.</strong><br>
-              1-3 = metropolitan, 4-6 = micropolitan, 7-9 = small town, 10 = rural, 99 = not coded. Select multiple codes; no selection means all RUCA codes.
-            </span>
-          </span>
+      <div class="filter-row">
+        <label>
+          Search
+          <input id="searchInput" type="search" placeholder="Name, city, ZIP, county, notes..." />
         </label>
-        <div id="rucaChecks" class="check-grid" aria-label="RUCA multi-select"></div>
-        <button id="clearRucaBtn" type="button" class="mini-clear">Clear RUCA</button>
+        <label>
+          Region
+          <select id="regionFilter"><option value="">All Regions</option></select>
+        </label>
+        <label>
+          State
+          <select id="stateFilter"><option value="">All States</option></select>
+        </label>
+        <label>
+          Rural
+          <select id="ruralFilter">
+            <option value="">All</option>
+            <option value="yes">Rural / likely rural</option>
+            <option value="no">Not rural / unknown</option>
+          </select>
+        </label>
+        <label>
+          Status
+          <select id="statusFilter">
+            <option value="">All Statuses</option>
+            <option>Not Started</option>
+            <option>Researching</option>
+            <option>Contacted</option>
+            <option>Follow Up</option>
+            <option>Qualified</option>
+            <option>Not a Fit</option>
+            <option>Do Not Contact</option>
+          </select>
+        </label>
       </div>
-      <div class="field">
-        <label for="typeFilter">Type</label>
-        <select id="typeFilter"></select>
-      </div>
-      <div class="field">
-        <label for="statusFilter">Status</label>
-        <select id="statusFilter"></select>
-      </div>
-      <div class="field">
-        <label for="sortBy">Sort by</label>
-        <select id="sortBy">
-          <option value="state">State</option>
-          <option value="region">Region</option>
-          <option value="name">Name</option>
-          <option value="ruca">RUCA</option>
-          <option value="rural">Rural</option>
-          <option value="followup">Next Follow-up</option>
-          <option value="priority">Priority</option>
-        </select>
-      </div>
-      <div class="field tiny">
-        <label for="sortDir">Dir</label>
-        <select id="sortDir"><option value="asc">A-Z</option><option value="desc">Z-A</option></select>
+
+      <div class="filter-row compact">
+        <label>
+          Sort By
+          <select id="sortBy">
+            <option value="state">State</option>
+            <option value="region">Region</option>
+            <option value="name">Name</option>
+            <option value="ruca_primary">RUCA</option>
+            <option value="rural_sort">Rural</option>
+            <option value="priority_sort">Priority</option>
+            <option value="next_followup">Next Follow-up</option>
+          </select>
+        </label>
+        <label>
+          View
+          <select id="viewMode">
+            <option value="table">Table</option>
+            <option value="cards">Cards</option>
+          </select>
+        </label>
+        <label>
+          Page Size
+          <select id="pageSize">
+            <option>50</option>
+            <option selected>100</option>
+            <option>250</option>
+            <option>500</option>
+            <option>1000</option>
+          </select>
+        </label>
+        <button id="clearFiltersBtn" class="btn small">Clear Filters</button>
+        <div class="ruca-box">
+          <div class="ruca-title">RUCA <span class="tooltip" tabindex="0">?</span>
+            <div class="tooltip-panel">
+              <strong>RUCA primary code:</strong><br>
+              1–3 = Metropolitan; 4–6 = Micropolitan; 7–9 = Small town; 10 = Rural; 99 = Not coded. Use multiple selections to include several categories at once.
+            </div>
+          </div>
+          <div id="rucaOptions" class="checkgrid"></div>
+        </div>
       </div>
     </section>
 
-    <section class="viewbar no-print">
-      <div class="segmented">
-        <button id="tableViewBtn" class="active">Table</button>
-        <button id="cardViewBtn">Cards</button>
-      </div>
-      <div class="pagination-controls">
-        <label>Rows <select id="pageSize"><option>25</option><option selected>50</option><option>100</option><option>250</option></select></label>
-        <button id="prevPage" class="btn small">Previous</button>
-        <span id="pageInfo"></span>
-        <button id="nextPage" class="btn small">Next</button>
-      </div>
-    </section>
-
-    <section id="activeFilters" class="active-filters"></section>
+    <section id="message" class="message hidden"></section>
 
     <section id="tableView" class="table-wrap">
-      <table id="resultsTable">
-        <thead>
-          <tr>
-            <th data-sort="region">Region</th>
-            <th data-sort="state">State</th>
-            <th data-sort="name">Name</th>
-            <th data-sort="rural">Rural</th>
-            <th data-sort="ruca">RUCA</th>
-            <th>Type</th>
-            <th>City / County</th>
-            <th>Contact</th>
-            <th>Website</th>
-            <th>Status</th>
-            <th class="no-print">Details</th>
-          </tr>
-        </thead>
+      <table id="dataTable">
+        <thead></thead>
         <tbody></tbody>
       </table>
     </section>
 
-    <section id="cardView" class="card-grid hidden"></section>
+    <section id="cardView" class="cards hidden"></section>
+
+    <footer class="pager no-print">
+      <button id="prevPage" class="btn small">Previous</button>
+      <span id="pageInfo">Page 0 of 0</span>
+      <button id="nextPage" class="btn small">Next</button>
+    </footer>
   </main>
 
-  <dialog id="detailDialog">
-    <form method="dialog" class="dialog-card">
-      <button class="dialog-close" value="close" aria-label="Close">×</button>
-      <div id="detailContent"></div>
-    </form>
-  </dialog>
-
-  <dialog id="sourceDialog">
-    <form method="dialog" class="dialog-card source-dialog">
-      <button class="dialog-close" value="close" aria-label="Close">×</button>
-      <h2>Data-source strategy</h2>
-      <div class="source-list">
-        <article>
-          <h3>Primary list: HRSA Health Center Service Delivery and Look-Alike Sites</h3>
-          <p>Best source for prospect lookup fields such as site name, organization, address, city, state, ZIP, phone, website, county, site type, and coordinates. This page should load it from <code>data/hrsa_sites.csv</code>.</p>
-        </article>
-        <article>
-          <h3>Rural filters: USDA RUCA ZIP + HRSA FORHP rural ZIP approximation</h3>
-          <p>RUCA supports rural-urban sorting/filtering. FORHP ZIP approximation gives a practical rural yes/no flag for rural health prospecting.</p>
-        </article>
-        <article>
-          <h3>Enrichment: CMS FQHC Enrollments + CMS FQHC All Owners</h3>
-          <p>CMS is useful for Medicare enrollment and ownership context. It should not replace HRSA as the site prospecting base.</p>
-        </article>
-        <article>
-          <h3>Rep-owned fields</h3>
-          <p>Direct contact emails are usually not in official source files. Reps should add verified Contact Name, Contact Email, Assigned To, Status, Priority, Follow-up Date, and Notes in the details panel, then export CSV.</p>
-        </article>
+  <template id="cardTemplate">
+    <article class="card">
+      <div class="card-head">
+        <div>
+          <h3 data-field="name"></h3>
+          <p data-field="subtitle"></p>
+        </div>
+        <span data-field="region_chip" class="chip"></span>
       </div>
-      <p class="hint">This package includes a GitHub Action and Python script to refresh local files server-side. That avoids browser CORS blocks.</p>
-    </form>
-  </dialog>
+      <div class="card-grid">
+        <p><strong>Location:</strong> <span data-field="location"></span></p>
+        <p><strong>RUCA:</strong> <span data-field="ruca"></span></p>
+        <p><strong>Rural:</strong> <span data-field="rural"></span></p>
+        <p><strong>Phone:</strong> <span data-field="phone"></span></p>
+        <p><strong>Website:</strong> <span data-field="website"></span></p>
+        <p><strong>CMS:</strong> <span data-field="cms"></span></p>
+      </div>
+      <div class="note-grid"></div>
+    </article>
+  </template>
 
-  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
-  <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
-  <script src="config.js"></script>
   <script src="assets/app.js"></script>
 </body>
 </html>

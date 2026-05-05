@@ -1,543 +1,381 @@
-(() => {
-  const CFG = window.FQHC_TRACKER_CONFIG || {};
-  const $ = sel => document.querySelector(sel);
-  const $$ = sel => Array.from(document.querySelectorAll(sel));
-  const RUCAS = ['1','2','3','4','5','6','7','8','9','10','99','Unknown'];
-  const state = {
-    rawSites: [], rucaByZip: new Map(), forhpByZip: new Map(), cmsEnrollments: [], cmsOwners: [],
-    records: [], filtered: [], page: 1, view: 'table', sortBy: 'state', sortDir: 'asc', notes: loadNotes(),
-    sourceStatus: {}, manifest: null
+(function(){
+  const CONFIG = window.FQHC_TRACKER_CONFIG || {};
+  const API_URL = (CONFIG.API_URL || '').trim();
+  const STATES = 'AL AK AZ AR CA CO CT DE DC FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MS MO MT NE NV NH NJ NM NY NC ND OH OK OR PA RI SC SD TN TX UT VT VA WA WV WI WY'.split(' ');
+  const REGIONS = {
+    'Mid-Atlantic':['KY','MD','TN','VA','WV'],
+    'Northeast':['CT','DE','IL','IN','IA','KS','ME','MA','MI','MN','MO','NE','NH','NJ','NY','ND','OH','PA','RI','SD','VT','WI'],
+    'Southeast':['AL','AR','FL','GA','LA','MS','NC','SC'],
+    'West':['AK','AZ','CA','CO','HI','ID','MT','NV','NM','OK','OR','TX','UT','WA','WY']
   };
+  const REGION_BY_STATE = Object.entries(REGIONS).reduce((acc,[r,states])=>{states.forEach(s=>acc[s]=r);return acc;},{});
+  const RUCA_CODES = ['1','2','3','4','5','6','7','8','9','10','99','Unknown'];
+  const NOTE_FIELDS = ['contact_name','contact_email','assigned_to','status','priority','next_followup','notes'];
+  const DEFAULT_STATUS = 'Not Started';
+  const DEFAULT_PRIORITY = '';
 
+  let records = [];
+  let filtered = [];
+  let page = 1;
+  let sourceStatus = [];
+  const notesDraft = new Map();
+
+  const $ = id => document.getElementById(id);
   const els = {
-    statusPanel: $('#statusPanel'), statusTitle: $('#statusTitle'), statusText: $('#statusText'), noDataPanel: $('#noDataPanel'),
-    metrics: $('#metrics'), sourceStatusGrid: $('#sourceStatusGrid'), lastUpdated: $('#lastUpdated'),
-    search: $('#searchInput'), region: $('#regionFilter'), state: $('#stateFilter'), rural: $('#ruralFilter'), rucaChecks: $('#rucaChecks'), type: $('#typeFilter'), status: $('#statusFilter'), sortBy: $('#sortBy'), sortDir: $('#sortDir'),
-    tableBody: $('#resultsTable tbody'), tableView: $('#tableView'), cardView: $('#cardView'), pageSize: $('#pageSize'), pageInfo: $('#pageInfo'), activeFilters: $('#activeFilters'),
-    detailDialog: $('#detailDialog'), detailContent: $('#detailContent'), sourceDialog: $('#sourceDialog')
+    setupWarning:$('setupWarning'), statusPanel:$('statusPanel'), message:$('message'),
+    loadBtn:$('loadBtn'), refreshBtn:$('refreshBtn'), exportBtn:$('exportBtn'), printBtn:$('printBtn'),
+    searchInput:$('searchInput'), regionFilter:$('regionFilter'), stateFilter:$('stateFilter'), ruralFilter:$('ruralFilter'), statusFilter:$('statusFilter'),
+    sortBy:$('sortBy'), viewMode:$('viewMode'), pageSize:$('pageSize'), clearFiltersBtn:$('clearFiltersBtn'), rucaOptions:$('rucaOptions'),
+    tableView:$('tableView'), cardView:$('cardView'), dataTable:$('dataTable'), cardTemplate:$('cardTemplate'),
+    prevPage:$('prevPage'), nextPage:$('nextPage'), pageInfo:$('pageInfo'),
+    metricTotal:$('metricTotal'), metricFiltered:$('metricFiltered'), metricRural:$('metricRural'), metricFollowup:$('metricFollowup')
   };
 
-  document.addEventListener('DOMContentLoaded', () => {
-    wireEvents();
-    initFilters();
-    renderSourceStatus();
-    renderAll();
-  });
+  init();
 
-  function wireEvents(){
-    $('#refreshBtn').addEventListener('click', loadData);
-    $('#sourceBtn').addEventListener('click', () => els.sourceDialog.showModal());
-    $('#printBtn').addEventListener('click', () => window.print());
-    $('#exportBtn').addEventListener('click', exportFilteredCsv);
-    $('#clearRucaBtn').addEventListener('click', () => { $$('#rucaChecks input').forEach(cb => cb.checked = false); state.page = 1; renderAll(); });
-    $('#tableViewBtn').addEventListener('click', () => setView('table'));
-    $('#cardViewBtn').addEventListener('click', () => setView('card'));
-    $('#prevPage').addEventListener('click', () => { if(state.page > 1){ state.page--; renderResults(); } });
-    $('#nextPage').addEventListener('click', () => { const max = maxPage(); if(state.page < max){ state.page++; renderResults(); } });
-    [els.search, els.region, els.state, els.rural, els.type, els.status, els.sortBy, els.sortDir, els.pageSize].forEach(el => {
-      ['input','change'].forEach(evt => el.addEventListener(evt, () => { state.sortBy = els.sortBy.value; state.sortDir = els.sortDir.value; state.page = 1; renderAll(); }));
+  function init(){
+    renderStaticFilters();
+    attachEvents();
+    if(!API_URL){
+      els.setupWarning.classList.remove('hidden');
+      showMessage('Admin setup needed: paste the deployed Apps Script Web App URL into config.js. The tracker will not use sample rows or manual source mapping.');
+    } else {
+      els.setupWarning.classList.add('hidden');
+      loadData();
+    }
+  }
+
+  function renderStaticFilters(){
+    Object.keys(REGIONS).forEach(r=>els.regionFilter.append(new Option(r,r)));
+    STATES.forEach(s=>els.stateFilter.append(new Option(s,s)));
+    RUCA_CODES.forEach(code=>{
+      const label = document.createElement('label');
+      label.className = 'checkpill';
+      label.innerHTML = `<input type="checkbox" value="${escapeHtml(code)}"> ${escapeHtml(code)}`;
+      els.rucaOptions.appendChild(label);
     });
-    els.rucaChecks.addEventListener('change', () => { state.page = 1; renderAll(); });
-    $$('#resultsTable th[data-sort]').forEach(th => th.addEventListener('click', () => {
-      const key = th.dataset.sort;
-      if (state.sortBy === key) state.sortDir = state.sortDir === 'asc' ? 'desc' : 'asc'; else state.sortBy = key;
-      els.sortBy.value = state.sortBy; els.sortDir.value = state.sortDir; state.page = 1; renderAll();
-    }));
-    $('#hrsaFile').addEventListener('change', e => handleCsvUpload(e, rows => { state.rawSites = rows; markStatus('HRSA Sites','loaded',`${rows.length.toLocaleString()} uploaded rows`); buildRecords(); renderAll(); setStatus('Loaded HRSA sites from upload', `${rows.length.toLocaleString()} rows loaded.`); }));
-    $('#rucaFile').addEventListener('change', e => handleAnyTableUpload(e, rows => { state.rucaByZip = buildRucaMap(rows); markStatus('RUCA ZIP','loaded',`${state.rucaByZip.size.toLocaleString()} uploaded ZIP rows`); buildRecords(); renderAll(); setStatus('Loaded RUCA from upload', `${state.rucaByZip.size.toLocaleString()} ZIP rows loaded.`); }));
-    $('#forhpFile').addEventListener('change', e => handleAnyTableUpload(e, rows => { state.forhpByZip = buildForhpMap(rows); markStatus('FORHP Rural ZIP','loaded',`${state.forhpByZip.size.toLocaleString()} uploaded ZIP rows`); buildRecords(); renderAll(); setStatus('Loaded FORHP rural ZIPs from upload', `${state.forhpByZip.size.toLocaleString()} ZIP rows loaded.`); }));
-    $('#notesFile').addEventListener('change', e => handleCsvUpload(e, importNotes));
   }
 
-  function initFilters(){
-    fillSelect(els.region, ['All Regions', ...Object.keys(CFG.regions || {})], els.region.value);
-    fillSelect(els.state, ['All States', ...allStates()], els.state.value);
-    renderRucaChecks();
-    fillSelect(els.type, ['All Types'], els.type.value);
-    fillSelect(els.status, ['All Statuses', ...(CFG.statusOptions || [])], els.status.value);
-  }
-
-  function renderRucaChecks(){
-    els.rucaChecks.innerHTML = RUCAS.map(code => `<label title="${escapeAttr(rucaDescription(code))}"><input type="checkbox" value="${escapeAttr(code)}"> ${escapeHtml(code)}</label>`).join('');
+  function attachEvents(){
+    ['searchInput','regionFilter','stateFilter','ruralFilter','statusFilter','sortBy','viewMode','pageSize'].forEach(id=>{
+      els[id].addEventListener('input',()=>{ page=1; applyFilters(); });
+      els[id].addEventListener('change',()=>{ page=1; applyFilters(); });
+    });
+    els.rucaOptions.addEventListener('change',()=>{ page=1; applyFilters(); });
+    els.clearFiltersBtn.addEventListener('click',clearFilters);
+    els.loadBtn.addEventListener('click',loadData);
+    els.refreshBtn.addEventListener('click',refreshSources);
+    els.exportBtn.addEventListener('click',exportCsv);
+    els.printBtn.addEventListener('click',()=>window.print());
+    els.prevPage.addEventListener('click',()=>{ if(page>1){page--; render();} });
+    els.nextPage.addEventListener('click',()=>{ const pages=pageCount(); if(page<pages){page++; render();} });
   }
 
   async function loadData(){
-    setStatus('Loading local GitHub data...', 'Checking /data/ files first. This avoids browser CORS blocks from HRSA, CMS, USDA, and other outside domains.', true);
-    resetStatuses();
-    const files = CFG.localFiles || {};
-
-    await loadManifest(files.manifestJson);
-    await loadLocalCsv(files.hrsaSitesCsv, 'HRSA Sites').then(rows => { state.rawSites = rows; markStatus('HRSA Sites','loaded',`${rows.length.toLocaleString()} local rows`); }).catch(err => markStatus('HRSA Sites','missing',friendlyError(err)));
-    await loadLocalCsv(files.rucaZipCsv, 'RUCA ZIP').then(rows => { state.rucaByZip = buildRucaMap(rows); markStatus('RUCA ZIP','loaded',`${state.rucaByZip.size.toLocaleString()} ZIPs`); }).catch(err => markStatus('RUCA ZIP','missing',friendlyError(err)));
-    await loadLocalCsv(files.forhpZipCsv, 'FORHP Rural ZIP').then(rows => { state.forhpByZip = buildForhpMap(rows); markStatus('FORHP Rural ZIP','loaded',`${state.forhpByZip.size.toLocaleString()} ZIPs`); }).catch(err => markStatus('FORHP Rural ZIP','missing',friendlyError(err)));
-    await loadLocalJson(files.cmsEnrollmentsJson, 'CMS Enrollments').then(rows => { state.cmsEnrollments = rows; markStatus('CMS Enrollments','loaded',`${rows.length.toLocaleString()} local rows`); }).catch(err => markStatus('CMS Enrollments','missing',friendlyError(err)));
-    await loadLocalJson(files.cmsOwnersJson, 'CMS Owners').then(rows => { state.cmsOwners = rows; markStatus('CMS Owners','loaded',`${rows.length.toLocaleString()} local rows`); }).catch(err => markStatus('CMS Owners','missing',friendlyError(err)));
-
-    if(!state.rawSites.length && CFG.browserRemoteFallback){
-      await tryRemoteFallback();
-    }
-
-    buildRecords();
-    renderAll();
-    const loaded = state.records.length;
-    const missing = Object.values(state.sourceStatus).filter(s => s.state !== 'loaded').length;
-    if(loaded){
-      setStatus('Data loaded', `${loaded.toLocaleString()} FQHC/site records loaded. ${missing ? `${missing} enrichment source(s) missing or not refreshed.` : 'All configured sources loaded.'}`);
-    } else {
-      setStatus('No official FQHC records loaded', 'The sample notes file is only a notes template. Run the GitHub Action/script to create data/hrsa_sites.csv, or upload the HRSA sites CSV manually.');
+    if(!API_URL) return;
+    try{
+      setBusy(true,'Loading normalized FQHC data...');
+      const res = await apiGet({action:'prospects'});
+      if(!res || !Array.isArray(res.records)) throw new Error('The API did not return a records array. Check the Apps Script deployment and permissions.');
+      records = res.records.map(normalizeClientRecord);
+      sourceStatus = res.status || [];
+      records.forEach(r=>notesDraft.set(r.record_id, pick(r, NOTE_FIELDS)));
+      renderStatus();
+      applyFilters();
+      showMessage(`Loaded ${records.length.toLocaleString()} records. Source mapping was handled by Apps Script.`);
+    }catch(err){
+      showMessage(`Load failed: ${err.message || err}. Open README.md and confirm the Apps Script Web App is deployed as “Anyone with the link.”`, true);
+    }finally{
+      setBusy(false);
     }
   }
 
-  async function loadManifest(path){
-    if(!path) return;
-    try {
-      const manifest = await loadLocalJson(path, 'Manifest');
-      state.manifest = manifest;
-      els.lastUpdated.textContent = manifest?.refreshed_at ? `Data refreshed: ${manifest.refreshed_at}` : '';
-      markStatus('Manifest','loaded',manifest?.refreshed_at || 'loaded');
-    } catch(err){
-      els.lastUpdated.textContent = '';
-      markStatus('Manifest','missing','No refresh manifest found');
+  async function refreshSources(){
+    if(!API_URL) return;
+    try{
+      setBusy(true,'Refreshing HRSA/CMS/RUCA/FORHP sources in Apps Script...');
+      const res = await apiGet({action:'refresh'});
+      sourceStatus = res.status || [];
+      renderStatus();
+      showMessage(res.message || 'Refresh complete. Reloading data...');
+      await loadData();
+    }catch(err){
+      showMessage(`Refresh failed: ${err.message || err}. This usually means Apps Script authorization or source URL access needs to be approved by the admin.`, true);
+    }finally{
+      setBusy(false);
     }
-  }
-
-  async function tryRemoteFallback(){
-    const urls = CFG.sourceUrls || {};
-    try {
-      const text = await fetchText(urls.hrsaSitesCsv, 'Remote HRSA Sites');
-      state.rawSites = parseCsv(text);
-      markStatus('HRSA Sites','loaded',`${state.rawSites.length.toLocaleString()} remote rows`);
-    } catch(err){
-      markStatus('HRSA Sites','failed',`Remote browser fetch failed: ${friendlyError(err)}`);
-    }
-  }
-
-  async function loadLocalCsv(path, label){
-    if(!path) throw new Error(`${label} path missing`);
-    const text = await fetchText(path, label);
-    return parseCsv(text);
-  }
-
-  async function loadLocalJson(path, label){
-    if(!path) throw new Error(`${label} path missing`);
-    const text = await fetchText(path, label);
-    const parsed = JSON.parse(text);
-    return Array.isArray(parsed) ? parsed : parsed;
-  }
-
-  async function fetchText(url, label){
-    const res = await fetch(url, { cache: 'no-store' });
-    if(!res.ok) throw new Error(`${label}: ${res.status} ${res.statusText || ''}`.trim());
-    return res.text();
-  }
-
-  function parseCsv(text){
-    if(window.Papa){
-      const parsed = Papa.parse(text, { header: true, skipEmptyLines: true, dynamicTyping: false });
-      return parsed.data.filter(r => Object.values(r).some(v => String(v || '').trim()));
-    }
-    return fallbackCsvParse(text);
-  }
-
-  function fallbackCsvParse(text){
-    const lines = String(text || '').split(/\r?\n/).filter(Boolean);
-    const headers = splitCsvLine(lines.shift() || '');
-    return lines.map(line => Object.fromEntries(splitCsvLine(line).map((v,i) => [headers[i] || `col_${i}`, v])));
-  }
-  function splitCsvLine(line){
-    const out=[]; let cur='', q=false;
-    for(let i=0;i<line.length;i++){
-      const ch=line[i];
-      if(ch==='"' && line[i+1]==='"'){cur+='"'; i++; continue;}
-      if(ch==='"'){q=!q; continue;}
-      if(ch===',' && !q){out.push(cur); cur=''; continue;}
-      cur+=ch;
-    }
-    out.push(cur); return out;
-  }
-
-  function parseWorkbook(arrayBuffer){
-    if(!window.XLSX) throw new Error('SheetJS library not loaded');
-    const wb = XLSX.read(arrayBuffer, { type: 'array' });
-    for(const name of wb.SheetNames){
-      const rows = XLSX.utils.sheet_to_json(wb.Sheets[name], { defval: '' });
-      if(rows.length) return rows;
-    }
-    return [];
-  }
-
-  function handleCsvUpload(e, cb){
-    const file = e.target.files?.[0]; if(!file) return;
-    const reader = new FileReader();
-    reader.onload = () => cb(parseCsv(String(reader.result || '')));
-    reader.readAsText(file);
-  }
-
-  function handleAnyTableUpload(e, cb){
-    const file = e.target.files?.[0]; if(!file) return;
-    const reader = new FileReader();
-    reader.onload = () => {
-      const lower = file.name.toLowerCase();
-      const rows = lower.endsWith('.csv') ? parseCsv(String(reader.result || '')) : parseWorkbook(reader.result);
-      cb(rows);
-    };
-    if(file.name.toLowerCase().endsWith('.csv')) reader.readAsText(file); else reader.readAsArrayBuffer(file);
-  }
-
-  function buildRecords(){
-    const enrollmentIndex = buildEnrollmentIndex(state.cmsEnrollments);
-    const ownerIndex = buildOwnerIndex(state.cmsOwners);
-    state.records = state.rawSites.map(row => normalizeSite(row, enrollmentIndex, ownerIndex)).filter(r => r.name || r.zip || r.state);
-    updateDynamicFilters();
-  }
-
-  function normalizeSite(row, enrollmentIndex, ownerIndex){
-    const name = value(row, ['site_name','Site Name','SITE_NM','SiteName','Name','Site']);
-    const org = value(row, ['hc_name','Health Center Name','Health Center','Grantee Name','Grantee Organization Name','Organization Name','Health Center Program Awardee Name','Awardee Name']);
-    const type = value(row, ['site_type_desc','loc_type_desc','hc_type','Health Center Type','Site Type','Site Subtype','Health Center Program Type','Site Setting','SiteStatus']) || 'Health Center Site';
-    const street = value(row, ['site_address','Site Address','Site Street Address','Address','Street Address','LOCATION_ADDRESS','Address Line 1']);
-    const city = value(row, ['site_city','Site City','City','SITE_CITY','LOCATION_CITY']);
-    const st = normalizeState(value(row, ['site_state','Site State','State','ST','LOCATION_STATE','Site State Abbreviation']));
-    const zip = normalizeZip(value(row, ['site_zipcode','Site ZIP Code','Site ZIP','ZIP Code','Zip Code','ZIP','LOCATION_ZIP','Postal Code']));
-    const county = value(row, ['site_county_full','site_county','Site County','County','County Name','COUNTY']);
-    const phone = cleanPhone(value(row, ['site_phone','Telephone Number','Site Telephone Number','Phone','PHONE','Site Phone Number']));
-    const website = cleanUrl(value(row, ['site_website','Site Web Address','Site Website','Web Address','Website','URL','Site URL']));
-    const email = value(row, ['Email','E-mail','Contact Email','Site Email','Organization Email']);
-    const hours = value(row, ['op_hrs_per_wk','Operating Hours per Week','Hours','Weekly Hours']);
-    const hcNumber = value(row, ['hc_id','bhcmis_id','bphc_id','Health Center Number','Health Center ID','Grant Number','BHCMISID','BPHC Assigned Number']);
-    const latitude = value(row, ['site_latitude','Latitude','LAT']);
-    const longitude = value(row, ['site_longitude','Longitude','LON','LNG']);
-    const region = regionForState(st);
-    const ruca = state.rucaByZip.get(zip) || { code: '', description: '', source: '' };
-    const forhp = state.forhpByZip.get(zip) || { rural: '', source: '' };
-    const rural = deriveRural(forhp, ruca);
-    const key = recordKey(st, zip, name || org, street);
-    const note = state.notes[key] || {};
-    const enrollment = enrollmentIndex.get(zipNameKey(zip, name || org)) || enrollmentIndex.get(zipNameKey(zip, org)) || null;
-    const owner = ownerIndex.get(zipNameKey(zip, org || name)) || ownerIndex.get(zipNameKey(zip, name)) || null;
-    return { key, sourceRow: row, name: name || org || 'Unnamed site', org, type, street, city, state: st, zip, county, phone, website, email, hours, hcNumber, region, latitude, longitude, rucaCode: ruca.code || '', rucaDescription: ruca.description || '', ruralStatus: rural.status, ruralSource: rural.source, enrollment, owner, note };
-  }
-
-  function buildRucaMap(rows){
-    const map = new Map();
-    rows.forEach(row => {
-      const zip = normalizeZip(value(row, ['ZIP_CODE','ZIP Code','ZIP','ZCTA','Zip Code','ZIPCODE','zip','zip_code']));
-      if(!zip) return;
-      const codeRaw = value(row, ['RUCA1','RUCA Code','Primary RUCA Code','Primary RUCA code','RUCA_CODE','Primary RUCA','RUCA','ruca_primary_code','ZIP RUCA Code','primary_ruca_code','ruca_code']);
-      const code = normalizeRuca(codeRaw);
-      const desc = value(row, ['Primary RUCA Description','Classification Description','RUCA Description','Description','Primary RUCA code description','description','ruca_description']);
-      map.set(zip, { code, description: desc || rucaDescription(code), source: 'USDA RUCA ZIP' });
-    });
-    return map;
-  }
-
-  function buildForhpMap(rows){
-    const map = new Map();
-    rows.forEach(row => {
-      const zip = normalizeZip(value(row, ['ZIP Code','ZIP_CODE','ZIP','Zip','ZIPCODE','zip','zip_code']));
-      if(!zip) return;
-      const raw = value(row, ['FORHP Rural','FORHP_Rural','FORHP rural','Rural','Rural Status','Rural_Eligibility','FORHP Rural Approximation','Rural Flag','rural','rural_flag']);
-      let rural = '';
-      if(/yes|rural|eligible|true|1/i.test(String(raw))) rural = 'Yes';
-      else if(/no|not|false|0/i.test(String(raw))) rural = 'No';
-      map.set(zip, { rural, raw, source: 'HRSA FORHP ZIP Approximation' });
-    });
-    return map;
-  }
-
-  function buildEnrollmentIndex(rows){
-    const map = new Map();
-    (Array.isArray(rows) ? rows : []).forEach(row => {
-      const zip = normalizeZip(value(row, ['ZIP Code','ZIP_CD','ZIP','PRACTICE_LOCATION_ZIP','LOCATION_ZIP','ADDRESS_ZIP','zip_code']));
-      const name = value(row, ['ORGANIZATION_NAME','Legal Business Name','LBN','LEGAL_BUSINESS_NAME','DOING_BUSINESS_AS_NAME','Doing Business As Name','DBA Name','ASSOCIATE_NAME','organization_name']);
-      if(zip && name) map.set(zipNameKey(zip, name), row);
-    });
-    return map;
-  }
-
-  function buildOwnerIndex(rows){
-    const map = new Map();
-    (Array.isArray(rows) ? rows : []).forEach(row => {
-      const zip = normalizeZip(value(row, ['ZIP Code','ZIP_CD','ZIP','OWNER_ZIP','Ownership Address ZIP','ADDRESS_ZIP','zip_code']));
-      const name = value(row, ['ORGANIZATION_NAME','OWNER_NAME','Ownership Name','Owner Name','ASSOCIATE_NAME','Legal Business Name','organization_name']);
-      if(zip && name) map.set(zipNameKey(zip, name), row);
-    });
-    return map;
-  }
-
-  function deriveRural(forhp, ruca){
-    if(forhp.rural === 'Yes') return { status: 'Rural', source: forhp.source };
-    if(forhp.rural === 'No') return { status: 'Not Rural', source: forhp.source };
-    const c = parseFloat(String(ruca.code || '').replace(/[^0-9.]/g,''));
-    if(Number.isFinite(c)) return { status: c >= 4 && c <= 10 ? 'Rural' : 'Not Rural', source: 'Derived from RUCA code' };
-    return { status: 'Unknown', source: 'No rural/RUCA match' };
-  }
-
-  function renderAll(){
-    applyFilters(); renderMetrics(); renderResults(); renderActiveFilters(); renderSourceStatus();
-    els.noDataPanel.classList.toggle('hidden', state.records.length > 0);
   }
 
   function applyFilters(){
-    const q = els.search.value.trim().toLowerCase();
-    const region = els.region.value;
-    const st = els.state.value;
-    const rural = els.rural.value;
-    const selectedRuca = getSelectedRucaValues();
-    const type = els.type.value;
-    const status = els.status.value;
-    state.filtered = state.records.filter(r => {
-      const noteText = Object.values(r.note || {}).join(' ');
-      const blob = [r.name,r.org,r.type,r.street,r.city,r.state,r.zip,r.county,r.phone,r.website,r.email,noteText,r.rucaCode,r.rucaDescription].join(' ').toLowerCase();
-      if(q && !blob.includes(q)) return false;
-      if(region && region !== 'All Regions' && r.region !== region) return false;
-      if(st && st !== 'All States' && r.state !== st) return false;
-      if(rural === 'rural' && r.ruralStatus !== 'Rural') return false;
-      if(rural === 'not-rural' && r.ruralStatus !== 'Not Rural') return false;
-      if(rural === 'unknown' && r.ruralStatus !== 'Unknown') return false;
-      if(selectedRuca.length){
-        const code = r.rucaCode ? String(r.rucaCode) : 'Unknown';
-        if(!selectedRuca.includes(code)) return false;
+    const q = norm(els.searchInput.value);
+    const region = els.regionFilter.value;
+    const state = els.stateFilter.value;
+    const rural = els.ruralFilter.value;
+    const status = els.statusFilter.value;
+    const selectedRuca = new Set([...els.rucaOptions.querySelectorAll('input:checked')].map(i=>i.value));
+    filtered = records.filter(r=>{
+      const note = notesDraft.get(r.record_id) || {};
+      if(region && r.region !== region) return false;
+      if(state && r.state !== state) return false;
+      if(rural === 'yes' && !r.is_rural) return false;
+      if(rural === 'no' && r.is_rural) return false;
+      if(status && (note.status || r.status || DEFAULT_STATUS) !== status) return false;
+      if(selectedRuca.size){
+        const val = r.ruca_primary || 'Unknown';
+        if(!selectedRuca.has(String(val))) return false;
       }
-      if(type && type !== 'All Types' && r.type !== type) return false;
-      const recStatus = r.note.status || 'New';
-      if(status && status !== 'All Statuses' && recStatus !== status) return false;
+      if(q){
+        const blob = [r.name,r.organization_name,r.site_type,r.address,r.city,r.state,r.zip,r.county,r.phone,r.website,r.cms_legal_name,r.cms_owner_name,note.contact_name,note.contact_email,note.assigned_to,note.status,note.priority,note.notes].join(' ').toLowerCase();
+        if(!blob.includes(q)) return false;
+      }
       return true;
     });
-    sortRecords(state.filtered);
+    sortFiltered();
+    renderMetrics();
+    render();
   }
 
-  function sortRecords(arr){
-    const dir = state.sortDir === 'desc' ? -1 : 1;
-    const key = state.sortBy;
-    arr.sort((a,b) => {
-      let av, bv;
-      if(key === 'ruca'){ av = parseFloat(a.rucaCode || '999'); bv = parseFloat(b.rucaCode || '999'); return (av-bv)*dir || a.name.localeCompare(b.name); }
-      if(key === 'followup'){ av = a.note.nextFollowup || '9999-99-99'; bv = b.note.nextFollowup || '9999-99-99'; return av.localeCompare(bv)*dir || a.name.localeCompare(b.name); }
-      if(key === 'priority'){ av = priorityRank(a.note.priority); bv = priorityRank(b.note.priority); return (av-bv)*dir || a.name.localeCompare(b.name); }
-      av = String(key === 'name' ? a.name : key === 'region' ? a.region : key === 'rural' ? a.ruralStatus : a.state || '').toLowerCase();
-      bv = String(key === 'name' ? b.name : key === 'region' ? b.region : key === 'rural' ? b.ruralStatus : b.state || '').toLowerCase();
-      return av.localeCompare(bv) * dir || a.name.localeCompare(b.name);
+  function sortFiltered(){
+    const key = els.sortBy.value;
+    filtered.sort((a,b)=>{
+      const na = notesDraft.get(a.record_id) || {}, nb = notesDraft.get(b.record_id) || {};
+      const va = sortValue(a, na, key), vb = sortValue(b, nb, key);
+      return String(va).localeCompare(String(vb), undefined, {numeric:true, sensitivity:'base'});
     });
   }
-  function priorityRank(v){ return ({High:1,Medium:2,Low:3})[v] || 9; }
+
+  function sortValue(r,n,key){
+    if(key === 'priority_sort') return priorityRank(n.priority || r.priority);
+    if(key === 'rural_sort') return r.is_rural ? '0' : '1';
+    if(key === 'next_followup') return n.next_followup || r.next_followup || '9999-12-31';
+    return r[key] || '';
+  }
+
+  function priorityRank(p){ return ({High:'0',Medium:'1',Low:'2'}[p] || '9') + (p||''); }
+
+  function render(){
+    const view = els.viewMode.value;
+    els.tableView.classList.toggle('hidden', view !== 'table');
+    els.cardView.classList.toggle('hidden', view !== 'cards');
+    if(view === 'table') renderTable(); else renderCards();
+    renderPager();
+  }
+
+  function currentPageRows(){
+    const size = parseInt(els.pageSize.value,10) || 100;
+    const start = (page-1)*size;
+    return filtered.slice(start, start+size);
+  }
+  function pageCount(){ return Math.max(1, Math.ceil(filtered.length / (parseInt(els.pageSize.value,10) || 100))); }
+
+  function renderPager(){
+    const pages = pageCount();
+    if(page > pages) page = pages;
+    els.pageInfo.textContent = `Page ${filtered.length ? page : 0} of ${filtered.length ? pages : 0} — ${filtered.length.toLocaleString()} filtered`;
+    els.prevPage.disabled = page <= 1;
+    els.nextPage.disabled = page >= pages;
+  }
+
+  function renderTable(){
+    const headers = ['Name','Region','State','City','ZIP','RUCA','Rural','Type','Phone','Website','Contact Name','Contact Email','Assigned To','Status','Priority','Next Follow-up','Notes','Save'];
+    els.dataTable.tHead.innerHTML = `<tr>${headers.map(h=>`<th>${escapeHtml(h)}</th>`).join('')}</tr>`;
+    const rows = currentPageRows().map(r=>{
+      const n = notesDraft.get(r.record_id) || {};
+      return `<tr data-id="${escapeHtml(r.record_id)}">
+        <td class="cell-name">${escapeHtml(r.name)}<br><small>${escapeHtml(r.organization_name || '')}</small></td>
+        <td class="cell-small">${regionChip(r.region)}</td>
+        <td class="cell-small">${escapeHtml(r.state)}</td>
+        <td class="cell-med">${escapeHtml(r.city)}</td>
+        <td class="cell-small">${escapeHtml(r.zip)}</td>
+        <td class="cell-small">${escapeHtml(r.ruca_primary || 'Unknown')}</td>
+        <td class="cell-small">${r.is_rural ? '<span class="chip chip-rural">Rural</span>' : '<span class="chip chip-urban">No/Unknown</span>'}</td>
+        <td class="cell-med">${escapeHtml(r.site_type || '')}</td>
+        <td class="cell-med">${escapeHtml(r.phone || '')}</td>
+        <td class="cell-med">${linkify(r.website)}</td>
+        <td>${inputHtml(r,'contact_name',n.contact_name)}</td>
+        <td>${inputHtml(r,'contact_email',n.contact_email,'email')}</td>
+        <td>${inputHtml(r,'assigned_to',n.assigned_to)}</td>
+        <td>${selectHtml(r,'status',n.status || DEFAULT_STATUS,['Not Started','Researching','Contacted','Follow Up','Qualified','Not a Fit','Do Not Contact'])}</td>
+        <td>${selectHtml(r,'priority',n.priority || DEFAULT_PRIORITY,['','High','Medium','Low'])}</td>
+        <td>${inputHtml(r,'next_followup',n.next_followup,'date')}</td>
+        <td>${textareaHtml(r,'notes',n.notes)}</td>
+        <td><button class="btn small save-row">Save</button></td>
+      </tr>`;
+    }).join('');
+    els.dataTable.tBodies[0].innerHTML = rows || `<tr><td colspan="18">No records match the current filters.</td></tr>`;
+    els.dataTable.tBodies[0].querySelectorAll('input,select,textarea').forEach(el=>el.addEventListener('input',onNoteEdit));
+    els.dataTable.tBodies[0].querySelectorAll('.save-row').forEach(btn=>btn.addEventListener('click',saveRowFromButton));
+  }
+
+  function renderCards(){
+    els.cardView.innerHTML = '';
+    const rows = currentPageRows();
+    if(!rows.length){ els.cardView.innerHTML = '<p>No records match the current filters.</p>'; return; }
+    rows.forEach(r=>{
+      const n = notesDraft.get(r.record_id) || {};
+      const node = els.cardTemplate.content.firstElementChild.cloneNode(true);
+      setText(node,'name',r.name);
+      setText(node,'subtitle',[r.organization_name,r.site_type].filter(Boolean).join(' • '));
+      const chip = node.querySelector('[data-field="region_chip"]'); chip.outerHTML = regionChip(r.region);
+      setText(node,'location',`${r.address ? r.address + ', ' : ''}${r.city || ''}, ${r.state || ''} ${r.zip || ''}`.trim());
+      setText(node,'ruca',r.ruca_primary || 'Unknown');
+      setText(node,'rural',r.is_rural ? 'Rural / likely rural' : 'No / unknown');
+      setText(node,'phone',r.phone || '');
+      node.querySelector('[data-field="website"]').innerHTML = linkify(r.website);
+      setText(node,'cms',[r.cms_legal_name,r.cms_owner_name].filter(Boolean).join(' / '));
+      const noteGrid = node.querySelector('.note-grid');
+      noteGrid.innerHTML = `
+        ${fieldBlock(r,'Contact Name','contact_name',n.contact_name)}
+        ${fieldBlock(r,'Email','contact_email',n.contact_email,'email')}
+        ${fieldBlock(r,'Assigned To','assigned_to',n.assigned_to)}
+        <label>Status${selectHtml(r,'status',n.status || DEFAULT_STATUS,['Not Started','Researching','Contacted','Follow Up','Qualified','Not a Fit','Do Not Contact'])}</label>
+        <label>Priority${selectHtml(r,'priority',n.priority || DEFAULT_PRIORITY,['','High','Medium','Low'])}</label>
+        ${fieldBlock(r,'Next Follow-up','next_followup',n.next_followup,'date')}
+        <label>Notes${textareaHtml(r,'notes',n.notes)}</label>
+        <button class="btn small save-row" data-id="${escapeHtml(r.record_id)}">Save Notes</button>`;
+      noteGrid.querySelectorAll('input,select,textarea').forEach(el=>el.addEventListener('input',onNoteEdit));
+      noteGrid.querySelector('.save-row').addEventListener('click',saveRowFromButton);
+      els.cardView.appendChild(node);
+    });
+  }
+
+  function onNoteEdit(e){
+    const id = e.target.dataset.id || e.target.closest('[data-id]')?.dataset.id;
+    const field = e.target.dataset.noteField;
+    if(!id || !field) return;
+    const note = notesDraft.get(id) || {};
+    note[field] = e.target.value;
+    notesDraft.set(id, note);
+  }
+
+  function saveRowFromButton(e){
+    const id = e.target.dataset.id || e.target.closest('[data-id]')?.dataset.id;
+    if(!id) return;
+    const note = notesDraft.get(id) || {};
+    saveNote(id, note, e.target);
+  }
+
+  async function saveNote(recordId, note, button){
+    if(!API_URL) return;
+    const old = button ? button.textContent : '';
+    if(button){ button.textContent = 'Saving...'; button.disabled = true; }
+    try{
+      await apiPostNoCors({action:'saveNote', record_id:recordId, note:note});
+      if(button){ button.textContent = 'Saved'; setTimeout(()=>{button.textContent=old || 'Save'; button.disabled=false;},900); }
+    }catch(err){
+      if(button){ button.textContent = 'Retry'; button.disabled=false; }
+      showMessage(`Save failed for ${recordId}: ${err.message || err}`, true);
+    }
+  }
+
+  function inputHtml(r,field,value,type='text'){
+    return `<input class="inline-input" type="${type}" data-id="${escapeHtml(r.record_id)}" data-note-field="${field}" value="${escapeAttr(value||'')}">`;
+  }
+  function textareaHtml(r,field,value){
+    return `<textarea class="inline-textarea" data-id="${escapeHtml(r.record_id)}" data-note-field="${field}">${escapeHtml(value||'')}</textarea>`;
+  }
+  function selectHtml(r,field,value,opts){
+    return `<select class="inline-select" data-id="${escapeHtml(r.record_id)}" data-note-field="${field}">${opts.map(o=>`<option value="${escapeAttr(o)}" ${String(o)===String(value)?'selected':''}>${escapeHtml(o || '—')}</option>`).join('')}</select>`;
+  }
+  function fieldBlock(r,label,field,value,type='text'){ return `<label>${escapeHtml(label)}${inputHtml(r,field,value,type)}</label>`; }
+  function setText(root,field,text){ root.querySelector(`[data-field="${field}"]`).textContent = text || ''; }
+
+  function renderStatus(){
+    const cards = (sourceStatus || []).map(s=>{
+      const cls = s.ok ? 'status-ok' : (s.warning ? 'status-warn' : 'status-bad');
+      return `<div class="status-card ${cls}"><strong>${escapeHtml(s.name || 'Source')}</strong><span>${escapeHtml(s.message || '')}${s.count!==undefined ? `\nRows: ${Number(s.count).toLocaleString()}` : ''}${s.refreshed_at ? `\n${escapeHtml(s.refreshed_at)}` : ''}</span></div>`;
+    }).join('');
+    els.statusPanel.innerHTML = cards || '<div class="status-card status-warn"><strong>No status yet</strong><span>Click Load Data or Refresh Sources.</span></div>';
+  }
 
   function renderMetrics(){
-    const total = state.filtered.length;
-    const rural = state.filtered.filter(r => r.ruralStatus === 'Rural').length;
-    const states = new Set(state.filtered.map(r => r.state).filter(Boolean)).size;
-    const withPhone = state.filtered.filter(r => r.phone).length;
-    const withWebsite = state.filtered.filter(r => r.website).length;
-    const withEmail = state.filtered.filter(r => r.email || r.note.contactEmail).length;
-    const cards = [['Filtered Sites', total], ['Rural / FORHP', rural], ['States', states], ['Phone Available', withPhone], ['Website Available', withWebsite], ['Email Available', withEmail]];
-    els.metrics.innerHTML = cards.map(([label,val]) => `<div class="metric"><span>${escapeHtml(label)}</span><strong>${Number(val).toLocaleString()}</strong></div>`).join('');
+    const due = filtered.filter(r=>{
+      const d = (notesDraft.get(r.record_id)||{}).next_followup;
+      return d && d <= todayISO();
+    }).length;
+    els.metricTotal.textContent = records.length.toLocaleString();
+    els.metricFiltered.textContent = filtered.length.toLocaleString();
+    els.metricRural.textContent = filtered.filter(r=>r.is_rural).length.toLocaleString();
+    els.metricFollowup.textContent = due.toLocaleString();
   }
 
-  function renderResults(){
-    const pageSize = parseInt(els.pageSize.value, 10) || 50;
-    const max = maxPage(); if(state.page > max) state.page = max;
-    const start = (state.page - 1) * pageSize;
-    const rows = state.filtered.slice(start, start + pageSize);
-    els.pageInfo.textContent = `${state.page} / ${max} • ${state.filtered.length.toLocaleString()} records`;
-    if(state.view === 'table') renderTable(rows); else renderCards(rows);
+  function clearFilters(){
+    els.searchInput.value=''; els.regionFilter.value=''; els.stateFilter.value=''; els.ruralFilter.value=''; els.statusFilter.value=''; els.sortBy.value='state';
+    els.rucaOptions.querySelectorAll('input').forEach(i=>i.checked=false); page=1; applyFilters();
   }
 
-  function renderTable(rows){
-    els.tableBody.innerHTML = rows.map(r => `
-      <tr>
-        <td>${regionChip(r.region)}</td>
-        <td><strong>${escapeHtml(r.state || '')}</strong></td>
-        <td class="name-cell"><strong>${escapeHtml(r.name)}</strong><span class="subtext">${escapeHtml(r.org || '')}</span><span class="subtext">${escapeHtml(r.street || '')}</span></td>
-        <td>${ruralChip(r.ruralStatus)}<span class="subtext">${escapeHtml(r.ruralSource || '')}</span></td>
-        <td><strong>${escapeHtml(r.rucaCode || '—')}</strong><span class="subtext">${escapeHtml(r.rucaDescription || '')}</span></td>
-        <td>${escapeHtml(r.type || '')}</td>
-        <td>${escapeHtml([r.city, r.county].filter(Boolean).join(' / '))}<span class="subtext">${escapeHtml(r.zip || '')}</span></td>
-        <td class="contact-stack">${r.phone ? `<span>${escapeHtml(r.phone)}</span>` : ''}${(r.email || r.note.contactEmail) ? `<span>${escapeHtml(r.email || r.note.contactEmail)}</span>` : '<span class="subtext">Email not in source</span>'}${r.note.contactName ? `<span class="subtext">${escapeHtml(r.note.contactName)}</span>` : ''}</td>
-        <td>${r.website ? `<a class="website-link" href="${escapeAttr(r.website)}" target="_blank" rel="noreferrer">Open site</a>` : '<span class="subtext">—</span>'}</td>
-        <td>${statusChip(r.note.status || 'New')}<span class="subtext">${escapeHtml(r.note.priority || '')} ${escapeHtml(r.note.nextFollowup || '')}</span></td>
-        <td class="table-actions no-print"><button type="button" data-detail="${escapeAttr(r.key)}">Open</button></td>
-      </tr>`).join('') || `<tr><td colspan="11" class="subtext">No records match the current filters, or no official data has been loaded.</td></tr>`;
-    els.tableBody.querySelectorAll('[data-detail]').forEach(btn => btn.addEventListener('click', () => openDetail(btn.dataset.detail)));
-  }
-
-  function renderCards(rows){
-    els.cardView.innerHTML = rows.map(r => `
-      <article class="card">
-        <div class="meta">${regionChip(r.region)} ${ruralChip(r.ruralStatus)} ${statusChip(r.note.status || 'New')}</div>
-        <h3>${escapeHtml(r.name)}</h3>
-        <p class="muted">${escapeHtml(r.org || '')}</p>
-        <p>${escapeHtml([r.street, r.city, r.state, r.zip].filter(Boolean).join(', '))}</p>
-        <p><strong>RUCA:</strong> ${escapeHtml(r.rucaCode || '—')} <span class="muted">${escapeHtml(r.rucaDescription || '')}</span></p>
-        <p><strong>Contact:</strong> ${escapeHtml([r.phone, r.email || r.note.contactEmail].filter(Boolean).join(' • ') || 'Email not in source')}</p>
-        <p><strong>Follow-up:</strong> ${escapeHtml(r.note.nextFollowup || '—')} ${r.note.priority ? `• ${escapeHtml(r.note.priority)}` : ''}</p>
-        <div class="card-actions no-print"><button type="button" data-detail="${escapeAttr(r.key)}">Open Details</button></div>
-      </article>`).join('') || `<p class="muted">No cards match the current filters, or no official data has been loaded.</p>`;
-    els.cardView.querySelectorAll('[data-detail]').forEach(btn => btn.addEventListener('click', () => openDetail(btn.dataset.detail)));
-  }
-
-  function openDetail(key){
-    const r = state.records.find(x => x.key === key); if(!r) return;
-    const n = r.note || {};
-    els.detailContent.innerHTML = `
-      <h2>${escapeHtml(r.name)}</h2>
-      <p class="muted">${escapeHtml(r.org || '')}</p>
-      <div class="detail-grid">
-        <section class="detail-box">
-          <h3>Official source fields</h3>
-          ${detailLine('Address', [r.street,r.city,r.state,r.zip].filter(Boolean).join(', '))}
-          ${detailLine('County', r.county)}${detailLine('Phone', r.phone)}${detailLine('Website', r.website ? `<a href="${escapeAttr(r.website)}" target="_blank" rel="noreferrer">${escapeHtml(r.website)}</a>` : '—')}${detailLine('Source Email', r.email || 'Not in source')}${detailLine('Hours', r.hours)}${detailLine('Health Center ID', r.hcNumber)}
-        </section>
-        <section class="detail-box">
-          <h3>Prospecting context</h3>
-          ${detailLine('Region', r.region)}${detailLine('Rural Status', `${r.ruralStatus} — ${r.ruralSource}`)}${detailLine('RUCA', `${r.rucaCode || '—'} ${r.rucaDescription || ''}`)}${detailLine('CMS Enrollment Match', r.enrollment ? 'Possible match loaded' : 'No match loaded')}${detailLine('CMS Ownership Match', r.owner ? 'Possible match loaded' : 'No match loaded')}${detailLine('Lat / Long', [r.latitude,r.longitude].filter(Boolean).join(', '))}
-        </section>
-      </div>
-      <section class="detail-box" style="margin-top:12px">
-        <h3>Rep prospecting notes</h3>
-        <div class="detail-form" data-note-form="${escapeAttr(r.key)}">
-          <label>Contact Name <input name="contactName" value="${escapeAttr(n.contactName || '')}" placeholder="Verified contact name" /></label>
-          <label>Email <input name="contactEmail" value="${escapeAttr(n.contactEmail || '')}" placeholder="Verified email" /></label>
-          <label>Assigned To <input name="assignedTo" value="${escapeAttr(n.assignedTo || '')}" placeholder="Rep" /></label>
-          <label>Status <select name="status">${(CFG.statusOptions || []).map(s => `<option ${s === (n.status || 'New') ? 'selected' : ''}>${escapeHtml(s)}</option>`).join('')}</select></label>
-          <label>Priority <select name="priority"><option ${!n.priority ? 'selected' : ''}></option>${(CFG.priorityOptions || []).map(p => `<option ${p === n.priority ? 'selected' : ''}>${escapeHtml(p)}</option>`).join('')}</select></label>
-          <label>Next Follow-up <input type="date" name="nextFollowup" value="${escapeAttr(n.nextFollowup || '')}" /></label>
-          <textarea name="notes" placeholder="Notes, outreach result, solution fit, buyer titles, source of email...">${escapeHtml(n.notes || '')}</textarea>
-        </div>
-        <p class="hint">Notes save automatically to this browser. Use Export CSV to preserve/share, and Rep Notes CSV Import to reload.</p>
-      </section>`;
-    els.detailDialog.showModal();
-    els.detailContent.querySelectorAll('[data-note-form] input, [data-note-form] select, [data-note-form] textarea').forEach(input => {
-      input.addEventListener('input', saveDetailForm);
-      input.addEventListener('change', saveDetailForm);
+  function exportCsv(){
+    const headers = ['Record_ID','Region','State','Name','Organization','Type','Street','City','ZIP','County','RUCA_Primary','RUCA_Secondary','Rural','Phone','Website','CMS_Legal_Name','CMS_DBA','CMS_Owner_Name','Contact_Name','Contact_Email','Assigned_To','Status','Priority','Next_Followup','Notes'];
+    const lines = [headers.join(',')];
+    filtered.forEach(r=>{
+      const n = notesDraft.get(r.record_id) || {};
+      const vals = [r.record_id,r.region,r.state,r.name,r.organization_name,r.site_type,r.address,r.city,r.zip,r.county,r.ruca_primary,r.ruca_secondary,r.is_rural?'Yes':'No/Unknown',r.phone,r.website,r.cms_legal_name,r.cms_dba,r.cms_owner_name,n.contact_name,n.contact_email,n.assigned_to,n.status,n.priority,n.next_followup,n.notes];
+      lines.push(vals.map(csvEscape).join(','));
     });
-  }
-
-  function saveDetailForm(e){
-    const form = e.target.closest('[data-note-form]');
-    const key = form.dataset.noteForm;
-    const data = Object.fromEntries($$('input,select,textarea').filter(el => form.contains(el)).map(el => [el.name, el.value]));
-    state.notes[key] = data;
-    saveNotes(state.notes);
-    const rec = state.records.find(r => r.key === key); if(rec) rec.note = data;
-    renderAll();
-  }
-
-  function updateDynamicFilters(){
-    const current = els.type.value;
-    const types = [...new Set(state.records.map(r => r.type).filter(Boolean))].sort((a,b) => a.localeCompare(b));
-    fillSelect(els.type, ['All Types', ...types], current);
-  }
-
-  function setView(view){
-    state.view = view;
-    $('#tableViewBtn').classList.toggle('active', view === 'table');
-    $('#cardViewBtn').classList.toggle('active', view === 'card');
-    els.tableView.classList.toggle('hidden', view !== 'table');
-    els.cardView.classList.toggle('hidden', view !== 'card');
-    renderResults();
-  }
-
-  function maxPage(){ return Math.max(1, Math.ceil(state.filtered.length / (parseInt(els.pageSize.value, 10) || 50))); }
-
-  function renderActiveFilters(){
-    const parts = [];
-    if(els.search.value.trim()) parts.push(`Search: ${els.search.value.trim()}`);
-    for(const [label, el, all] of [['Region', els.region, 'All Regions'], ['State', els.state, 'All States'], ['Type', els.type, 'All Types'], ['Status', els.status, 'All Statuses']]) if(el.value && el.value !== all) parts.push(`${label}: ${el.value}`);
-    const selectedRuca = getSelectedRucaValues();
-    if(selectedRuca.length) parts.push(`RUCA: ${selectedRuca.join(', ')}`);
-    if(els.rural.value !== 'all') parts.push(`Rural: ${els.rural.options[els.rural.selectedIndex].text}`);
-    els.activeFilters.innerHTML = parts.length ? `<strong>Active filters:</strong> ${parts.map(p => `<span class="chip unknown">${escapeHtml(p)}</span>`).join(' ')}` : '';
-  }
-
-  function exportFilteredCsv(){
-    const rows = state.filtered.map(r => ({
-      Key:r.key, Region:r.region, State:r.state, Name:r.name, Organization:r.org, Type:r.type, Rural:r.ruralStatus, Rural_Source:r.ruralSource, RUCA:r.rucaCode, RUCA_Description:r.rucaDescription,
-      Street:r.street, City:r.city, County:r.county, ZIP:r.zip, Phone:r.phone, Website:r.website, Source_Email:r.email, Latitude:r.latitude, Longitude:r.longitude,
-      Contact_Name:r.note.contactName || '', Contact_Email:r.note.contactEmail || '', Assigned_To:r.note.assignedTo || '', Status:r.note.status || 'New', Priority:r.note.priority || '', Next_Followup:r.note.nextFollowup || '', Notes:r.note.notes || ''
-    }));
-    const csv = window.Papa ? Papa.unparse(rows) : fallbackCsvStringify(rows);
-    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-    const url = URL.createObjectURL(blob);
+    const blob = new Blob([lines.join('\n')], {type:'text/csv;charset=utf-8'});
     const a = document.createElement('a');
-    a.href = url; a.download = `fqhc_prospect_lookup_${new Date().toISOString().slice(0,10)}.csv`; a.click();
-    URL.revokeObjectURL(url);
+    a.href = URL.createObjectURL(blob); a.download = `fqhc_prospects_${todayISO()}.csv`; a.click(); URL.revokeObjectURL(a.href);
   }
 
-  function fallbackCsvStringify(rows){
-    const headers = Object.keys(rows[0] || {});
-    const esc = v => `"${String(v ?? '').replace(/"/g,'""')}"`;
-    return [headers.join(','), ...rows.map(r => headers.map(h => esc(r[h])).join(','))].join('\n');
-  }
-
-  function importNotes(rows){
-    let count = 0;
-    rows.forEach(row => {
-      const key = row.Key || recordKey(normalizeState(row.State), normalizeZip(row.ZIP), row.Name || row.Organization, row.Street);
-      if(!key) return;
-      state.notes[key] = {
-        contactName: row.Contact_Name || row.contactName || '', contactEmail: row.Contact_Email || row.contactEmail || '', assignedTo: row.Assigned_To || row.assignedTo || '', status: row.Status || 'New', priority: row.Priority || '', nextFollowup: row.Next_Followup || row.nextFollowup || '', notes: row.Notes || row.notes || ''
-      };
-      count++;
-    });
-    saveNotes(state.notes); buildRecords(); renderAll(); setStatus('Imported rep notes', `${count.toLocaleString()} note rows imported.`);
-  }
-
-  function resetStatuses(){
-    state.sourceStatus = {
-      'Manifest': { state:'missing', msg:'Not checked' },
-      'HRSA Sites': { state:'missing', msg:'Not checked' },
-      'RUCA ZIP': { state:'missing', msg:'Not checked' },
-      'FORHP Rural ZIP': { state:'missing', msg:'Not checked' },
-      'CMS Enrollments': { state:'missing', msg:'Not checked' },
-      'CMS Owners': { state:'missing', msg:'Not checked' }
+  function normalizeClientRecord(r){
+    const zip = cleanZip(r.zip || r.site_zip || '');
+    const state = (r.state || '').toUpperCase();
+    const region = r.region || REGION_BY_STATE[state] || 'Other';
+    const ruca = String(r.ruca_primary || r.ruca || 'Unknown').replace(/\.0$/,'') || 'Unknown';
+    const isRural = !!(r.is_rural === true || String(r.is_rural).toLowerCase() === 'true' || String(r.rural || '').match(/yes|rural|eligible|likely/i) || ruca === '10' || ['7','8','9'].includes(ruca));
+    return {
+      record_id: r.record_id || `${state}-${zip}-${norm(r.name || r.site_name || '').slice(0,40)}`,
+      name: r.name || r.site_name || r.cms_dba || r.cms_legal_name || 'Unnamed Site',
+      organization_name: r.organization_name || r.awardee_name || '',
+      site_type: r.site_type || r.type || '',
+      address: r.address || r.street || '',
+      city: r.city || '', state, zip, region,
+      county: r.county || '', phone: r.phone || '', website: r.website || '',
+      ruca_primary: ruca, ruca_secondary: r.ruca_secondary || '', is_rural: isRural,
+      cms_legal_name: r.cms_legal_name || '', cms_dba: r.cms_dba || '', cms_owner_name: r.cms_owner_name || '',
+      contact_name: r.contact_name || '', contact_email: r.contact_email || '', assigned_to: r.assigned_to || '',
+      status: r.status || DEFAULT_STATUS, priority: r.priority || '', next_followup: r.next_followup || '', notes: r.notes || ''
     };
-    renderSourceStatus();
   }
-  function markStatus(label, status, msg){ state.sourceStatus[label] = { state: status, msg }; renderSourceStatus(); }
-  function renderSourceStatus(){
-    const entries = Object.entries(state.sourceStatus).length ? Object.entries(state.sourceStatus) : Object.entries({
-      'Manifest': { state:'missing', msg:'Not loaded' }, 'HRSA Sites': { state:'missing', msg:'Not loaded' }, 'RUCA ZIP': { state:'missing', msg:'Not loaded' }, 'FORHP Rural ZIP': { state:'missing', msg:'Not loaded' }, 'CMS Enrollments': { state:'missing', msg:'Not loaded' }, 'CMS Owners': { state:'missing', msg:'Not loaded' }
+
+  function apiGet(params){
+    // JSONP avoids CORS problems between GitHub Pages and Apps Script.
+    return new Promise((resolve,reject)=>{
+      const cb = '__fqhc_cb_' + Math.random().toString(36).slice(2);
+      const timeout = setTimeout(()=>{ cleanup(); reject(new Error('API timeout')); }, 120000);
+      function cleanup(){ clearTimeout(timeout); delete window[cb]; script.remove(); }
+      window[cb] = data => { cleanup(); if(data && data.error) reject(new Error(data.error)); else resolve(data); };
+      const qs = new URLSearchParams({...params, callback:cb, t:Date.now()}).toString();
+      const script = document.createElement('script');
+      script.onerror = () => { cleanup(); reject(new Error('Could not load Apps Script response. Check Web App URL and access setting.')); };
+      script.src = `${API_URL}${API_URL.includes('?')?'&':'?'}${qs}`;
+      document.body.appendChild(script);
     });
-    els.sourceStatusGrid.innerHTML = entries.map(([name, s]) => `<div class="source-pill ${escapeAttr(s.state)}"><strong>${escapeHtml(name)}</strong><span>${escapeHtml(s.msg || s.state)}</span></div>`).join('');
   }
 
-  function value(row, candidates){
-    if(!row) return '';
-    const keys = Object.keys(row);
-    for(const c of candidates){
-      if(Object.prototype.hasOwnProperty.call(row, c) && row[c] !== null && row[c] !== undefined && String(row[c]).trim() !== '') return String(row[c]).trim();
-      const found = keys.find(k => norm(k) === norm(c));
-      if(found && String(row[found] || '').trim() !== '') return String(row[found]).trim();
-    }
-    return '';
+  async function apiPostNoCors(payload){
+    // Fire-and-forget save. Apps Script receives it; browser does not need a CORS-readable response.
+    await fetch(API_URL, {method:'POST', mode:'no-cors', headers:{'Content-Type':'text/plain;charset=utf-8'}, body:JSON.stringify(payload)});
+    return true;
   }
 
-  function norm(s){ return String(s || '').toLowerCase().replace(/[^a-z0-9]/g,''); }
-  function normalizeZip(v){ const s = String(v || '').trim(); const m = s.match(/\d{5}/); return m ? m[0] : ''; }
-  function normalizeState(v){ return String(v || '').trim().toUpperCase().slice(0,2); }
-  function normalizeRuca(v){ const s = String(v || '').trim(); const m = s.match(/99|10|[1-9](?:\.\d+)?/); return m ? String(Math.trunc(parseFloat(m[0]))) : ''; }
-  function cleanPhone(v){ const s = String(v || '').trim(); return s.replace(/\.0$/,''); }
-  function cleanUrl(v){ let s = String(v || '').trim(); if(!s) return ''; if(!/^https?:\/\//i.test(s)) s = 'https://' + s; return s; }
-  function rucaDescription(code){ return ({'1':'Metropolitan core','2':'Metropolitan high commuting','3':'Metropolitan low commuting','4':'Micropolitan core','5':'Micropolitan high commuting','6':'Micropolitan low commuting','7':'Small town core','8':'Small town high commuting','9':'Small town low commuting','10':'Rural area','99':'Not coded','Unknown':'No RUCA match loaded'})[String(code)] || ''; }
-  function recordKey(st, zip, name, street=''){ return [st || '', zip || '', slug(name || ''), slug(street || '')].join('|'); }
-  function zipNameKey(zip, name){ return `${zip}|${slug(name)}`; }
-  function slug(s){ return String(s || '').toLowerCase().replace(/[^a-z0-9]+/g,'').slice(0,80); }
-  function regionForState(st){ for(const [region, states] of Object.entries(CFG.regions || {})) if(states.includes(st)) return region; return 'Unassigned'; }
-  function allStates(){ return [...new Set(Object.values(CFG.regions || {}).flat())].sort(); }
-  function fillSelect(sel, values, current=''){
-    const existing = current || sel.value;
-    sel.innerHTML = values.map(v => `<option value="${escapeAttr(v)}">${escapeHtml(v)}</option>`).join('');
-    if(existing && values.includes(existing)) sel.value = existing;
+  function setBusy(isBusy,msg){
+    [els.loadBtn, els.refreshBtn].forEach(b=>b.disabled = isBusy);
+    if(msg) showMessage(msg);
   }
-  function getSelectedRucaValues(){ return $$('#rucaChecks input:checked').map(cb => cb.value); }
-  function setStatus(title, text, loading=false){ els.statusTitle.textContent = title; els.statusText.textContent = text || ''; els.statusPanel.classList.toggle('loading', !!loading); }
-  function friendlyError(err){ return String(err?.message || err || '').replace(/^.*?: /,'').slice(0,110) || 'missing'; }
-  function regionChip(region){ return `<span class="chip region-${escapeAttr(region || '').replace(/\s/g,'-')}">${escapeHtml(region || 'Unassigned')}</span>`; }
-  function ruralChip(status){ const c = status === 'Rural' ? 'rural' : status === 'Not Rural' ? 'not-rural' : 'unknown'; return `<span class="chip ${c}">${escapeHtml(status || 'Unknown')}</span>`; }
-  function statusChip(status){ return `<span class="chip status">${escapeHtml(status || 'New')}</span>`; }
-  function detailLine(label, value){ return `<p><strong>${escapeHtml(label)}:</strong> ${String(value || '—')}</p>`; }
-  function escapeHtml(s){ return String(s ?? '').replace(/[&<>"]/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[ch])); }
-  function escapeAttr(s){ return escapeHtml(s).replace(/'/g,'&#39;'); }
-  function loadNotes(){ try { return JSON.parse(localStorage.getItem('fqhcTrackerNotes') || '{}'); } catch { return {}; } }
-  function saveNotes(notes){ localStorage.setItem('fqhcTrackerNotes', JSON.stringify(notes)); }
+  function showMessage(text,isError=false){
+    els.message.textContent = text; els.message.classList.remove('hidden');
+    els.message.style.background = isError ? '#fef2f2' : '#eef6ff';
+    els.message.style.borderColor = isError ? '#fecaca' : '#bfdbfe';
+    els.message.style.color = isError ? '#7f1d1d' : '#163b5c';
+  }
+  function regionChip(region){ const cls = 'region-' + String(region||'other').toLowerCase().replace(/[^a-z0-9]+/g,'-'); return `<span class="chip ${cls}">${escapeHtml(region||'Other')}</span>`; }
+  function linkify(url){ if(!url) return ''; const u = /^https?:\/\//i.test(url) ? url : `https://${url}`; return `<a href="${escapeAttr(u)}" target="_blank" rel="noopener">Website</a>`; }
+  function norm(s){ return String(s||'').trim().toLowerCase(); }
+  function cleanZip(s){ const m = String(s||'').match(/\d{5}/); return m ? m[0] : String(s||'').trim(); }
+  function todayISO(){ return new Date().toISOString().slice(0,10); }
+  function pick(obj,fields){ return fields.reduce((a,f)=>{a[f]=obj[f]||''; return a;},{}); }
+  function csvEscape(v){ const s = String(v ?? ''); return /[",\n]/.test(s) ? `"${s.replace(/"/g,'""')}"` : s; }
+  function escapeHtml(s){ return String(s ?? '').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c])); }
+  function escapeAttr(s){ return escapeHtml(s).replace(/`/g,'&#096;'); }
 })();

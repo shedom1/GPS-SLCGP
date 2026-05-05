@@ -1,97 +1,74 @@
 # FQHC Prospect Lookup Tracker
 
-Clean static GitHub Pages tracker for FQHC / Health Center prospecting. It supports Table and Card views, State/Region/Name/RUCA/Rural filtering, multi-select RUCA codes, source-status visibility, CSV export, print-to-PDF, and rep notes.
+This package is designed for a GitHub Pages front end with a Google Apps Script backend. Reps should not manually map HRSA/CMS/RUCA sources. Apps Script does the source fetching, normalization, enrichment, and note storage.
 
-## Important fix in this version
+## What this solves
 
-This version does **not** rely on browser JavaScript fetching HRSA/CMS/USDA files directly from other domains. Those browser fetches often fail because of CORS, redirects, MIME headers, or large file download behavior.
+Earlier browser fetch attempts failed because GitHub Pages JavaScript was trying to read government files from other domains. Even if a URL opens in a browser, JavaScript can be blocked by CORS, redirects, file headers, or large downloads. This version uses Apps Script as a server-side proxy/cache.
 
-Instead, the tracker loads same-origin files from `/data/`:
+## Files
 
-- `data/hrsa_sites.csv`
-- `data/ruca_zip.csv`
-- `data/forhp_rural_zips.csv`
-- `data/cms_enrollments.json`
-- `data/cms_owners.json`
-- `data/source_manifest.json`
+- `index.html` — FQHC tracker UI
+- `assets/app.js` — table/card view, filtering, sorting, RUCA multi-select, CSV/PDF output, note saves
+- `assets/styles.css` — clean/professional styling
+- `config.js` — paste the Apps Script Web App URL here
+- `apps_script/Code.gs` — backend API/proxy/normalizer
+- `apps_script/appsscript.json` — Apps Script project manifest
+- `data/rep_notes_template.csv` — header-only optional import/export reference
 
-The included GitHub Action or Python script creates those files.
+## Source strategy
 
-## What each file does
+Primary source:
+- HRSA Health Center Service Delivery and Look-Alike Sites CSV
 
-- `index.html` — main tracker
-- `config.js` — data paths, official URLs, region assignments, status options
-- `assets/app.js` — filter/sort/render/export/note logic
-- `assets/styles.css` — professional compact styling
-- `scripts/fetch_fqhc_data.py` — server-side refresh script
-- `.github/workflows/refresh-fqhc-data.yml` — scheduled/manual data refresh workflow
-- `data/rep_notes_import_template.csv` — header-only import template for rep notes
+Enrichment layers:
+- CMS FQHC Enrollments API
+- CMS FQHC All Owners API
+- USDA ERS ZIP RUCA XLSX
+- HRSA FORHP ZIP rural approximation XLSX
 
-## Deployment steps
+Contact email note:
+Official FQHC datasets usually provide site address, phone, and website more reliably than direct prospecting email. The tracker includes official contact fields when present, plus rep-editable `Contact_Name` and `Contact_Email` fields stored in the Google Sheet.
 
-1. Unzip the folder.
-2. Upload the full `fqhc_prospect_tracker` folder contents to your GitHub repository.
-3. In GitHub, go to **Actions**.
-4. Open **Refresh FQHC Tracker Data**.
-5. Click **Run workflow**.
-6. Wait for the action to commit `/data/` files.
-7. Open the GitHub Pages URL and click **Load Data**.
+## Setup
 
-## Local refresh option
+1. Create a Google Sheet named `FQHC Prospect Tracker Data`.
+2. Open the Sheet, then go to **Extensions > Apps Script**.
+3. Replace the default code with `apps_script/Code.gs`.
+4. Open Project Settings and add this Script Property:
+   - `SPREADSHEET_ID` = the ID from your Google Sheet URL.
+5. Replace the manifest with `apps_script/appsscript.json`:
+   - In Apps Script, click Project Settings.
+   - Check **Show appsscript.json manifest file in editor**.
+   - Open `appsscript.json` and replace it with the file provided here.
+6. Click **Deploy > New deployment > Web app**.
+   - Execute as: **Me**
+   - Who has access: **Anyone with the link**
+7. Copy the Web App URL.
+8. Paste the URL into `config.js`.
+9. Upload this folder to GitHub Pages.
+10. Open the tracker and click **Refresh Sources**, then **Load Data**.
 
-From the project folder:
+## Rep workflow
 
-```bash
-pip install -r requirements.txt
-python scripts/fetch_fqhc_data.py
-```
+- Open tracker URL.
+- Click **Load Data** if it does not auto-load.
+- Filter by State, Region, RUCA, Rural, Status, or keyword.
+- Use Table or Card view.
+- Add Contact Name, Contact Email, Assigned To, Status, Priority, Follow-up Date, and Notes.
+- Click Save on a row/card.
+- Export filtered results to CSV or use Save PDF.
 
-Then open `index.html` locally or publish to GitHub Pages.
+## Troubleshooting
 
-## RUCA multi-select
+### The page says setup needed
+Paste the Apps Script Web App URL into `config.js`.
 
-RUCA filter is now a checkbox multi-select:
+### Refresh Sources fails
+Open the Apps Script editor and run `refreshAllSources_` once. Google will ask you to authorize the script to access your Sheet and external URLs.
 
-- 1-3 = metropolitan
-- 4-6 = micropolitan
-- 7-9 = small town
-- 10 = rural
-- 99 = not coded
-- Unknown = no RUCA match loaded
+### RUCA or FORHP shows warning
+The tracker still works with HRSA/CMS data. RUCA/FORHP enrichment uses XLSX files parsed server-side. If a source format changes, the source card will show a warning rather than breaking the page.
 
-No RUCA checkbox selected = include all RUCA codes.
-
-## Rep notes
-
-Open a site detail record to enter:
-
-- Contact Name
-- Contact Email
-- Assigned To
-- Status
-- Priority
-- Next Follow-up
-- Notes
-
-Notes are saved in the browser's local storage. Use **Export CSV** to preserve or share. To re-import notes later, use `data/rep_notes_import_template.csv` as the format.
-
-## Why the sample row was confusing
-
-The prior package included a sample note row like:
-
-`GA,30000,Example Health Center...`
-
-That row was only meant to demonstrate the notes import format. It has been removed. The new template is header-only so it cannot be mistaken for the FQHC source dataset.
-
-## Email contacts
-
-Official FQHC/health center source files usually provide phone, website, address, site/organization fields, and sometimes source emails depending on the dataset. They generally do not provide direct prospecting contacts. Use the detail modal to add verified contact names and emails found by the rep.
-
-## Data source strategy
-
-Best setup:
-
-1. HRSA Health Center Service Delivery and Look-Alike Sites as the primary site list.
-2. USDA RUCA ZIP and HRSA FORHP rural ZIP approximation for rural filters.
-3. CMS FQHC Enrollments and CMS FQHC All Owners for Medicare enrollment/ownership enrichment.
-4. Rep-owned notes/contact fields for verified outreach intelligence.
+### Notes do not save
+Confirm the Apps Script deployment is a Web App with access set to **Anyone with the link** and execute as **Me**.
