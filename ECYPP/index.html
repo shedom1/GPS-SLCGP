@@ -225,6 +225,11 @@ thead th,
   font-weight:800;
 }
 
+
+table.resizable th:nth-child(5), table.resizable td:nth-child(5){min-width:90px;max-width:105px}
+table.resizable th:nth-child(6), table.resizable td:nth-child(6){min-width:90px;max-width:105px}
+table.resizable th.invoice-head, table.resizable td.invoice-col{min-width:100px}
+
 </style>
 </head>
 <body>
@@ -826,8 +831,14 @@ function renderFrnBlock(f){
       <table class="resizable">
         <thead>
           <tr>
-            <th class="resizable-col">Line Item</th><th class="line-make resizable-col">Make</th><th class="line-model resizable-col">Model / Service</th><th class="line-type resizable-col">Type</th>
-            <th class="num">Qty</th><th class="num">Months</th>
+            <th class="resizable-col">Line Item</th>
+            <th class="line-make resizable-col">Make</th>
+            <th class="line-model resizable-col">Model / Service</th>
+            <th class="line-type resizable-col">Type</th>
+            <th class="resizable-col">FRN Service Date</th>
+            <th class="resizable-col">FRN Service End Date</th>
+            <th class="num resizable-col">Qty</th>
+            <th class="num resizable-col">Months</th>
             ${amountHeader('Monthly Product / Service', visibleKeys, 'monthlyProduct')}
             ${amountHeader('Monthly Install / Config', visibleKeys, 'monthlyInstall')}
             ${amountHeader('Monthly Tax', visibleKeys, 'monthlyTax')}
