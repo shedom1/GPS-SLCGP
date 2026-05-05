@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FQHC Prospect Lookup</title>
+  <link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <p class="eyebrow">GPS Prospecting Tool</p>
+      <h1>FQHC Prospect Lookup</h1>
+      <p class="subtitle">HRSA site lookup with CMS enrollment/ownership, RUCA, rural filters, rep notes, CSV export, and print-to-PDF.</p>
+    </div>
+    <div class="top-actions">
+      <button id="refreshBtn" class="btn primary">Load / Refresh Data</button>
+      <button id="sourceBtn" class="btn">Data Sources</button>
+      <button id="printBtn" class="btn">Save to PDF</button>
+      <button id="exportBtn" class="btn">Export CSV</button>
+    </div>
+  </header>
+
+  <main>
+    <section id="statusPanel" class="status-panel">
+      <div class="loader-dot"></div>
+      <div>
+        <strong id="statusTitle">Ready to load official data</strong>
+        <p id="statusText">Click Load / Refresh Data. If an official source blocks browser access, use the file upload fallback below.</p>
+      </div>
+    </section>
+
+    <section class="source-upload-panel no-print">
+      <details>
+        <summary>Optional fallback uploads / configuration</summary>
+        <div class="upload-grid">
+          <label>HRSA Sites CSV
+            <input type="file" id="hrsaFile" accept=".csv" />
+          </label>
+          <label>USDA RUCA ZIP XLSX/CSV
+            <input type="file" id="rucaFile" accept=".xlsx,.xls,.csv" />
+          </label>
+          <label>HRSA FORHP Rural ZIP XLSX/CSV
+            <input type="file" id="forhpFile" accept=".xlsx,.xls,.csv" />
+          </label>
+          <label>Rep Notes CSV Import
+            <input type="file" id="notesFile" accept=".csv" />
+          </label>
+        </div>
+        <p class="hint">Use uploads only if a source blocks CORS from GitHub Pages. Rep notes are saved locally in the browser unless exported/imported.</p>
+      </details>
+    </section>
+
+    <section class="metrics" id="metrics"></section>
+
+    <section class="filters no-print">
+      <div class="field wide">
+        <label for="searchInput">Search name, city, county, ZIP, phone, website, notes</label>
+        <input id="searchInput" type="search" placeholder="Search FQHCs, contacts, counties, services..." />
+      </div>
+      <div class="field">
+        <label for="regionFilter">Region</label>
+        <select id="regionFilter"></select>
+      </div>
+      <div class="field">
+        <label for="stateFilter">State</label>
+        <select id="stateFilter"></select>
+      </div>
+      <div class="field">
+        <label for="ruralFilter">Rural</label>
+        <select id="ruralFilter">
+          <option value="all">All</option>
+          <option value="rural">Rural only</option>
+          <option value="not-rural">Not rural</option>
+          <option value="unknown">Unknown</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="rucaFilter">RUCA</label>
+        <select id="rucaFilter"></select>
+      </div>
+      <div class="field">
+        <label for="typeFilter">Type</label>
+        <select id="typeFilter"></select>
+      </div>
+      <div class="field">
+        <label for="statusFilter">Status</label>
+        <select id="statusFilter"></select>
+      </div>
+      <div class="field">
+        <label for="sortBy">Sort by</label>
+        <select id="sortBy">
+          <option value="state">State</option>
+          <option value="region">Region</option>
+          <option value="name">Name</option>
+          <option value="ruca">RUCA</option>
+          <option value="rural">Rural</option>
+          <option value="followup">Next Follow-up</option>
+        </select>
+      </div>
+      <div class="field tiny">
+        <label for="sortDir">Dir</label>
+        <select id="sortDir"><option value="asc">A-Z</option><option value="desc">Z-A</option></select>
+      </div>
+    </section>
+
+    <section class="viewbar no-print">
+      <div class="segmented">
+        <button id="tableViewBtn" class="active">Table</button>
+        <button id="cardViewBtn">Cards</button>
+      </div>
+      <div class="pagination-controls">
+        <label>Rows <select id="pageSize"><option>25</option><option selected>50</option><option>100</option><option>250</option></select></label>
+        <button id="prevPage" class="btn small">Previous</button>
+        <span id="pageInfo"></span>
+        <button id="nextPage" class="btn small">Next</button>
+      </div>
+    </section>
+
+    <section id="activeFilters" class="active-filters"></section>
+
+    <section id="tableView" class="table-wrap">
+      <table id="resultsTable">
+        <thead>
+          <tr>
+            <th data-sort="region">Region</th>
+            <th data-sort="state">State</th>
+            <th data-sort="name">Name</th>
+            <th data-sort="rural">Rural</th>
+            <th data-sort="ruca">RUCA</th>
+            <th>Type</th>
+            <th>City / County</th>
+            <th>Contact</th>
+            <th>Website</th>
+            <th>Status</th>
+            <th class="no-print">Details</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
+
+    <section id="cardView" class="card-grid hidden"></section>
+  </main>
+
+  <dialog id="detailDialog">
+    <form method="dialog" class="dialog-card">
+      <button class="dialog-close" value="close" aria-label="Close">×</button>
+      <div id="detailContent"></div>
+    </form>
+  </dialog>
+
+  <dialog id="sourceDialog">
+    <form method="dialog" class="dialog-card source-dialog">
+      <button class="dialog-close" value="close" aria-label="Close">×</button>
+      <h2>Recommended data-source stack</h2>
+      <div class="source-list">
+        <article>
+          <h3>1. HRSA Health Center Service Delivery and Look-Alike Sites</h3>
+          <p>Best primary prospecting list. Includes HRSA-supported health center service delivery sites and look-alikes, phone, website, address, grantee/site context, and daily refresh cycle.</p>
+          <a href="https://data.hrsa.gov/DataDownload/DD_Files/Health_Center_Service_Delivery_and_LookAlike_Sites.csv" target="_blank" rel="noreferrer">CSV source</a>
+        </article>
+        <article>
+          <h3>2. CMS FQHC Enrollments</h3>
+          <p>Good validation layer for Medicare-enrolled FQHC legal business name, DBA, organization type, and address.</p>
+          <a href="https://data.cms.gov/data-api/v1/dataset/4bcae866-3411-439a-b762-90a6187c194b/data" target="_blank" rel="noreferrer">API source</a>
+        </article>
+        <article>
+          <h3>3. CMS FQHC All Owners</h3>
+          <p>Your original API. Use it for ownership intelligence, not as the primary FQHC lookup list.</p>
+          <a href="https://data.cms.gov/data-api/v1/dataset/ed289c89-0bb8-4221-a20a-85776066381b/data" target="_blank" rel="noreferrer">API source</a>
+        </article>
+        <article>
+          <h3>4. USDA RUCA ZIP data + HRSA FORHP Rural ZIP Approximation</h3>
+          <p>RUCA provides sortable rural-urban commuting codes. FORHP ZIP approximation provides a practical rural yes/no filter for rural health grant prospecting.</p>
+          <a href="https://ers.usda.gov/sites/default/files/_laserfiche/DataFiles/53241/RUCA-codes-2020-zipcode.xlsx?v=32088" target="_blank" rel="noreferrer">RUCA ZIP XLSX</a>
+          <a href="https://www.hrsa.gov/sites/default/files/hrsa/rural-health/about/rural-zip-code-approximations.xlsx" target="_blank" rel="noreferrer">FORHP ZIP XLSX</a>
+        </article>
+      </div>
+      <p class="hint">Direct contact emails are rarely provided in official FQHC source files. This tool captures official phone/website and allows reps to add verified emails/contact names locally, then export/import those notes.</p>
+    </form>
+  </dialog>
+
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+  <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
+  <script src="config.js"></script>
+  <script src="assets/app.js"></script>
+</body>
+</html>
