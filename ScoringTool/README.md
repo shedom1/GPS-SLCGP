@@ -113,3 +113,13 @@ USDA DLT Rurality scoring requires verification with the official USDA DLT map f
 ## Deployment
 
 Upload the folder contents to your GitHub Pages repo. Set the Pages root to the folder containing `index.html`, or place all files in the repo root.
+
+## v9 Rurality-place fix
+- Added a `Rurality Place/CDP` worksheet column so users can separate the postal city from the Census town/place used for D-1 scoring.
+- Added a guardrail for NCES rural locale records, such as Locale 41/42/43, where the postal city population is >20,000. These rows are now marked for D-1 review instead of being automatically scored as 0 unless the DLT map fields are confirmed.
+- Example: Huckabay ISD may show a Stephenville postal address in NCES even though the physical community/Census place for DLT review may need to be Huckabay or Census Rural. Verify with the USDA DLT map before final scoring.
+
+
+## v10 update — Prospect Finder
+
+Added `prospects.html` as a separate view so reps can search by state, optional county, and optional city to find highly eligible K-12, healthcare, and higher-ed/technical prospects. The view screens source records using provisional D-1 Rurality and D-2 Economic Need, supports HRSA XLSX fallback upload, exports a prospect CSV, and can stage selected records for import into the main scoring worksheet as non-included rows. Descriptions are assembled only from source fields; the tool does not invent contacts, service needs, partnerships, or eligibility facts.

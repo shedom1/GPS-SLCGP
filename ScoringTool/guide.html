@@ -15,6 +15,7 @@
       <div class="brand"><div class="brand-mark">DLT</div><div><div class="brand-title">RUS DLT Scoring Workspace</div><div class="brand-subtitle">FY2026 how-to guide</div></div></div>
       <nav class="nav-actions" aria-label="Primary navigation">
         <a class="nav-button" href="index.html">Back to Scoring Tool</a>
+        <a class="nav-button" href="prospects.html">Prospect Finder</a>
         <a class="nav-button" href="javascript:window.print()">Save/Print PDF</a>
         <a class="nav-button" href="https://ruraldevelopment.maps.arcgis.com/apps/webappviewer/index.html?id=15a73830555645ae93d2fa773ed8e971" target="_blank">USDA DLT Map</a>
         <a class="nav-button" href="https://www.rd.usda.gov/programs-services/telecommunications-programs/distance-learning-telemedicine-grants" target="_blank">USDA FY2026 Resources</a>
@@ -33,7 +34,7 @@
         <h2>What this tool is for</h2>
         <div class="body">
           <div class="callout warn"><strong>Important:</strong> This is a pre-application scoring and prospecting tool. It helps organize site addresses, Census place population, County SAIPE poverty, and provisional scores. USDA’s DLT map review and final application documentation still control the official score.</div>
-          <div class="button-row"><a class="button" href="index.html">Open the Scoring Tool</a><a class="button secondary" href="#steps">Jump to Step-by-Step</a><a class="button secondary" href="#definitions">Jump to Definitions</a></div>
+          <div class="button-row"><a class="button" href="index.html">Open the Scoring Tool</a><a class="button secondary" href="prospects.html">Open Prospect Finder</a><a class="button secondary" href="#steps">Jump to Step-by-Step</a><a class="button secondary" href="#definitions">Jump to Definitions</a></div>
         </div>
       </section>
 
@@ -69,6 +70,26 @@
         </div>
       </aside>
 
+
+
+
+      <section class="card span-12">
+        <h2>Prospect Finder workflow — state / county / city search</h2>
+        <div class="body">
+          <div class="callout"><strong>Purpose:</strong> Use the Prospect Finder when reps do not already have a seed organization. It lets them pick a state, optional county, and/or optional city, then search K-12, HRSA healthcare, and higher-ed/technical school source records for locations that appear highly eligible based on available D-1 Rurality and D-2 Economic Need screening data.</div>
+          <table>
+            <thead><tr><th>Step</th><th>How to use it</th><th>Guardrail</th></tr></thead>
+            <tbody>
+              <tr><td>1. Pick a state</td><td>Default is Georgia, but reps can choose any state.</td><td>Large states may return many records; narrow by county or city for faster results.</td></tr>
+              <tr><td>2. Optional county/city</td><td>Use county for a regional callout list, or city for a smaller target market.</td><td>County and city fields come from source datasets, so spelling may vary by source.</td></tr>
+              <tr><td>3. Choose prospect types</td><td>Select K-12 schools, HRSA healthcare, and/or Higher Ed / Technical sites.</td><td>The page lists source records only; it does not infer a partnership or project need.</td></tr>
+              <tr><td>4. Set high-fit thresholds</td><td>Default high-fit is D-1 + D-2 objective score of 50+ out of 70, minimum SAIPE 20%, and population under 20,000 where available.</td><td>Rows marked Review may still be promising where the source indicates rurality but the Census place / DLT map needs manual review.</td></tr>
+              <tr><td>5. Export or send to scoring</td><td>Export a CSV for callouts, or select rows and send them to the Scoring Tool.</td><td>Rows sent to the Scoring Tool are imported as not included, so they do not affect the project score until reviewed.</td></tr>
+            </tbody>
+          </table>
+          <div class="button-row"><a class="button" href="prospects.html">Open Prospect Finder</a><a class="button secondary" href="index.html">Open Scoring Tool</a></div>
+        </div>
+      </section>
 
       <section class="card span-12">
         <h2>Partner radius workflow — 50 to 100 miles</h2>
@@ -178,6 +199,13 @@
         </div>
       </section>
     </div>
-  </main>
+  
+<section class="card">
+  <h2>Why a rural NCES Locale can still show D-1 review or 0</h2>
+  <p>USDA DLT D-1 Rurality is not scored directly from NCES Locale. Locale 41, 42, or 43 is a helpful screening clue, but the DLT score depends on the 2020 Census town/place/CDP population and whether the site is in or contiguous to a non-rural area on the USDA DLT map.</p>
+  <p>Some school records use a postal city that is not the actual community where the campus sits. For example, a campus may have a Stephenville mailing address while the physical rural community is Huckabay. In that case, enter the correct value in <strong>Rurality Place/CDP</strong>, then re-run enrichment and verify the DLT map fields.</p>
+</section>
+
+</main>
 </body>
 </html>

@@ -53,6 +53,7 @@
       </div>
       <nav class="nav-actions" aria-label="Primary navigation">
         <a class="nav-button" href="index.html">Scoring Tool</a>
+        <a class="nav-button" href="prospects.html">Prospect Finder</a>
         <a class="nav-button" href="guide.html">How to Use Guide</a>
         <a class="nav-button" href="https://ruraldevelopment.maps.arcgis.com/apps/webappviewer/index.html?id=15a73830555645ae93d2fa773ed8e971" target="_blank">USDA DLT Map</a>
         <a class="nav-button" href="https://www.rd.usda.gov/programs-services/telecommunications-programs/distance-learning-telemedicine-grants" target="_blank">USDA FY2026 Resources</a>
@@ -92,6 +93,7 @@
             <button class="ghost" onclick="quickGeorgiaHealthcare()">Load GA Healthcare</button>
             <a class="button-link" href="https://data.hrsa.gov/DataDownload/DD_Files/Health_Center_Service_Delivery_and_LookAlike_Sites.xlsx" target="_blank">Download HRSA XLSX</a>
             <button class="ghost" onclick="showManualSite()">Add Manual Location</button>
+            <a class="button-link primary" href="prospects.html">Open Prospect Finder</a>
             <a class="button-link primary" href="guide.html">Open How-to Guide</a>
           </div>
           <div id="searchStatus" class="status"></div>
@@ -117,6 +119,7 @@
             <button onclick="window.print()">Save/Print PDF</button>
             <button onclick="exportCSV()">Export CSV</button>
             <button onclick="downloadJSON()">Export JSON</button>
+            <a class="button-link" href="prospects.html">Prospect Finder</a>
             <a class="button-link" href="guide.html">Guide</a>
           </div>
           <div id="scoreWarnings" class="status"></div>
@@ -193,8 +196,8 @@
         <div class="row">
           <div class="col-6">
             <label>Paste Manual Project Site CSV Rows</label>
-            <textarea id="csvPaste" placeholder="organization,siteName,address,city,state,zip,county,countyFips,designation,type,sourceLocale,cityPopulation,saipePercent
-Example County Schools,Example School,100 Main St,Albany,GA,31701,Dougherty,13095,End-User,K-12,,68559,24.1"></textarea>
+            <textarea id="csvPaste" placeholder="organization,siteName,address,city,ruralityPlace,state,zip,county,countyFips,designation,type,sourceLocale,cityPopulation,saipePercent
+Example County Schools,Example School,100 Main St,Albany,Albany,GA,31701,Dougherty,13095,End-User,K-12,,68559,24.1"></textarea>
           </div>
           <div class="col-3"><label>Upload Project Site CSV</label><input id="csvFile" type="file" accept=".csv,text/csv" /></div>
           <div class="col-3"><button class="primary" onclick="importCSV()">Import Project Sites</button></div>
@@ -224,6 +227,7 @@ Example County Schools,Example School,100 Main St,Albany,GA,31701,Dougherty,1309
         <div class="grid">
           <div>
             <h3>D-1 Rurality – Up to 40 points</h3>
+          <div class="callout"><strong>Important:</strong> D-1 is based on the actual 2020 Census town/place/CDP and DLT map verification — not just the NCES Locale or the postal city in the mailing address. Use <strong>Rurality Place/CDP</strong> when the mailing city is different from the community where the site physically sits.</div>
             <table style="min-width:0"><thead><tr><th>Community / Census Place Population</th><th>Contiguous to >50k Urban?</th><th>Score</th></tr></thead><tbody>
               <tr><td>5,000 and under</td><td>No</td><td><span class="pill green">40</span></td></tr>
               <tr><td>5,001–10,000</td><td>No</td><td><span class="pill blue">30</span></td></tr>
@@ -317,7 +321,8 @@ const TABLE_COLUMNS = [
   {key:'type', label:'Type', w:108, type:'text'},
   {key:'designation', label:'Designation', w:112, type:'text'},
   {key:'address', label:'Address', w:165, type:'text'},
-  {key:'city', label:'City', w:95, type:'text'},
+  {key:'city', label:'Postal City', w:95, type:'text'},
+  {key:'ruralityPlace', label:'Rurality Place/CDP', w:125, type:'text'},
   {key:'state', label:'State', w:54, type:'text'},
   {key:'zip', label:'ZIP', w:72, type:'text'},
   {key:'county', label:'County', w:115, type:'text'},
@@ -353,6 +358,19 @@ function init(){
   }
   document.getElementById('csvFile').addEventListener('change', importCSV);
   renderTable(); renderPartnerTable(); recalc();
+  importPendingProspectsFromLocalStorage();
+}
+function importPendingProspectsFromLocalStorage(){
+  try{
+    const raw=localStorage.getItem('dltPendingProspectsV1');
+    if(!raw) return;
+    const pending=JSON.parse(raw);
+    if(!Array.isArray(pending) || !pending.length) return;
+    const rows=pending.map(p=>finalizeSiteFields({...p, id:crypto.randomUUID(), include:false, selected:false, notes:appendNote(p.notes,'Imported from Prospect Finder; set Include=true only after confirming this site is part of the proposed DLT project.')}));
+    localStorage.removeItem('dltPendingProspectsV1');
+    addRows(rows);
+    setStatus(`<strong>${rows.length}</strong> Prospect Finder row(s) imported into the worksheet as not included. Review designation and DLT map fields before scoring.`);
+  }catch(e){console.warn('Prospect import failed',e);}
 }
 function setStatus(msg){document.getElementById('searchStatus').innerHTML=msg||'';}
 function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
@@ -691,6 +709,7 @@ function renderTable(){
       <td><select onchange="upd('${s.id}','designation',this.value)">${opts(DESIGNATION_OPTIONS,normalizeDesignation(s.designation))}</select></td>
       <td><input title="${esc(s.address)}" value="${esc(s.address)}" onchange="upd('${s.id}','address',this.value)"></td>
       <td><input title="${esc(s.city)}" value="${esc(s.city)}" onchange="upd('${s.id}','city',this.value)"></td>
+      <td><input title="${esc(s.ruralityPlace||'')}" value="${esc(s.ruralityPlace||'')}" placeholder="e.g., Huckabay" onchange="upd('${s.id}','ruralityPlace',this.value)"></td>
       <td><input value="${esc(s.state)}" maxlength="2" onchange="upd('${s.id}','state',this.value.toUpperCase())"></td>
       <td><input value="${esc(s.zip||'')}" onchange="upd('${s.id}','zip',this.value)"></td>
       <td><input title="${esc(s.county)}" value="${esc(s.county)}" onchange="upd('${s.id}','county',this.value)"></td>
@@ -803,11 +822,23 @@ function econScore(p){
   const n=parseFloat(p); if(isNaN(n)) return null;
   if(n>=30) return 30; if(n>=20) return 20; if(n>=10) return 10; return 0;
 }
+function isNcesRuralLocale(value){
+  const txt=String(value||'');
+  const m=txt.match(/(4[123])/);
+  return /Rural/i.test(txt) || (m && ['41','42','43'].includes(m[1]));
+}
 function ruralityScore(s){
   if(s.contiguous==='Yes') return 0;
   if(s.censusRural==='Yes') return 40;
   const pop=parseInt(String(s.cityPopulation||'').replace(/,/g,''));
   if(isNaN(pop)) return null;
+  // Guardrail: NCES Locale 41/42/43 is not the USDA D-1 score, but it is a red flag that
+  // the postal city may not be the actual Census place used for DLT rurality. Do not score
+  // these as 0 solely because a mailing city like Stephenville has >20,000 people.
+  if(pop>20000 && isNcesRuralLocale(s.sourceLocale) && s.contiguous==='Unknown' && s.outsideNonRural==='Unknown' && s.censusRural==='Unknown'){
+    s.notes=appendNote(s.notes,'D-1 review: NCES rural locale conflicts with postal-city population. Enter the actual Rurality Place/CDP or set Census Rural after DLT map verification.');
+    return null;
+  }
   if(pop>20000 && s.outsideNonRural==='Yes') return 20;
   if(pop<=5000) return 40;
   if(pop<=10000) return 30;
@@ -843,7 +874,7 @@ async function enrichAll(){
   setStatus('Enriching sites with Census place population and county SAIPE...');
   for(const s of sites){
     if(!s.state) continue;
-    if(!s.cityPopulation && s.city) await enrichPlacePop(s);
+    if(!s.cityPopulation && (s.ruralityPlace || s.city)) await enrichPlacePop(s);
     if(!s.saipePercent) await enrichSaipe(s);
   }
   renderTable(); recalc(); setStatus('Enrichment complete. Review DLT map verification fields before relying on scores.');
@@ -858,9 +889,10 @@ async function enrichPlacePop(s){
       placeCache[st]=map;
     }catch(e){s.notes=appendNote(s.notes,'Census place API failed'); return;}
   }
-  const m=placeCache[st][norm(s.city)];
-  if(m){s.cityPopulation=m.pop; s.notes=appendNote(s.notes,`Census place match: ${m.name}`);}
-  else {s.notes=appendNote(s.notes,'No 2020 Census place match; verify Census Rural / DLT map');}
+  const lookupName=(s.ruralityPlace || s.city || '').trim();
+  const m=placeCache[st][norm(lookupName)];
+  if(m){s.cityPopulation=m.pop; if(!s.ruralityPlace) s.ruralityPlace=m.name.replace(/,.*$/,''); s.notes=appendNote(s.notes,`Census place match for rurality: ${m.name}`);}
+  else {s.notes=appendNote(s.notes,`No 2020 Census place match for '${lookupName}'; verify Census Rural / DLT map`);}
 }
 async function enrichSaipe(s){
   const st=s.state.toUpperCase(); const fips=STATE_FIPS[st]; if(!fips) return;
@@ -1047,7 +1079,7 @@ function addSelectedPartnersToWorksheet(){addPartnerRowsToWorksheet(partnerResul
 function addHighPotentialPartnersToWorksheet(){addPartnerRowsToWorksheet(partnerResults.filter(isHighPotentialPartner));}
 function clearPartnerResults(){partnerResults=[]; renderPartnerTable(); setPartnerStatus('Partner list cleared.');}
 function exportPartnersCSV(){
-  const fields=['selected','fitBand','distanceMiles','type','organization','siteName','address','city','state','zip','county','countyFips','phone','website','sourceLocale','enrollment','cityPopulation','ruralityScore','saipePercent','economicScore','objectiveScore','description','source','sourceId','lat','lon','notes'];
+  const fields=['selected','fitBand','distanceMiles','type','organization','siteName','address','city','ruralityPlace','state','zip','county','countyFips','phone','website','sourceLocale','enrollment','cityPopulation','ruralityScore','saipePercent','economicScore','objectiveScore','description','source','sourceId','lat','lon','notes'];
   const csv=[fields.join(',')].concat(partnerResults.map(p=>fields.map(f=>csvCell(f==='fitBand'?partnerBand(p).label:p[f])).join(','))).join('\n');
   download('RUS_DLT_Partner_Radius_List.csv',csv,'text/csv');
 }
@@ -1073,11 +1105,11 @@ function importCSVText(text){
   const rows=parseCSV(text); if(rows.length<2){setStatus('CSV needs a header row and at least one data row.'); return;}
   const headers=rows[0]; const imported=[];
   rows.slice(1).forEach(r=>{const o=rowToObject(headers,r); const s={
-    id:crypto.randomUUID(), include:String(pick(o,['include','Include'])||'true').toLowerCase()!=='false', type:pick(o,['type','Type'])||'Other', source:pick(o,['source','Source'])||'CSV Import', sourceId:pick(o,['sourceId','ID','NCES ID','UnitID']), organization:pick(o,['organization','Organization','district','District']), siteName:pick(o,['siteName','Site Name','School Name','Institution','Name']), address:pick(o,['address','Address','Site Address','Street']), city:pick(o,['city','City','Site City']), state:(pick(o,['state','State','STABR'])||'').toUpperCase(), zip:pick(o,['zip','ZIP','Postal Code']), county:pick(o,['county','County','County Name']), countyFips:pick(o,['countyFips','County FIPS','CNTY','COUNTYCD']), phone:pick(o,['phone','Phone']), website:pick(o,['website','Website']), sourceLocale:pick(o,['sourceLocale','Locale','ULOCALE','LOCALE']), enrollment:pick(o,['enrollment','Enrollment','MEMBER']), designation:normalizeDesignation(pick(o,['designation','Designation'])||'End-User'), contiguous:pick(o,['contiguous','Contiguous'])||'Unknown', outsideNonRural:pick(o,['outsideNonRural','Outside Non-Rural','DLT Map Outside Non-Rural'])||'Unknown', censusRural:pick(o,['censusRural','Census Rural'])||'Unknown', cityPopulation:pick(o,['cityPopulation','2020 Population','Census Population']), saipePercent:pick(o,['saipePercent','SAIPE Poverty %','Poverty %']), ruralityScore:null, economicScore:null, lat:pick(o,['lat','Latitude']), lon:pick(o,['lon','Longitude']), description:pick(o,['description','Description']), notes:pick(o,['notes','Notes'])}; if(s.siteName) imported.push(s);});
+    id:crypto.randomUUID(), include:String(pick(o,['include','Include'])||'true').toLowerCase()!=='false', type:pick(o,['type','Type'])||'Other', source:pick(o,['source','Source'])||'CSV Import', sourceId:pick(o,['sourceId','ID','NCES ID','UnitID']), organization:pick(o,['organization','Organization','district','District']), siteName:pick(o,['siteName','Site Name','School Name','Institution','Name']), address:pick(o,['address','Address','Site Address','Street']), city:pick(o,['city','City','Site City','Postal City']), ruralityPlace:pick(o,['ruralityPlace','Rurality Place','Rurality Place/CDP','Town or Place Name','Census Place','CDP']), state:(pick(o,['state','State','STABR'])||'').toUpperCase(), zip:pick(o,['zip','ZIP','Postal Code']), county:pick(o,['county','County','County Name']), countyFips:pick(o,['countyFips','County FIPS','CNTY','COUNTYCD']), phone:pick(o,['phone','Phone']), website:pick(o,['website','Website']), sourceLocale:pick(o,['sourceLocale','Locale','ULOCALE','LOCALE']), enrollment:pick(o,['enrollment','Enrollment','MEMBER']), designation:normalizeDesignation(pick(o,['designation','Designation'])||'End-User'), contiguous:pick(o,['contiguous','Contiguous'])||'Unknown', outsideNonRural:pick(o,['outsideNonRural','Outside Non-Rural','DLT Map Outside Non-Rural'])||'Unknown', censusRural:pick(o,['censusRural','Census Rural'])||'Unknown', cityPopulation:pick(o,['cityPopulation','2020 Population','Census Population']), saipePercent:pick(o,['saipePercent','SAIPE Poverty %','Poverty %']), ruralityScore:null, economicScore:null, lat:pick(o,['lat','Latitude']), lon:pick(o,['lon','Longitude']), description:pick(o,['description','Description']), notes:pick(o,['notes','Notes'])}; if(s.siteName) imported.push(s);});
   addRows(imported); setStatus(`<strong>${imported.length}</strong> CSV site rows imported.`);
 }
 function exportCSV(){
-  const fields=['include','type','source','sourceId','organization','siteName','address','city','state','zip','county','countyFips','phone','website','sourceLocale','enrollment','designation','contiguous','outsideNonRural','censusRural','cityPopulation','ruralityScore','saipePercent','economicScore','description','lat','lon','notes'];
+  const fields=['include','type','source','sourceId','organization','siteName','address','city','ruralityPlace','state','zip','county','countyFips','phone','website','sourceLocale','enrollment','designation','contiguous','outsideNonRural','censusRural','cityPopulation','ruralityScore','saipePercent','economicScore','description','lat','lon','notes'];
   const csv=[fields.join(',')].concat(sites.map(s=>fields.map(f=>csvCell(s[f])).join(','))).join('\n');
   download('RUS_DLT_FY2026_Site_Scoring_Worksheet.csv',csv,'text/csv');
 }
@@ -1085,7 +1117,7 @@ function csvCell(v){v=String(v??''); return /[",\n]/.test(v)?'"'+v.replace(/"/g,
 function download(name,content,type='text/plain'){const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([content],{type})); a.download=name; a.click(); URL.revokeObjectURL(a.href);}
 function downloadJSON(){download('RUS_DLT_FY2026_Scoring_Project.json',JSON.stringify({projectType:document.getElementById('projectType').value,subjectiveScore:document.getElementById('subjectiveScore').value,sites},null,2),'application/json');}
 function downloadTemplate(){
-  const csv='include,type,organization,siteName,address,city,state,zip,county,countyFips,phone,website,designation,sourceLocale,cityPopulation,saipePercent,contiguous,outsideNonRural,censusRural,description,notes\ntrue,K-12 District Office,Example County Schools,Example County Schools District Office,200 Board Rd,Exampletown,GA,30000,Example County,13000,555-555-5555,https://www.example.org,Hub,,5187,18.4,Unknown,Unknown,Unknown,NCES school district office record; county: Example County; location: Exampletown, GA.,\ntrue,K-12,Example County Schools,Example Elementary,100 Main St,Exampletown,GA,30000,Example County,13000,555-555-1212,https://www.example.org,End-User,43,5187,18.4,Unknown,Unknown,Unknown,NCES public school record; district: Example County Schools; county: Example County; location: Exampletown, GA.,\n';
+  const csv='include,type,organization,siteName,address,city,ruralityPlace,state,zip,county,countyFips,phone,website,designation,sourceLocale,cityPopulation,saipePercent,contiguous,outsideNonRural,censusRural,description,notes\ntrue,K-12 District Office,Example County Schools,Example County Schools District Office,200 Board Rd,Exampletown,Exampletown,GA,30000,Example County,13000,555-555-5555,https://www.example.org,Hub,,5187,18.4,Unknown,Unknown,Unknown,NCES school district office record; county: Example County; location: Exampletown, GA.,\ntrue,K-12,Example County Schools,Example Elementary,100 Main St,Exampletown,Exampletown,GA,30000,Example County,13000,555-555-1212,https://www.example.org,End-User,43,5187,18.4,Unknown,Unknown,Unknown,NCES public school record; district: Example County Schools; county: Example County; location: Exampletown, GA.,\n';
   download('RUS_DLT_Manual_Site_Template.csv',csv,'text/csv');
 }
 function copySummary(){
