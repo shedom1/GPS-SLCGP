@@ -148,3 +148,14 @@ Added `prospects.html` as a separate view so reps can search by state, optional 
 - Prospect Finder snapshot now breaks out displayed counts by prospect type: K-12 Districts, K-12 School Sites, Healthcare / HRSA, and Higher Ed / Technical.
 - CSV exports and the scoring worksheet import now preserve Email in addition to Phone and Website.
 - Contact fields remain source-based only. If NCES, HRSA, or the higher-ed source does not provide a phone/email/website value, the tool leaves the field blank rather than guessing.
+
+## v13 Update Notes
+
+- Added **Agency / Organization Search** to the Prospect Finder.
+  - K-12 Districts search district names.
+  - K-12 School Sites search district names and school names.
+  - Healthcare / HRSA searches health center organization names and site names.
+  - Higher Ed / Technical searches institution and system names.
+- Added **Address Search** to the Prospect Finder.
+  - Searches source address fields, city, ZIP, and visible address text where available.
+- Agency/address filters are source-based and post-filtered again after source retrieval so the tool does not invent or infer entities that are not present in the public source records.

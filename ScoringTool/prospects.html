@@ -47,6 +47,8 @@
             <div class="col-3"><label>County Filter</label><input id="pfCounty" placeholder="Optional, e.g. Dougherty" /></div>
             <div class="col-3"><label>City Filter</label><input id="pfCity" placeholder="Optional, e.g. Albany" /></div>
             <div class="col-3"><label>Display Limit</label><input id="pfMax" type="number" value="5000" min="25" max="25000" step="25" /></div>
+            <div class="col-6"><label>Agency / Organization Search</label><input id="pfAgency" placeholder="Optional, e.g. Huckabay, Phoebe, Technical College" /></div>
+            <div class="col-6"><label>Address Search</label><input id="pfAddress" placeholder="Optional, e.g. County Rd 421, Main St, 76401" /></div>
             <div class="col-3"><label>Minimum Objective Score</label><input id="pfMinObjective" type="number" value="50" min="0" max="70" step="5" /></div>
             <div class="col-3"><label>Minimum SAIPE %</label><input id="pfMinSaipe" type="number" value="20" min="0" max="100" step="1" /></div>
             <div class="col-3"><label>Maximum Place Population</label><input id="pfMaxPop" type="number" value="20000" min="0" step="1000" /></div>
@@ -93,7 +95,7 @@
             <button class="green" onclick="sendSelectedToScoring()">Send Selected to Scoring Tool</button>
             <a class="button-link primary" href="index.html">Open Scoring Tool</a>
           </div>
-          <div class="callout ok" style="margin-top:12px"><strong>Recommended workflow:</strong> Search by state first, then narrow by county/city. Export the prospect list for callouts, or send selected records to the scoring worksheet as non-included rows for later review.</div>
+          <div class="callout ok" style="margin-top:12px"><strong>Recommended workflow:</strong> Search by state first, then narrow by county/city, agency/organization, or address. Export the prospect list for callouts, or send selected records to the scoring worksheet as non-included rows for later review.</div>
         </div>
       </div>
     </section>
@@ -156,10 +158,19 @@ function sourceLinkFor(s){if(siteHasCoords(s))return `https://www.google.com/map
 async function arcgisQueryAll(url,where,fields,cap=25000){let out=[],offset=0,page=2000;while(out.length<cap){const params=new URLSearchParams({where,outFields:fields,returnGeometry:'true',returnCentroid:'true',outSR:'4326',f:'json',resultRecordCount:String(Math.min(page,cap-out.length)),resultOffset:String(offset)});const res=await fetch(`${url}?${params.toString()}`);if(!res.ok)throw new Error('Source returned '+res.status);const data=await res.json();if(data.error)throw new Error(data.error.message||JSON.stringify(data.error));const features=data.features||[];out.push(...features);if(!data.exceededTransferLimit||!features.length)break;offset+=features.length;}return out}
 async function arcgisQuery(url,where,fields,count=2000){return arcgisQueryAll(url,where,fields,count)}
 function wherePart(field,val){return val?` AND UPPER(${field}) LIKE '%${sqlText(val).toUpperCase()}%'`:''}
+function whereOrPart(fields,val){if(!val)return '';const q=sqlText(val).toUpperCase();return ` AND (${fields.map(f=>`UPPER(${f}) LIKE '%${q}%'`).join(' OR ')})`}
+function textMatch(haystack,needle){return !needle||norm(String(haystack||'')).includes(norm(needle))}
+function prospectMatchesTextFilters(r,agency,address){
+  const agencyText=[r.organization,r.siteName,r.sourceId,r.description].join(' ');
+  const addressText=[r.address,r.city,r.county,r.state,r.zip].join(' ');
+  return textMatch(agencyText,agency)&&textMatch(addressText,address);
+}
 async function findProspects(){
   const st=document.getElementById('pfState').value;
   const county=document.getElementById('pfCounty').value.trim();
   const city=document.getElementById('pfCity').value.trim();
+  const agency=document.getElementById('pfAgency').value.trim();
+  const address=document.getElementById('pfAddress').value.trim();
   const displayLimit=Math.max(25,Math.min(25000,parseInt(document.getElementById('pfMax').value)||5000));
   const useK12Districts=document.getElementById('pfK12Districts').checked;
   const useK12=document.getElementById('pfK12').checked;
@@ -167,36 +178,36 @@ async function findProspects(){
   const useHE=document.getElementById('pfHigherEd').checked;
   if(!useK12Districts&&!useK12&&!useH&&!useHE){setStatus('Select at least one prospect type.');return}
   prospects=[];renderTable();
-  setStatus(`Searching complete source record sets for <strong>${st}</strong>${county?`, county: ${esc(county)}`:''}${city?`, city: ${esc(city)}`:''}...`);
+  setStatus(`Searching complete source record sets for <strong>${st}</strong>${county?`, county: ${esc(county)}`:''}${city?`, city: ${esc(city)}`:''}${agency?`, agency/org: ${esc(agency)}`:''}${address?`, address: ${esc(address)}`:''}...`);
   let rows=[];const errors=[];const sourceCap=25000;
   if(useK12Districts){
     try{
       const f='*';
-      let where=`LSTATE='${st}'`+wherePart('CONAME',county)+wherePart('LCITY',city);
+      let where=`LSTATE='${st}'`+wherePart('CONAME',county)+wherePart('LCITY',city)+whereOrPart(['LEA_NAME'],agency)+whereOrPart(['LSTREET1','LSTREET2','LCITY','LZIP'],address);
       rows.push(...(await arcgisQueryAll(NCES_DISTRICTS,where,f,sourceCap)).map(k12DistrictToSite));
     }catch(e){errors.push('K-12 district layer failed: '+e.message)}
   }
   if(useK12){
     try{
       const f='*';
-      let where=`STABR='${st}'`+wherePart('NMCNTY',county)+wherePart('LCITY',city);
+      let where=`STABR='${st}'`+wherePart('NMCNTY',county)+wherePart('LCITY',city)+whereOrPart(['LEA_NAME','SCH_NAME'],agency)+whereOrPart(['LSTREET1','LSTREET2','LCITY','LZIP'],address);
       rows.push(...(await arcgisQueryAll(NCES_SCHOOLS,where,f,sourceCap)).map(k12ToSite));
     }catch(e){errors.push('K-12 school layer failed: '+e.message)}
   }
   if(useHE){
     try{
       const f='*';
-      let where=`STABBR='${st}'`+wherePart('COUNTYNM',county)+wherePart('CITY',city);
+      let where=`STABBR='${st}'`+wherePart('COUNTYNM',county)+wherePart('CITY',city)+whereOrPart(['INSTNM','F1SYSNAM'],agency)+whereOrPart(['ADDR','CITY','ZIP'],address);
       rows.push(...(await arcgisQueryAll(HIGHER_ED,where,f,sourceCap)).map(higherToSite));
     }catch(e){errors.push('Higher-ed failed: '+e.message)}
   }
   if(useH){
     try{
       const items=await getHRSALookupItems();
-      rows.push(...items.filter(x=>x.state===st).filter(x=>!county||norm(x.county).includes(norm(county))).filter(x=>!city||norm(x.city).includes(norm(city))).map(x=>({...x,id:crypto.randomUUID()})));
+      rows.push(...items.filter(x=>x.state===st).filter(x=>!county||norm(x.county).includes(norm(county))).filter(x=>!city||norm(x.city).includes(norm(city))).filter(x=>prospectMatchesTextFilters(x,agency,address)).map(x=>({...x,id:crypto.randomUUID()})));
     }catch(e){errors.push(e.message)}
   }
-  rows=dedupe(rows);
+  rows=dedupe(rows).filter(r=>prospectMatchesTextFilters(r,agency,address));
   const sourceCount=rows.length;
   setStatus(`Found <strong>${sourceCount}</strong> source record(s) before eligibility filters. Enriching with Census place population and SAIPE...`);
   for(const r of rows){
