@@ -141,3 +141,10 @@ Added `prospects.html` as a separate view so reps can search by state, optional 
   - I can match at this percentage — is that enough?
   - Where can the applicant look for match money?
 - The Match Calculator includes grant-range checks, minimum 15% match calculations, gap/surplus, project total, scenario buttons, and copyable summary output.
+
+## v12 Update Notes
+
+- Prospect Finder now includes Phone, Email, and Website columns where those fields are available from the source dataset.
+- Prospect Finder snapshot now breaks out displayed counts by prospect type: K-12 Districts, K-12 School Sites, Healthcare / HRSA, and Higher Ed / Technical.
+- CSV exports and the scoring worksheet import now preserve Email in addition to Phone and Website.
+- Contact fields remain source-based only. If NCES, HRSA, or the higher-ed source does not provide a phone/email/website value, the tool leaves the field blank rather than guessing.

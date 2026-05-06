@@ -126,3 +126,12 @@ tbody tr:hover td{background:#f3f9fb!important;}
 .source-list a{border-radius:6px!important;}
 @media print{.app-header{background:#fff!important;color:var(--solutionz-navy)!important;border-bottom:3px solid var(--solutionz-blue)!important;box-shadow:none!important}.brand-mark{color:var(--solutionz-blue)!important}.subtitle{color:#334155!important}}
 .th-inner{position:relative;display:flex;align-items:center;gap:2px;min-height:20px;padding-right:8px}.col-resizer{position:absolute;right:-4px;top:-6px;width:8px;height:calc(100% + 12px);cursor:col-resize;z-index:5}.col-resizer:hover{background:rgba(125,206,200,.35)}
+
+/* v12 Prospect Finder contact/type-count updates */
+.type-breakdown{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px}
+.type-chip{border:1px solid #d9e5f2;border-radius:14px;background:linear-gradient(180deg,#ffffff,#f5f9fe);padding:9px 10px;min-height:64px}
+.type-label{font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:#43576d;font-weight:900;line-height:1.1}
+.type-count{font-size:23px;font-weight:950;color:#0d4f75;line-height:1.1;margin-top:3px}
+.type-sub{font-size:10px;color:#667b91;margin-top:2px;line-height:1.2}
+@media(max-width:1100px){.type-breakdown{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:640px){.type-breakdown{grid-template-columns:1fr}}

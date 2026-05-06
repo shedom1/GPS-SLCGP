@@ -289,7 +289,8 @@ Example County Schools,Example School,100 Main St,Albany,Albany,GA,31701,Dougher
           <div class="col-2"><label>City Pop</label><input id="mCityPopulation" type="number"></div>
           <div class="col-2"><label>SAIPE %</label><input id="mSaipePercent" type="number" step="0.1"></div>
           <div class="col-3"><label>Phone</label><input id="mPhone"></div>
-          <div class="col-5"><label>Website</label><input id="mWebsite"></div>
+          <div class="col-3"><label>Email</label><input id="mEmail" type="email"></div>
+          <div class="col-4"><label>Website</label><input id="mWebsite"></div>
         </div>
         <div class="btnrow"><button class="primary" onclick="addManualSite()">Add Location</button><button onclick="document.getElementById('manualCard').remove()">Cancel</button></div>
       </div>
@@ -331,6 +332,7 @@ const TABLE_COLUMNS = [
   {key:'zip', label:'ZIP', w:72, type:'text'},
   {key:'county', label:'County', w:115, type:'text'},
   {key:'phone', label:'Phone', w:105, type:'text'},
+  {key:'email', label:'Email', w:150, type:'text'},
   {key:'website', label:'Website', w:135, type:'text'},
   {key:'countyFips', label:'County FIPS', w:82, type:'text'},
   {key:'sourceLocale', label:'Locale', w:70, type:'text'},
@@ -512,7 +514,7 @@ async function searchK12(){
 }
 function addK12Rows(rows){
   const mapped=rows.map(f=>{const a=f.attributes; const g=f.geometry||{}; return {
-    id:crypto.randomUUID(), include:true, type:'K-12', source:'NCES CCD Public School Characteristics', sourceId:a.NCESSCH||'', organization:a.LEA_NAME||'', siteName:a.SCH_NAME||'', address:[a.LSTREET1,a.LSTREET2].filter(Boolean).join(' '), city:a.LCITY||'', state:a.LSTATE||a.STABR||'', zip:a.LZIP||'', county:a.NMCNTY||'', countyFips:cleanCountyFips(a.CNTY,a.STABR), phone:a.PHONE||'', sourceLocale:a.ULOCALE||'', enrollment:a.MEMBER||a.TOTAL||'', designation:getDefaultDesignation(), contiguous:'Unknown', outsideNonRural:'Unknown', censusRural:'Unknown', cityPopulation:'', saipePercent:'', ruralityScore:null, economicScore:null, lat:g.y||a.LATCOD||'', lon:g.x||a.LONCOD||'', notes:''
+    id:crypto.randomUUID(), include:true, type:'K-12', source:'NCES CCD Public School Characteristics', sourceId:a.NCESSCH||'', organization:a.LEA_NAME||'', siteName:a.SCH_NAME||'', address:[a.LSTREET1,a.LSTREET2].filter(Boolean).join(' '), city:a.LCITY||'', state:a.LSTATE||a.STABR||'', zip:a.LZIP||'', county:a.NMCNTY||'', countyFips:cleanCountyFips(a.CNTY,a.STABR), phone:a.PHONE||'', email:pick(a,['EMAIL','E_MAIL','CONTACT_EMAIL','CONTACTEMAIL','SCHOOL_EMAIL','ADMIN_EMAIL']), website:pick(a,['WEBSITE','WEB_SITE','URL','WEBADDR','SCH_URL','SCHOOL_URL','WWW']), sourceLocale:a.ULOCALE||'', enrollment:a.MEMBER||a.TOTAL||'', designation:getDefaultDesignation(), contiguous:'Unknown', outsideNonRural:'Unknown', censusRural:'Unknown', cityPopulation:'', saipePercent:'', ruralityScore:null, economicScore:null, lat:g.y||a.LATCOD||'', lon:g.x||a.LONCOD||'', notes:''
   }}); addRows(mapped); setStatus(`<strong>${mapped.length}</strong> K-12 school sites added.`);
 }
 async function getK12DistrictFeature(leaId){
@@ -525,7 +527,7 @@ async function getK12DistrictFeature(leaId){
 function districtFeatureToSite(feature){
   if(!feature) return null;
   const a=feature.attributes||{}; const g=feature.geometry||{};
-  return {id:crypto.randomUUID(), include:true, type:'K-12 District Office', source:'NCES School District Characteristics', sourceId:a.LEAID||'', organization:a.LEA_NAME||'', siteName:(a.LEA_NAME ? `${a.LEA_NAME} District Office` : 'District Office'), address:[a.LSTREET1,a.LSTREET2].filter(Boolean).join(' '), city:a.LCITY||'', state:a.LSTATE||'', zip:a.LZIP||'', county:a.CONAME||'', countyFips:cleanCountyFips(a.COID,a.LSTATE), phone:a.PHONE||'', website:'', sourceLocale:a.LOCALE_TEXT||'', enrollment:a.MEMBER||'', designation:'Hub', contiguous:'Unknown', outsideNonRural:'Unknown', censusRural:'Unknown', cityPopulation:'', saipePercent:'', ruralityScore:null, economicScore:null, lat:a.Lat||g.y||'', lon:a.Long||g.x||'', notes:'District administrative office. Verify whether this is a Hub, Hub/End-User, or non-scored administrative location.'};
+  return {id:crypto.randomUUID(), include:true, type:'K-12 District Office', source:'NCES School District Characteristics', sourceId:a.LEAID||'', organization:a.LEA_NAME||'', siteName:(a.LEA_NAME ? `${a.LEA_NAME} District Office` : 'District Office'), address:[a.LSTREET1,a.LSTREET2].filter(Boolean).join(' '), city:a.LCITY||'', state:a.LSTATE||'', zip:a.LZIP||'', county:a.CONAME||'', countyFips:cleanCountyFips(a.COID,a.LSTATE), phone:a.PHONE||'', email:pick(a,['EMAIL','E_MAIL','CONTACT_EMAIL','CONTACTEMAIL','LEA_EMAIL','ADMIN_EMAIL']), website:pick(a,['WEBSITE','WEB_SITE','URL','WEBADDR','LEA_URL','LEA_WEBSITE','WWW']), sourceLocale:a.LOCALE_TEXT||'', enrollment:a.MEMBER||'', designation:'Hub', contiguous:'Unknown', outsideNonRural:'Unknown', censusRural:'Unknown', cityPopulation:'', saipePercent:'', ruralityScore:null, economicScore:null, lat:a.Lat||g.y||'', lon:a.Long||g.x||'', notes:'District administrative office. Verify whether this is a Hub, Hub/End-User, or non-scored administrative location.'};
 }
 async function addK12DistrictRow(leaId){
   setStatus('Looking up district office location...');
@@ -542,7 +544,7 @@ async function addK12DistrictAndSchoolRows(leaId, schoolRows){
   let districtSite=null;
   try{ districtSite=districtFeatureToSite(await getK12DistrictFeature(leaId)); }catch(e){ districtSite=null; }
   const schoolSites=schoolRows.map(f=>{const a=f.attributes; const g=f.geometry||{}; return {
-    id:crypto.randomUUID(), include:true, type:'K-12', source:'NCES CCD Public School Characteristics', sourceId:a.NCESSCH||'', organization:a.LEA_NAME||'', siteName:a.SCH_NAME||'', address:[a.LSTREET1,a.LSTREET2].filter(Boolean).join(' '), city:a.LCITY||'', state:a.LSTATE||a.STABR||'', zip:a.LZIP||'', county:a.NMCNTY||'', countyFips:cleanCountyFips(a.CNTY,a.STABR), phone:a.PHONE||'', sourceLocale:a.ULOCALE||'', enrollment:a.MEMBER||a.TOTAL||'', designation:getDefaultDesignation(), contiguous:'Unknown', outsideNonRural:'Unknown', censusRural:'Unknown', cityPopulation:'', saipePercent:'', ruralityScore:null, economicScore:null, lat:g.y||a.LATCOD||'', lon:g.x||a.LONCOD||'', notes:''
+    id:crypto.randomUUID(), include:true, type:'K-12', source:'NCES CCD Public School Characteristics', sourceId:a.NCESSCH||'', organization:a.LEA_NAME||'', siteName:a.SCH_NAME||'', address:[a.LSTREET1,a.LSTREET2].filter(Boolean).join(' '), city:a.LCITY||'', state:a.LSTATE||a.STABR||'', zip:a.LZIP||'', county:a.NMCNTY||'', countyFips:cleanCountyFips(a.CNTY,a.STABR), phone:a.PHONE||'', email:pick(a,['EMAIL','E_MAIL','CONTACT_EMAIL','CONTACTEMAIL','SCHOOL_EMAIL','ADMIN_EMAIL']), website:pick(a,['WEBSITE','WEB_SITE','URL','WEBADDR','SCH_URL','SCHOOL_URL','WWW']), sourceLocale:a.ULOCALE||'', enrollment:a.MEMBER||a.TOTAL||'', designation:getDefaultDesignation(), contiguous:'Unknown', outsideNonRural:'Unknown', censusRural:'Unknown', cityPopulation:'', saipePercent:'', ruralityScore:null, economicScore:null, lat:g.y||a.LATCOD||'', lon:g.x||a.LONCOD||'', notes:''
   }});
   addRows((districtSite?[districtSite]:[]).concat(schoolSites));
   setStatus(`<strong>${schoolSites.length + (districtSite?1:0)}</strong> K-12 location(s) added${districtSite ? ', including the district office as Hub.' : '. District office not found; use Add Manual Location if needed.'}`);
@@ -563,7 +565,7 @@ async function searchHigherEd(){
 }
 function addHigherEdRows(rows){
   const mapped=rows.map(f=>{const a=f.attributes; const g=f.geometry||{}; return {
-    id:crypto.randomUUID(), include:true, type:'Higher Ed', source:'IPEDS / Colleges & Universities Feature Layer', sourceId:a.UNITID||'', organization:a.F1SYSNAM||a.INSTNM||'', siteName:a.INSTNM||'', address:a.ADDR||'', city:a.CITY||'', state:a.STABBR||'', zip:a.ZIP||'', county:a.COUNTYNM||'', countyFips:cleanCountyFips(a.COUNTYCD,a.STABBR), phone:a.GENTELE||'', website:a.WEBADDR||'', sourceLocale:a.LOCALE||'', enrollment:'', designation:getDefaultDesignation(), contiguous:'Unknown', outsideNonRural:'Unknown', censusRural:'Unknown', cityPopulation:'', saipePercent:'', ruralityScore:null, economicScore:null, lat:g.y||a.LATITUDE||'', lon:g.x||a.LONGITUD||'', notes:''
+    id:crypto.randomUUID(), include:true, type:'Higher Ed', source:'IPEDS / Colleges & Universities Feature Layer', sourceId:a.UNITID||'', organization:a.F1SYSNAM||a.INSTNM||'', siteName:a.INSTNM||'', address:a.ADDR||'', city:a.CITY||'', state:a.STABBR||'', zip:a.ZIP||'', county:a.COUNTYNM||'', countyFips:cleanCountyFips(a.COUNTYCD,a.STABBR), phone:a.GENTELE||'', email:pick(a,['EMAIL','E_MAIL','CONTACT_EMAIL','ADMIN_EMAIL','FAIDEMAIL']), website:pick(a,['WEBADDR','WEBSITE','URL','ADMINURL','FAIDURL','APPLURL']), sourceLocale:a.LOCALE||'', enrollment:'', designation:getDefaultDesignation(), contiguous:'Unknown', outsideNonRural:'Unknown', censusRural:'Unknown', cityPopulation:'', saipePercent:'', ruralityScore:null, economicScore:null, lat:g.y||a.LATITUDE||'', lon:g.x||a.LONGITUD||'', notes:''
   }}); addRows(mapped); setStatus(`<strong>${mapped.length}</strong> higher-ed site(s) added.`);
 }
 
@@ -656,7 +658,7 @@ function hrsaToSite(obj){
   const siteName=pick(obj,['Site Name','Health Center Site Name','Name']);
   if(!siteName || !state) return null;
   const fips=cleanCountyFips(pick(obj,['County FIPS Code','County Equivalent FIPS Code','County Equivalent Code','County Code','County FIPS','Site County FIPS']), state);
-  return {id:crypto.randomUUID(), include:true, type:'Rural Health', source:'HRSA Health Center Service Delivery and Look-Alike Sites XLSX', sourceId:pick(obj,['Site ID','Site Number','BHCMIS ID','Grant Number','Health Center Number']), organization:pick(obj,['Health Center Name','Organization Name','Awardee Name']), siteName, address:pick(obj,['Site Address','Address','Street Address']), city:pick(obj,['Site City','City']), state, zip:pick(obj,['Site Postal Code','ZIP','Zip Code']), county:pick(obj,['County Equivalent Name','County','Site County']), countyFips:fips, phone:pick(obj,['Site Telephone Number','Phone','Telephone']), website:pick(obj,['Site Web Address','Website','Web Address']), sourceLocale:'', enrollment:'', designation:getDefaultDesignation(), contiguous:'Unknown', outsideNonRural:'Unknown', censusRural:'Unknown', cityPopulation:'', saipePercent:'', ruralityScore:null, economicScore:null, lat:pick(obj,['Latitude','Site Latitude','Site Latitude Number']), lon:pick(obj,['Longitude','Site Longitude','Site Longitude Number']), notes:'HRSA healthcare source; verify whether the site is an end-user, hub, or hub/end-user for the proposed telemedicine project.'};
+  return {id:crypto.randomUUID(), include:true, type:'Rural Health', source:'HRSA Health Center Service Delivery and Look-Alike Sites XLSX', sourceId:pick(obj,['Site ID','Site Number','BHCMIS ID','Grant Number','Health Center Number']), organization:pick(obj,['Health Center Name','Organization Name','Awardee Name']), siteName, address:pick(obj,['Site Address','Address','Street Address']), city:pick(obj,['Site City','City']), state, zip:pick(obj,['Site Postal Code','ZIP','Zip Code']), county:pick(obj,['County Equivalent Name','County','Site County']), countyFips:fips, phone:pick(obj,['Site Telephone Number','Phone','Telephone','Telephone Number']), email:pick(obj,['Site Email Address','Site Email','Email','Contact Email','E-mail','E-Mail Address']), website:pick(obj,['Site Web Address','Website','Web Address','URL','Site URL']), sourceLocale:'', enrollment:'', designation:getDefaultDesignation(), contiguous:'Unknown', outsideNonRural:'Unknown', censusRural:'Unknown', cityPopulation:'', saipePercent:'', ruralityScore:null, economicScore:null, lat:pick(obj,['Latitude','Site Latitude','Site Latitude Number']), lon:pick(obj,['Longitude','Site Longitude','Site Longitude Number']), notes:'HRSA healthcare source; verify whether the site is an end-user, hub, or hub/end-user for the proposed telemedicine project.'};
 }
 
 function addRows(rows){
@@ -678,7 +680,7 @@ function showManualSite(){
 function addManualSite(){
   const siteName=document.getElementById('mName').value.trim();
   if(!siteName){setStatus('Manual location needs a site/location name.'); return;}
-  addRows([{id:crypto.randomUUID(), include:true, type:document.getElementById('mType').value, source:'Manual', sourceId:'', organization:document.getElementById('mOrg').value, siteName, address:document.getElementById('mAddress').value, city:document.getElementById('mCity').value, state:document.getElementById('mState').value.toUpperCase(), zip:document.getElementById('mZip').value, county:document.getElementById('mCounty').value, countyFips:document.getElementById('mCountyFips').value, phone:document.getElementById('mPhone').value, website:document.getElementById('mWebsite').value, sourceLocale:document.getElementById('mLocale').value, enrollment:'', designation:document.getElementById('mDesignation').value, contiguous:'Unknown', outsideNonRural:'Unknown', censusRural:'Unknown', cityPopulation:document.getElementById('mCityPopulation').value, saipePercent:document.getElementById('mSaipePercent').value, ruralityScore:null, economicScore:null, lat:'', lon:'', description:'', notes:''}]);
+  addRows([{id:crypto.randomUUID(), include:true, type:document.getElementById('mType').value, source:'Manual', sourceId:'', organization:document.getElementById('mOrg').value, siteName, address:document.getElementById('mAddress').value, city:document.getElementById('mCity').value, state:document.getElementById('mState').value.toUpperCase(), zip:document.getElementById('mZip').value, county:document.getElementById('mCounty').value, countyFips:document.getElementById('mCountyFips').value, phone:document.getElementById('mPhone').value, email:document.getElementById('mEmail').value, website:document.getElementById('mWebsite').value, sourceLocale:document.getElementById('mLocale').value, enrollment:'', designation:document.getElementById('mDesignation').value, contiguous:'Unknown', outsideNonRural:'Unknown', censusRural:'Unknown', cityPopulation:document.getElementById('mCityPopulation').value, saipePercent:document.getElementById('mSaipePercent').value, ruralityScore:null, economicScore:null, lat:'', lon:'', description:'', notes:''}]);
   document.getElementById('manualCard').remove();
   setStatus('Manual location added. Run Enrich Census + SAIPE or complete missing scoring fields manually.');
 }
@@ -718,6 +720,7 @@ function renderTable(){
       <td><input value="${esc(s.zip||'')}" onchange="upd('${s.id}','zip',this.value)"></td>
       <td><input title="${esc(s.county)}" value="${esc(s.county)}" onchange="upd('${s.id}','county',this.value)"></td>
       <td><input title="${esc(s.phone||'')}" value="${esc(s.phone||'')}" onchange="upd('${s.id}','phone',this.value)"></td>
+      <td><input title="${esc(s.email||'')}" value="${esc(s.email||'')}" onchange="upd('${s.id}','email',this.value)"></td>
       <td><input title="${esc(s.website||'')}" value="${esc(s.website||'')}" onchange="upd('${s.id}','website',this.value)"></td>
       <td><input value="${esc(s.countyFips||'')}" onchange="upd('${s.id}','countyFips',this.value)"></td>
       <td><input value="${esc(s.sourceLocale||'')}" onchange="upd('${s.id}','sourceLocale',this.value)"></td>
@@ -936,7 +939,7 @@ function k12FeatureToSite(f){
     id:crypto.randomUUID(), include:false, type:'K-12', source:'NCES CCD Public School Characteristics', sourceId:a.NCESSCH||'',
     organization:a.LEA_NAME||'', siteName:a.SCH_NAME||'', address:[a.LSTREET1,a.LSTREET2].filter(Boolean).join(' '),
     city:a.LCITY||'', state:a.LSTATE||a.STABR||'', zip:a.LZIP||'', county:a.NMCNTY||'', countyFips:cleanCountyFips(a.CNTY,a.STABR),
-    phone:a.PHONE||'', website:'', sourceLocale:a.ULOCALE||'', enrollment:a.MEMBER||a.TOTAL||'', designation:'End-User',
+    phone:a.PHONE||'', email:pick(a,['EMAIL','E_MAIL','CONTACT_EMAIL','CONTACTEMAIL','SCHOOL_EMAIL','ADMIN_EMAIL']), website:pick(a,['WEBSITE','WEB_SITE','URL','WEBADDR','SCH_URL','SCHOOL_URL','WWW']), sourceLocale:a.ULOCALE||'', enrollment:a.MEMBER||a.TOTAL||'', designation:'End-User',
     contiguous:'Unknown', outsideNonRural:'Unknown', censusRural:'Unknown', cityPopulation:'', saipePercent:'', ruralityScore:null, economicScore:null,
     lat:g.y||a.LATCOD||'', lon:g.x||a.LONCOD||'', notes:'Partner radius result from official NCES school layer; review before including in the project.'
   });
@@ -946,7 +949,7 @@ function higherEdFeatureToSite(f){
   return finalizeSiteFields({
     id:crypto.randomUUID(), include:false, type:'Higher Ed', source:'IPEDS / Colleges & Universities Feature Layer', sourceId:a.UNITID||'',
     organization:a.F1SYSNAM||a.INSTNM||'', siteName:a.INSTNM||'', address:a.ADDR||'', city:a.CITY||'', state:a.STABBR||'', zip:a.ZIP||'',
-    county:a.COUNTYNM||'', countyFips:cleanCountyFips(a.COUNTYCD,a.STABBR), phone:a.GENTELE||'', website:a.WEBADDR||'', sourceLocale:a.LOCALE||'',
+    county:a.COUNTYNM||'', countyFips:cleanCountyFips(a.COUNTYCD,a.STABBR), phone:a.GENTELE||'', email:pick(a,['EMAIL','E_MAIL','CONTACT_EMAIL','ADMIN_EMAIL','FAIDEMAIL']), website:pick(a,['WEBADDR','WEBSITE','URL','ADMINURL','FAIDURL','APPLURL']), sourceLocale:a.LOCALE||'',
     enrollment:'', designation:'End-User', contiguous:'Unknown', outsideNonRural:'Unknown', censusRural:'Unknown', cityPopulation:'', saipePercent:'', ruralityScore:null, economicScore:null,
     lat:g.y||a.LATITUDE||'', lon:g.x||a.LONGITUD||'', notes:'Partner radius result from higher-ed source layer; review before including in the project.'
   });
@@ -1083,7 +1086,7 @@ function addSelectedPartnersToWorksheet(){addPartnerRowsToWorksheet(partnerResul
 function addHighPotentialPartnersToWorksheet(){addPartnerRowsToWorksheet(partnerResults.filter(isHighPotentialPartner));}
 function clearPartnerResults(){partnerResults=[]; renderPartnerTable(); setPartnerStatus('Partner list cleared.');}
 function exportPartnersCSV(){
-  const fields=['selected','fitBand','distanceMiles','type','organization','siteName','address','city','ruralityPlace','state','zip','county','countyFips','phone','website','sourceLocale','enrollment','cityPopulation','ruralityScore','saipePercent','economicScore','objectiveScore','description','source','sourceId','lat','lon','notes'];
+  const fields=['selected','fitBand','distanceMiles','type','organization','siteName','address','city','ruralityPlace','state','zip','county','countyFips','phone','email','website','sourceLocale','enrollment','cityPopulation','ruralityScore','saipePercent','economicScore','objectiveScore','description','source','sourceId','lat','lon','notes'];
   const csv=[fields.join(',')].concat(partnerResults.map(p=>fields.map(f=>csvCell(f==='fitBand'?partnerBand(p).label:p[f])).join(','))).join('\n');
   download('RUS_DLT_Partner_Radius_List.csv',csv,'text/csv');
 }
@@ -1109,11 +1112,11 @@ function importCSVText(text){
   const rows=parseCSV(text); if(rows.length<2){setStatus('CSV needs a header row and at least one data row.'); return;}
   const headers=rows[0]; const imported=[];
   rows.slice(1).forEach(r=>{const o=rowToObject(headers,r); const s={
-    id:crypto.randomUUID(), include:String(pick(o,['include','Include'])||'true').toLowerCase()!=='false', type:pick(o,['type','Type'])||'Other', source:pick(o,['source','Source'])||'CSV Import', sourceId:pick(o,['sourceId','ID','NCES ID','UnitID']), organization:pick(o,['organization','Organization','district','District']), siteName:pick(o,['siteName','Site Name','School Name','Institution','Name']), address:pick(o,['address','Address','Site Address','Street']), city:pick(o,['city','City','Site City','Postal City']), ruralityPlace:pick(o,['ruralityPlace','Rurality Place','Rurality Place/CDP','Town or Place Name','Census Place','CDP']), state:(pick(o,['state','State','STABR'])||'').toUpperCase(), zip:pick(o,['zip','ZIP','Postal Code']), county:pick(o,['county','County','County Name']), countyFips:pick(o,['countyFips','County FIPS','CNTY','COUNTYCD']), phone:pick(o,['phone','Phone']), website:pick(o,['website','Website']), sourceLocale:pick(o,['sourceLocale','Locale','ULOCALE','LOCALE']), enrollment:pick(o,['enrollment','Enrollment','MEMBER']), designation:normalizeDesignation(pick(o,['designation','Designation'])||'End-User'), contiguous:pick(o,['contiguous','Contiguous'])||'Unknown', outsideNonRural:pick(o,['outsideNonRural','Outside Non-Rural','DLT Map Outside Non-Rural'])||'Unknown', censusRural:pick(o,['censusRural','Census Rural'])||'Unknown', cityPopulation:pick(o,['cityPopulation','2020 Population','Census Population']), saipePercent:pick(o,['saipePercent','SAIPE Poverty %','Poverty %']), ruralityScore:null, economicScore:null, lat:pick(o,['lat','Latitude']), lon:pick(o,['lon','Longitude']), description:pick(o,['description','Description']), notes:pick(o,['notes','Notes'])}; if(s.siteName) imported.push(s);});
+    id:crypto.randomUUID(), include:String(pick(o,['include','Include'])||'true').toLowerCase()!=='false', type:pick(o,['type','Type'])||'Other', source:pick(o,['source','Source'])||'CSV Import', sourceId:pick(o,['sourceId','ID','NCES ID','UnitID']), organization:pick(o,['organization','Organization','district','District']), siteName:pick(o,['siteName','Site Name','School Name','Institution','Name']), address:pick(o,['address','Address','Site Address','Street']), city:pick(o,['city','City','Site City','Postal City']), ruralityPlace:pick(o,['ruralityPlace','Rurality Place','Rurality Place/CDP','Town or Place Name','Census Place','CDP']), state:(pick(o,['state','State','STABR'])||'').toUpperCase(), zip:pick(o,['zip','ZIP','Postal Code']), county:pick(o,['county','County','County Name']), countyFips:pick(o,['countyFips','County FIPS','CNTY','COUNTYCD']), phone:pick(o,['phone','Phone']), email:pick(o,['email','Email','Contact Email']), website:pick(o,['website','Website']), sourceLocale:pick(o,['sourceLocale','Locale','ULOCALE','LOCALE']), enrollment:pick(o,['enrollment','Enrollment','MEMBER']), designation:normalizeDesignation(pick(o,['designation','Designation'])||'End-User'), contiguous:pick(o,['contiguous','Contiguous'])||'Unknown', outsideNonRural:pick(o,['outsideNonRural','Outside Non-Rural','DLT Map Outside Non-Rural'])||'Unknown', censusRural:pick(o,['censusRural','Census Rural'])||'Unknown', cityPopulation:pick(o,['cityPopulation','2020 Population','Census Population']), saipePercent:pick(o,['saipePercent','SAIPE Poverty %','Poverty %']), ruralityScore:null, economicScore:null, lat:pick(o,['lat','Latitude']), lon:pick(o,['lon','Longitude']), description:pick(o,['description','Description']), notes:pick(o,['notes','Notes'])}; if(s.siteName) imported.push(s);});
   addRows(imported); setStatus(`<strong>${imported.length}</strong> CSV site rows imported.`);
 }
 function exportCSV(){
-  const fields=['include','type','source','sourceId','organization','siteName','address','city','ruralityPlace','state','zip','county','countyFips','phone','website','sourceLocale','enrollment','designation','contiguous','outsideNonRural','censusRural','cityPopulation','ruralityScore','saipePercent','economicScore','description','lat','lon','notes'];
+  const fields=['include','type','source','sourceId','organization','siteName','address','city','ruralityPlace','state','zip','county','countyFips','phone','email','website','sourceLocale','enrollment','designation','contiguous','outsideNonRural','censusRural','cityPopulation','ruralityScore','saipePercent','economicScore','description','lat','lon','notes'];
   const csv=[fields.join(',')].concat(sites.map(s=>fields.map(f=>csvCell(s[f])).join(','))).join('\n');
   download('RUS_DLT_FY2026_Site_Scoring_Worksheet.csv',csv,'text/csv');
 }
