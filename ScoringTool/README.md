@@ -168,3 +168,10 @@ Added `prospects.html` as a separate view so reps can search by state, optional 
 - Changed ArcGIS prospect searches to pull broader state/all-state source sets first, then apply county, city, agency, and address filters in the browser. This reduces missed records caused by overly narrow source queries.
 - Improved higher-ed/technical school retrieval by querying the Colleges & Universities Feature Layer with state/all-state scope first and then applying the local filters, rather than depending on complex server-side text filtering.
 - Added a source link for the Colleges & Universities Feature Layer on the Prospect Finder page.
+
+## v15 Update Notes
+
+- Added a visible working indicator on the Prospect Finder: a clock icon plus spinner now appears while the tool is searching source records and while it is adding Census place population and SAIPE poverty data.
+- The status line now shows enrichment progress such as `Adding Census population + SAIPE data... 250 / 1,000` so users know the page is still working.
+- Fixed the K-12 school-site query error (`Cannot perform query. Invalid query parameters.`) by simplifying ArcGIS source requests to attribute-only queries and removing geometry/centroid parameters that were not needed for scoring. NCES school latitude/longitude fields are already included in the source attributes.
+- Kept K-12 school sites optional because all-state school-building pulls can be very large. For complete district-level prospecting, start with K-12 Districts, HRSA Healthcare, and Higher Ed / Technical.
