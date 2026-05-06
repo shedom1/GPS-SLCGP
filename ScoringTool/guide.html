@@ -36,7 +36,7 @@
         <h2>What this tool is for</h2>
         <div class="body">
           <div class="callout warn"><strong>Important:</strong> This is a pre-application scoring and prospecting tool. It helps organize site addresses, Census place population, County SAIPE poverty, and provisional scores. USDA’s DLT map review and final application documentation still control the official score.</div>
-          <div class="button-row"><a class="button" href="index.html">Open the Scoring Tool</a><a class="button secondary" href="prospects.html">Open Prospect Finder</a><a class="button secondary" href="#steps">Jump to Step-by-Step</a><a class="button secondary" href="#definitions">Jump to Definitions</a></div>
+          <div class="button-row"><a class="button" href="index.html">Open the Scoring Tool</a><a class="button secondary" href="prospects.html">Open Prospect Finder</a><a class="button secondary" href="match.html">Open Match Calculator</a><a class="button secondary" href="#steps">Jump to Step-by-Step</a><a class="button secondary" href="#definitions">Jump to Definitions</a></div>
         </div>
       </section>
 
@@ -45,7 +45,7 @@
         <div class="body">
           <div class="step"><div class="step-num">1</div><div><strong>Choose the project type.</strong><p>Select Fixed, Hybrid, or Non-fixed. Most school district projects are Fixed unless the project also serves home-based, mobile, or changing end-user locations.</p></div></div>
           <div class="step"><div class="step-num">2</div><div><strong>Select the state and default site designation.</strong><p>For K-12 schools, End-User is usually the default. District offices are usually Hub unless they also receive end-user benefit.</p></div></div>
-          <div class="step"><div class="step-num">3</div><div><strong>Search and add the seed organization’s locations.</strong><p>Start with one school district, health center, college, or technical school. For K-12, use “Add district office + schools.” For healthcare, Georgia is the default state and the tool tries the HRSA XLSX source first. For higher ed, search the institution or add curated/manual locations.</p></div></div>
+          <div class="step"><div class="step-num">3</div><div><strong>Search and add the seed organization’s locations.</strong><p>Start with one school district, public charter school, health center, college, or technical school. For K-12, use “Add district office + schools.” For charter schools, use the Prospect Finder Charter Schools type or K-12 school-site list and verify the legal applicant/consortium role. For healthcare, Georgia is the default state and the tool tries the HRSA XLSX source first. For higher ed, search the institution or add curated/manual locations.</p></div></div>
           <div class="step"><div class="step-num">4</div><div><strong>Build a 50–100 mile partner radius list.</strong><p>Choose an anchor site from the seed organization, pick 50, 75, or 100 miles, and search official K-12, HRSA healthcare, and higher-ed sources for nearby partners. Partner descriptions are assembled only from returned source fields.</p></div></div>
           <div class="step"><div class="step-num">5</div><div><strong>Add only real candidate partners to the worksheet.</strong><p>Use the partner list as a prospecting screen. Added partners are placed in the worksheet as not included by default so they do not inflate scoring until reviewed and intentionally included.</p></div></div>
           <div class="step"><div class="step-num">6</div><div><strong>Add missing or special sites manually.</strong><p>Use Add Manual Location for district offices, consortium hubs, partner clinics, extension campuses, libraries, or other sites not returned by the data source.</p></div></div>
@@ -84,7 +84,7 @@
             <tbody>
               <tr><td>1. Pick a state</td><td>Default is Georgia, but reps can choose any state.</td><td>Large states may return many records; narrow by county or city for faster results.</td></tr>
               <tr><td>2. Optional county/city</td><td>Use county for a regional callout list, or city for a smaller target market.</td><td>County and city fields come from source datasets, so spelling may vary by source.</td></tr>
-              <tr><td>3. Choose prospect types</td><td>Select K-12 schools, HRSA healthcare, and/or Higher Ed / Technical sites.</td><td>The page lists source records only; it does not infer a partnership or project need.</td></tr>
+              <tr><td>3. Choose prospect types</td><td>Select K-12 districts, K-12 school sites, Charter Schools, HRSA healthcare, and/or Higher Ed / Technical sites.</td><td>The page lists source records only; it does not infer a partnership, legal eligibility, or project need.</td></tr>
               <tr><td>4. Set high-fit thresholds</td><td>Default high-fit is D-1 + D-2 objective score of 50+ out of 70, minimum SAIPE 20%, and population under 20,000 where available.</td><td>Rows marked Review may still be promising where the source indicates rurality but the Census place / DLT map needs manual review.</td></tr>
               <tr><td>5. Export or send to scoring</td><td>Export a CSV for callouts, or select rows and send them to the Scoring Tool.</td><td>Rows sent to the Scoring Tool are imported as not included, so they do not affect the project score until reviewed.</td></tr>
             </tbody>
@@ -137,6 +137,40 @@
             <div class="definition"><strong>Proxy Hub</strong><p>A hub used as the scoring proxy for non-fixed end users in Hybrid or Non-fixed projects. Use only when the project includes mobile/home/changing end-user locations.</p></div>
             <div class="definition"><strong>District Office</strong><p>Usually a Hub if it manages or originates services. Change it to Hub/End-User only if the office also receives direct end-user benefit from the funded equipment.</p></div>
           </div>
+        </div>
+      </section>
+
+      
+      <section class="card span-12">
+        <h2>Charter school eligibility guardrail</h2>
+        <div class="body">
+          <div class="callout"><strong>Practical answer:</strong> A public charter school can be a strong RUS DLT prospect or end-user site, but it is not automatically eligible solely because it is a charter school. Confirm the applicant structure, ownership of grant-funded equipment, SAM/UEI readiness, and whether the charter school is a public entity, nonprofit, part of an LEA, or part of a consortium.</div>
+          <table>
+            <thead><tr><th>Question</th><th>What to check before treating it as eligible</th></tr></thead>
+            <tbody>
+              <tr><td>Can the charter school apply directly?</td><td>Only if it is a legally organized entity with authority to contract with RUS and own/manage the grant-funded assets.</td></tr>
+              <tr><td>Can it participate as an end-user?</td><td>Yes, if the project delivers DLT-eligible educational or telemedicine services to rural residents/students and the site receives eligible equipment or direct benefit.</td></tr>
+              <tr><td>Could the district or consortium apply instead?</td><td>Often yes. Use this when the charter is part of a broader K-12 or regional hub-and-spoke network.</td></tr>
+              <tr><td>What should reps avoid saying?</td><td>Do not say “charter schools automatically qualify.” Say “charter schools may qualify depending on legal structure, project design, rurality, and documentation.”</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="card span-12">
+        <h2>Are the Scoring Tool and Prospect Finder using the same source files?</h2>
+        <div class="body">
+          <div class="callout"><strong>Yes — same source families, different workflows.</strong> The Scoring Tool starts with one project/applicant and builds a site worksheet. The Prospect Finder runs broader state/county/city screens across the same source families, then stages selected rows for the Scoring Tool as not included until reviewed.</div>
+          <table>
+            <thead><tr><th>Source family</th><th>Used in Scoring Tool</th><th>Used in Prospect Finder</th><th>Notes</th></tr></thead>
+            <tbody>
+              <tr><td>NCES Public School Characteristics</td><td>Yes</td><td>Yes</td><td>School-site rows, including public charter schools when the source identifies a charter flag.</td></tr>
+              <tr><td>NCES District Characteristics</td><td>Yes</td><td>Yes</td><td>District office / district-level prospect rows.</td></tr>
+              <tr><td>HRSA Health Center Service Delivery and Look-Alike Sites</td><td>Yes</td><td>Yes</td><td>Healthcare search defaults to GA and supports XLSX fallback upload.</td></tr>
+              <tr><td>Colleges & Universities Feature Layer</td><td>Yes</td><td>Yes</td><td>Higher ed and technical-school prospecting screen.</td></tr>
+              <tr><td>Census 2020 place population + SAIPE</td><td>Yes</td><td>Yes</td><td>Used for provisional D-1/D-2 screening; DLT map verification still required.</td></tr>
+            </tbody>
+          </table>
         </div>
       </section>
 

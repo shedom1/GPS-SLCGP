@@ -175,3 +175,22 @@ Added `prospects.html` as a separate view so reps can search by state, optional 
 - The status line now shows enrichment progress such as `Adding Census population + SAIPE data... 250 / 1,000` so users know the page is still working.
 - Fixed the K-12 school-site query error (`Cannot perform query. Invalid query parameters.`) by simplifying ArcGIS source requests to attribute-only queries and removing geometry/centroid parameters that were not needed for scoring. NCES school latitude/longitude fields are already included in the source attributes.
 - Kept K-12 school sites optional because all-state school-building pulls can be very large. For complete district-level prospecting, start with K-12 Districts, HRSA Healthcare, and Higher Ed / Technical.
+
+## v16 Update Notes
+
+- Reordered the Scoring Tool worksheet so the most important scoring fields are at the front of the table:
+  - D-1 Rurality
+  - D-2 Economic Need
+  - 2020 Place Population
+  - SAIPE Poverty %
+  - D-1 + D-2 Objective Score
+- Added **Charter School** as a K-12 prospect/site type.
+  - The tool classifies school-site records as Charter School when the NCES source record includes a charter indicator field.
+  - Charter rows can be manually added, imported by CSV, or staged from the Prospect Finder.
+  - Charter schools are not marked automatically eligible; the guide now explains that eligibility depends on legal applicant/consortium structure, rurality, project design, asset ownership, and required documentation.
+- Added a Charter Schools option to the Prospect Finder type filters.
+- Added Charter Schools to the Prospect Snapshot type-count breakout.
+- Updated the How-to Guide with:
+  - Charter school eligibility guardrails.
+  - A source-family crosswalk explaining that the Scoring Tool and Prospect Finder use the same source families, but in different workflows.
+- Updated the manual site template with a sample Charter School row.
