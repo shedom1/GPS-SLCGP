@@ -42,11 +42,12 @@
         <h2>Prospect Search Filters</h2>
         <div class="body">
           <div class="callout warn"><strong>Guardrail:</strong> This page is for prospecting. It ranks source records using available Census place population and county SAIPE data. Final D-1 Rurality still needs USDA DLT map verification for each actual project site. K-12 district searches use the NCES district layer; K-12 school-site searches use the NCES school layer.</div>
+          <div class="callout"><strong>All-states scan:</strong> Choose <em>ALL — Target score scan</em> in the State field or use the All States by Target Score button. For best speed, start with K-12 Districts, HRSA Healthcare, and Higher Ed / Technical; add K-12 school sites only when you need school-building-level records.</div>
           <div class="row">
-            <div class="col-3"><label>State</label><select id="pfState"></select></div>
+            <div class="col-3"><label>State / Scope</label><select id="pfState"></select></div>
             <div class="col-3"><label>County Filter</label><input id="pfCounty" placeholder="Optional, e.g. Dougherty" /></div>
             <div class="col-3"><label>City Filter</label><input id="pfCity" placeholder="Optional, e.g. Albany" /></div>
-            <div class="col-3"><label>Display Limit</label><input id="pfMax" type="number" value="5000" min="25" max="25000" step="25" /></div>
+            <div class="col-3"><label>Display Limit</label><input id="pfMax" type="number" value="5000" min="25" max="200000" step="25" /></div>
             <div class="col-6"><label>Agency / Organization Search</label><input id="pfAgency" placeholder="Optional, e.g. Huckabay, Phoebe, Technical College" /></div>
             <div class="col-6"><label>Address Search</label><input id="pfAddress" placeholder="Optional, e.g. County Rd 421, Main St, 76401" /></div>
             <div class="col-3"><label>Minimum Objective Score</label><input id="pfMinObjective" type="number" value="50" min="0" max="70" step="5" /></div>
@@ -64,6 +65,7 @@
           </div>
           <div class="btnrow">
             <button class="primary" onclick="findProspects()">Find Complete Prospects</button>
+            <button class="green" onclick="runAllStatesTargetScore()">All States by Target Score</button>
             <button class="ghost" onclick="clearProspects()">Clear Results</button>
             <button class="accent" onclick="showHrsaFallback()">HRSA Fallback Upload</button>
             <a class="button-link" href="https://data.hrsa.gov/DataDownload/DD_Files/Health_Center_Service_Delivery_and_LookAlike_Sites.xlsx" target="_blank">Download HRSA XLSX</a>
@@ -95,7 +97,7 @@
             <button class="green" onclick="sendSelectedToScoring()">Send Selected to Scoring Tool</button>
             <a class="button-link primary" href="index.html">Open Scoring Tool</a>
           </div>
-          <div class="callout ok" style="margin-top:12px"><strong>Recommended workflow:</strong> Search by state first, then narrow by county/city, agency/organization, or address. Export the prospect list for callouts, or send selected records to the scoring worksheet as non-included rows for later review.</div>
+          <div class="callout ok" style="margin-top:12px"><strong>Recommended workflow:</strong> Search by state first, or choose ALL for a target-score scan across states. Then narrow by county/city, agency/organization, or address. Export the prospect list for callouts, or send selected records to the scoring worksheet as non-included rows for later review.</div>
         </div>
       </div>
     </section>
@@ -122,11 +124,13 @@
         <a href="https://ruraldevelopment.maps.arcgis.com/apps/webappviewer/index.html?id=15a73830555645ae93d2fa773ed8e971" target="_blank"><strong>USDA DLT Map</strong><span>Required rurality / non-rural / contiguous verification.</span></a>
         <a href="https://data.hrsa.gov/DataDownload/DD_Files/Health_Center_Service_Delivery_and_LookAlike_Sites.xlsx" target="_blank"><strong>HRSA Health Center Sites XLSX</strong><span>Health Center Service Delivery and Look-Alike Sites dataset used for healthcare prospecting.</span></a>
         <a href="https://nces.ed.gov/programs/edge/Geographic/DistrictBoundaries" target="_blank"><strong>NCES School District Boundaries</strong><span>District-level source used for complete K-12 district prospect lists.</span></a>
+        <a href="https://hub.arcgis.com/datasets/fedmaps::colleges-and-universities/api" target="_blank"><strong>Colleges & Universities Feature Layer</strong><span>IPEDS/Living Atlas source used for higher-ed and technical school prospects.</span></a>
         <a href="https://api.census.gov/data/timeseries/poverty/saipe.html" target="_blank"><strong>Census SAIPE API</strong><span>County poverty rate estimates used for Economic Need scoring.</span></a>
       </div>
     </section>
   </main>
 <script>
+const ALL_STATE_VALUE='ALL';
 const STATE_FIPS={AL:'01',AK:'02',AZ:'04',AR:'05',CA:'06',CO:'08',CT:'09',DE:'10',DC:'11',FL:'12',GA:'13',HI:'15',ID:'16',IL:'17',IN:'18',IA:'19',KS:'20',KY:'21',LA:'22',ME:'23',MD:'24',MA:'25',MI:'26',MN:'27',MS:'28',MO:'29',MT:'30',NE:'31',NV:'32',NH:'33',NJ:'34',NM:'35',NY:'36',NC:'37',ND:'38',OH:'39',OK:'40',OR:'41',PA:'42',RI:'44',SC:'45',SD:'46',TN:'47',TX:'48',UT:'49',VT:'50',VA:'51',WA:'53',WV:'54',WI:'55',WY:'56'};
 const STATE_NAMES={AL:'Alabama',AK:'Alaska',AZ:'Arizona',AR:'Arkansas',CA:'California',CO:'Colorado',CT:'Connecticut',DE:'Delaware',DC:'District of Columbia',FL:'Florida',GA:'Georgia',HI:'Hawaii',ID:'Idaho',IL:'Illinois',IN:'Indiana',IA:'Iowa',KS:'Kansas',KY:'Kentucky',LA:'Louisiana',ME:'Maine',MD:'Maryland',MA:'Massachusetts',MI:'Michigan',MN:'Minnesota',MS:'Mississippi',MO:'Missouri',MT:'Montana',NE:'Nebraska',NV:'Nevada',NH:'New Hampshire',NJ:'New Jersey',NM:'New Mexico',NY:'New York',NC:'North Carolina',ND:'North Dakota',OH:'Ohio',OK:'Oklahoma',OR:'41',PA:'Pennsylvania',RI:'Rhode Island',SC:'South Carolina',SD:'South Dakota',TN:'Tennessee',TX:'Texas',UT:'Utah',VT:'Vermont',VA:'Virginia',WA:'Washington',WV:'West Virginia',WI:'Wisconsin',WY:'Wyoming'};
 STATE_NAMES.OR='Oregon';
@@ -138,7 +142,7 @@ let prospects=[]; let placeCache={}; let saipeCache={}; let hrsaLookupCache=null
 const COLS=[
   ['selected','Select',54,'bool'],['fitLabel','Fit',82,'text'],['objectiveScore','Obj.',60,'number'],['ruralityScore','D-1',55,'number'],['economicScore','D-2',55,'number'],['saipePercent','SAIPE %',72,'number'],['cityPopulation','2020 Pop',82,'number'],['type','Type',98,'text'],['organization','Organization / Entity',170,'text'],['siteName','Site',180,'text'],['address','Address',175,'text'],['city','City',90,'text'],['county','County',105,'text'],['state','State',48,'text'],['zip','ZIP',70,'text'],['phone','Phone',108,'text'],['email','Email',165,'text'],['website','Website',165,'text'],['sourceLocale','Locale',70,'text'],['description','Description from source fields',240,'text'],['source','Source',140,'text'],['map','Map',50,'text']
 ];
-function init(){const sel=document.getElementById('pfState');Object.keys(STATE_FIPS).forEach(abbr=>{const o=document.createElement('option');o.value=abbr;o.textContent=`${abbr} — ${STATE_NAMES[abbr]}`;sel.appendChild(o)});sel.value='GA';COLS.forEach(c=>columnWidths[c[0]]=c[2]);renderTable();updateMetrics();}
+function init(){const sel=document.getElementById('pfState');const all=document.createElement('option');all.value=ALL_STATE_VALUE;all.textContent='ALL — Target score scan';sel.appendChild(all);Object.keys(STATE_FIPS).forEach(abbr=>{const o=document.createElement('option');o.value=abbr;o.textContent=`${abbr} — ${STATE_NAMES[abbr]}`;sel.appendChild(o)});sel.value='GA';COLS.forEach(c=>columnWidths[c[0]]=c[2]);renderTable();updateMetrics();}
 function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
 function firstUrl(v){v=String(v||'').trim();if(!v)return '';const m=v.match(/https?:\/\/[^\s,;]+|www\.[^\s,;]+|[A-Za-z0-9.-]+\.[A-Za-z]{2,}[^\s,;]*/);return m?m[0]:v}
 function firstEmail(v){v=String(v||'').trim();const m=v.match(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/i);return m?m[0]:v}
@@ -155,7 +159,10 @@ function pick(o,keys){for(const k of keys){if(o[k]!==undefined&&String(o[k]).tri
 function buildDesc(s){const bits=[];if(s.type==='K-12 District'){bits.push('NCES public school district record');if(s.siteName)bits.push(`district office: ${s.siteName}`);if(s.sourceLocale)bits.push(`locale: ${s.sourceLocale}`);if(s.schoolCount)bits.push(`school count: ${s.schoolCount}`);if(s.enrollment)bits.push(`students: ${s.enrollment}`)}else if(s.type==='K-12'){bits.push('NCES public school record');if(s.organization)bits.push(`district: ${s.organization}`);if(s.sourceLocale)bits.push(`locale: ${s.sourceLocale}`);if(s.enrollment)bits.push(`enrollment: ${s.enrollment}`)}else if(s.type==='Rural Health'){bits.push('HRSA health center service delivery/look-alike site record');if(s.organization)bits.push(`health center: ${s.organization}`)}else if(s.type==='Higher Ed'){bits.push('Higher-ed institution/campus source record');if(s.sourceLocale)bits.push(`locale: ${s.sourceLocale}`)}if(s.county)bits.push(`county: ${s.county}`);if(s.city||s.state)bits.push(`location: ${[s.city,s.state].filter(Boolean).join(', ')}`);return bits.join('; ')+(bits.length?'.':'')}
 function siteHasCoords(s){return !isNaN(parseFloat(s.lat))&&!isNaN(parseFloat(s.lon))}
 function sourceLinkFor(s){if(siteHasCoords(s))return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(s.lat+','+s.lon)}`;return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent([s.address,s.city,s.state,s.zip].filter(Boolean).join(' '))}`}
-async function arcgisQueryAll(url,where,fields,cap=25000){let out=[],offset=0,page=2000;while(out.length<cap){const params=new URLSearchParams({where,outFields:fields,returnGeometry:'true',returnCentroid:'true',outSR:'4326',f:'json',resultRecordCount:String(Math.min(page,cap-out.length)),resultOffset:String(offset)});const res=await fetch(`${url}?${params.toString()}`);if(!res.ok)throw new Error('Source returned '+res.status);const data=await res.json();if(data.error)throw new Error(data.error.message||JSON.stringify(data.error));const features=data.features||[];out.push(...features);if(!data.exceededTransferLimit||!features.length)break;offset+=features.length;}return out}
+async function arcgisQueryAll(url,where,fields,cap=25000){let out=[],offset=0,page=2000;while(out.length<cap){const params=new URLSearchParams({where,outFields:fields,returnGeometry:'true',returnCentroid:'true',outSR:'4326',f:'json',resultRecordCount:String(Math.min(page,cap-out.length)),resultOffset:String(offset)});let data=null;try{const res=await fetch(`${url}?${params.toString()}`);if(!res.ok)throw new Error('GET '+res.status);data=await res.json()}catch(getErr){const res=await fetch(url,{method:'POST',body:params});if(!res.ok)throw new Error('Source returned '+res.status);data=await res.json()}if(data.error)throw new Error(data.error.message||JSON.stringify(data.error));const features=data.features||[];out.push(...features);if(!data.exceededTransferLimit||!features.length)break;offset+=features.length;}return out}
+function scopeWhere(field,st){return st===ALL_STATE_VALUE?'1=1':`${field}='${st}'`}
+function scopeLabel(st){return st===ALL_STATE_VALUE?'ALL STATES':st}
+function runAllStatesTargetScore(){document.getElementById('pfState').value=ALL_STATE_VALUE;document.getElementById('pfMode').value='high';document.getElementById('pfIncludeReview').checked=true;document.getElementById('pfK12Districts').checked=true;document.getElementById('pfHealthcare').checked=true;document.getElementById('pfHigherEd').checked=true;findProspects()}
 async function arcgisQuery(url,where,fields,count=2000){return arcgisQueryAll(url,where,fields,count)}
 function wherePart(field,val){return val?` AND UPPER(${field}) LIKE '%${sqlText(val).toUpperCase()}%'`:''}
 function whereOrPart(fields,val){if(!val)return '';const q=sqlText(val).toUpperCase();return ` AND (${fields.map(f=>`UPPER(${f}) LIKE '%${q}%'`).join(' OR ')})`}
@@ -171,43 +178,47 @@ async function findProspects(){
   const city=document.getElementById('pfCity').value.trim();
   const agency=document.getElementById('pfAgency').value.trim();
   const address=document.getElementById('pfAddress').value.trim();
-  const displayLimit=Math.max(25,Math.min(25000,parseInt(document.getElementById('pfMax').value)||5000));
+  const displayLimit=Math.max(25,Math.min(200000,parseInt(document.getElementById('pfMax').value)||5000));
   const useK12Districts=document.getElementById('pfK12Districts').checked;
   const useK12=document.getElementById('pfK12').checked;
   const useH=document.getElementById('pfHealthcare').checked;
   const useHE=document.getElementById('pfHigherEd').checked;
   if(!useK12Districts&&!useK12&&!useH&&!useHE){setStatus('Select at least one prospect type.');return}
   prospects=[];renderTable();
-  setStatus(`Searching complete source record sets for <strong>${st}</strong>${county?`, county: ${esc(county)}`:''}${city?`, city: ${esc(city)}`:''}${agency?`, agency/org: ${esc(agency)}`:''}${address?`, address: ${esc(address)}`:''}...`);
-  let rows=[];const errors=[];const sourceCap=25000;
+  setStatus(`Searching complete source record sets for <strong>${scopeLabel(st)}</strong>${county?`, county: ${esc(county)}`:''}${city?`, city: ${esc(city)}`:''}${agency?`, agency/org: ${esc(agency)}`:''}${address?`, address: ${esc(address)}`:''}...`);
+  let rows=[];const errors=[];const sourceCap=st===ALL_STATE_VALUE?200000:25000;
   if(useK12Districts){
     try{
       const f='*';
-      let where=`LSTATE='${st}'`+wherePart('CONAME',county)+wherePart('LCITY',city)+whereOrPart(['LEA_NAME'],agency)+whereOrPart(['LSTREET1','LSTREET2','LCITY','LZIP'],address);
+      let where=scopeWhere('LSTATE',st);
       rows.push(...(await arcgisQueryAll(NCES_DISTRICTS,where,f,sourceCap)).map(k12DistrictToSite));
     }catch(e){errors.push('K-12 district layer failed: '+e.message)}
   }
   if(useK12){
     try{
       const f='*';
-      let where=`STABR='${st}'`+wherePart('NMCNTY',county)+wherePart('LCITY',city)+whereOrPart(['LEA_NAME','SCH_NAME'],agency)+whereOrPart(['LSTREET1','LSTREET2','LCITY','LZIP'],address);
+      let where=scopeWhere('STABR',st);
       rows.push(...(await arcgisQueryAll(NCES_SCHOOLS,where,f,sourceCap)).map(k12ToSite));
     }catch(e){errors.push('K-12 school layer failed: '+e.message)}
   }
   if(useHE){
     try{
       const f='*';
-      let where=`STABBR='${st}'`+wherePart('COUNTYNM',county)+wherePart('CITY',city)+whereOrPart(['INSTNM','F1SYSNAM'],agency)+whereOrPart(['ADDR','CITY','ZIP'],address);
+      let where=scopeWhere('STABBR',st);
       rows.push(...(await arcgisQueryAll(HIGHER_ED,where,f,sourceCap)).map(higherToSite));
     }catch(e){errors.push('Higher-ed failed: '+e.message)}
   }
   if(useH){
     try{
       const items=await getHRSALookupItems();
-      rows.push(...items.filter(x=>x.state===st).filter(x=>!county||norm(x.county).includes(norm(county))).filter(x=>!city||norm(x.city).includes(norm(city))).filter(x=>prospectMatchesTextFilters(x,agency,address)).map(x=>({...x,id:crypto.randomUUID()})));
+      rows.push(...items.filter(x=>st===ALL_STATE_VALUE||x.state===st).filter(x=>!county||norm(x.county).includes(norm(county))).filter(x=>!city||norm(x.city).includes(norm(city))).filter(x=>prospectMatchesTextFilters(x,agency,address)).map(x=>({...x,id:crypto.randomUUID()})));
     }catch(e){errors.push(e.message)}
   }
-  rows=dedupe(rows).filter(r=>prospectMatchesTextFilters(r,agency,address));
+  rows=dedupe(rows)
+    .filter(r=>st===ALL_STATE_VALUE||String(r.state||'').toUpperCase()===st)
+    .filter(r=>!county||norm(r.county).includes(norm(county)))
+    .filter(r=>!city||norm(r.city).includes(norm(city)))
+    .filter(r=>prospectMatchesTextFilters(r,agency,address));
   const sourceCount=rows.length;
   setStatus(`Found <strong>${sourceCount}</strong> source record(s) before eligibility filters. Enriching with Census place population and SAIPE...`);
   for(const r of rows){
@@ -225,7 +236,7 @@ async function findProspects(){
 }
 function k12DistrictToSite(f){const a=f.attributes||{},g=f.geometry||{},cent=f.centroid||{};const s={id:crypto.randomUUID(),selected:false,include:false,type:'K-12 District',source:'NCES CCD School District Characteristics',sourceId:a.LEAID||'',organization:a.LEA_NAME||'',siteName:a.LEA_NAME||'',address:[a.LSTREET1,a.LSTREET2].filter(Boolean).join(' '),city:a.LCITY||'',ruralityPlace:'',state:a.LSTATE||'',zip:a.LZIP||'',county:a.CONAME||'',countyFips:cleanCountyFips(a.COID,a.LSTATE),phone:pick(a,['PHONE','TEL','TELEPHONE']),email:pick(a,['EMAIL','E_MAIL','CONTACT_EMAIL','CONTACTEMAIL','LEA_EMAIL','ADMIN_EMAIL']),website:pick(a,['WEBSITE','WEB_SITE','URL','WEBADDR','LEA_URL','LEA_WEBSITE','WWW']),sourceLocale:a.LOCALE_TEXT||'',enrollment:a.MEMBER||'',schoolCount:a.SCH||'',designation:'Hub',contiguous:'Unknown',outsideNonRural:'Unknown',censusRural:'Unknown',cityPopulation:'',saipePercent:'',ruralityScore:null,economicScore:null,lat:g.y||cent.y||a.Lat||'',lon:g.x||cent.x||a.Long||'',notes:'Prospect Finder result from official NCES district layer; district office imported as a potential hub/anchor. Add specific school sites before final scoring.'};s.description=buildDesc(s);return s}
 function k12ToSite(f){const a=f.attributes||{},g=f.geometry||{};const s={id:crypto.randomUUID(),selected:false,include:false,type:'K-12',source:'NCES CCD Public School Characteristics',sourceId:a.NCESSCH||'',organization:a.LEA_NAME||'',siteName:a.SCH_NAME||'',address:[a.LSTREET1,a.LSTREET2].filter(Boolean).join(' '),city:a.LCITY||'',ruralityPlace:'',state:a.LSTATE||a.STABR||'',zip:a.LZIP||'',county:a.NMCNTY||'',countyFips:cleanCountyFips(a.CNTY,a.STABR),phone:pick(a,['PHONE','TEL','TELEPHONE']),email:pick(a,['EMAIL','E_MAIL','CONTACT_EMAIL','CONTACTEMAIL','SCHOOL_EMAIL','ADMIN_EMAIL']),website:pick(a,['WEBSITE','WEB_SITE','URL','WEBADDR','SCH_URL','SCHOOL_URL','WWW']),sourceLocale:a.ULOCALE||'',enrollment:a.MEMBER||a.TOTAL||'',designation:'End-User',contiguous:'Unknown',outsideNonRural:'Unknown',censusRural:'Unknown',cityPopulation:'',saipePercent:'',ruralityScore:null,economicScore:null,lat:g.y||a.LATCOD||'',lon:g.x||a.LONCOD||'',notes:'Prospect Finder result from official NCES school layer; verify DLT map and site role before scoring.'};s.description=buildDesc(s);return s}
-function higherToSite(f){const a=f.attributes||{},g=f.geometry||{};const s={id:crypto.randomUUID(),selected:false,include:false,type:'Higher Ed',source:'IPEDS / Colleges & Universities Feature Layer',sourceId:a.UNITID||'',organization:a.F1SYSNAM||a.INSTNM||'',siteName:a.INSTNM||'',address:a.ADDR||'',city:a.CITY||'',ruralityPlace:'',state:a.STABBR||'',zip:a.ZIP||'',county:a.COUNTYNM||'',countyFips:cleanCountyFips(a.COUNTYCD,a.STABBR),phone:pick(a,['GENTELE','PHONE','TELEPHONE']),email:pick(a,['EMAIL','E_MAIL','CONTACT_EMAIL','ADMIN_EMAIL','FAIDEMAIL']),website:pick(a,['WEBADDR','WEBSITE','URL','ADMINURL','FAIDURL','APPLURL']),sourceLocale:a.LOCALE||'',enrollment:'',designation:'End-User',contiguous:'Unknown',outsideNonRural:'Unknown',censusRural:'Unknown',cityPopulation:'',saipePercent:'',ruralityScore:null,economicScore:null,lat:g.y||a.LATITUDE||'',lon:g.x||a.LONGITUD||'',notes:'Prospect Finder result from higher-ed source layer; verify DLT map and site role before scoring.'};s.description=buildDesc(s);return s}
+function higherToSite(f){const a=f.attributes||{},g=f.geometry||{};const s={id:crypto.randomUUID(),selected:false,include:false,type:'Higher Ed',source:'IPEDS / ArcGIS Colleges and Universities Feature Layer',sourceId:a.UNITID||'',organization:a.F1SYSNAM||a.INSTNM||'',siteName:a.INSTNM||'',address:a.ADDR||'',city:a.CITY||'',ruralityPlace:'',state:a.STABBR||'',zip:a.ZIP||'',county:a.COUNTYNM||'',countyFips:cleanCountyFips(a.COUNTYCD,a.STABBR),phone:pick(a,['GENTELE','PHONE','TELEPHONE']),email:pick(a,['EMAIL','E_MAIL','CONTACT_EMAIL','ADMIN_EMAIL','FAIDEMAIL']),website:pick(a,['WEBADDR','WEBSITE','URL','ADMINURL','FAIDURL','APPLURL']),sourceLocale:a.LOCALE||'',enrollment:'',designation:'End-User',contiguous:'Unknown',outsideNonRural:'Unknown',censusRural:'Unknown',cityPopulation:'',saipePercent:'',ruralityScore:null,economicScore:null,lat:g.y||a.LATITUDE||'',lon:g.x||a.LONGITUD||'',notes:'Prospect Finder result from higher-ed source layer; verify DLT map and site role before scoring.'};s.description=buildDesc(s);return s}
 function hrsaToSite(o){const state=(pick(o,['Site State Abbreviation','Site State','State','State Abbreviation'])||'').toUpperCase();const siteName=pick(o,['Site Name','Health Center Site Name','Name']);if(!siteName||!state)return null;const fips=cleanCountyFips(pick(o,['County FIPS Code','County Equivalent FIPS Code','County Equivalent Code','County Code','County FIPS','Site County FIPS']),state);const s={id:crypto.randomUUID(),selected:false,include:false,type:'Rural Health',source:'HRSA Health Center Service Delivery and Look-Alike Sites XLSX',sourceId:pick(o,['Site ID','Site Number','BHCMIS ID','Grant Number','Health Center Number']),organization:pick(o,['Health Center Name','Organization Name','Awardee Name']),siteName,address:pick(o,['Site Address','Address','Street Address']),city:pick(o,['Site City','City']),ruralityPlace:'',state,zip:pick(o,['Site Postal Code','ZIP','Zip Code']),county:pick(o,['County Equivalent Name','County','Site County']),countyFips:fips,phone:pick(o,['Site Telephone Number','Phone','Telephone','Telephone Number']),email:pick(o,['Site Email Address','Site Email','Email','Contact Email','E-mail','E-Mail Address']),website:pick(o,['Site Web Address','Website','Web Address','URL','Site URL']),sourceLocale:'',enrollment:'',designation:'End-User',contiguous:'Unknown',outsideNonRural:'Unknown',censusRural:'Unknown',cityPopulation:'',saipePercent:'',ruralityScore:null,economicScore:null,lat:pick(o,['Latitude','Site Latitude','Site Latitude Number']),lon:pick(o,['Longitude','Site Longitude','Site Longitude Number']),notes:'Prospect Finder result from HRSA source; verify telemedicine use, site role, and DLT map before scoring.'};s.description=buildDesc(s);return s}
 async function getHRSALookupItems(){if(hrsaLookupCache?.length)return hrsaLookupCache;if(!window.XLSX)throw new Error('HRSA needs the XLSX fallback upload because the XLSX parser did not load.');try{const res=await fetch(HRSA_XLSX,{cache:'no-store'});if(!res.ok)throw new Error('HTTP '+res.status);const buf=await res.arrayBuffer();const wb=XLSX.read(buf,{type:'array'});const items=workbookToHRSASites(wb);if(!items.length)throw new Error('No usable HRSA rows found.');hrsaLookupCache=items;return items}catch(e){throw new Error('HRSA live data could not load. Download the HRSA XLSX and upload it using HRSA Fallback Upload.')}}
 function workbookToHRSASites(wb){let best={score:-1,objects:[],sheetName:''};wb.SheetNames.forEach(name=>{const matrix=XLSX.utils.sheet_to_json(wb.Sheets[name],{header:1,defval:'',raw:false});if(!matrix.length)return;let headerIndex=matrix.findIndex(r=>{const t=r.map(x=>String(x||'').toLowerCase()).join(' | ');return(t.includes('site name')||t.includes('health center name'))&&(t.includes('state')||t.includes('site state'))});if(headerIndex<0)headerIndex=0;const headers=matrix[headerIndex].map(h=>String(h||'').trim());const objects=matrix.slice(headerIndex+1).map(row=>{const o={};headers.forEach((h,i)=>{if(h)o[h]=row[i]??''});return o}).filter(o=>Object.values(o).some(v=>String(v).trim()!==''));const score=objects.length+headers.filter(h=>/site|health|center|state|county|address|phone|web/i.test(h)).length*1000;if(score>best.score)best={score,objects,sheetName:name}});return best.objects.map(hrsaToSite).filter(Boolean)}

@@ -159,3 +159,12 @@ Added `prospects.html` as a separate view so reps can search by state, optional 
 - Added **Address Search** to the Prospect Finder.
   - Searches source address fields, city, ZIP, and visible address text where available.
 - Agency/address filters are source-based and post-filtered again after source retrieval so the tool does not invent or infer entities that are not present in the public source records.
+
+## v14 Update Notes
+
+- Prospect Finder now includes an **ALL — Target score scan** state/scope option.
+- Added an **All States by Target Score** button that sets the Prospect Finder to a high-fit, cross-state scan using the current target score settings.
+- Increased the Display Limit ceiling to 200,000 for large scans. For best performance, start with K-12 Districts, HRSA Healthcare, and Higher Ed / Technical; add K-12 school sites only when building site-level lists.
+- Changed ArcGIS prospect searches to pull broader state/all-state source sets first, then apply county, city, agency, and address filters in the browser. This reduces missed records caused by overly narrow source queries.
+- Improved higher-ed/technical school retrieval by querying the Colleges & Universities Feature Layer with state/all-state scope first and then applying the local filters, rather than depending on complex server-side text filtering.
+- Added a source link for the Colleges & Universities Feature Layer on the Prospect Finder page.
