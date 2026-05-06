@@ -4,8 +4,11 @@ GitHub Pages-ready static HTML tool for preliminary FY2026 USDA RUS Distance Lea
 
 ## Files
 
-- `index.html` — high-tech/professional scoring and partner radius workspace.
+- `index.html` — Solutionz-branded scoring and partner radius workspace.
+- `prospects.html` — complete source-based Prospect Finder for state/county/city screening.
+- `match.html` — RUS DLT Match Calculator view for grant/match scenario planning.
 - `guide.html` — standalone how-to guide and definitions page, accessible from the homepage/header button.
+- `brand.css` — shared Solutionz-inspired style overrides based on the uploaded brand guide.
 - `sample_manual_sites.csv` — manual import template with example rows.
 
 ## What it does
@@ -80,8 +83,9 @@ The partner finder is intentionally conservative:
 
 ## Design updates in this version
 
-- Reworked the page into a more modern, high-tech, professional interface.
-- Added a dark gradient hero/header with navigation buttons.
+- Reworked the page into a more professional Solutionz-branded interface using Solutionz Blue, Navy, Aqua, white, and clean business typography from the brand guide.
+- Added a shared `brand.css` file so the scoring, prospecting, guide, and match pages have a consistent visual system.
+- Added a polished hero/header with navigation buttons.
 - Added a dedicated `guide.html` page with:
   - Fixed vs Hybrid vs Non-fixed explanations.
   - Hub, End-User, Hub/End-User, and Proxy Hub definitions.
@@ -123,3 +127,17 @@ Upload the folder contents to your GitHub Pages repo. Set the Pages root to the 
 ## v10 update — Prospect Finder
 
 Added `prospects.html` as a separate view so reps can search by state, optional county, and optional city to find highly eligible K-12, healthcare, and higher-ed/technical prospects. The view screens source records using provisional D-1 Rurality and D-2 Economic Need, supports HRSA XLSX fallback upload, exports a prospect CSV, and can stage selected records for import into the main scoring worksheet as non-included rows. Descriptions are assembled only from source fields; the tool does not invent contacts, service needs, partnerships, or eligibility facts.
+
+
+## v11 update — Complete Prospect Finder + Match Calculator
+
+- Updated the Prospect Finder so K-12 district searches use the NCES School District Characteristics layer rather than relying only on school-site records. This is intended to support complete district-level prospect lists for state searches such as AK and GA.
+- Added `arcgisQueryAll()` pagination so the tool retrieves all matching source records before applying eligibility filters and display limits. The previous workflow could effectively cut off large states by applying the result limit too early.
+- Changed the Prospect Finder control from **Max Results** to **Display Limit**. The tool now screens the full source result set, then only limits how many filtered rows are shown.
+- Added a separate **K-12 districts** checkbox, checked by default, and made **K-12 school sites** optional.
+- Added `match.html`, a third view for Match Calculator planning:
+  - How much match do I need?
+  - I only have this much match money — what grant amount can it support?
+  - I can match at this percentage — is that enough?
+  - Where can the applicant look for match money?
+- The Match Calculator includes grant-range checks, minimum 15% match calculations, gap/surplus, project total, scenario buttons, and copyable summary output.

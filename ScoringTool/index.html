@@ -43,6 +43,7 @@
     @media print{body{background:#fff}.app-header,.tabs,.btnrow,.no-print,.card.controls{display:none!important}main{max-width:none;margin:0;padding:0}.card{box-shadow:none;border:0;border-radius:0}.table-wrap{max-height:none;overflow:visible;border:0}table{font-size:9px;min-width:0}th,td{padding:4px}.grid{display:block}.metrics{grid-template-columns:repeat(5,1fr)}input,select{border:0;padding:0;background:transparent}.callout{border:1px solid #ddd}}
   </style>
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <link rel="stylesheet" href="brand.css" />
 </head>
 <body>
   <header class="app-header">
@@ -54,6 +55,7 @@
       <nav class="nav-actions" aria-label="Primary navigation">
         <a class="nav-button" href="index.html">Scoring Tool</a>
         <a class="nav-button" href="prospects.html">Prospect Finder</a>
+        <a class="nav-button" href="match.html">Match Calculator</a>
         <a class="nav-button" href="guide.html">How to Use Guide</a>
         <a class="nav-button" href="https://ruraldevelopment.maps.arcgis.com/apps/webappviewer/index.html?id=15a73830555645ae93d2fa773ed8e971" target="_blank">USDA DLT Map</a>
         <a class="nav-button" href="https://www.rd.usda.gov/programs-services/telecommunications-programs/distance-learning-telemedicine-grants" target="_blank">USDA FY2026 Resources</a>
@@ -94,6 +96,7 @@
             <a class="button-link" href="https://data.hrsa.gov/DataDownload/DD_Files/Health_Center_Service_Delivery_and_LookAlike_Sites.xlsx" target="_blank">Download HRSA XLSX</a>
             <button class="ghost" onclick="showManualSite()">Add Manual Location</button>
             <a class="button-link primary" href="prospects.html">Open Prospect Finder</a>
+            <a class="button-link primary" href="match.html">Open Match Calculator</a>
             <a class="button-link primary" href="guide.html">Open How-to Guide</a>
           </div>
           <div id="searchStatus" class="status"></div>
@@ -120,6 +123,7 @@
             <button onclick="exportCSV()">Export CSV</button>
             <button onclick="downloadJSON()">Export JSON</button>
             <a class="button-link" href="prospects.html">Prospect Finder</a>
+            <a class="button-link" href="match.html">Match Calculator</a>
             <a class="button-link" href="guide.html">Guide</a>
           </div>
           <div id="scoreWarnings" class="status"></div>
