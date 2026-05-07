@@ -205,3 +205,11 @@ Added `prospects.html` as a separate view so reps can search by state, optional 
 - Added a clock/progress message during scoring enrichment so users know the tool is still adding Census population and SAIPE data.
 
 Final D-1 Rurality still requires USDA DLT map verification before relying on the score in an application.
+
+## v18 Update Notes
+- Fixed the Scoring Tool K-12/NCES flow so the search starts with the **NCES district layer** first, then pulls all school sites by LEAID. This avoids the school-layer invalid query parameter problem during the initial district lookup.
+- Added an all-fields fallback for ArcGIS queries and paginated NCES requests so larger district/site lists are less likely to be cut off or fail because of a changed source field list.
+- Added a visible **# Schools** field to the scoring table, manual entry form, CSV export, and import mappings. The field is populated from the NCES district `SCH` / School Count field when available.
+- Improved NCES Excel/CSV import detection by scanning for the best header row instead of assuming the first row is always the header.
+- Improved field matching for uploaded files so simple headers like `City`, `County`, `State`, `School Count`, and `# Schools` map more reliably.
+- Tightened the Scoring Tool start area text and guardrail callout to reduce screen clutter.
