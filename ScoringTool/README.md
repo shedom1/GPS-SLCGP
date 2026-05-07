@@ -194,3 +194,14 @@ Added `prospects.html` as a separate view so reps can search by state, optional 
   - Charter school eligibility guardrails.
   - A source-family crosswalk explaining that the Scoring Tool and Prospect Finder use the same source families, but in different workflows.
 - Updated the manual site template with a sample Charter School row.
+
+## v17 Update Notes
+- Tightened the Scoring Tool start screen and moved the partner-radius workflow into a collapsible section so the scoring worksheet is less cluttered.
+- Added **Auto-enrich + score** on add/import. When enabled, newly added rows automatically look up Census 2020 place population and 2024 county SAIPE data, then calculate row-level **D-1 Rurality**, **D-2 Economic Need**, and **D-1 + D-2 Total**.
+- Fixed the scoring table refresh order so D-1, D-2, population, SAIPE, and total scores display immediately after lookup/enrichment instead of waiting for another refresh.
+- Expanded the Project Site import to accept **CSV, XLSX, and XLS** files.
+- Added source-file import detection for NCES/CCD school exports, NCES/CCD district exports, higher-ed/IPEDS exports, HRSA health center files, and manual site templates.
+- Added downloadable **NCES Import Notes** from the Import/Templates tab.
+- Added a clock/progress message during scoring enrichment so users know the tool is still adding Census population and SAIPE data.
+
+Final D-1 Rurality still requires USDA DLT map verification before relying on the score in an application.

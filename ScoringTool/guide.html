@@ -111,6 +111,19 @@
       </section>
 
       <section class="card span-12">
+        
+        <h2>Scoring Tool import + auto-score workflow</h2>
+        <div class="body">
+          <div class="callout"><strong>Use the Scoring Tool for project-specific locations.</strong> Search or import the locations that may actually be included in one DLT application. For broad statewide prospecting, use the Prospect Finder first, then send selected records into the Scoring Tool.</div>
+          <ol>
+            <li>Keep <strong>Auto-enrich + score</strong> checked when adding or importing rows.</li>
+            <li>Upload a manual site file, NCES/CCD school export, NCES/CCD district export, higher-ed/IPEDS file, or HRSA file as CSV/XLSX/XLS.</li>
+            <li>The tool maps available source fields into the worksheet, then looks up Census 2020 place population and 2024 county SAIPE where possible.</li>
+            <li>Review the front scoring columns: D-1 Rurality, D-2 Economic Need, 2020 Pop, SAIPE %, and D-1+D-2 Total.</li>
+            <li>Before relying on the score, verify the DLT map fields and correct the Rurality Place/CDP if a mailing city is not the actual rurality community.</li>
+          </ol>
+        </div>
+
         <h2>Healthcare workflow — GA default + HRSA XLSX fallback</h2>
         <div class="body">
           <div class="callout"><strong>Default healthcare source:</strong> The Healthcare button uses HRSA Health Center Service Delivery and Look-Alike Sites and now tries the official XLSX file first. The scoring workspace opens with Georgia selected, so leaving the search field blank will load the Georgia healthcare list first. Use a search term when you want to narrow the list by health center, clinic/site name, city, county, or address.</div>
