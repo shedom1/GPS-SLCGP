@@ -41,7 +41,7 @@
       <div class="card controls">
         <h2>Prospect Search Filters</h2>
         <div class="body">
-          <div class="callout warn"><strong>Guardrail:</strong> This page is for prospecting. It ranks source records using available Census place population and county SAIPE data. Final D-1 Rurality still needs USDA DLT map verification for each actual project site. K-12 district searches use the NCES district layer; K-12 school-site searches use the NCES school layer.</div>
+          <div class="callout warn"><strong>Guardrail:</strong> This page is for prospecting. It ranks source records using available Census place population and county SAIPE data. Final D-1 Rurality still needs USDA DLT map verification for each actual project site. K-12 district searches use the bundled ELSI/NCES 2025 district CSV with websites and # Schools; K-12 school-site searches use the NCES school layer.</div>
           <div class="callout"><strong>Charter schools:</strong> Public charter schools can be screened here as potential K-12 end-user sites. They are not automatically eligible just because they are charter schools; the applicant must still be an eligible legal entity or part of an eligible consortium, operate or serve a rural community facility/residents, and have a DLT-eligible distance learning or telemedicine project.</div>
           <div class="callout"><strong>All-states scan:</strong> Choose <em>ALL — Target score scan</em> in the State field or use the All States by Target Score button. For best speed, start with K-12 Districts, HRSA Healthcare, and Higher Ed / Technical; add K-12 school sites only when you need school-building-level records.</div>
           <div class="row">
@@ -126,7 +126,7 @@
         <a href="https://www.rd.usda.gov/programs-services/telecommunications-programs/distance-learning-telemedicine-grants" target="_blank"><strong>USDA RUS DLT FY2026 Resources</strong><span>Application guide, sample worksheets, checklist, SAIPE poverty data, DLT map.</span></a>
         <a href="https://ruraldevelopment.maps.arcgis.com/apps/webappviewer/index.html?id=15a73830555645ae93d2fa773ed8e971" target="_blank"><strong>USDA DLT Map</strong><span>Required rurality / non-rural / contiguous verification.</span></a>
         <a href="https://data.hrsa.gov/DataDownload/DD_Files/Health_Center_Service_Delivery_and_LookAlike_Sites.xlsx" target="_blank"><strong>HRSA Health Center Sites XLSX</strong><span>Health Center Service Delivery and Look-Alike Sites dataset used for healthcare prospecting.</span></a>
-        <a href="https://nces.ed.gov/programs/edge/Geographic/DistrictBoundaries" target="_blank"><strong>NCES School District Boundaries</strong><span>District-level source used for complete K-12 district prospect lists.</span></a>
+        <a href="https://nces.ed.gov/programs/edge/Geographic/DistrictBoundaries" target="_blank"><strong>ELSI/NCES District CSV</strong><span>Bundled district-level source used for complete K-12 district prospect lists, including websites and # Schools where available.</span></a>
         <a href="https://hub.arcgis.com/datasets/fedmaps::colleges-and-universities/api" target="_blank"><strong>Colleges & Universities Feature Layer</strong><span>IPEDS/Living Atlas source used for higher-ed and technical school prospects.</span></a>
         <a href="https://api.census.gov/data/timeseries/poverty/saipe.html" target="_blank"><strong>Census SAIPE API</strong><span>County poverty rate estimates used for Economic Need scoring.</span></a>
       </div>
@@ -139,6 +139,67 @@ const STATE_NAMES={AL:'Alabama',AK:'Alaska',AZ:'Arizona',AR:'Arkansas',CA:'Calif
 STATE_NAMES.OR='Oregon';
 const NCES_SCHOOLS='https://services1.arcgis.com/Ua5sjt3LWTPigjyD/ArcGIS/rest/services/School_Characteristics_Current/FeatureServer/0/query';
 const NCES_DISTRICTS='https://services1.arcgis.com/Ua5sjt3LWTPigjyD/ArcGIS/rest/services/School_District_Characteristics_Current/FeatureServer/1/query';
+
+const ELSI_DISTRICTS_CSV = 'data/ELSI_K12_School_Districts_2025_Scoring_Tool.csv';
+let elsiDistrictCache = null;
+function cleanElsi(v){v=String(v??'').trim();return (v==='†'||v==='-'||v==='–')?'':v;}
+function findElsiHeaderIndex(rows){
+  return Math.max(0, rows.findIndex(r=>r.some(c=>/Agency Name/i.test(String(c))) && r.some(c=>/Web Site URL/i.test(String(c))) && r.some(c=>/Agency ID.*NCES/i.test(String(c)))));
+}
+function elsiObjectsFromCsv(text){
+  const rows=parseCSV(text); const hi=findElsiHeaderIndex(rows); const headers=rows[hi].map(h=>String(h||'').trim());
+  return rows.slice(hi+1).map(r=>rowToObject(headers,r)).filter(o=>cleanElsi(o['Agency Name']) || cleanElsi(o['Agency Name [District] 2024-25']));
+}
+async function loadElsiDistricts(){
+  if(elsiDistrictCache) return elsiDistrictCache;
+  const res=await fetch(ELSI_DISTRICTS_CSV,{cache:'no-store'});
+  if(!res.ok) throw new Error('Could not load local ELSI/NCES district CSV. Make sure the data folder is uploaded with the site.');
+  elsiDistrictCache=elsiObjectsFromCsv(await res.text());
+  return elsiDistrictCache;
+}
+function elsiObjToDistrictFeature(o){
+  const state=cleanElsi(o['Location State Abbr [District] 2024-25'] || o['State Abbr [District] Latest available year']).toUpperCase();
+  return {attributes:{
+    LEA_NAME: cleanElsi(o['Agency Name [District] 2024-25'] || o['Agency Name']),
+    LEAID: cleanElsi(o['Agency ID - NCES Assigned [District] Latest available year']),
+    CONAME: cleanElsi(o['County Name [District] 2024-25']),
+    LSTREET1: cleanElsi(o['Location Address 1 [District] 2024-25']),
+    LSTREET2: cleanElsi(o['Location Address 2 [District] 2024-25']),
+    LCITY: cleanElsi(o['Location City [District] 2024-25']),
+    LSTATE: state,
+    STABR: state,
+    LZIP: cleanElsi(o['Location ZIP [District] 2024-25']),
+    PHONE: cleanElsi(o['Phone Number [District] 2024-25']),
+    WEBSITE: cleanElsi(o['Web Site URL [District] 2024-25']),
+    LOCALE_TEXT: cleanElsi(o['Locale [District] 2024-25']),
+    MEMBER: cleanElsi(o['Total Students All Grades (Excludes AE) [District] 2024-25']),
+    SCH: cleanElsi(o['Total Number Operational Schools [Public School] 2024-25']),
+    TYPE_TEXT: cleanElsi(o['Agency Type [District] 2024-25']),
+    CBSA: cleanElsi(o['CBSA Name [District] 2024-25']),
+    CSA: cleanElsi(o['CSA Name [District] 2024-25']),
+    METRO_MICRO: cleanElsi(o['Metro Micro Area Code [District] 2024-25']),
+    Lat: cleanElsi(o['Latitude [District] 2024-25']),
+    Long: cleanElsi(o['Longitude [District] 2024-25'])
+  }};
+}
+function districtFeatureFromElsiLeaId(leaId){
+  const rows=elsiDistrictCache||[];
+  const found=rows.find(o=>cleanElsi(o['Agency ID - NCES Assigned [District] Latest available year'])===String(leaId));
+  return found?elsiObjToDistrictFeature(found):null;
+}
+function filterElsiDistricts(rows, {state, term='', county='', city='', agency='', address=''}={}){
+  const st=String(state||'').toUpperCase(); const t=norm(term||agency); const c=norm(county), ci=norm(city), ad=norm(address);
+  return rows.filter(o=>{
+    const f=elsiObjToDistrictFeature(o).attributes;
+    if(st && st!==ALL_STATE_VALUE && String(f.LSTATE||'').toUpperCase()!==st) return false;
+    if(t && !norm([f.LEA_NAME,f.LEAID,f.TYPE_TEXT].join(' ')).includes(t)) return false;
+    if(c && !norm(f.CONAME).includes(c)) return false;
+    if(ci && !norm(f.LCITY).includes(ci)) return false;
+    if(ad && !norm([f.LSTREET1,f.LSTREET2,f.LCITY,f.LZIP].join(' ')).includes(ad)) return false;
+    return true;
+  });
+}
+
 const HIGHER_ED='https://services2.arcgis.com/FiaPA4ga0iQKduv3/ArcGIS/rest/services/Colleges_and_Universities_View/FeatureServer/0/query';
 const HRSA_XLSX='https://data.hrsa.gov/DataDownload/DD_Files/Health_Center_Service_Delivery_and_LookAlike_Sites.xlsx';
 let prospects=[]; let placeCache={}; let saipeCache={}; let hrsaLookupCache=null; let sortState={key:'objectiveScore',dir:'desc'}; let columnWidths={};
@@ -236,11 +297,10 @@ async function findProspects(){
   let rows=[];const errors=[];const sourceCap=st===ALL_STATE_VALUE?200000:25000;
   if(useK12Districts){
     try{
-      setBusy(true,'⏱️ Searching NCES district records...');
-      const f='*';
-      let where=scopeWhere('LSTATE',st);
-      rows.push(...(await arcgisQueryAll(NCES_DISTRICTS,where,f,sourceCap)).map(k12DistrictToSite));
-    }catch(e){errors.push('K-12 district layer failed: '+e.message)}
+      setBusy(true,'⏱️ Searching local ELSI/NCES district CSV with websites...');
+      const local=await loadElsiDistricts();
+      rows.push(...filterElsiDistricts(local,{state:st,county,city,agency,address}).map(o=>k12DistrictToSite(elsiObjToDistrictFeature(o))));
+    }catch(e){errors.push('K-12 district CSV failed: '+e.message)}
   }
   if(useK12||useCharter){
     try{
@@ -295,7 +355,7 @@ async function findProspects(){
   const hidden=Math.max(0,screened.length-prospects.length);
   setStatus(`<strong>${prospects.length}</strong> row(s) displayed from <strong>${sourceCount}</strong> source record(s). <strong>${high}</strong> high fit; <strong>${review}</strong> review-needed.${hidden?` ${hidden} additional filtered rows hidden by Display Limit.`:''} ${errors.length?'<br><span style="color:#92400e">'+esc(errors.join(' | '))+'</span>':''}`)
 }
-function k12DistrictToSite(f){const a=f.attributes||{},g=f.geometry||{},cent=f.centroid||{};const s={id:crypto.randomUUID(),selected:false,include:false,type:'K-12 District',source:'NCES CCD School District Characteristics',sourceId:a.LEAID||'',organization:a.LEA_NAME||'',siteName:a.LEA_NAME||'',address:[a.LSTREET1,a.LSTREET2].filter(Boolean).join(' '),city:a.LCITY||'',ruralityPlace:'',state:a.LSTATE||'',zip:a.LZIP||'',county:a.CONAME||'',countyFips:cleanCountyFips(a.COID,a.LSTATE),phone:pick(a,['PHONE','TEL','TELEPHONE']),email:pick(a,['EMAIL','E_MAIL','CONTACT_EMAIL','CONTACTEMAIL','LEA_EMAIL','ADMIN_EMAIL']),website:pick(a,['WEBSITE','WEB_SITE','URL','WEBADDR','LEA_URL','LEA_WEBSITE','WWW']),sourceLocale:a.LOCALE_TEXT||'',enrollment:a.MEMBER||'',schoolCount:a.SCH||'',designation:'Hub',contiguous:'Unknown',outsideNonRural:'Unknown',censusRural:'Unknown',cityPopulation:'',saipePercent:'',ruralityScore:null,economicScore:null,lat:g.y||cent.y||a.Lat||'',lon:g.x||cent.x||a.Long||'',notes:'Prospect Finder result from official NCES district layer; district office imported as a potential hub/anchor. Add specific school sites before final scoring.'};s.description=buildDesc(s);return s}
+function k12DistrictToSite(f){const a=f.attributes||{},g=f.geometry||{},cent=f.centroid||{};const s={id:crypto.randomUUID(),selected:false,include:false,type:'K-12 District',source:'ELSI/NCES K-12 School Districts 2025 CSV',sourceId:a.LEAID||'',organization:a.LEA_NAME||'',siteName:a.LEA_NAME||'',address:[a.LSTREET1,a.LSTREET2].filter(Boolean).join(' '),city:a.LCITY||'',ruralityPlace:'',state:a.LSTATE||'',zip:a.LZIP||'',county:a.CONAME||'',countyFips:cleanCountyFips(a.COID,a.LSTATE),phone:pick(a,['PHONE','TEL','TELEPHONE']),email:pick(a,['EMAIL','E_MAIL','CONTACT_EMAIL','CONTACTEMAIL','LEA_EMAIL','ADMIN_EMAIL']),website:pick(a,['WEBSITE','WEB_SITE','URL','WEBADDR','LEA_URL','LEA_WEBSITE','WWW']),sourceLocale:a.LOCALE_TEXT||'',enrollment:a.MEMBER||'',schoolCount:a.SCH||'',designation:'Hub',contiguous:'Unknown',outsideNonRural:'Unknown',censusRural:'Unknown',cityPopulation:'',saipePercent:'',ruralityScore:null,economicScore:null,lat:g.y||cent.y||a.Lat||'',lon:g.x||cent.x||a.Long||'',notes:'Prospect Finder result from official NCES district layer; district office imported as a potential hub/anchor. Add specific school sites before final scoring.'};s.description=buildDesc(s);return s}
 function k12ToSite(f){const a=f.attributes||{},g=f.geometry||{};const s={id:crypto.randomUUID(),selected:false,include:false,type:k12TypeFromAttrs(a),source:'NCES CCD Public School Characteristics',sourceId:a.NCESSCH||'',organization:a.LEA_NAME||'',siteName:a.SCH_NAME||'',address:[a.LSTREET1,a.LSTREET2].filter(Boolean).join(' '),city:a.LCITY||'',ruralityPlace:'',state:a.LSTATE||a.STABR||'',zip:a.LZIP||'',county:a.NMCNTY||'',countyFips:cleanCountyFips(a.CNTY,a.STABR),phone:pick(a,['PHONE','TEL','TELEPHONE']),email:pick(a,['EMAIL','E_MAIL','CONTACT_EMAIL','CONTACTEMAIL','SCHOOL_EMAIL','ADMIN_EMAIL']),website:pick(a,['WEBSITE','WEB_SITE','URL','WEBADDR','SCH_URL','SCHOOL_URL','WWW']),sourceLocale:a.ULOCALE||'',enrollment:a.MEMBER||a.TOTAL||'',designation:'End-User',contiguous:'Unknown',outsideNonRural:'Unknown',censusRural:'Unknown',cityPopulation:'',saipePercent:'',ruralityScore:null,economicScore:null,lat:g.y||a.LATCOD||'',lon:g.x||a.LONCOD||'',notes:'Prospect Finder result from official NCES school layer; verify DLT map and site role before scoring.'};s.description=buildDesc(s);return s}
 function higherToSite(f){const a=f.attributes||{},g=f.geometry||{};const s={id:crypto.randomUUID(),selected:false,include:false,type:'Higher Ed',source:'IPEDS / ArcGIS Colleges and Universities Feature Layer',sourceId:a.UNITID||'',organization:a.F1SYSNAM||a.INSTNM||'',siteName:a.INSTNM||'',address:a.ADDR||'',city:a.CITY||'',ruralityPlace:'',state:a.STABBR||'',zip:a.ZIP||'',county:a.COUNTYNM||'',countyFips:cleanCountyFips(a.COUNTYCD,a.STABBR),phone:pick(a,['GENTELE','PHONE','TELEPHONE']),email:pick(a,['EMAIL','E_MAIL','CONTACT_EMAIL','ADMIN_EMAIL','FAIDEMAIL']),website:pick(a,['WEBADDR','WEBSITE','URL','ADMINURL','FAIDURL','APPLURL']),sourceLocale:a.LOCALE||'',enrollment:'',designation:'End-User',contiguous:'Unknown',outsideNonRural:'Unknown',censusRural:'Unknown',cityPopulation:'',saipePercent:'',ruralityScore:null,economicScore:null,lat:g.y||a.LATITUDE||'',lon:g.x||a.LONGITUD||'',notes:'Prospect Finder result from higher-ed source layer; verify DLT map and site role before scoring.'};s.description=buildDesc(s);return s}
 function hrsaToSite(o){const state=(pick(o,['Site State Abbreviation','Site State','State','State Abbreviation'])||'').toUpperCase();const siteName=pick(o,['Site Name','Health Center Site Name','Name']);if(!siteName||!state)return null;const fips=cleanCountyFips(pick(o,['County FIPS Code','County Equivalent FIPS Code','County Equivalent Code','County Code','County FIPS','Site County FIPS']),state);const s={id:crypto.randomUUID(),selected:false,include:false,type:'Rural Health',source:'HRSA Health Center Service Delivery and Look-Alike Sites XLSX',sourceId:pick(o,['Site ID','Site Number','BHCMIS ID','Grant Number','Health Center Number']),organization:pick(o,['Health Center Name','Organization Name','Awardee Name']),siteName,address:pick(o,['Site Address','Address','Street Address']),city:pick(o,['Site City','City']),ruralityPlace:'',state,zip:pick(o,['Site Postal Code','ZIP','Zip Code']),county:pick(o,['County Equivalent Name','County','Site County']),countyFips:fips,phone:pick(o,['Site Telephone Number','Phone','Telephone','Telephone Number']),email:pick(o,['Site Email Address','Site Email','Email','Contact Email','E-mail','E-Mail Address']),website:pick(o,['Site Web Address','Website','Web Address','URL','Site URL']),sourceLocale:'',enrollment:'',designation:'End-User',contiguous:'Unknown',outsideNonRural:'Unknown',censusRural:'Unknown',cityPopulation:'',saipePercent:'',ruralityScore:null,economicScore:null,lat:pick(o,['Latitude','Site Latitude','Site Latitude Number']),lon:pick(o,['Longitude','Site Longitude','Site Longitude Number']),notes:'Prospect Finder result from HRSA source; verify telemedicine use, site role, and DLT map before scoring.'};s.description=buildDesc(s);return s}

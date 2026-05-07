@@ -207,7 +207,7 @@ Added `prospects.html` as a separate view so reps can search by state, optional 
 Final D-1 Rurality still requires USDA DLT map verification before relying on the score in an application.
 
 ## v18 Update Notes
-- Fixed the Scoring Tool K-12/NCES flow so the search starts with the **NCES district layer** first, then pulls all school sites by LEAID. This avoids the school-layer invalid query parameter problem during the initial district lookup.
+- Fixed the Scoring Tool K-12/NCES flow so the search starts with the **bundled ELSI/NCES 2025 district CSV** first, then pulls all school sites by LEAID. This avoids the school-layer invalid query parameter problem during the initial district lookup.
 - Added an all-fields fallback for ArcGIS queries and paginated NCES requests so larger district/site lists are less likely to be cut off or fail because of a changed source field list.
 - Added a visible **# Schools** field to the scoring table, manual entry form, CSV export, and import mappings. The field is populated from the NCES district `SCH` / School Count field when available.
 - Improved NCES Excel/CSV import detection by scanning for the best header row instead of assuming the first row is always the header.
@@ -219,3 +219,12 @@ Final D-1 Rurality still requires USDA DLT map verification before relying on th
 - Added `schoolCount` to the **Export Prospect CSV** output.
 - Updated the Prospect Snapshot type breakout so, when school-count data is available, the K-12 District tile also shows the total schools represented in the displayed prospect set.
 - The field remains source-based. It is populated when the NCES district source provides a school count; otherwise it stays blank.
+
+
+Update v20: K-12 district prospecting/search now uses the bundled ELSI/NCES K-12 School Districts 2025 CSV as the district source, including website and # Schools where available. School-site rows still use the NCES school layer by LEAID when adding all school buildings for a selected district.
+
+## v21 Update Notes
+- Moved the **Build Partner Radius List** workflow below the Site Scoring Worksheet table so users can first build/review the scoring worksheet, then run partner discovery from the selected anchor site.
+- Expanded the Partner Radius selector to support **25, 50, 75, and 100 miles**.
+- Added sortable column headers to the Partner Radius results table. Users can now sort by Fit, Miles, D-1+D-2 Total, Type, Organization, Site, County, 2020 Population, D-1, SAIPE %, D-2, Description, and Source.
+- Partner CSV export now follows the active partner-table sort order.
