@@ -213,3 +213,9 @@ Final D-1 Rurality still requires USDA DLT map verification before relying on th
 - Improved NCES Excel/CSV import detection by scanning for the best header row instead of assuming the first row is always the header.
 - Improved field matching for uploaded files so simple headers like `City`, `County`, `State`, `School Count`, and `# Schools` map more reliably.
 - Tightened the Scoring Tool start area text and guardrail callout to reduce screen clutter.
+
+## v19 Update Notes
+- Added **# Schools** to the Prospect Finder results table so reps can see the district-level school count directly on the prospecting page.
+- Added `schoolCount` to the **Export Prospect CSV** output.
+- Updated the Prospect Snapshot type breakout so, when school-count data is available, the K-12 District tile also shows the total schools represented in the displayed prospect set.
+- The field remains source-based. It is populated when the NCES district source provides a school count; otherwise it stays blank.
