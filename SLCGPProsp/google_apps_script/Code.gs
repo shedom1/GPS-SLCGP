@@ -8,7 +8,7 @@
  *    Who has access: Anyone with the link (or your Workspace domain)
  * 5) Copy the Web App URL into config.js as LOG_WEB_APP_URL.
  */
-const SPREADSHEET_ID = '1rHMcqBnf2LqdHGYTsBHM0PItc7NcIEhHuTE1fxRtxk0';
+const SPREADSHEET_ID = 'PASTE_YOUR_GOOGLE_SHEET_ID_HERE';
 
 function doPost(e) {
   try {

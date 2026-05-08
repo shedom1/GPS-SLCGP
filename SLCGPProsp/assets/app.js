@@ -1,5 +1,17 @@
 
 let STATES=[], PROSPECTS=[];
+let stateSort = { col: 0, dir: 'asc' };
+const stateSorters = [
+  s => s.state,
+  s => s.status || s.openStatus || '',
+  s => parseDateValue(s.endDate || s.nextDate || ''),
+  s => s.procurementType || '',
+  s => Number(s.k12Count || 0),
+  s => Number(s.highPriority || 0),
+  s => s.summary || '',
+  s => s.sourceName || s.sourceUrl || '',
+  s => s.state
+];
 const fmt = new Intl.NumberFormat('en-US');
 const $ = sel => document.querySelector(sel);
 const $$ = sel => Array.from(document.querySelectorAll(sel));
@@ -7,6 +19,36 @@ function statusClass(s){s=(s||'').toLowerCase(); if(s.includes('open')) return '
 function priorityClass(p){p=(p||'').toLowerCase(); if(p.includes('tier 1')) return 'tier1'; if(p.includes('tier 2')) return 'tier2'; if(p.includes('tier 3')) return 'tier3'; return '';}
 function esc(v){return String(v??'').replace(/[&<>'"]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));}
 function link(url,text){return url?`<a href="${esc(url)}" target="_blank" rel="noopener">${esc(text||url)}</a>`:'—';}
+function parseDateValue(v){
+  if(!v) return 9999999999999;
+  const d = new Date(String(v).replace(/^(Deadline|Due|Close|Closes|End|Next)[: ]+/i,''));
+  return Number.isNaN(d.getTime()) ? String(v).toLowerCase() : d.getTime();
+}
+function compareValues(a,b){
+  const na = typeof a === 'number', nb = typeof b === 'number';
+  if(na && nb) return a-b;
+  return String(a ?? '').localeCompare(String(b ?? ''), undefined, {numeric:true, sensitivity:'base'});
+}
+function bindStateSortHeaders(){
+  const table = $('#statesTable'); if(!table) return;
+  table.querySelectorAll('thead th').forEach((th,i)=>{
+    th.classList.add('sortable');
+    th.setAttribute('title','Click to sort');
+    th.setAttribute('role','button');
+    th.tabIndex = 0;
+    const toggle=()=>{ stateSort = { col:i, dir:(stateSort.col===i && stateSort.dir==='asc')?'desc':'asc' }; renderStates(); };
+    th.addEventListener('click', toggle);
+    th.addEventListener('keydown', e=>{ if(e.key==='Enter' || e.key===' '){ e.preventDefault(); toggle(); } });
+  });
+}
+function updateStateSortIndicators(){
+  const table = $('#statesTable'); if(!table) return;
+  table.querySelectorAll('thead th').forEach((th,i)=>{
+    th.classList.toggle('sort-asc', stateSort.col===i && stateSort.dir==='asc');
+    th.classList.toggle('sort-desc', stateSort.col===i && stateSort.dir==='desc');
+    th.setAttribute('aria-sort', stateSort.col===i ? (stateSort.dir==='asc'?'ascending':'descending') : 'none');
+  });
+}
 async function loadData(){
   const [s,p]=await Promise.all([fetch('data/state_programs.json').then(r=>r.json()), fetch('data/prospects_k12.json').then(r=>r.json())]);
   STATES=s; PROSPECTS=p; initIndex();
@@ -14,6 +56,7 @@ async function loadData(){
 function initIndex(){
   populateFilters();
   renderKpis();
+  bindStateSortHeaders();
   renderStates();
   ['#q','#region','#state','#status','#priority'].forEach(id=>$(id)?.addEventListener('input', renderStates));
   $('#resetFilters')?.addEventListener('click',()=>{$$('#q,#region,#state,#status,#priority').forEach(e=>e.value='');renderStates();});
@@ -39,10 +82,14 @@ function filteredStates(){
     if(stat && s.openStatus!==stat) return false;
     if(pri==='high' && (s.highPriority||0)===0) return false;
     return true;
+  }).sort((a,b)=>{
+    const cmp = compareValues(stateSorters[stateSort.col]?.(a), stateSorters[stateSort.col]?.(b));
+    return stateSort.dir === 'asc' ? cmp : -cmp;
   });
 }
 function renderStates(){
   const rows=filteredStates();
+  updateStateSortIndicators();
   $('#visibleCount').textContent=fmt.format(rows.length);
   const table=$('#statesTable tbody'); if(!table) return;
   table.innerHTML=rows.map(s=>{
