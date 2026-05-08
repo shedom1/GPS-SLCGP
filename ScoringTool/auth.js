@@ -1,5 +1,6 @@
 (function(){
-  const REQUIRED_USER = 'open';
+  // Password gate for static GitHub Pages convenience.
+  // Any non-blank username is accepted; password remains shared.
   const REQUIRED_PASSWORD = 'gpstools';
   const SESSION_KEY = 'gps_tools_authenticated_v1';
   const USER_KEY = 'gps_tools_username_v1';
@@ -33,7 +34,7 @@
       <div class="gps-auth-card">
         <div class="gps-auth-eyebrow">Solutionz GPS Tools</div>
         <h1>Restricted Workspace</h1>
-        <p>Enter the shared GPS tools username and password to continue.</p>
+        <p>Enter any username and the shared GPS tools password to continue.</p>
         <label>Username</label>
         <input id="gps-auth-user" autocomplete="username" value="${sessionStorage.getItem(USER_KEY)||''}" autofocus>
         <label>Password</label>
@@ -44,13 +45,13 @@
       </div>`;
     document.body.appendChild(overlay);
     const tryLogin = function(){
-      const u = (document.getElementById('gps-auth-user').value || '').trim().toLowerCase();
+      const u = (document.getElementById('gps-auth-user').value || '').trim();
       const p = document.getElementById('gps-auth-pass').value || '';
-      if(u === REQUIRED_USER && p === REQUIRED_PASSWORD){
+      if(u && p === REQUIRED_PASSWORD){
         sessionStorage.setItem(USER_KEY, u);
         unlock();
       } else {
-        document.getElementById('gps-auth-error').textContent = 'Invalid username or password.';
+        document.getElementById('gps-auth-error').textContent = 'Enter any username and the correct shared password.';
         document.getElementById('gps-auth-pass').value='';
         document.getElementById('gps-auth-pass').focus();
       }

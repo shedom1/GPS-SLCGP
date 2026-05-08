@@ -122,22 +122,23 @@
     </section>
 
     <section class="card" style="margin-top:16px">
-      <h2>Prior RUS DLT Winners Strategy <span class="smalltxt">location-based award lookback</span></h2>
+      <h2>Prior RUS DLT Winners <span class="smalltxt">quick lookback</span></h2>
       <div class="body">
-        <div class="callout ok"><strong>Purpose:</strong> Use prior RUS DLT award records to see whether a state, county, city, applicant type, or nearby peer organization has a history of funded DLT projects. This is for prospecting and strategy only; it does not create eligibility facts or final scoring.</div>
+        <div class="callout ok"><strong>Use this for strategy:</strong> Load or upload prior-award records, then filter by state/location. Turn on <strong>Districts only</strong> when you only want prior school-district recipients.</div>
         <div class="row">
-          <div class="col-3"><label>State</label><select id="awardState"></select></div>
-          <div class="col-3"><label>County / City Filter</label><input id="awardLocation" placeholder="Example: Dougherty, Albany, Bethel" /></div>
-          <div class="col-3"><label>Awardee / Agency / Keyword</label><input id="awardKeyword" placeholder="Example: school, health, university" /></div>
-          <div class="col-3"><label>Radius for Selected Prospect</label><select id="awardRadius"><option value="25">25 miles</option><option value="50">50 miles</option><option value="75">75 miles</option><option value="100" selected>100 miles</option></select></div>
+          <div class="col-2"><label>State</label><select id="awardState" onchange="filterPriorAwards()"></select></div>
+          <div class="col-2"><label>Winner Type</label><select id="awardEntityScope" onchange="filterPriorAwards()"><option value="all">All winners</option><option value="districts">Districts only</option></select></div>
+          <div class="col-3"><label>County / City Filter</label><input id="awardLocation" placeholder="Example: Dougherty, Albany, Bethel" onkeydown="if(event.key==='Enter') filterPriorAwards()" /></div>
+          <div class="col-3"><label>Awardee / Agency / Keyword</label><input id="awardKeyword" placeholder="Example: school, health, university" onkeydown="if(event.key==='Enter') filterPriorAwards()" /></div>
+          <div class="col-2"><label>Radius</label><select id="awardRadius"><option value="25">25 miles</option><option value="50">50 miles</option><option value="75">75 miles</option><option value="100" selected>100 miles</option></select></div>
           <div class="col-5"><label>Upload Prior RUS DLT Award Table</label><input id="awardFile" type="file" accept=".xlsx,.xls,.csv,text/csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel" /></div>
           <div class="col-7">
             <div class="btnrow">
-              <button class="accent" onclick="loadRusDltMapAwards()">Load RUS DLT Map Awards</button>
+              <button class="accent" onclick="loadRusDltMapAwards()">Load Map Awards</button>
               <button class="ghost" onclick="importPriorAwardsFile()">Upload Award Table</button>
-              <button class="primary" onclick="filterPriorAwards()">Filter Awards</button>
+              <button class="primary" onclick="filterPriorAwards()">Apply Filters</button>
               <button class="green" onclick="findAwardsNearSelectedProspect()">Find Near Selected Prospect</button>
-              <button onclick="exportAwardsCSV()">Export Awards CSV</button>
+              <button onclick="exportAwardsCSV()">Export CSV</button>
               <a class="button-link" href="https://ruraldevelopment.maps.arcgis.com/apps/webappviewer/index.html?id=15a73830555645ae93d2fa773ed8e971" target="_blank">Open RUS DLT Map</a>
             </div>
           </div>
@@ -478,6 +479,11 @@ const AWARD_COLS=[
   ['year','Year',64,'number'],['awardee','Awardee / Recipient',210,'text'],['projectTitle','Project / Purpose',240,'text'],['state','State',54,'text'],['county','County',110,'text'],['city','City',100,'text'],['amount','Award $',90,'number'],['distanceMiles','Miles',70,'number'],['source','Source',130,'text'],['map','USDA Map',76,'text']
 ];
 function setAwardStatus(msg){const el=document.getElementById('awardStatus');if(el)el.innerHTML=msg||'';}
+function awardDistrictsOnlyEnabled(){return (document.getElementById('awardEntityScope')?.value||'all')==='districts';}
+function isDistrictAward(a){
+  const text=[a.awardee,a.projectTitle,a.county,a.city,a.source,JSON.stringify(a.raw||{})].join(' ').toLowerCase();
+  return /\b(school district|independent school district|unified school district|community unit school district|county school district|public school district|local school district|school system|county schools|public schools|board of education|boe|educational service district|isd|usd|cusd|csd|isd\.|usd\.)\b/i.test(text) || /\bdistrict\b/i.test(text);
+}
 function rusMapLinkFor(o){if(o&&siteHasCoords(o)){const lon=parseFloat(o.lon),lat=parseFloat(o.lat);return `${DLT_MAP}&center=${encodeURIComponent(lon+','+lat)}&level=12`;}return DLT_MAP;}
 function normalizeAwardRecord(obj,source,geom){
   obj=obj||{};
@@ -572,14 +578,16 @@ function filterPriorAwards(){
   const loc=(document.getElementById('awardLocation')?.value||'').toLowerCase().trim();
   const key=(document.getElementById('awardKeyword')?.value||'').toLowerCase().trim();
   const useState=st&&st!==ALL_STATE_VALUE;
+  const districtsOnly=awardDistrictsOnlyEnabled();
   awardResults=priorAwards.filter(a=>{
     const stateOk=!useState||String(a.state||'').toUpperCase()===st;
     const locText=[a.county,a.city,a.state].join(' ').toLowerCase();
     const keyText=[a.awardee,a.projectTitle,a.source,JSON.stringify(a.raw||{})].join(' ').toLowerCase();
-    return stateOk && (!loc||locText.includes(loc)) && (!key||keyText.includes(key));
+    return stateOk && (!loc||locText.includes(loc)) && (!key||keyText.includes(key)) && (!districtsOnly||isDistrictAward(a));
   });
   renderAwardsTable(awardResults);
-  setAwardStatus(`<strong>${awardResults.length.toLocaleString()}</strong> prior-award record(s) match the current filters. ${priorAwards.length?`Loaded source records: ${priorAwards.length.toLocaleString()}.`:''}`);
+  const scopeMsg=districtsOnly?' Districts-only filter is ON.':'';
+  setAwardStatus(`<strong>${awardResults.length.toLocaleString()}</strong> prior-award record(s) match the current filters.${scopeMsg} ${priorAwards.length?`Loaded source records: ${priorAwards.length.toLocaleString()}.`:''}`);
 }
 function findAwardsNearSelectedProspect(){
   const selected=prospects.filter(p=>p.selected&&siteHasCoords(p));
@@ -589,6 +597,7 @@ function findAwardsNearSelectedProspect(){
   const out=[];
   selected.forEach(p=>{
     priorAwards.forEach(a=>{
+      if(awardDistrictsOnlyEnabled() && !isDistrictAward(a)) return;
       if(siteHasCoords(a)){
         const miles=distanceMiles(parseFloat(p.lat),parseFloat(p.lon),parseFloat(a.lat),parseFloat(a.lon));
         if(miles<=radius) out.push({...a,distanceMiles:miles,nearProspect:p.siteName||p.organization});
@@ -601,7 +610,8 @@ function findAwardsNearSelectedProspect(){
   });
   awardResults=dedupeAwards(out);
   renderAwardsTable(awardResults);
-  setAwardStatus(`<strong>${awardResults.length.toLocaleString()}</strong> prior-award record(s) found near selected prospect(s), using a ${radius}-mile radius where coordinates were available and county/city fallback where not.`);
+  const scopeMsg=awardDistrictsOnlyEnabled()?' Districts-only filter is ON.':'';
+  setAwardStatus(`<strong>${awardResults.length.toLocaleString()}</strong> prior-award record(s) found near selected prospect(s), using a ${radius}-mile radius where coordinates were available and county/city fallback where not.${scopeMsg}`);
 }
 function dedupeAwards(rows){const seen=new Set(),out=[];(rows||[]).forEach(r=>{const k=norm([r.year,r.awardee,r.projectTitle,r.state,r.county,r.city,r.amount].join('|'));if(!seen.has(k)){seen.add(k);out.push(r);}});return out;}
 function renderAwardsTable(rows){
@@ -614,7 +624,7 @@ function renderAwardsTable(rows){
 }
 function sortAwards(key){if(awardSort.key===key)awardSort.dir=awardSort.dir==='asc'?'desc':'asc';else awardSort={key,dir:'asc'};renderAwardsTable(awardResults);}
 function sortAwardRows(rows){const col=AWARD_COLS.find(c=>c[0]===awardSort.key)||AWARD_COLS[0];const dir=awardSort.dir==='desc'?-1:1;return rows.sort((a,b)=>compare(a[col[0]],b[col[0]],col[3])*dir);}
-function exportAwardsCSV(){const rows=sortAwardRows([...(awardResults.length?awardResults:priorAwards)]);if(!rows.length){setAwardStatus('No prior-award rows to export.');return;}const fields=['year','awardee','projectTitle','state','county','city','amount','distanceMiles','nearProspect','source','lat','lon'];const csv=[fields.join(',')].concat(rows.map(r=>fields.map(f=>csvCell(r[f])).join(','))).join('\n');download('RUS_DLT_Prior_Awards_Strategy.csv',csv,'text/csv');}
+function exportAwardsCSV(){let base=awardResults.length?awardResults:priorAwards;if(awardDistrictsOnlyEnabled())base=base.filter(isDistrictAward);const rows=sortAwardRows([...base]);if(!rows.length){setAwardStatus('No prior-award rows to export.');return;}const fields=['year','awardee','projectTitle','state','county','city','amount','distanceMiles','nearProspect','source','lat','lon'];const csv=[fields.join(',')].concat(rows.map(r=>fields.map(f=>csvCell(r[f])).join(','))).join('\n');download(awardDistrictsOnlyEnabled()?'RUS_DLT_Prior_District_Awards.csv':'RUS_DLT_Prior_Awards_Strategy.csv',csv,'text/csv');}
 function exportCSV(){const fields=['selected','fitLabel','objectiveScore','ruralityScore','economicScore','saipePercent','cityPopulation','type','schoolCount','organization','siteName','address','city','ruralityPlace','state','zip','county','countyFips','phone','email','website','sourceLocale','enrollment','designation','description','source','sourceId','lat','lon','notes'];const csv=[fields.join(',')].concat(prospects.map(p=>fields.map(f=>csvCell(p[f])).join(','))).join('\n');download('RUS_DLT_High_Eligibility_Prospects.csv',csv,'text/csv')}
 function sendSelectedToScoring(){const selected=prospects.filter(p=>p.selected);if(!selected.length){setStatus('Select at least one prospect first.');return}const clean=selected.map(p=>({...p,id:crypto.randomUUID(),include:false,selected:false,notes:appendNote(p.notes,'Sent from Prospect Finder; set Include=true only if used in the DLT project.')}));localStorage.setItem('dltPendingProspectsV1',JSON.stringify(clean));setStatus(`<strong>${clean.length}</strong> selected prospect(s) staged for the scoring worksheet. Click Open Scoring Tool to import them.`)}
 init();

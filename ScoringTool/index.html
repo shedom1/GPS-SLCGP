@@ -91,9 +91,9 @@
           <div class="callout warn"><strong>Guardrail:</strong> D-1 remains provisional until USDA DLT map fields are verified.</div>
           <div class="row">
             <div class="col-2"><label>Project Type</label><select id="projectType"><option>Fixed</option><option>Hybrid</option><option>Non-fixed</option></select></div>
-            <div class="col-2"><label>State</label><select id="stateSelect"></select></div>
+            <div class="col-2"><label>State / Scope</label><select id="stateSelect"></select></div>
             <div class="col-3"><label>Designation</label><select id="defaultDesignation"><option>End-User</option><option>Hub/End-User</option><option>Hub</option><option>Proxy Hub</option></select></div>
-            <div class="col-5"><label>Search Name / District / Agency / Institution</label><input id="searchTerm" placeholder="Mitchell County Schools, Phoebe, Berry College" /></div>
+            <div class="col-5"><label>Search Name / District / Agency / Institution</label><input id="searchTerm" placeholder="Search name first — state can be ALL" /></div>
           </div>
           <div class="btnrow">
             <button class="primary" onclick="searchK12()">K-12 District + Schools</button>
@@ -104,7 +104,7 @@
             <span class="mini-toggle"><input id="autoEnrichOnAdd" type="checkbox" checked> Auto-enrich + score</span>
           </div>
           <div id="searchStatus" class="status"></div>
-          <div class="status"><strong>Tip:</strong> Use the Prospect Finder for broad statewide lists. Use this Scoring Tool only for sites that may belong in one proposed DLT project.</div>
+          <div class="status"><strong>Tip:</strong> State / Scope now defaults to ALL so you can search by name when you do not know the state. Use the Prospect Finder for broad eligibility prospecting; use this Scoring Tool for sites that may belong in one proposed DLT project.</div>
           <div id="searchResults" class="search-results"></div>
         </div>
       </div>
@@ -427,10 +427,11 @@ const TABLE_COLUMNS = [
 
 function init(){
   const stateSelect = document.getElementById('stateSelect');
+  const allOpt = document.createElement('option'); allOpt.value='ALL'; allOpt.textContent='ALL — All states'; stateSelect.appendChild(allOpt);
   Object.keys(STATE_FIPS).filter(s=>STATE_NAMES[s]).forEach(abbr=>{
     const opt = document.createElement('option'); opt.value=abbr; opt.textContent=`${abbr} — ${STATE_NAMES[abbr]}`; stateSelect.appendChild(opt);
   });
-  stateSelect.value='GA';
+  stateSelect.value='ALL';
   const hrsaFallbackState = document.getElementById('hrsaFallbackState');
   if(hrsaFallbackState){
     Object.keys(STATE_FIPS).filter(s=>STATE_NAMES[s]).forEach(abbr=>{
@@ -637,7 +638,7 @@ function showResults(features, kind){
     if(features.length>24) box.insertAdjacentHTML('beforeend',`<div class="smalltxt">Showing first 24 of ${features.length}. Use a more specific search term if needed.</div>`);
   } else if(kind==='HRSA'){
     const toolbar=document.createElement('div'); toolbar.className='result';
-    toolbar.innerHTML=`<strong>Healthcare results for ${esc(document.getElementById('stateSelect').value)}</strong><div class="meta">${features.length} HRSA service delivery / look-alike site record(s) loaded. Showing the first ${Math.min(100, features.length)} below. Add all if this is a statewide healthcare prospect list; otherwise narrow by organization, city, county, or site name.</div><div class="btnrow"><button class="accent" data-action="add-all-health">Add all returned healthcare sites</button><button class="ghost" data-action="add-shown-health">Add first ${Math.min(100, features.length)}</button></div>`;
+    toolbar.innerHTML=`<strong>Healthcare results for ${esc(document.getElementById('stateSelect').value==='ALL'?'all states':document.getElementById('stateSelect').value)}</strong><div class="meta">${features.length} HRSA service delivery / look-alike site record(s) loaded. Showing the first ${Math.min(100, features.length)} below. Add all if this is a statewide healthcare prospect list; otherwise narrow by organization, city, county, or site name.</div><div class="btnrow"><button class="accent" data-action="add-all-health">Add all returned healthcare sites</button><button class="ghost" data-action="add-shown-health">Add first ${Math.min(100, features.length)}</button></div>`;
     toolbar.querySelector('[data-action="add-all-health"]').onclick=()=>{addRows(features.map(cloneSite)); setStatus(`<strong>${features.length}</strong> healthcare site(s) added to the worksheet.`)};
     toolbar.querySelector('[data-action="add-shown-health"]').onclick=()=>{const shown=features.slice(0,100); addRows(shown.map(cloneSite)); setStatus(`<strong>${shown.length}</strong> displayed healthcare site(s) added to the worksheet.`)};
     box.appendChild(toolbar);
@@ -656,7 +657,7 @@ async function searchK12(){
   const state=document.getElementById('stateSelect').value;
   const term=document.getElementById('searchTerm').value.trim();
   if(term.length<2){setStatus('Enter at least 2 characters for district search.');return;}
-  setStatus('<span class="status busy"><span class="busy-clock">⏱️</span>Searching local ELSI/NCES district CSV with websites...</span>');
+  setStatus(`<span class="status busy"><span class="busy-clock">⏱️</span>Searching local ELSI/NCES district CSV with websites${state==='ALL'?' across all states':''}...</span>`);
   document.getElementById('searchResults').innerHTML='';
   try{
     const rows=await loadElsiDistricts();
@@ -668,7 +669,7 @@ async function searchK12(){
     }
     // Fallback: school-site layer for school-name searches.
     const up=sqlText(term).toUpperCase();
-    const schoolWhere=`STABR='${state}' AND (UPPER(LEA_NAME) LIKE '%${up}%' OR UPPER(SCH_NAME) LIKE '%${up}%')`;
+    const schoolWhere=(state==='ALL') ? `(UPPER(LEA_NAME) LIKE '%${up}%' OR UPPER(SCH_NAME) LIKE '%${up}%')` : `STABR='${state}' AND (UPPER(LEA_NAME) LIKE '%${up}%' OR UPPER(SCH_NAME) LIKE '%${up}%')`;
     const schools=await arcgisQuery(NCES_SCHOOLS,schoolWhere,'*',{returnGeometry:false,orderByFields:'LEA_NAME,SCH_NAME'});
     if(schools.length){
       setStatus(`<strong>${schools.length}</strong> school record(s) found from the NCES school layer. Choose a district below, or import only the school sites shown.`);
@@ -696,7 +697,7 @@ async function getK12DistrictFeature(leaId){
   if(elsiDistrictCache){const local= districtFeatureFromElsiLeaId(leaId); if(local) return local;}
   try{await loadElsiDistricts(); const local=districtFeatureFromElsiLeaId(leaId); if(local) return local;}catch(e){}
   const state=document.getElementById('stateSelect').value;
-  const where=`LEAID='${sqlText(leaId)}' AND LSTATE='${state}'`;
+  const where=(state==='ALL') ? `LEAID='${sqlText(leaId)}'` : `LEAID='${sqlText(leaId)}' AND LSTATE='${state}'`;
   const features=await arcgisQuery(NCES_DISTRICTS,where,'*',{returnGeometry:false});
   return features[0] || null;
 }
@@ -759,9 +760,9 @@ function cleanCountyFips(cnty, st){
 async function searchHigherEd(){
   const state=document.getElementById('stateSelect').value; const term=document.getElementById('searchTerm').value.trim();
   if(term.length<3){setStatus('Enter at least 3 characters for higher-ed search.');return;}
-  setStatus('Searching higher-ed colleges and universities layer...'); document.getElementById('searchResults').innerHTML='';
+  setStatus(`<span class="status busy"><span class="busy-clock">⏱️</span>Searching higher-ed colleges and universities layer${state==='ALL'?' across all states':''}...</span>`); document.getElementById('searchResults').innerHTML='';
   const up=sqlText(term).toUpperCase();
-  const where=`STABBR='${state}' AND (UPPER(INSTNM) LIKE '%${up}%' OR UPPER(F1SYSNAM) LIKE '%${up}%')`;
+  const where=(state==='ALL') ? `(UPPER(INSTNM) LIKE '%${up}%' OR UPPER(F1SYSNAM) LIKE '%${up}%')` : `STABBR='${state}' AND (UPPER(INSTNM) LIKE '%${up}%' OR UPPER(F1SYSNAM) LIKE '%${up}%')`;
   const fields='UNITID,INSTNM,IALIAS,ADDR,CITY,STABBR,ZIP,CHFNM,CHFTITLE,GENTELE,WEBADDR,SECTOR,ICLEVEL,HBCU,TRIBAL,LOCALE,COUNTYCD,COUNTYNM,LONGITUD,LATITUDE,F1SYSNAM';
   try{const features=await arcgisQuery(HIGHER_ED,where,fields); setStatus(`<strong>${features.length}</strong> higher-ed records found.`); showResults(features,'HigherEd');}
   catch(e){setStatus(`<span style="color:#b42318">Higher-ed search failed: ${esc(e.message)}. Use CSV import as fallback.</span>`)}
@@ -773,11 +774,16 @@ function addHigherEdRows(rows){
 }
 
 async function searchHRSA(){
-  const state=document.getElementById('stateSelect').value || 'GA';
+  const state=document.getElementById('stateSelect').value || 'ALL';
   const term=document.getElementById('searchTerm').value.trim().toLowerCase();
   document.getElementById('searchResults').innerHTML='';
+  if(state==='ALL' && term.length<2){
+    setStatus('For Healthcare with State / Scope set to ALL, enter at least 2 characters in the search box, or click GA Healthcare / choose a specific state. This prevents accidentally loading a national healthcare list into the scoring worksheet.');
+    return;
+  }
   try{
-    setStatus(`Loading the full HRSA Health Center Service Delivery and Look-Alike Sites lookup table, then filtering locally for <strong>${esc(state)}</strong>${term ? ` and “${esc(term)}”` : ''}...`);
+    const scopeLabel = state==='ALL' ? 'all states' : state;
+    setStatus(`<span class="status busy"><span class="busy-clock">⏱️</span>Loading the full HRSA Health Center Service Delivery and Look-Alike Sites lookup table, then filtering locally for <strong>${esc(scopeLabel)}</strong>${term ? ` and “${esc(term)}”` : ''}...</span>`);
     const items=await getFullHRSALookupItems();
     showHRSAFilteredResults(items,state,term,hrsaLookupSourceLabel);
   } catch(e){
@@ -819,9 +825,11 @@ async function getFullHRSALookupItems(){
   throw new Error(failures.join(' | '));
 }
 function showHRSAFilteredResults(items,state,term,sourceLabel){
-  const stateItems=items.filter(x=>String(x.state||'').toUpperCase()===String(state||'').toUpperCase());
+  const isAll=String(state||'').toUpperCase()==='ALL';
+  const stateItems=isAll ? items : items.filter(x=>String(x.state||'').toUpperCase()===String(state||'').toUpperCase());
   const matches=term ? stateItems.filter(x=>[x.organization,x.siteName,x.city,x.county,x.address,x.phone,x.email,x.website].join(' ').toLowerCase().includes(term)) : stateItems;
-  setStatus(`<strong>${matches.length}</strong> HRSA healthcare site record(s) found for <strong>${esc(state)}</strong>${term ? ` matching “${esc(term)}”` : ''} after locally filtering the full <strong>${esc(sourceLabel)}</strong> source table. ${matches.length>100 ? 'Showing first 100; use the add-all button or narrow your search.' : ''}`);
+  const scopeLabel=isAll ? 'all states' : state;
+  setStatus(`<strong>${matches.length}</strong> HRSA healthcare site record(s) found for <strong>${esc(scopeLabel)}</strong>${term ? ` matching “${esc(term)}”` : ''} after locally filtering the full <strong>${esc(sourceLabel)}</strong> source table. ${matches.length>100 ? 'Showing first 100; use the add-all button or narrow your search.' : ''}`);
   showResults(matches,'HRSA');
 }
 function workbookToHRSASites(wb){
@@ -914,7 +922,7 @@ function showManualSite(){
   const existing=document.getElementById('manualCard'); if(existing){existing.scrollIntoView({behavior:'smooth',block:'start'}); return;}
   const tpl=document.getElementById('manualSiteTemplate').content.cloneNode(true);
   document.querySelector('main').insertBefore(tpl, document.querySelector('main').children[1]);
-  document.getElementById('mState').value=document.getElementById('stateSelect').value;
+  document.getElementById('mState').value=(document.getElementById('stateSelect').value==='ALL'?'':document.getElementById('stateSelect').value);
   document.getElementById('mDesignation').value=getDefaultDesignation();
 }
 function addManualSite(){
