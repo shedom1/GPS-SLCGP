@@ -296,3 +296,9 @@ Update v20: K-12 district prospecting/search now uses the bundled ELSI/NCES K-12
 - Added available pre-2017 workbook rows to the normalized table. The uploaded workbook data sheet contains FY2016–FY2025 records; FY2016 rows were added where district-related and no site-level map rows were available.
 - Prior Winners drilldown cards now show DL/TM type, year-by-year project cards, descriptions, site/sub-recipient rows, USDA Map links, and calculated totals.
 - Added an Include in totals checkbox on each project card so a card can be deselected from the drilldown calculations without hiding the source row.
+
+
+## v30 updates
+- Removed the Solutionz/brand icon wordmark from page headers.
+- Condensed the Prior Winners page: smaller title, reduced header height, tighter filter cards, smaller tables, compact drilldown cards, and horizontal action buttons.
+- Removed the explanatory source paragraph from the Prior Winners header/filter area.

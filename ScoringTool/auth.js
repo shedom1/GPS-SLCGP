@@ -32,7 +32,7 @@
     overlay.id = 'gps-auth-screen';
     overlay.innerHTML = `
       <div class="gps-auth-card">
-        <div class="gps-auth-eyebrow">Solutionz GPS Tools</div>
+        <div class="gps-auth-eyebrow">GPS Tools</div>
         <h1>Restricted Workspace</h1>
         <p>Enter any username and the shared GPS tools password to continue.</p>
         <label>Username</label>

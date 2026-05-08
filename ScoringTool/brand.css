@@ -171,3 +171,11 @@ html.auth-locked body > :not(#gps-auth-screen) { display: none !important; }
 /* Prior awards strategy table */
 #awardsTable { min-width: 1500px; }
 .awards-near-note { color:#075985; font-weight:800; }
+
+/* v30: remove brand icon/wordmark from pages and keep headers compact */
+.brand-mark{display:none!important;width:0!important;min-width:0!important;height:0!important;padding:0!important;margin:0!important;overflow:hidden!important;}
+.brand{gap:8px!important;}
+.brand-title{font-size:11px!important;}
+.brand-subtitle{font-size:10.5px!important;}
+.app-header{border-bottom-width:3px!important;}
+.gps-auth-eyebrow{display:none!important;}
