@@ -1,0 +1,120 @@
+[
+  {
+    "name": "K-12 public school districts",
+    "fit": "Primary focus",
+    "eligibility": "Generally eligible when the district is an agency or instrumentality of state/local government. Validate charter school status by state.",
+    "contacts": "Superintendent, CTO/CIO, IT Director, Business Officer, Grants Director, Procurement Officer",
+    "useCases": [
+      "MFA",
+      "EDR",
+      "network traffic monitoring",
+      "security awareness training",
+      "incident response tabletop",
+      "NCSR/CPG readiness",
+      "backup/resilience planning"
+    ]
+  },
+  {
+    "name": "County governments",
+    "fit": "High",
+    "eligibility": "Local government subrecipient; often coordinated through county emergency management, IT, public safety, or commissioners.",
+    "contacts": "County Administrator, CIO/IT Director, Emergency Manager, Public Safety Director, Finance/Grants",
+    "useCases": [
+      "security assessment",
+      "MFA",
+      "SOC/SIEM",
+      "EDR",
+      "network segmentation",
+      "incident response"
+    ]
+  },
+  {
+    "name": "Cities, towns, townships, municipalities",
+    "fit": "High",
+    "eligibility": "Local government subrecipient; often key to 80% local pass-through and 25% rural pass-through.",
+    "contacts": "City Manager, Mayor/Administrator, IT Director, Clerk, Finance Director, Police/Fire leadership",
+    "useCases": [
+      "MFA",
+      "endpoint protection",
+      "awareness training",
+      "email security",
+      "backup and recovery"
+    ]
+  },
+  {
+    "name": "Public higher education",
+    "fit": "Medium/High",
+    "eligibility": "Generally eligible when a public institution is an agency or instrumentality of state/local government.",
+    "contacts": "CIO/CISO, VP Administration, Procurement, Grants Office, Public Safety",
+    "useCases": [
+      "network monitoring",
+      "identity protection",
+      "EDR",
+      "student/faculty awareness training",
+      "lab/simulation security"
+    ]
+  },
+  {
+    "name": "Public health, EMS, public safety, and emergency communications",
+    "fit": "High",
+    "eligibility": "Eligible when operated by a local government, special district, authority, or public entity.",
+    "contacts": "Emergency Manager, EMS Director, 911 Director, Health Director, IT/security lead",
+    "useCases": [
+      "continuity of operations",
+      "secure communications",
+      "endpoint protection",
+      "incident response exercises",
+      "resilient backup"
+    ]
+  },
+  {
+    "name": "Public libraries and community authorities",
+    "fit": "Medium",
+    "eligibility": "Eligible when structured as public entities, local authorities, districts, or instrumentalities.",
+    "contacts": "Library Director, Board Chair, IT Coordinator, Finance/Grants",
+    "useCases": [
+      "MFA",
+      "device inventory",
+      "security awareness",
+      "email/domain protection"
+    ]
+  },
+  {
+    "name": "Special districts, utilities, water/wastewater, ports, transit",
+    "fit": "Medium/High",
+    "eligibility": "Eligible where they are local public authorities, special districts, intrastate districts, or public instrumentalities.",
+    "contacts": "General Manager, Operations Director, OT/IT lead, Finance/Grants, Board liaison",
+    "useCases": [
+      "OT/IT monitoring",
+      "asset visibility",
+      "incident response",
+      "MFA",
+      "network segmentation"
+    ]
+  },
+  {
+    "name": "Councils of government and regional entities",
+    "fit": "Medium/High",
+    "eligibility": "Can aggregate local government needs and support regional projects where state guidance allows.",
+    "contacts": "Executive Director, Regional Planner, IT lead, Grant Manager",
+    "useCases": [
+      "regional shared services",
+      "training cohorts",
+      "joint procurement",
+      "rural pass-through strategy"
+    ]
+  },
+  {
+    "name": "Tribal governments / authorized tribal organizations",
+    "fit": "State-dependent",
+    "eligibility": "May appear as SLCGP subrecipients in some state processes; note that Tribal Cybersecurity Grant Program is a separate direct tribal funding path.",
+    "contacts": "Tribal Administrator, IT Director, Emergency Manager, Finance/Grants",
+    "useCases": [
+      "MFA",
+      "EDR",
+      "awareness training",
+      "assessment",
+      "incident response"
+    ]
+  }
+]

@@ -1,0 +1,23 @@
+Sheet,Field,Description
+Login_Log,timestamp,ISO timestamp from browser
+Login_Log,user,User-entered login name
+Login_Log,status,success or failed
+Login_Log,page,Page where login occurred
+Login_Log,userAgent,Browser user agent
+Prospect_Activity,timestamp,ISO timestamp
+Prospect_Activity,updatedBy,Logged-in user
+Prospect_Activity,state,State abbreviation
+Prospect_Activity,prospectId,NCES ID or local prospect ID
+Prospect_Activity,prospectName,Prospect organization name
+Prospect_Activity,county,County
+Prospect_Activity,status,Prospecting status selected by rep
+Prospect_Activity,assignedTo,Assigned rep
+Prospect_Activity,priority,High Medium or Low
+Prospect_Activity,nextFollowup,Follow-up date
+Prospect_Activity,notes,Rep notes
+Prospect_Activity,page,Page path
+State_Updates,state,Optional future manual sheet for state program data refreshes
+State_Updates,status,Open/Closed/Coming Soon/TBD
+State_Updates,startDate,Open date
+State_Updates,endDate,Close date
+State_Updates,sourceUrl,Official source URL
