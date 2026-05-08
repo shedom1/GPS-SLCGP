@@ -60,3 +60,17 @@ table{width:100%;border-collapse:separate;border-spacing:0;font-size:10.5px;line
 #prospectTable td:nth-child(9),#prospectTable td:nth-child(10){white-space:nowrap}
 @media (max-width:1000px){.jump-select{max-width:130px}.kpi-compact{grid-template-columns:repeat(2,1fr)}}
 @media print{.compact-details{display:none!important}.hero.hero-compact{padding:6px;border-radius:0}.optional-title{display:none!important}}
+
+/* 2026-05 v4 density + state/prospect workflow updates */
+.action-link{font-size:10px;font-weight:800;color:var(--solutionz-blue);text-decoration:none;border-bottom:1px dotted currentColor;white-space:nowrap;line-height:1.1;display:inline-block;padding:1px 0}.action-link:hover{color:var(--orange);text-decoration:none}
+.status.status-notstarted{background:#f4f6f8;color:#56616f;border-color:#dbe2ea}.status.status-researching{background:#fff9da;color:#705c00;border-color:#f5e58f}.status.status-callscheduled{background:#eaf7fb;color:#075e75;border-color:#b7e2ec}.status.status-contacted{background:#eef5ff;color:#0b4a86;border-color:#c9ddf4}.status.status-interested{background:#e9fbf2;color:#0b6841;border-color:#bfe8d1}.status.status-notfit{background:#fff0eb;color:#8d260a;border-color:#ffd1c3}.status.status-donotcontact{background:#f4f4f4;color:#626262;border-color:#ddd}.status.status-vendor{background:#edf6fb;color:#004060;border-color:#b7dbe9}.status.status-buyer{background:#effaf9;color:#075e75;border-color:#b7e2ec}
+.status-count-section{margin:0 0 8px}.status-count-grid{display:grid;grid-template-columns:repeat(9,minmax(90px,1fr));gap:5px}.status-count-card{padding:5px 6px!important;display:flex;align-items:center;justify-content:space-between;gap:5px;min-height:30px}.status-count-card strong{font-size:13px;color:var(--navy)}
+.field-check{justify-content:flex-start;min-height:28px;border-radius:8px;background:#fbfdff}
+.note-panel{width:min(560px,calc(100% - 24px))}.note-panel .two-col{gap:6px}.note-panel .field input,.note-panel .field select,.note-panel .field textarea{font-size:11px}.note-panel .field label{font-size:8.5px}
+#statesTable td:nth-child(9){text-align:center;white-space:nowrap}#statesTable td:nth-child(3){min-width:145px}#statesTable td:nth-child(7){min-width:260px;max-width:420px}
+#prospectTable td:nth-child(11){min-width:160px;max-width:260px}#prospectTable td:nth-child(12){min-width:170px;max-width:260px}#prospectTable td:nth-child(13){text-align:center;white-space:nowrap}
+#prospectTable th:nth-child(11),#prospectTable th:nth-child(12){min-width:150px}
+.jump-select{max-width:220px;min-width:185px}.topbar .nav-actions{gap:5px}
+@media (max-width:1200px){.status-count-grid{grid-template-columns:repeat(3,1fr)}#statesTable td:nth-child(7){min-width:220px}}
+@media (max-width:700px){.status-count-grid{grid-template-columns:1fr 1fr}.note-panel{right:8px;bottom:8px;width:calc(100% - 16px)}.jump-select{max-width:150px;min-width:130px}}
+@media print{.action-link{color:#000;border:0}.status-count-section{display:none!important}}

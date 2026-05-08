@@ -14,6 +14,15 @@ Prospect_Activity,status,Prospecting status selected by rep
 Prospect_Activity,assignedTo,Assigned rep
 Prospect_Activity,priority,High Medium or Low
 Prospect_Activity,nextFollowup,Follow-up date
+Prospect_Activity,registeredVendor,Yes/No checkbox value from log panel
+Prospect_Activity,vendorRegistrationDate,Vendor registration date if known
+Prospect_Activity,stateBuyingVehicle,Yes/No checkbox value from log panel
+Prospect_Activity,stateBuyingVehicleName,State contract/cooperative/buying vehicle name or contract number
+Prospect_Activity,stateBuyingVehicleStatus,Not Reviewed Available In Progress Yes - Confirmed No Known Vehicle Needs Follow-up
+Prospect_Activity,contactName,Superintendent or contact name
+Prospect_Activity,contactTitle,Contact title such as Superintendent IT Director Grants Procurement
+Prospect_Activity,contactEmail,Contact email
+Prospect_Activity,contactPhone,Contact phone
 Prospect_Activity,notes,Rep notes
 Prospect_Activity,page,Page path
 State_Updates,state,Optional future manual sheet for state program data refreshes
@@ -21,3 +30,7 @@ State_Updates,status,Open/Closed/Coming Soon/TBD
 State_Updates,startDate,Open date
 State_Updates,endDate,Close date
 State_Updates,sourceUrl,Official source URL
+State_Buying_Vehicles,state,Optional future sheet for reusable state buying vehicle research
+State_Buying_Vehicles,buyingVehicleName,State contract cooperative or purchasing vehicle name
+State_Buying_Vehicles,buyingVehicleStatus,Available In Progress Yes - Confirmed No Known Vehicle Needs Follow-up
+State_Buying_Vehicles,notes,Vehicle notes and links

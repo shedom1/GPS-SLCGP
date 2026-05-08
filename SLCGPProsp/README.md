@@ -4,8 +4,8 @@ GitHub-ready static HTML tool focused on K-12 SLCGP prospecting, with other elig
 
 ## Files
 
-- `index.html` - State Breakdown Page with filters, KPIs, K-12 counts, state status, and source links.
-- `state.html?state=GA` - State Level Page with timeline, requirements, funding path, links, K-12 prospect search, export, and note logging.
+- `index.html` - State Breakdown Page with compact filters, KPIs, full alphabetical state dropdown, K-12 counts, SLCGP FY/date status, state status, and source links.
+- `state.html?state=GA` - State Level Page with timeline, requirements, funding path, links, K-12 prospect search, sortable columns, status counts, activity cards, export, and expanded note logging.
 - `data/prospects_k12.json` - 19,336 K-12 district records normalized from the uploaded NCES/ELSI CSV.
 - `data/state_programs.json` - all states + D.C. with starter SLCGP state records and updated active/watch records from the existing SLCGP tracker resource.
 - `data/eligible_org_categories.json` - other eligible organization categories beyond K-12.
@@ -17,7 +17,16 @@ GitHub-ready static HTML tool focused on K-12 SLCGP prospecting, with other elig
 
 Password: `gpsslcgp`
 
-Users can type any name. The tool stores the login in browser localStorage and logs login attempts locally. To capture logins in Google Sheets, deploy `google_apps_script/Code.gs` and paste the Web App URL in `config.js`.
+Users can type any name. The tool stores the login in browser localStorage and logs login attempts locally. To capture logins and prospect activity in Google Sheets, deploy `google_apps_script/Code.gs` and paste the Web App URL in `config.js`.
+
+
+## Prospect activity fields
+
+The state-level log panel now captures: assigned rep, prospect status, priority, next follow-up, registered-as-vendor checkbox, vendor registration date, state buying vehicle checkbox, state buying vehicle name/contract number, state buying vehicle status, superintendent/contact name, contact title, contact email, contact phone, and notes. The Activity card view and CSV export include these fields.
+
+## Status counts
+
+The state-level page includes compact counts for each prospecting status type plus registered vendor and state buying vehicle counts. Counts update as filters change.
 
 ## Google Sheets logging setup
 
