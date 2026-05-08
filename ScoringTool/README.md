@@ -257,3 +257,23 @@ Update v20: K-12 district prospecting/search now uses the bundled ELSI/NCES K-12
 - Bundled the uploaded `rus_dlt_all_sites_2026-05-08.csv` file under `/data/` for Prior RUS DLT Winners / award-site strategy.
 - Prior RUS DLT Winners now auto-loads the bundled award/site table and has a more compact horizontal action layout.
 - HRSA note: if the official HRSA XLSX cannot be fetched from GitHub Pages, it is usually because the HRSA file was not bundled in `/data` or the browser blocked the cross-origin download. Upload the official HRSA XLSX under the Healthcare Lookup Dataset Fallback area to use it as the full healthcare source.
+
+## v27 Update Notes
+- Reworked the **Prior RUS DLT Winners** section on the Prospect Finder so it is smaller, tighter, and more functional.
+- Replaced the stacked/vertical action buttons with a single horizontal action bar.
+- Renamed the actions so their purpose is clear:
+  - **Filter Table** applies the state, winner type, county/city, and keyword filters.
+  - **Find Near Selected Prospects** finds prior RUS DLT awards near selected prospect rows using coordinates when available, with county/city fallback.
+  - **Export Filtered CSV** exports the current prior-winner view.
+  - **Reload Bundled Table** reloads the bundled 2026-05-08 all-sites award table.
+- Moved replacement award-table upload into an **Advanced** collapsible area so normal users are not distracted by it.
+- Added row-click drilldown for prior winners. Clicking any award row opens an awardee card showing:
+  - years won,
+  - project count,
+  - site/sub-recipient location count,
+  - total grant and site-dollar breakdown,
+  - year-by-year drilldown,
+  - project-level cards,
+  - all site/sub-recipient location rows with USDA Map links.
+- Multiple-year awardees now show as expandable year sections inside the drilldown card.
+- Drilldown values remain source-based only. The tool does not infer missing grant amounts, sub-recipients, or project descriptions.
