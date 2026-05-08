@@ -1,6 +1,7 @@
 
 let STATES=[], PROSPECTS=[];
 let stateSort = { col: 0, dir: 'asc' };
+let stateCardsVisible = false;
 const stateSorters = [
   s => s.state,
   s => s.status || s.openStatus || '',
@@ -61,11 +62,16 @@ function initIndex(){
   ['#q','#region','#state','#status','#priority'].forEach(id=>$(id)?.addEventListener('input', renderStates));
   $('#resetFilters')?.addEventListener('click',()=>{$$('#q,#region,#state,#status,#priority').forEach(e=>e.value='');renderStates();});
   $('#exportStateCsv')?.addEventListener('click',()=>downloadCsv('slcgp_state_breakdown.csv', filteredStates().map(s=>({State:s.state,Region:s.region,Status:s.status,EndNext:s.endDate||s.nextDate,Procurement:s.procurementType,K12:s.k12Count,HighPriority:s.highPriority,Source:s.sourceUrl}))));
+  $('#toggleStateCards')?.addEventListener('click',()=>{
+    stateCardsVisible = !stateCardsVisible;
+    $('#stateCards')?.classList.toggle('hidden', !stateCardsVisible);
+    if($('#toggleStateCards')) $('#toggleStateCards').textContent = stateCardsVisible ? 'Hide state cards' : 'Show state cards';
+  });
   $('#printBtn')?.addEventListener('click',()=>window.print());
 }
 function populateFilters(){
   const regions=[...new Set(STATES.map(s=>s.region))].sort(); const r=$('#region'); if(r) r.innerHTML='<option value="">All regions</option>'+regions.map(v=>`<option>${v}</option>`).join('');
-  const st=$('#state'); if(st) st.innerHTML='<option value="">All states</option>'+STATES.map(s=>`<option value="${s.abbr}">${s.state}</option>`).join('');
+  const st=$('#state'); if(st) st.innerHTML='<option value="">All states</option>'+[...STATES].sort((a,b)=>a.state.localeCompare(b.state)).map(s=>`<option value="${s.abbr}">${s.state}</option>`).join('');
 }
 function renderKpis(){
   const totalK12=STATES.reduce((a,s)=>a+(s.k12Count||0),0), high=STATES.reduce((a,s)=>a+(s.highPriority||0),0), rural=STATES.reduce((a,s)=>a+(s.ruralCount||0),0), open=STATES.filter(s=>s.openStatus==='Open').length, soon=STATES.filter(s=>/soon|summer|spring/i.test(s.status+' '+s.nextDate)).length;

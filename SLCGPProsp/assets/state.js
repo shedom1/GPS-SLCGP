@@ -1,17 +1,5 @@
-
 let STATES=[], PROSPECTS=[], CATEGORIES=[], STATE=null, filtered=[], mode='table';
 let prospectSort = { col: 3, dir: 'asc' };
-const prospectSorters = [
-  p => p.agencyName || '',
-  p => p.county || '',
-  p => `${p.city || ''} ${p.zip || ''}`,
-  p => p.priority || '',
-  p => Number(p.students || 0),
-  p => Number(p.schools || 0),
-  p => p.phone || '',
-  p => p.website || '',
-  p => p.agencyName || ''
-];
 const fmt = new Intl.NumberFormat('en-US');
 const $ = sel => document.querySelector(sel); const $$ = sel => Array.from(document.querySelectorAll(sel));
 function esc(v){return String(v??'').replace(/[&<>'"]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));}
@@ -23,6 +11,27 @@ function compareValues(a,b){
   if(na && nb) return a-b;
   return String(a ?? '').localeCompare(String(b ?? ''), undefined, {numeric:true, sensitivity:'base'});
 }
+function allNotes(){try{return JSON.parse(localStorage.getItem('slcgpProspectNotes')||'{}')}catch(e){return {}}}
+function prospectNote(id){return allNotes()[id]||{};}
+function shortText(v,n=105){v=String(v||'').trim(); return v.length>n ? v.slice(0,n-1)+'…' : v;}
+function noteDate(v){if(!v) return '—'; const d=new Date(v); return Number.isNaN(d.getTime()) ? String(v) : d.toLocaleString([], {month:'short', day:'numeric', hour:'numeric', minute:'2-digit'});}
+function noteStatus(n){return n?.status || 'Not Started';}
+function noteAssigned(n){return n?.assignedTo || '—';}
+function noteLast(n){return n?.notes ? shortText(n.notes) : '—';}
+const prospectSorters = [
+  p => p.agencyName || '',
+  p => p.county || '',
+  p => `${p.city || ''} ${p.zip || ''}`,
+  p => p.priority || '',
+  p => Number(p.students || 0),
+  p => Number(p.schools || 0),
+  p => p.phone || '',
+  p => p.website || '',
+  p => noteAssigned(prospectNote(p.id)),
+  p => noteStatus(prospectNote(p.id)),
+  p => noteLast(prospectNote(p.id)),
+  p => p.agencyName || ''
+];
 function bindProspectSortHeaders(){
   const table = $('#prospectTable'); if(!table) return;
   table.querySelectorAll('thead th').forEach((th,i)=>{
@@ -54,15 +63,22 @@ function init(){
   $('#stateTitle').textContent=`${STATE.state} SLCGP Prospecting`;
   $('#stateSub').textContent=`${STATE.region} | ${STATE.status} | ${fmt.format(STATE.k12Count||0)} K-12 district records loaded`;
   $('#stateBadge').textContent=STATE.abbr;
+  populateStateJump();
   renderOverview(); populateProspectFilters(); bindProspectSortHeaders(); renderProspects(); renderCategories();
   ['#pQ','#county','#locale','#tier','#agencyType','#minStudents','#ruralOnly','#websiteOnly'].forEach(id=>$(id)?.addEventListener('input', renderProspects));
   $('#resetP')?.addEventListener('click',()=>{$$('#pQ,#county,#locale,#tier,#agencyType,#minStudents').forEach(e=>e.value=''); $('#ruralOnly').checked=false; $('#websiteOnly').checked=false; renderProspects();});
-  $('#exportProspects')?.addEventListener('click',()=>downloadCsv(`${STATE.abbr}_slcgp_k12_prospects.csv`, filtered.map(p=>({NCES_ID:p.id,Agency:p.agencyName,County:p.county,City:p.city,ZIP:p.zip,Phone:p.phone,Website:p.website,Locale:p.locale,Priority:p.priority,Students:p.students,Schools:p.schools,Agency_Type:p.agencyType}))));
+  $('#exportProspects')?.addEventListener('click',()=>downloadCsv(`${STATE.abbr}_slcgp_k12_prospects.csv`, filtered.map(p=>{ const n=prospectNote(p.id); return {NCES_ID:p.id,Agency:p.agencyName,County:p.county,City:p.city,ZIP:p.zip,Phone:p.phone,Website:p.website,Locale:p.locale,Priority:p.priority,Students:p.students,Schools:p.schools,Agency_Type:p.agencyType,Assigned_To:n.assignedTo||'',Status:n.status||'',Last_Notes:n.notes||'',Next_Followup:n.nextFollowup||'',Last_Updated:n.updatedAt||'',Updated_By:n.updatedBy||''}; })));
   $('#printBtn')?.addEventListener('click',()=>window.print());
   $('#tableMode')?.addEventListener('click',()=>{mode='table'; renderProspects()});
   $('#cardMode')?.addEventListener('click',()=>{mode='cards'; renderProspects()});
+  $('#activityMode')?.addEventListener('click',()=>{mode='activity'; renderProspects()});
   $('#copyCallList')?.addEventListener('click',copyCallList);
   $$('.tab').forEach(t=>t.addEventListener('click',()=>{ $$('.tab').forEach(x=>x.classList.remove('active')); t.classList.add('active'); $$('.tab-panel').forEach(p=>p.classList.add('hidden')); $('#'+t.dataset.tab).classList.remove('hidden'); }));
+}
+function populateStateJump(){
+  const sel=$('#stateJump'); if(!sel) return;
+  sel.innerHTML=[...STATES].sort((a,b)=>a.state.localeCompare(b.state)).map(s=>`<option value="${s.abbr}" ${s.abbr===STATE.abbr?'selected':''}>${esc(s.state)}</option>`).join('');
+  sel.addEventListener('change',()=>{ location.href=`state.html?state=${encodeURIComponent(sel.value)}`; });
 }
 function renderOverview(){
   const k=$('#stateKpis');
@@ -84,7 +100,8 @@ function prospectFilters(){return {q:$('#pQ').value.toLowerCase(), county:$('#co
 function applyProspectFilters(){
   const f=prospectFilters();
   return stateProspects().filter(p=>{
-    const hay=[p.agencyName,p.county,p.city,p.zip,p.locale,p.agencyType,p.phone,p.website].join(' ').toLowerCase();
+    const n=prospectNote(p.id);
+    const hay=[p.agencyName,p.county,p.city,p.zip,p.locale,p.agencyType,p.phone,p.website,n.assignedTo,n.status,n.notes].join(' ').toLowerCase();
     if(f.q && !hay.includes(f.q)) return false; if(f.county && p.county!==f.county) return false; if(f.locale && p.locale!==f.locale) return false; if(f.agencyType && p.agencyType!==f.agencyType) return false; if(f.min && (p.students||0)<f.min) return false; if(f.rural && p.ruralTag!=='Rural') return false; if(f.website && !p.website) return false;
     if(f.tier && !p.priority.startsWith(f.tier)) return false; return true;
   }).sort((a,b)=>{
@@ -95,12 +112,21 @@ function applyProspectFilters(){
   });
 }
 function renderProspects(){
-  filtered=applyProspectFilters(); updateProspectSortIndicators(); $('#prospectCount').textContent=fmt.format(filtered.length); $$('#tableMode,#cardMode').forEach(b=>b.classList.remove('primary')); $(mode==='table'?'#tableMode':'#cardMode').classList.add('primary');
-  $('#prospectTableWrap').classList.toggle('hidden', mode!=='table'); $('#prospectCards').classList.toggle('hidden', mode!=='cards');
+  filtered=applyProspectFilters(); updateProspectSortIndicators(); $('#prospectCount').textContent=fmt.format(filtered.length); $$('#tableMode,#cardMode,#activityMode').forEach(b=>b.classList.remove('primary')); $(mode==='table'?'#tableMode':mode==='cards'?'#cardMode':'#activityMode').classList.add('primary');
+  $('#prospectTableWrap').classList.toggle('hidden', mode!=='table'); $('#prospectCards').classList.toggle('hidden', mode!=='cards'); $('#prospectActivityCards').classList.toggle('hidden', mode!=='activity');
   const rows=filtered.slice(0,900); // performance cap for screen; CSV still exports all filtered
-  $('#prospectTable tbody').innerHTML=rows.map(p=>`<tr><td><strong>${esc(p.agencyName)}</strong><span class="source-tag">NCES: ${esc(p.id)}</span></td><td>${esc(p.county)}</td><td>${esc(p.city)} ${esc(p.zip)}</td><td><span class="priority ${priorityClass(p.priority)}">${esc(p.priority.replace(' - ',': '))}</span><span class="source-tag">${esc(p.locale)}</span></td><td>${fmt.format(p.students||0)}</td><td>${fmt.format(p.schools||0)}</td><td>${esc(p.phone||'')}</td><td>${p.website?link(p.website,'Website'):'—'}</td><td><button class="btn small" onclick='openNote(${JSON.stringify(p.id)})'>Log note</button></td></tr>`).join('') || `<tr><td colspan="9" class="empty">No K-12 prospects match this filter.</td></tr>`;
+  $('#prospectTable tbody').innerHTML=rows.map(p=>{
+    const n=prospectNote(p.id);
+    return `<tr><td><strong>${esc(p.agencyName)}</strong><span class="source-tag">NCES: ${esc(p.id)}</span></td><td>${esc(p.county)}</td><td>${esc(p.city)} ${esc(p.zip)}</td><td><span class="priority ${priorityClass(p.priority)}">${esc(p.priority.replace(' - ',': '))}</span><span class="source-tag">${esc(p.locale)}</span></td><td>${fmt.format(p.students||0)}</td><td>${fmt.format(p.schools||0)}</td><td>${esc(p.phone||'')}</td><td>${p.website?link(p.website,'Website'):'—'}</td><td>${esc(noteAssigned(n))}</td><td><span class="status ${statusClass(noteStatus(n))}">${esc(noteStatus(n))}</span></td><td>${esc(noteLast(n))}<span class="source-tag">${n.updatedAt?`Updated ${esc(noteDate(n.updatedAt))}`:''}</span></td><td><button class="btn small" onclick='openNote(${JSON.stringify(p.id)})'>Log note</button></td></tr>`;
+  }).join('') || `<tr><td colspan="12" class="empty">No K-12 prospects match this filter.</td></tr>`;
   $('#tableLimitNote').textContent = filtered.length>900 ? `Showing first 900 of ${fmt.format(filtered.length)} matches for performance. Export CSV includes all filtered rows.` : '';
-  $('#prospectCards').innerHTML=rows.map(p=>`<div class="card prospect-card"><h3>${esc(p.agencyName)}</h3><div class="meta"><span class="priority ${priorityClass(p.priority)}">${esc(p.priority)}</span><span class="pill">${esc(p.locale)}</span></div><p><strong>County:</strong> ${esc(p.county)}<br><strong>Location:</strong> ${esc(p.city)}, ${esc(p.zip)}<br><strong>Students/Schools:</strong> ${fmt.format(p.students||0)} / ${fmt.format(p.schools||0)}</p><p>${esc(p.phone||'No phone loaded')} ${p.website?' | '+link(p.website,'Website'):''}</p><button class="btn small primary" onclick='openNote(${JSON.stringify(p.id)})'>Log prospect note</button></div>`).join('') || `<div class="empty">No K-12 prospects match this filter.</div>`;
+  $('#prospectCards').innerHTML=rows.map(p=>{ const n=prospectNote(p.id); return `<div class="card prospect-card"><h3>${esc(p.agencyName)}</h3><div class="meta"><span class="priority ${priorityClass(p.priority)}">${esc(p.priority)}</span><span class="pill">${esc(p.locale)}</span><span class="status ${statusClass(noteStatus(n))}">${esc(noteStatus(n))}</span></div><p><strong>County:</strong> ${esc(p.county)}<br><strong>Location:</strong> ${esc(p.city)}, ${esc(p.zip)}<br><strong>Students/Schools:</strong> ${fmt.format(p.students||0)} / ${fmt.format(p.schools||0)}</p><p><strong>Assigned:</strong> ${esc(noteAssigned(n))}<br><strong>Last note:</strong> ${esc(noteLast(n))}</p><p>${esc(p.phone||'No phone loaded')} ${p.website?' | '+link(p.website,'Website'):''}</p><button class="btn small primary" onclick='openNote(${JSON.stringify(p.id)})'>Log prospect note</button></div>`; }).join('') || `<div class="empty">No K-12 prospects match this filter.</div>`;
+  renderActivityCards();
+}
+function renderActivityCards(){
+  const notes=allNotes();
+  const items=filtered.map(p=>({p,n:notes[p.id]})).filter(x=>x.n).sort((a,b)=>(new Date(b.n.updatedAt||0))- (new Date(a.n.updatedAt||0))).slice(0,900);
+  $('#prospectActivityCards').innerHTML = items.map(({p,n})=>`<div class="card activity-card"><div class="meta"><span class="status ${statusClass(noteStatus(n))}">${esc(noteStatus(n))}</span><span class="pill">Assigned: ${esc(noteAssigned(n))}</span></div><h3>${esc(p.agencyName)}</h3><p><strong>Last note:</strong> ${esc(n.notes||'—')}</p><p class="mini"><strong>Updated:</strong> ${esc(noteDate(n.updatedAt))} by ${esc(n.updatedBy||'—')}<br><strong>Next follow-up:</strong> ${esc(n.nextFollowup||'—')}<br><strong>County:</strong> ${esc(p.county)} | ${esc(p.city)}, ${esc(p.zip)}</p><div class="toolbar"><button class="btn small" onclick='openNote(${JSON.stringify(p.id)})'>Update activity</button>${p.website?link(p.website,'Website'):''}</div></div>`).join('') || `<div class="empty">No prospect activity has been logged for the current filters yet. Use “Log note” from the Table or Cards view to create activity cards.</div>`;
 }
 function renderCategories(){
   $('#categoriesGrid').innerHTML=CATEGORIES.map(c=>`<div class="card"><h3>${esc(c.name)}</h3><div class="meta"><span class="pill">Fit: ${esc(c.fit)}</span></div><p>${esc(c.eligibility)}</p><p><strong>Who to contact:</strong> ${esc(c.contacts)}</p><p><strong>Project angles:</strong> ${c.useCases.map(esc).join(', ')}</p><button class="btn small" onclick="navigator.clipboard.writeText('${esc(c.name)} ${esc(c.contacts)} ${esc(c.useCases.join(', '))}')">Copy search hints</button></div>`).join('');
@@ -122,11 +148,11 @@ function openNote(id){
   $('#saveNote').onclick=()=>{
     const note={prospectId:p.id, prospectName:p.agencyName, state:STATE.abbr, county:p.county, status:$('#noteStatus').value, assignedTo:$('#assigned').value, priority:$('#notePriority').value, nextFollowup:$('#nextFollow').value, notes:$('#noteText').value, updatedAt:new Date().toISOString(), updatedBy:currentUser()};
     const all=JSON.parse(localStorage.getItem('slcgpProspectNotes')||'{}'); all[p.id]=note; localStorage.setItem('slcgpProspectNotes', JSON.stringify(all));
-    logEvent({eventType:'prospect_note', ...note}); panel.remove(); alert('Prospect note saved.');
+    logEvent({eventType:'prospect_note', ...note}); panel.remove(); renderProspects(); alert('Prospect note saved.');
   };
 }
 function copyCallList(){
-  const text=filtered.slice(0,50).map(p=>`${p.agencyName} | ${p.county} | ${p.city}, ${p.zip} | ${p.phone||''} | ${p.website||''} | ${p.priority}`).join('\n');
+  const text=filtered.slice(0,50).map(p=>{ const n=prospectNote(p.id); return `${p.agencyName} | ${p.county} | ${p.city}, ${p.zip} | ${p.phone||''} | ${p.website||''} | ${p.priority} | Assigned: ${n.assignedTo||''} | Status: ${n.status||''} | Notes: ${shortText(n.notes||'', 80)}`; }).join('\n');
   navigator.clipboard.writeText(text); alert('Copied top 50 filtered prospects.');
 }
 function downloadCsv(filename, rows){
