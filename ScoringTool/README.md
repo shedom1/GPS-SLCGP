@@ -16,7 +16,7 @@ GitHub Pages-ready static HTML tool for preliminary FY2026 USDA RUS Distance Lea
 - Searches K-12 districts and can import the district administrative office as a Hub row plus all school locations from NCES public school and school district characteristics ArcGIS layers. For application-grade review, compare imported rows against the latest NCES CCD directory files.
 - Searches higher education institutions and technical-school style institutions from a public colleges/universities ArcGIS feature layer.
 - Builds a 25, 50, 75, or 100 mile partner radius list around a selected anchor site, using official K-12, HRSA healthcare, and higher-ed source records.
-- Uses HRSA Health Center Service Delivery and Look-Alike Sites for the Healthcare/Rural Health workflow. The Scoring Tool State / Scope now defaults to `ALL` so users can search by organization/name without knowing the state. For Healthcare with `ALL`, enter at least 2 search characters first, or use the GA Healthcare quick button / choose a specific state to avoid accidentally loading a national healthcare list. If the browser blocks the live HRSA file, download the official HRSA XLSX and upload it under Import / Templates → Healthcare Lookup Dataset Fallback.
+- Uses HRSA Health Center Service Delivery and Look-Alike Sites for the Healthcare/Rural Health workflow. The Scoring Tool State / Scope now defaults to `ALL` so users can search by organization/name without knowing the state. Healthcare attempts to load the full HRSA lookup first and then filters locally by state/name/city/county; if browser loading is blocked, use the HRSA fallback upload. If the browser blocks the live HRSA file, download the official HRSA XLSX and upload it under Import / Templates → Healthcare Lookup Dataset Fallback.
 - Adds manual locations for district offices, consortium hubs, partner clinics, higher-ed extension sites, libraries, or other custom project locations.
 - Enriches sites with 2020 Census place population and 2024 Census SAIPE county poverty rate.
 - Calculates provisional D-1 Rurality and D-2 Economic Need scores.
@@ -62,12 +62,11 @@ The partner finder is intentionally conservative:
 
 ## Healthcare updates in this version
 
-- The Scoring Tool State / Scope now defaults to **ALL — All states**. The **GA Healthcare** quick button still switches to Georgia for a manageable healthcare load.
-- Added a **Load GA Healthcare** quick button.
+- The Scoring Tool State / Scope now defaults to **ALL — All states**. Healthcare uses a full-table HRSA source when available and filters locally.
 - The Healthcare button now tries the official HRSA **XLSX** file first instead of relying only on the CSV.
 - Added a separate **Healthcare Lookup Dataset Fallback** area under **Import / Templates** for uploading the downloaded HRSA XLSX or CSV when live loading is blocked.
 - Separated **Project Site List Import** from **Healthcare Lookup Dataset Fallback** so users know whether they are importing rows to score or loading a lookup dataset.
-- HRSA Healthcare search no longer requires a search term when a specific state is selected; blank search loads the selected-state healthcare site list. When State / Scope is `ALL`, the tool requires at least 2 search characters before healthcare lookup to avoid loading a national list by accident.
+- HRSA Healthcare uses a full-table lookup when available and then applies state/name/city/county filters locally.
 - Healthcare results now include an **Add all returned healthcare sites** action and displays the first 100 records for easier review.
 - Added Phone, Website, and ZIP columns to the main worksheet table for healthcare and outreach use.
 - Enriched HRSA import mapping for county FIPS, site ID, phone, website, latitude, and longitude fields when available.
@@ -247,5 +246,14 @@ Update v20: K-12 district prospecting/search now uses the bundled ELSI/NCES K-12
 - Scoring Tool **State / Scope** now defaults to **ALL — All states** so users can search by district, agency, health center, or higher-ed name without knowing the state first.
 - K-12 district searches use the bundled ELSI/NCES district file across all states first; school-site fallback searches also support all-state name matching.
 - Higher-ed searches now support all-state institution/system-name matching from the colleges/universities source layer.
-- Healthcare searches support all-state name matching after the HRSA full-table lookup loads. To prevent accidental national healthcare pulls, the tool asks for at least 2 search characters when State / Scope is ALL.
+- Healthcare searches support all-state matching after the HRSA full-table lookup loads or after the HRSA fallback dataset is uploaded.
 - Manual Location keeps the State field blank when the scope is ALL, so users enter the actual site state instead of accidentally saving `ALL` as a state value.
+
+
+## v26 updates
+
+- Restored Target Scoring controls on the Scoring Tool: Target D-1, Target D-2, Target Objective Score, Target Total Score, project target status, and row-level Target Fit.
+- Removed the GA-only healthcare shortcut/tip language. HRSA healthcare now treats the uploaded/bundled dataset as a full-table source and filters locally.
+- Bundled the uploaded `rus_dlt_all_sites_2026-05-08.csv` file under `/data/` for Prior RUS DLT Winners / award-site strategy.
+- Prior RUS DLT Winners now auto-loads the bundled award/site table and has a more compact horizontal action layout.
+- HRSA note: if the official HRSA XLSX cannot be fetched from GitHub Pages, it is usually because the HRSA file was not bundled in `/data` or the browser blocked the cross-origin download. Upload the official HRSA XLSX under the Healthcare Lookup Dataset Fallback area to use it as the full healthcare source.
