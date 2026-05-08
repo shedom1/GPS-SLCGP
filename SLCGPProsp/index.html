@@ -1,11 +1,1618 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SLCGP K-12 Prospecting Tool</title><link rel="stylesheet" href="assets/styles.css"><script src="config.js"></script><script src="assets/auth.js"></script></head>
-<body><div class="app-shell"><header class="topbar"><div class="topbar-inner"><div class="brand"><span class="logo-word">SOLUTIONZ</span><span class="brand-sub">GPS Team | SLCGP</span></div><nav class="nav-actions"><span class="pill">User: <span data-current-user>—</span></span><a class="btn small" href="https://www.myfundingtracker.com/SLCGP/" target="_blank" rel="noopener">Source tracker</a><button class="btn small" id="printBtn">Print/PDF</button><button class="btn small ghost" onclick="clearAuth()">Log out</button></nav></div></header>
-<main class="container"><section class="hero hero-compact"><div class="hero-grid"><div><h1>SLCGP State Prospecting Tool</h1><p>Compact state breakdown with K-12 district targeting, state links, timelines, and prospecting notes.</p></div><div class="hero-card compact"><strong>Rep workflow</strong><span class="mini" style="color:#e9f6ff">Filter → open state → log assigned/status/notes.</span></div></div></section>
-<details class="callout compact-details"><summary><strong>How to use this tool</strong></summary><p>Identify rural K-12 districts and other eligible local-government organizations for SLCGP-funded cybersecurity planning, training, MFA, EDR, monitoring, SIEM, and resilience work.</p></details>
-<section id="kpis" class="grid kpi kpi-compact"></section>
-<section class="section-title"><h2>State Breakdown</h2><span class="pill">Visible states: <span id="visibleCount">—</span></span></section>
-<section class="card compact-card"><div class="filters"><div class="field"><label>Search</label><input id="q" placeholder="Search state, procurement route, notes..."></div><div class="field"><label>Region</label><select id="region"></select></div><div class="field"><label>State</label><select id="state"><option value="">All states</option></select></div><div class="field"><label>Open status</label><select id="status"><option value="">All statuses</option><option>Open</option><option>Forecasted/TBD</option><option>Closed</option></select></div><div class="field"><label>Priority filter</label><select id="priority"><option value="">All</option><option value="high">Has Tier 1/2 K-12</option></select></div></div><div class="toolbar"><div><button class="btn" id="resetFilters">Reset</button><button class="btn" id="exportStateCsv">Export CSV</button></div><span class="mini">State dropdown includes all 50 states + D.C. in alphabetical order. Pennsylvania is mapped to Northeast per GPS convention.</span></div></section>
-<div class="table-wrap state-table-wrap" style="margin-top:10px"><table id="statesTable"><thead><tr><th>State</th><th>Status</th><th>SLCGP FY / Dates</th><th>Procurement</th><th>K-12</th><th>Tier 1/2</th><th>Summary</th><th>Source</th><th>Action</th></tr></thead><tbody></tbody></table></div>
-<section class="section-title optional-title"><h2>Optional State Cards</h2><button class="btn small" id="toggleStateCards">Show state cards</button></section><section id="stateCards" class="cards-grid hidden"></section>
-<footer class="footer">Created for GPS/SLCGP prospecting. Data files are static JSON and can be refreshed by replacing files in the data folder. Login is a convenience layer for GitHub Pages; use stronger identity controls if needed.</footer></main></div><script src="assets/app.js"></script></body></html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FY2026 RUS DLT Scoring + Partner Radius Tool | Professional Workspace</title>
+  <style>
+    :root{
+      --bg0:#050b18; --bg1:#07182e; --bg2:#0c2f4f; --panel:#ffffff; --panel2:#f8fbff;
+      --ink:#102033; --muted:#60738b; --line:#d6e1ee; --line2:#e8eef6;
+      --blue:#1d4ed8; --blue2:#0ea5e9; --cyan:#22d3ee; --teal:#14b8a6;
+      --green:#0f8a5f; --amber:#b7791f; --red:#c2410c; --purple:#6d28d9;
+      --shadow:0 20px 55px rgba(8,22,48,.16); --shadow2:0 8px 24px rgba(8,22,48,.10);
+      --radius:20px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Inter,Segoe UI,Roboto,Arial,sans-serif;
+      color:var(--ink);
+      background:
+        radial-gradient(circle at 12% 0%, rgba(34,211,238,.18), transparent 26rem),
+        radial-gradient(circle at 85% 12%, rgba(29,78,216,.22), transparent 30rem),
+        linear-gradient(180deg,#06111f 0%,#0b1d33 330px,#edf4fb 331px,#f8fbff 100%);
+    }
+    a{color:#0b66c3;text-decoration:none}
+    a:hover{text-decoration:underline}
+    .app-header{color:white;padding:22px 26px 18px;position:relative;overflow:hidden;border-bottom:1px solid rgba(255,255,255,.12)}
+    .app-header:before{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.08),transparent 36%,rgba(34,211,238,.10));pointer-events:none}
+    .topbar{position:relative;z-index:1;display:flex;justify-content:space-between;gap:20px;align-items:flex-start;max-width:1540px;margin:0 auto 18px;}
+    .brand{display:flex;gap:13px;align-items:center;min-width:270px}.brand-mark{width:42px;height:42px;border-radius:14px;background:linear-gradient(135deg,var(--cyan),var(--blue));box-shadow:0 0 0 6px rgba(34,211,238,.10),0 16px 38px rgba(14,165,233,.35);display:grid;place-items:center;font-weight:950;letter-spacing:-.08em}.brand-title{font-size:13px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:#e0f2fe}.brand-subtitle{font-size:11px;color:#9cc8e8;margin-top:2px}
+    .nav-actions{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:9px}.nav-button,.button-link{display:inline-flex;align-items:center;gap:8px;border-radius:999px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.09);color:#f8fbff;padding:9px 12px;font-weight:850;font-size:12px;backdrop-filter:blur(10px);box-shadow:0 8px 18px rgba(0,0,0,.12)}.nav-button:hover,.button-link:hover{text-decoration:none;background:rgba(255,255,255,.16);transform:translateY(-1px)}.button-link{border-color:var(--line);background:#fff;color:#0f3760}.button-link.primary{background:linear-gradient(135deg,#154db4,#0ea5e9);color:white;border:0}
+    .hero{position:relative;z-index:1;max-width:1540px;margin:0 auto;display:grid;grid-template-columns:1.2fr .8fr;gap:20px;align-items:end}.eyebrow{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(34,211,238,.30);background:rgba(34,211,238,.09);color:#c7f9ff;border-radius:999px;padding:6px 10px;font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.08em}.eyebrow:before{content:"";width:7px;height:7px;border-radius:50%;background:#22d3ee;box-shadow:0 0 16px #22d3ee}h1{font-size:34px;line-height:1.02;margin:12px 0 9px;font-weight:950;letter-spacing:-.04em}.subtitle{font-size:14px;line-height:1.55;color:#c7d8ea;max-width:980px}.hero-chips{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap}.badge{display:inline-flex;align-items:center;gap:7px;padding:8px 10px;border:1px solid rgba(255,255,255,.20);background:rgba(255,255,255,.10);border-radius:999px;font-size:12px;color:#fff;white-space:nowrap}.badge strong{color:#cffafe}.right{text-align:right}
+    main{max-width:1540px;margin:-6px auto 56px;padding:0 18px}.grid{display:grid;grid-template-columns:1.15fr .85fr;gap:16px;margin-bottom:16px}.card{background:rgba(255,255,255,.96);border:1px solid rgba(208,222,238,.95);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;backdrop-filter:blur(10px)}.card h2{font-size:15px;margin:0;padding:14px 16px;border-bottom:1px solid var(--line2);background:linear-gradient(180deg,#ffffff,#f4f8fc);display:flex;align-items:center;justify-content:space-between;gap:12px;color:#0c2442;letter-spacing:-.01em}.card h2:before{content:"";width:8px;height:24px;border-radius:99px;background:linear-gradient(180deg,var(--cyan),var(--blue));box-shadow:0 0 16px rgba(34,211,238,.35)}.card h2 .smalltxt{margin-left:auto}.card .body{padding:14px 16px}.controls{border-top:3px solid #22d3ee}
+    label{display:block;font-size:11px;font-weight:850;color:#34465d;margin-bottom:5px;text-transform:uppercase;letter-spacing:.035em}input,select,textarea{width:100%;border:1px solid #c9d6e6;border-radius:11px;padding:9px 10px;background:#fff;font:inherit;color:var(--ink);box-shadow:inset 0 1px 0 rgba(255,255,255,.72)}input:focus,select:focus,textarea:focus{outline:2px solid rgba(14,165,233,.22);border-color:#38bdf8}input[type="checkbox"]{width:auto;transform:scale(1.03)}textarea{min-height:78px;resize:vertical}.row{display:grid;grid-template-columns:repeat(12,1fr);gap:10px;align-items:end;margin-bottom:10px}.col-2{grid-column:span 2}.col-3{grid-column:span 3}.col-4{grid-column:span 4}.col-5{grid-column:span 5}.col-6{grid-column:span 6}.col-7{grid-column:span 7}.col-8{grid-column:span 8}.col-12{grid-column:span 12}
+    button{border:0;border-radius:11px;padding:9px 12px;font-weight:850;cursor:pointer;background:#e5edf6;color:#102033;transition:.15s ease;box-shadow:0 1px 0 rgba(255,255,255,.7) inset}button:hover{filter:brightness(.985);transform:translateY(-1px);box-shadow:var(--shadow2)}.primary{background:linear-gradient(135deg,#1447a5,#0ea5e9);color:white}.accent{background:linear-gradient(135deg,#dff7ff,#bae6fd);color:#075985}.green{background:linear-gradient(135deg,#dffbed,#bcf7d2);color:#166534}.amber{background:linear-gradient(135deg,#fff3c4,#fde68a);color:#92400e}.danger{background:linear-gradient(135deg,#fee2e2,#fecaca);color:#991b1b}.dark{background:#0f172a;color:white}.ghost{background:#f8fbff;border:1px solid var(--line);color:#17324d}.btnrow{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.btnrow button,.btnrow .button-link{font-size:12px;padding:8px 10px}.status{font-size:12px;color:var(--muted);margin-top:7px;min-height:18px}.status strong{color:var(--ink)}
+    .metrics{display:grid;grid-template-columns:repeat(5,1fr);gap:9px}.metric{border:1px solid #d9e5f2;border-radius:17px;padding:12px;background:linear-gradient(180deg,#fff,#f5f9fe);box-shadow:0 10px 20px rgba(13,38,76,.05)}.metric .k{font-size:10px;text-transform:uppercase;letter-spacing:.07em;color:#667b91;font-weight:900}.metric .v{font-size:25px;font-weight:950;margin-top:4px;letter-spacing:-.04em}.metric .s{font-size:10.5px;color:var(--muted);margin-top:3px}.score-good{color:var(--green)}.score-mid{color:var(--amber)}.score-low{color:var(--red)}
+    .callout{border:1px solid #cfe8ff;border-left:5px solid var(--blue2);background:linear-gradient(180deg,#f0f8ff,#ffffff);border-radius:14px;padding:11px 13px;font-size:12.5px;line-height:1.45;color:#173a65;margin:0 0 12px}.warn{border-color:#fde4b4;border-left-color:#f59e0b;background:linear-gradient(180deg,#fff8eb,#ffffff);color:#78350f}.ok{border-color:#ccefdc;border-left-color:var(--green);background:linear-gradient(180deg,#effdf5,#ffffff);color:#064e3b}
+    .tabs{display:flex;gap:6px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding:10px 14px 0;background:#f4f8fc}.tab{padding:9px 12px;border:1px solid var(--line);border-bottom:0;border-radius:13px 13px 0 0;background:#e9f1fa;font-weight:850;font-size:12px;color:#334155}.tab.active{background:#fff;color:#0c2442;box-shadow:0 -8px 20px rgba(13,38,76,.04)}.panel{display:none}.panel.active{display:block}
+    .table-tools{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px;flex-wrap:wrap}.compact-select{padding:7px 8px;border-radius:9px;border:1px solid var(--line);font-size:12px;background:white}.table-hint{font-size:11px;color:var(--muted);line-height:1.25}.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:14px;background:white;max-height:690px;box-shadow:inset 0 1px 0 #fff}.table-wrap.small{max-height:360px}table{width:100%;border-collapse:separate;border-spacing:0;font-size:10px;min-width:1860px;table-layout:fixed}th,td{border-bottom:1px solid #e8eef5;border-right:1px solid #eef3f8;padding:3px 4px;vertical-align:middle;background:#fff;line-height:1.15}th{position:sticky;top:0;z-index:2;background:linear-gradient(180deg,#eaf2fb,#dde9f7);color:#334155;text-align:left;font-size:9px;text-transform:uppercase;letter-spacing:.035em;line-height:1.05;user-select:none;white-space:normal;overflow:hidden}tbody tr:hover td{background:#f8fbff}.sortable{cursor:pointer}.sortable:hover{background:#dbeafe}.sort-indicator{font-size:9px;color:#0f6db5;margin-left:3px}.th-inner{position:relative;display:flex;align-items:center;gap:2px;min-height:20px;padding-right:7px}.col-resizer{position:absolute;right:-4px;top:-4px;width:8px;height:calc(100% + 8px);cursor:col-resize;z-index:4}.col-resizer:hover{background:rgba(14,165,233,.25)}td{overflow:hidden}td input,td select{padding:3px 4px;border-radius:6px;font-size:10px;min-height:22px}td input{width:100%}td select{width:100%}td button{padding:4px 6px;border-radius:6px;font-size:10px}.num{text-align:right;font-variant-numeric:tabular-nums}.nowrap{white-space:nowrap}.truncate{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.pill{display:inline-flex;align-items:center;border-radius:999px;padding:2px 6px;font-weight:900;font-size:9px;background:#e2e8f0;color:#334155}.pill.green{background:#dcfce7;color:#166534}.pill.blue{background:#dbeafe;color:#1d4ed8}.pill.amber{background:#fef3c7;color:#92400e}.pill.red{background:#fee2e2;color:#991b1b}.pill.purple{background:#ede9fe;color:#5b21b6}.source-list{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.source-list a{display:block;border:1px solid var(--line);background:linear-gradient(180deg,#fff,#f8fbff);border-radius:14px;padding:11px;text-decoration:none;color:#0f172a}.source-list strong{display:block;font-size:13px}.source-list span{display:block;color:var(--muted);font-size:12px;margin-top:3px;line-height:1.35}.hidden{display:none!important}.smalltxt{font-size:12px;color:var(--muted);line-height:1.45}.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace}.search-results{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:10px}.result{border:1px solid var(--line);border-radius:14px;padding:10px;background:linear-gradient(180deg,#ffffff,#f8fbff);box-shadow:0 8px 18px rgba(13,38,76,.05)}.result strong{font-size:13px}.result .meta{font-size:12px;color:var(--muted);margin:3px 0 8px;line-height:1.35}.result button{font-size:12px;padding:8px 9px}.footnote{font-size:11px;color:#64748b;margin-top:8px;line-height:1.35}.partner-card{border-top:3px solid #14b8a6;margin-bottom:16px}.inline-check{display:inline-flex;align-items:center;gap:6px;margin:0 10px 8px 0;font-size:12px;font-weight:850;color:#34465d;text-transform:none;letter-spacing:0}.partner-table{min-width:1480px}.partner-table td,.partner-table th{font-size:10px;line-height:1.18}.partner-table td{padding:4px 5px}.partner-actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:10px}.data-note{font-size:11px;color:#475569;background:#f8fbff;border:1px solid var(--line);border-radius:12px;padding:8px 10px;margin-top:8px}.workflow-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:0 0 8px}.workflow-step{border:1px solid var(--line);border-radius:11px;background:#f8fbff;padding:6px 8px;font-size:10.5px;line-height:1.2;color:#40566f}.workflow-step strong{display:block;color:#0c2442;font-size:11px;text-transform:uppercase;letter-spacing:.04em;margin-bottom:2px}.tight-card .body{padding:12px 14px}.tight-card .callout{padding:7px 9px;font-size:11px;margin-bottom:8px}.tight-card label{font-size:10px;margin-bottom:4px}.tight-card input,.tight-card select{padding:7px 8px;border-radius:9px;font-size:12px}.tight-card .row{gap:8px;margin-bottom:8px}.status.busy{display:inline-flex;align-items:center;gap:7px;color:#0f3760;font-weight:850}.busy-clock{display:inline-block;animation:spin 1s linear infinite}.mini-toggle{display:inline-flex;align-items:center;gap:5px;border:1px solid var(--line);border-radius:999px;background:#fff;padding:6px 9px;font-size:11px;font-weight:850;color:#334155}.mini-toggle input{width:auto}.accordion-card{margin-bottom:16px}.accordion-card>summary{list-style:none;cursor:pointer;padding:13px 16px;border-bottom:1px solid var(--line2);background:linear-gradient(180deg,#ffffff,#f4f8fc);font-weight:950;color:#0c2442;display:flex;justify-content:space-between;align-items:center}.accordion-card>summary::-webkit-details-marker{display:none}.accordion-card>summary:after{content:'Open';font-size:11px;border:1px solid var(--line);border-radius:999px;padding:5px 9px;background:#fff;color:#0f3760}.accordion-card[open]>summary:after{content:'Collapse'}
+    @media (max-width:1100px){.hero,.grid{grid-template-columns:1fr}.metrics{grid-template-columns:repeat(2,1fr)}.row{grid-template-columns:repeat(6,1fr)}.col-2,.col-3,.col-4,.col-5,.col-6,.col-7,.col-8{grid-column:span 6}.source-list,.search-results,.workflow-strip{grid-template-columns:1fr}.topbar{display:block}.nav-actions{justify-content:flex-start;margin-top:12px}.hero-chips{justify-content:flex-start}.badge{margin:6px 6px 0 0}h1{font-size:28px}}
+    @media print{body{background:#fff}.app-header,.tabs,.btnrow,.no-print,.card.controls{display:none!important}main{max-width:none;margin:0;padding:0}.card{box-shadow:none;border:0;border-radius:0}.table-wrap{max-height:none;overflow:visible;border:0}table{font-size:9px;min-width:0}th,td{padding:4px}.grid{display:block}.metrics{grid-template-columns:repeat(5,1fr)}input,select{border:0;padding:0;background:transparent}.callout{border:1px solid #ddd}}
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <link rel="stylesheet" href="brand.css" />
+  <script src="auth.js"></script>
+</head>
+<body>
+  <header class="app-header">
+    <div class="topbar">
+      <div class="brand">
+        <div class="brand-mark">DLT</div>
+        <div><div class="brand-title">RUS DLT Scoring Workspace</div><div class="brand-subtitle">FY2026 prospecting + pre-application review</div></div>
+      </div>
+      <nav class="nav-actions" aria-label="Primary navigation">
+        <a class="nav-button" href="index.html">Scoring Tool</a>
+        <a class="nav-button" href="prospects.html">Prospect Finder</a>
+        <a class="nav-button" href="match.html">Match Calculator</a>
+        <a class="nav-button" href="guide.html">How to Use Guide</a>
+        <a class="nav-button" href="https://ruraldevelopment.maps.arcgis.com/apps/webappviewer/index.html?id=15a73830555645ae93d2fa773ed8e971" target="_blank">USDA DLT Map</a>
+        <a class="nav-button" href="https://www.rd.usda.gov/programs-services/telecommunications-programs/distance-learning-telemedicine-grants" target="_blank">USDA FY2026 Resources</a>
+      </nav>
+    </div>
+    <div class="hero">
+      <div>
+        <div class="eyebrow">High-confidence early scoring</div>
+        <h1>FY2026 RUS DLT Scoring + Partner Radius Tool</h1>
+        <div class="subtitle">Start with a school district, health center, or higher-ed/technical institution, identify its sites, then build a 50–100 mile partner radius list using official source data. Enrich each location with Census place population and county SAIPE data, review DLT map verification fields, and export a source-based prospecting worksheet.</div>
+      </div>
+      <div class="hero-chips">
+        <span class="badge"><strong>Deadline</strong> 06/30/2026</span>
+        <span class="badge"><strong>Grant</strong> $50k–$750k</span>
+        <span class="badge"><strong>Match</strong> 15% minimum</span>
+        <span class="badge"><strong>Scoring</strong> 100 pts</span>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="grid">
+      <div class="card controls tight-card">
+        <h2>1) Find / Add Sites <span class="smalltxt">District, Healthcare, Higher Ed, or Manual</span></h2>
+        <div class="body">
+          <div class="workflow-strip">
+            <div class="workflow-step"><strong>1. Find sites</strong>Search a district, healthcare org, or institution.</div>
+            <div class="workflow-step"><strong>2. Add rows</strong>Pick office + sites, sites only, or manual rows.</div>
+            <div class="workflow-step"><strong>3. Auto-score</strong>Populate Census population, SAIPE, D-1/D-2.</div>
+            <div class="workflow-step"><strong>4. Verify</strong>Confirm DLT map flags before final use.</div>
+          </div>
+          <div class="callout warn"><strong>Guardrail:</strong> D-1 remains provisional until USDA DLT map fields are verified.</div>
+          <div class="row">
+            <div class="col-2"><label>Project Type</label><select id="projectType"><option>Fixed</option><option>Hybrid</option><option>Non-fixed</option></select></div>
+            <div class="col-2"><label>State / Scope</label><select id="stateSelect"></select></div>
+            <div class="col-3"><label>Designation</label><select id="defaultDesignation"><option>End-User</option><option>Hub/End-User</option><option>Hub</option><option>Proxy Hub</option></select></div>
+            <div class="col-5"><label>Search Name / District / Agency / Institution</label><input id="searchTerm" placeholder="Search name first — state can be ALL" /></div>
+          </div>
+          <div class="btnrow">
+            <button class="primary" onclick="searchK12()">K-12 District + Schools</button>
+            <button class="green" onclick="searchHigherEd()">Higher Ed / Technical</button>
+            <button class="accent" onclick="searchHRSA()">Healthcare</button>
+            <button class="ghost" onclick="showManualSite()">Manual Location</button>
+            <span class="mini-toggle"><input id="autoEnrichOnAdd" type="checkbox" checked> Auto-enrich + score</span>
+          </div>
+          <div id="searchStatus" class="status"></div>
+          <div id="searchResults" class="search-results"></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>2) Project Score Snapshot</h2>
+        <div class="body">
+          <div class="metrics">
+            <div class="metric"><div class="k">Scored Sites</div><div id="metricSites" class="v">0</div><div class="s">End-User + Hub/End-User + Proxy Hub</div></div>
+            <div class="metric"><div class="k">D-1 Rurality</div><div id="metricRurality" class="v">—</div><div class="s">max 40 pts</div></div>
+            <div class="metric"><div class="k">D-2 Economic</div><div id="metricEconomic" class="v">—</div><div class="s">max 30 pts</div></div>
+            <div class="metric"><div class="k">D-3 Needs</div><input id="subjectiveScore" class="num" value="0" type="number" min="0" max="30" step="0.5" oninput="recalc();renderTable()" /><div class="s">manual estimate, max 30</div></div>
+            <div class="metric"><div class="k">Total Score</div><div id="metricTotal" class="v">—</div><div class="s">provisional max 100</div></div>
+          </div>
+          <div class="target-panel" style="margin-top:10px;border:1px solid var(--line);border-radius:16px;background:linear-gradient(180deg,#ffffff,#f8fbff);padding:10px 12px">
+            <div class="row" style="margin-bottom:6px">
+              <div class="col-2"><label>Target D-1</label><input id="targetD1" class="num" type="number" value="30" min="0" max="40" step="5" oninput="recalc();renderTable()" /></div>
+              <div class="col-2"><label>Target D-2</label><input id="targetD2" class="num" type="number" value="20" min="0" max="30" step="5" oninput="recalc();renderTable()" /></div>
+              <div class="col-2"><label>Target D-1+D-2</label><input id="targetObjectiveScore" class="num" type="number" value="50" min="0" max="70" step="5" oninput="recalc();renderTable()" /></div>
+              <div class="col-2"><label>Target Total</label><input id="targetTotalScore" class="num" type="number" value="75" min="0" max="100" step="5" oninput="recalc();renderTable()" /></div>
+              <div class="col-2"><label>Target Status</label><div id="metricTargetStatus" class="pill">—</div></div>
+              <div class="col-2"><label>Gap / Surplus</label><div id="metricTargetGap" class="pill">—</div></div>
+            </div>
+            <div class="smalltxt">Target features are screening aids. Row target fit uses D-1, D-2, and D-1+D-2 thresholds; final scoring still depends on verified USDA DLT map data and the D-3 narrative score.</div>
+          </div>
+          <div class="btnrow" style="margin-top:12px">
+            <button class="primary" onclick="enrichAll()">Enrich Census + SAIPE</button>
+            <button onclick="recalc()">Recalculate</button>
+            <button onclick="copySummary()">Copy Score Summary</button>
+            <button onclick="window.print()">Save/Print PDF</button>
+            <button onclick="exportCSV()">Export CSV</button>
+            <button onclick="downloadJSON()">Export JSON</button>
+            <a class="button-link" href="prospects.html">Prospect Finder</a>
+            <a class="button-link" href="match.html">Match Calculator</a>
+            <a class="button-link" href="guide.html">Guide</a>
+          </div>
+          <div id="scoreWarnings" class="status"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="tabs no-print">
+        <button class="tab active" onclick="switchTab('sites')">Site Scoring Worksheet</button>
+        <button class="tab" onclick="switchTab('import')">Import / Templates</button>
+        <button class="tab" onclick="switchTab('guide')">Scoring Rules</button>
+        <button class="tab" onclick="switchTab('sources')">Official Data Sources</button>
+      </div>
+
+      <div id="panel-sites" class="panel active body">
+        <div class="table-tools no-print">
+          <div class="btnrow">
+            <button class="ghost" onclick="selectAllSites(true)">Include All</button>
+            <button class="ghost" onclick="selectAllSites(false)">Exclude All</button>
+            <select id="bulkDesignation" class="compact-select" title="Bulk update site designation for included rows"><option>End-User</option><option>Hub/End-User</option><option>Hub</option><option>Proxy Hub</option></select>
+            <button class="ghost" onclick="applyDesignationToIncluded()">Apply Designation to Included</button>
+            <button class="green" onclick="showManualSite()">Add Manual Location</button>
+            <button class="amber" onclick="dedupeSites()">Deduplicate</button>
+            <button class="danger" onclick="clearSites()">Clear All</button>
+            <button class="ghost" onclick="openDLTMap()">Open USDA DLT Map</button>
+          </div>
+          <div class="table-hint">Click a column heading to sort. Drag heading edges to resize columns.</div>
+        </div>
+        <div class="table-wrap">
+          <table id="siteTable"></table>
+        </div>
+        <div class="footnote">Provisional city/place population is matched to 2020 Census “place” records. Sites outside a Census place may need manual “Census Rural” designation after checking the Census/DLT map.</div>
+
+    <details class="card partner-card accordion-card no-print">
+      <summary>3) Build a 25–100 Mile Partner Radius List <span class="smalltxt">Source-based partner discovery — no invented descriptions</span></summary>
+      <div class="body">
+        <div class="callout ok"><strong>Partner radius workflow:</strong> First add the seed district, health center, college, or technical school sites above. Then choose an anchor site, select a radius, and search official K-12, HRSA healthcare, and higher-ed source data for nearby potential partners. Descriptions are assembled only from returned source fields; blank or unavailable facts stay blank.</div>
+        <div class="row">
+          <div class="col-4"><label>Anchor Site</label><select id="anchorSiteSelect"><option value="">Add a site first</option></select></div>
+          <div class="col-2"><label>Radius</label><select id="radiusMiles"><option value="25">25 miles</option><option value="50">50 miles</option><option value="75">75 miles</option><option value="100" selected>100 miles</option></select></div>
+          <div class="col-2"><label>Max Results</label><input id="radiusMaxResults" type="number" value="250" min="25" max="1000" step="25"></div>
+          <div class="col-4"><label>Partner Types</label>
+            <div>
+              <label class="inline-check"><input id="radiusK12" type="checkbox" checked> K-12</label>
+              <label class="inline-check"><input id="radiusHealthcare" type="checkbox" checked> Healthcare</label>
+              <label class="inline-check"><input id="radiusHigherEd" type="checkbox" checked> Higher Ed / Technical</label>
+            </div>
+          </div>
+          <div class="col-12">
+            <label class="inline-check"><input id="radiusHighOnly" type="checkbox"> Show only preliminary high-fit partners after enrichment</label>
+            <span class="smalltxt">High-fit means the provisional D-1 + D-2 objective score is 50+ out of 70, using available Census/SAIPE data. This is a screening flag, not a USDA decision.</span>
+          </div>
+        </div>
+        <div class="btnrow">
+          <button class="primary" onclick="buildPartnerRadiusList()">Build Partner Radius List</button>
+          <button class="green" onclick="addSelectedPartnersToWorksheet()">Add Selected to Worksheet</button>
+          <button class="amber" onclick="addHighPotentialPartnersToWorksheet()">Add High-Fit to Worksheet</button>
+          <button class="ghost" onclick="selectAllPartners(true)">Select All Partners</button>
+          <button class="ghost" onclick="selectAllPartners(false)">Clear Selection</button>
+          <button onclick="exportPartnersCSV()">Export Partner CSV</button>
+          <button class="danger" onclick="clearPartnerResults()">Clear Partner List</button>
+        </div>
+        <div id="partnerStatus" class="status"></div>
+        <div class="table-hint" style="margin-top:8px">Click a partner column heading to sort results. Distance, D-1, D-2, and Total score sort numerically.</div>
+        <div class="table-wrap small" style="margin-top:8px"><table id="partnerTable" class="partner-table"></table></div>
+        <div class="data-note"><strong>Data integrity note:</strong> Partner results are limited to records returned by the official public datasets available to the browser. The tool does not fabricate contacts, capabilities, needs, partnerships, or eligibility facts. Use the source links and DLT map verification before presenting a final recommendation.</div>
+      </div>
+    </details>
+
+      </div>
+
+      <div id="panel-import" class="panel body">
+        <div class="callout"><strong>Two different import types:</strong> Use <strong>Project Site List Import</strong> for locations you want scored. Use <strong>Healthcare Lookup Dataset Fallback</strong> only when the live HRSA healthcare lookup will not load.</div>
+        <h3>Project Site / Source File Import</h3>
+        <div class="row">
+          <div class="col-6">
+            <label>Paste Project Site CSV Rows</label>
+            <textarea id="csvPaste" placeholder="organization,siteName,address,city,ruralityPlace,state,zip,county,countyFips,designation,type,sourceLocale,cityPopulation,saipePercent
+Example County Schools,Example School,100 Main St,Albany,Albany,GA,31701,Dougherty,13095,End-User,K-12,,68559,24.1"></textarea>
+          </div>
+          <div class="col-3"><label>Upload CSV/XLSX Site or NCES File</label><input id="csvFile" type="file" accept=".csv,.xlsx,.xls,text/csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel" /></div>
+          <div class="col-3"><button class="primary" onclick="importCSV()">Import + Score Rows</button></div>
+        </div>
+        <div class="btnrow" style="margin-bottom:12px">
+          <button onclick="downloadTemplate()">Download Manual Site Template</button>
+          <button onclick="downloadNcesImportNotes()">Download NCES Import Notes</button>
+          <button onclick="loadDemo()">Load Small Demo</button>
+        </div>
+
+        <div class="callout ok"><strong>NCES import fix v18:</strong> K-12 district search now starts from the bundled ELSI/NCES 2025 district CSV with websites and # Schools, then loads school sites by LEAID, so it is less likely to fail on school-layer query parameters. <strong># Schools</strong> is captured from the district record.  You can now upload CSV/XLSX files from NCES/CCD school or district exports. The tool detects school, district, higher-ed, HRSA, or manual site columns, maps them into the worksheet, then calculates D-1, D-2, and D-1+D-2 after lookup enrichment.</div>
+
+        <h3>Healthcare Lookup Dataset Fallback</h3>
+        <div class="callout warn"><strong>Use this when HRSA live loading fails:</strong> Download the official HRSA <strong>Health Center Service Delivery and Look-Alike Sites</strong> XLSX, then upload it below. This loads the HRSA lookup dataset into the tool; it does not immediately score every site until you choose which results to add.</div>
+        <div class="row">
+          <div class="col-5"><label>Upload HRSA XLSX or CSV Lookup Dataset</label><input id="hrsaLookupFile" type="file" accept=".xlsx,.xls,.csv,text/csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel" /></div>
+          <div class="col-3"><label>Optional State Filter</label><select id="hrsaFallbackState"></select></div>
+          <div class="col-4"><label>Optional Healthcare Search Filter</label><input id="hrsaFallbackTerm" placeholder="organization, clinic, city, county" /></div>
+          <div class="col-12 btnrow">
+            <button class="accent" onclick="importHRSALookupFile()">Load HRSA Lookup File</button>
+            <a class="button-link" href="https://data.hrsa.gov/DataDownload/DD_Files/Health_Center_Service_Delivery_and_LookAlike_Sites.xlsx" target="_blank">Download HRSA XLSX</a>
+            <a class="button-link" href="https://data.hrsa.gov/data/download?titleFilter=Health+Center+Service+Delivery+and+Look%E2%80%93Alike+Sites" target="_blank">Open HRSA Download Page</a>
+          </div>
+        </div>
+        <div id="hrsaUploadStatus" class="status"></div>
+        <div class="callout"><strong>Recommended repeatable workflow:</strong> For K-12, search the district and import the district office plus all school locations. For healthcare, the tool loads the full HRSA lookup table first when available, then filters locally by state/name/city/county; upload the HRSA XLSX fallback file when live loading is blocked. For higher ed, search the institution or upload a curated project-site CSV. Then click <strong>Enrich Census + SAIPE</strong>, verify all DLT map flags, and export the scoring worksheet.</div>
+      </div>
+
+      <div id="panel-guide" class="panel body">
+        <div class="grid">
+          <div>
+            <h3>D-1 Rurality – Up to 40 points</h3>
+          <div class="callout"><strong>Important:</strong> D-1 is based on the actual 2020 Census town/place/CDP and DLT map verification — not just the NCES Locale or the postal city in the mailing address. Use <strong>Rurality Place/CDP</strong> when the mailing city is different from the community where the site physically sits.</div>
+            <table style="min-width:0"><thead><tr><th>Community / Census Place Population</th><th>Contiguous to >50k Urban?</th><th>Score</th></tr></thead><tbody>
+              <tr><td>5,000 and under</td><td>No</td><td><span class="pill green">40</span></td></tr>
+              <tr><td>5,001–10,000</td><td>No</td><td><span class="pill blue">30</span></td></tr>
+              <tr><td>10,001–20,000</td><td>No</td><td><span class="pill amber">20</span></td></tr>
+              <tr><td>Over 20,000</td><td>Generally no / non-rural unless DLT map exception applies</td><td><span class="pill red">0</span></td></tr>
+              <tr><td>No Census place match / Census Rural</td><td>No</td><td><span class="pill green">40</span></td></tr>
+            </tbody></table>
+            <p class="smalltxt">Only End-User and Hub/End-User sites are averaged for fixed projects. Pure hubs are listed but excluded unless the project is non-fixed/hybrid and the hub is the proxy serving non-fixed end users.</p>
+          </div>
+          <div>
+            <h3>D-2 Economic Need – Up to 30 points</h3>
+            <table style="min-width:0"><thead><tr><th>County SAIPE Poverty, All Ages</th><th>Score</th></tr></thead><tbody>
+              <tr><td>30% or higher</td><td><span class="pill green">30</span></td></tr>
+              <tr><td>20% to under 30%</td><td><span class="pill blue">20</span></td></tr>
+              <tr><td>10% to under 20%</td><td><span class="pill amber">10</span></td></tr>
+              <tr><td>Under 10%</td><td><span class="pill red">0</span></td></tr>
+            </tbody></table>
+            <p class="smalltxt">This tool uses 2024 Census SAIPE county “all ages poverty rate estimate” where available. USDA’s FY2026 guide references the SAIPE poverty data posted with the DLT application resources.</p>
+          </div>
+        </div>
+      </div>
+
+      <div id="panel-sources" class="panel body">
+        <div class="source-list">
+          <a href="https://www.rd.usda.gov/programs-services/telecommunications-programs/distance-learning-telemedicine-grants" target="_blank"><strong>USDA RUS DLT FY2026 Resources</strong><span>Application guide, sample worksheets, checklist, SAIPE poverty data, DLT map.</span></a>
+          <a href="https://ruraldevelopment.maps.arcgis.com/apps/webappviewer/index.html?id=15a73830555645ae93d2fa773ed8e971" target="_blank"><strong>USDA DLT Rurality Mapping Tool</strong><span>Use to verify non-rural areas / contiguity to urban areas.</span></a>
+          <a href="https://services1.arcgis.com/Ua5sjt3LWTPigjyD/ArcGIS/rest/services/School_Characteristics_Current/FeatureServer/0" target="_blank"><strong>NCES Public School Characteristics</strong><span>School name, district, physical address, county FIPS, NCES locale, enrollment, lat/long. For application-grade review, compare against the latest NCES CCD directory files if available.</span></a>
+          <a href="https://data.hrsa.gov/DataDownload/DD_Files/Health_Center_Service_Delivery_and_LookAlike_Sites.xlsx" target="_blank"><strong>HRSA Health Center Sites XLSX</strong><span>Health Center Service Delivery and Look-Alike Sites. The tool attempts a full-table lookup and includes an upload fallback when browser/CORS settings block live HRSA loading.</span></a>
+          <a href="https://services2.arcgis.com/FiaPA4ga0iQKduv3/ArcGIS/rest/services/Colleges_and_Universities_View/FeatureServer/0" target="_blank"><strong>Higher Ed Colleges & Universities Layer</strong><span>IPEDS/NCES institution names, addresses, sector, locale, county, latitude/longitude.</span></a>
+          <a href="https://www.census.gov/data/developers/data-sets/Poverty-Statistics.html" target="_blank"><strong>Census SAIPE API</strong><span>County poverty rate estimates used for Economic Need scoring.</span></a>
+          <a href="https://api.census.gov/data/2020/dec/pl/variables/P1_001N.html" target="_blank"><strong>2020 Decennial Census API</strong><span>P1_001N total population for Census places.</span></a>
+          <a href="https://geocoding.geo.census.gov/" target="_blank"><strong>U.S. Census Geocoder</strong><span>Optional coordinate lookup for manual anchor locations before radius search.</span></a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <template id="manualSiteTemplate">
+    <div class="card" style="margin-bottom:12px" id="manualCard">
+      <h2>Add Manual Site</h2>
+      <div class="body">
+        <div class="callout ok"><strong>Manual location entry:</strong> Use this for district offices, consortium hubs, partner clinics, higher-ed extension sites, or any location not returned by search. You can still enrich Census population and SAIPE after adding.</div>
+        <div class="row">
+          <div class="col-4"><label>Organization / District</label><input id="mOrg" placeholder="Example County Schools"></div>
+          <div class="col-4"><label>Location / Site Name</label><input id="mName" placeholder="District Office, High School, Clinic, Campus"></div>
+          <div class="col-4"><label>Address</label><input id="mAddress"></div>
+          <div class="col-2"><label>City</label><input id="mCity"></div>
+          <div class="col-2"><label>State</label><input id="mState" maxlength="2"></div>
+          <div class="col-2"><label>ZIP</label><input id="mZip"></div>
+          <div class="col-2"><label>County</label><input id="mCounty"></div>
+          <div class="col-2"><label>County FIPS</label><input id="mCountyFips"></div>
+          <div class="col-2"><label>Type</label><select id="mType"><option>K-12</option><option>Charter School</option><option>K-12 District Office</option><option>Rural Health</option><option>Higher Ed</option><option>Other</option></select></div>
+          <div class="col-2"><label># Schools</label><input id="mSchoolCount" type="number" placeholder="district rows"></div>
+          <div class="col-2"><label>Designation</label><select id="mDesignation"><option>End-User</option><option>Hub/End-User</option><option>Hub</option><option>Proxy Hub</option></select></div>
+          <div class="col-2"><label>Locale</label><input id="mLocale" placeholder="43"></div>
+          <div class="col-2"><label>City Pop</label><input id="mCityPopulation" type="number"></div>
+          <div class="col-2"><label>SAIPE %</label><input id="mSaipePercent" type="number" step="0.1"></div>
+          <div class="col-3"><label>Phone</label><input id="mPhone"></div>
+          <div class="col-3"><label>Email</label><input id="mEmail" type="email"></div>
+          <div class="col-4"><label>Website</label><input id="mWebsite"></div>
+        </div>
+        <div class="btnrow"><button class="primary" onclick="addManualSite()">Add Location</button><button onclick="document.getElementById('manualCard').remove()">Cancel</button></div>
+      </div>
+    </div>
+  </template>
+
+<script>
+const STATE_FIPS = {
+  AL:'01', AK:'02', AZ:'04', AR:'05', CA:'06', CO:'08', CT:'09', DE:'10', DC:'11', FL:'12', GA:'13', HI:'15', ID:'16', IL:'17', IN:'18', IA:'19', KS:'20', KY:'21', LA:'22', ME:'23', MD:'24', MA:'25', MI:'26', MN:'27', MS:'28', MO:'29', MT:'30', NE:'31', NV:'32', NH:'33', NJ:'34', NM:'35', NY:'36', NC:'37', ND:'38', OH:'39', OK:'40', OR:'41', PA:'42', RI:'44', SC:'45', SD:'46', TN:'47', TX:'48', UT:'49', VT:'50', VA:'51', WA:'53', WV:'54', WI:'55', WY:'56', AS:'60', GU:'66', MP:'69', PR:'72', VI:'78'
+};
+const STATE_NAMES = {AL:'Alabama',AK:'Alaska',AZ:'Arizona',AR:'Arkansas',CA:'California',CO:'Colorado',CT:'Connecticut',DE:'Delaware',DC:'District of Columbia',FL:'Florida',GA:'Georgia',HI:'Hawaii',ID:'Idaho',IL:'Illinois',IN:'Indiana',IA:'Iowa',KS:'Kansas',KY:'Kentucky',LA:'Louisiana',ME:'Maine',MD:'Maryland',MA:'Massachusetts',MI:'Michigan',MN:'Minnesota',MS:'Mississippi',MO:'Missouri',MT:'Montana',NE:'Nebraska',NV:'Nevada',NH:'New Hampshire',NJ:'New Jersey',NM:'New Mexico',NY:'New York',NC:'North Carolina',ND:'North Dakota',OH:'Ohio',OK:'Oklahoma',OR:'Oregon',PA:'Pennsylvania',RI:'Rhode Island',SC:'South Carolina',SD:'South Dakota',TN:'Tennessee',TX:'Texas',UT:'Utah',VT:'Vermont',VA:'Virginia',WA:'Washington',WV:'West Virginia',WI:'Wisconsin',WY:'Wyoming'};
+const NCES_SCHOOLS = 'https://services1.arcgis.com/Ua5sjt3LWTPigjyD/ArcGIS/rest/services/School_Characteristics_Current/FeatureServer/0/query';
+const NCES_DISTRICTS = 'https://services1.arcgis.com/Ua5sjt3LWTPigjyD/arcgis/rest/services/School_District_Characteristics_Current/FeatureServer/1/query';
+const HIGHER_ED = 'https://services2.arcgis.com/FiaPA4ga0iQKduv3/ArcGIS/rest/services/Colleges_and_Universities_View/FeatureServer/0/query';
+const HRSA_XLSX = 'https://data.hrsa.gov/DataDownload/DD_Files/Health_Center_Service_Delivery_and_LookAlike_Sites.xlsx';
+
+const ELSI_DISTRICTS_CSV = 'data/ELSI_K12_School_Districts_2025_Scoring_Tool.csv';
+let elsiDistrictCache = null;
+function cleanElsi(v){v=String(v??'').trim();return (v==='†'||v==='-'||v==='–')?'':v;}
+function findElsiHeaderIndex(rows){
+  return Math.max(0, rows.findIndex(r=>r.some(c=>/Agency Name/i.test(String(c))) && r.some(c=>/Web Site URL/i.test(String(c))) && r.some(c=>/Agency ID.*NCES/i.test(String(c)))));
+}
+function elsiObjectsFromCsv(text){
+  const rows=parseCSV(text); const hi=findElsiHeaderIndex(rows); const headers=rows[hi].map(h=>String(h||'').trim());
+  return rows.slice(hi+1).map(r=>rowToObject(headers,r)).filter(o=>cleanElsi(o['Agency Name']) || cleanElsi(o['Agency Name [District] 2024-25']));
+}
+async function loadElsiDistricts(){
+  if(elsiDistrictCache) return elsiDistrictCache;
+  const res=await fetch(ELSI_DISTRICTS_CSV,{cache:'no-store'});
+  if(!res.ok) throw new Error('Could not load local ELSI/NCES district CSV. Make sure the data folder is uploaded with the site.');
+  elsiDistrictCache=elsiObjectsFromCsv(await res.text());
+  return elsiDistrictCache;
+}
+function elsiObjToDistrictFeature(o){
+  const state=cleanElsi(o['Location State Abbr [District] 2024-25'] || o['State Abbr [District] Latest available year']).toUpperCase();
+  return {attributes:{
+    LEA_NAME: cleanElsi(o['Agency Name [District] 2024-25'] || o['Agency Name']),
+    LEAID: cleanElsi(o['Agency ID - NCES Assigned [District] Latest available year']),
+    CONAME: cleanElsi(o['County Name [District] 2024-25']),
+    LSTREET1: cleanElsi(o['Location Address 1 [District] 2024-25']),
+    LSTREET2: cleanElsi(o['Location Address 2 [District] 2024-25']),
+    LCITY: cleanElsi(o['Location City [District] 2024-25']),
+    LSTATE: state,
+    STABR: state,
+    LZIP: cleanElsi(o['Location ZIP [District] 2024-25']),
+    PHONE: cleanElsi(o['Phone Number [District] 2024-25']),
+    WEBSITE: cleanElsi(o['Web Site URL [District] 2024-25']),
+    LOCALE_TEXT: cleanElsi(o['Locale [District] 2024-25']),
+    MEMBER: cleanElsi(o['Total Students All Grades (Excludes AE) [District] 2024-25']),
+    SCH: cleanElsi(o['Total Number Operational Schools [Public School] 2024-25']),
+    TYPE_TEXT: cleanElsi(o['Agency Type [District] 2024-25']),
+    CBSA: cleanElsi(o['CBSA Name [District] 2024-25']),
+    CSA: cleanElsi(o['CSA Name [District] 2024-25']),
+    METRO_MICRO: cleanElsi(o['Metro Micro Area Code [District] 2024-25']),
+    Lat: cleanElsi(o['Latitude [District] 2024-25']),
+    Long: cleanElsi(o['Longitude [District] 2024-25'])
+  }};
+}
+function districtFeatureFromElsiLeaId(leaId){
+  const rows=elsiDistrictCache||[];
+  const found=rows.find(o=>cleanElsi(o['Agency ID - NCES Assigned [District] Latest available year'])===String(leaId));
+  return found?elsiObjToDistrictFeature(found):null;
+}
+function filterElsiDistricts(rows, {state, term='', county='', city='', agency='', address=''}={}){
+  const st=String(state||'').toUpperCase(); const t=norm(term||agency); const c=norm(county), ci=norm(city), ad=norm(address);
+  return rows.filter(o=>{
+    const f=elsiObjToDistrictFeature(o).attributes;
+    if(st && st!=='ALL' && String(f.LSTATE||'').toUpperCase()!==st) return false;
+    if(t && !norm([f.LEA_NAME,f.LEAID,f.TYPE_TEXT].join(' ')).includes(t)) return false;
+    if(c && !norm(f.CONAME).includes(c)) return false;
+    if(ci && !norm(f.LCITY).includes(ci)) return false;
+    if(ad && !norm([f.LSTREET1,f.LSTREET2,f.LCITY,f.LZIP].join(' ')).includes(ad)) return false;
+    return true;
+  });
+}
+
+const HRSA_CSV = 'https://data.hrsa.gov/DataDownload/DD_Files/Health_Center_Service_Delivery_and_LookAlike_Sites.csv';
+const HRSA_LOCAL_XLSX = 'data/Health_Center_Service_Delivery_and_LookAlike_Sites.xlsx';
+const HRSA_LOCAL_CSV = 'data/Health_Center_Service_Delivery_and_LookAlike_Sites.csv';
+const DLT_MAP = 'https://ruraldevelopment.maps.arcgis.com/apps/webappviewer/index.html?id=15a73830555645ae93d2fa773ed8e971';
+let sites = [];
+let placeCache = {}; // state -> map
+let saipeCache = {}; // state -> county lookup
+let lastSearchFeatures = [];
+let partnerResults = [];
+let hrsaLookupCache = null;
+let hrsaLookupSourceLabel = 'HRSA live XLSX';
+let tableSort = {key:'', dir:'asc'};
+let partnerSort = {key:'distanceMiles', dir:'asc'};
+let columnWidths = {};
+const DESIGNATION_OPTIONS = ['End-User','Hub/End-User','Hub','Proxy Hub'];
+const TABLE_COLUMNS = [
+  {key:'include', label:'Include', w:54, type:'bool'},
+  {key:'rowNumber', label:'#', w:40, type:'number', noSort:true},
+  {key:'ruralityScore', label:'D-1 Rurality', w:80, type:'number'},
+  {key:'economicScore', label:'D-2 Economic', w:88, type:'number'},
+  {key:'cityPopulation', label:'2020 Pop', w:88, type:'number'},
+  {key:'saipePercent', label:'SAIPE %', w:78, type:'number'},
+  {key:'objectiveScore', label:'D-1+D-2 Total', w:94, type:'number'},
+  {key:'targetFit', label:'Target Fit', w:92, type:'number'},
+  {key:'siteName', label:'Site Name', w:175, type:'text'},
+  {key:'organization', label:'Organization / District', w:160, type:'text'},
+  {key:'type', label:'Type', w:108, type:'text'},
+  {key:'schoolCount', label:'# Schools', w:72, type:'number'},
+  {key:'designation', label:'Designation', w:112, type:'text'},
+  {key:'address', label:'Address', w:165, type:'text'},
+  {key:'city', label:'Postal City', w:95, type:'text'},
+  {key:'ruralityPlace', label:'Rurality Place/CDP', w:125, type:'text'},
+  {key:'state', label:'State', w:54, type:'text'},
+  {key:'zip', label:'ZIP', w:72, type:'text'},
+  {key:'county', label:'County', w:115, type:'text'},
+  {key:'phone', label:'Phone', w:105, type:'text'},
+  {key:'email', label:'Email', w:150, type:'text'},
+  {key:'website', label:'Website', w:135, type:'text'},
+  {key:'countyFips', label:'County FIPS', w:82, type:'text'},
+  {key:'sourceLocale', label:'Locale', w:70, type:'text'},
+  {key:'contiguous', label:'Contiguous / Non-Rural?', w:112, type:'text'},
+  {key:'outsideNonRural', label:'Outside Non-Rural?', w:110, type:'text'},
+  {key:'censusRural', label:'Census Rural?', w:88, type:'text'},
+  {key:'description', label:'Description', w:220, type:'text'},
+  {key:'notes', label:'Notes', w:170, type:'text'},
+  {key:'map', label:'USDA Map', w:76, type:'text', noSort:true},
+  {key:'remove', label:'Remove', w:60, type:'text', noSort:true}
+];
+
+function init(){
+  const stateSelect = document.getElementById('stateSelect');
+  const allOpt = document.createElement('option'); allOpt.value='ALL'; allOpt.textContent='ALL — All states'; stateSelect.appendChild(allOpt);
+  Object.keys(STATE_FIPS).filter(s=>STATE_NAMES[s]).forEach(abbr=>{
+    const opt = document.createElement('option'); opt.value=abbr; opt.textContent=`${abbr} — ${STATE_NAMES[abbr]}`; stateSelect.appendChild(opt);
+  });
+  stateSelect.value='ALL';
+  const hrsaFallbackState = document.getElementById('hrsaFallbackState');
+  if(hrsaFallbackState){
+    const all=document.createElement('option'); all.value='ALL'; all.textContent='ALL — All states'; hrsaFallbackState.appendChild(all);
+    Object.keys(STATE_FIPS).filter(s=>STATE_NAMES[s]).forEach(abbr=>{
+      const opt=document.createElement('option'); opt.value=abbr; opt.textContent=`${abbr} — ${STATE_NAMES[abbr]}`; hrsaFallbackState.appendChild(opt);
+    });
+    hrsaFallbackState.value='ALL';
+  }
+  document.getElementById('csvFile').addEventListener('change', importCSV);
+  recalc(); renderTable(); renderPartnerTable();
+  importPendingProspectsFromLocalStorage();
+}
+function importPendingProspectsFromLocalStorage(){
+  try{
+    const raw=localStorage.getItem('dltPendingProspectsV1');
+    if(!raw) return;
+    const pending=JSON.parse(raw);
+    if(!Array.isArray(pending) || !pending.length) return;
+    const rows=pending.map(p=>finalizeSiteFields({...p, id:crypto.randomUUID(), include:false, selected:false, notes:appendNote(p.notes,'Imported from Prospect Finder; set Include=true only after confirming this site is part of the proposed DLT project.')}));
+    localStorage.removeItem('dltPendingProspectsV1');
+    addRows(rows);
+    setStatus(`<strong>${rows.length}</strong> Prospect Finder row(s) imported into the worksheet as not included. Review designation and DLT map fields before scoring.`);
+  }catch(e){console.warn('Prospect import failed',e);}
+}
+function setStatus(msg){document.getElementById('searchStatus').innerHTML=msg||'';}
+function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
+function sqlText(s){return String(s||'').replace(/'/g,"''").trim();}
+function norm(s){return String(s||'').toLowerCase().replace(/\b(county|parish|borough|municipality|city and borough|city|town|village|cdp|unified government|balance)\b/g,'').replace(/[^a-z0-9]+/g,' ').trim();}
+function onlyDigits(s){return String(s||'').replace(/\D/g,'');}
+
+function charterFlagFromAttrs(a){
+  const keys=['CHARTER_TEXT','CHARTER','CHARTER_YN','CHARTER_IND','CHARTERSTATUS','CHARTER_STATUS','IS_CHARTER'];
+  const vals=keys.map(k=>String(a?.[k]??'').trim()).filter(Boolean);
+  const joined=vals.join(' ').toLowerCase();
+  return /\byes\b|\by\b|\btrue\b|\b1\b|charter school/.test(joined);
+}
+function k12TypeFromAttrs(a){ return charterFlagFromAttrs(a) ? 'Charter School' : 'K-12'; }
+
+function normalizeDesignation(val){
+  const raw=String(val||'').trim();
+  const v=raw.toLowerCase().replace(/[–—]/g,'-').replace(/\s+/g,' ');
+  if(['end-user','end user','enduser','end-user site','end user site'].includes(v)) return 'End-User';
+  if(['hub/end-user','hub/enduser','hub end-user','hub end user','hub/end user','hub/end-user site','hub/end user site'].includes(v)) return 'Hub/End-User';
+  if(['proxy hub','hub proxy','hub (proxy) serving end-user','hub proxy serving end-user','hub serving end-user','hub (proxy) serving end user'].includes(v)) return 'Proxy Hub';
+  if(['hub','pure hub','hub site'].includes(v)) return 'Hub';
+  return raw || 'End-User';
+}
+function getDefaultDesignation(){
+  return normalizeDesignation(document.getElementById('defaultDesignation')?.value || 'End-User');
+}
+function cloneSite(site){
+  return {...site, id: crypto.randomUUID()};
+}
+function quickGeorgiaHealthcare(){
+  document.getElementById('stateSelect').value='GA';
+  document.getElementById('defaultDesignation').value='End-User';
+  document.getElementById('searchTerm').value='';
+  searchHRSA();
+}
+function dltMapLinkFor(site){
+  if(site && siteHasCoords(site)){
+    const lon=parseFloat(site.lon), lat=parseFloat(site.lat);
+    return `${DLT_MAP}&center=${encodeURIComponent(lon+','+lat)}&level=12`;
+  }
+  return DLT_MAP;
+}
+function sourceLinkFor(site){return dltMapLinkFor(site);}
+function openDLTMap(){window.open(DLT_MAP,'_blank');}
+function validCoord(v){const n=parseFloat(v); return !isNaN(n) && isFinite(n);}
+function siteHasCoords(s){return validCoord(s.lat) && validCoord(s.lon);}
+function buildSourceDescription(s){
+  const bits=[];
+  if(s.type==='K-12' || s.type==='Charter School'){
+    bits.push(s.type==='Charter School' ? 'NCES public charter school record' : 'NCES public school record');
+    if(s.organization) bits.push(`district: ${s.organization}`);
+    if(s.sourceLocale) bits.push(`locale: ${s.sourceLocale}`);
+    if(s.enrollment) bits.push(`enrollment: ${s.enrollment}`);
+  } else if(s.type==='K-12 District Office'){
+    bits.push('NCES school district office record');
+    if(s.enrollment) bits.push(`district enrollment: ${s.enrollment}`);
+    if(s.schoolCount) bits.push(`schools: ${s.schoolCount}`);
+  } else if(s.type==='Rural Health'){
+    bits.push('HRSA health center service delivery/look-alike site record');
+    if(s.organization) bits.push(`health center: ${s.organization}`);
+  } else if(s.type==='Higher Ed'){
+    bits.push('Higher-ed institution/campus source record');
+    if(s.organization && s.organization!==s.siteName) bits.push(`system/organization: ${s.organization}`);
+    if(s.sourceLocale) bits.push(`locale: ${s.sourceLocale}`);
+  } else {
+    bits.push('Manual or imported site record');
+  }
+  if(s.county) bits.push(`county: ${s.county}`);
+  if(s.city || s.state) bits.push(`location: ${[s.city,s.state].filter(Boolean).join(', ')}`);
+  return bits.filter(Boolean).join('; ') + (bits.length ? '.' : '');
+}
+function finalizeSiteFields(s){
+  s.designation=normalizeDesignation(s.designation);
+  if(s.schoolCount===undefined || s.schoolCount===null) s.schoolCount='';
+  if(!s.description) s.description=buildSourceDescription(s);
+  return s;
+}
+
+
+async function arcgisQuery(url, where, fields='*', options={}){
+  const pageSize=options.pageSize || 2000;
+  const maxRecords=options.maxRecords || 50000;
+  const all=[];
+  let offset=0;
+  while(offset < maxRecords){
+    const params = new URLSearchParams({
+      where: where || '1=1',
+      outFields: fields || '*',
+      returnGeometry: options.returnGeometry ? 'true' : 'false',
+      f: 'json',
+      resultRecordCount: String(pageSize),
+      resultOffset: String(offset)
+    });
+    if(options.returnGeometry) params.set('outSR','4326');
+    if(options.orderByFields) params.set('orderByFields', options.orderByFields);
+    let data = await fetchArcgisJson(url, params);
+    if(data.error && fields && fields !== '*'){
+      params.set('outFields','*');
+      data = await fetchArcgisJson(url, params);
+    }
+    if(data.error) throw new Error(data.error.message || JSON.stringify(data.error));
+    const features=data.features || [];
+    all.push(...features);
+    if(!data.exceededTransferLimit && features.length < pageSize) break;
+    if(!features.length) break;
+    offset += features.length;
+  }
+  return all;
+}
+async function fetchArcgisJson(url, params){
+  const res = await fetch(`${url}?${params.toString()}`);
+  if(!res.ok) throw new Error('Source returned '+res.status);
+  return await res.json();
+}
+
+async function arcgisRadiusQuery(url, lon, lat, miles, fields='*'){
+  const pageSize=2000;
+  const all=[];
+  let offset=0;
+  while(offset < 50000){
+    const params = new URLSearchParams({
+      where:'1=1', outFields:fields || '*', returnGeometry:'false', f:'json', resultRecordCount:String(pageSize), resultOffset:String(offset),
+      geometry:`${lon},${lat}`, geometryType:'esriGeometryPoint', inSR:'4326', spatialRel:'esriSpatialRelIntersects',
+      distance:String(miles), units:'esriSRUnit_StatuteMile'
+    });
+    let data=await fetchArcgisJson(url, params);
+    if(data.error && fields && fields !== '*'){
+      params.set('outFields','*');
+      data=await fetchArcgisJson(url, params);
+    }
+    if(data.error) throw new Error(data.error.message || JSON.stringify(data.error));
+    const features=data.features || [];
+    all.push(...features);
+    if(!data.exceededTransferLimit && features.length < pageSize) break;
+    if(!features.length) break;
+    offset += features.length;
+  }
+  return all;
+}
+
+function showK12DistrictResults(features){
+  lastSearchFeatures = features;
+  const box = document.getElementById('searchResults'); box.innerHTML='';
+  if(!features.length){ box.innerHTML='<div class="smalltxt">No matching district records found. Try a shorter district name or use Import / Templates.</div>'; return; }
+  const shown=features.slice(0,20);
+  shown.forEach(f=>{
+    const a=f.attributes||{};
+    const schoolCount=a.SCH ?? '';
+    const div=document.createElement('div'); div.className='result';
+    div.innerHTML=`<strong>${esc(a.LEA_NAME||'Unnamed District')}</strong><div class="meta">${esc(a.LSTATE||a.STABR||'')} • NCES LEAID ${esc(a.LEAID||'')} • ${esc(schoolCount||'—')} school(s)<br>${esc([a.LCITY,a.LSTATE,a.LZIP].filter(Boolean).join(', '))} • County: ${esc(a.CONAME||'')} • Enrollment: ${esc(a.MEMBER||'—')}</div><div class="btnrow"><button class="primary" data-action="district-schools">Add district office + schools</button><button class="ghost" data-action="schools-only">Schools only</button><button class="amber" data-action="district-only">District office only</button></div>`;
+    div.querySelector('[data-action="district-schools"]').onclick=()=>addK12DistrictAndSchoolsFromFeature(f);
+    div.querySelector('[data-action="schools-only"]').onclick=()=>addK12SchoolsOnlyByLea(a.LEAID);
+    div.querySelector('[data-action="district-only"]').onclick=()=>{addRows([districtFeatureToSite(f)]); setStatus('<strong>1</strong> district office row added as Hub.');};
+    box.appendChild(div);
+  });
+  if(features.length>shown.length) box.insertAdjacentHTML('beforeend',`<div class="smalltxt">Showing first ${shown.length} of ${features.length} district matches. Use a more specific district name if needed.</div>`);
+}
+
+function showResults(features, kind){
+  lastSearchFeatures = features;
+  const box = document.getElementById('searchResults'); box.innerHTML='';
+  if(!features.length){ box.innerHTML='<div class="smalltxt">No matching records found. Try a shorter search term or import a CSV.</div>'; return; }
+  if(kind==='K12'){
+    const byDistrict = {};
+    features.forEach(f=>{const a=f.attributes; const key=a.LEAID+'|'+a.LEA_NAME; (byDistrict[key] ||= []).push(f);});
+    Object.entries(byDistrict).slice(0,8).forEach(([key,rows])=>{
+      const a=rows[0].attributes; const div=document.createElement('div'); div.className='result';
+      div.innerHTML=`<strong>${esc(a.LEA_NAME)}</strong><div class="meta">${esc(a.STABR)} • NCES LEAID ${esc(a.LEAID)} • ${rows.length} school site(s) returned</div><div class="btnrow"><button class="primary" data-action="district-schools">Add district office + schools</button><button class="ghost" data-action="schools-only">Schools only</button><button class="amber" data-action="district-only">District office only</button></div>`;
+      div.querySelector('[data-action="district-schools"]').onclick=()=>addK12DistrictAndSchoolRows(a.LEAID, rows);
+      div.querySelector('[data-action="schools-only"]').onclick=()=>addK12Rows(rows);
+      div.querySelector('[data-action="district-only"]').onclick=()=>addK12DistrictRow(a.LEAID);
+      box.appendChild(div);
+    });
+  } else if(kind==='HigherEd'){
+    features.slice(0,24).forEach((f,i)=>{
+      const a=f.attributes; const div=document.createElement('div'); div.className='result';
+      div.innerHTML=`<strong>${esc(a.INSTNM)}</strong><div class="meta">${esc(a.ADDR)}, ${esc(a.CITY)}, ${esc(a.STABBR)} ${esc(a.ZIP||'')}<br>County: ${esc(a.COUNTYNM||'')} • Locale: ${esc(a.LOCALE||'')} • UnitID ${esc(a.UNITID||'')}</div><button class="green">Add campus</button>`;
+      div.querySelector('button').onclick=()=>addHigherEdRows([f]);
+      box.appendChild(div);
+    });
+    if(features.length>24) box.insertAdjacentHTML('beforeend',`<div class="smalltxt">Showing first 24 of ${features.length}. Use a more specific search term if needed.</div>`);
+  } else if(kind==='HRSA'){
+    const toolbar=document.createElement('div'); toolbar.className='result';
+    toolbar.innerHTML=`<strong>Healthcare results for ${esc(document.getElementById('stateSelect').value==='ALL'?'all states':document.getElementById('stateSelect').value)}</strong><div class="meta">${features.length} HRSA service delivery / look-alike site record(s) loaded. Showing the first ${Math.min(100, features.length)} below. Add all if this is a statewide healthcare prospect list; otherwise narrow by organization, city, county, or site name.</div><div class="btnrow"><button class="accent" data-action="add-all-health">Add all returned healthcare sites</button><button class="ghost" data-action="add-shown-health">Add first ${Math.min(100, features.length)}</button></div>`;
+    toolbar.querySelector('[data-action="add-all-health"]').onclick=()=>{addRows(features.map(cloneSite)); setStatus(`<strong>${features.length}</strong> healthcare site(s) added to the worksheet.`)};
+    toolbar.querySelector('[data-action="add-shown-health"]').onclick=()=>{const shown=features.slice(0,100); addRows(shown.map(cloneSite)); setStatus(`<strong>${shown.length}</strong> displayed healthcare site(s) added to the worksheet.`)};
+    box.appendChild(toolbar);
+    features.slice(0,100).forEach((r,i)=>{
+      const div=document.createElement('div'); div.className='result';
+      div.innerHTML=`<strong>${esc(r.siteName)}</strong><div class="meta">${esc(r.organization||'')}<br>${esc(r.address)}, ${esc(r.city)}, ${esc(r.state)} ${esc(r.zip||'')}<br>County: ${esc(r.county||'')} • Phone: ${esc(r.phone||'')} • Website: ${esc(r.website||'')}</div><button class="accent">Add site</button>`;
+      div.querySelector('button').onclick=()=>addRows([cloneSite(r)]);
+      box.appendChild(div);
+    });
+    if(features.length>100) box.insertAdjacentHTML('beforeend',`<div class="smalltxt">Showing first 100 of ${features.length}. Use the search box to narrow results or use “Add all returned healthcare sites.”</div>`);
+  }
+}
+
+
+async function searchK12(){
+  const state=document.getElementById('stateSelect').value;
+  const term=document.getElementById('searchTerm').value.trim();
+  if(term.length<2){setStatus('Enter at least 2 characters for district search.');return;}
+  setStatus(`<span class="status busy"><span class="busy-clock">⏱️</span>Searching local ELSI/NCES district CSV with websites${state==='ALL'?' across all states':''}...</span>`);
+  document.getElementById('searchResults').innerHTML='';
+  try{
+    const rows=await loadElsiDistricts();
+    const matches=filterElsiDistricts(rows,{state,term}).map(elsiObjToDistrictFeature);
+    if(matches.length){
+      setStatus(`<strong>${matches.length}</strong> district record(s) found from the local ELSI/NCES 2025 district file. Choose a district, then add the district office and/or all school sites. Website and # Schools come from the uploaded ELSI file.`);
+      showK12DistrictResults(matches);
+      return;
+    }
+    // Fallback: school-site layer for school-name searches.
+    const up=sqlText(term).toUpperCase();
+    const schoolWhere=(state==='ALL') ? `(UPPER(LEA_NAME) LIKE '%${up}%' OR UPPER(SCH_NAME) LIKE '%${up}%')` : `STABR='${state}' AND (UPPER(LEA_NAME) LIKE '%${up}%' OR UPPER(SCH_NAME) LIKE '%${up}%')`;
+    const schools=await arcgisQuery(NCES_SCHOOLS,schoolWhere,'*',{returnGeometry:false,orderByFields:'LEA_NAME,SCH_NAME'});
+    if(schools.length){
+      setStatus(`<strong>${schools.length}</strong> school record(s) found from the NCES school layer. Choose a district below, or import only the school sites shown.`);
+      showResults(schools,'K12');
+      return;
+    }
+    setStatus('No matching ELSI/NCES district or school records found. Try a shorter name or use Import / Templates.');
+  }catch(e){
+    setStatus(`<span style="color:#b42318">ELSI/NCES district source failed: ${esc(e.message)}. Use Import / Templates as a fallback.</span>`);
+  }
+}
+function schoolFeatureToSite(f, include=true){
+  const a=f.attributes||{}; const g=f.geometry||{};
+  return finalizeSiteFields({
+    id:crypto.randomUUID(), include, type:k12TypeFromAttrs(a), source:'NCES CCD Public School Characteristics', sourceId:a.NCESSCH||'',
+    organization:a.LEA_NAME||'', siteName:a.SCH_NAME||'', address:[a.LSTREET1,a.LSTREET2].filter(Boolean).join(' '), city:a.LCITY||'', state:a.LSTATE||a.STABR||'', zip:a.LZIP||'', county:a.NMCNTY||'', countyFips:cleanCountyFips(a.CNTY,a.STABR||a.LSTATE), phone:a.PHONE||'', email:pick(a,['EMAIL','E_MAIL','CONTACT_EMAIL','CONTACTEMAIL','SCHOOL_EMAIL','ADMIN_EMAIL']), website:pick(a,['WEBSITE','WEB_SITE','URL','WEBADDR','SCH_URL','SCHOOL_URL','WWW']), sourceLocale:a.ULOCALE||'', enrollment:a.MEMBER||a.TOTAL||'', schoolCount:'', designation:getDefaultDesignation(), contiguous:'Unknown', outsideNonRural:'Unknown', censusRural:'Unknown', cityPopulation:'', saipePercent:'', ruralityScore:null, economicScore:null, lat:g.y||a.LATCOD||'', lon:g.x||a.LONCOD||'', notes:''
+  });
+}
+function addK12Rows(rows){
+  const mapped=rows.map(f=>schoolFeatureToSite(f,true));
+  addRows(mapped);
+  setStatus(`<strong>${mapped.length}</strong> K-12 school site(s) added and queued for D-1/D-2 enrichment.`);
+}
+async function getK12DistrictFeature(leaId){
+  if(elsiDistrictCache){const local= districtFeatureFromElsiLeaId(leaId); if(local) return local;}
+  try{await loadElsiDistricts(); const local=districtFeatureFromElsiLeaId(leaId); if(local) return local;}catch(e){}
+  const state=document.getElementById('stateSelect').value;
+  const where=(state==='ALL') ? `LEAID='${sqlText(leaId)}'` : `LEAID='${sqlText(leaId)}' AND LSTATE='${state}'`;
+  const features=await arcgisQuery(NCES_DISTRICTS,where,'*',{returnGeometry:false});
+  return features[0] || null;
+}
+async function getK12SchoolsByLea(leaId){
+  const where=`LEAID='${sqlText(leaId)}'`;
+  return await arcgisQuery(NCES_SCHOOLS,where,'*',{returnGeometry:false,orderByFields:'SCH_NAME'});
+}
+function districtFeatureToSite(feature){
+  if(!feature) return null;
+  const a=feature.attributes||{}; const g=feature.geometry||{};
+  return finalizeSiteFields({id:crypto.randomUUID(), include:true, type:'K-12 District Office', source:'ELSI/NCES K-12 School Districts 2025 CSV', sourceId:a.LEAID||'', organization:a.LEA_NAME||'', siteName:(a.LEA_NAME ? `${a.LEA_NAME} District Office` : 'District Office'), address:[a.LSTREET1,a.LSTREET2].filter(Boolean).join(' '), city:a.LCITY||'', state:a.LSTATE||a.STABR||'', zip:a.LZIP||'', county:a.CONAME||'', countyFips:cleanCountyFips(a.COID,a.LSTATE||a.STABR), phone:a.PHONE||'', email:pick(a,['EMAIL','E_MAIL','CONTACT_EMAIL','CONTACTEMAIL','LEA_EMAIL','ADMIN_EMAIL']), website:pick(a,['WEBSITE','WEB_SITE','URL','WEBADDR','LEA_URL','LEA_WEBSITE','WWW']), sourceLocale:a.LOCALE_TEXT||'', enrollment:a.MEMBER||'', schoolCount:a.SCH||'', designation:'Hub', contiguous:'Unknown', outsideNonRural:'Unknown', censusRural:'Unknown', cityPopulation:'', saipePercent:'', ruralityScore:null, economicScore:null, lat:a.Lat||g.y||'', lon:a.Long||g.x||'', notes:'District administrative office. Verify whether this is a Hub, Hub/End-User, or non-scored administrative location.'});
+}
+async function addK12SchoolsOnlyByLea(leaId){
+  setStatus('<span class="status busy"><span class="busy-clock">⏱️</span>Loading all NCES school sites for selected district...</span>');
+  try{
+    const schoolRows=await getK12SchoolsByLea(leaId);
+    addK12Rows(schoolRows);
+  }catch(e){setStatus(`<span style="color:#b42318">School-site lookup failed: ${esc(e.message)}. Use Import / Templates as fallback.</span>`);}
+}
+async function addK12DistrictRow(leaId){
+  setStatus('Looking up district office location...');
+  try{
+    const feature=await getK12DistrictFeature(leaId);
+    const site=districtFeatureToSite(feature);
+    if(!site){setStatus('No district office location found. Use Add Manual Location.'); return;}
+    addRows([site]);
+    setStatus('<strong>1</strong> district office location added as Hub. Change designation if it should score as Hub/End-User.');
+  }catch(e){setStatus(`<span style="color:#b42318">District office lookup failed: ${esc(e.message)}. Use Add Manual Location.</span>`)}
+}
+async function addK12DistrictAndSchoolsFromFeature(feature){
+  const a=feature?.attributes||{};
+  setStatus('<span class="status busy"><span class="busy-clock">⏱️</span>Loading district office and all school locations...</span>');
+  try{
+    const districtSite=districtFeatureToSite(feature);
+    const schoolRows=await getK12SchoolsByLea(a.LEAID);
+    const schoolSites=schoolRows.map(f=>schoolFeatureToSite(f,true));
+    addRows((districtSite?[districtSite]:[]).concat(schoolSites));
+    setStatus(`<strong>${schoolSites.length + (districtSite?1:0)}</strong> K-12 location(s) added${districtSite ? ', including the district office as Hub.' : '. District office not found; use Add Manual Location if needed.'} NCES # Schools: <strong>${esc(a.SCH||schoolSites.length)}</strong>.`);
+  }catch(e){setStatus(`<span style="color:#b42318">Could not load full district site list: ${esc(e.message)}. Try Schools only or import the NCES file.</span>`);}
+}
+async function addK12DistrictAndSchoolRows(leaId, schoolRows){
+  // Backward-compatible path used by the fallback school-layer search results.
+  setStatus('Adding district office and school locations...');
+  let districtSite=null;
+  try{ districtSite=districtFeatureToSite(await getK12DistrictFeature(leaId)); }catch(e){ districtSite=null; }
+  const schoolSites=schoolRows.map(f=>schoolFeatureToSite(f,true));
+  addRows((districtSite?[districtSite]:[]).concat(schoolSites));
+  setStatus(`<strong>${schoolSites.length + (districtSite?1:0)}</strong> K-12 location(s) added${districtSite ? ', including the district office as Hub.' : '. District office not found; use Add Manual Location if needed.'}`);
+}
+function cleanCountyFips(cnty, st){
+  let d=onlyDigits(cnty);
+  if(!d) return '';
+  const state=String(st||'').toUpperCase();
+  if(d.length===3 && state && STATE_FIPS[state]) d=STATE_FIPS[state]+d;
+  if(d.length===5) return d;
+  if(d.length>5) return d.slice(-5);
+  return d.padStart(5,'0');
+}
+
+async function searchHigherEd(){
+  const state=document.getElementById('stateSelect').value; const term=document.getElementById('searchTerm').value.trim();
+  if(term.length<3){setStatus('Enter at least 3 characters for higher-ed search.');return;}
+  setStatus(`<span class="status busy"><span class="busy-clock">⏱️</span>Searching higher-ed colleges and universities layer${state==='ALL'?' across all states':''}...</span>`); document.getElementById('searchResults').innerHTML='';
+  const up=sqlText(term).toUpperCase();
+  const where=(state==='ALL') ? `(UPPER(INSTNM) LIKE '%${up}%' OR UPPER(F1SYSNAM) LIKE '%${up}%')` : `STABBR='${state}' AND (UPPER(INSTNM) LIKE '%${up}%' OR UPPER(F1SYSNAM) LIKE '%${up}%')`;
+  const fields='UNITID,INSTNM,IALIAS,ADDR,CITY,STABBR,ZIP,CHFNM,CHFTITLE,GENTELE,WEBADDR,SECTOR,ICLEVEL,HBCU,TRIBAL,LOCALE,COUNTYCD,COUNTYNM,LONGITUD,LATITUDE,F1SYSNAM';
+  try{const features=await arcgisQuery(HIGHER_ED,where,fields); setStatus(`<strong>${features.length}</strong> higher-ed records found.`); showResults(features,'HigherEd');}
+  catch(e){setStatus(`<span style="color:#b42318">Higher-ed search failed: ${esc(e.message)}. Use CSV import as fallback.</span>`)}
+}
+function addHigherEdRows(rows){
+  const mapped=rows.map(f=>{const a=f.attributes; const g=f.geometry||{}; return {
+    id:crypto.randomUUID(), include:true, type:'Higher Ed', source:'IPEDS / Colleges & Universities Feature Layer', sourceId:a.UNITID||'', organization:a.F1SYSNAM||a.INSTNM||'', siteName:a.INSTNM||'', address:a.ADDR||'', city:a.CITY||'', state:a.STABBR||'', zip:a.ZIP||'', county:a.COUNTYNM||'', countyFips:cleanCountyFips(a.COUNTYCD,a.STABBR), phone:a.GENTELE||'', email:pick(a,['EMAIL','E_MAIL','CONTACT_EMAIL','ADMIN_EMAIL','FAIDEMAIL']), website:pick(a,['WEBADDR','WEBSITE','URL','ADMINURL','FAIDURL','APPLURL']), sourceLocale:a.LOCALE||'', enrollment:'', designation:getDefaultDesignation(), contiguous:'Unknown', outsideNonRural:'Unknown', censusRural:'Unknown', cityPopulation:'', saipePercent:'', ruralityScore:null, economicScore:null, lat:g.y||a.LATITUDE||'', lon:g.x||a.LONGITUD||'', notes:''
+  }}); addRows(mapped); setStatus(`<strong>${mapped.length}</strong> higher-ed site(s) added.`);
+}
+
+async function searchHRSA(){
+  const state=document.getElementById('stateSelect').value || 'ALL';
+  const term=document.getElementById('searchTerm').value.trim().toLowerCase();
+  document.getElementById('searchResults').innerHTML='';
+  try{
+    const scopeLabel = state==='ALL' ? 'all states' : state;
+    setStatus(`<span class="status busy"><span class="busy-clock">⏱️</span>Loading the full HRSA Health Center Service Delivery and Look-Alike Sites lookup table, then filtering locally for <strong>${esc(scopeLabel)}</strong>${term ? ` and “${esc(term)}”` : ''}...</span>`);
+    const items=await getFullHRSALookupItems();
+    showHRSAFilteredResults(items,state,term,hrsaLookupSourceLabel);
+  } catch(e){
+    setStatus(`<span style="color:#b42318">HRSA full-table lookup could not be loaded from the bundled file or live HRSA download. This usually means the HRSA file was not included in /data or the browser blocked the official HRSA download. Upload the HRSA XLSX under Import / Templates → Healthcare Lookup Dataset Fallback; once uploaded, the full table is cached and filtered locally. Details: ${esc(e.message)}</span>`);
+  }
+}
+async function getFullHRSALookupItems(){
+  if(hrsaLookupCache?.length) return hrsaLookupCache;
+  const attempts=[
+    {label:'local bundled HRSA XLSX', url:HRSA_LOCAL_XLSX, type:'xlsx'},
+    {label:'local bundled HRSA CSV', url:HRSA_LOCAL_CSV, type:'csv'},
+    {label:'official HRSA XLSX', url:HRSA_XLSX, type:'xlsx'},
+    {label:'official HRSA CSV', url:HRSA_CSV, type:'csv'}
+  ];
+  const failures=[];
+  for(const a of attempts){
+    try{
+      const res=await fetch(a.url,{cache:'no-store'});
+      if(!res.ok) throw new Error('HTTP '+res.status);
+      let items=[];
+      if(a.type==='csv'){
+        const text=await res.text();
+        const rows=parseCSV(text);
+        if(rows.length<2) throw new Error('CSV has no data rows.');
+        items=rows.slice(1).map(r=>rowToObject(rows[0],r)).map(hrsaToSite).filter(Boolean);
+      } else {
+        if(!window.XLSX) throw new Error('XLSX parser did not load.');
+        const buf=await res.arrayBuffer();
+        const wb=XLSX.read(buf,{type:'array'});
+        items=workbookToHRSASites(wb);
+      }
+      if(!items.length) throw new Error('No usable HRSA service delivery rows found.');
+      hrsaLookupCache=items;
+      hrsaLookupSourceLabel=a.label;
+      setStatus(`<strong>${items.length.toLocaleString()}</strong> HRSA records loaded from <strong>${esc(a.label)}</strong> as a full-table lookup. State/county/city/search filters are applied locally after the source loads.`);
+      return items;
+    }catch(e){failures.push(`${a.label}: ${e.message}`);}
+  }
+  throw new Error(failures.join(' | '));
+}
+function showHRSAFilteredResults(items,state,term,sourceLabel){
+  const isAll=String(state||'').toUpperCase()==='ALL';
+  const stateItems=isAll ? items : items.filter(x=>String(x.state||'').toUpperCase()===String(state||'').toUpperCase());
+  const matches=term ? stateItems.filter(x=>[x.organization,x.siteName,x.city,x.county,x.address,x.phone,x.email,x.website].join(' ').toLowerCase().includes(term)) : stateItems;
+  const scopeLabel=isAll ? 'all states' : state;
+  setStatus(`<strong>${matches.length}</strong> HRSA healthcare site record(s) found for <strong>${esc(scopeLabel)}</strong>${term ? ` matching “${esc(term)}”` : ''} after locally filtering the full <strong>${esc(sourceLabel)}</strong> source table. ${matches.length>100 ? 'Showing first 100; use the add-all button or narrow your search.' : ''}`);
+  showResults(matches,'HRSA');
+}
+function workbookToHRSASites(wb){
+  let best={score:-1, objects:[], sheetName:''};
+  wb.SheetNames.forEach(name=>{
+    const matrix=XLSX.utils.sheet_to_json(wb.Sheets[name],{header:1,defval:'',raw:false});
+    if(!matrix.length) return;
+    let headerIndex=matrix.findIndex(r=>{
+      const t=r.map(x=>String(x||'').toLowerCase()).join(' | ');
+      return (t.includes('site name') || t.includes('health center name')) && (t.includes('state') || t.includes('site state'));
+    });
+    if(headerIndex<0) headerIndex=0;
+    const headers=matrix[headerIndex].map(h=>String(h||'').trim());
+    const objects=matrix.slice(headerIndex+1).map(row=>{
+      const o={}; headers.forEach((h,i)=>{ if(h) o[h]=row[i]??''; }); return o;
+    }).filter(o=>Object.values(o).some(v=>String(v).trim()!==''));
+    const score=objects.length + headers.filter(h=>/site|health|center|state|county|address|phone|web/i.test(h)).length*1000;
+    if(score>best.score) best={score,objects,sheetName:name};
+  });
+  return best.objects.map(hrsaToSite).filter(Boolean);
+}
+function importHRSALookupFile(){
+  const file=document.getElementById('hrsaLookupFile')?.files?.[0];
+  if(!file){setStatus('Select the HRSA XLSX or CSV lookup file first.'); return;}
+  const state=document.getElementById('hrsaFallbackState')?.value || document.getElementById('stateSelect').value || 'ALL';
+  const term=(document.getElementById('hrsaFallbackTerm')?.value || document.getElementById('searchTerm').value || '').trim().toLowerCase();
+  document.getElementById('stateSelect').value=state;
+  document.getElementById('searchTerm').value=term;
+  const lower=file.name.toLowerCase();
+  setStatus(`Loading uploaded HRSA lookup file: <strong>${esc(file.name)}</strong>...`);
+  const reader=new FileReader();
+  reader.onload=()=>{
+    try{
+      let items=[];
+      if(lower.endsWith('.csv')){
+        const rows=parseCSV(reader.result); if(rows.length<2) throw new Error('CSV needs a header row and at least one data row.');
+        const headers=rows[0]; items=rows.slice(1).map(r=>rowToObject(headers,r)).map(hrsaToSite).filter(Boolean);
+      } else {
+        if(!window.XLSX) throw new Error('XLSX parser did not load. Check internet access to the SheetJS CDN or use the CSV version.');
+        const wb=XLSX.read(reader.result,{type:'array'});
+        items=workbookToHRSASites(wb);
+      }
+      if(!items.length) throw new Error('No usable HRSA service delivery site rows found.');
+      hrsaLookupCache=items;
+      hrsaLookupSourceLabel=`uploaded ${file.name}`;
+      document.getElementById('hrsaUploadStatus').innerHTML=`Loaded <strong>${items.length}</strong> HRSA lookup record(s) from ${esc(file.name)}. Current display is filtered to ${esc(state)}.`;
+      showHRSAFilteredResults(items,state,term,hrsaLookupSourceLabel);
+      switchTabByName('sites');
+    }catch(e){setStatus(`<span style="color:#b42318">Could not read HRSA lookup file: ${esc(e.message)}</span>`);}
+  };
+  reader.onerror=()=>setStatus(`<span style="color:#b42318">Could not read file.</span>`);
+  if(lower.endsWith('.csv')) reader.readAsText(file); else reader.readAsArrayBuffer(file);
+}
+function fieldKey(s){return String(s||'').toLowerCase().replace(/[^a-z0-9]+/g,'').trim();}
+function pick(obj, names){
+  const keys=Object.keys(obj||{});
+  for(const n of names){
+    const target=String(n||'').trim().toLowerCase();
+    let k=keys.find(x=>String(x||'').trim().toLowerCase()===target);
+    if(!k) k=keys.find(x=>fieldKey(x)===fieldKey(n));
+    if(k && obj[k]!==undefined && obj[k]!==null && String(obj[k]).trim()!=='') return obj[k];
+  }
+  return '';
+}
+function hrsaToSite(obj){
+  const state=(pick(obj,['Site State Abbreviation','Site State','State','State Abbreviation'])||'').toUpperCase();
+  const siteName=pick(obj,['Site Name','Health Center Site Name','Name']);
+  if(!siteName || !state) return null;
+  const fips=cleanCountyFips(pick(obj,['County FIPS Code','County Equivalent FIPS Code','County Equivalent Code','County Code','County FIPS','Site County FIPS']), state);
+  return {id:crypto.randomUUID(), include:true, type:'Rural Health', source:'HRSA Health Center Service Delivery and Look-Alike Sites XLSX', sourceId:pick(obj,['Site ID','Site Number','BHCMIS ID','Grant Number','Health Center Number']), organization:pick(obj,['Health Center Name','Organization Name','Awardee Name']), siteName, address:pick(obj,['Site Address','Address','Street Address']), city:pick(obj,['Site City','City']), state, zip:pick(obj,['Site Postal Code','ZIP','Zip Code']), county:pick(obj,['County Equivalent Name','County','Site County']), countyFips:fips, phone:pick(obj,['Site Telephone Number','Phone','Telephone','Telephone Number']), email:pick(obj,['Site Email Address','Site Email','Email','Contact Email','E-mail','E-Mail Address']), website:pick(obj,['Site Web Address','Website','Web Address','URL','Site URL']), sourceLocale:'', enrollment:'', designation:getDefaultDesignation(), contiguous:'Unknown', outsideNonRural:'Unknown', censusRural:'Unknown', cityPopulation:'', saipePercent:'', ruralityScore:null, economicScore:null, lat:pick(obj,['Latitude','Site Latitude','Site Latitude Number']), lon:pick(obj,['Longitude','Site Longitude','Site Longitude Number']), notes:'HRSA healthcare source; verify whether the site is an end-user, hub, or hub/end-user for the proposed telemedicine project.'};
+}
+
+function addRows(rows, opts={}){
+  const addedIds=[];
+  rows.forEach(r=>{
+    if(!r.id) r.id=crypto.randomUUID();
+    if(r.include===undefined) r.include=true;
+    finalizeSiteFields(r);
+    sites.push(r);
+    addedIds.push(r.id);
+  });
+  dedupeSites(false);
+  recalc(); renderTable();
+  const auto = opts.autoEnrich ?? document.getElementById('autoEnrichOnAdd')?.checked;
+  if(auto && addedIds.length){
+    autoEnrichSites(addedIds, `Auto-scoring ${addedIds.length} added row(s)`);
+  }
+}
+function showManualSite(){
+  const existing=document.getElementById('manualCard'); if(existing){existing.scrollIntoView({behavior:'smooth',block:'start'}); return;}
+  const tpl=document.getElementById('manualSiteTemplate').content.cloneNode(true);
+  document.querySelector('main').insertBefore(tpl, document.querySelector('main').children[1]);
+  document.getElementById('mState').value=(document.getElementById('stateSelect').value==='ALL'?'':document.getElementById('stateSelect').value);
+  document.getElementById('mDesignation').value=getDefaultDesignation();
+}
+function addManualSite(){
+  const siteName=document.getElementById('mName').value.trim();
+  if(!siteName){setStatus('Manual location needs a site/location name.'); return;}
+  addRows([{id:crypto.randomUUID(), include:true, type:document.getElementById('mType').value, source:'Manual', sourceId:'', organization:document.getElementById('mOrg').value, siteName, address:document.getElementById('mAddress').value, city:document.getElementById('mCity').value, state:document.getElementById('mState').value.toUpperCase(), zip:document.getElementById('mZip').value, county:document.getElementById('mCounty').value, countyFips:document.getElementById('mCountyFips').value, phone:document.getElementById('mPhone').value, email:document.getElementById('mEmail').value, website:document.getElementById('mWebsite').value, sourceLocale:document.getElementById('mLocale').value, enrollment:'', schoolCount:document.getElementById('mSchoolCount')?.value||'', designation:document.getElementById('mDesignation').value, contiguous:'Unknown', outsideNonRural:'Unknown', censusRural:'Unknown', cityPopulation:document.getElementById('mCityPopulation').value, saipePercent:document.getElementById('mSaipePercent').value, ruralityScore:null, economicScore:null, lat:'', lon:'', description:'', notes:''}]);
+  document.getElementById('manualCard').remove();
+  setStatus('Manual location added. Auto-enrich will calculate D-1, D-2, and total when enough lookup data is available.');
+}
+function dedupeSites(showMsg=true){
+  const seen=new Set(); const clean=[];
+  for(const s of sites){const key=norm([s.siteName,s.address,s.city,s.state].join('|')); if(!seen.has(key)){seen.add(key); clean.push(s)}}
+  const removed=sites.length-clean.length; sites=clean; recalc(); renderTable(); if(showMsg) setStatus(`${removed} duplicate row(s) removed.`);
+}
+function clearSites(){if(confirm('Clear all sites from the worksheet?')){sites=[]; recalc(); renderTable();}}
+function selectAllSites(val){sites.forEach(s=>s.include=val); recalc(); renderTable();}
+function applyDesignationToIncluded(){
+  const val=normalizeDesignation(document.getElementById('bulkDesignation')?.value || 'End-User');
+  let count=0;
+  sites.forEach(s=>{ if(s.include){s.designation=val; count++;} });
+  recalc(); renderTable();
+  setStatus(`${count} included site(s) updated to ${val}.`);
+}
+
+function rowObjectiveTotal(s){
+  const d1=(s.ruralityScore===null||s.ruralityScore===undefined||s.ruralityScore==='')?null:Number(s.ruralityScore);
+  const d2=(s.economicScore===null||s.economicScore===undefined||s.economicScore==='')?null:Number(s.economicScore);
+  return (d1===null||d2===null||isNaN(d1)||isNaN(d2)) ? null : d1+d2;
+}
+function totalScorePill(s){
+  const v=rowObjectiveTotal(s);
+  if(v===null) return '<span class="pill">—</span>';
+  const cls=v>=50?'green':v>=30?'amber':'red';
+  return `<span class="pill ${cls}">${Number(v).toFixed(2).replace(/\.00$/,'')}</span>`;
+}
+function numInput(id,fallback){
+  const el=document.getElementById(id);
+  const n=parseFloat(el?.value);
+  return Number.isFinite(n)?n:fallback;
+}
+function targetFitValue(s){
+  const d1=(s.ruralityScore===null||s.ruralityScore===undefined||s.ruralityScore==='')?null:Number(s.ruralityScore);
+  const d2=(s.economicScore===null||s.economicScore===undefined||s.economicScore==='')?null:Number(s.economicScore);
+  const obj=rowObjectiveTotal(s);
+  if(d1===null||d2===null||obj===null||isNaN(d1)||isNaN(d2)||isNaN(obj)) return -1;
+  const t1=numInput('targetD1',30), t2=numInput('targetD2',20), tobj=numInput('targetObjectiveScore',50);
+  if(d1>=t1 && d2>=t2 && obj>=tobj) return 3;
+  if(obj>=tobj) return 2;
+  if(obj>=Math.max(0,tobj-10)) return 1;
+  return 0;
+}
+function targetFitPill(s){
+  const v=targetFitValue(s);
+  if(v<0) return '<span class="pill amber">Review</span>';
+  if(v===3) return '<span class="pill green">Meets</span>';
+  if(v===2) return '<span class="pill blue">Obj OK</span>';
+  if(v===1) return '<span class="pill amber">Near</span>';
+  return '<span class="pill red">Below</span>';
+}
+
+function renderTable(){
+  const table=document.getElementById('siteTable');
+  const columns=TABLE_COLUMNS;
+  table.innerHTML=`<colgroup>${columns.map(c=>`<col style="width:${columnWidths[c.key]||c.w}px">`).join('')}</colgroup><thead><tr>${columns.map(c=>headerCell(c)).join('')}</tr></thead><tbody></tbody>`;
+  const body=table.querySelector('tbody');
+  const rows=getSortedSites();
+  rows.forEach((s,i)=>{
+    const tr=document.createElement('tr'); tr.innerHTML=`
+      <td class="nowrap"><input type="checkbox" ${s.include?'checked':''} onchange="upd('${s.id}','include',this.checked)"></td>
+      <td class="num">${i+1}</td>
+      <td class="num">${scorePill(s.ruralityScore,40)}</td>
+      <td class="num">${scorePill(s.economicScore,30)}</td>
+      <td><input class="num" value="${esc(s.cityPopulation||'')}" onchange="upd('${s.id}','cityPopulation',this.value)"></td>
+      <td><input class="num" value="${esc(s.saipePercent||'')}" onchange="upd('${s.id}','saipePercent',this.value)"></td>
+      <td class="num">${totalScorePill(s)}</td>
+      <td class="num">${targetFitPill(s)}</td>
+      <td><input title="${esc(s.siteName)}" value="${esc(s.siteName)}" onchange="upd('${s.id}','siteName',this.value)"></td>
+      <td><input title="${esc(s.organization||'')}" value="${esc(s.organization||'')}" onchange="upd('${s.id}','organization',this.value)"></td>
+      <td><select onchange="upd('${s.id}','type',this.value)">${opts(['K-12','Charter School','K-12 District Office','Rural Health','Higher Ed','Other'],s.type)}</select></td>
+      <td><input class="num" title="${esc(s.schoolCount||'')}" value="${esc(s.schoolCount||'')}" onchange="upd('${s.id}','schoolCount',this.value)"></td>
+      <td><select onchange="upd('${s.id}','designation',this.value)">${opts(DESIGNATION_OPTIONS,normalizeDesignation(s.designation))}</select></td>
+      <td><input title="${esc(s.address)}" value="${esc(s.address)}" onchange="upd('${s.id}','address',this.value)"></td>
+      <td><input title="${esc(s.city)}" value="${esc(s.city)}" onchange="upd('${s.id}','city',this.value)"></td>
+      <td><input title="${esc(s.ruralityPlace||'')}" value="${esc(s.ruralityPlace||'')}" placeholder="e.g., Huckabay" onchange="upd('${s.id}','ruralityPlace',this.value)"></td>
+      <td><input value="${esc(s.state)}" maxlength="2" onchange="upd('${s.id}','state',this.value.toUpperCase())"></td>
+      <td><input value="${esc(s.zip||'')}" onchange="upd('${s.id}','zip',this.value)"></td>
+      <td><input title="${esc(s.county)}" value="${esc(s.county)}" onchange="upd('${s.id}','county',this.value)"></td>
+      <td><input title="${esc(s.phone||'')}" value="${esc(s.phone||'')}" onchange="upd('${s.id}','phone',this.value)"></td>
+      <td><input title="${esc(s.email||'')}" value="${esc(s.email||'')}" onchange="upd('${s.id}','email',this.value)"></td>
+      <td><input title="${esc(s.website||'')}" value="${esc(s.website||'')}" onchange="upd('${s.id}','website',this.value)"></td>
+      <td><input value="${esc(s.countyFips||'')}" onchange="upd('${s.id}','countyFips',this.value)"></td>
+      <td><input value="${esc(s.sourceLocale||'')}" onchange="upd('${s.id}','sourceLocale',this.value)"></td>
+      <td><select onchange="upd('${s.id}','contiguous',this.value)">${opts(['Unknown','No','Yes'],s.contiguous)}</select></td>
+      <td><select onchange="upd('${s.id}','outsideNonRural',this.value)">${opts(['Unknown','No','Yes'],s.outsideNonRural)}</select></td>
+      <td><select onchange="upd('${s.id}','censusRural',this.value)">${opts(['Unknown','No','Yes'],s.censusRural)}</select></td>
+      <td><input title="${esc(s.description||'')}" value="${esc(s.description||'')}" onchange="upd('${s.id}','description',this.value)"></td>
+      <td><input title="${esc(s.notes||'')}" value="${esc(s.notes||'')}" onchange="upd('${s.id}','notes',this.value)"></td>
+      <td><a href="${sourceLinkFor(s)}" target="_blank">USDA Map</a></td>
+      <td><button class="danger" onclick="removeSite('${s.id}')">X</button></td>`;
+    body.appendChild(tr);
+  });
+  if(!sites.length){body.innerHTML=`<tr><td colspan="${TABLE_COLUMNS.length}" class="smalltxt">No sites added yet. Search a district/organization/institution, add a manual location, or import a CSV/XLSX site or NCES file.</td></tr>`}
+  initColumnResize(table);
+  renderAnchorOptions();
+}
+function headerCell(c){
+  const active=tableSort.key===c.key;
+  const indicator=active ? `<span class="sort-indicator">${tableSort.dir==='asc'?'▲':'▼'}</span>` : '';
+  const cls=c.noSort?'':'sortable';
+  const click=c.noSort?'':`onclick="sortTable('${c.key}')"`;
+  return `<th class="${cls}" data-key="${c.key}" ${click}><div class="th-inner"><span>${c.label}</span>${indicator}<span class="col-resizer" data-key="${c.key}" title="Drag to resize"></span></div></th>`;
+}
+function sortTable(key){
+  const col=TABLE_COLUMNS.find(c=>c.key===key);
+  if(!col || col.noSort) return;
+  if(tableSort.key===key) tableSort.dir = tableSort.dir==='asc' ? 'desc' : 'asc';
+  else tableSort = {key, dir:'asc'};
+  renderTable();
+}
+function getSortedSites(){
+  const arr=[...sites];
+  const col=TABLE_COLUMNS.find(c=>c.key===tableSort.key);
+  if(!col || col.noSort) return arr;
+  const dir=tableSort.dir==='desc'?-1:1;
+  return arr.sort((a,b)=>compareValues(getSortValue(a,col), getSortValue(b,col), col.type)*dir);
+}
+function getSortValue(s,col){
+  if(col.key==='include') return s.include ? 1 : 0;
+  if(col.key==='objectiveScore') return rowObjectiveTotal(s);
+  if(col.key==='targetFit') return targetFitValue(s);
+  return s[col.key];
+}
+function compareValues(a,b,type){
+  const emptyA=(a===null||a===undefined||a==='');
+  const emptyB=(b===null||b===undefined||b==='');
+  if(emptyA && emptyB) return 0;
+  if(emptyA) return 1;
+  if(emptyB) return -1;
+  if(type==='number'){
+    const na=parseFloat(String(a).replace(/,/g,''));
+    const nb=parseFloat(String(b).replace(/,/g,''));
+    if(isNaN(na)&&isNaN(nb)) return 0;
+    if(isNaN(na)) return 1;
+    if(isNaN(nb)) return -1;
+    return na-nb;
+  }
+  if(type==='bool') return Number(a)-Number(b);
+  return String(a).localeCompare(String(b),undefined,{numeric:true,sensitivity:'base'});
+}
+function initColumnResize(table){
+  table.querySelectorAll('.col-resizer').forEach(handle=>{
+    handle.addEventListener('click',e=>e.stopPropagation());
+    handle.addEventListener('mousedown',e=>{
+      e.preventDefault(); e.stopPropagation();
+      const key=handle.dataset.key;
+      const th=handle.closest('th');
+      const startX=e.pageX;
+      const startW=th.offsetWidth;
+      document.body.style.cursor='col-resize';
+      document.body.style.userSelect='none';
+      const onMove=ev=>{
+        const next=Math.max(44,startW+(ev.pageX-startX));
+        columnWidths[key]=next;
+        const colIndex=TABLE_COLUMNS.findIndex(c=>c.key===key)+1;
+        const col=table.querySelector(`colgroup col:nth-child(${colIndex})`);
+        if(col) col.style.width=next+'px';
+      };
+      const onUp=()=>{
+        document.removeEventListener('mousemove',onMove);
+        document.removeEventListener('mouseup',onUp);
+        document.body.style.cursor='';
+        document.body.style.userSelect='';
+      };
+      document.addEventListener('mousemove',onMove);
+      document.addEventListener('mouseup',onUp);
+    });
+  });
+}
+function opts(arr,val){return arr.map(x=>`<option ${String(x)===String(val)?'selected':''}>${esc(x)}</option>`).join('');}
+function scorePill(v,max){ if(v===null||v===undefined||v==='') return '<span class="pill">—</span>'; const cls=v>=max*.75?'green':v>=max*.45?'amber':'red'; return `<span class="pill ${cls}">${Number(v).toFixed(2).replace(/\.00$/,'')}</span>`}
+function upd(id,key,val){const s=sites.find(x=>x.id===id); if(!s) return; s[key]=val; recalc(); renderTable();}
+function removeSite(id){sites=sites.filter(x=>x.id!==id); recalc(); renderTable();}
+
+function isScoredSite(s){
+  if(!s.include) return false;
+  const pt=document.getElementById('projectType').value;
+  const designation=normalizeDesignation(s.designation);
+  if(designation==='End-User' || designation==='Hub/End-User') return true;
+  if((pt==='Non-fixed' || pt==='Hybrid') && designation==='Proxy Hub') return true;
+  return false;
+}
+function econScore(p){
+  const n=parseFloat(p); if(isNaN(n)) return null;
+  if(n>=30) return 30; if(n>=20) return 20; if(n>=10) return 10; return 0;
+}
+function isNcesRuralLocale(value){
+  const txt=String(value||'');
+  const m=txt.match(/\b(4[123])\b/);
+  return /Rural/i.test(txt) || (m && ['41','42','43'].includes(m[1]));
+}
+function ruralityScore(s){
+  if(s.contiguous==='Yes') return 0;
+  if(s.censusRural==='Yes') return 40;
+  const pop=parseInt(String(s.cityPopulation||'').replace(/,/g,''));
+  if(isNaN(pop)) return null;
+  // Guardrail: NCES Locale 41/42/43 is not the USDA D-1 score, but it is a red flag that
+  // the postal city may not be the actual Census place used for DLT rurality. Do not score
+  // these as 0 solely because a mailing city like Stephenville has >20,000 people.
+  if(pop>20000 && isNcesRuralLocale(s.sourceLocale) && s.contiguous==='Unknown' && s.outsideNonRural==='Unknown' && s.censusRural==='Unknown'){
+    s.notes=appendNote(s.notes,'D-1 review: NCES rural locale conflicts with postal-city population. Enter the actual Rurality Place/CDP or set Census Rural after DLT map verification.');
+    return null;
+  }
+  if(pop>20000 && s.outsideNonRural==='Yes') return 20;
+  if(pop<=5000) return 40;
+  if(pop<=10000) return 30;
+  if(pop<=20000) return 20;
+  return 0;
+}
+function recalc(){
+  sites.forEach(s=>{s.economicScore=econScore(s.saipePercent); s.ruralityScore=ruralityScore(s);});
+  const scored=sites.filter(isScoredSite);
+  const ruralReady=scored.filter(s=>s.ruralityScore!==null && s.ruralityScore!==undefined);
+  const econReady=scored.filter(s=>s.economicScore!==null && s.economicScore!==undefined);
+  const ruralAvg=ruralReady.length ? avg(ruralReady.map(s=>Number(s.ruralityScore))) : null;
+  const econAvg=econReady.length ? avg(econReady.map(s=>Number(s.economicScore))) : null;
+  const subj=Math.max(0,Math.min(30,parseFloat(document.getElementById('subjectiveScore').value)||0));
+  const total=(ruralAvg??0)+(econAvg??0)+subj;
+  document.getElementById('metricSites').textContent=scored.length;
+  document.getElementById('metricRurality').innerHTML=ruralAvg===null?'—':scoreClass(ruralAvg,40);
+  document.getElementById('metricEconomic').innerHTML=econAvg===null?'—':scoreClass(econAvg,30);
+  document.getElementById('metricTotal').innerHTML=(ruralAvg===null&&econAvg===null&&subj===0)?'—':scoreClass(total,100);
+  const targetTotal=numInput('targetTotalScore',75);
+  const targetObjective=numInput('targetObjectiveScore',50);
+  const objective=(ruralAvg??0)+(econAvg??0);
+  const targetStatus=document.getElementById('metricTargetStatus');
+  const targetGap=document.getElementById('metricTargetGap');
+  if(targetStatus){
+    const statusCls=total>=targetTotal?'green':objective>=targetObjective?'amber':'red';
+    const label=total>=targetTotal?'On Target':objective>=targetObjective?'Objective OK':'Below Target';
+    targetStatus.className=`pill ${statusCls}`;
+    targetStatus.textContent=label;
+  }
+  if(targetGap){
+    const gap=Math.round((total-targetTotal)*100)/100;
+    const gapCls=gap>=0?'green':gap>=-10?'amber':'red';
+    targetGap.className=`pill ${gapCls}`;
+    targetGap.textContent=(gap>=0?'+':'')+gap.toFixed(2).replace(/\.00$/,'')+' pts';
+  }
+  const warnings=[];
+  const missingPop=scored.filter(s=>s.ruralityScore===null).length;
+  const missingSaipe=scored.filter(s=>s.economicScore===null).length;
+  const unknownMap=scored.filter(s=>s.contiguous==='Unknown' || s.outsideNonRural==='Unknown').length;
+  if(missingPop) warnings.push(`${missingPop} scored site(s) need Census place population or Census Rural designation.`);
+  if(missingSaipe) warnings.push(`${missingSaipe} scored site(s) need county SAIPE poverty data.`);
+  if(unknownMap) warnings.push(`${unknownMap} scored site(s) still need DLT map verification fields reviewed.`);
+  document.getElementById('scoreWarnings').textContent=warnings.join(' ');
+}
+function avg(arr){return Math.round((arr.reduce((a,b)=>a+b,0)/arr.length)*100)/100;}
+function scoreClass(v,max){const cls=v>=max*.75?'score-good':v>=max*.45?'score-mid':'score-low'; return `<span class="${cls}">${Number(v).toFixed(2)}</span>`;}
+
+async function enrichAll(){
+  await autoEnrichSites(sites.map(s=>s.id), 'Enriching all worksheet rows');
+}
+async function autoEnrichSites(ids, label='Auto-enriching worksheet rows'){
+  const target=sites.filter(s=>ids.includes(s.id));
+  if(!target.length){setStatus('No rows to enrich.'); return;}
+  setStatus(`<span class="status busy"><span class="busy-clock">⏱️</span>${esc(label)} — adding Census population + SAIPE data...</span>`);
+  for(let i=0;i<target.length;i++){
+    const s=target[i];
+    if(s.state){
+      if(!s.cityPopulation && (s.ruralityPlace || s.city)) await enrichPlacePop(s);
+      if(!s.saipePercent) await enrichSaipe(s);
+    }
+    if(i===0 || (i+1)%10===0 || i===target.length-1){
+      recalc(); renderTable();
+      setStatus(`<span class="status busy"><span class="busy-clock">⏱️</span>${esc(label)} — ${i+1} / ${target.length} rows scored where lookup data is available.</span>`);
+      await new Promise(r=>setTimeout(r,0));
+    }
+  }
+  recalc(); renderTable();
+  const missingPop=target.filter(s=>s.ruralityScore===null).length;
+  const missingSaipe=target.filter(s=>s.economicScore===null).length;
+  setStatus(`Auto-enrichment complete. ${missingPop} row(s) still need population/DLT map review; ${missingSaipe} row(s) still need SAIPE/county review.`);
+}
+async function enrichPlacePop(s){
+  const st=s.state.toUpperCase(); const fips=STATE_FIPS[st]; if(!fips) return;
+  if(!placeCache[st]){
+    try{
+      const res=await fetch(`https://api.census.gov/data/2020/dec/pl?get=NAME,P1_001N&for=place:*&in=state:${fips}`);
+      const data=await res.json(); const map={};
+      data.slice(1).forEach(r=>{ const name=r[0].replace(/,.*$/,''); map[norm(name)]={name:r[0],pop:parseInt(r[1])}; });
+      placeCache[st]=map;
+    }catch(e){s.notes=appendNote(s.notes,'Census place API failed'); return;}
+  }
+  const lookupName=(s.ruralityPlace || s.city || '').trim();
+  const m=placeCache[st][norm(lookupName)];
+  if(m){s.cityPopulation=m.pop; if(!s.ruralityPlace) s.ruralityPlace=m.name.replace(/,.*$/,''); s.notes=appendNote(s.notes,`Census place match for rurality: ${m.name}`);}
+  else {s.notes=appendNote(s.notes,`No 2020 Census place match for '${lookupName}'; verify Census Rural / DLT map`);}
+}
+async function enrichSaipe(s){
+  const st=s.state.toUpperCase(); const fips=STATE_FIPS[st]; if(!fips) return;
+  if(!saipeCache[st]){
+    try{
+      const res=await fetch(`https://api.census.gov/data/timeseries/poverty/saipe?get=NAME,SAEPOVRTALL_PT&for=county:*&in=state:${fips}&YEAR=2024`);
+      const data=await res.json(); const byFips={}, byName={};
+      data.slice(1).forEach(r=>{const obj={name:r[0],rate:parseFloat(r[1]),state:r[3],county:r[4],fips:r[3]+r[4]}; byFips[obj.fips]=obj; byName[norm(obj.name.replace(/,.*$/,''))]=obj;});
+      saipeCache[st]={byFips,byName};
+    }catch(e){s.notes=appendNote(s.notes,'SAIPE API failed'); return;}
+  }
+  let m=null; const f=cleanCountyFips(s.countyFips,st); if(f && f.length===5) m=saipeCache[st].byFips[f];
+  if(!m && s.county) m=saipeCache[st].byName[norm(s.county)];
+  if(m){s.saipePercent=m.rate; if(!s.countyFips) s.countyFips=m.fips; if(!s.county) s.county=m.name.replace(/,.*$/,'');}
+  else{s.notes=appendNote(s.notes,'No county SAIPE match; check county/FIPS');}
+}
+function appendNote(old,n){ old=old||''; return old.includes(n)?old:(old?old+'; ':'')+n;}
+
+
+function setPartnerStatus(msg){document.getElementById('partnerStatus').innerHTML=msg||'';}
+function renderAnchorOptions(){
+  const sel=document.getElementById('anchorSiteSelect');
+  if(!sel) return;
+  const current=sel.value;
+  sel.innerHTML='';
+  if(!sites.length){sel.innerHTML='<option value="">Add a site first</option>'; return;}
+  sites.forEach((s,i)=>{
+    const opt=document.createElement('option'); opt.value=s.id;
+    opt.textContent=`${i+1}. ${s.siteName || 'Unnamed'} — ${[s.city,s.state].filter(Boolean).join(', ')}${siteHasCoords(s)?'':' (needs coordinates)'}`;
+    sel.appendChild(opt);
+  });
+  if(current && sites.some(s=>s.id===current)) sel.value=current;
+}
+function k12FeatureToSite(f){
+  const a=f.attributes||{}; const g=f.geometry||{};
+  return finalizeSiteFields({
+    id:crypto.randomUUID(), include:false, type:k12TypeFromAttrs(a), source:'NCES CCD Public School Characteristics', sourceId:a.NCESSCH||'',
+    organization:a.LEA_NAME||'', siteName:a.SCH_NAME||'', address:[a.LSTREET1,a.LSTREET2].filter(Boolean).join(' '),
+    city:a.LCITY||'', state:a.LSTATE||a.STABR||'', zip:a.LZIP||'', county:a.NMCNTY||'', countyFips:cleanCountyFips(a.CNTY,a.STABR),
+    phone:a.PHONE||'', email:pick(a,['EMAIL','E_MAIL','CONTACT_EMAIL','CONTACTEMAIL','SCHOOL_EMAIL','ADMIN_EMAIL']), website:pick(a,['WEBSITE','WEB_SITE','URL','WEBADDR','SCH_URL','SCHOOL_URL','WWW']), sourceLocale:a.ULOCALE||'', enrollment:a.MEMBER||a.TOTAL||'', schoolCount:'', designation:'End-User',
+    contiguous:'Unknown', outsideNonRural:'Unknown', censusRural:'Unknown', cityPopulation:'', saipePercent:'', ruralityScore:null, economicScore:null,
+    lat:g.y||a.LATCOD||'', lon:g.x||a.LONCOD||'', notes:'Partner radius result from official NCES school layer; review before including in the project.'
+  });
+}
+function higherEdFeatureToSite(f){
+  const a=f.attributes||{}; const g=f.geometry||{};
+  return finalizeSiteFields({
+    id:crypto.randomUUID(), include:false, type:'Higher Ed', source:'IPEDS / Colleges & Universities Feature Layer', sourceId:a.UNITID||'',
+    organization:a.F1SYSNAM||a.INSTNM||'', siteName:a.INSTNM||'', address:a.ADDR||'', city:a.CITY||'', state:a.STABBR||'', zip:a.ZIP||'',
+    county:a.COUNTYNM||'', countyFips:cleanCountyFips(a.COUNTYCD,a.STABBR), phone:a.GENTELE||'', email:pick(a,['EMAIL','E_MAIL','CONTACT_EMAIL','ADMIN_EMAIL','FAIDEMAIL']), website:pick(a,['WEBADDR','WEBSITE','URL','ADMINURL','FAIDURL','APPLURL']), sourceLocale:a.LOCALE||'',
+    enrollment:'', schoolCount:'', designation:'End-User', contiguous:'Unknown', outsideNonRural:'Unknown', censusRural:'Unknown', cityPopulation:'', saipePercent:'', ruralityScore:null, economicScore:null,
+    lat:g.y||a.LATITUDE||'', lon:g.x||a.LONGITUD||'', notes:'Partner radius result from higher-ed source layer; review before including in the project.'
+  });
+}
+async function geocodeSite(s){
+  if(siteHasCoords(s)) return true;
+  const address=[s.address,s.city,s.state,s.zip].filter(Boolean).join(', ');
+  if(!address) return false;
+  try{
+    const params=new URLSearchParams({address, benchmark:'Public_AR_Current', format:'json'});
+    const res=await fetch(`https://geocoding.geo.census.gov/geocoder/locations/onelineaddress?${params.toString()}`);
+    const data=await res.json();
+    const match=data?.result?.addressMatches?.[0];
+    if(match?.coordinates){s.lon=match.coordinates.x; s.lat=match.coordinates.y; s.notes=appendNote(s.notes,'Coordinates matched by U.S. Census Geocoder'); return true;}
+  }catch(e){s.notes=appendNote(s.notes,'Census Geocoder failed');}
+  return false;
+}
+function distanceMiles(lat1,lon1,lat2,lon2){
+  const R=3958.7613;
+  const toRad=d=>d*Math.PI/180;
+  const a=toRad(parseFloat(lat2)-parseFloat(lat1));
+  const b=toRad(parseFloat(lon2)-parseFloat(lon1));
+  const p1=toRad(parseFloat(lat1));
+  const p2=toRad(parseFloat(lat2));
+  const h=Math.sin(a/2)**2+Math.cos(p1)*Math.cos(p2)*Math.sin(b/2)**2;
+  return 2*R*Math.asin(Math.sqrt(h));
+}
+async function getHRSALookupItemsForRadius(){
+  try{
+    return await getFullHRSALookupItems();
+  }catch(e){
+    throw new Error('HRSA full-table lookup could not load for radius search. Upload the official HRSA XLSX/CSV under Import / Templates → Healthcare Lookup Dataset Fallback, then run the radius search again. Details: '+e.message);
+  }
+}
+function dedupePartnerRows(rows){
+  const seen=new Set(); const out=[];
+  rows.forEach(r=>{
+    const key=norm([r.type,r.sourceId,r.siteName,r.address,r.city,r.state].join('|'));
+    if(!seen.has(key)){seen.add(key); out.push(r);}
+  });
+  return out;
+}
+function scorePartner(p){
+  p.economicScore=econScore(p.saipePercent);
+  p.ruralityScore=ruralityScore(p);
+  const obj=(Number(p.ruralityScore)||0)+(Number(p.economicScore)||0);
+  p.objectiveScore=(p.ruralityScore==null || p.economicScore==null) ? null : obj;
+  return p;
+}
+function isHighPotentialPartner(p){return p.objectiveScore!==null && p.objectiveScore>=50;}
+function partnerBand(p){
+  if(p.objectiveScore===null) return {label:'Review', cls:'amber'};
+  if(p.objectiveScore>=50) return {label:'High fit', cls:'green'};
+  if(p.objectiveScore>=30) return {label:'Medium', cls:'blue'};
+  return {label:'Low', cls:'red'};
+}
+async function buildPartnerRadiusList(){
+  const anchorId=document.getElementById('anchorSiteSelect').value;
+  const anchor=sites.find(s=>s.id===anchorId);
+  if(!anchor){setPartnerStatus('<span style="color:#b42318">Add/select an anchor site first.</span>'); return;}
+  if(!siteHasCoords(anchor)){
+    setPartnerStatus('Anchor site does not have coordinates. Trying the U.S. Census Geocoder...');
+    const ok=await geocodeSite(anchor); renderTable();
+    if(!ok){setPartnerStatus('<span style="color:#b42318">The selected anchor needs latitude/longitude. Choose a source-loaded site or add coordinates through a CSV import.</span>'); return;}
+  }
+  const radius=parseFloat(document.getElementById('radiusMiles').value)||100;
+  const max=Math.max(25,Math.min(1000,parseInt(document.getElementById('radiusMaxResults').value)||250));
+  const useK12=document.getElementById('radiusK12').checked;
+  const useHealthcare=document.getElementById('radiusHealthcare').checked;
+  const useHigherEd=document.getElementById('radiusHigherEd').checked;
+  if(!useK12 && !useHealthcare && !useHigherEd){setPartnerStatus('Select at least one partner type.'); return;}
+  partnerResults=[]; renderPartnerTable();
+  setPartnerStatus(`Searching official source records within ${radius} miles of <strong>${esc(anchor.siteName)}</strong>...`);
+  let rows=[]; const errors=[];
+  const k12Fields='*';
+  const higherFields='UNITID,INSTNM,IALIAS,ADDR,CITY,STABBR,ZIP,CHFNM,CHFTITLE,GENTELE,WEBADDR,SECTOR,ICLEVEL,HBCU,TRIBAL,LOCALE,COUNTYCD,COUNTYNM,LONGITUD,LATITUDE,F1SYSNAM';
+  if(useK12){
+    try{ rows.push(...(await arcgisRadiusQuery(NCES_SCHOOLS,anchor.lon,anchor.lat,radius,k12Fields)).map(k12FeatureToSite)); }
+    catch(e){errors.push('K-12 source failed: '+e.message);}
+  }
+  if(useHigherEd){
+    try{ rows.push(...(await arcgisRadiusQuery(HIGHER_ED,anchor.lon,anchor.lat,radius,higherFields)).map(higherEdFeatureToSite)); }
+    catch(e){errors.push('Higher-ed source failed: '+e.message);}
+  }
+  if(useHealthcare){
+    try{
+      const items=await getHRSALookupItemsForRadius();
+      rows.push(...items.filter(siteHasCoords).filter(x=>distanceMiles(anchor.lat,anchor.lon,x.lat,x.lon)<=radius).map(x=>finalizeSiteFields({...x, id:crypto.randomUUID(), include:false, designation:'End-User', notes:appendNote(x.notes,'Partner radius result from HRSA source; review before including in the project.')})));
+    }catch(e){errors.push(e.message);}
+  }
+  rows=dedupePartnerRows(rows)
+    .filter(x=>x.siteName && !(norm(x.siteName)===norm(anchor.siteName) && norm(x.address)===norm(anchor.address)))
+    .map(x=>{x.distanceMiles=distanceMiles(anchor.lat,anchor.lon,x.lat,x.lon); x.selected=false; return x;})
+    .sort((a,b)=>a.distanceMiles-b.distanceMiles)
+    .slice(0,max);
+  setPartnerStatus(`Found ${rows.length} nearby source records. Enriching with Census place population and SAIPE for preliminary fit flags...`);
+  for(const r of rows){
+    if(!r.cityPopulation && r.city) await enrichPlacePop(r);
+    if(!r.saipePercent) await enrichSaipe(r);
+    scorePartner(r);
+  }
+  if(document.getElementById('radiusHighOnly').checked) rows=rows.filter(isHighPotentialPartner);
+  partnerResults=rows;
+  renderPartnerTable();
+  const high=rows.filter(isHighPotentialPartner).length;
+  setPartnerStatus(`<strong>${rows.length}</strong> partner record(s) ready. <strong>${high}</strong> flagged preliminary high-fit by D-1 + D-2 objective screening. ${errors.length ? '<br><span style="color:#92400e">'+esc(errors.join(' | '))+'</span>' : ''}`);
+}
+const PARTNER_COLUMNS = [
+  {key:'selected', label:'Select', noSort:true},
+  {key:'fitBand', label:'Fit'},
+  {key:'distanceMiles', label:'Miles', type:'number'},
+  {key:'objectiveScore', label:'D-1+D-2 Total', type:'number'},
+  {key:'type', label:'Type'},
+  {key:'organization', label:'Organization'},
+  {key:'siteName', label:'Site'},
+  {key:'addressFull', label:'Address'},
+  {key:'county', label:'County'},
+  {key:'cityPopulation', label:'2020 Pop', type:'number'},
+  {key:'ruralityScore', label:'D-1', type:'number'},
+  {key:'saipePercent', label:'SAIPE %', type:'number'},
+  {key:'economicScore', label:'D-2', type:'number'},
+  {key:'description', label:'Description from source fields'},
+  {key:'source', label:'Source'},
+  {key:'map', label:'USDA Map', noSort:true}
+];
+function partnerColumnValue(p,key){
+  if(key==='fitBand') return partnerBand(p).label;
+  if(key==='addressFull') return [p.address,p.city,p.state,p.zip].filter(Boolean).join(', ');
+  return p[key];
+}
+function sortPartners(key){
+  const col=PARTNER_COLUMNS.find(c=>c.key===key);
+  if(!col || col.noSort) return;
+  if(partnerSort.key===key) partnerSort.dir=partnerSort.dir==='asc'?'desc':'asc';
+  else partnerSort={key,dir:'asc'};
+  renderPartnerTable();
+}
+function sortedPartnerRows(){
+  const col=PARTNER_COLUMNS.find(c=>c.key===partnerSort.key);
+  const arr=[...partnerResults];
+  if(!col || col.noSort) return arr;
+  const dir=partnerSort.dir==='desc'?-1:1;
+  arr.sort((a,b)=>{
+    let av=partnerColumnValue(a,col.key), bv=partnerColumnValue(b,col.key);
+    const an=(av===null||av===undefined||av===''), bn=(bv===null||bv===undefined||bv==='');
+    if(an&&bn) return 0; if(an) return 1; if(bn) return -1;
+    if(col.type==='number') return (parseFloat(av)||0)>(parseFloat(bv)||0)?dir:-dir;
+    return String(av).localeCompare(String(bv),undefined,{numeric:true,sensitivity:'base'})*dir;
+  });
+  return arr;
+}
+function partnerHeaderCell(c){
+  const active=partnerSort.key===c.key;
+  const indicator=active ? `<span class="sort-indicator">${partnerSort.dir==='asc'?'▲':'▼'}</span>` : '';
+  const cls=c.noSort?'':'sortable';
+  const click=c.noSort?'':` onclick="sortPartners('${c.key}')"`;
+  return `<th class="${cls}"${click}>${esc(c.label)}${indicator}</th>`;
+}
+function setPartnerSelected(id, checked){
+  const row=partnerResults.find(p=>p.id===id);
+  if(row) row.selected=checked;
+}
+function renderPartnerTable(){
+  const table=document.getElementById('partnerTable'); if(!table) return;
+  const head='<thead><tr>'+PARTNER_COLUMNS.map(partnerHeaderCell).join('')+'</tr></thead>';
+  if(!partnerResults.length){table.innerHTML=head+'<tbody><tr><td colspan="16" class="smalltxt">No partner radius results yet. Add/select an anchor site and click Build Partner Radius List.</td></tr></tbody>'; return;}
+  const rows=sortedPartnerRows();
+  table.innerHTML=head+'<tbody>'+rows.map((p)=>{
+    const band=partnerBand(p);
+    const addr=[p.address,p.city,p.state,p.zip].filter(Boolean).join(', ');
+    return `<tr><td><input type="checkbox" ${p.selected?'checked':''} onchange="setPartnerSelected('${esc(p.id)}',this.checked)"></td><td><span class="pill ${band.cls}">${band.label}</span></td><td class="num">${Number(p.distanceMiles||0).toFixed(1)}</td><td class="num">${scorePill(p.objectiveScore,70)}</td><td>${esc(p.type)}</td><td title="${esc(p.organization||'')}">${esc(p.organization||'')}</td><td title="${esc(p.siteName)}">${esc(p.siteName)}</td><td title="${esc(addr)}">${esc(addr)}</td><td>${esc(p.county||'')}</td><td class="num">${esc(p.cityPopulation||'')}</td><td class="num">${scorePill(p.ruralityScore,40)}</td><td class="num">${esc(p.saipePercent||'')}</td><td class="num">${scorePill(p.economicScore,30)}</td><td title="${esc(p.description||'')}">${esc(p.description||'')}</td><td title="${esc(p.source||'')}">${esc(p.source||'')}</td><td><a href="${sourceLinkFor(p)}" target="_blank">USDA Map</a></td></tr>`;
+  }).join('')+'</tbody>';
+}
+function selectAllPartners(val){partnerResults.forEach(p=>p.selected=val); renderPartnerTable();}
+function addPartnerRowsToWorksheet(rows){
+  if(!rows.length){setPartnerStatus('No partner rows selected.'); return;}
+  const mapped=rows.map(p=>finalizeSiteFields({...p, id:crypto.randomUUID(), include:false, selected:false, notes:appendNote(p.notes,'Added from partner radius list; set Include=true only if used in the DLT project.')}));
+  addRows(mapped);
+  setPartnerStatus(`<strong>${mapped.length}</strong> partner row(s) added to the worksheet as not included. Review/designate before scoring.`);
+}
+function addSelectedPartnersToWorksheet(){addPartnerRowsToWorksheet(partnerResults.filter(p=>p.selected));}
+function addHighPotentialPartnersToWorksheet(){addPartnerRowsToWorksheet(partnerResults.filter(isHighPotentialPartner));}
+function clearPartnerResults(){partnerResults=[]; renderPartnerTable(); setPartnerStatus('Partner list cleared.');}
+function exportPartnersCSV(){
+  const fields=['selected','fitBand','distanceMiles','type','organization','siteName','address','city','ruralityPlace','state','zip','county','countyFips','phone','email','website','sourceLocale','enrollment','cityPopulation','ruralityScore','saipePercent','economicScore','objectiveScore','description','source','sourceId','lat','lon','notes'];
+  const csv=[fields.join(',')].concat(sortedPartnerRows().map(p=>fields.map(f=>csvCell(f==='fitBand'?partnerBand(p).label:p[f])).join(','))).join('\n');
+  download('RUS_DLT_Partner_Radius_List.csv',csv,'text/csv');
+}
+
+function parseCSV(text){
+  const rows=[]; let row=[], cell='', q=false;
+  for(let i=0;i<text.length;i++){
+    const c=text[i], n=text[i+1];
+    if(q){ if(c==='"' && n==='"'){cell+='"';i++;} else if(c==='"'){q=false;} else cell+=c; }
+    else { if(c==='"') q=true; else if(c===','){row.push(cell);cell='';} else if(c==='\n'){row.push(cell); rows.push(row); row=[]; cell='';} else if(c==='\r'){} else cell+=c; }
+  }
+  if(cell.length||row.length){row.push(cell); rows.push(row)}
+  return rows.filter(r=>r.some(x=>String(x).trim()!==''));
+}
+function rowToObject(headers,row){const o={}; headers.forEach((h,i)=>o[h.trim()]=row[i]??''); return o;}
+function importCSV(){
+  const file=document.getElementById('csvFile').files[0];
+  if(file){
+    const lower=file.name.toLowerCase();
+    const reader=new FileReader();
+    reader.onload=()=>{
+      try{
+        let objects=[];
+        if(lower.endsWith('.xlsx') || lower.endsWith('.xls')){
+          if(!window.XLSX) throw new Error('XLSX parser did not load. Save the source as CSV or check internet access to the SheetJS CDN.');
+          const wb=XLSX.read(reader.result,{type:'array'});
+          objects=workbookToObjects(wb);
+        }else{
+          objects=csvTextToObjects(reader.result);
+        }
+        importSiteObjects(objects, file.name);
+      }catch(e){setStatus(`<span style="color:#b42318">Import failed: ${esc(e.message)}</span>`)}
+    };
+    reader.onerror=()=>setStatus('<span style="color:#b42318">Could not read the selected file.</span>');
+    if(lower.endsWith('.xlsx') || lower.endsWith('.xls')) reader.readAsArrayBuffer(file); else reader.readAsText(file);
+  } else {
+    try{ importSiteObjects(csvTextToObjects(document.getElementById('csvPaste').value), 'pasted CSV'); }
+    catch(e){ setStatus(`<span style="color:#b42318">Import failed: ${esc(e.message)}</span>`); }
+  }
+}
+function csvTextToObjects(text){
+  if(!String(text||'').trim()) throw new Error('No CSV text or file selected.');
+  const rows=parseCSV(text); if(rows.length<2) throw new Error('CSV needs a header row and at least one data row.');
+  const headers=rows[0]; return rows.slice(1).map(r=>rowToObject(headers,r));
+}
+
+function workbookToObjects(wb){
+  let best={score:-1,objects:[],sheetName:'',headerIndex:-1};
+  wb.SheetNames.forEach(name=>{
+    const matrix=XLSX.utils.sheet_to_json(wb.Sheets[name],{header:1,defval:'',raw:false});
+    if(!matrix.length) return;
+    let bestHeader={idx:0,score:-1};
+    matrix.slice(0,75).forEach((r,i)=>{
+      const cells=r.map(x=>String(x||'').trim()).filter(Boolean);
+      if(!cells.length) return;
+      const score=cells.reduce((acc,h)=>acc+(/^(ncessch|sch_name|lea_name|leaid|lstree?t?1|lcity|lstate|stabr|lzip|nm?cnty|cnty|coname|coid|phone|ulocale|member|instnm|unitid|addr|stabbr|countynm|site name|health center name|organization|address|city|state|county)$/i.test(h.replace(/\s+/g,'_'))?4:/school|district|agency|site|institution|health|center|address|city|state|county|phone|web|zip|locale|enrollment|member|latitude|longitude/i.test(h)?1:0),0);
+      if(score>bestHeader.score) bestHeader={idx:i,score};
+    });
+    const headerIndex=bestHeader.score>=3 ? bestHeader.idx : 0;
+    const headers=matrix[headerIndex].map((h,i)=>String(h||`Column_${i+1}`).trim() || `Column_${i+1}`);
+    const objects=matrix.slice(headerIndex+1).map(row=>rowToObject(headers,row)).filter(o=>Object.values(o).some(v=>String(v).trim()!==''));
+    const headerScore=headers.filter(h=>/ncessch|sch_name|school|lea_name|leaid|district|site|institution|health|center|state|county|address|phone|web|locale|member|sch/i.test(h)).length*1000;
+    const score=objects.length+headerScore+(bestHeader.score*100);
+    if(score>best.score) best={score,objects,sheetName:name,headerIndex};
+  });
+  if(!best.objects.length) throw new Error('No usable rows found in the workbook. Check whether the workbook has a visible tab with a normal header row.');
+  return best.objects;
+}
+function importSiteObjects(objects, sourceName='import'){
+  const imported=objects.map(sourceObjectToSite).filter(Boolean);
+  if(!imported.length) throw new Error('No usable site rows were detected. Check that the file has site, school, district, organization, address, city, state, and county columns.');
+  addRows(imported, {autoEnrich: document.getElementById('autoEnrichOnAdd')?.checked});
+  setStatus(`<strong>${imported.length}</strong> row(s) imported from ${esc(sourceName)}. Calculating D-1, D-2, SAIPE, population, and total where lookup fields are available...`);
+}
+function sourceObjectToSite(o){
+  if(!o || !Object.keys(o).length) return null;
+  if(pick(o,['NCESSCH','NCES School ID','School ID']) || pick(o,['SCH_NAME','School Name']) && pick(o,['LEA_NAME','District Name','Agency Name'])) return importedSchoolToSite(o);
+  if((pick(o,['LEAID','NCES District ID','District ID']) || pick(o,['LEA_NAME','District Name','Agency Name'])) && !pick(o,['SCH_NAME','School Name'])) return importedDistrictToSite(o);
+  if(pick(o,['UNITID','IPEDS ID']) || pick(o,['INSTNM','Institution Name','Institution'])) return importedHigherEdToSite(o);
+  if(pick(o,['Site Name','Health Center Site Name']) || pick(o,['Health Center Name','Awardee Name'])) return hrsaToSite(o);
+  return importedManualSite(o);
+}
+function importedSchoolToSite(o){
+  const state=(pick(o,['LSTATE','STABR','State','STATE'])||'').toUpperCase();
+  const siteName=pick(o,['SCH_NAME','School Name','NAME','Site Name']);
+  if(!siteName) return null;
+  const a=o;
+  return finalizeSiteFields({id:crypto.randomUUID(),include:true,type:k12TypeFromAttrs(a),source:'Imported NCES/CCD school file',sourceId:pick(o,['NCESSCH','NCES School ID','School ID']),organization:pick(o,['LEA_NAME','District Name','Agency Name','LEA']),siteName,address:[pick(o,['LSTREET1','Street Address','Location Address','Location Address 1 [District] 2024-25','Address']),pick(o,['LSTREET2','Address 2','Location Address 2 [District] 2024-25'])].filter(Boolean).join(' '),city:pick(o,['LCITY','City','Location City','Location City [District] 2024-25']),ruralityPlace:pick(o,['Rurality Place','Rurality Place/CDP','Census Place']),state,zip:pick(o,['LZIP','ZIP','Zip Code','Location ZIP','Location ZIP [District] 2024-25']),county:pick(o,['NMCNTY','County','County Name']),countyFips:cleanCountyFips(pick(o,['CNTY','County FIPS','County Code']),state),phone:pick(o,['PHONE','Phone','Telephone','Phone Number [District] 2024-25']),email:pick(o,['EMAIL','E_MAIL','CONTACT_EMAIL','CONTACTEMAIL','SCHOOL_EMAIL','ADMIN_EMAIL']),website:pick(o,['WEBSITE','WEB_SITE','URL','WEBADDR','SCH_URL','SCHOOL_URL','WWW']),sourceLocale:pick(o,['ULOCALE','Locale','NCES Locale']),enrollment:pick(o,['MEMBER','TOTAL','Enrollment']),schoolCount:pick(o,['SCH','School Count','# Schools','No. Schools','Schools','Total Number Operational Schools [Public School] 2024-25']),designation:getDefaultDesignation(),contiguous:'Unknown',outsideNonRural:'Unknown',censusRural:'Unknown',cityPopulation:pick(o,['cityPopulation','2020 Population','Census Population']),saipePercent:pick(o,['saipePercent','SAIPE Poverty %','Poverty %']),ruralityScore:null,economicScore:null,lat:pick(o,['LATCOD','Latitude','LATITUDE']),lon:pick(o,['LONCOD','Longitude','LONGITUDE']),description:'',notes:'Imported NCES/CCD school record. Verify DLT map fields before relying on D-1.'});
+}
+function importedDistrictToSite(o){
+  const state=(pick(o,['LSTATE','STABR','State','STATE','Location State Abbr [District] 2024-25','State Abbr [District] Latest available year'])||'').toUpperCase().trim();
+  const org=pick(o,['LEA_NAME','District Name','Agency Name','Agency Name [District] 2024-25','Organization','Name']);
+  if(!org) return null;
+  return finalizeSiteFields({id:crypto.randomUUID(),include:true,type:'K-12 District Office',source:'Imported NCES/CCD district file',sourceId:pick(o,['LEAID','NCES District ID','District ID','Agency ID - NCES Assigned [District] Latest available year']),organization:org,siteName:pick(o,['siteName','Site Name']) || `${org} District Office`,address:[pick(o,['LSTREET1','Street Address','Location Address','Location Address 1 [District] 2024-25','Address']),pick(o,['LSTREET2','Address 2','Location Address 2 [District] 2024-25'])].filter(Boolean).join(' '),city:pick(o,['LCITY','City','Location City','Location City [District] 2024-25']),ruralityPlace:pick(o,['Rurality Place','Rurality Place/CDP','Census Place']),state,zip:pick(o,['LZIP','ZIP','Zip Code','Location ZIP','Location ZIP [District] 2024-25']),county:pick(o,['CONAME','NMCNTY','County','County Name','County Name [District] 2024-25']),countyFips:cleanCountyFips(pick(o,['COID','CNTY','County FIPS','County Code']),state),phone:pick(o,['PHONE','Phone','Telephone','Phone Number [District] 2024-25']),email:pick(o,['EMAIL','E_MAIL','CONTACT_EMAIL','CONTACTEMAIL','LEA_EMAIL','ADMIN_EMAIL']),website:pick(o,['WEBSITE','WEB_SITE','URL','WEBADDR','LEA_URL','LEA_WEBSITE','WWW','Web Site URL [District] 2024-25']),sourceLocale:pick(o,['LOCALE_TEXT','ULOCALE','Locale','NCES Locale','Locale [District] 2024-25']),enrollment:pick(o,['MEMBER','Enrollment','Total Students All Grades (Excludes AE) [District] 2024-25']),schoolCount:pick(o,['SCH','School Count','# Schools','No. Schools','Schools','Total Number Operational Schools [Public School] 2024-25']),designation:'Hub',contiguous:'Unknown',outsideNonRural:'Unknown',censusRural:'Unknown',cityPopulation:pick(o,['cityPopulation','2020 Population','Census Population']),saipePercent:pick(o,['saipePercent','SAIPE Poverty %','Poverty %']),ruralityScore:null,economicScore:null,lat:pick(o,['Lat','LATCOD','Latitude','LATITUDE','Latitude [District] 2024-25']),lon:pick(o,['Long','LONCOD','Longitude','LONGITUDE','Longitude [District] 2024-25']),description:'',notes:'Imported NCES/CCD district office record. Hub rows do not count in fixed scoring unless changed to Hub/End-User or End-User.'});
+}
+function importedHigherEdToSite(o){
+  const state=(pick(o,['STABBR','State','STATE'])||'').toUpperCase();
+  const name=pick(o,['INSTNM','Institution Name','Institution','Name']);
+  if(!name) return null;
+  return finalizeSiteFields({id:crypto.randomUUID(),include:true,type:'Higher Ed',source:'Imported higher-ed/IPEDS file',sourceId:pick(o,['UNITID','IPEDS ID']),organization:pick(o,['F1SYSNAM','System Name','Organization'])||name,siteName:name,address:pick(o,['ADDR','Address','Street Address']),city:pick(o,['CITY','City']),ruralityPlace:pick(o,['Rurality Place','Rurality Place/CDP','Census Place']),state,zip:pick(o,['ZIP','Zip Code']),county:pick(o,['COUNTYNM','County','County Name']),countyFips:cleanCountyFips(pick(o,['COUNTYCD','County FIPS','County Code']),state),phone:pick(o,['GENTELE','Phone','Telephone']),email:pick(o,['EMAIL','E_MAIL','CONTACT_EMAIL','ADMIN_EMAIL','FAIDEMAIL']),website:pick(o,['WEBADDR','WEBSITE','URL','ADMINURL','FAIDURL','APPLURL']),sourceLocale:pick(o,['LOCALE','Locale']),enrollment:pick(o,['Enrollment','EFYTOTLT']),designation:getDefaultDesignation(),contiguous:'Unknown',outsideNonRural:'Unknown',censusRural:'Unknown',cityPopulation:pick(o,['cityPopulation','2020 Population','Census Population']),saipePercent:pick(o,['saipePercent','SAIPE Poverty %','Poverty %']),ruralityScore:null,economicScore:null,lat:pick(o,['LATITUDE','Latitude']),lon:pick(o,['LONGITUD','LONGITUDE','Longitude']),description:'',notes:'Imported higher-ed record. Verify whether it is a hub, end-user, or hub/end-user.'});
+}
+function importedManualSite(o){
+  const siteName=pick(o,['siteName','Site Name','School Name','Institution','Name','Location Name']);
+  if(!siteName) return null;
+  const state=(pick(o,['state','State','STABR','LSTATE'])||'').toUpperCase();
+  return finalizeSiteFields({id:crypto.randomUUID(), include:String(pick(o,['include','Include'])||'true').toLowerCase()!=='false', type:pick(o,['type','Type'])||'Other', source:pick(o,['source','Source'])||'Imported Site File', sourceId:pick(o,['sourceId','ID','NCES ID','UnitID']), organization:pick(o,['organization','Organization','district','District','Agency Name']), siteName, address:pick(o,['address','Address','Site Address','Street','Street Address']), city:pick(o,['city','City','Site City','Postal City','LCITY']), ruralityPlace:pick(o,['ruralityPlace','Rurality Place','Rurality Place/CDP','Town or Place Name','Census Place','CDP']), state, zip:pick(o,['zip','ZIP','Postal Code','LZIP']), county:pick(o,['county','County','County Name','NMCNTY']), countyFips:cleanCountyFips(pick(o,['countyFips','County FIPS','CNTY','COUNTYCD']),state), phone:pick(o,['phone','Phone','PHONE']), email:pick(o,['email','Email','Contact Email']), website:pick(o,['website','Website','WEBADDR','URL']), sourceLocale:pick(o,['sourceLocale','Locale','ULOCALE','LOCALE']), enrollment:pick(o,['enrollment','Enrollment','MEMBER']), schoolCount:pick(o,['schoolCount','School Count','# Schools','SCH']), designation:normalizeDesignation(pick(o,['designation','Designation'])||'End-User'), contiguous:pick(o,['contiguous','Contiguous'])||'Unknown', outsideNonRural:pick(o,['outsideNonRural','Outside Non-Rural','DLT Map Outside Non-Rural'])||'Unknown', censusRural:pick(o,['censusRural','Census Rural'])||'Unknown', cityPopulation:pick(o,['cityPopulation','2020 Population','Census Population']), saipePercent:pick(o,['saipePercent','SAIPE Poverty %','Poverty %']), ruralityScore:null, economicScore:null, lat:pick(o,['lat','Latitude','LATITUDE']), lon:pick(o,['lon','Longitude','LONGITUDE']), description:pick(o,['description','Description']), notes:pick(o,['notes','Notes'])});
+}
+function downloadNcesImportNotes(){
+  const txt=`NCES import notes for the RUS DLT Scoring Tool\n\nAccepted formats: .csv, .xlsx, .xls\n\nThe import tries to detect these source types automatically:\n- NCES/CCD school exports: NCESSCH, SCH_NAME, LEA_NAME, LSTREET1, LCITY, LSTATE/STABR, LZIP, NMCNTY, CNTY, PHONE, ULOCALE, MEMBER, LATCOD, LONCOD\n- NCES/CCD district exports: LEAID, LEA_NAME, LSTREET1, LCITY, LSTATE/STABR, LZIP, CONAME/NMCNTY, COID/CNTY, PHONE, SCH, LOCALE_TEXT\n- Higher-ed/IPEDS exports: UNITID, INSTNM, ADDR, CITY, STABBR, ZIP, COUNTYNM, COUNTYCD, GENTELE, WEBADDR, LOCALE\n- Manual site files: organization, siteName, address, city, ruralityPlace, state, zip, county, countyFips, phone, email, website, schoolCount, designation, sourceLocale\n\nAfter import, Auto-enrich + score looks up Census 2020 place population and 2024 SAIPE county poverty where possible, then calculates D-1, D-2, and D-1+D-2. USDA DLT map verification is still required before final scoring.`;
+  download('NCES_DLT_Import_Notes.txt', txt, 'text/plain');
+}
+function exportCSV(){
+  const fields=['include','type','source','sourceId','organization','siteName','address','city','ruralityPlace','state','zip','county','countyFips','phone','email','website','sourceLocale','enrollment','schoolCount','designation','contiguous','outsideNonRural','censusRural','cityPopulation','ruralityScore','saipePercent','economicScore','objectiveScore','description','lat','lon','notes'];
+  const csv=[fields.join(',')].concat(sites.map(s=>fields.map(f=>csvCell(f==='objectiveScore'?rowObjectiveTotal(s):s[f])).join(','))).join('\n');
+  download('RUS_DLT_FY2026_Site_Scoring_Worksheet.csv',csv,'text/csv');
+}
+function csvCell(v){v=String(v??''); return /[",\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v;}
+function download(name,content,type='text/plain'){const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([content],{type})); a.download=name; a.click(); URL.revokeObjectURL(a.href);}
+function downloadJSON(){download('RUS_DLT_FY2026_Scoring_Project.json',JSON.stringify({projectType:document.getElementById('projectType').value,subjectiveScore:document.getElementById('subjectiveScore').value,sites},null,2),'application/json');}
+function downloadTemplate(){
+  const csv='include,type,organization,siteName,address,city,ruralityPlace,state,zip,county,countyFips,phone,email,website,schoolCount,designation,sourceLocale,cityPopulation,saipePercent,contiguous,outsideNonRural,censusRural,description,notes\ntrue,K-12 District Office,Example County Schools,Example County Schools District Office,200 Board Rd,Exampletown,Exampletown,GA,30000,Example County,13000,555-555-5555,info@example.org,https://www.example.org,5,Hub,,5187,18.4,Unknown,Unknown,Unknown,NCES school district office record; county: Example County; location: Exampletown, GA.,\ntrue,K-12,Example County Schools,Example Elementary,100 Main St,Exampletown,Exampletown,GA,30000,Example County,13000,555-555-1212,info@example.org,https://www.example.org,,End-User,43,5187,18.4,Unknown,Unknown,Unknown,NCES public school record; district: Example County Schools; county: Example County; location: Exampletown, GA.,\n';
+  download('RUS_DLT_Manual_Site_Template.csv',csv,'text/csv');
+}
+function copySummary(){
+  const scored=sites.filter(isScoredSite); const ruralAvg=avg(scored.filter(s=>s.ruralityScore!==null).map(s=>Number(s.ruralityScore))) || 0; const econAvg=avg(scored.filter(s=>s.economicScore!==null).map(s=>Number(s.economicScore))) || 0; const subj=parseFloat(document.getElementById('subjectiveScore').value)||0;
+  const text=`FY2026 RUS DLT Provisional Score Summary\nScored Sites: ${scored.length}\nD-1 Rurality: ${ruralAvg.toFixed(2)} / 40\nD-2 Economic Need: ${econAvg.toFixed(2)} / 30\nD-3 Need/Benefits Estimate: ${subj.toFixed(2)} / 30\nTotal Provisional Score: ${(ruralAvg+econAvg+subj).toFixed(2)} / 100\nNote: DLT map verification is required before relying on rurality scores.`;
+  navigator.clipboard.writeText(text).then(()=>setStatus('Score summary copied to clipboard.'));
+}
+function switchTab(name){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  if(typeof event !== 'undefined' && event && event.target) event.target.classList.add('active');
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('panel-'+name).classList.add('active');
+}
+function switchTabByName(name){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  const labels={sites:'Site Scoring Worksheet',import:'Import / Templates',guide:'Scoring Rules',sources:'Official Data Sources'};
+  document.querySelectorAll('.tab').forEach(t=>{if(t.textContent.trim()===labels[name]) t.classList.add('active')});
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('panel-'+name).classList.add('active');
+}
+function loadDemo(){
+  addRows([
+    {id:crypto.randomUUID(),include:true,type:'K-12 District Office',source:'Demo',organization:'Example County Schools',siteName:'Example County Schools District Office',address:'200 Board Rd',city:'Camilla',state:'GA',zip:'31730',county:'Mitchell County',countyFips:'13205',designation:'Hub',sourceLocale:'',cityPopulation:'5187',saipePercent:'27.3',contiguous:'No',outsideNonRural:'No',censusRural:'No',notes:'Demo district office row - Hub only, not scored unless changed'},
+    {id:crypto.randomUUID(),include:true,type:'K-12',source:'Demo',organization:'Example County Schools',siteName:'Example Elementary School',address:'100 Main St',city:'Camilla',state:'GA',zip:'31730',county:'Mitchell County',countyFips:'13205',designation:'End-User',sourceLocale:'43',cityPopulation:'5187',saipePercent:'27.3',contiguous:'No',outsideNonRural:'No',censusRural:'No',notes:'Demo row only'},
+    {id:crypto.randomUUID(),include:true,type:'Higher Ed',source:'Demo',organization:'Example College',siteName:'Example Rural Learning Hub',address:'200 College Dr',city:'Mount Berry',state:'GA',zip:'30149',county:'Floyd County',countyFips:'13115',designation:'Hub/End-User',sourceLocale:'41',cityPopulation:'',saipePercent:'16.9',contiguous:'Unknown',outsideNonRural:'Unknown',censusRural:'Unknown',notes:'Demo row only'}
+  ]);
+}
+
+init();
+</script>
+</body>
+</html>
