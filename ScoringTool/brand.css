@@ -135,3 +135,39 @@ tbody tr:hover td{background:#f3f9fb!important;}
 .type-sub{font-size:10px;color:#667b91;margin-top:2px;line-height:1.2}
 @media(max-width:1100px){.type-breakdown{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:640px){.type-breakdown{grid-template-columns:1fr}}
+
+/* Lightweight static HTML access gate */
+html.auth-locked body > :not(#gps-auth-screen) { display: none !important; }
+#gps-auth-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 999999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: radial-gradient(circle at top left, rgba(38, 184, 217, .24), transparent 30%), linear-gradient(135deg, #071a33 0%, #0f2f57 52%, #05111f 100%);
+  font-family: var(--font, Arial, sans-serif);
+}
+.gps-auth-card {
+  width: min(430px, 94vw);
+  background: rgba(255,255,255,.97);
+  color: #071a33;
+  border: 1px solid rgba(255,255,255,.42);
+  border-radius: 22px;
+  padding: 28px;
+  box-shadow: 0 30px 90px rgba(0,0,0,.35);
+}
+.gps-auth-eyebrow { color: #0086b3; text-transform: uppercase; letter-spacing: .12em; font-size: 12px; font-weight: 800; margin-bottom: 8px; }
+.gps-auth-card h1 { margin: 0 0 8px; font-size: 28px; letter-spacing: -.02em; }
+.gps-auth-card p { margin: 0 0 18px; color: #526579; line-height: 1.45; }
+.gps-auth-card label { display: block; margin: 12px 0 6px; font-size: 12px; color: #37526e; font-weight: 800; text-transform: uppercase; letter-spacing: .06em; }
+.gps-auth-card input { width: 100%; padding: 12px 13px; border: 1px solid #b8c7d6; border-radius: 12px; font-size: 15px; box-sizing: border-box; }
+.gps-auth-card button { width: 100%; margin-top: 16px; border: 0; border-radius: 12px; padding: 13px 16px; background: linear-gradient(90deg, #0072bc, #00a6ce); color: white; font-weight: 800; cursor: pointer; }
+.gps-auth-error { min-height: 20px; margin-top: 10px; color: #b42318; font-weight: 700; }
+.gps-auth-note { margin-top: 12px; font-size: 11px; color: #6b7b8b; line-height: 1.35; }
+#gps-auth-logout { position: fixed; right: 14px; bottom: 14px; z-index: 2000; border: 1px solid rgba(0,0,0,.12); border-radius: 999px; padding: 8px 12px; background: rgba(255,255,255,.92); color: #123a5f; font-size: 12px; font-weight: 800; box-shadow: 0 10px 24px rgba(0,0,0,.12); cursor: pointer; }
+
+/* Prior awards strategy table */
+#awardsTable { min-width: 1500px; }
+.awards-near-note { color:#075985; font-weight:800; }

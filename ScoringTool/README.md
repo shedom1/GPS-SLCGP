@@ -228,3 +228,10 @@ Update v20: K-12 district prospecting/search now uses the bundled ELSI/NCES K-12
 - Expanded the Partner Radius selector to support **25, 50, 75, and 100 miles**.
 - Added sortable column headers to the Partner Radius results table. Users can now sort by Fit, Miles, D-1+D-2 Total, Type, Organization, Site, County, 2020 Population, D-1, SAIPE %, D-2, Description, and Source.
 - Partner CSV export now follows the active partner-table sort order.
+
+## v22 updates
+
+- Added a lightweight client-side username/password gate to each HTML page. Username: `open`; password: `gpstools`. This is a convenience gate for GitHub Pages, not enterprise-grade security. Use hosting-level authentication for confidential data.
+- Replaced Google Maps links with per-record **USDA DLT Map** links. Records with coordinates open the USDA DLT map centered on that location when supported by the ArcGIS viewer.
+- Changed Healthcare/HRSA loading to treat the HRSA Health Center Service Delivery and Look-Alike Sites file as a **full-table lookup** first, then apply state/county/city/search filters locally. This reduces incomplete state pulls and supports uploaded HRSA XLSX/CSV fallback as the full healthcare source.
+- Added a **Prior RUS DLT Winners Strategy** panel to the Prospect Finder. It can try to discover prior-award/recipient layers from the USDA RUS DLT map, or accept an uploaded prior-awards CSV/XLSX table. Filter by state, county/city, keyword, or find awards near selected prospects.

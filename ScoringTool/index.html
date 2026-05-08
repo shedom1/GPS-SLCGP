@@ -44,6 +44,7 @@
   </style>
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
   <link rel="stylesheet" href="brand.css" />
+  <script src="auth.js"></script>
 </head>
 <body>
   <header class="app-header">
@@ -377,6 +378,8 @@ function filterElsiDistricts(rows, {state, term='', county='', city='', agency='
 }
 
 const HRSA_CSV = 'https://data.hrsa.gov/DataDownload/DD_Files/Health_Center_Service_Delivery_and_LookAlike_Sites.csv';
+const HRSA_LOCAL_XLSX = 'data/Health_Center_Service_Delivery_and_LookAlike_Sites.xlsx';
+const HRSA_LOCAL_CSV = 'data/Health_Center_Service_Delivery_and_LookAlike_Sites.csv';
 const DLT_MAP = 'https://ruraldevelopment.maps.arcgis.com/apps/webappviewer/index.html?id=15a73830555645ae93d2fa773ed8e971';
 let sites = [];
 let placeCache = {}; // state -> map
@@ -418,7 +421,7 @@ const TABLE_COLUMNS = [
   {key:'censusRural', label:'Census Rural?', w:88, type:'text'},
   {key:'description', label:'Description', w:220, type:'text'},
   {key:'notes', label:'Notes', w:170, type:'text'},
-  {key:'map', label:'Map', w:54, type:'text', noSort:true},
+  {key:'map', label:'USDA Map', w:76, type:'text', noSort:true},
   {key:'remove', label:'Remove', w:60, type:'text', noSort:true}
 ];
 
@@ -486,10 +489,14 @@ function quickGeorgiaHealthcare(){
   document.getElementById('searchTerm').value='';
   searchHRSA();
 }
-function sourceLinkFor(site){
-  if(site.lat && site.lon) return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(site.lat+','+site.lon)}`;
-  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent([site.address,site.city,site.state,site.zip].filter(Boolean).join(' '))}`;
+function dltMapLinkFor(site){
+  if(site && siteHasCoords(site)){
+    const lon=parseFloat(site.lon), lat=parseFloat(site.lat);
+    return `${DLT_MAP}&center=${encodeURIComponent(lon+','+lat)}&level=12`;
+  }
+  return DLT_MAP;
 }
+function sourceLinkFor(site){return dltMapLinkFor(site);}
 function openDLTMap(){window.open(DLT_MAP,'_blank');}
 function validCoord(v){const n=parseFloat(v); return !isNaN(n) && isFinite(n);}
 function siteHasCoords(s){return validCoord(s.lat) && validCoord(s.lon);}
@@ -770,31 +777,51 @@ async function searchHRSA(){
   const term=document.getElementById('searchTerm').value.trim().toLowerCase();
   document.getElementById('searchResults').innerHTML='';
   try{
-    let items=hrsaLookupCache;
-    let sourceLabel=hrsaLookupSourceLabel;
-    if(!items){
-      if(!window.XLSX) throw new Error('XLSX parser did not load. Use the Healthcare Lookup Dataset Fallback upload.');
-      setStatus(`Loading HRSA Health Center Service Delivery and Look-Alike Sites XLSX for <strong>${esc(state)}</strong>${term ? ` and filtering by “${esc(term)}”` : ''}...`);
-      const res=await fetch(HRSA_XLSX,{cache:'no-store'}); if(!res.ok) throw new Error('HTTP '+res.status);
-      const buf=await res.arrayBuffer();
-      const wb=XLSX.read(buf,{type:'array'});
-      items=workbookToHRSASites(wb);
-      hrsaLookupCache=items;
-      hrsaLookupSourceLabel='HRSA live XLSX';
-      sourceLabel=hrsaLookupSourceLabel;
-      if(!items.length) throw new Error('No usable HRSA site rows found in workbook.');
-    } else {
-      setStatus(`Using cached <strong>${esc(sourceLabel)}</strong> lookup data for <strong>${esc(state)}</strong>${term ? ` and filtering by “${esc(term)}”` : ''}...`);
-    }
-    showHRSAFilteredResults(items,state,term,sourceLabel);
+    setStatus(`Loading the full HRSA Health Center Service Delivery and Look-Alike Sites lookup table, then filtering locally for <strong>${esc(state)}</strong>${term ? ` and “${esc(term)}”` : ''}...`);
+    const items=await getFullHRSALookupItems();
+    showHRSAFilteredResults(items,state,term,hrsaLookupSourceLabel);
   } catch(e){
-    setStatus(`<span style="color:#b42318">HRSA live XLSX could not be loaded: ${esc(e.message)}. Download the official HRSA XLSX, then upload it under Import / Templates → Healthcare Lookup Dataset Fallback.</span>`);
+    setStatus(`<span style="color:#b42318">HRSA full-table lookup could not be loaded: ${esc(e.message)}. Download the official HRSA XLSX, then upload it under Import / Templates → Healthcare Lookup Dataset Fallback. The fallback upload is treated as the full healthcare source and filtered locally.</span>`);
   }
 }
+async function getFullHRSALookupItems(){
+  if(hrsaLookupCache?.length) return hrsaLookupCache;
+  const attempts=[
+    {label:'local bundled HRSA XLSX', url:HRSA_LOCAL_XLSX, type:'xlsx'},
+    {label:'local bundled HRSA CSV', url:HRSA_LOCAL_CSV, type:'csv'},
+    {label:'official HRSA XLSX', url:HRSA_XLSX, type:'xlsx'},
+    {label:'official HRSA CSV', url:HRSA_CSV, type:'csv'}
+  ];
+  const failures=[];
+  for(const a of attempts){
+    try{
+      const res=await fetch(a.url,{cache:'no-store'});
+      if(!res.ok) throw new Error('HTTP '+res.status);
+      let items=[];
+      if(a.type==='csv'){
+        const text=await res.text();
+        const rows=parseCSV(text);
+        if(rows.length<2) throw new Error('CSV has no data rows.');
+        items=rows.slice(1).map(r=>rowToObject(rows[0],r)).map(hrsaToSite).filter(Boolean);
+      } else {
+        if(!window.XLSX) throw new Error('XLSX parser did not load.');
+        const buf=await res.arrayBuffer();
+        const wb=XLSX.read(buf,{type:'array'});
+        items=workbookToHRSASites(wb);
+      }
+      if(!items.length) throw new Error('No usable HRSA service delivery rows found.');
+      hrsaLookupCache=items;
+      hrsaLookupSourceLabel=a.label;
+      setStatus(`<strong>${items.length.toLocaleString()}</strong> HRSA records loaded from <strong>${esc(a.label)}</strong> as a full-table lookup. State/county/city/search filters are applied locally after the source loads.`);
+      return items;
+    }catch(e){failures.push(`${a.label}: ${e.message}`);}
+  }
+  throw new Error(failures.join(' | '));
+}
 function showHRSAFilteredResults(items,state,term,sourceLabel){
-  const stateItems=items.filter(x=>x.state===state);
-  const matches=term ? stateItems.filter(x=>[x.organization,x.siteName,x.city,x.county,x.address].join(' ').toLowerCase().includes(term)) : stateItems;
-  setStatus(`<strong>${matches.length}</strong> HRSA healthcare site record(s) found for <strong>${esc(state)}</strong>${term ? ` matching “${esc(term)}”` : ''} using <strong>${esc(sourceLabel)}</strong>. ${matches.length>100 ? 'Showing first 100; use the add-all button or narrow your search.' : ''}`);
+  const stateItems=items.filter(x=>String(x.state||'').toUpperCase()===String(state||'').toUpperCase());
+  const matches=term ? stateItems.filter(x=>[x.organization,x.siteName,x.city,x.county,x.address,x.phone,x.email,x.website].join(' ').toLowerCase().includes(term)) : stateItems;
+  setStatus(`<strong>${matches.length}</strong> HRSA healthcare site record(s) found for <strong>${esc(state)}</strong>${term ? ` matching “${esc(term)}”` : ''} after locally filtering the full <strong>${esc(sourceLabel)}</strong> source table. ${matches.length>100 ? 'Showing first 100; use the add-all button or narrow your search.' : ''}`);
   showResults(matches,'HRSA');
 }
 function workbookToHRSASites(wb){
@@ -960,7 +987,7 @@ function renderTable(){
       <td><select onchange="upd('${s.id}','censusRural',this.value)">${opts(['Unknown','No','Yes'],s.censusRural)}</select></td>
       <td><input title="${esc(s.description||'')}" value="${esc(s.description||'')}" onchange="upd('${s.id}','description',this.value)"></td>
       <td><input title="${esc(s.notes||'')}" value="${esc(s.notes||'')}" onchange="upd('${s.id}','notes',this.value)"></td>
-      <td><a href="${sourceLinkFor(s)}" target="_blank">Map</a></td>
+      <td><a href="${sourceLinkFor(s)}" target="_blank">USDA Map</a></td>
       <td><button class="danger" onclick="removeSite('${s.id}')">X</button></td>`;
     body.appendChild(tr);
   });
@@ -1221,18 +1248,10 @@ function distanceMiles(lat1,lon1,lat2,lon2){
   return 2*R*Math.asin(Math.sqrt(h));
 }
 async function getHRSALookupItemsForRadius(){
-  if(hrsaLookupCache?.length) return hrsaLookupCache;
-  if(!window.XLSX) throw new Error('HRSA radius search needs the HRSA XLSX fallback upload because the XLSX parser did not load.');
   try{
-    const res=await fetch(HRSA_XLSX,{cache:'no-store'}); if(!res.ok) throw new Error('HTTP '+res.status);
-    const buf=await res.arrayBuffer();
-    const wb=XLSX.read(buf,{type:'array'});
-    const items=workbookToHRSASites(wb);
-    if(!items.length) throw new Error('No usable HRSA rows found.');
-    hrsaLookupCache=items; hrsaLookupSourceLabel='HRSA live XLSX';
-    return items;
+    return await getFullHRSALookupItems();
   }catch(e){
-    throw new Error('HRSA live data could not load. Download the official HRSA XLSX and upload it under Import / Templates → Healthcare Lookup Dataset Fallback, then run the radius search again.');
+    throw new Error('HRSA full-table lookup could not load for radius search. Upload the official HRSA XLSX/CSV under Import / Templates → Healthcare Lookup Dataset Fallback, then run the radius search again. Details: '+e.message);
   }
 }
 function dedupePartnerRows(rows){
@@ -1324,7 +1343,7 @@ const PARTNER_COLUMNS = [
   {key:'economicScore', label:'D-2', type:'number'},
   {key:'description', label:'Description from source fields'},
   {key:'source', label:'Source'},
-  {key:'map', label:'Map', noSort:true}
+  {key:'map', label:'USDA Map', noSort:true}
 ];
 function partnerColumnValue(p,key){
   if(key==='fitBand') return partnerBand(p).label;
@@ -1371,7 +1390,7 @@ function renderPartnerTable(){
   table.innerHTML=head+'<tbody>'+rows.map((p)=>{
     const band=partnerBand(p);
     const addr=[p.address,p.city,p.state,p.zip].filter(Boolean).join(', ');
-    return `<tr><td><input type="checkbox" ${p.selected?'checked':''} onchange="setPartnerSelected('${esc(p.id)}',this.checked)"></td><td><span class="pill ${band.cls}">${band.label}</span></td><td class="num">${Number(p.distanceMiles||0).toFixed(1)}</td><td class="num">${scorePill(p.objectiveScore,70)}</td><td>${esc(p.type)}</td><td title="${esc(p.organization||'')}">${esc(p.organization||'')}</td><td title="${esc(p.siteName)}">${esc(p.siteName)}</td><td title="${esc(addr)}">${esc(addr)}</td><td>${esc(p.county||'')}</td><td class="num">${esc(p.cityPopulation||'')}</td><td class="num">${scorePill(p.ruralityScore,40)}</td><td class="num">${esc(p.saipePercent||'')}</td><td class="num">${scorePill(p.economicScore,30)}</td><td title="${esc(p.description||'')}">${esc(p.description||'')}</td><td title="${esc(p.source||'')}">${esc(p.source||'')}</td><td><a href="${sourceLinkFor(p)}" target="_blank">Map</a></td></tr>`;
+    return `<tr><td><input type="checkbox" ${p.selected?'checked':''} onchange="setPartnerSelected('${esc(p.id)}',this.checked)"></td><td><span class="pill ${band.cls}">${band.label}</span></td><td class="num">${Number(p.distanceMiles||0).toFixed(1)}</td><td class="num">${scorePill(p.objectiveScore,70)}</td><td>${esc(p.type)}</td><td title="${esc(p.organization||'')}">${esc(p.organization||'')}</td><td title="${esc(p.siteName)}">${esc(p.siteName)}</td><td title="${esc(addr)}">${esc(addr)}</td><td>${esc(p.county||'')}</td><td class="num">${esc(p.cityPopulation||'')}</td><td class="num">${scorePill(p.ruralityScore,40)}</td><td class="num">${esc(p.saipePercent||'')}</td><td class="num">${scorePill(p.economicScore,30)}</td><td title="${esc(p.description||'')}">${esc(p.description||'')}</td><td title="${esc(p.source||'')}">${esc(p.source||'')}</td><td><a href="${sourceLinkFor(p)}" target="_blank">USDA Map</a></td></tr>`;
   }).join('')+'</tbody>';
 }
 function selectAllPartners(val){partnerResults.forEach(p=>p.selected=val); renderPartnerTable();}

@@ -9,6 +9,7 @@
   </style>
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
   <link rel="stylesheet" href="brand.css" />
+  <script src="auth.js"></script>
 </head>
 <body>
   <header class="app-header">
@@ -75,7 +76,7 @@
           <div id="pfStatus" class="status"></div>
           <div id="busyPill" class="busy-pill hidden" aria-live="polite"><span class="clock">⏱️</span><span class="spinner" aria-hidden="true"></span><span id="busyText">Working...</span></div>
           <div id="hrsaFallback" class="callout hidden" style="margin-top:12px">
-            <strong>Healthcare fallback:</strong> If HRSA live loading is blocked, download the official XLSX, upload it here, then run the search again.
+            <strong>Healthcare fallback:</strong> If HRSA live loading is blocked, download and upload the full official HRSA XLSX/CSV here. The tool caches the full table first, then applies state/county/city filters locally.
             <div class="row" style="margin-top:8px">
               <div class="col-6"><label>Upload HRSA XLSX or CSV</label><input id="hrsaFile" type="file" accept=".xlsx,.xls,.csv,text/csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel" /></div>
               <div class="col-3"><button class="accent" onclick="importHRSALookupFile()">Load HRSA Lookup File</button></div>
@@ -121,6 +122,36 @@
     </section>
 
     <section class="card" style="margin-top:16px">
+      <h2>Prior RUS DLT Winners Strategy <span class="smalltxt">location-based award lookback</span></h2>
+      <div class="body">
+        <div class="callout ok"><strong>Purpose:</strong> Use prior RUS DLT award records to see whether a state, county, city, applicant type, or nearby peer organization has a history of funded DLT projects. This is for prospecting and strategy only; it does not create eligibility facts or final scoring.</div>
+        <div class="row">
+          <div class="col-3"><label>State</label><select id="awardState"></select></div>
+          <div class="col-3"><label>County / City Filter</label><input id="awardLocation" placeholder="Example: Dougherty, Albany, Bethel" /></div>
+          <div class="col-3"><label>Awardee / Agency / Keyword</label><input id="awardKeyword" placeholder="Example: school, health, university" /></div>
+          <div class="col-3"><label>Radius for Selected Prospect</label><select id="awardRadius"><option value="25">25 miles</option><option value="50">50 miles</option><option value="75">75 miles</option><option value="100" selected>100 miles</option></select></div>
+          <div class="col-5"><label>Upload Prior RUS DLT Award Table</label><input id="awardFile" type="file" accept=".xlsx,.xls,.csv,text/csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel" /></div>
+          <div class="col-7">
+            <div class="btnrow">
+              <button class="accent" onclick="loadRusDltMapAwards()">Load RUS DLT Map Awards</button>
+              <button class="ghost" onclick="importPriorAwardsFile()">Upload Award Table</button>
+              <button class="primary" onclick="filterPriorAwards()">Filter Awards</button>
+              <button class="green" onclick="findAwardsNearSelectedProspect()">Find Near Selected Prospect</button>
+              <button onclick="exportAwardsCSV()">Export Awards CSV</button>
+              <a class="button-link" href="https://ruraldevelopment.maps.arcgis.com/apps/webappviewer/index.html?id=15a73830555645ae93d2fa773ed8e971" target="_blank">Open RUS DLT Map</a>
+            </div>
+          </div>
+        </div>
+        <div id="awardStatus" class="status"></div>
+        <div class="table-tools no-print">
+          <div class="table-hint">Click a column heading to sort. If the ArcGIS map layer is blocked or changes structure, upload a USDA previous-award summary table instead.</div>
+        </div>
+        <div class="table-wrap"><table id="awardsTable"></table></div>
+        <div class="footnote"><strong>No hallucination rule:</strong> Prior-winner rows display only fields returned by the RUS DLT map or the uploaded award table. Missing award amount, year, site count, county, or project description fields remain blank.</div>
+      </div>
+    </section>
+
+    <section class="card" style="margin-top:16px">
       <h2>Official Source Links</h2>
       <div class="body source-list">
         <a href="https://www.rd.usda.gov/programs-services/telecommunications-programs/distance-learning-telemedicine-grants" target="_blank"><strong>USDA RUS DLT FY2026 Resources</strong><span>Application guide, sample worksheets, checklist, SAIPE poverty data, DLT map.</span></a>
@@ -134,6 +165,7 @@
   </main>
 <script>
 const ALL_STATE_VALUE='ALL';
+const DLT_MAP='https://ruraldevelopment.maps.arcgis.com/apps/webappviewer/index.html?id=15a73830555645ae93d2fa773ed8e971';
 const STATE_FIPS={AL:'01',AK:'02',AZ:'04',AR:'05',CA:'06',CO:'08',CT:'09',DE:'10',DC:'11',FL:'12',GA:'13',HI:'15',ID:'16',IL:'17',IN:'18',IA:'19',KS:'20',KY:'21',LA:'22',ME:'23',MD:'24',MA:'25',MI:'26',MN:'27',MS:'28',MO:'29',MT:'30',NE:'31',NV:'32',NH:'33',NJ:'34',NM:'35',NY:'36',NC:'37',ND:'38',OH:'39',OK:'40',OR:'41',PA:'42',RI:'44',SC:'45',SD:'46',TN:'47',TX:'48',UT:'49',VT:'50',VA:'51',WA:'53',WV:'54',WI:'55',WY:'56'};
 const STATE_NAMES={AL:'Alabama',AK:'Alaska',AZ:'Arizona',AR:'Arkansas',CA:'California',CO:'Colorado',CT:'Connecticut',DE:'Delaware',DC:'District of Columbia',FL:'Florida',GA:'Georgia',HI:'Hawaii',ID:'Idaho',IL:'Illinois',IN:'Indiana',IA:'Iowa',KS:'Kansas',KY:'Kentucky',LA:'Louisiana',ME:'Maine',MD:'Maryland',MA:'Massachusetts',MI:'Michigan',MN:'Minnesota',MS:'Mississippi',MO:'Missouri',MT:'Montana',NE:'Nebraska',NV:'Nevada',NH:'New Hampshire',NJ:'New Jersey',NM:'New Mexico',NY:'New York',NC:'North Carolina',ND:'North Dakota',OH:'Ohio',OK:'Oklahoma',OR:'41',PA:'Pennsylvania',RI:'Rhode Island',SC:'South Carolina',SD:'South Dakota',TN:'Tennessee',TX:'Texas',UT:'Utah',VT:'Vermont',VA:'Virginia',WA:'Washington',WV:'West Virginia',WI:'Wisconsin',WY:'Wyoming'};
 STATE_NAMES.OR='Oregon';
@@ -202,11 +234,14 @@ function filterElsiDistricts(rows, {state, term='', county='', city='', agency='
 
 const HIGHER_ED='https://services2.arcgis.com/FiaPA4ga0iQKduv3/ArcGIS/rest/services/Colleges_and_Universities_View/FeatureServer/0/query';
 const HRSA_XLSX='https://data.hrsa.gov/DataDownload/DD_Files/Health_Center_Service_Delivery_and_LookAlike_Sites.xlsx';
+const HRSA_CSV='https://data.hrsa.gov/DataDownload/DD_Files/Health_Center_Service_Delivery_and_LookAlike_Sites.csv';
+const HRSA_LOCAL_XLSX='data/Health_Center_Service_Delivery_and_LookAlike_Sites.xlsx';
+const HRSA_LOCAL_CSV='data/Health_Center_Service_Delivery_and_LookAlike_Sites.csv';
 let prospects=[]; let placeCache={}; let saipeCache={}; let hrsaLookupCache=null; let sortState={key:'objectiveScore',dir:'desc'}; let columnWidths={};
 const COLS=[
-  ['selected','Select',54,'bool'],['fitLabel','Fit',82,'text'],['objectiveScore','Obj.',60,'number'],['ruralityScore','D-1',55,'number'],['economicScore','D-2',55,'number'],['saipePercent','SAIPE %',72,'number'],['cityPopulation','2020 Pop',82,'number'],['type','Type',98,'text'],['schoolCount','# Schools',76,'number'],['organization','Organization / Entity',170,'text'],['siteName','Site',180,'text'],['address','Address',175,'text'],['city','City',90,'text'],['county','County',105,'text'],['state','State',48,'text'],['zip','ZIP',70,'text'],['phone','Phone',108,'text'],['email','Email',165,'text'],['website','Website',165,'text'],['sourceLocale','Locale',70,'text'],['description','Description from source fields',240,'text'],['source','Source',140,'text'],['map','Map',50,'text']
+  ['selected','Select',54,'bool'],['fitLabel','Fit',82,'text'],['objectiveScore','Obj.',60,'number'],['ruralityScore','D-1',55,'number'],['economicScore','D-2',55,'number'],['saipePercent','SAIPE %',72,'number'],['cityPopulation','2020 Pop',82,'number'],['type','Type',98,'text'],['schoolCount','# Schools',76,'number'],['organization','Organization / Entity',170,'text'],['siteName','Site',180,'text'],['address','Address',175,'text'],['city','City',90,'text'],['county','County',105,'text'],['state','State',48,'text'],['zip','ZIP',70,'text'],['phone','Phone',108,'text'],['email','Email',165,'text'],['website','Website',165,'text'],['sourceLocale','Locale',70,'text'],['description','Description from source fields',240,'text'],['source','Source',140,'text'],['map','USDA Map',76,'text']
 ];
-function init(){const sel=document.getElementById('pfState');const all=document.createElement('option');all.value=ALL_STATE_VALUE;all.textContent='ALL — Target score scan';sel.appendChild(all);Object.keys(STATE_FIPS).forEach(abbr=>{const o=document.createElement('option');o.value=abbr;o.textContent=`${abbr} — ${STATE_NAMES[abbr]}`;sel.appendChild(o)});sel.value='GA';COLS.forEach(c=>columnWidths[c[0]]=c[2]);renderTable();updateMetrics();}
+function init(){const sel=document.getElementById('pfState');const all=document.createElement('option');all.value=ALL_STATE_VALUE;all.textContent='ALL — Target score scan';sel.appendChild(all);Object.keys(STATE_FIPS).forEach(abbr=>{const o=document.createElement('option');o.value=abbr;o.textContent=`${abbr} — ${STATE_NAMES[abbr]}`;sel.appendChild(o)});sel.value='GA';const awardSel=document.getElementById('awardState');if(awardSel){const ao=document.createElement('option');ao.value='';ao.textContent='Use prospect state / All';awardSel.appendChild(ao);Object.keys(STATE_FIPS).forEach(abbr=>{const o=document.createElement('option');o.value=abbr;o.textContent=`${abbr} — ${STATE_NAMES[abbr]}`;awardSel.appendChild(o)});}COLS.forEach(c=>columnWidths[c[0]]=c[2]);renderTable();updateMetrics();renderAwardsTable([]);}
 function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
 function firstUrl(v){v=String(v||'').trim();if(!v)return '';const m=v.match(/https?:\/\/[^\s,;]+|www\.[^\s,;]+|[A-Za-z0-9.-]+\.[A-Za-z]{2,}[^\s,;]*/);return m?m[0]:v}
 function firstEmail(v){v=String(v||'').trim();const m=v.match(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/i);return m?m[0]:v}
@@ -221,7 +256,8 @@ function nextFrame(){return new Promise(resolve=>requestAnimationFrame(resolve))
 function csvCell(v){v=String(v??'');return /[",\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v;}
 function download(name,content,type='text/plain'){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([content],{type}));a.download=name;a.click();URL.revokeObjectURL(a.href)}
 function cleanCountyFips(cnty,st){let d=onlyDigits(cnty);if(d.length===3&&st&&STATE_FIPS[st])d=STATE_FIPS[st]+d;return d.padStart(5,'0').slice(-5)}
-function pick(o,keys){for(const k of keys){if(o[k]!==undefined&&String(o[k]).trim()!=='')return String(o[k]).trim()}return ''}
+function fieldKey(s){return String(s||'').toLowerCase().replace(/[^a-z0-9]+/g,'').trim()}
+function pick(o,keys){const ks=Object.keys(o||{});for(const k of keys){if(o[k]!==undefined&&String(o[k]).trim()!=='')return String(o[k]).trim();const target=fieldKey(k);const found=ks.find(x=>fieldKey(x)===target);if(found&&String(o[found]).trim()!=='')return String(o[found]).trim()}return ''}
 function charterFlagFromAttrs(a){
   const keys=['CHARTER_TEXT','CHARTER','CHARTER_YN','CHARTER_IND','CHARTERSTATUS','CHARTER_STATUS','IS_CHARTER'];
   const vals=keys.map(k=>String(a?.[k]??'').trim()).filter(Boolean);
@@ -231,7 +267,8 @@ function charterFlagFromAttrs(a){
 function k12TypeFromAttrs(a){return charterFlagFromAttrs(a)?'Charter School':'K-12'}
 function buildDesc(s){const bits=[];if(s.type==='K-12 District'){bits.push('NCES public school district record');if(s.siteName)bits.push(`district office: ${s.siteName}`);if(s.sourceLocale)bits.push(`locale: ${s.sourceLocale}`);if(s.schoolCount)bits.push(`school count: ${s.schoolCount}`);if(s.enrollment)bits.push(`students: ${s.enrollment}`)}else if(s.type==='K-12'||s.type==='Charter School'){bits.push(s.type==='Charter School'?'NCES public charter school record':'NCES public school record');if(s.organization)bits.push(`district: ${s.organization}`);if(s.sourceLocale)bits.push(`locale: ${s.sourceLocale}`);if(s.enrollment)bits.push(`enrollment: ${s.enrollment}`)}else if(s.type==='Rural Health'){bits.push('HRSA health center service delivery/look-alike site record');if(s.organization)bits.push(`health center: ${s.organization}`)}else if(s.type==='Higher Ed'){bits.push('Higher-ed institution/campus source record');if(s.sourceLocale)bits.push(`locale: ${s.sourceLocale}`)}if(s.county)bits.push(`county: ${s.county}`);if(s.city||s.state)bits.push(`location: ${[s.city,s.state].filter(Boolean).join(', ')}`);return bits.join('; ')+(bits.length?'.':'')}
 function siteHasCoords(s){return !isNaN(parseFloat(s.lat))&&!isNaN(parseFloat(s.lon))}
-function sourceLinkFor(s){if(siteHasCoords(s))return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(s.lat+','+s.lon)}`;return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent([s.address,s.city,s.state,s.zip].filter(Boolean).join(' '))}`}
+function distanceMiles(lat1,lon1,lat2,lon2){const R=3958.7613;const toRad=x=>x*Math.PI/180;const dLat=toRad(lat2-lat1),dLon=toRad(lon2-lon1);const a=Math.sin(dLat/2)**2+Math.cos(toRad(lat1))*Math.cos(toRad(lat2))*Math.sin(dLon/2)**2;return R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));}
+function sourceLinkFor(s){if(s&&siteHasCoords(s)){const lon=parseFloat(s.lon),lat=parseFloat(s.lat);return `${DLT_MAP}&center=${encodeURIComponent(lon+','+lat)}&level=12`;}return DLT_MAP;}
 async function arcgisQueryAll(url,where,fields,cap=25000){
   let out=[],offset=0,page=2000;
   while(out.length<cap){
@@ -359,10 +396,41 @@ function k12DistrictToSite(f){const a=f.attributes||{},g=f.geometry||{},cent=f.c
 function k12ToSite(f){const a=f.attributes||{},g=f.geometry||{};const s={id:crypto.randomUUID(),selected:false,include:false,type:k12TypeFromAttrs(a),source:'NCES CCD Public School Characteristics',sourceId:a.NCESSCH||'',organization:a.LEA_NAME||'',siteName:a.SCH_NAME||'',address:[a.LSTREET1,a.LSTREET2].filter(Boolean).join(' '),city:a.LCITY||'',ruralityPlace:'',state:a.LSTATE||a.STABR||'',zip:a.LZIP||'',county:a.NMCNTY||'',countyFips:cleanCountyFips(a.CNTY,a.STABR),phone:pick(a,['PHONE','TEL','TELEPHONE']),email:pick(a,['EMAIL','E_MAIL','CONTACT_EMAIL','CONTACTEMAIL','SCHOOL_EMAIL','ADMIN_EMAIL']),website:pick(a,['WEBSITE','WEB_SITE','URL','WEBADDR','SCH_URL','SCHOOL_URL','WWW']),sourceLocale:a.ULOCALE||'',enrollment:a.MEMBER||a.TOTAL||'',designation:'End-User',contiguous:'Unknown',outsideNonRural:'Unknown',censusRural:'Unknown',cityPopulation:'',saipePercent:'',ruralityScore:null,economicScore:null,lat:g.y||a.LATCOD||'',lon:g.x||a.LONCOD||'',notes:'Prospect Finder result from official NCES school layer; verify DLT map and site role before scoring.'};s.description=buildDesc(s);return s}
 function higherToSite(f){const a=f.attributes||{},g=f.geometry||{};const s={id:crypto.randomUUID(),selected:false,include:false,type:'Higher Ed',source:'IPEDS / ArcGIS Colleges and Universities Feature Layer',sourceId:a.UNITID||'',organization:a.F1SYSNAM||a.INSTNM||'',siteName:a.INSTNM||'',address:a.ADDR||'',city:a.CITY||'',ruralityPlace:'',state:a.STABBR||'',zip:a.ZIP||'',county:a.COUNTYNM||'',countyFips:cleanCountyFips(a.COUNTYCD,a.STABBR),phone:pick(a,['GENTELE','PHONE','TELEPHONE']),email:pick(a,['EMAIL','E_MAIL','CONTACT_EMAIL','ADMIN_EMAIL','FAIDEMAIL']),website:pick(a,['WEBADDR','WEBSITE','URL','ADMINURL','FAIDURL','APPLURL']),sourceLocale:a.LOCALE||'',enrollment:'',designation:'End-User',contiguous:'Unknown',outsideNonRural:'Unknown',censusRural:'Unknown',cityPopulation:'',saipePercent:'',ruralityScore:null,economicScore:null,lat:g.y||a.LATITUDE||'',lon:g.x||a.LONGITUD||'',notes:'Prospect Finder result from higher-ed source layer; verify DLT map and site role before scoring.'};s.description=buildDesc(s);return s}
 function hrsaToSite(o){const state=(pick(o,['Site State Abbreviation','Site State','State','State Abbreviation'])||'').toUpperCase();const siteName=pick(o,['Site Name','Health Center Site Name','Name']);if(!siteName||!state)return null;const fips=cleanCountyFips(pick(o,['County FIPS Code','County Equivalent FIPS Code','County Equivalent Code','County Code','County FIPS','Site County FIPS']),state);const s={id:crypto.randomUUID(),selected:false,include:false,type:'Rural Health',source:'HRSA Health Center Service Delivery and Look-Alike Sites XLSX',sourceId:pick(o,['Site ID','Site Number','BHCMIS ID','Grant Number','Health Center Number']),organization:pick(o,['Health Center Name','Organization Name','Awardee Name']),siteName,address:pick(o,['Site Address','Address','Street Address']),city:pick(o,['Site City','City']),ruralityPlace:'',state,zip:pick(o,['Site Postal Code','ZIP','Zip Code']),county:pick(o,['County Equivalent Name','County','Site County']),countyFips:fips,phone:pick(o,['Site Telephone Number','Phone','Telephone','Telephone Number']),email:pick(o,['Site Email Address','Site Email','Email','Contact Email','E-mail','E-Mail Address']),website:pick(o,['Site Web Address','Website','Web Address','URL','Site URL']),sourceLocale:'',enrollment:'',designation:'End-User',contiguous:'Unknown',outsideNonRural:'Unknown',censusRural:'Unknown',cityPopulation:'',saipePercent:'',ruralityScore:null,economicScore:null,lat:pick(o,['Latitude','Site Latitude','Site Latitude Number']),lon:pick(o,['Longitude','Site Longitude','Site Longitude Number']),notes:'Prospect Finder result from HRSA source; verify telemedicine use, site role, and DLT map before scoring.'};s.description=buildDesc(s);return s}
-async function getHRSALookupItems(){if(hrsaLookupCache?.length)return hrsaLookupCache;if(!window.XLSX)throw new Error('HRSA needs the XLSX fallback upload because the XLSX parser did not load.');try{const res=await fetch(HRSA_XLSX,{cache:'no-store'});if(!res.ok)throw new Error('HTTP '+res.status);const buf=await res.arrayBuffer();const wb=XLSX.read(buf,{type:'array'});const items=workbookToHRSASites(wb);if(!items.length)throw new Error('No usable HRSA rows found.');hrsaLookupCache=items;return items}catch(e){throw new Error('HRSA live data could not load. Download the HRSA XLSX and upload it using HRSA Fallback Upload.')}}
+async function getHRSALookupItems(){
+  if(hrsaLookupCache?.length)return hrsaLookupCache;
+  if(!window.XLSX)throw new Error('HRSA needs the XLSX fallback upload because the XLSX parser did not load.');
+  const attempts=[
+    {label:'local bundled HRSA XLSX',url:HRSA_LOCAL_XLSX,type:'xlsx'},
+    {label:'local bundled HRSA CSV',url:HRSA_LOCAL_CSV,type:'csv'},
+    {label:'official HRSA XLSX',url:HRSA_XLSX,type:'xlsx'},
+    {label:'official HRSA CSV',url:HRSA_CSV,type:'csv'}
+  ];
+  const failures=[];
+  for(const a of attempts){
+    try{
+      const res=await fetch(a.url,{cache:'no-store'});
+      if(!res.ok)throw new Error('HTTP '+res.status);
+      let items=[];
+      if(a.type==='csv'){
+        const rows=parseCSV(await res.text());
+        const headers=rows[0]||[];
+        items=rows.slice(1).map(r=>rowToObject(headers,r)).map(hrsaToSite).filter(Boolean);
+      }else{
+        const buf=await res.arrayBuffer();
+        const wb=XLSX.read(buf,{type:'array'});
+        items=workbookToHRSASites(wb);
+      }
+      if(!items.length)throw new Error('No usable HRSA rows found.');
+      hrsaLookupCache=items;
+      setStatus(`<strong>${items.length.toLocaleString()}</strong> HRSA records loaded as a full-table lookup from ${esc(a.label)}. State/county/city filters are applied locally after the full source table loads.`);
+      return items;
+    }catch(e){failures.push(`${a.label}: ${e.message}`);}
+  }
+  throw new Error('HRSA full-table lookup could not load from bundled or live sources. Upload the full HRSA XLSX/CSV with HRSA Fallback Upload. Details: '+failures.join(' | '));
+}
 function workbookToHRSASites(wb){let best={score:-1,objects:[],sheetName:''};wb.SheetNames.forEach(name=>{const matrix=XLSX.utils.sheet_to_json(wb.Sheets[name],{header:1,defval:'',raw:false});if(!matrix.length)return;let headerIndex=matrix.findIndex(r=>{const t=r.map(x=>String(x||'').toLowerCase()).join(' | ');return(t.includes('site name')||t.includes('health center name'))&&(t.includes('state')||t.includes('site state'))});if(headerIndex<0)headerIndex=0;const headers=matrix[headerIndex].map(h=>String(h||'').trim());const objects=matrix.slice(headerIndex+1).map(row=>{const o={};headers.forEach((h,i)=>{if(h)o[h]=row[i]??''});return o}).filter(o=>Object.values(o).some(v=>String(v).trim()!==''));const score=objects.length+headers.filter(h=>/site|health|center|state|county|address|phone|web/i.test(h)).length*1000;if(score>best.score)best={score,objects,sheetName:name}});return best.objects.map(hrsaToSite).filter(Boolean)}
 function showHrsaFallback(){document.getElementById('hrsaFallback').classList.toggle('hidden')}
-function importHRSALookupFile(){const file=document.getElementById('hrsaFile')?.files?.[0];if(!file){setStatus('Select the HRSA XLSX or CSV lookup file first.');return}const lower=file.name.toLowerCase();setStatus(`Loading uploaded HRSA lookup file: <strong>${esc(file.name)}</strong>...`);const reader=new FileReader();reader.onload=()=>{try{let items=[];if(lower.endsWith('.csv')){const rows=parseCSV(reader.result);const headers=rows[0];items=rows.slice(1).map(r=>rowToObject(headers,r)).map(hrsaToSite).filter(Boolean)}else{if(!window.XLSX)throw new Error('XLSX parser did not load.');const wb=XLSX.read(reader.result,{type:'array'});items=workbookToHRSASites(wb)}if(!items.length)throw new Error('No usable HRSA rows found.');hrsaLookupCache=items;setStatus(`<strong>${items.length}</strong> HRSA lookup rows loaded from ${esc(file.name)}. Run the prospect search again.`)}catch(e){setStatus(`<span style="color:#b42318">HRSA upload failed: ${esc(e.message)}</span>`)}};if(lower.endsWith('.csv'))reader.readAsText(file);else reader.readAsArrayBuffer(file)}
+function importHRSALookupFile(){const file=document.getElementById('hrsaFile')?.files?.[0];if(!file){setStatus('Select the HRSA XLSX or CSV lookup file first.');return}const lower=file.name.toLowerCase();setStatus(`Loading uploaded HRSA lookup file: <strong>${esc(file.name)}</strong>...`);const reader=new FileReader();reader.onload=()=>{try{let items=[];if(lower.endsWith('.csv')){const rows=parseCSV(reader.result);const headers=rows[0];items=rows.slice(1).map(r=>rowToObject(headers,r)).map(hrsaToSite).filter(Boolean)}else{if(!window.XLSX)throw new Error('XLSX parser did not load.');const wb=XLSX.read(reader.result,{type:'array'});items=workbookToHRSASites(wb)}if(!items.length)throw new Error('No usable HRSA rows found.');hrsaLookupCache=items;setStatus(`<strong>${items.length.toLocaleString()}</strong> HRSA lookup rows loaded from ${esc(file.name)} as the full-table healthcare source. State/county/city filters will be applied locally when you run the prospect search.`)}catch(e){setStatus(`<span style="color:#b42318">HRSA upload failed: ${esc(e.message)}</span>`)}};if(lower.endsWith('.csv'))reader.readAsText(file);else reader.readAsArrayBuffer(file)}
 function parseCSV(text){const rows=[];let row=[],cell='',q=false;for(let i=0;i<text.length;i++){const c=text[i],n=text[i+1];if(q){if(c==='"'&&n==='"'){cell+='"';i++}else if(c==='"'){q=false}else cell+=c}else{if(c==='"')q=true;else if(c===','){row.push(cell);cell=''}else if(c==='\n'){row.push(cell);rows.push(row);row=[];cell=''}else if(c==='\r'){}else cell+=c}}if(cell.length||row.length){row.push(cell);rows.push(row)}return rows.filter(r=>r.some(x=>String(x).trim()!==''))}
 function rowToObject(headers,row){const o={};headers.forEach((h,i)=>o[h.trim()]=row[i]??'');return o}
 async function enrichPlacePop(s){const st=s.state.toUpperCase(),fips=STATE_FIPS[st];if(!fips)return;if(!placeCache[st]){try{const res=await fetch(`https://api.census.gov/data/2020/dec/pl?get=NAME,P1_001N&for=place:*&in=state:${fips}`);const data=await res.json();const map={};data.slice(1).forEach(r=>{const name=r[0].replace(/,.*$/,'');map[norm(name)]={name:r[0],pop:parseInt(r[1])}});placeCache[st]=map}catch(e){s.notes=appendNote(s.notes,'Census place API failed');return}}const lookup=(s.ruralityPlace||s.city||'').trim();const m=placeCache[st][norm(lookup)];if(m){s.cityPopulation=m.pop;if(!s.ruralityPlace)s.ruralityPlace=m.name.replace(/,.*$/,'');s.notes=appendNote(s.notes,`Census place match for rurality: ${m.name}`)}else{s.notes=appendNote(s.notes,`No 2020 Census place match for '${lookup}'; verify Census Rural / DLT map`)}}
@@ -376,7 +444,7 @@ function applyProspectFilters(rows){const mode=document.getElementById('pfMode')
 function dedupe(rows){const seen=new Set(),out=[];rows.forEach(r=>{const k=norm([r.type,r.sourceId,r.organization,r.siteName,r.address,r.city,r.state].join('|'));if(!seen.has(k)){seen.add(k);out.push(r)}});return out}
 function fitPill(v){const cls=v==='High Fit'?'green':v==='Review'?'amber':v==='Economic Fit'?'blue':'red';return `<span class="pill ${cls}">${esc(v||'')}</span>`}
 function scorePill(v,max){if(v===null||v===undefined||v==='')return '<span class="pill amber">Review</span>';const n=Number(v);const cls=n>=max*.75?'green':n>=max*.45?'blue':'red';return `<span class="pill ${cls}">${n.toFixed(0)}</span>`}
-function renderTable(){const table=document.getElementById('prospectTable');const rows=sortRows([...prospects]);table.innerHTML=`<colgroup>${COLS.map(c=>`<col style="width:${columnWidths[c[0]]||c[2]}px">`).join('')}</colgroup><thead><tr>${COLS.map(c=>head(c)).join('')}</tr></thead><tbody></tbody>`;const body=table.querySelector('tbody');if(!rows.length){body.innerHTML=`<tr><td colspan="${COLS.length}" class="smalltxt">No prospects yet. Choose a state/county/city and click Find Complete Prospects.</td></tr>`;return}rows.forEach((r,i)=>{const tr=document.createElement('tr');const addr=[r.address,r.city,r.state,r.zip].filter(Boolean).join(', ');tr.innerHTML=`<td><input type="checkbox" ${r.selected?'checked':''} onchange="toggleSelected('${r.id}',this.checked)"></td><td>${fitPill(r.fitLabel)}</td><td class="num">${r.objectiveScore==null?'—':Number(r.objectiveScore).toFixed(0)}</td><td class="num">${scorePill(r.ruralityScore,40)}</td><td class="num">${scorePill(r.economicScore,30)}</td><td class="num">${esc(r.saipePercent||'')}</td><td class="num">${esc(r.cityPopulation||'')}</td><td>${esc(r.type)}</td><td class="num">${esc(r.schoolCount||'')}</td><td title="${esc(r.organization||'')}">${esc(r.organization||'')}</td><td title="${esc(r.siteName||'')}">${esc(r.siteName||'')}</td><td title="${esc(addr)}">${esc(addr)}</td><td>${esc(r.city||'')}</td><td>${esc(r.county||'')}</td><td>${esc(r.state||'')}</td><td>${esc(r.zip||'')}</td><td title="${esc(r.phone||'')}">${esc(r.phone||'')}</td><td title="${esc(r.email||'')}">${emailCell(r.email||'')}</td><td title="${esc(r.website||'')}">${websiteCell(r.website||'')}</td><td>${esc(r.sourceLocale||'')}</td><td title="${esc(r.description||'')}">${esc(r.description||'')}</td><td title="${esc(r.source||'')}">${esc(r.source||'')}</td><td><a href="${sourceLinkFor(r)}" target="_blank">Map</a></td>`;body.appendChild(tr)});updateMetrics();initProspectColumnResize(table)}
+function renderTable(){const table=document.getElementById('prospectTable');const rows=sortRows([...prospects]);table.innerHTML=`<colgroup>${COLS.map(c=>`<col style="width:${columnWidths[c[0]]||c[2]}px">`).join('')}</colgroup><thead><tr>${COLS.map(c=>head(c)).join('')}</tr></thead><tbody></tbody>`;const body=table.querySelector('tbody');if(!rows.length){body.innerHTML=`<tr><td colspan="${COLS.length}" class="smalltxt">No prospects yet. Choose a state/county/city and click Find Complete Prospects.</td></tr>`;return}rows.forEach((r,i)=>{const tr=document.createElement('tr');const addr=[r.address,r.city,r.state,r.zip].filter(Boolean).join(', ');tr.innerHTML=`<td><input type="checkbox" ${r.selected?'checked':''} onchange="toggleSelected('${r.id}',this.checked)"></td><td>${fitPill(r.fitLabel)}</td><td class="num">${r.objectiveScore==null?'—':Number(r.objectiveScore).toFixed(0)}</td><td class="num">${scorePill(r.ruralityScore,40)}</td><td class="num">${scorePill(r.economicScore,30)}</td><td class="num">${esc(r.saipePercent||'')}</td><td class="num">${esc(r.cityPopulation||'')}</td><td>${esc(r.type)}</td><td class="num">${esc(r.schoolCount||'')}</td><td title="${esc(r.organization||'')}">${esc(r.organization||'')}</td><td title="${esc(r.siteName||'')}">${esc(r.siteName||'')}</td><td title="${esc(addr)}">${esc(addr)}</td><td>${esc(r.city||'')}</td><td>${esc(r.county||'')}</td><td>${esc(r.state||'')}</td><td>${esc(r.zip||'')}</td><td title="${esc(r.phone||'')}">${esc(r.phone||'')}</td><td title="${esc(r.email||'')}">${emailCell(r.email||'')}</td><td title="${esc(r.website||'')}">${websiteCell(r.website||'')}</td><td>${esc(r.sourceLocale||'')}</td><td title="${esc(r.description||'')}">${esc(r.description||'')}</td><td title="${esc(r.source||'')}">${esc(r.source||'')}</td><td><a href="${sourceLinkFor(r)}" target="_blank">USDA Map</a></td>`;body.appendChild(tr)});updateMetrics();initProspectColumnResize(table)}
 function head(c){const active=sortState.key===c[0];const indicator=active?`<span class="sort-indicator">${sortState.dir==='asc'?'▲':'▼'}</span>`:'';return `<th class="sortable" data-key="${c[0]}" onclick="sortTable('${c[0]}')"><div class="th-inner"><span>${c[1]}</span>${indicator}<span class="col-resizer" data-key="${c[0]}" title="Drag to resize"></span></div></th>`}
 
 function initProspectColumnResize(table){
@@ -402,6 +470,151 @@ function selectAll(val){prospects.forEach(p=>p.selected=val);renderTable();updat
 function clearProspects(){setBusy(false);prospects=[];renderTable();updateMetrics();setStatus('Results cleared.')}
 function updateMetrics(){const high=prospects.filter(p=>p.fitLabel==='High Fit').length;const review=prospects.filter(p=>p.fitLabel==='Review').length;const selected=prospects.filter(p=>p.selected).length;document.getElementById('mReturned').textContent=prospects.length;document.getElementById('mHigh').textContent=high;document.getElementById('mReview').textContent=review;document.getElementById('mSelected').textContent=selected;renderTypeBreakdown()}
 function renderTypeBreakdown(){const el=document.getElementById('typeBreakdown');if(!el)return;const ordered=['K-12 District','K-12','Charter School','Rural Health','Higher Ed'];const labels={'K-12 District':'K-12 Districts','K-12':'K-12 School Sites','Charter School':'Charter Schools','Rural Health':'Healthcare / HRSA','Higher Ed':'Higher Ed / Technical'};const counts={};const high={};const review={};const schools={};prospects.forEach(p=>{const t=p.type||'Other';counts[t]=(counts[t]||0)+1;if(p.fitLabel==='High Fit')high[t]=(high[t]||0)+1;if(p.fitLabel==='Review')review[t]=(review[t]||0)+1;const sc=parseFloat(String(p.schoolCount||'').replace(/,/g,''));if(!isNaN(sc))schools[t]=(schools[t]||0)+sc});const types=[...ordered,...Object.keys(counts).filter(t=>!ordered.includes(t)).sort()];el.innerHTML=types.map(t=>{const schoolLine=schools[t]?` • ${schools[t].toLocaleString()} schools`:'';return `<div class="type-chip"><div class="type-label">${esc(labels[t]||t)}</div><div class="type-count">${counts[t]||0}</div><div class="type-sub">${high[t]||0} high fit • ${review[t]||0} review${schoolLine}</div></div>`}).join('')}
+
+let priorAwards=[];
+let awardResults=[];
+let awardSort={key:'year',dir:'desc'};
+const AWARD_COLS=[
+  ['year','Year',64,'number'],['awardee','Awardee / Recipient',210,'text'],['projectTitle','Project / Purpose',240,'text'],['state','State',54,'text'],['county','County',110,'text'],['city','City',100,'text'],['amount','Award $',90,'number'],['distanceMiles','Miles',70,'number'],['source','Source',130,'text'],['map','USDA Map',76,'text']
+];
+function setAwardStatus(msg){const el=document.getElementById('awardStatus');if(el)el.innerHTML=msg||'';}
+function rusMapLinkFor(o){if(o&&siteHasCoords(o)){const lon=parseFloat(o.lon),lat=parseFloat(o.lat);return `${DLT_MAP}&center=${encodeURIComponent(lon+','+lat)}&level=12`;}return DLT_MAP;}
+function normalizeAwardRecord(obj,source,geom){
+  obj=obj||{};
+  const state=(pick(obj,['State','STATE','state','ST','Recipient State','Project State','Applicant State'])||'').toUpperCase().trim();
+  const city=pick(obj,['City','CITY','city','Town','Project City','Recipient City','Applicant City','Location City']);
+  const county=stripCounty(pick(obj,['County','COUNTY','county','Project County','Recipient County','Applicant County','CNTY_NM','COUNTY_NM']));
+  let lat=pick(obj,['Latitude','LATITUDE','lat','Y','y','POINT_Y']);
+  let lon=pick(obj,['Longitude','LONGITUDE','lon','Long','X','x','POINT_X']);
+  if((!lat||!lon)&&geom){
+    let x=geom.x, y=geom.y;
+    if(Number.isFinite(x)&&Number.isFinite(y)){
+      if(Math.abs(x)>180||Math.abs(y)>90){const ll=webMercatorToLonLat(x,y);lon=ll.lon;lat=ll.lat;}else{lon=x;lat=y;}
+    }
+  }
+  const awardee=pick(obj,['Awardee','Recipient','Recipient Name','Applicant','Applicant Name','Grantee','Grantee Name','Organization','Organization Name','Entity','Entity Name','Name']);
+  const projectTitle=pick(obj,['Project Title','Project','Purpose','Project Description','Description','Public Description','Award Description','Grant Purpose','Program','TITLE']);
+  const amount=moneyValue(pick(obj,['Award Amount','Grant Amount','Amount','Total Award','Federal Award','DLT Award','Award','Grant','FUNDS','Funding']));
+  const year=yearValue(pick(obj,['Fiscal Year','FY','Year','Award Year','Program Year','FISCALYEAR','FISCAL_YR']));
+  if(!awardee && !projectTitle && !state && !county && !city) return null;
+  return {id:crypto.randomUUID(),awardee,projectTitle,state,county,city,amount,year,lat,lon,source:source||'RUS DLT map/uploaded award table',raw:obj};
+}
+function moneyValue(v){const s=String(v||'').replace(/[^0-9.\-]/g,'');return s?Number(s):'';}
+function yearValue(v){const m=String(v||'').match(/20\d{2}|19\d{2}/);return m?m[0]:String(v||'').trim();}
+function webMercatorToLonLat(x,y){const lon=x/20037508.34*180;let lat=y/20037508.34*180;lat=180/Math.PI*(2*Math.atan(Math.exp(lat*Math.PI/180))-Math.PI/2);return {lon,lat};}
+function stripCounty(v){return String(v||'').replace(/\s+County$/i,'').trim();}
+async function loadRusDltMapAwards(){
+  setAwardStatus('⏱️ Searching the USDA RUS DLT map for prior recipient/award layers...');
+  try{
+    const candidates=[
+      `https://ruraldevelopment.maps.arcgis.com/sharing/rest/content/items/15a73830555645ae93d2fa773ed8e971/data?f=json`,
+      `https://www.arcgis.com/sharing/rest/content/items/15a73830555645ae93d2fa773ed8e971/data?f=json`
+    ];
+    let mapData=null, failures=[];
+    for(const url of candidates){
+      try{const res=await fetch(url,{cache:'no-store'});if(!res.ok)throw new Error('HTTP '+res.status);mapData=await res.json();break;}catch(e){failures.push(e.message);}
+    }
+    if(!mapData) throw new Error('Could not open map item data: '+failures.join(' | '));
+    const layers=[];
+    collectOperationalLayers(mapData.operationalLayers||[],layers);
+    const awardLayers=layers.filter(l=>/award|recipient|grantee|grant|dlt/i.test([l.title,l.name,l.url].join(' ')) && /FeatureServer|MapServer/i.test(l.url||''));
+    if(!awardLayers.length) throw new Error('No obvious award/recipient FeatureServer layer was discoverable in the map item. Upload a prior-awards table instead.');
+    const records=[];
+    for(const layer of awardLayers.slice(0,8)){
+      const url=layer.url.replace(/\/$/,'');
+      try{
+        const rows=await arcgisAwardQuery(url);
+        rows.forEach(f=>{const rec=normalizeAwardRecord(f.attributes||{},layer.title||'RUS DLT Map',f.geometry);if(rec)records.push(rec);});
+      }catch(e){/* keep trying other layers */}
+    }
+    priorAwards=dedupeAwards(records);
+    if(!priorAwards.length) throw new Error('The map layers loaded, but no usable recipient/award rows were found. Upload an award table instead.');
+    setAwardStatus(`<strong>${priorAwards.length.toLocaleString()}</strong> prior RUS DLT map record(s) loaded. Use Filter Awards or Find Near Selected Prospect.`);
+    filterPriorAwards();
+  }catch(e){setAwardStatus(`<span style="color:#b42318">RUS DLT map awards could not be loaded automatically: ${esc(e.message)} Use the upload option with a prior-award CSV/XLSX table.</span>`);}
+}
+function collectOperationalLayers(list,out){(list||[]).forEach(l=>{if(l.url)out.push(l);if(l.layers)collectOperationalLayers(l.layers,out);if(l.sublayers)collectOperationalLayers(l.sublayers,out);});}
+async function arcgisAwardQuery(url){
+  const all=[];let offset=0;const pageSize=2000;
+  while(offset<20000){
+    const params=new URLSearchParams({where:'1=1',outFields:'*',returnGeometry:'true',f:'json',resultOffset:String(offset),resultRecordCount:String(pageSize),orderByFields:'OBJECTID ASC'});
+    const res=await fetch(`${url}/query?${params.toString()}`);
+    if(!res.ok)throw new Error('HTTP '+res.status);
+    const data=await res.json();
+    if(data.error)throw new Error(data.error.message||'ArcGIS query error');
+    const features=data.features||[];all.push(...features);
+    if(!data.exceededTransferLimit&&features.length<pageSize)break;
+    offset+=pageSize;
+  }
+  return all;
+}
+function importPriorAwardsFile(){
+  const file=document.getElementById('awardFile')?.files?.[0];
+  if(!file){setAwardStatus('Select a RUS DLT prior-awards CSV/XLSX file first.');return;}
+  const lower=file.name.toLowerCase();
+  setAwardStatus(`Loading prior-awards file: <strong>${esc(file.name)}</strong>...`);
+  const reader=new FileReader();
+  reader.onload=()=>{try{
+    let rows=[];
+    if(lower.endsWith('.csv')){const parsed=parseCSV(reader.result);rows=objectsFromMatrix(parsed);}
+    else {if(!window.XLSX)throw new Error('XLSX parser did not load.');const wb=XLSX.read(reader.result,{type:'array'});rows=objectsFromWorkbook(wb,/award|recipient|grantee|project|state|county|amount|year/i);}
+    priorAwards=dedupeAwards(rows.map(r=>normalizeAwardRecord(r,`uploaded ${file.name}`)).filter(Boolean));
+    if(!priorAwards.length)throw new Error('No recognizable award records were found.');
+    setAwardStatus(`<strong>${priorAwards.length.toLocaleString()}</strong> prior-award record(s) loaded from ${esc(file.name)}.`);
+    filterPriorAwards();
+  }catch(e){setAwardStatus(`<span style="color:#b42318">Award upload failed: ${esc(e.message)}</span>`);}};
+  if(lower.endsWith('.csv'))reader.readAsText(file);else reader.readAsArrayBuffer(file);
+}
+function objectsFromMatrix(matrix){if(!matrix||!matrix.length)return[];let headerIndex=matrix.findIndex(r=>r.map(x=>String(x||'').toLowerCase()).join(' | ').match(/award|recipient|grantee|project|state|county|amount|year/));if(headerIndex<0)headerIndex=0;const headers=matrix[headerIndex].map(h=>String(h||'').trim());return matrix.slice(headerIndex+1).map(row=>rowToObject(headers,row)).filter(o=>Object.values(o).some(v=>String(v).trim()!==''));}
+function objectsFromWorkbook(wb,re){let best={score:-1,objects:[]};wb.SheetNames.forEach(name=>{const matrix=XLSX.utils.sheet_to_json(wb.Sheets[name],{header:1,defval:'',raw:false});const objects=objectsFromMatrix(matrix);const headers=objects[0]?Object.keys(objects[0]):[];const score=objects.length+headers.filter(h=>re.test(h)).length*1000;if(score>best.score)best={score,objects};});return best.objects;}
+function filterPriorAwards(){
+  const st=(document.getElementById('awardState')?.value||document.getElementById('pfState')?.value||'').toUpperCase();
+  const loc=(document.getElementById('awardLocation')?.value||'').toLowerCase().trim();
+  const key=(document.getElementById('awardKeyword')?.value||'').toLowerCase().trim();
+  const useState=st&&st!==ALL_STATE_VALUE;
+  awardResults=priorAwards.filter(a=>{
+    const stateOk=!useState||String(a.state||'').toUpperCase()===st;
+    const locText=[a.county,a.city,a.state].join(' ').toLowerCase();
+    const keyText=[a.awardee,a.projectTitle,a.source,JSON.stringify(a.raw||{})].join(' ').toLowerCase();
+    return stateOk && (!loc||locText.includes(loc)) && (!key||keyText.includes(key));
+  });
+  renderAwardsTable(awardResults);
+  setAwardStatus(`<strong>${awardResults.length.toLocaleString()}</strong> prior-award record(s) match the current filters. ${priorAwards.length?`Loaded source records: ${priorAwards.length.toLocaleString()}.`:''}`);
+}
+function findAwardsNearSelectedProspect(){
+  const selected=prospects.filter(p=>p.selected&&siteHasCoords(p));
+  if(!selected.length){setAwardStatus('Select at least one prospect with coordinates first.');return;}
+  if(!priorAwards.length){setAwardStatus('Load RUS DLT map awards or upload a prior-awards table first.');return;}
+  const radius=parseFloat(document.getElementById('awardRadius')?.value)||100;
+  const out=[];
+  selected.forEach(p=>{
+    priorAwards.forEach(a=>{
+      if(siteHasCoords(a)){
+        const miles=distanceMiles(parseFloat(p.lat),parseFloat(p.lon),parseFloat(a.lat),parseFloat(a.lon));
+        if(miles<=radius) out.push({...a,distanceMiles:miles,nearProspect:p.siteName||p.organization});
+      }else if(p.state&&a.state&&String(p.state).toUpperCase()===String(a.state).toUpperCase()){
+        const countyMatch=p.county&&a.county&&norm(p.county)===norm(a.county);
+        const cityMatch=p.city&&a.city&&norm(p.city)===norm(a.city);
+        if(countyMatch||cityMatch) out.push({...a,distanceMiles:'',nearProspect:p.siteName||p.organization});
+      }
+    });
+  });
+  awardResults=dedupeAwards(out);
+  renderAwardsTable(awardResults);
+  setAwardStatus(`<strong>${awardResults.length.toLocaleString()}</strong> prior-award record(s) found near selected prospect(s), using a ${radius}-mile radius where coordinates were available and county/city fallback where not.`);
+}
+function dedupeAwards(rows){const seen=new Set(),out=[];(rows||[]).forEach(r=>{const k=norm([r.year,r.awardee,r.projectTitle,r.state,r.county,r.city,r.amount].join('|'));if(!seen.has(k)){seen.add(k);out.push(r);}});return out;}
+function renderAwardsTable(rows){
+  const table=document.getElementById('awardsTable');if(!table)return;
+  const sorted=sortAwardRows([...(rows||[])]);
+  table.innerHTML=`<thead><tr>${AWARD_COLS.map(c=>`<th class="sortable" onclick="sortAwards('${c[0]}')">${esc(c[1])}${awardSort.key===c[0]?` <span class="sort-indicator">${awardSort.dir==='asc'?'▲':'▼'}</span>`:''}</th>`).join('')}</tr></thead><tbody></tbody>`;
+  const body=table.querySelector('tbody');
+  if(!sorted.length){body.innerHTML=`<tr><td colspan="${AWARD_COLS.length}" class="smalltxt">No prior RUS DLT award records loaded or matching filters yet.</td></tr>`;return;}
+  sorted.forEach(a=>{const tr=document.createElement('tr');tr.innerHTML=`<td>${esc(a.year||'')}</td><td title="${esc(a.awardee||'')}">${esc(a.awardee||'')}</td><td title="${esc(a.projectTitle||'')}">${esc(a.projectTitle||'')}</td><td>${esc(a.state||'')}</td><td>${esc(a.county||'')}</td><td>${esc(a.city||'')}</td><td class="num">${a.amount!==''&&a.amount!==undefined?Number(a.amount).toLocaleString():''}</td><td class="num">${a.distanceMiles!==undefined&&a.distanceMiles!==''?Number(a.distanceMiles).toFixed(1):''}</td><td title="${esc(a.source||'')}">${esc(a.source||'')}</td><td><a href="${rusMapLinkFor(a)}" target="_blank">USDA Map</a></td>`;body.appendChild(tr);});
+}
+function sortAwards(key){if(awardSort.key===key)awardSort.dir=awardSort.dir==='asc'?'desc':'asc';else awardSort={key,dir:'asc'};renderAwardsTable(awardResults);}
+function sortAwardRows(rows){const col=AWARD_COLS.find(c=>c[0]===awardSort.key)||AWARD_COLS[0];const dir=awardSort.dir==='desc'?-1:1;return rows.sort((a,b)=>compare(a[col[0]],b[col[0]],col[3])*dir);}
+function exportAwardsCSV(){const rows=sortAwardRows([...(awardResults.length?awardResults:priorAwards)]);if(!rows.length){setAwardStatus('No prior-award rows to export.');return;}const fields=['year','awardee','projectTitle','state','county','city','amount','distanceMiles','nearProspect','source','lat','lon'];const csv=[fields.join(',')].concat(rows.map(r=>fields.map(f=>csvCell(r[f])).join(','))).join('\n');download('RUS_DLT_Prior_Awards_Strategy.csv',csv,'text/csv');}
 function exportCSV(){const fields=['selected','fitLabel','objectiveScore','ruralityScore','economicScore','saipePercent','cityPopulation','type','schoolCount','organization','siteName','address','city','ruralityPlace','state','zip','county','countyFips','phone','email','website','sourceLocale','enrollment','designation','description','source','sourceId','lat','lon','notes'];const csv=[fields.join(',')].concat(prospects.map(p=>fields.map(f=>csvCell(p[f])).join(','))).join('\n');download('RUS_DLT_High_Eligibility_Prospects.csv',csv,'text/csv')}
 function sendSelectedToScoring(){const selected=prospects.filter(p=>p.selected);if(!selected.length){setStatus('Select at least one prospect first.');return}const clean=selected.map(p=>({...p,id:crypto.randomUUID(),include:false,selected:false,notes:appendNote(p.notes,'Sent from Prospect Finder; set Include=true only if used in the DLT project.')}));localStorage.setItem('dltPendingProspectsV1',JSON.stringify(clean));setStatus(`<strong>${clean.length}</strong> selected prospect(s) staged for the scoring worksheet. Click Open Scoring Tool to import them.`)}
 init();
