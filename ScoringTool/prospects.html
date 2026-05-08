@@ -20,6 +20,7 @@
         <a class="nav-button" href="prospects.html">Prospect Finder</a>
         <a class="nav-button" href="guide.html">How to Use Guide</a>
         <a class="nav-button" href="match.html">Match Calculator</a>
+        <a class="nav-button" href="awards.html">Prior Winners</a>
         <a class="nav-button" href="https://ruraldevelopment.maps.arcgis.com/apps/webappviewer/index.html?id=15a73830555645ae93d2fa773ed8e971" target="_blank">USDA DLT Map</a>
         <a class="nav-button" href="https://www.rd.usda.gov/programs-services/telecommunications-programs/distance-learning-telemedicine-grants" target="_blank">USDA FY2026 Resources</a>
       </nav>
@@ -42,9 +43,14 @@
       <div class="card controls">
         <h2>Prospect Search Filters</h2>
         <div class="body">
-          <div class="callout warn"><strong>Guardrail:</strong> This page is for prospecting. It ranks source records using available Census place population and county SAIPE data. Final D-1 Rurality still needs USDA DLT map verification for each actual project site. K-12 district searches use the bundled ELSI/NCES 2025 district CSV with websites and # Schools; K-12 school-site searches use the NCES school layer.</div>
-          <div class="callout"><strong>Charter schools:</strong> Public charter schools can be screened here as potential K-12 end-user sites. They are not automatically eligible just because they are charter schools; the applicant must still be an eligible legal entity or part of an eligible consortium, operate or serve a rural community facility/residents, and have a DLT-eligible distance learning or telemedicine project.</div>
-          <div class="callout"><strong>All-states scan:</strong> Choose <em>ALL — Target score scan</em> in the State field or use the All States by Target Score button. For best speed, start with K-12 Districts, HRSA Healthcare, and Higher Ed / Technical; add K-12 school sites only when you need school-building-level records.</div>
+          <details class="callout warn" style="padding:9px 12px" id="prospectGuardrails">
+            <summary style="cursor:pointer;font-weight:900">Prospecting guardrails, charter school note, and all-states scan tips</summary>
+            <div style="margin-top:8px;display:grid;gap:8px">
+              <div><strong>Guardrail:</strong> This page is for prospecting. It ranks source records using available Census place population and county SAIPE data. Final D-1 Rurality still needs USDA DLT map verification for each actual project site. K-12 district searches use the bundled ELSI/NCES 2025 district CSV with websites and # Schools; K-12 school-site searches use the NCES school layer.</div>
+              <div><strong>Charter schools:</strong> Public charter schools can be screened here as potential K-12 end-user sites. They are not automatically eligible just because they are charter schools; the applicant must still be an eligible legal entity or part of an eligible consortium, operate or serve a rural community facility/residents, and have a DLT-eligible distance learning or telemedicine project.</div>
+              <div><strong>All-states scan:</strong> Choose <em>ALL — Target score scan</em> in the State field or use the All States by Target Score button. For best speed, start with K-12 Districts, HRSA Healthcare, and Higher Ed / Technical; add K-12 school sites only when you need school-building-level records.</div>
+            </div>
+          </details>
           <div class="row">
             <div class="col-3"><label>State / Scope</label><select id="pfState"></select></div>
             <div class="col-3"><label>County Filter</label><input id="pfCounty" placeholder="Optional, e.g. Dougherty" /></div>
@@ -121,35 +127,11 @@
       </div>
     </section>
 
-    <section class="card award-compact" style="margin-top:16px">
-      <h2>Prior RUS DLT Winners <span class="smalltxt">click a row for awardee drilldown</span></h2>
+    <section class="card" style="margin-top:16px">
+      <h2>Prior RUS DLT Winners <span class="smalltxt">moved to a separate view</span></h2>
       <div class="body">
-        <div class="award-mini-note"><strong>Strategy use:</strong> compare prospects against prior DLT recipients, filter to school districts, or find awards near selected prospects. The table is source-based from the bundled 2026-05-08 RUS DLT all-sites export.</div>
-        <div class="award-toolbar">
-          <div><label>State</label><select id="awardState" onchange="filterPriorAwards()"></select></div>
-          <div><label>Winner Type</label><select id="awardEntityScope" onchange="filterPriorAwards()"><option value="all">All winners</option><option value="districts">Districts only</option></select></div>
-          <div><label>County / City</label><input id="awardLocation" placeholder="Dougherty, Albany" onkeydown="if(event.key==='Enter') filterPriorAwards()" /></div>
-          <div><label>Awardee / Keyword</label><input id="awardKeyword" placeholder="school, health, university" onkeydown="if(event.key==='Enter') filterPriorAwards()" /></div>
-          <div><label>Near Radius</label><select id="awardRadius"><option value="25">25 mi</option><option value="50">50 mi</option><option value="75">75 mi</option><option value="100" selected>100 mi</option></select></div>
-        </div>
-        <div class="award-actions-bar">
-          <button class="primary" onclick="filterPriorAwards()" title="Apply state, winner type, county/city, and keyword filters to the prior winners table.">Filter Table</button>
-          <button class="green" onclick="findAwardsNearSelectedProspect()" title="Find prior RUS DLT winners near prospects you selected in the Prospect Results table.">Find Near Selected Prospects</button>
-          <button onclick="exportAwardsCSV()" title="Export the currently filtered prior winner rows.">Export Filtered CSV</button>
-          <button class="accent" onclick="loadBundledPriorAwards()" title="Reload the bundled 2026-05-08 all-sites award table.">Reload Bundled Table</button>
-          <a class="button-link" href="https://ruraldevelopment.maps.arcgis.com/apps/webappviewer/index.html?id=15a73830555645ae93d2fa773ed8e971" target="_blank" title="Open the official USDA DLT Map.">USDA DLT Map</a>
-        </div>
-        <details class="award-upload-details">
-          <summary>Advanced: upload replacement award table</summary>
-          <div class="award-upload-line"><input id="awardFile" type="file" accept=".xlsx,.xls,.csv,text/csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel" /><button class="ghost" onclick="importPriorAwardsFile()">Upload Replacement</button></div>
-        </details>
-        <div id="awardStatus" class="status compact-status"></div>
-        <div id="awardDrilldown" class="award-drilldown hidden"></div>
-        <div class="table-tools no-print">
-          <div class="table-hint"><strong>Actions:</strong> Filter Table = applies the fields above. Find Near Selected = uses selected prospect coordinates/county/city. Export = exports the current filtered table. Click any award row to show all site/sub-recipient locations and year-by-year grant detail.</div>
-        </div>
-        <div class="table-wrap award-table-wrap"><table id="awardsTable"></table></div>
-        <div class="footnote"><strong>No hallucination rule:</strong> Prior-winner rows display only fields returned by the RUS DLT map or bundled/uploaded award table. Missing award amount, site count, county, or project description fields remain blank.</div>
+        <div class="btnrow"><a class="button-link primary" href="awards.html">Open Prior Winners Strategy View</a></div>
+        <div class="footnote">Use the separate view to filter prior awards, drill into awardee cards, review sub-recipient/site rows, and compare multiple winning years.</div>
       </div>
     </section>
 
@@ -244,7 +226,7 @@ let prospects=[]; let placeCache={}; let saipeCache={}; let hrsaLookupCache=null
 const COLS=[
   ['selected','Select',54,'bool'],['fitLabel','Fit',82,'text'],['objectiveScore','Obj.',60,'number'],['ruralityScore','D-1',55,'number'],['economicScore','D-2',55,'number'],['saipePercent','SAIPE %',72,'number'],['cityPopulation','2020 Pop',82,'number'],['type','Type',98,'text'],['schoolCount','# Schools',76,'number'],['organization','Organization / Entity',170,'text'],['siteName','Site',180,'text'],['address','Address',175,'text'],['city','City',90,'text'],['county','County',105,'text'],['state','State',48,'text'],['zip','ZIP',70,'text'],['phone','Phone',108,'text'],['email','Email',165,'text'],['website','Website',165,'text'],['sourceLocale','Locale',70,'text'],['description','Description from source fields',240,'text'],['source','Source',140,'text'],['map','USDA Map',76,'text']
 ];
-function init(){const sel=document.getElementById('pfState');const all=document.createElement('option');all.value=ALL_STATE_VALUE;all.textContent='ALL — Target score scan';sel.appendChild(all);Object.keys(STATE_FIPS).forEach(abbr=>{const o=document.createElement('option');o.value=abbr;o.textContent=`${abbr} — ${STATE_NAMES[abbr]}`;sel.appendChild(o)});sel.value=ALL_STATE_VALUE;const awardSel=document.getElementById('awardState');if(awardSel){const ao=document.createElement('option');ao.value='';ao.textContent='Use prospect state / All';awardSel.appendChild(ao);Object.keys(STATE_FIPS).forEach(abbr=>{const o=document.createElement('option');o.value=abbr;o.textContent=`${abbr} — ${STATE_NAMES[abbr]}`;awardSel.appendChild(o)});}COLS.forEach(c=>columnWidths[c[0]]=c[2]);renderTable();updateMetrics();renderAwardsTable([]);loadBundledPriorAwards();}
+function init(){const sel=document.getElementById('pfState');const all=document.createElement('option');all.value=ALL_STATE_VALUE;all.textContent='ALL — Target score scan';sel.appendChild(all);Object.keys(STATE_FIPS).forEach(abbr=>{const o=document.createElement('option');o.value=abbr;o.textContent=`${abbr} — ${STATE_NAMES[abbr]}`;sel.appendChild(o)});sel.value=ALL_STATE_VALUE;const awardSel=document.getElementById('awardState');if(awardSel){const ao=document.createElement('option');ao.value='';ao.textContent='Use prospect state / All';awardSel.appendChild(ao);Object.keys(STATE_FIPS).forEach(abbr=>{const o=document.createElement('option');o.value=abbr;o.textContent=`${abbr} — ${STATE_NAMES[abbr]}`;awardSel.appendChild(o)});}COLS.forEach(c=>columnWidths[c[0]]=c[2]);renderTable();updateMetrics();}
 function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
 function firstUrl(v){v=String(v||'').trim();if(!v)return '';const m=v.match(/https?:\/\/[^\s,;]+|www\.[^\s,;]+|[A-Za-z0-9.-]+\.[A-Za-z]{2,}[^\s,;]*/);return m?m[0]:v}
 function firstEmail(v){v=String(v||'').trim();const m=v.match(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/i);return m?m[0]:v}

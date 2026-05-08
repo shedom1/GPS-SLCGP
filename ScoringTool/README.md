@@ -277,3 +277,13 @@ Update v20: K-12 district prospecting/search now uses the bundled ELSI/NCES K-12
   - all site/sub-recipient location rows with USDA Map links.
 - Multiple-year awardees now show as expandable year sections inside the drilldown card.
 - Drilldown values remain source-based only. The tool does not infer missing grant amounts, sub-recipients, or project descriptions.
+
+
+## v28 updates
+
+- Moved **Prior RUS DLT Winners** out of the Prospect Finder and into its own `awards.html` view.
+- Added the uploaded **RUS DLT Past Award Winners 2012-2025** workbook as a bundled CSV source under `/data/`.
+- Prior Winners cards now combine award-level descriptions with site/sub-recipient rows from the bundled RUS DLT all-sites table where project IDs match.
+- Added DL/TM award type display in the Prior Winners table and card drilldowns.
+- Awardee cards now show multiple winning years as expandable sections.
+- Collapsed the Prospect Finder guardrail / charter school / all-states scan notes so the page is less cluttered.
