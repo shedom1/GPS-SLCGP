@@ -112,19 +112,127 @@ function shorten(s,n){s=String(s||'');return s.length>n?s.slice(0,n-1)+'…':s;}
 function pillType(t){if(t==='TM')return '<span class="pill tm">TM</span>';if(t==='DL')return '<span class="pill dl">DL</span>';if(t==='DL + TM')return '<span class="pill both">DL + TM</span>';return esc(t||'');}
 function sortAwards(key){if(awardSort.key===key)awardSort.dir=awardSort.dir==='asc'?'desc':'asc';else awardSort={key,dir:'asc'};renderAwardsTable(awardResults);}
 function sortRows(rows){const col=AWARD_COLS.find(c=>c[0]===awardSort.key)||AWARD_COLS[0];const dir=awardSort.dir==='desc'?-1:1;return rows.sort((a,b)=>compare(a[col[0]],b[col[0]],col[3])*dir);}
-function showAwardeeCard(seed){const k=awardeeKey(seed);currentCardProjects=projectRows.filter(r=>awardeeKey(r)===k).sort((a,b)=>Number(b.year||0)-Number(a.year||0)||String(a.projectId).localeCompare(String(b.projectId)));const byYear={};currentCardProjects.forEach(p=>{(byYear[p.year||'Unknown'] ||= []).push(p);});const yearHtml=Object.entries(byYear).sort((a,b)=>Number(b[0])-Number(a[0])).map(([year,projs],idx)=>{const yTotal=projs.reduce((s,p)=>s+(p.totalGrant||0),0);const ySites=projs.reduce((s,p)=>s+(p.siteCount||0),0);return `<details class="year-detail" ${idx<2?'open':''}><summary>FY ${esc(year)} • ${projs.length} project(s) • ${ySites} site/sub-recipient row(s) • ${fmtMoney(yTotal)}</summary>${projs.map(renderProjectCard).join('')}</details>`;}).join('');const panel=document.getElementById('awardDrilldown');document.getElementById('emptyDrilldown').classList.add('hidden');panel.classList.remove('hidden');panel.innerHTML=`<div class="drill-head"><div><h3>${esc(seed.awardee)}</h3><div class="smalltxt">Click project checkboxes to include or deselect cards from the totals. Site rows can be exported; Census/SAIPE values are pulled when available and left blank when no source match is found.</div><div id="drillEnrichStatus" class="enrich-note">Preparing Census/SAIPE lookup…</div></div><div class="drill-actions no-print"><button class="primary" onclick="printAwardeeCard()">Print / PDF Card</button><button class="accent" onclick="exportAwardeeCardCSV()">Export Card CSV</button><button class="ghost" onclick="document.getElementById('awardDrilldown').classList.add('hidden');document.getElementById('emptyDrilldown').classList.remove('hidden')">Close</button></div></div><div class="mini-metrics"><div class="mini-metric"><span>Included Years</span><b id="metricYears">—</b></div><div class="mini-metric"><span>Award Type</span><b id="metricTypes">—</b></div><div class="mini-metric"><span>States</span><b id="metricStates">—</b></div><div class="mini-metric"><span>Included Projects</span><b id="metricProjects">—</b></div><div class="mini-metric"><span>Included Grant Total</span><b id="metricTotal">—</b></div><div class="mini-metric"><span>Site Rows / Site $</span><b id="metricSites">—</b></div></div>${yearHtml}`;refreshDrillMetrics();enrichAwardDrilldown();panel.scrollIntoView({behavior:'smooth',block:'start'});}
+function showAwardeeCard(seed){const k=awardeeKey(seed);currentCardProjects=projectRows.filter(r=>awardeeKey(r)===k).sort((a,b)=>Number(b.year||0)-Number(a.year||0)||String(a.projectId).localeCompare(String(b.projectId)));const byYear={};currentCardProjects.forEach(p=>{(byYear[p.year||'Unknown'] ||= []).push(p);});const yearHtml=Object.entries(byYear).sort((a,b)=>Number(b[0])-Number(a[0])).map(([year,projs],idx)=>{const yTotal=projs.reduce((s,p)=>s+(p.totalGrant||0),0);const ySites=projs.reduce((s,p)=>s+(p.siteCount||0),0);return `<details class="year-detail" ${idx<2?'open':''}><summary>FY ${esc(year)} • ${projs.length} project(s) • ${ySites} site/sub-recipient row(s) • ${fmtMoney(yTotal)}</summary>${projs.map(renderProjectCard).join('')}</details>`;}).join('');const panel=document.getElementById('awardDrilldown');document.getElementById('emptyDrilldown').classList.add('hidden');panel.classList.remove('hidden');panel.innerHTML=`<div class="drill-head"><div><h3>${esc(seed.awardee)}</h3><div class="smalltxt">Click project checkboxes to include or deselect cards from the totals. Site rows can be exported; Census/SAIPE values are pulled when available and left blank when no source match is found.</div><div id="drillEnrichStatus" class="enrich-note">Preparing Census/SAIPE lookup…</div></div><div class="drill-actions no-print"><button class="primary" onclick="printAwardeeCard()">Print / PDF Card</button><button class="accent" onclick="exportAwardeeCardCSV()">Export Card CSV</button><button class="ghost" onclick="enrichAwardDrilldown(true)">Refresh Census/SAIPE</button><button class="ghost" onclick="document.getElementById('awardDrilldown').classList.add('hidden');document.getElementById('emptyDrilldown').classList.remove('hidden')">Close</button></div></div><div class="mini-metrics"><div class="mini-metric"><span>Included Years</span><b id="metricYears">—</b></div><div class="mini-metric"><span>Award Type</span><b id="metricTypes">—</b></div><div class="mini-metric"><span>States</span><b id="metricStates">—</b></div><div class="mini-metric"><span>Included Projects</span><b id="metricProjects">—</b></div><div class="mini-metric"><span>Included Grant Total</span><b id="metricTotal">—</b></div><div class="mini-metric"><span>Site Rows / Site $</span><b id="metricSites">—</b></div></div>${yearHtml}`;refreshDrillMetrics();enrichAwardDrilldown();panel.scrollIntoView({behavior:'smooth',block:'start'});}
 function renderProjectCard(p){const sites=p.sites||[];const safeKey=esc(p.key);const siteRowsHtml=sites.length?`<div class="table-wrap" style="max-height:240px;border-radius:9px"><table class="site-table"><thead><tr><th>Site / sub-recipient location</th><th>Role</th><th>Address</th><th>City</th><th>County</th><th>State</th><th>2020 Pop</th><th>SAIPE %</th><th>Site $</th><th>USDA Map</th></tr></thead><tbody>${sites.map((s,i)=>{const sid=siteDomId(p,i);s._domId=sid;return `<tr data-site-row="${esc(sid)}"><td>${esc(s.siteName)}</td><td>${esc(s.siteType)}</td><td>${esc(s.address)}</td><td>${esc(s.city)}</td><td>${esc(s.county)}</td><td>${esc(s.state)}</td><td class="num pop-cell">${esc(s.cityPopulation||'')}</td><td class="num saipe-cell">${esc(s.saipePercent||'')}</td><td class="num">${fmtMoney(s.siteGrant)}</td><td><a href="${rusMapLinkFor(s)}" target="_blank">USDA Map</a></td></tr>`}).join('')}</tbody></table></div>`:`<div class="smalltxt">No site-level/sub-recipient rows are available for this project. This row comes from the workbook summary data.</div>`;const desc=p.description&&p.description!=='Detailed Project Description Not Available'?`<div class="desc"><strong>Description:</strong> ${esc(p.description)}</div>`:`<div class="desc"><strong>Description:</strong> Detailed project description not available in the uploaded workbook.</div>`;return `<div class="project-card" data-project-card="${safeKey}"><div class="project-title"><div>${esc(p.projectId||'Project')} • ${pillType(p.awardUse)} <span class="smalltxt">FY ${esc(p.year)} • Grant ${fmtMoney(p.totalGrant)} • Site $ ${fmtMoney(p.siteGrantTotal)} • ${sites.length} site row(s)</span></div><label class="calc-toggle"><input type="checkbox" class="project-calc-toggle" data-key="${safeKey}" data-year="${esc(p.year)}" data-type="${esc(p.awardUse)}" data-state="${esc(p.state)}" data-total="${p.totalGrant||0}" data-sitegrant="${p.siteGrantTotal||0}" data-sites="${sites.length}" checked onchange="toggleProjectCard(this);refreshDrillMetrics()"> Include in totals</label></div>${desc}${siteRowsHtml}</div>`;}
 function siteDomId(p,i){return String(p.key||'project').replace(/[^a-z0-9_-]/gi,'').slice(0,70)+'-'+i;}
 function toggleProjectCard(cb){const card=document.querySelector(`[data-project-card="${CSS.escape(cb.dataset.key)}"]`);if(card)card.classList.toggle('excluded',!cb.checked);}
 function refreshDrillMetrics(){const boxes=[...document.querySelectorAll('.project-calc-toggle')];const included=boxes.filter(b=>b.checked);const years=[...new Set(included.map(b=>b.dataset.year).filter(Boolean))].sort((a,b)=>Number(b)-Number(a));const types=[...new Set(included.map(b=>b.dataset.type).filter(Boolean))].sort();const states=[...new Set(included.map(b=>b.dataset.state).filter(Boolean))].sort();const total=included.reduce((s,b)=>s+num(b.dataset.total),0);const siteGrant=included.reduce((s,b)=>s+num(b.dataset.sitegrant),0);const siteRows=included.reduce((s,b)=>s+(parseInt(b.dataset.sites,10)||0),0);setText('metricYears',years.join(', ')||'—');setText('metricTypes',types.join(', ')||'—');setText('metricStates',states.join(', ')||'—');setText('metricProjects',String(included.length));setText('metricTotal',fmtMoney(total)||'$0');setText('metricSites',`${siteRows.toLocaleString()} / ${fmtMoney(siteGrant)||'$0'}`);}
 function setText(id,val){const el=document.getElementById(id);if(el)el.textContent=val;}
 function rusMapLinkFor(r){const base='https://ruraldevelopment.maps.arcgis.com/apps/webappviewer/index.html?id=15a73830555645ae93d2fa773ed8e971';const lat=parseFloat(r.lat),lon=parseFloat(r.lon);if(Number.isFinite(lat)&&Number.isFinite(lon))return `${base}&center=${lon},${lat}&level=12`;return base;}
-async function enrichAwardDrilldown(){const status=document.getElementById('drillEnrichStatus');const sites=currentCardProjects.flatMap(p=>p.sites||[]);if(!sites.length){if(status)status.textContent='No site-level rows available for Census/SAIPE enrichment.';return;}if(status)status.textContent=`⏱️ Adding Census population + SAIPE data… 0 / ${sites.length}`;let done=0;for(const s of sites){try{await enrichAwardSite(s);}catch(e){s._enrichError=e.message||'lookup failed';}done++;updateSiteCells(s);if(status)status.textContent=`⏱️ Adding Census population + SAIPE data… ${done} / ${sites.length}`;}if(status)status.textContent='Census/SAIPE lookup complete where source matches were available. Blank values need manual verification.';}
-async function enrichAwardSite(s){await enrichAwardPlacePop(s);await enrichAwardSaipe(s);}
-async function enrichAwardPlacePop(s){const st=String(s.state||'').toUpperCase();const fips=STATE_FIPS[st];if(!fips||s.cityPopulation)return;if(!placeCache[st]){const res=await fetch(`https://api.census.gov/data/2020/dec/pl?get=NAME,P1_001N&for=place:*&in=state:${fips}`);if(!res.ok)throw new Error('Census place API failed');const data=await res.json();const map={};data.slice(1).forEach(r=>{const nm=String(r[0]||'').replace(/,.*$/,'');map[norm(nm)]={name:r[0],pop:parseInt(r[1],10)}});placeCache[st]=map;}const city=String(s.city||'').trim();const m=placeCache[st][norm(city)];if(m&&Number.isFinite(m.pop)){s.cityPopulation=m.pop;s._censusPlace=m.name;}else{s._censusPlace='No place match';}}
-async function enrichAwardSaipe(s){const st=String(s.state||'').toUpperCase();const fips=STATE_FIPS[st];if(!fips||s.saipePercent)return;if(!saipeCache[st]){const res=await fetch(`https://api.census.gov/data/timeseries/poverty/saipe?get=NAME,SAEPOVRTALL_PT&for=county:*&in=state:${fips}&YEAR=2024`);if(!res.ok)throw new Error('SAIPE API failed');const data=await res.json();const byName={};data.slice(1).forEach(r=>{const nm=String(r[0]||'').replace(/,.*$/,'');byName[norm(nm)]={name:r[0],rate:parseFloat(r[1])};});saipeCache[st]={byName};}const county=String(s.county||'').replace(/\s+County$/i,'').trim();const m=saipeCache[st].byName[norm(county)];if(m&&Number.isFinite(m.rate)){s.saipePercent=m.rate;s._saipeCounty=m.name;}else{s._saipeCounty='No county match';}}
-function updateSiteCells(s){const row=document.querySelector(`[data-site-row="${CSS.escape(s._domId||'')}"]`);if(!row)return;const pop=row.querySelector('.pop-cell');const sai=row.querySelector('.saipe-cell');if(pop)pop.textContent=s.cityPopulation?Number(s.cityPopulation).toLocaleString():'';if(sai)sai.textContent=s.saipePercent!==undefined&&s.saipePercent!==''?String(s.saipePercent):'';}
-function currentIncludedProjects(){const selected=new Set([...document.querySelectorAll('.project-calc-toggle')].filter(b=>b.checked).map(b=>b.dataset.key));return currentCardProjects.filter(p=>selected.has(p.key));}
+async function enrichAwardDrilldown(force=false){
+  const status=document.getElementById('drillEnrichStatus');
+  const sites=currentCardProjects.flatMap(p=>p.sites||[]);
+  if(!sites.length){if(status)status.textContent='No site-level rows available for Census/SAIPE enrichment.';return;}
+  if(status)status.textContent=`⏱️ Looking up Census place population + SAIPE county poverty… 0 / ${sites.length}`;
+  let done=0,popOk=0,saipeOk=0,popNoMatch=0,saipeNoMatch=0,apiErrors=[];
+  for(const s of sites){
+    if(force){delete s.cityPopulation;delete s.saipePercent;delete s._censusPlace;delete s._saipeCounty;delete s._enrichError;}
+    const beforePop=s.cityPopulation, beforeSaipe=s.saipePercent;
+    try{await enrichAwardPlacePop(s);}catch(e){apiErrors.push(`Census: ${e.message||e}`);s._censusPlace='Lookup failed';}
+    try{await enrichAwardSaipe(s);}catch(e){apiErrors.push(`SAIPE: ${e.message||e}`);s._saipeCounty='Lookup failed';}
+    if(s.cityPopulation)popOk++; else if(s._censusPlace)popNoMatch++;
+    if(s.saipePercent!==undefined && s.saipePercent!=='' && s.saipePercent!==null)saipeOk++; else if(s._saipeCounty)saipeNoMatch++;
+    done++;updateSiteCells(s);
+    if(status)status.textContent=`⏱️ Looking up Census/SAIPE… ${done} / ${sites.length} | Pop matched ${popOk} | SAIPE matched ${saipeOk}`;
+    if(done%15===0) await new Promise(r=>setTimeout(r,25));
+  }
+  const uniqueErr=[...new Set(apiErrors)].slice(0,3);
+  if(status){
+    status.innerHTML=`Census/SAIPE lookup complete: <strong>${popOk}/${sites.length}</strong> population values and <strong>${saipeOk}/${sites.length}</strong> SAIPE values matched. ${uniqueErr.length?`API/status notes: ${esc(uniqueErr.join(' | '))}. `:''}Blank values mean the city/county name did not match the public API or needs manual verification.`;
+  }
+}
+async function enrichAwardSite(s){await Promise.allSettled([enrichAwardPlacePop(s),enrichAwardSaipe(s)]);}
+function normPlaceName(x){
+  return norm(String(x||'')
+    .replace(/\(.*?\)/g,' ')
+    .replace(/\b(city|town|village|cdp|borough|municipality|municipio|comunidad|zona urbana|balance|consolidated government|corporation)\b/ig,' '));
+}
+function placeVariants(city){
+  const raw=String(city||'').trim();
+  const set=new Set();
+  if(raw)set.add(raw);
+  const noParen=raw.replace(/\(.*?\)/g,' ').trim();
+  if(noParen)set.add(noParen);
+  for(const m of raw.matchAll(/\((.*?)\)/g)){ if(m[1])set.add(m[1].trim()); }
+  raw.split(/[\/;|,-]/).map(x=>x.trim()).filter(Boolean).forEach(x=>set.add(x));
+  // common historical/official alternate names observed in the prior-awards table
+  const lower=raw.toLowerCase();
+  if(lower.includes('barrow')||lower.includes('utqiagvik'))set.add('Utqiagvik');
+  return [...set].filter(Boolean);
+}
+async function loadCensusPlacesForState(st){
+  const fips=STATE_FIPS[st]; if(!fips)throw new Error(`missing FIPS for ${st}`);
+  if(placeCache[st])return placeCache[st];
+  const url=`https://api.census.gov/data/2020/dec/pl?get=NAME,P1_001N&for=place:*&in=state:${fips}`;
+  const res=await fetch(url,{cache:'force-cache'});
+  if(!res.ok)throw new Error(`2020 Census place API HTTP ${res.status}`);
+  const data=await res.json();
+  const map={};
+  data.slice(1).forEach(r=>{
+    const name=String(r[0]||'').replace(/,.*$/,'').trim();
+    const pop=parseInt(r[1],10);
+    if(!Number.isFinite(pop))return;
+    const obj={name:r[0],pop};
+    [norm(name),normPlaceName(name)].filter(Boolean).forEach(k=>{if(!map[k])map[k]=obj;});
+  });
+  placeCache[st]=map;return map;
+}
+async function enrichAwardPlacePop(s){
+  const st=String(s.state||'').toUpperCase();
+  if(!st||s.cityPopulation)return;
+  const map=await loadCensusPlacesForState(st);
+  const variants=placeVariants(s.city);
+  for(const v of variants){
+    const keys=[norm(v),normPlaceName(v)].filter(Boolean);
+    for(const k of keys){const m=map[k];if(m&&Number.isFinite(m.pop)){s.cityPopulation=m.pop;s._censusPlace=m.name;return;}}
+  }
+  s._censusPlace='No Census place match';
+}
+function normCountyName(x){
+  return norm(String(x||'')
+    .replace(/\b(county|parish|borough|census area|municipality|municipio|city and borough|city)\b/ig,' '));
+}
+async function loadSaipeForState(st){
+  const fips=STATE_FIPS[st]; if(!fips)throw new Error(`missing FIPS for ${st}`);
+  if(saipeCache[st])return saipeCache[st];
+  const years=['2024','2023'];
+  let lastErr='';
+  for(const year of years){
+    try{
+      const url=`https://api.census.gov/data/timeseries/poverty/saipe?get=NAME,SAEPOVRTALL_PT&for=county:*&in=state:${fips}&YEAR=${year}`;
+      const res=await fetch(url,{cache:'force-cache'});
+      if(!res.ok){lastErr=`SAIPE ${year} HTTP ${res.status}`;continue;}
+      const data=await res.json();
+      const byName={};
+      data.slice(1).forEach(r=>{
+        const nm=String(r[0]||'').replace(/,.*$/,'').trim();
+        const rate=parseFloat(r[1]);
+        if(!Number.isFinite(rate))return;
+        const obj={name:r[0],rate,year};
+        [norm(nm),normCountyName(nm)].filter(Boolean).forEach(k=>{if(!byName[k])byName[k]=obj;});
+      });
+      saipeCache[st]={byName,year};return saipeCache[st];
+    }catch(e){lastErr=e.message||String(e);}
+  }
+  throw new Error(lastErr||'SAIPE API failed');
+}
+async function enrichAwardSaipe(s){
+  const st=String(s.state||'').toUpperCase();
+  if(!st||s.saipePercent)return;
+  const cache=await loadSaipeForState(st);
+  const countyRaw=String(s.county||'').trim();
+  const keys=[norm(countyRaw),normCountyName(countyRaw)].filter(Boolean);
+  for(const k of keys){const m=cache.byName[k];if(m&&Number.isFinite(m.rate)){s.saipePercent=m.rate;s._saipeCounty=m.name;s._saipeYear=m.year;return;}}
+  s._saipeCounty='No county match';
+}
+function updateSiteCells(s){
+  const id=s._domId||'';
+  const row=document.querySelector(`[data-site-row="${CSS.escape(id)}"]`);
+  if(!row)return;
+  const pop=row.querySelector('.pop-cell');const sai=row.querySelector('.saipe-cell');
+  if(pop){pop.textContent=s.cityPopulation?Number(s.cityPopulation).toLocaleString():'';pop.title=s._censusPlace||'';}
+  if(sai){sai.textContent=(s.saipePercent!==undefined&&s.saipePercent!==''&&s.saipePercent!==null)?String(s.saipePercent):'';sai.title=s._saipeCounty?`${s._saipeCounty}${s._saipeYear?' ('+s._saipeYear+')':''}`:'';}
+}function currentIncludedProjects(){const selected=new Set([...document.querySelectorAll('.project-calc-toggle')].filter(b=>b.checked).map(b=>b.dataset.key));return currentCardProjects.filter(p=>selected.has(p.key));}
 function exportAwardeeCardCSV(){const projects=currentIncludedProjects();if(!projects.length){setAwardStatus('No included project cards to export.');return;}const fields=['included','year','awardee','projectId','awardUse','totalGrant','siteGrantTotal','siteCount','description','siteName','siteType','address','city','county','state','zip','cityPopulation','saipePercent','siteGrant','usdaMap'];const rows=[];projects.forEach(p=>{if((p.sites||[]).length){p.sites.forEach(s=>rows.push({included:'yes',year:p.year,awardee:p.awardee,projectId:p.projectId,awardUse:p.awardUse,totalGrant:p.totalGrant,siteGrantTotal:p.siteGrantTotal,siteCount:p.siteCount,description:p.description,siteName:s.siteName,siteType:s.siteType,address:s.address,city:s.city,county:s.county,state:s.state,zip:s.zip,cityPopulation:s.cityPopulation||'',saipePercent:s.saipePercent||'',siteGrant:s.siteGrant,usdaMap:rusMapLinkFor(s)}));}else{rows.push({included:'yes',year:p.year,awardee:p.awardee,projectId:p.projectId,awardUse:p.awardUse,totalGrant:p.totalGrant,siteGrantTotal:p.siteGrantTotal,siteCount:0,description:p.description});}});const csv=[fields.join(',')].concat(rows.map(r=>fields.map(f=>csvCell(r[f])).join(','))).join('\n');const blob=new Blob([csv],{type:'text/csv'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`RUS_DLT_Awardee_Card_${(projects[0].awardee||'awardee').replace(/[^a-z0-9]+/gi,'_')}.csv`;a.click();URL.revokeObjectURL(a.href);}
 function printAwardeeCard(){const panel=document.getElementById('awardDrilldown');if(!panel||panel.classList.contains('hidden'))return;const css=[...document.styleSheets].map(s=>{try{return [...s.cssRules].map(r=>r.cssText).join('\n')}catch(e){return ''}}).join('\n');const w=window.open('','_blank');w.document.write(`<!doctype html><html><head><title>RUS DLT Awardee Card</title><style>${css} body{background:#fff!important;margin:12px}.drill-actions,.no-print{display:none!important}.drilldown{box-shadow:none!important;border:1px solid #cbd5e1!important}</style></head><body>${panel.outerHTML}</body></html>`);w.document.close();w.focus();setTimeout(()=>w.print(),300);}
 function findAwardsNearSelectedProspects(){try{const raw=localStorage.getItem('rusDltSelectedProspects')||localStorage.getItem('rusDltProspectSelection')||'[]';const selected=JSON.parse(raw);if(!selected||!selected.length){setAwardStatus('No selected prospects were found from the Prospect Finder. Select prospects there first, then use this button.');return;}const radius=Number(document.getElementById('awardRadius').value)||100;const matches=[];for(const p of selected){const plat=parseFloat(p.lat||p.latitude),plon=parseFloat(p.lon||p.longitude);for(const pr of projectRows){const siteMatch=(pr.sites||[]).some(s=>{const d=distanceMiles(plat,plon,parseFloat(s.lat),parseFloat(s.lon));return Number.isFinite(d)&&d<=radius;});const textMatch=norm([p.county,p.city,p.state].join(' '));const projectText=norm([pr.county,pr.city,pr.state,(pr.sites||[]).map(s=>[s.county,s.city,s.state].join(' ')).join(' ')].join(' '));if(siteMatch||(textMatch&&projectText.includes(textMatch)))matches.push({...pr,nearProspect:p.organization||p.name||p.siteName||''});}}awardResults=matches;renderAwardsTable(awardResults);setAwardStatus(`<strong>${awardResults.length.toLocaleString()}</strong> prior district-winner project row(s) found near selected prospects using ${radius}-mile radius where coordinates are available, plus county/city fallback.`);}catch(e){setAwardStatus(`Could not compare selected prospects: ${esc(e.message)}`);}}

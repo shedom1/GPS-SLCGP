@@ -320,3 +320,16 @@ Update v20: K-12 district prospecting/search now uses the bundled ELSI/NCES K-12
 - Prior Winners awardee drilldown cards now include Print / PDF Card and Export Card CSV actions.
 - Prior Winners drilldown site rows now include 2020 Census place population and 2024 SAIPE poverty-rate lookup columns where the public APIs return a match.
 - Prior Winner card exports include the included project cards and site rows currently selected for the drilldown calculation.
+
+## v33 Updates
+
+- Rebuilt the Match Calculator into a more rep-friendly workflow with three clear entry points:
+  - Grant request known: shows grant amount, match needed, total project, and gap/surplus.
+  - Match available known: shows the maximum grant supported by the available match.
+  - Total project cost known: shows the implied grant/match split.
+- Fixed the Match Calculator answer panel so the **Grant Request** is explicitly included in the answer metrics.
+- Added compact answer cards for: “How much match do I need?”, “I only have this much match”, and “I can match at this %.”
+- Improved the Prior Winners Census/SAIPE lookup so Census population and SAIPE poverty lookups run independently. A Census place lookup failure no longer prevents the SAIPE lookup from running.
+- Improved Prior Winners matching for Census place names and county names, including common suffixes such as city, town, village, CDP, county, borough, census area, parish, and municipality.
+- Added a **Refresh Census/SAIPE** button to the Prior Winners drilldown card.
+- Prior Winners drilldown now reports how many site rows matched Census population and SAIPE values, and leaves unmatched values blank for manual verification.

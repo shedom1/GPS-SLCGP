@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>FY2026 RUS DLT Match Calculator</title>
   <style>
-    :root{--solutionz-blue:#005bbb;--solutionz-navy:#00476b;--solutionz-aqua:#7dcec8;--solutionz-orange:#e79766;--ink:#12344d;--muted:#5a6e7d;--line:#c9d9e6;--panel:#fff;--shadow:0 10px 24px rgba(0,71,107,.10);--radius:8px}
-    *{box-sizing:border-box}body{margin:0;font-family:"Myriad Pro","Segoe UI",Arial,sans-serif;color:var(--ink);background:#f7fafc}a{color:var(--solutionz-blue);text-decoration:none}.app-header{color:#fff;padding:14px 18px;background:linear-gradient(110deg,rgba(0,71,107,.94),rgba(0,91,187,.94));border-bottom:3px solid var(--solutionz-aqua)}.topbar,.hero,main{max-width:1380px;margin:0 auto}.topbar{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}.brand-title{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}.brand-subtitle{font-size:10px;color:#dfeff8;margin-top:1px}.nav-actions{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:6px}.nav-button,.button-link{display:inline-flex;align-items:center;border-radius:4px;border:1px solid rgba(255,255,255,.28);background:rgba(255,255,255,.10);color:#fff;padding:6px 9px;font-weight:700;font-size:10.5px;text-transform:uppercase;letter-spacing:.04em}.eyebrow{display:inline-flex;margin-top:10px;border:1px solid rgba(125,206,200,.55);background:rgba(125,206,200,.16);color:#e6fffd;border-radius:4px;padding:4px 8px;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.08em}h1{font-size:22px;line-height:1.05;margin:6px 0 3px;font-weight:850}.subtitle{font-size:11.5px;line-height:1.35;color:#dfeff8;max-width:980px}main{padding:12px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}.card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}.card h2{font-size:12px;margin:0;padding:8px 10px;border-bottom:2px solid var(--solutionz-blue);background:#fff;color:var(--solutionz-navy);text-transform:uppercase;letter-spacing:.035em}.body{padding:10px}.row{display:grid;grid-template-columns:repeat(12,1fr);gap:7px;align-items:end;margin-bottom:7px}.col-3{grid-column:span 3}.col-4{grid-column:span 4}.col-6{grid-column:span 6}.col-12{grid-column:span 12}label{display:block;font-size:9.5px;font-weight:850;color:#34465d;margin-bottom:3px;text-transform:uppercase;letter-spacing:.035em}input,select,textarea{width:100%;border:1px solid #b9cbd8;border-radius:4px;padding:6px 7px;background:#fff;font:inherit;font-size:12px;color:var(--ink)}textarea{min-height:48px;resize:vertical}.btnrow{display:flex;gap:5px;flex-wrap:wrap;align-items:center}button{border-radius:4px;border:1px solid var(--line);padding:6px 8px;font-weight:800;cursor:pointer;background:#fff;color:var(--solutionz-navy);font-size:11px}button.primary{background:var(--solutionz-blue);color:#fff;border-color:var(--solutionz-blue)}button.accent{background:var(--solutionz-aqua);color:var(--solutionz-navy);border-color:var(--solutionz-aqua)}.callout{border:1px solid #cfe8ff;border-left:4px solid var(--solutionz-blue);background:#f8fbff;border-radius:6px;padding:7px 9px;font-size:11px;line-height:1.35;color:#173a65;margin:0 0 8px}.warn{border-color:#f8dccb;border-left-color:var(--solutionz-orange);background:#fffaf5;color:#78350f}.ok{border-color:#ccefdc;border-left-color:#0f8060;background:#f5fff9;color:#064e3b}.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}.metric{border:1px solid var(--line);border-top:3px solid var(--solutionz-blue);border-radius:6px;padding:8px;background:#fff}.metric .k{font-size:9px;text-transform:uppercase;letter-spacing:.06em;color:#667b91;font-weight:850}.metric .v{font-size:18px;font-weight:900;margin-top:2px;letter-spacing:-.03em;color:var(--solutionz-navy)}.metric .s{font-size:9.5px;color:var(--muted);margin-top:2px}.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:6px;background:#fff}table{width:100%;border-collapse:separate;border-spacing:0;font-size:11px}th,td{border-bottom:1px solid #e8eef5;border-right:1px solid #eef3f8;padding:5px 6px;text-align:left;vertical-align:top}th{background:var(--solutionz-navy);color:#fff;font-size:9.5px;text-transform:uppercase;letter-spacing:.04em}.num{text-align:right;font-variant-numeric:tabular-nums}.pill{display:inline-flex;border-radius:4px;padding:2px 5px;font-weight:850;font-size:9.5px;text-transform:uppercase;letter-spacing:.03em}.green{background:#dff4ec;color:#0f8060}.amberP{background:#fff1e7;color:#9b4e1e}.redP{background:#ffe9e4;color:#b42318}.smalltxt{font-size:10.5px;color:var(--muted);line-height:1.35}.status{font-size:11px;color:var(--muted);margin-top:6px}details summary{cursor:pointer;font-size:11px;font-weight:850;color:#0d4f75;margin-bottom:6px}@media(max-width:1000px){.grid{grid-template-columns:1fr}.metrics{grid-template-columns:repeat(2,1fr)}.row{grid-template-columns:repeat(6,1fr)}.col-3,.col-4,.col-6{grid-column:span 6}.topbar{display:block}.nav-actions{justify-content:flex-start;margin-top:8px}h1{font-size:20px}}@media print{.app-header .nav-actions,.btnrow,.no-print{display:none!important}.app-header{background:#fff!important;color:var(--solutionz-navy)!important;border-bottom:2px solid var(--solutionz-blue)}.subtitle{color:#334155}.card{box-shadow:none;break-inside:avoid}.grid{display:block}}
+    :root{--blue:#005bbb;--navy:#00476b;--aqua:#7dcec8;--orange:#f79646;--ink:#12344d;--muted:#5a6e7d;--line:#c9d9e6;--panel:#fff;--bg:#f7fafc;--shadow:0 8px 18px rgba(0,71,107,.08);--radius:8px}
+    *{box-sizing:border-box}body{margin:0;font-family:"Myriad Pro","Segoe UI",Arial,sans-serif;color:var(--ink);background:var(--bg)}a{color:var(--blue);text-decoration:none}.app-header{color:#fff;padding:12px 16px;background:linear-gradient(110deg,rgba(0,71,107,.96),rgba(0,91,187,.96));border-bottom:3px solid var(--aqua)}.topbar,.hero,main{max-width:1380px;margin:0 auto}.topbar{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}.brand-title{font-size:10.5px;font-weight:850;letter-spacing:.1em;text-transform:uppercase}.brand-subtitle{font-size:10px;color:#e1f2fb;margin-top:1px}.nav-actions{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:5px}.nav-button{display:inline-flex;align-items:center;border-radius:4px;border:1px solid rgba(255,255,255,.28);background:rgba(255,255,255,.10);color:#fff;padding:5px 8px;font-weight:800;font-size:10px;text-transform:uppercase;letter-spacing:.04em}.eyebrow{display:inline-flex;margin-top:8px;border:1px solid rgba(125,206,200,.55);background:rgba(125,206,200,.16);color:#e6fffd;border-radius:4px;padding:3px 7px;font-size:9.5px;font-weight:850;text-transform:uppercase;letter-spacing:.08em}h1{font-size:19px;line-height:1.05;margin:5px 0 2px;font-weight:850}.subtitle{font-size:11px;line-height:1.3;color:#e1f2fb;max-width:950px}main{padding:10px}.grid{display:grid;grid-template-columns:1.02fr .98fr;gap:9px;margin-bottom:9px}.tri{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:9px}.card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}.card h2{font-size:11.5px;margin:0;padding:7px 9px;border-bottom:2px solid var(--blue);background:#fff;color:var(--navy);text-transform:uppercase;letter-spacing:.035em}.body{padding:8px}.row{display:grid;grid-template-columns:repeat(12,1fr);gap:6px;align-items:end;margin-bottom:6px}.col-2{grid-column:span 2}.col-3{grid-column:span 3}.col-4{grid-column:span 4}.col-5{grid-column:span 5}.col-6{grid-column:span 6}.col-12{grid-column:span 12}label{display:block;font-size:9px;font-weight:850;color:#34465d;margin-bottom:2px;text-transform:uppercase;letter-spacing:.035em}input,select{width:100%;border:1px solid #b9cbd8;border-radius:4px;padding:5px 6px;background:#fff;font:inherit;font-size:11.5px;color:var(--ink)}.btnrow{display:flex;gap:5px;flex-wrap:wrap;align-items:center}button{border-radius:4px;border:1px solid var(--line);padding:5px 7px;font-weight:850;cursor:pointer;background:#fff;color:var(--navy);font-size:10.5px;white-space:nowrap}button.primary{background:var(--blue);color:#fff;border-color:var(--blue)}button.accent{background:var(--aqua);color:var(--navy);border-color:var(--aqua)}button.orange{background:var(--orange);color:#fff;border-color:var(--orange)}.callout{border:1px solid #cfe8ff;border-left:4px solid var(--blue);background:#f8fbff;border-radius:6px;padding:6px 8px;font-size:10.7px;line-height:1.3;color:#173a65;margin:0 0 7px}.warn{border-color:#f8dccb;border-left-color:var(--orange);background:#fffaf5;color:#78350f}.ok{border-color:#ccefdc;border-left-color:#0f8060;background:#f5fff9;color:#064e3b}.answers{display:grid;grid-template-columns:repeat(6,minmax(100px,1fr));gap:6px}.metric{border:1px solid var(--line);border-top:3px solid var(--blue);border-radius:6px;padding:6px;background:#fff}.metric .k{font-size:8.5px;text-transform:uppercase;letter-spacing:.06em;color:#667b91;font-weight:850}.metric .v{font-size:16px;font-weight:900;margin-top:1px;letter-spacing:-.03em;color:var(--navy)}.metric .s{font-size:9px;color:var(--muted);margin-top:1px}.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:6px;background:#fff;max-height:380px}table{width:100%;border-collapse:separate;border-spacing:0;font-size:10.5px;min-width:920px}th,td{border-bottom:1px solid #e8eef5;border-right:1px solid #eef3f8;padding:4px 5px;text-align:left;vertical-align:top}th{background:var(--navy);color:#fff;font-size:9px;text-transform:uppercase;letter-spacing:.04em}.num{text-align:right;font-variant-numeric:tabular-nums}.pill{display:inline-flex;border-radius:4px;padding:2px 5px;font-weight:850;font-size:9px;text-transform:uppercase;letter-spacing:.03em}.green{background:#dff4ec;color:#0f8060}.amberP{background:#fff1e7;color:#9b4e1e}.redP{background:#ffe9e4;color:#b42318}.smalltxt{font-size:10.2px;color:var(--muted);line-height:1.3}.status{font-size:10.5px;color:var(--muted);margin-top:5px}details summary{cursor:pointer;font-size:10.5px;font-weight:850;color:#0d4f75;margin-bottom:5px}.mini-list{margin:0;padding-left:17px;font-size:10.5px;line-height:1.35;color:#334155}.resultLine{font-size:11.5px;font-weight:850;color:#12344d;margin-top:5px}.formula{font-size:9.8px;color:#64748b;margin-top:3px}@media(max-width:1100px){.grid,.tri{grid-template-columns:1fr}.answers{grid-template-columns:repeat(2,1fr)}.row{grid-template-columns:repeat(6,1fr)}.col-2,.col-3,.col-4,.col-5,.col-6{grid-column:span 6}.topbar{display:block}.nav-actions{justify-content:flex-start;margin-top:8px}h1{font-size:18px}}@media print{.app-header .nav-actions,.btnrow,.no-print{display:none!important}.app-header{background:#fff!important;color:var(--navy)!important;border-bottom:2px solid var(--blue)}.subtitle{color:#334155}.card{box-shadow:none;break-inside:avoid}.grid,.tri{display:block}.metric{break-inside:avoid}}
   </style>
   <link rel="stylesheet" href="brand.css" />
   <script src="auth.js"></script>
@@ -26,16 +26,16 @@
     <div class="hero">
       <div class="eyebrow">Default planning buffer: 15.1%</div>
       <h1>RUS DLT Match Calculator</h1>
-      <div class="subtitle">Answer two questions fast: how much match is needed for a grant request, and how much grant can be supported by the match already available.</div>
+      <div class="subtitle">Rep-friendly calculator for grant request, match requirement, available match, gap/surplus, and scenario planning.</div>
     </div>
   </header>
 
   <main>
     <section class="grid">
       <div class="card">
-        <h2>Match Calculator</h2>
+        <h2>1. Enter the numbers you know</h2>
         <div class="body">
-          <div class="callout"><strong>Default:</strong> 15.1% match-to-grant planning rate. Change the percentage if you want to test a higher match scenario.</div>
+          <div class="callout"><strong>Use case:</strong> Enter either the grant amount you want, the match money you have, or a total project cost. The answer panel updates all three ways.</div>
           <div class="row">
             <div class="col-3"><label>Match %</label><input id="matchPct" type="number" value="15.1" min="15" max="100" step="0.1" oninput="calc()"></div>
             <div class="col-3"><label>Grant Request</label><input id="grant" type="number" value="750000" min="0" step="1000" oninput="calc()"></div>
@@ -44,10 +44,11 @@
           </div>
           <div class="btnrow no-print">
             <button class="primary" onclick="calc()">Calculate</button>
-            <button onclick="usePresetGrant(50000)">$50k Grant</button>
-            <button onclick="usePresetGrant(250000)">$250k Grant</button>
-            <button onclick="usePresetGrant(500000)">$500k Grant</button>
-            <button onclick="usePresetGrant(750000)">$750k Grant</button>
+            <button onclick="setGrant(50000)">$50k Grant</button>
+            <button onclick="setGrant(250000)">$250k Grant</button>
+            <button onclick="setGrant(500000)">$500k Grant</button>
+            <button onclick="setGrant(750000)">$750k Grant</button>
+            <button onclick="setMatchForMax()">Match for Max Grant</button>
             <button class="accent" onclick="copySummary()">Copy Summary</button>
           </div>
           <div id="status" class="status"></div>
@@ -55,15 +56,46 @@
       </div>
 
       <div class="card">
-        <h2>Answers</h2>
+        <h2>2. Answer for the rep</h2>
         <div class="body">
-          <div class="metrics">
-            <div class="metric"><div class="k">How much match do I need?</div><div id="needed" class="v">—</div><div id="neededSub" class="s">based on grant request</div></div>
-            <div class="metric"><div class="k">How much grant can I get?</div><div id="supportedGrant" class="v">—</div><div class="s">based on match available</div></div>
-            <div class="metric"><div class="k">Gap / Surplus</div><div id="gap" class="v">—</div><div class="s">available match less required match</div></div>
-            <div class="metric"><div class="k">Grant From Total Cost</div><div id="grantFromTotal" class="v">—</div><div class="s">optional reverse calculation</div></div>
+          <div class="answers">
+            <div class="metric"><div class="k">Grant Request</div><div id="ansGrant" class="v">—</div><div class="s">entered target</div></div>
+            <div class="metric"><div class="k">Match Needed</div><div id="needed" class="v">—</div><div class="s">grant × match %</div></div>
+            <div class="metric"><div class="k">Total Project</div><div id="totalProject" class="v">—</div><div class="s">grant + match</div></div>
+            <div class="metric"><div class="k">Max Grant From Match</div><div id="supportedGrant" class="v">—</div><div class="s">available match ÷ %</div></div>
+            <div class="metric"><div class="k">Gap / Surplus</div><div id="gap" class="v">—</div><div class="s">available less needed</div></div>
+            <div class="metric"><div class="k">Grant From Total Cost</div><div id="grantFromTotal" class="v">—</div><div class="s">optional reverse calc</div></div>
           </div>
-          <div id="advice" class="callout ok" style="margin-top:8px"></div>
+          <div id="advice" class="callout ok" style="margin-top:7px"></div>
+          <div id="quickAnswer" class="resultLine"></div>
+          <div id="formula" class="formula"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="tri">
+      <div class="card">
+        <h2>Question A: How much match do I need?</h2>
+        <div class="body">
+          <div class="smalltxt">Use when the rep knows the grant request.</div>
+          <div class="resultLine" id="qaNeed">—</div>
+          <div class="formula">Formula: Grant Request × Match %</div>
+        </div>
+      </div>
+      <div class="card">
+        <h2>Question B: I only have this much match</h2>
+        <div class="body">
+          <div class="smalltxt">Use when the customer has a fixed cash match amount.</div>
+          <div class="resultLine" id="qaHave">—</div>
+          <div class="formula">Formula: Available Match ÷ Match %; capped at $750,000</div>
+        </div>
+      </div>
+      <div class="card">
+        <h2>Question C: I can match at this %</h2>
+        <div class="body">
+          <div class="smalltxt">Use when testing 15.1%, 20%, 25%, or another scenario.</div>
+          <div class="resultLine" id="qaPct">—</div>
+          <div class="formula">The minimum is 15%; 15.1% is a cushion for rounding.</div>
         </div>
       </div>
     </section>
@@ -72,17 +104,16 @@
       <div class="card">
         <h2>Scenario Table</h2>
         <div class="body">
-          <div class="smalltxt" style="margin-bottom:6px">Each row answers: match needed, total project cost, and whether your available match covers the scenario.</div>
           <div class="table-wrap"><table id="scenarioTable"></table></div>
         </div>
       </div>
       <div class="card">
-        <h2>Create a Scenario</h2>
+        <h2>Custom Scenarios</h2>
         <div class="body">
           <div class="row">
-            <div class="col-6"><label>Scenario Name</label><input id="scenarioName" placeholder="Example: Phase 1 / high-priority sites"></div>
+            <div class="col-5"><label>Scenario Name</label><input id="scenarioName" placeholder="Phase 1 / rural sites"></div>
             <div class="col-4"><label>Grant Amount</label><input id="scenarioGrant" type="number" min="0" step="1000" placeholder="250000"></div>
-            <div class="col-2"><label>&nbsp;</label><button class="primary" onclick="addScenario()" style="width:100%">Add</button></div>
+            <div class="col-3"><label>&nbsp;</label><button class="primary" onclick="addScenario()" style="width:100%">Add Scenario</button></div>
           </div>
           <div class="table-wrap"><table id="customTable"></table></div>
         </div>
@@ -93,14 +124,14 @@
       <h2>Where can I get match money?</h2>
       <div class="body">
         <div class="table-wrap"><table>
-          <thead><tr><th>Potential Source</th><th>How to Think About It</th><th>Watch-Out</th></tr></thead>
+          <thead><tr><th>Potential Source</th><th>How to Use It</th><th>Watch-Out</th></tr></thead>
           <tbody>
-            <tr><td>Applicant cash</td><td>Cleanest source when the applicant can document committed funds.</td><td>Must be available and committed at application submission.</td></tr>
-            <tr><td>Partner / end-user contribution</td><td>Useful for consortium or multi-site projects where partners benefit from equipment.</td><td>Each contributor needs support documentation.</td></tr>
-            <tr><td>State or local funds</td><td>County, city, school board, hospital authority, or other non-federal commitments can help close gaps.</td><td>Confirm the funds are non-federal unless a statute specifically allows use as match.</td></tr>
-            <tr><td>Non-federal grants / philanthropy</td><td>Local foundations, community foundations, hospital foundations, or corporate philanthropy may help.</td><td>Grant award letters must allow use for the proposed DLT project.</td></tr>
-            <tr><td>ARC funds, where applicable</td><td>Potential option in eligible Appalachian Regional Commission counties.</td><td>Coordinate early with ARC/state program contacts.</td></tr>
-            <tr><td>Eligible in-kind</td><td>New, non-depreciated, integral equipment or assets can sometimes count.</td><td>Do not use already-installed equipment, vendor discounts tied to purchases, future revenue, E-rate, or ineligible items.</td></tr>
+            <tr><td>Applicant cash</td><td>Cleanest source when committed by the applicant.</td><td>Must be documented and available.</td></tr>
+            <tr><td>Partner/end-user contribution</td><td>Works for shared multi-site projects.</td><td>Each contributor needs a match letter.</td></tr>
+            <tr><td>State/local funds</td><td>County, city, school board, hospital authority, or other local funds.</td><td>Confirm the funds are not federal unless authorized.</td></tr>
+            <tr><td>Non-federal grants/philanthropy</td><td>Community foundations, hospital foundations, local donors, corporate philanthropy.</td><td>Award letters must allow DLT project use.</td></tr>
+            <tr><td>ARC funds where applicable</td><td>Potential option for eligible Appalachian counties.</td><td>Coordinate early with ARC/state contacts.</td></tr>
+            <tr><td>Eligible in-kind</td><td>New, non-depreciated, integral assets can sometimes count.</td><td>No vendor discounts tied to purchases, installed equipment, E-rate, future revenue, or ineligible items.</td></tr>
           </tbody>
         </table></div>
       </div>
@@ -115,42 +146,52 @@ function pct(){return Math.max(0,val('matchPct'))/100}
 function grantSupportedByMatch(match, rate){return rate>0?Math.min(match/rate, GRANT_MAX):0}
 function matchNeededForGrant(grant, rate){return grant*rate}
 function grantFromProjectCost(total, rate){return rate>=0?Math.min(total/(1+rate), GRANT_MAX):0}
+function setText(id,text){const el=document.getElementById(id);if(el)el.textContent=text}
 function calc(){
   const rate=pct();
   const grant=val('grant');
   const available=val('availableMatch');
   const totalCost=val('projectCost');
   const needed=matchNeededForGrant(grant,rate);
+  const project=grant+needed;
   const supported=grantSupportedByMatch(available,rate);
+  const supportedMatch=supported*rate;
   const gap=available-needed;
   const reverseGrant=totalCost>0?grantFromProjectCost(totalCost,rate):NaN;
-  document.getElementById('needed').textContent=money(needed);
-  document.getElementById('neededSub').textContent=`${(rate*100).toFixed(1)}% of ${money(grant)}`;
-  document.getElementById('supportedGrant').textContent=money(supported);
-  document.getElementById('gap').textContent=money(gap);
-  document.getElementById('grantFromTotal').textContent=Number.isFinite(reverseGrant)?money(reverseGrant):'—';
+  setText('ansGrant',money(grant));
+  setText('needed',money(needed));
+  setText('totalProject',money(project));
+  setText('supportedGrant',money(supported));
+  setText('gap',money(gap));
+  setText('grantFromTotal',Number.isFinite(reverseGrant)?money(reverseGrant):'—');
+  setText('qaNeed',grant>0?`${money(grant)} needs ${money(needed)} match; total project ${money(project)}.`:'Enter a grant request.');
+  setText('qaHave',available>0?`${money(available)} match supports up to ${money(supported)} grant and about ${money(supported+supportedMatch)} total project.`:'Enter available match.');
+  setText('qaPct',`${(rate*100).toFixed(1)}% means ${money(100000)} grant needs ${money(100000*rate)} match.`);
   const issues=[];
   if(rate<.15) issues.push('Match percentage is below the 15% minimum.');
   if(grant>0 && grant<GRANT_MIN) issues.push('Grant request is below the $50,000 program minimum.');
   if(grant>GRANT_MAX) issues.push('Grant request exceeds the $750,000 program maximum.');
-  if(gap<0) issues.push(`You need ${money(Math.abs(gap))} more match for a ${money(grant)} grant request.`);
-  const ok=[];
-  if(grant>0) ok.push(`A ${money(grant)} grant needs ${money(needed)} in match at ${(rate*100).toFixed(1)}%.`);
-  if(available>0) ok.push(`${money(available)} in match supports up to ${money(supported)} in grant request, capped at ${money(GRANT_MAX)}.`);
-  if(totalCost>0 && Number.isFinite(reverseGrant)) ok.push(`A ${money(totalCost)} total project implies about ${money(reverseGrant)} grant and ${money(totalCost-reverseGrant)} match at this rate.`);
+  if(grant>0 && available>0 && gap<0) issues.push(`You need ${money(Math.abs(gap))} more match for this grant request.`);
+  const good=[];
+  if(grant>0) good.push(`${money(grant)} grant request requires ${money(needed)} match at ${(rate*100).toFixed(1)}%.`);
+  if(available>0) good.push(`${money(available)} available match supports ${money(supported)} grant.`);
+  if(totalCost>0 && Number.isFinite(reverseGrant)) good.push(`${money(totalCost)} total project = about ${money(reverseGrant)} grant + ${money(totalCost-reverseGrant)} match.`);
   const advice=document.getElementById('advice');
   advice.className='callout '+(issues.length?'warn':'ok');
-  advice.innerHTML=(issues.length?'<strong>Review:</strong> ':'<strong>Answer:</strong> ')+(issues.length?issues.join(' '):(ok.join(' ')||'Enter a grant request or available match amount.'));
-  document.getElementById('status').textContent=`Using ${(rate*100).toFixed(1)}% match-to-grant ratio. Minimum DLT match is 15%; 15.1% is a planning buffer.`;
-  renderScenarios(); renderCustom();
+  advice.innerHTML=(issues.length?'<strong>Needs attention:</strong> ':'<strong>Answer:</strong> ')+(issues.length?issues.join(' '):(good.join(' ')||'Enter a grant request or available match amount.'));
+  setText('quickAnswer',grant>0?`Rep answer: ask for ${money(needed)} match to support a ${money(grant)} RUS DLT grant request.`:'Rep answer: enter the grant target first.');
+  setText('formula',`Using ${(rate*100).toFixed(1)}% match-to-grant ratio. Required match = Grant × ${(rate*100).toFixed(1)}%.`);
+  setText('status',`Last calculated at ${(rate*100).toFixed(1)}%. RUS DLT planning range: ${money(GRANT_MIN)} to ${money(GRANT_MAX)} grant request.`);
+  renderScenarios();renderCustom();
 }
-function usePresetGrant(g){document.getElementById('grant').value=g;calc();}
+function setGrant(g){document.getElementById('grant').value=g;calc();}
+function setMatchForMax(){document.getElementById('availableMatch').value=Math.ceil(GRANT_MAX*pct());calc();}
 function scenarioRow(name,g,removeIndex=null){
   const rate=pct(), available=val('availableMatch'), need=matchNeededForGrant(g,rate), gap=available-need;
-  const cls=gap>=0?'green':'redP';
-  const status=gap>=0?'Covered':'Gap';
-  const action = removeIndex===null ? `<button onclick="usePresetGrant(${g})">Use</button>` : `<button onclick="usePresetGrant(${g})">Use</button> <button onclick="removeScenario(${removeIndex})">Remove</button>`;
-  return `<tr><td>${name}</td><td class="num">${money(g)}</td><td class="num">${money(need)}</td><td class="num">${money(g+need)}</td><td><span class="pill ${cls}">${status}</span></td><td class="num">${money(gap)}</td><td class="no-print">${action}</td></tr>`;
+  const cls=available?gap>=0?'green':'redP':'amberP';
+  const status=available?gap>=0?'Covered':'Gap':'No match entered';
+  const action = removeIndex===null ? `<button onclick="setGrant(${g})">Use</button>` : `<button onclick="setGrant(${g})">Use</button> <button onclick="removeScenario(${removeIndex})">Remove</button>`;
+  return `<tr><td>${name}</td><td class="num">${money(g)}</td><td class="num">${money(need)}</td><td class="num">${money(g+need)}</td><td><span class="pill ${cls}">${status}</span></td><td class="num">${available?money(gap):'—'}</td><td class="no-print">${action}</td></tr>`;
 }
 function renderScenarios(){
   const rows=[50000,100000,250000,500000,750000].map(g=>scenarioRow('$'+(g/1000)+'k grant',g)).join('');
@@ -159,9 +200,8 @@ function renderScenarios(){
 function addScenario(){
   const name=(document.getElementById('scenarioName').value||'Custom Scenario').trim();
   const grant=val('scenarioGrant');
-  if(!grant){document.getElementById('status').textContent='Enter a custom grant amount first.';return;}
-  customScenarios.push({name,grant});
-  document.getElementById('scenarioName').value='';document.getElementById('scenarioGrant').value='';renderCustom();
+  if(!grant){setText('status','Enter a custom grant amount first.');return;}
+  customScenarios.push({name,grant});document.getElementById('scenarioName').value='';document.getElementById('scenarioGrant').value='';renderCustom();
 }
 function renderCustom(){
   const table=document.getElementById('customTable');
@@ -171,9 +211,8 @@ function renderCustom(){
 function removeScenario(i){customScenarios.splice(i,1);renderCustom();}
 function copySummary(){
   const rate=pct(), grant=val('grant'), available=val('availableMatch'), needed=matchNeededForGrant(grant,rate), supported=grantSupportedByMatch(available,rate), totalCost=val('projectCost'), reverse=totalCost>0?grantFromProjectCost(totalCost,rate):NaN;
-  const lines=['RUS DLT Match Planning Summary',`Match % used: ${(rate*100).toFixed(1)}%`,`Grant request: ${money(grant)}`,`Match needed: ${money(needed)}`,`Available match: ${money(available)}`,`Grant supported by available match: ${money(supported)}`,`Gap/surplus: ${money(available-needed)}`, totalCost>0?`From total project cost ${money(totalCost)}: grant ${money(reverse)} / match ${money(totalCost-reverse)}`:'Total project reverse calc: not entered'];
-  navigator.clipboard?.writeText(lines.join('\n'));
-  document.getElementById('status').textContent='Summary copied.';
+  const lines=['RUS DLT Match Planning Summary',`Match % used: ${(rate*100).toFixed(1)}%`,`Grant request: ${money(grant)}`,`Match needed: ${money(needed)}`,`Total project: ${money(grant+needed)}`,`Available match: ${money(available)}`,`Grant supported by available match: ${money(supported)}`,`Gap/surplus: ${money(available-needed)}`, totalCost>0?`From total project cost ${money(totalCost)}: grant ${money(reverse)} / match ${money(totalCost-reverse)}`:'Total project reverse calc: not entered'];
+  navigator.clipboard?.writeText(lines.join('\n'));setText('status','Summary copied.');
 }
 calc();
 </script>
