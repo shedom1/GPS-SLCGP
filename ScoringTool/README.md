@@ -302,3 +302,13 @@ Update v20: K-12 district prospecting/search now uses the bundled ELSI/NCES K-12
 - Removed the Solutionz/brand icon wordmark from page headers.
 - Condensed the Prior Winners page: smaller title, reduced header height, tighter filter cards, smaller tables, compact drilldown cards, and horizontal action buttons.
 - Removed the explanatory source paragraph from the Prior Winners header/filter area.
+
+## v31 updates
+
+- Applied the same compact, low-profile layout treatment across all views.
+- Removed the Scoring Tool target-score panel and row-level target-fit column to reduce clutter.
+- Added a `https://data.census.gov` resource link on the Scoring Tool for manual Census population/geography review.
+- Rebuilt the Match Calculator around two practical questions:
+  - How much match do I need?
+  - How much grant can I support with this much match?
+- Match Calculator now defaults to a 15.1% planning match rate, with scenario rows for $50k, $100k, $250k, $500k, and $750k grant requests plus custom scenarios.

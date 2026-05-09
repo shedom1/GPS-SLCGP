@@ -116,17 +116,6 @@
             <div class="metric"><div class="k">D-3 Needs</div><input id="subjectiveScore" class="num" value="0" type="number" min="0" max="30" step="0.5" oninput="recalc();renderTable()" /><div class="s">manual estimate, max 30</div></div>
             <div class="metric"><div class="k">Total Score</div><div id="metricTotal" class="v">—</div><div class="s">provisional max 100</div></div>
           </div>
-          <div class="target-panel" style="margin-top:10px;border:1px solid var(--line);border-radius:16px;background:linear-gradient(180deg,#ffffff,#f8fbff);padding:10px 12px">
-            <div class="row" style="margin-bottom:6px">
-              <div class="col-2"><label>Target D-1</label><input id="targetD1" class="num" type="number" value="30" min="0" max="40" step="5" oninput="recalc();renderTable()" /></div>
-              <div class="col-2"><label>Target D-2</label><input id="targetD2" class="num" type="number" value="20" min="0" max="30" step="5" oninput="recalc();renderTable()" /></div>
-              <div class="col-2"><label>Target D-1+D-2</label><input id="targetObjectiveScore" class="num" type="number" value="50" min="0" max="70" step="5" oninput="recalc();renderTable()" /></div>
-              <div class="col-2"><label>Target Total</label><input id="targetTotalScore" class="num" type="number" value="75" min="0" max="100" step="5" oninput="recalc();renderTable()" /></div>
-              <div class="col-2"><label>Target Status</label><div id="metricTargetStatus" class="pill">—</div></div>
-              <div class="col-2"><label>Gap / Surplus</label><div id="metricTargetGap" class="pill">—</div></div>
-            </div>
-            <div class="smalltxt">Target features are screening aids. Row target fit uses D-1, D-2, and D-1+D-2 thresholds; final scoring still depends on verified USDA DLT map data and the D-3 narrative score.</div>
-          </div>
           <div class="btnrow" style="margin-top:12px">
             <button class="primary" onclick="enrichAll()">Enrich Census + SAIPE</button>
             <button onclick="recalc()">Recalculate</button>
@@ -274,6 +263,7 @@ Example County Schools,Example School,100 Main St,Albany,Albany,GA,31701,Dougher
       <div id="panel-sources" class="panel body">
         <div class="source-list">
           <a href="https://www.rd.usda.gov/programs-services/telecommunications-programs/distance-learning-telemedicine-grants" target="_blank"><strong>USDA RUS DLT FY2026 Resources</strong><span>Application guide, sample worksheets, checklist, SAIPE poverty data, DLT map.</span></a>
+          <a href="https://data.census.gov" target="_blank"><strong>Census Data Explorer</strong><span>Use data.census.gov to verify 2020 Census place population, community geography, and source documentation when the automated lookup needs review.</span></a>
           <a href="https://ruraldevelopment.maps.arcgis.com/apps/webappviewer/index.html?id=15a73830555645ae93d2fa773ed8e971" target="_blank"><strong>USDA DLT Rurality Mapping Tool</strong><span>Use to verify non-rural areas / contiguity to urban areas.</span></a>
           <a href="https://services1.arcgis.com/Ua5sjt3LWTPigjyD/ArcGIS/rest/services/School_Characteristics_Current/FeatureServer/0" target="_blank"><strong>NCES Public School Characteristics</strong><span>School name, district, physical address, county FIPS, NCES locale, enrollment, lat/long. For application-grade review, compare against the latest NCES CCD directory files if available.</span></a>
           <a href="https://data.hrsa.gov/DataDownload/DD_Files/Health_Center_Service_Delivery_and_LookAlike_Sites.xlsx" target="_blank"><strong>HRSA Health Center Sites XLSX</strong><span>Health Center Service Delivery and Look-Alike Sites. The tool attempts a full-table lookup and includes an upload fallback when browser/CORS settings block live HRSA loading.</span></a>
@@ -408,7 +398,6 @@ const TABLE_COLUMNS = [
   {key:'cityPopulation', label:'2020 Pop', w:88, type:'number'},
   {key:'saipePercent', label:'SAIPE %', w:78, type:'number'},
   {key:'objectiveScore', label:'D-1+D-2 Total', w:94, type:'number'},
-  {key:'targetFit', label:'Target Fit', w:92, type:'number'},
   {key:'siteName', label:'Site Name', w:175, type:'text'},
   {key:'organization', label:'Organization / District', w:160, type:'text'},
   {key:'type', label:'Type', w:108, type:'text'},
@@ -1004,7 +993,6 @@ function renderTable(){
       <td><input class="num" value="${esc(s.cityPopulation||'')}" onchange="upd('${s.id}','cityPopulation',this.value)"></td>
       <td><input class="num" value="${esc(s.saipePercent||'')}" onchange="upd('${s.id}','saipePercent',this.value)"></td>
       <td class="num">${totalScorePill(s)}</td>
-      <td class="num">${targetFitPill(s)}</td>
       <td><input title="${esc(s.siteName)}" value="${esc(s.siteName)}" onchange="upd('${s.id}','siteName',this.value)"></td>
       <td><input title="${esc(s.organization||'')}" value="${esc(s.organization||'')}" onchange="upd('${s.id}','organization',this.value)"></td>
       <td><select onchange="upd('${s.id}','type',this.value)">${opts(['K-12','Charter School','K-12 District Office','Rural Health','Higher Ed','Other'],s.type)}</select></td>
@@ -1058,7 +1046,6 @@ function getSortedSites(){
 function getSortValue(s,col){
   if(col.key==='include') return s.include ? 1 : 0;
   if(col.key==='objectiveScore') return rowObjectiveTotal(s);
-  if(col.key==='targetFit') return targetFitValue(s);
   return s[col.key];
 }
 function compareValues(a,b,type){
