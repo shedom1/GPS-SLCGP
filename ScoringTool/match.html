@@ -33,22 +33,21 @@
   <main>
     <section class="grid">
       <div class="card">
-        <h2>Quick Inputs</h2>
+        <h2>Match Calculator</h2>
         <div class="body">
-          <div class="callout"><strong>How it calculates:</strong> match is calculated as a percentage of the grant request. The USDA minimum is 15%; this tool defaults to 15.1% as a small planning buffer.</div>
+          <div class="callout"><strong>Default:</strong> 15.1% match-to-grant planning rate. Change the percentage if you want to test a higher match scenario.</div>
           <div class="row">
-            <div class="col-4"><label>Match % to Use</label><input id="matchPct" type="number" value="15.1" min="0" max="100" step="0.1" oninput="calc()"></div>
-            <div class="col-4"><label>Requested Grant</label><input id="grant" type="number" value="750000" min="0" step="1000" oninput="calc()"></div>
-            <div class="col-4"><label>Available Match Money</label><input id="availableMatch" type="number" value="0" min="0" step="1000" oninput="calc()"></div>
-            <div class="col-12"><label>Scenario Notes</label><textarea id="notes" placeholder="Optional: applicant cash, county contribution, local foundation, ARC, eligible in-kind..."></textarea></div>
+            <div class="col-3"><label>Match %</label><input id="matchPct" type="number" value="15.1" min="15" max="100" step="0.1" oninput="calc()"></div>
+            <div class="col-3"><label>Grant Request</label><input id="grant" type="number" value="750000" min="0" step="1000" oninput="calc()"></div>
+            <div class="col-3"><label>Match Available</label><input id="availableMatch" type="number" value="0" min="0" step="1000" oninput="calc()"></div>
+            <div class="col-3"><label>Total Project Cost</label><input id="projectCost" type="number" value="" min="0" step="1000" placeholder="optional" oninput="calc()"></div>
           </div>
           <div class="btnrow no-print">
             <button class="primary" onclick="calc()">Calculate</button>
-            <button onclick="setGrant(50000)">$50k</button>
-            <button onclick="setGrant(100000)">$100k</button>
-            <button onclick="setGrant(250000)">$250k</button>
-            <button onclick="setGrant(500000)">$500k</button>
-            <button onclick="setGrant(750000)">$750k</button>
+            <button onclick="usePresetGrant(50000)">$50k Grant</button>
+            <button onclick="usePresetGrant(250000)">$250k Grant</button>
+            <button onclick="usePresetGrant(500000)">$500k Grant</button>
+            <button onclick="usePresetGrant(750000)">$750k Grant</button>
             <button class="accent" onclick="copySummary()">Copy Summary</button>
           </div>
           <div id="status" class="status"></div>
@@ -59,47 +58,51 @@
         <h2>Answers</h2>
         <div class="body">
           <div class="metrics">
-            <div class="metric"><div class="k">How much match do I need?</div><div id="needed" class="v">—</div><div id="neededSub" class="s">for requested grant</div></div>
-            <div class="metric"><div class="k">How much can I get?</div><div id="supportedGrant" class="v">—</div><div class="s">by available match</div></div>
-            <div class="metric"><div class="k">Gap / Surplus</div><div id="gap" class="v">—</div><div class="s">available less needed</div></div>
-            <div class="metric"><div class="k">Total Project</div><div id="projectTotal" class="v">—</div><div class="s">grant + match</div></div>
+            <div class="metric"><div class="k">How much match do I need?</div><div id="needed" class="v">—</div><div id="neededSub" class="s">based on grant request</div></div>
+            <div class="metric"><div class="k">How much grant can I get?</div><div id="supportedGrant" class="v">—</div><div class="s">based on match available</div></div>
+            <div class="metric"><div class="k">Gap / Surplus</div><div id="gap" class="v">—</div><div class="s">available match less required match</div></div>
+            <div class="metric"><div class="k">Grant From Total Cost</div><div id="grantFromTotal" class="v">—</div><div class="s">optional reverse calculation</div></div>
           </div>
           <div id="advice" class="callout ok" style="margin-top:8px"></div>
         </div>
       </div>
     </section>
 
-    <section class="card" style="margin-bottom:10px">
-      <h2>Grant Scenarios at Selected Match %</h2>
-      <div class="body">
-        <div class="table-wrap"><table id="scenarioTable"></table></div>
-      </div>
-    </section>
-
     <section class="grid">
       <div class="card">
-        <h2>Custom Scenarios</h2>
+        <h2>Scenario Table</h2>
+        <div class="body">
+          <div class="smalltxt" style="margin-bottom:6px">Each row answers: match needed, total project cost, and whether your available match covers the scenario.</div>
+          <div class="table-wrap"><table id="scenarioTable"></table></div>
+        </div>
+      </div>
+      <div class="card">
+        <h2>Create a Scenario</h2>
         <div class="body">
           <div class="row">
-            <div class="col-6"><label>Scenario Name</label><input id="scenarioName" placeholder="Example: Phase 1"></div>
-            <div class="col-3"><label>Grant Amount</label><input id="scenarioGrant" type="number" min="0" step="1000" placeholder="250000"></div>
-            <div class="col-3"><label>&nbsp;</label><button class="primary" onclick="addScenario()" style="width:100%">Add</button></div>
+            <div class="col-6"><label>Scenario Name</label><input id="scenarioName" placeholder="Example: Phase 1 / high-priority sites"></div>
+            <div class="col-4"><label>Grant Amount</label><input id="scenarioGrant" type="number" min="0" step="1000" placeholder="250000"></div>
+            <div class="col-2"><label>&nbsp;</label><button class="primary" onclick="addScenario()" style="width:100%">Add</button></div>
           </div>
           <div class="table-wrap"><table id="customTable"></table></div>
         </div>
       </div>
-      <div class="card">
-        <h2>Match Source Reminders</h2>
-        <div class="body">
-          <details open>
-            <summary>Potential sources to investigate</summary>
-            <div class="smalltxt">Applicant cash; partner/end-user cash commitments; state or local funds; non-federal grants; philanthropy/local foundation support; Appalachian Regional Commission funds where applicable; and eligible in-kind items integral to the DLT project.</div>
-          </details>
-          <details>
-            <summary>Watch-outs</summary>
-            <div class="smalltxt">Do not rely on E-rate funds, future revenue, already-installed equipment, vendor-donated match tied to purchases, or ineligible/non-integral items.</div>
-          </details>
-        </div>
+    </section>
+
+    <section class="card">
+      <h2>Where can I get match money?</h2>
+      <div class="body">
+        <div class="table-wrap"><table>
+          <thead><tr><th>Potential Source</th><th>How to Think About It</th><th>Watch-Out</th></tr></thead>
+          <tbody>
+            <tr><td>Applicant cash</td><td>Cleanest source when the applicant can document committed funds.</td><td>Must be available and committed at application submission.</td></tr>
+            <tr><td>Partner / end-user contribution</td><td>Useful for consortium or multi-site projects where partners benefit from equipment.</td><td>Each contributor needs support documentation.</td></tr>
+            <tr><td>State or local funds</td><td>County, city, school board, hospital authority, or other non-federal commitments can help close gaps.</td><td>Confirm the funds are non-federal unless a statute specifically allows use as match.</td></tr>
+            <tr><td>Non-federal grants / philanthropy</td><td>Local foundations, community foundations, hospital foundations, or corporate philanthropy may help.</td><td>Grant award letters must allow use for the proposed DLT project.</td></tr>
+            <tr><td>ARC funds, where applicable</td><td>Potential option in eligible Appalachian Regional Commission counties.</td><td>Coordinate early with ARC/state program contacts.</td></tr>
+            <tr><td>Eligible in-kind</td><td>New, non-depreciated, integral equipment or assets can sometimes count.</td><td>Do not use already-installed equipment, vendor discounts tied to purchases, future revenue, E-rate, or ineligible items.</td></tr>
+          </tbody>
+        </table></div>
       </div>
     </section>
   </main>
@@ -107,48 +110,51 @@
 const GRANT_MIN=50000, GRANT_MAX=750000;
 let customScenarios=[];
 function val(id){return parseFloat(document.getElementById(id)?.value)||0}
-function money(n){return isFinite(n)?n.toLocaleString(undefined,{style:'currency',currency:'USD',maximumFractionDigits:0}):'—'}
+function money(n){return Number.isFinite(n)?n.toLocaleString(undefined,{style:'currency',currency:'USD',maximumFractionDigits:0}):'—'}
 function pct(){return Math.max(0,val('matchPct'))/100}
+function grantSupportedByMatch(match, rate){return rate>0?Math.min(match/rate, GRANT_MAX):0}
+function matchNeededForGrant(grant, rate){return grant*rate}
+function grantFromProjectCost(total, rate){return rate>=0?Math.min(total/(1+rate), GRANT_MAX):0}
 function calc(){
   const rate=pct();
   const grant=val('grant');
   const available=val('availableMatch');
-  const needed=grant*rate;
-  const supported=rate>0?Math.min(available/rate,GRANT_MAX):0;
+  const totalCost=val('projectCost');
+  const needed=matchNeededForGrant(grant,rate);
+  const supported=grantSupportedByMatch(available,rate);
   const gap=available-needed;
+  const reverseGrant=totalCost>0?grantFromProjectCost(totalCost,rate):NaN;
   document.getElementById('needed').textContent=money(needed);
   document.getElementById('neededSub').textContent=`${(rate*100).toFixed(1)}% of ${money(grant)}`;
   document.getElementById('supportedGrant').textContent=money(supported);
   document.getElementById('gap').textContent=money(gap);
-  document.getElementById('projectTotal').textContent=money(grant+needed);
+  document.getElementById('grantFromTotal').textContent=Number.isFinite(reverseGrant)?money(reverseGrant):'—';
   const issues=[];
-  if(rate<.15) issues.push('Match % is below the 15% minimum.');
-  if(grant<GRANT_MIN) issues.push('Requested grant is below $50,000.');
-  if(grant>GRANT_MAX) issues.push('Requested grant exceeds the $750,000 grant cap.');
-  if(gap<0) issues.push(`Need ${money(Math.abs(gap))} more match for this grant request.`);
-  if(available>0 && supported<GRANT_MIN) issues.push('Available match may not support the $50,000 minimum grant request.');
+  if(rate<.15) issues.push('Match percentage is below the 15% minimum.');
+  if(grant>0 && grant<GRANT_MIN) issues.push('Grant request is below the $50,000 program minimum.');
+  if(grant>GRANT_MAX) issues.push('Grant request exceeds the $750,000 program maximum.');
+  if(gap<0) issues.push(`You need ${money(Math.abs(gap))} more match for a ${money(grant)} grant request.`);
   const ok=[];
-  if(gap>=0) ok.push(`Available match covers this request with ${money(gap)} remaining.`);
-  if(available>0) ok.push(`At ${(rate*100).toFixed(1)}%, available match supports up to ${money(supported)} in grant request, capped at ${money(GRANT_MAX)}.`);
+  if(grant>0) ok.push(`A ${money(grant)} grant needs ${money(needed)} in match at ${(rate*100).toFixed(1)}%.`);
+  if(available>0) ok.push(`${money(available)} in match supports up to ${money(supported)} in grant request, capped at ${money(GRANT_MAX)}.`);
+  if(totalCost>0 && Number.isFinite(reverseGrant)) ok.push(`A ${money(totalCost)} total project implies about ${money(reverseGrant)} grant and ${money(totalCost-reverseGrant)} match at this rate.`);
   const advice=document.getElementById('advice');
   advice.className='callout '+(issues.length?'warn':'ok');
-  advice.innerHTML=issues.length?('<strong>Review:</strong> '+issues.join(' ')):('<strong>Answer:</strong> '+(ok.join(' ')||'Enter available match money to see how much grant it supports.'));
-  document.getElementById('status').textContent=`Using ${(rate*100).toFixed(1)}% match-to-grant ratio.`;
+  advice.innerHTML=(issues.length?'<strong>Review:</strong> ':'<strong>Answer:</strong> ')+(issues.length?issues.join(' '):(ok.join(' ')||'Enter a grant request or available match amount.'));
+  document.getElementById('status').textContent=`Using ${(rate*100).toFixed(1)}% match-to-grant ratio. Minimum DLT match is 15%; 15.1% is a planning buffer.`;
   renderScenarios(); renderCustom();
 }
-function setGrant(g){document.getElementById('grant').value=g;calc();}
+function usePresetGrant(g){document.getElementById('grant').value=g;calc();}
 function scenarioRow(name,g,removeIndex=null){
-  const rate=pct(), available=val('availableMatch'), need=g*rate, gap=available-need;
+  const rate=pct(), available=val('availableMatch'), need=matchNeededForGrant(g,rate), gap=available-need;
   const cls=gap>=0?'green':'redP';
   const status=gap>=0?'Covered':'Gap';
-  const action = removeIndex===null
-    ? `<button onclick="setGrant(${g})">Use</button>`
-    : `<button onclick="setGrant(${g})">Use</button> <button onclick="removeScenario(${removeIndex})">Remove</button>`;
+  const action = removeIndex===null ? `<button onclick="usePresetGrant(${g})">Use</button>` : `<button onclick="usePresetGrant(${g})">Use</button> <button onclick="removeScenario(${removeIndex})">Remove</button>`;
   return `<tr><td>${name}</td><td class="num">${money(g)}</td><td class="num">${money(need)}</td><td class="num">${money(g+need)}</td><td><span class="pill ${cls}">${status}</span></td><td class="num">${money(gap)}</td><td class="no-print">${action}</td></tr>`;
 }
 function renderScenarios(){
   const rows=[50000,100000,250000,500000,750000].map(g=>scenarioRow('$'+(g/1000)+'k grant',g)).join('');
-  document.getElementById('scenarioTable').innerHTML=`<thead><tr><th>Scenario</th><th>Grant</th><th>Match Needed</th><th>Total Project</th><th>Status</th><th>Gap / Surplus</th><th class="no-print">Action</th></tr></thead><tbody>${rows}</tbody>`;
+  document.getElementById('scenarioTable').innerHTML=`<thead><tr><th>Scenario</th><th>Grant Request</th><th>Match Needed</th><th>Total Project</th><th>Available Match?</th><th>Gap / Surplus</th><th class="no-print">Action</th></tr></thead><tbody>${rows}</tbody>`;
 }
 function addScenario(){
   const name=(document.getElementById('scenarioName').value||'Custom Scenario').trim();
@@ -160,12 +166,12 @@ function addScenario(){
 function renderCustom(){
   const table=document.getElementById('customTable');
   if(!customScenarios.length){table.innerHTML='<tbody><tr><td class="smalltxt">No custom scenarios yet.</td></tr></tbody>';return;}
-  table.innerHTML='<thead><tr><th>Scenario</th><th>Grant</th><th>Match Needed</th><th>Total Project</th><th>Status</th><th>Gap / Surplus</th><th class="no-print">Action</th></tr></thead><tbody>'+customScenarios.map((x,i)=>scenarioRow(x.name,x.grant,i)).join('')+'</tbody>';
+  table.innerHTML='<thead><tr><th>Scenario</th><th>Grant Request</th><th>Match Needed</th><th>Total Project</th><th>Available Match?</th><th>Gap / Surplus</th><th class="no-print">Action</th></tr></thead><tbody>'+customScenarios.map((x,i)=>scenarioRow(x.name,x.grant,i)).join('')+'</tbody>';
 }
 function removeScenario(i){customScenarios.splice(i,1);renderCustom();}
 function copySummary(){
-  const rate=pct(), grant=val('grant'), available=val('availableMatch'), needed=grant*rate, supported=rate>0?Math.min(available/rate,GRANT_MAX):0;
-  const lines=['RUS DLT Match Planning Summary',`Match % used: ${(rate*100).toFixed(1)}%`,`Requested grant: ${money(grant)}`,`Match needed: ${money(needed)}`,`Available match: ${money(available)}`,`Grant supported by available match: ${money(supported)}`,`Gap/surplus: ${money(available-needed)}`,`Notes: ${document.getElementById('notes').value||'None entered'}`];
+  const rate=pct(), grant=val('grant'), available=val('availableMatch'), needed=matchNeededForGrant(grant,rate), supported=grantSupportedByMatch(available,rate), totalCost=val('projectCost'), reverse=totalCost>0?grantFromProjectCost(totalCost,rate):NaN;
+  const lines=['RUS DLT Match Planning Summary',`Match % used: ${(rate*100).toFixed(1)}%`,`Grant request: ${money(grant)}`,`Match needed: ${money(needed)}`,`Available match: ${money(available)}`,`Grant supported by available match: ${money(supported)}`,`Gap/surplus: ${money(available-needed)}`, totalCost>0?`From total project cost ${money(totalCost)}: grant ${money(reverse)} / match ${money(totalCost-reverse)}`:'Total project reverse calc: not entered'];
   navigator.clipboard?.writeText(lines.join('\n'));
   document.getElementById('status').textContent='Summary copied.';
 }

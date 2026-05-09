@@ -312,3 +312,11 @@ Update v20: K-12 district prospecting/search now uses the bundled ELSI/NCES K-12
   - How much match do I need?
   - How much grant can I support with this much match?
 - Match Calculator now defaults to a 15.1% planning match rate, with scenario rows for $50k, $100k, $250k, $500k, and $750k grant requests plus custom scenarios.
+
+## v32 Updates
+
+- Reworked the Match Calculator to a tighter two-question layout modeled on the RUS DLT support calculator concept: "How much match do I need?" and "How much grant can this match support?"
+- Match Calculator defaults to a 15.1% planning rate, with editable percentage, grant-request presets, available-match reverse calculation, total-project-cost reverse calculation, scenario table, custom scenarios, and match-source reminders.
+- Prior Winners awardee drilldown cards now include Print / PDF Card and Export Card CSV actions.
+- Prior Winners drilldown site rows now include 2020 Census place population and 2024 SAIPE poverty-rate lookup columns where the public APIs return a match.
+- Prior Winner card exports include the included project cards and site rows currently selected for the drilldown calculation.
