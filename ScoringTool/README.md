@@ -333,3 +333,25 @@ Update v20: K-12 district prospecting/search now uses the bundled ELSI/NCES K-12
 - Improved Prior Winners matching for Census place names and county names, including common suffixes such as city, town, village, CDP, county, borough, census area, parish, and municipality.
 - Added a **Refresh Census/SAIPE** button to the Prior Winners drilldown card.
 - Prior Winners drilldown now reports how many site rows matched Census population and SAIPE values, and leaves unmatched values blank for manual verification.
+
+## v34 updates
+
+- Increased the Prior Winners view font sizes by approximately 1pt while keeping the compact layout.
+- Rebuilt the Match Calculator from scratch around the FY2026 guidance workflow:
+  - Enter Project Total, Grant Request / Amount Requested, or Available Match.
+  - Default match percentage is 15.1%, editable by the user.
+  - Outputs include Amount Requested, Match Needed, Total Project, Available Match, Gap/Surplus, and Max Grant from Match.
+  - Scenario planner compares preset and custom grant amounts.
+
+
+
+## v35 Update
+- Rebuilt the Prior Winners normalized table from the full RUS DLT all-sites source so non-district awardees, including healthcare entities such as Ben Archer Health Center, are included in Prior Winners searches.
+- Kept the single normalized CSV source to avoid duplicate calculations.
+- Merged project descriptions from the uploaded Past Award Winners workbook where project/year matches were available, and retained FY2016 summary-only records from the workbook because the site map source begins later.
+- Added an Awardee Category filter on the Prior Winners page: District/K-12, Healthcare, Higher Ed/Technical, and Other.
+
+
+## v36 update
+- Improved Prior Winners searching for county-formatted names such as `Barton County, KS`, `Barton, County of`, or `County of Barton` by adding county/state aliases and token-based matching across awardee, county, city, site, address, description, and raw source fields.
+- Confirmed Barton County, KS appears as a Telemedicine prior awardee with FY2020 and FY2023 project rows.
