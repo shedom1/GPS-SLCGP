@@ -1,10 +1,15 @@
-# Key Funding Sources Dashboard - v16
+# Key Funding Sources Dashboard — May 7, 2026 Refresh
 
-GitHub Pages setup:
+GitHub Pages-ready package.
 
-- `index.html` opens directly to the Federal Status dashboard.
-- `federal-status.html` is retained as a standalone Federal page for direct linking.
-- `state-status.html` is the standalone State Status page.
-- From the Federal page, click **State Status** to navigate to the state dashboard.
+## Files
+- `index.html` — Federal Status page and default entry point
+- `federal-status.html` — duplicate standalone Federal Status page
+- `state-status.html` — separate State Status page
 
-Publish all files in the same GitHub Pages directory.
+## Notes
+- Refresh date: 2026-05-07
+- RUS-DLT FY2026 is OPEN: May 1, 2026 through June 30, 2026.
+- State rows include all 50 states plus D.C.
+- RHTP and SLCGP state-lane statuses were refreshed from the May 7 source links, with exact dates shown only when a dated source/window was available.
+- Use the Admin-only Daily Refresh Prompt inside the page for future rebuilds.
