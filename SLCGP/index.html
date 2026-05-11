@@ -9,10 +9,10 @@
   :root {
     --bg: #f2f6fb;
     --card: #ffffff;
-    --ink: #172335;
+    --ink: #123a5a;
     --muted: #5c6a80;
     --line: #d8e2ef;
-    --blue: #2563eb;
+    --blue: #005BBB;
     --blue-soft: #eaf1ff;
     --green: #15803d;
     --green-soft: #eaf8ef;
@@ -30,21 +30,21 @@
   * { box-sizing: border-box; }
   body {
     margin: 0;
-    font-family: Inter, Arial, Helvetica, sans-serif;
+    font-family: "Myriad Pro","MyriadPro-Regular","Arial","Helvetica",sans-serif;
     background: linear-gradient(180deg, #f7fbff 0%, #eef5fd 100%);
     color: var(--ink);
   }
   .wrap {
     width: min(100vw, 1520px);
     margin: 0 auto;
-    padding: 18px 12px 40px;
+    padding: 12px 10px 22px;
   }
   .hero, .toolbar, .table-card, .card { background: var(--card); border: 1px solid var(--line); box-shadow: var(--shadow); }
   .hero { border-radius: 22px; padding: 18px 18px 14px; margin-bottom: 14px; background: linear-gradient(135deg, #ffffff 0%, #f3f8ff 58%, #eefbf8 100%); }
   .eyebrow { font-size: 11px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--blue); margin-bottom: 7px; }
-  h1 { margin: 0 0 8px; font-size: 28px; line-height: 1.06; }
-  .sub { color: var(--muted); font-size: 13px; line-height: 1.45; max-width: 1180px; }
-  .meta { display: flex; flex-wrap: wrap; gap: 8px 16px; margin-top: 13px; color: var(--muted); font-size: 12px; }
+  h1 { margin: 0 0 8px; font-size: 25px; line-height: 1.06; }
+  .sub { color: var(--muted); font-size: 11.5px; line-height: 1.45; max-width: 1180px; }
+  .meta { display: flex; flex-wrap: wrap; gap: 8px 16px; margin-top: 13px; color: var(--muted); font-size: 10.5px; }
   .meta b { color: var(--ink); }
   .cards { display: grid; grid-template-columns: repeat(6, minmax(0,1fr)); gap: 10px; margin: 14px 0; }
   .card { border-radius: 15px; padding: 12px 14px; position: relative; overflow: hidden; }
@@ -56,10 +56,10 @@
   .card:nth-child(6)::before { background: linear-gradient(90deg, var(--teal), #2fb7aa); }
   .card .label { font-size: 10px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin-bottom: 7px; font-weight: 800; }
   .card .value { font-size: 22px; font-weight: 800; line-height: 1; }
-  .toolbar { border-radius: var(--radius); padding: 12px; margin-bottom: 14px; }
+  .toolbar { border-radius: var(--radius); padding: 10px; margin-bottom: 10px; }
   .controls { display: grid; grid-template-columns: 1.25fr .9fr .9fr .85fr .95fr auto auto; gap: 8px; align-items: end; }
   .field label { display: block; font-size: 10px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin-bottom: 5px; font-weight: 800; }
-  input[type="search"], select { width: 100%; padding: 9px 10px; border-radius: 10px; border: 1px solid var(--line); background: #fff; color: var(--ink); font-size: 12px; min-height: 38px; }
+  input[type="search"], select { width: 100%; padding: 9px 10px; border-radius: 10px; border: 1px solid var(--line); background: #fff; color: var(--ink); font-size: 10.5px; min-height: 38px; }
   .btn { appearance:none; border:1px solid var(--line); background:#fff; color:var(--ink); border-radius:10px; padding:9px 12px; font-size:12px; font-weight:800; cursor:pointer; min-height:38px; }
   .btn.primary { background: linear-gradient(135deg, #2f7bff 0%, var(--blue) 100%); border-color: var(--blue); color:#fff; }
   .btn:hover { transform: translateY(-1px); }
@@ -81,8 +81,8 @@
   colgroup col:nth-child(12) { width: 8%; }
   colgroup col:nth-child(13) { width: 5%; }
   colgroup col:nth-child(14) { width: 4%; }
-  thead th { position: sticky; top: 0; background: #eff5fd; z-index: 2; text-align: left; padding: 8px 8px; border-bottom: 1px solid var(--line); color: #26405f; font-size: 10px; text-transform: uppercase; letter-spacing: .05em; vertical-align: bottom; }
-  tbody td { padding: 8px 8px; border-bottom: 1px solid #e9eef5; vertical-align: top; line-height: 1.35; overflow-wrap: anywhere; word-break: break-word; }
+  thead th { position: sticky; top: 0; background: #eff5fd; z-index: 2; text-align: left; padding: 6px 7px; border-bottom: 1px solid var(--line); color: #26405f; font-size: 10px; text-transform: uppercase; letter-spacing: .05em; vertical-align: bottom; }
+  tbody td { padding: 6px 7px; border-bottom: 1px solid #e9eef5; vertical-align: top; line-height: 1.35; overflow-wrap: anywhere; word-break: break-word; }
   td.status-cell { white-space: nowrap; }
   tbody tr:hover { background: #f9fbff; }
   .th-inner { position: relative; padding-right: 12px; }
@@ -96,7 +96,14 @@
   th:hover .resize-handle::after, th.resizing .resize-handle::after { background: var(--blue); }
   th.resizing, th.resizing .th-label { color: var(--blue); }
   .state { font-weight: 800; font-size: 11.2px; margin-bottom: 4px; }
-  .region-chip, .status-chip, .conf-chip, .ptype-chip { display:inline-flex; align-items:center; gap:3px; border-radius:999px; padding:2px 6px; font-size:9px; font-weight:800; line-height:1; white-space:nowrap; }
+  .region-chip, .status-chip, .conf-chip, .ptype-chip { display:inline-flex; align-items:center; gap:3px; border-radius:999px; padding:2px 6px; font-size:9px; font-weight:800; line-height:1.15; }
+.ptype-chip { display:inline-block; white-space:normal; max-width:100%; overflow-wrap:anywhere; word-break:break-word; }
+.state-select-wrap{display:flex;align-items:flex-start;gap:8px;}
+.state-check{margin-top:3px;accent-color:var(--blue);cursor:pointer;}
+.selected-state-strip{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:8px;}
+.selected-state-list{display:flex;flex-wrap:wrap;gap:6px;}
+.selected-chip{display:inline-flex;align-items:center;border-radius:999px;padding:3px 8px;background:#eef5fd;border:1px solid #d9e7f7;font-size:9px;font-weight:800;line-height:1;}
+.selected-note{font-size:10px;color:var(--muted);line-height:1.35;}
   .region-chip.mid { background: #eef2ff; color: #4f46e5; }
   .region-chip.ne { background: #eefaf7; color: #0f766e; }
   .region-chip.se { background: #fff5ec; color: #b45309; }
@@ -215,7 +222,7 @@
   }
   .prospect-summary {
     color: var(--muted);
-    font-size: 12px;
+    font-size: 10.5px;
     line-height: 1.45;
   }
   .prospect-body {
@@ -243,7 +250,7 @@
     margin-bottom: 6px;
   }
   .prospect-mini .value {
-    font-size: 13px;
+    font-size: 11.5px;
     line-height: 1.35;
     font-weight: 700;
   }
@@ -256,10 +263,10 @@
   }
   .prospect-section h3 {
     margin: 0 0 8px;
-    font-size: 13px;
+    font-size: 11.5px;
   }
   .prospect-section p, .prospect-section li {
-    font-size: 12px;
+    font-size: 10.5px;
     line-height: 1.45;
     color: var(--ink);
   }
@@ -270,7 +277,7 @@
   .prospect-links a {
     display: inline-block;
     margin: 0 10px 8px 0;
-    font-size: 12px;
+    font-size: 10.5px;
   }
   .program-lead {
     margin: 0 0 9px;
@@ -294,7 +301,7 @@
     gap: 6px;
   }
   .window-detail div {
-    font-size: 12px;
+    font-size: 10.5px;
     line-height: 1.45;
   }
   .window-detail b {
@@ -322,14 +329,14 @@
   .changes { border-radius: var(--radius); padding: 12px 14px; margin: 0 0 14px; background: linear-gradient(135deg, #fffef8 0%, #f7fbff 100%); border: 1px solid var(--line); box-shadow: var(--shadow); }
   .changes h2 { margin: 0 0 8px; font-size: 15px; }
   .changes ul { margin: 0; padding-left: 18px; color: var(--ink); }
-  .changes li { margin: 0 0 6px; font-size: 12px; line-height: 1.4; }
+  .changes li { margin: 0 0 6px; font-size: 10.5px; line-height: 1.4; }
   .changes .small { margin-top: 6px; font-size: 11px; color: var(--muted); }
 
   .table-status-row td { padding: 18px 12px; }
   .table-status-cell {
     text-align: center;
     color: var(--muted);
-    font-size: 12px;
+    font-size: 10.5px;
     line-height: 1.45;
     background: linear-gradient(180deg, #fbfdff 0%, #f5f9ff 100%);
   }
@@ -414,10 +421,20 @@
 <button class="btn" id="resetBtn">Reset filters</button>
 <button class="btn" id="executiveSummaryBtn">Executive Summary</button>
 <button class="btn" id="openActiveEmailBtn">Email Open / Active</button>
+<button class="btn" id="repActionQueueBtn">Rep Action Queue</button>
+<button class="btn" id="closedRadarBtn">Closed / Reopen Radar</button>
+<button class="btn" id="procurementPlaybookBtn">Procurement Playbook</button>
+<button class="btn" id="committeeWatchBtn">Committee Watch</button>
 <button class="btn primary" id="pdfBtn">Export to PDF</button>
 </div>
 <div class="note btn-print-note">Tip: the PDF button prints the currently filtered and sorted view. Click any header to sort. Drag the right edge of a header to resize a column. New advisory committee and meetings/webinars columns are included in the export.</div>
-<div class="note">Method: official state program pages first; refreshed against current public state pages as of April 22, 2026. Official award notices, guidance packets, prior-round materials, and program pages used when a clean statewide awards list was not published. Forecasted/TBD means no clearly dated 2026 local window was found on the reviewed public source. The FY / match / min-max column uses the reviewed state page where it was explicit; otherwise it falls back to the federal year-based cost-share rules or marks the item as not publicly stated.</div>
+<div class="selected-state-strip">
+  <div class="selected-state-list" id="selectedStateList"></div>
+  <button class="btn" id="clearSelectedBtn" type="button">Clear selected</button>
+  <span class="selected-note">Select up to 3 states. The rep-facing views will only show the selected states.</span>
+</div>
+
+<div class="note">Method: refreshed against current official state program and grant pages through May 11, 2026. Unchanged rows were retained when a new public status signal was not posted. Forecasted/TBD means no clearly dated local window was found on the reviewed official source.</div>
 </section>
 
 
@@ -438,7 +455,7 @@
 </colgroup>
 <thead>
 <tr>
-<th class="sortable" data-key="State" data-type="text"><div class="th-inner"><span class="th-label"><span class="help-tip" title="Click a state name to open a sales prospecting panel with priority, targets, next steps, funding summary, and print-to-PDF.">State</span></span><span class="sort-indicator"></span><span aria-hidden="true" class="resize-handle"></span></div></th>
+<th class="sortable" data-key="State" data-type="text"><div class="th-inner"><span class="th-label"><span class="help-tip" title="Use the checkbox to select up to 3 states for the rep-facing drill-down views. Click the state name to open the sales prospecting panel.">State / Select</span></span><span class="sort-indicator"></span><span aria-hidden="true" class="resize-handle"></span></div></th>
 <th class="sortable" data-key="Status" data-type="status"><div class="th-inner"><span class="th-label"><span class="help-tip" title="Current state of the public subrecipient window based on the reviewed official source: Open, Closed, or Forecasted/TBD.">Status</span></span><span class="sort-indicator"></span><span aria-hidden="true" class="resize-handle"></span></div></th>
 <th class="sortable" data-key="Start" data-type="date"><div class="th-inner"><span class="th-label"><span class="help-tip" title="Posted opening date for the current or most relevant application window, when publicly stated.">Start</span></span><span class="sort-indicator"></span><span aria-hidden="true" class="resize-handle"></span></div></th>
 <th class="sortable" data-key="End" data-type="date"><div class="th-inner"><span class="th-label"><span class="help-tip" title="Posted closing date for the current window, or the next listed deadline for rolling or quarterly processes.">End / Next</span></span><span class="sort-indicator"></span><span aria-hidden="true" class="resize-handle"></span></div></th>
@@ -1211,7 +1228,7 @@ const data = [
     "Start": "",
     "End": "",
     "SortDate": "2099-12-31",
-    "Description": "Montana says its most recent application window closed January 9, 2026 and that the next application window will open by late spring 2026. The official page does not currently post a specific opening date.",
+    "Description": "Montana says the most recent application window closed January 9, 2026 and that the next application window will open by late spring 2026. The official page does not currently post a specific opening date.",
     "SourceLabel": "Montana SLCGP application info",
     "SourceURL": "https://des.mt.gov/Grant-Programs/SLCGPApplicationInfo",
     "Confidence": "High",
@@ -1220,13 +1237,13 @@ const data = [
     "PriorNote": "No statewide prior-awards list was clearly surfaced in the current review; linked the best official state SLCGP page, program summary, or prior-round material.",
     "DrillDownLabel": "Montana SLCGP application info",
     "DrillDownURL": "https://des.mt.gov/Grant-Programs/SLCGPApplicationInfo",
-    "ProcurementProcess": "The most recent application window closed January 9, 2026. Montana says the next application window will open by late spring 2026, but the reviewed official page does not currently post a specific opening date.",
+    "ProcurementProcess": "The most recent application window closed January 9, 2026. Montana says the next application window will open by late spring 2026, but the reviewed official page does not post a specific opening date.",
     "ProcurementType": "State page / TBD",
     "FYYear": "TBD on reviewed source",
     "MatchInfo": "TBD on reviewed source",
     "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "TBD on reviewed source | Match: TBD on reviewed source | Min/Max: Not publicly stated on reviewed source",
-    "CommitteeLabel": "Montana SLCGP / program page",
+    "FYSummary": "Next window promised by late spring 2026 | Match: FY24/25 match applies when relevant | Min/Max: Not publicly stated on reviewed source",
+    "CommitteeLabel": "Montana SLCGP application info",
     "CommitteeURL": "https://des.mt.gov/Grant-Programs/SLCGPApplicationInfo",
     "MeetingsLabel": "Monitor official page",
     "MeetingsURL": "https://des.mt.gov/Grant-Programs/SLCGPApplicationInfo"
@@ -1481,24 +1498,24 @@ const data = [
     "Start": "",
     "End": "2026-07-31",
     "SortDate": "2026-07-31",
-    "Description": "Oklahoma's grants page says the State and Local Cybersecurity Grant Program is accepting new applications and lists 2026 deadlines of January 30, April 30, July 31, and October 30. The same page also says funding is not currently accessible and that additional funding is expected later this year.",
+    "Description": "Oklahoma's grants page says the State and Local Cybersecurity Grant Program is now accepting new applications and lists 2026 deadlines of January 30, April 30, July 31, and October 30. The page also says funding is not currently accessible and that additional funding is expected later this year.",
     "SourceLabel": "Oklahoma grants page",
     "SourceURL": "https://oklahoma.gov/homeland-security/grants.html",
-    "Confidence": "Medium",
+    "Confidence": "High",
     "PriorLabel": "Oklahoma grants page",
     "PriorURL": "https://oklahoma.gov/homeland-security/grants.html",
     "PriorNote": "Official Oklahoma grants page with current SLCGP application materials, deadlines, and procurement guidance links.",
-    "DrillDownLabel": "Oklahoma grants page",
+    "DrillDownLabel": "Application announcement / grant page",
     "DrillDownURL": "https://oklahoma.gov/homeland-security/grants.html",
-    "ProcurementProcess": "Recurring state application process with multiple 2026 deadlines. As of May 11, 2026 the next posted deadline is July 31, 2026; applicants review the announcement, tie projects to the state cyber plan, and submit applications to the state. The official page also notes that funding is not currently accessible and that additional funding is expected later in 2026.",
+    "ProcurementProcess": "Recurring application process with quarterly deadlines. The page says new applications are being accepted, but it also says funding is not currently accessible and that additional funding is expected later in 2026.",
     "ProcurementType": "Quarterly rolling application",
     "FYYear": "TBD; page links FY22–FY25 NOFOs",
     "MatchInfo": "Depends on linked NOFO year",
     "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "TBD; page links FY22–FY25 NOFOs | Match: Depends on linked NOFO year | Min/Max: Not publicly stated on reviewed source",
-    "CommitteeLabel": "Committee / program page",
+    "FYSummary": "FY22-FY25 NOFOs linked on page | Match: Depends on linked NOFO year | Min/Max: Not publicly stated on reviewed source",
+    "CommitteeLabel": "Oklahoma grants page",
     "CommitteeURL": "https://oklahoma.gov/homeland-security/grants.html",
-    "MeetingsLabel": "Monitor official page",
+    "MeetingsLabel": "Oklahoma grants page",
     "MeetingsURL": "https://oklahoma.gov/homeland-security/grants.html"
   },
   {
@@ -1775,10 +1792,10 @@ const data = [
     "State": "Washington",
     "Region": "West",
     "Status": "Open",
-    "Start": "2026-05-11",
+    "Start": "",
     "End": "2026-06-12",
-    "SortDate": "2026-05-11",
-    "Description": "Washington's official WaTech SLCGP page says the application period for the next round of SLCGP funding will open on May 11, 2026, with all applications due by June 12, 2026. The page also references the State Planning Committee, applicant resources, and update subscriptions.",
+    "SortDate": "2026-06-12",
+    "Description": "Washington's WaTech page says the FY25 State and Local Cybersecurity Grant Program competitive project solicitation is now open in May 2026. Applications are due June 12, 2026.",
     "SourceLabel": "WaTech SLCGP page",
     "SourceURL": "https://watech.wa.gov/state-local-cybersecurity-grant-program",
     "Confidence": "High",
@@ -1787,16 +1804,16 @@ const data = [
     "PriorNote": "Official WaTech page references prior allocations, State Planning Committee approval, and applicant webinar resources.",
     "DrillDownLabel": "WaTech SLCGP page",
     "DrillDownURL": "https://watech.wa.gov/state-local-cybersecurity-grant-program",
-    "ProcurementProcess": "Open state application round. WaTech's official page says the next round opens May 11, 2026 and applications are due June 12, 2026. Prospective applicants should review the program resources, prepare materials, and submit during the open window.",
+    "ProcurementProcess": "Open state application round. The WaTech page says the FY25 competitive project solicitation is open in May 2026 and applications are due June 12, 2026.",
     "ProcurementType": "State application",
     "FYYear": "Upcoming 2026 round opens May 4",
     "MatchInfo": "Not publicly stated on reviewed source",
     "MinMaxInfo": "Not publicly stated on reviewed source",
-    "FYSummary": "2026 round | Match: Not publicly stated on reviewed source | Min/Max: Not publicly stated on reviewed source",
-    "CommitteeLabel": "State Planning Committee / program page",
+    "FYSummary": "FY25 round now open | Match: Not publicly stated on reviewed source | Min/Max: Not publicly stated on reviewed source",
+    "CommitteeLabel": "WaTech SLCGP page",
     "CommitteeURL": "https://watech.wa.gov/state-local-cybersecurity-grant-program",
-    "MeetingsLabel": "SLCGP application webinar",
-    "MeetingsURL": "https://www.youtube.com/watch?v=XYbe5NJxifw&feature=youtu.be"
+    "MeetingsLabel": "SLCGP webinar / resources",
+    "MeetingsURL": "https://watech.wa.gov/state-local-cybersecurity-grant-program"
   },
   {
     "State": "West Virginia",
@@ -2234,6 +2251,42 @@ function setTableStatus(message, subtext = '', kind = 'loading') {
   tbody.innerHTML = `<tr class="table-status-row"><td class="table-status-cell" colspan="14">${label}${subtext ? `<span class="table-status-sub">${escapeHtml(subtext)}</span>` : ''}</td></tr>`;
 }
 
+
+const SELECT_KEY = 'slcgpSelectedStates';
+function getSelectedStates() {
+  try {
+    const raw = localStorage.getItem(SELECT_KEY);
+    const parsed = raw ? JSON.parse(raw) : [];
+    return Array.isArray(parsed) ? parsed : [];
+  } catch (e) { return []; }
+}
+function saveSelectedStates(states) {
+  localStorage.setItem(SELECT_KEY, JSON.stringify(states));
+}
+function isSelected(state) {
+  return getSelectedStates().includes(state);
+}
+function toggleSelectedState(state, checked) {
+  const current = getSelectedStates();
+  let next = current.filter(s => s !== state);
+  if (checked) {
+    if (next.length >= 3) {
+      alert('Please choose no more than 3 states for the drill-down views.');
+      render();
+      return;
+    }
+    next.push(state);
+  }
+  saveSelectedStates(next);
+  renderSelectedStateSummary();
+}
+function renderSelectedStateSummary() {
+  const wrap = document.getElementById('selectedStateList');
+  if (!wrap) return;
+  const selected = getSelectedStates();
+  wrap.innerHTML = selected.length ? selected.map(s => `<span class="selected-chip">${escapeHtml(s)}</span>`).join('') : `<span class="selected-note">No states selected yet.</span>`;
+}
+
 function render() {
   const q = normalize(searchEl.value);
   const regionVal = regionFilter.value;
@@ -2267,10 +2320,13 @@ function render() {
   tbody.innerHTML = filtered.map(row => `
     <tr class="row-${cssKey(row.Status)}">
       <td>
-        <button class="state-trigger" type="button" data-state="${escapeHtml(row.State)}" aria-label="Open sales prospecting detail for ${escapeHtml(row.State)}">
-          <div class="state">${escapeHtml(row.State)}</div>
-          <span class="region-chip ${regionClass(row.Region)}">${escapeHtml(row.Region)}</span>
-        </button>
+        <div class="state-select-wrap">
+          <input class="state-check" type="checkbox" data-select-state="${escapeHtml(row.State)}" aria-label="Select ${escapeHtml(row.State)} for drill-down views" ${isSelected(row.State) ? 'checked' : ''}/>
+          <button class="state-trigger" type="button" data-state="${escapeHtml(row.State)}" aria-label="Open sales prospecting detail for ${escapeHtml(row.State)}">
+            <div class="state">${escapeHtml(row.State)}</div>
+            <span class="region-chip ${regionClass(row.Region)}">${escapeHtml(row.Region)}</span>
+          </button>
+        </div>
       </td>
       <td class="status-cell"><span class="status-chip status-${cssKey(row.Status)}">${escapeHtml(row.Status)}</span></td>
       <td>${escapeHtml(fmtDate(row.Start))}</td>
@@ -2295,6 +2351,7 @@ function render() {
   document.getElementById('highCount').textContent = filtered.filter(r => r.Confidence === 'High').length;
   document.getElementById('priorCount').textContent = filtered.filter(r => !!r.PriorURL).length;
   updateSortIndicators();
+  renderSelectedStateSummary();
 }
 
 function setupSorting() {
@@ -2366,6 +2423,10 @@ document.getElementById('resetBtn').addEventListener('click', () => {
 
 document.getElementById('executiveSummaryBtn').addEventListener('click', () => { window.location.href = 'executive-summary.html'; });
 document.getElementById('openActiveEmailBtn').addEventListener('click', () => { window.location.href = 'open-active-email.html'; });
+document.getElementById('repActionQueueBtn').addEventListener('click', () => { window.location.href = 'rep-action-queue.html'; });
+document.getElementById('closedRadarBtn').addEventListener('click', () => { window.location.href = 'recently-closed-radar.html'; });
+document.getElementById('procurementPlaybookBtn').addEventListener('click', () => { window.location.href = 'procurement-playbook.html'; });
+document.getElementById('committeeWatchBtn').addEventListener('click', () => { window.location.href = 'committee-watch.html'; });
 
 (function enableColumnResize(){
   const table = document.getElementById('dataTable');
@@ -2430,6 +2491,15 @@ document.getElementById('tbody').addEventListener('click', event => {
   if (!trigger) return;
   openProspectDrawer(trigger.dataset.state);
 });
+document.getElementById('tbody').addEventListener('change', event => {
+  const check = event.target.closest('[data-select-state]');
+  if (!check) return;
+  toggleSelectedState(check.getAttribute('data-select-state'), check.checked);
+});
+document.getElementById('clearSelectedBtn').addEventListener('click', () => {
+  localStorage.removeItem(SELECT_KEY);
+  render();
+});
 
 overlay.addEventListener('click', closeProspectDrawer);
 closeDrawerBtn.addEventListener('click', closeProspectDrawer);
@@ -2440,7 +2510,7 @@ document.addEventListener('keydown', event => {
 setupSorting();
 setupResizableColumns();
 setTableStatus('Loading state data…', 'Please wait while the tracker renders.', 'loading');
-requestAnimationFrame(() => render());
+requestAnimationFrame(() => { renderSelectedStateSummary(); render(); });
 </script>
 </body>
 </html>

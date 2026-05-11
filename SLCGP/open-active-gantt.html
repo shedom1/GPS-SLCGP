@@ -1,62 +1,120 @@
-<!DOCTYPE html><html lang='en'><head><meta charset='utf-8'/><meta name='viewport' content='width=device-width,initial-scale=1'/><title>SLCGP Open / Active Gantt View | May 11, 2026</title><style>
-:root{--bg:#f7fbff;--card:#fff;--ink:#172335;--muted:#5c6a80;--line:#d8e2ef;--blue:#2563eb;--green:#15803d;--green-soft:#eaf8ef;--amber:#a16207;--amber-soft:#fff4d8;--red:#b42318;--red-soft:#fdecec;--shadow:0 10px 24px rgba(18,33,53,.08);--radius:14px}
+<!DOCTYPE html><html lang='en'><head><meta charset='utf-8'/><meta name='viewport' content='width=device-width,initial-scale=1'/><title>Open / Active Gantt View</title><style>
+:root{
+ --bg:#f5f8fc;--card:#ffffff;--ink:#123a5a;--muted:#5a6b7c;--line:#d6e0eb;
+ --blue:#005BBB;--navy:#0B4F75;--black:#000000;--gray:#C5C5C5;
+ --aqua:#7DCEC8;--yellow:#F6F4A7;--orange:#E79665;
+ --green:#15803d;--green-soft:#eaf8ef;--amber:#9a6700;--amber-soft:#fff4d8;
+ --red:#b42318;--red-soft:#fdecec;--purple:#6d28d9;--purple-soft:#f3ebff;
+ --shadow:0 8px 20px rgba(18,58,90,.06);--radius:14px
+}
 *{box-sizing:border-box}
-body{margin:0;font-family:Inter,Arial,Helvetica,sans-serif;background:linear-gradient(180deg,#f7fbff 0%,#eef5fd 100%);color:var(--ink)}
-.wrap{width:min(100vw,1240px);margin:0 auto;padding:14px 12px 26px}
-.hero,.region,.block,.card,.month{background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow)}
-.hero{border-radius:18px;padding:16px 18px 14px;margin-bottom:10px;background:linear-gradient(135deg,#fff 0%,#f3f8ff 58%,#eefbf8 100%)}
-.eyebrow{font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--blue);margin-bottom:6px}
-h1{margin:0 0 6px;font-size:24px;line-height:1.08}
-.sub{color:var(--muted);font-size:12px;line-height:1.5;max-width:980px}
-.meta{display:flex;flex-wrap:wrap;gap:8px 14px;margin-top:10px;font-size:11px;color:var(--muted)}
+body{
+ margin:0;
+ font-family:"Myriad Pro","MyriadPro-Regular","Arial","Helvetica",sans-serif;
+ background:linear-gradient(180deg,#f7fbff 0%,#eef5fd 100%);
+ color:var(--ink)
+}
+.wrap{width:min(100vw,1320px);margin:0 auto;padding:12px 10px 20px}
+.hero,.section,.card,.mini,.toolbar,.table-card,.ptype{background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow)}
+.hero{border-radius:18px;padding:14px 16px 12px;margin-bottom:10px;background:linear-gradient(135deg,#fff 0%,#f4f9ff 60%,#eefbf8 100%)}
+.eyebrow{font-size:10px;font-weight:800;letter-spacing:.11em;text-transform:uppercase;color:var(--blue);margin-bottom:6px}
+h1{margin:0 0 6px;font-size:26px;line-height:1.02;font-weight:800;letter-spacing:-.02em}
+h2{margin:0 0 8px;font-size:18px;line-height:1.04;font-weight:800;letter-spacing:-.01em}
+h3{margin:0 0 6px;font-size:15px;line-height:1.06;font-weight:800}
+.sub{color:var(--muted);font-size:11.5px;line-height:1.45;max-width:1040px}
+.meta{display:flex;flex-wrap:wrap;gap:6px 12px;margin-top:9px;font-size:10.5px;color:var(--muted)}
 .meta b{color:var(--ink)}
-.nav{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 12px}
-.btn{appearance:none;border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:10px;padding:7px 10px;font-size:11px;font-weight:800;cursor:pointer;text-decoration:none;line-height:1}
+.nav{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 10px}
+.btn{appearance:none;border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:8px;padding:7px 9px;font-size:10px;font-weight:800;cursor:pointer;text-decoration:none;line-height:1;text-transform:uppercase;letter-spacing:.04em}
+.btn.primary{background:linear-gradient(135deg,var(--blue) 0%,#3178d3 100%);border-color:var(--blue);color:#fff}
 .btn:hover{transform:translateY(-1px)}
-.badge{display:inline-flex;align-items:center;border-radius:999px;padding:3px 8px;font-size:10px;font-weight:800;line-height:1}
-.badge.open{background:var(--green-soft);color:var(--green)}
-.badge.upcoming{background:var(--amber-soft);color:var(--amber)}
-.badge.deadline{background:#eef3ff;color:#2847a8}
-.badge.watch{background:var(--red-soft);color:var(--red)}
-a{color:var(--blue);text-decoration:none;font-weight:700}
+.pill{display:inline-flex;align-items:center;border-radius:999px;padding:3px 7px;font-size:9px;font-weight:800;line-height:1;text-transform:uppercase;letter-spacing:.04em}
+.pill.red{background:var(--red-soft);color:var(--red)}
+.pill.green{background:var(--green-soft);color:var(--green)}
+.pill.amber{background:var(--amber-soft);color:var(--amber)}
+.pill.purple{background:var(--purple-soft);color:var(--purple)}
+.note{font-size:10.5px;color:var(--muted);line-height:1.4}
+a{color:var(--blue);text-decoration:none;font-weight:800}
 a:hover{text-decoration:underline}
-.note{font-size:11px;color:var(--muted);line-height:1.45}
-@media print{body{background:#fff}.wrap{width:100%;max-width:none;padding:0}.hero,.region,.block,.card,.month{box-shadow:none}.nav{display:none!important}}
-
-.axis-row{display:grid;grid-template-columns:240px minmax(320px,1fr) 260px;gap:12px;align-items:center;margin:10px 0 12px}
-.axis-wrap{overflow-x:auto;padding-bottom:4px}
-.axis{position:relative;min-width:760px;height:38px;border:1px solid #edf2f8;border-radius:12px;background:#f9fbff;overflow:hidden}
-.month-cell{position:absolute;top:0;bottom:0;border-left:1px solid #e7eef8;padding:10px 8px 8px;font-size:10px;font-weight:800;color:var(--muted);white-space:nowrap}
-.today-line{position:absolute;top:0;bottom:0;width:2px;background:#2563eb;opacity:.8}
-.today-label{position:absolute;top:4px;transform:translateX(-50%);background:#2563eb;color:#fff;font-size:9px;font-weight:800;border-radius:999px;padding:2px 6px;white-space:nowrap}
-.legend{display:flex;flex-wrap:wrap;gap:12px;margin:-2px 0 8px;font-size:11px;color:var(--muted)}
-.legend span{display:inline-flex;align-items:center;gap:6px}
-.legend i{display:inline-block;width:14px;height:8px;border-radius:999px}
-.legend .lg-open{background:linear-gradient(90deg,#bfe8c9 0%,#59b67a 100%)}
-.legend .lg-upcoming{background:linear-gradient(90deg,#ffe7ae 0%,#d9a126 100%)}
-.legend .lg-milestone{width:10px;height:10px;border-radius:999px;background:#4b5563}
-.g-row{display:grid;grid-template-columns:240px minmax(320px,1fr) 260px;gap:12px;align-items:center;padding:10px 0;border-top:1px solid #edf2f8}
-.g-row:first-of-type{border-top:0;padding-top:0}
-.g-label .state-name{font-size:13px;font-weight:800;margin-bottom:3px}
-.g-meta{font-size:11px;color:var(--muted);line-height:1.35}
-.g-track{position:relative;height:20px;border-radius:999px;background:#f2f6fb;border:1px solid #e5edf7;overflow:visible}
-.g-track::before{content:'';position:absolute;inset:0;border-radius:999px;background:repeating-linear-gradient(to right, transparent 0, transparent calc(25% - 1px), rgba(23,35,53,.04) calc(25% - 1px), rgba(23,35,53,.04) 25%)}
+.card-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.card{border-radius:14px;padding:11px 11px 10px}
+.card p{margin:0 0 7px;font-size:11px;line-height:1.45}
+.kicker{font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-weight:800;margin-bottom:4px}
+.fact-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin-bottom:8px}
+.fact{background:#f9fbff;border:1px solid #edf2f8;border-radius:10px;padding:7px 8px;font-size:10.5px;line-height:1.35}
+.fact .label{display:block;font-size:9px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:800;margin-bottom:3px}
+.links{display:flex;flex-wrap:wrap;gap:8px;font-size:10px}
+.section{border-radius:16px;padding:11px 12px;margin-bottom:10px}
+.grid-4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.mini{border-radius:12px;padding:10px 11px}
+.mini .value{font-size:22px;font-weight:800;line-height:1}
+.table{width:100%;border-collapse:collapse}
+.table th,.table td{padding:8px 8px;border-bottom:1px solid #edf2f8;vertical-align:top;text-align:left}
+.table th{font-size:9px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:800}
+.table td{font-size:11px;line-height:1.35}
+.banner{background:#eef5fd;border:1px solid #d4e1f1;color:var(--ink);padding:8px 10px;border-radius:10px;font-size:10.5px;margin-bottom:10px}
+.state-pills{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.state-pill{display:inline-flex;align-items:center;border-radius:999px;padding:3px 7px;background:#f3f8ff;border:1px solid #e1eaff;font-size:9px;font-weight:800;line-height:1}
+.ptype-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.ptype{border-radius:14px;padding:11px}
+@media (max-width:1000px){.card-grid,.ptype-grid,.grid-4,.fact-grid{grid-template-columns:1fr}}
+@media print{body{background:#fff}.wrap{width:100%;max-width:none;padding:0}.hero,.section,.card,.mini,.toolbar,.table-card,.ptype{box-shadow:none}.nav{display:none!important}}
+</style></head>
+<body><div class='wrap'><section class='hero'><div class='eyebrow'>GPS Team | Timeline view</div><h1>Open / Active Gantt View</h1><div class='sub'>Tight 4-month timeline view from May through August 2026. Selected states from the tracker carry through here.</div><div class='meta'><div><b>Refresh date:</b> May 11, 2026</div><div><b>Axis:</b> May 2026 - August 2026</div></div></section>
+<div class='nav'><button class='btn' onclick='window.print()'>Print to PDF</button><a class='btn' href='index.html'>Tracker</a><a class='btn' href='executive-summary.html'>Executive Summary</a><a class='btn' href='open-active-email.html'>Open / Active</a><a class='btn' href='open-active-cards.html'>Cards</a><a class='btn primary' href='open-active-gantt.html'>Gantt</a><a class='btn' href='rep-action-queue.html'>Action Queue</a><a class='btn' href='recently-closed-radar.html'>Closed / Reopen</a><a class='btn' href='procurement-playbook.html'>Procurement Playbook</a><a class='btn' href='committee-watch.html'>Committee Watch</a></div>
+<div class='banner' id='selectionBanner' hidden><b>Selected states from tracker:</b> <span id='selectionList'></span> · <button class='btn' id='clearSelectionBtn' type='button'>Clear selection</button></div>
+<style>
+.axis-row{display:grid;grid-template-columns:200px minmax(320px,1fr) 240px;gap:10px;align-items:center;margin:8px 0 10px}
+.axis{position:relative;min-width:700px;height:32px;border:1px solid var(--line);border-radius:12px;background:#f9fbff;overflow:hidden}
+.today-line{position:absolute;top:0;bottom:0;width:2px;background:var(--blue)}
+.g-row{display:grid;grid-template-columns:200px minmax(320px,1fr) 240px;gap:10px;align-items:center;padding:8px 0;border-top:1px solid #edf2f8}
+.g-row:first-of-type{border-top:0}
+.g-track{position:relative;height:18px;border-radius:999px;background:#f2f6fb;border:1px solid #e5edf7}
+.g-track::before{content:'';position:absolute;inset:0;border-radius:999px;background:repeating-linear-gradient(to right, transparent 0, transparent calc(25% - 1px), rgba(18,58,90,.05) calc(25% - 1px), rgba(18,58,90,.05) 25%)}
 .bar{position:absolute;top:2px;bottom:2px;border-radius:999px;min-width:12px}
 .bar.open{background:linear-gradient(90deg,#bfe8c9 0%,#59b67a 100%)}
 .bar.upcoming{background:linear-gradient(90deg,#ffe7ae 0%,#d9a126 100%)}
-.milestone{position:absolute;top:50%;width:12px;height:12px;transform:translate(-6px,-50%);border-radius:999px;box-shadow:0 0 0 2px #fff}
-.milestone.open{background:#15803d}
-.milestone.upcoming{background:#a16207}
-.g-notes{font-size:11px;line-height:1.4}
-.note-line{margin-bottom:4px}
-.note-links{font-size:11px}
-.block{border-radius:16px;padding:12px 14px;margin-bottom:10px}
-ul.watch{margin:8px 0 0;padding-left:18px}
-ul.watch li{margin-bottom:7px;font-size:12px;line-height:1.45}
-@media (max-width:1100px){.axis-row{grid-template-columns:1fr;gap:7px}.g-row{grid-template-columns:1fr;gap:7px}.axis{min-width:680px}}
-</style></head>
-<body><div class='wrap'><section class='hero'><div class='eyebrow'>GPS Team | Timeline view</div><h1>Open / Active Gantt View</h1><div class='sub'><b>Sales use:</b> a fixed 4-month timeline view of live and near-term upcoming SLCGP activity. This version keeps the chart tight and readable while showing the current cycle from May through August 2026.</div><div class='meta'><div><b>Refresh date:</b> May 11, 2026</div><div><b>States on timeline:</b> 10</div><div><b>Axis:</b> May. 01, 2026 to Aug. 31, 2026</div></div></section>
-<div class='nav'><button class='btn' onclick='window.print()'>Print to PDF</button><a class='btn' href='index.html'>Back to Tracker</a><a class='btn' href='open-active-email.html'>Email View</a><a class='btn' href='open-active-cards.html'>Card View</a></div>
-<section class='block'><div class='legend'><span><i class='lg-open'></i> Open / active range</span><span><i class='lg-upcoming'></i> Upcoming dated window</span><span><i class='lg-milestone'></i> Single milestone / no posted range</span></div><div class='axis-row'><div aria-hidden='true'></div><div class='axis-wrap'><div class='axis'><div class='month-cell' style='left:0.00%;width:25.41%'>May 2026</div><div class='month-cell' style='left:25.41%;width:24.59%'>Jun 2026</div><div class='month-cell' style='left:50.00%;width:25.41%'>Jul 2026</div><div class='month-cell' style='left:75.41%;width:24.59%'>Aug 2026</div><div class='today-line' style='left:4.92%'></div><div class='today-label' style='left:4.92%'>Today</div></div></div><div aria-hidden='true'></div></div><div class='g-row'><div class='g-label'><div class='state-name'>Alabama</div><div class='g-meta'>Southeast · Open / Active · Active now; no posted close date</div></div><div class='g-track'><div class='milestone open' style='left:4.92%'></div></div><div class='g-notes'><div class='note-line'>First-come portal</div><div class='note-links'><a href='https://slcgp.alabama.gov/apply/' target='_blank' rel='noopener'>Source</a> · <a href='https://slcgp.alabama.gov/apply/' target='_blank' rel='noopener'>Program link</a></div></div></div><div class='g-row'><div class='g-label'><div class='state-name'>Maryland</div><div class='g-meta'>Mid-Atlantic · Open / Active · Active now; no posted close date</div></div><div class='g-track'><div class='milestone open' style='left:4.92%'></div></div><div class='g-notes'><div class='note-line'>Rolling application</div><div class='note-links'><a href='https://mdem.maryland.gov/pages/cyber-preparedness-funding.aspx' target='_blank' rel='noopener'>Source</a> · <a href='https://mdem.maryland.gov/pages/cyber-preparedness-funding.aspx' target='_blank' rel='noopener'>Program link</a></div></div></div><div class='g-row'><div class='g-label'><div class='state-name'>Idaho</div><div class='g-meta'>West · Open / Active · Active now; no posted close date</div></div><div class='g-track'><div class='milestone open' style='left:4.92%'></div></div><div class='g-notes'><div class='note-line'>Participation request forms</div><div class='note-links'><a href='https://cybersecurity.idaho.gov/operation-cyber-idaho/' target='_blank' rel='noopener'>Source</a> · <a href='https://cybersecurity.idaho.gov/operation-cyber-idaho/' target='_blank' rel='noopener'>Program link</a></div></div></div><div class='g-row'><div class='g-label'><div class='state-name'>New Mexico</div><div class='g-meta'>West · Open / Active · Active now; no posted close date</div></div><div class='g-track'><div class='milestone open' style='left:4.92%'></div></div><div class='g-notes'><div class='note-line'>Participation/request forms</div><div class='note-links'><a href='https://www.doit.nm.gov/programs/cybersecurity/state-and-local-cybersecurity-grant-program-slcgp/' target='_blank' rel='noopener'>Source</a> · <a href='https://www.doit.nm.gov/programs/cybersecurity/state-and-local-cybersecurity-grant-program-slcgp/' target='_blank' rel='noopener'>Program link</a></div></div></div><div class='g-row'><div class='g-label'><div class='state-name'>Georgia</div><div class='g-meta'>Southeast · Open / Active · Deadline May. 15, 2026</div></div><div class='g-track'><div class='bar open' style='left:0.80%;width:10.68%'></div></div><div class='g-notes'><div class='note-line'>Online application window</div><div class='note-links'><a href='https://gema.georgia.gov/state-and-local-cybersecurity-grant-program' target='_blank' rel='noopener'>Source</a> · <a href='https://gema.georgia.gov/state-and-local-cybersecurity-grant-program' target='_blank' rel='noopener'>Program link</a></div></div></div><div class='g-row'><div class='g-label'><div class='state-name'>South Carolina</div><div class='g-meta'>Southeast · Open / Active · Deadline May. 15, 2026</div></div><div class='g-track'><div class='milestone open' style='left:11.48%'></div></div><div class='g-notes'><div class='note-line'>Proposal application</div><div class='note-links'><a href='https://www.sled.sc.gov/departments/state-administrative-agency-saa-homeland-security' target='_blank' rel='noopener'>Source</a> · <a href='https://www.sled.sc.gov/sites/sled/files/forms/homeland/2024%20SLCGP%20Application%20Proposal%20Worksheet-Update_4.20.2026.pdf' target='_blank' rel='noopener'>Program link</a></div></div></div><div class='g-row'><div class='g-label'><div class='state-name'>Wyoming</div><div class='g-meta'>West · Open / Active · Deadline May. 15, 2026</div></div><div class='g-track'><div class='bar open' style='left:0.80%;width:10.68%'></div></div><div class='g-notes'><div class='note-line'>Proposal application</div><div class='note-links'><a href='https://hls.wyo.gov/' target='_blank' rel='noopener'>Source</a> · <a href='https://hls.wyo.gov/' target='_blank' rel='noopener'>Program link</a></div></div></div><div class='g-row'><div class='g-label'><div class='state-name'>Missouri</div><div class='g-meta'>Northeast · Open / Active · Deadline May. 20, 2026</div></div><div class='g-track'><div class='bar open' style='left:0.80%;width:14.77%'></div></div><div class='g-notes'><div class='note-line'>Online application window</div><div class='note-links'><a href='https://dps.mo.gov/dir/programs/ohs/grantstraining/documents/fy2025-slcgp-nofo.pdf' target='_blank' rel='noopener'>Source</a> · <a href='https://dps.mo.gov/dir/programs/ohs/grantstraining/' target='_blank' rel='noopener'>Program link</a></div></div></div><div class='g-row'><div class='g-label'><div class='state-name'>Washington</div><div class='g-meta'>West · Open / Active · Deadline Jun. 12, 2026</div></div><div class='g-track'><div class='bar open' style='left:2.46%;width:31.97%'></div></div><div class='g-notes'><div class='note-line'>State application</div><div class='note-links'><a href='https://watech.wa.gov/state-local-cybersecurity-grant-program' target='_blank' rel='noopener'>Source</a> · <a href='https://watech.wa.gov/state-local-cybersecurity-grant-program' target='_blank' rel='noopener'>Program link</a></div></div></div><div class='g-row'><div class='g-label'><div class='state-name'>Oklahoma</div><div class='g-meta'>West · Open / Active · Deadline Jul. 31, 2026</div></div><div class='g-track'><div class='milestone open' style='left:74.59%'></div></div><div class='g-notes'><div class='note-line'>Quarterly rolling application</div><div class='note-links'><a href='https://oklahoma.gov/homeland-security/grants.html' target='_blank' rel='noopener'>Source</a> · <a href='https://oklahoma.gov/homeland-security/grants.html' target='_blank' rel='noopener'>Program link</a></div></div></div></section>
-<section class='block'><h3 style='margin:0 0 8px;font-size:14px'>Watch list: future-cycle signal, no current dated window</h3><div class='note'>These states reference a future cycle or reopening, but the public page does not yet provide a dated window suitable for timeline placement.</div><ul class='watch'><li><b>Pennsylvania</b> — Pennsylvania&#x27;s official cybersecurity grant page says local governments will be able to apply to the Commonwealth to participate in cybersecurity projects identified by the committee, cannot apply directly to the federal government, and should sign up for updates. The page says more information to apply for 2025 funding will be provided later. <a href='https://www.pa.gov/services/pema/cybersecurity-grant' target='_blank' rel='noopener'>Source</a></li><li><b>Montana</b> — Montana says its most recent application window closed January 9, 2026 and that the next application window will open by late spring 2026. The official page does not currently post a specific opening date. <a href='https://des.mt.gov/Grant-Programs/SLCGPApplicationInfo' target='_blank' rel='noopener'>Source</a></li><li><b>Oregon</b> — Oregon&#x27;s official SLCGP page says the funding opportunity is temporarily closed as of April 1, 2026 and that new applications are anticipated in Summer 2026. The page continues to direct applicants to Oregon&#x27;s Cybersecurity Plan and the SLCGP administrative email for questions. <a href='https://www.oregon.gov/oem/emresources/grants/pages/state-and-local-cybersecurity-grant-program.aspx' target='_blank' rel='noopener'>Source</a></li></ul></section>
-</div></body></html>
+.milestone{position:absolute;top:50%;width:12px;height:12px;transform:translate(-6px,-50%);border-radius:999px;background:var(--blue)}
+@media (max-width:1100px){.axis-row,.g-row{grid-template-columns:1fr}.axis{min-width:640px}}
+</style><section class='section' data-filter-section><h2>4-Month timeline</h2><div class='axis-row'><div></div><div class='axis'><div class='state-pill' style='position:absolute;top:6px;left:0.00%;width:25.41%;justify-content:flex-start;background:transparent;border:0;font-size:9px;color:var(--muted);padding:0'>May 2026</div><div class='state-pill' style='position:absolute;top:6px;left:25.41%;width:24.59%;justify-content:flex-start;background:transparent;border:0;font-size:9px;color:var(--muted);padding:0'>Jun 2026</div><div class='state-pill' style='position:absolute;top:6px;left:50.00%;width:25.41%;justify-content:flex-start;background:transparent;border:0;font-size:9px;color:var(--muted);padding:0'>Jul 2026</div><div class='state-pill' style='position:absolute;top:6px;left:75.41%;width:24.59%;justify-content:flex-start;background:transparent;border:0;font-size:9px;color:var(--muted);padding:0'>Aug 2026</div><div class='today-line' style='left:8.20%'></div></div><div></div></div><div class='g-row' data-state='Ohio'><div><div class='kicker'>Northeast</div><h3>Ohio</h3></div><div class='g-track'><div class='milestone' style='left:1.00%'></div></div><div class='note'>Recently closed · End / next: Mar. 13, 2026</div></div><div class='g-row' data-state='California'><div><div class='kicker'>West</div><h3>California</h3></div><div class='g-track'><div class='bar open' style='left:0.80%;width:2.20%'></div></div><div class='note'>Recently closed · End / next: Mar. 13, 2026</div></div><div class='g-row' data-state='Alabama'><div><div class='kicker'>Southeast</div><h3>Alabama</h3></div><div class='g-track'><div class='milestone' style='left:8.20%'></div></div><div class='note'>Active now · End / next: Not publicly posted</div></div><div class='g-row' data-state='Maryland'><div><div class='kicker'>Mid-Atlantic</div><h3>Maryland</h3></div><div class='g-track'><div class='milestone' style='left:8.20%'></div></div><div class='note'>Active now · End / next: Not publicly posted</div></div><div class='g-row' data-state='Idaho'><div><div class='kicker'>West</div><h3>Idaho</h3></div><div class='g-track'><div class='milestone' style='left:8.20%'></div></div><div class='note'>Active now · End / next: Not publicly posted</div></div><div class='g-row' data-state='New Mexico'><div><div class='kicker'>West</div><h3>New Mexico</h3></div><div class='g-track'><div class='milestone' style='left:8.20%'></div></div><div class='note'>Active now · End / next: Not publicly posted</div></div><div class='g-row' data-state='Georgia'><div><div class='kicker'>Southeast</div><h3>Georgia</h3></div><div class='g-track'><div class='bar open' style='left:0.80%;width:10.68%'></div></div><div class='note'>Do now · End / next: May. 15, 2026</div></div><div class='g-row' data-state='South Carolina'><div><div class='kicker'>Southeast</div><h3>South Carolina</h3></div><div class='g-track'><div class='milestone' style='left:11.48%'></div></div><div class='note'>Do now · End / next: May. 15, 2026</div></div><div class='g-row' data-state='Wyoming'><div><div class='kicker'>West</div><h3>Wyoming</h3></div><div class='g-track'><div class='bar open' style='left:0.80%;width:10.68%'></div></div><div class='note'>Do now · End / next: May. 15, 2026</div></div><div class='g-row' data-state='Missouri'><div><div class='kicker'>Northeast</div><h3>Missouri</h3></div><div class='g-track'><div class='bar open' style='left:0.80%;width:14.77%'></div></div><div class='note'>Next 14 days · End / next: May. 20, 2026</div></div><div class='g-row' data-state='Washington'><div><div class='kicker'>West</div><h3>Washington</h3></div><div class='g-track'><div class='milestone' style='left:34.43%'></div></div><div class='note'>Open · End / next: Jun. 12, 2026</div></div><div class='g-row' data-state='Oklahoma'><div><div class='kicker'>West</div><h3>Oklahoma</h3></div><div class='g-track'><div class='milestone' style='left:74.59%'></div></div><div class='note'>Open · End / next: Jul. 31, 2026</div></div><div class='g-row' data-state='Pennsylvania'><div><div class='kicker'>Northeast</div><h3>Pennsylvania</h3></div><div class='g-track'><div class='milestone' style='left:99.00%'></div></div><div class='note'>Coming soon · End / next: Not publicly posted</div></div><div class='g-row' data-state='Montana'><div><div class='kicker'>West</div><h3>Montana</h3></div><div class='g-track'><div class='milestone' style='left:99.00%'></div></div><div class='note'>Coming soon · End / next: Not publicly posted</div></div><div class='g-row' data-state='Oregon'><div><div class='kicker'>West</div><h3>Oregon</h3></div><div class='g-track'><div class='milestone' style='left:99.00%'></div></div><div class='note'>Coming soon · End / next: Not publicly posted</div></div></section>
+</div>
+<script>
+const SELECT_KEY = 'slcgpSelectedStates';
+function getSelectedStates() {
+  try {
+    const raw = localStorage.getItem(SELECT_KEY);
+    const parsed = raw ? JSON.parse(raw) : [];
+    return Array.isArray(parsed) ? parsed : [];
+  } catch (e) { return []; }
+}
+function clearSelectedStates() {
+  localStorage.removeItem(SELECT_KEY);
+  applySelectionFilter();
+}
+function applySelectionFilter() {
+  const selected = getSelectedStates();
+  const banner = document.getElementById('selectionBanner');
+  const list = document.getElementById('selectionList');
+  if (!banner || !list) return;
+  if (!selected.length) {
+    banner.hidden = true;
+    document.querySelectorAll('[data-state]').forEach(el => { el.hidden = false; });
+  } else {
+    banner.hidden = false;
+    list.textContent = selected.join(', ');
+    document.querySelectorAll('[data-state]').forEach(el => {
+      el.hidden = !selected.includes(el.getAttribute('data-state'));
+    });
+  }
+  document.querySelectorAll('[data-filter-section]').forEach(sec => {
+    const visible = sec.querySelectorAll('[data-state]:not([hidden])').length;
+    sec.hidden = !visible;
+  });
+}
+window.addEventListener('DOMContentLoaded', () => {
+  const clearBtn = document.getElementById('clearSelectionBtn');
+  if (clearBtn) clearBtn.addEventListener('click', clearSelectedStates);
+  applySelectionFilter();
+});
+</script>
+</body></html>

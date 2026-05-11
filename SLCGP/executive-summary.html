@@ -1,54 +1,66 @@
 <!DOCTYPE html><html lang='en'><head><meta charset='utf-8'/><meta name='viewport' content='width=device-width,initial-scale=1'/><title>SLCGP Executive Summary | May 11, 2026</title><style>
-:root{--bg:#f7fbff;--card:#fff;--ink:#172335;--muted:#5c6a80;--line:#d8e2ef;--blue:#2563eb;--green:#15803d;--green-soft:#eaf8ef;--amber:#a16207;--amber-soft:#fff4d8;--red:#b42318;--red-soft:#fdecec;--shadow:0 10px 24px rgba(18,33,53,.08);--radius:14px}
+:root{
+ --bg:#f5f8fc;--card:#ffffff;--ink:#123a5a;--muted:#5a6b7c;--line:#d6e0eb;
+ --blue:#005BBB;--navy:#0B4F75;--black:#000000;--gray:#C5C5C5;
+ --aqua:#7DCEC8;--yellow:#F6F4A7;--orange:#E79665;
+ --green:#15803d;--green-soft:#eaf8ef;--amber:#9a6700;--amber-soft:#fff4d8;
+ --red:#b42318;--red-soft:#fdecec;--purple:#6d28d9;--purple-soft:#f3ebff;
+ --shadow:0 8px 20px rgba(18,58,90,.06);--radius:14px
+}
 *{box-sizing:border-box}
-body{margin:0;font-family:Inter,Arial,Helvetica,sans-serif;background:linear-gradient(180deg,#f7fbff 0%,#eef5fd 100%);color:var(--ink)}
-.wrap{width:min(100vw,1240px);margin:0 auto;padding:14px 12px 26px}
-.hero,.region,.block,.card,.month{background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow)}
-.hero{border-radius:18px;padding:16px 18px 14px;margin-bottom:10px;background:linear-gradient(135deg,#fff 0%,#f3f8ff 58%,#eefbf8 100%)}
-.eyebrow{font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--blue);margin-bottom:6px}
-h1{margin:0 0 6px;font-size:24px;line-height:1.08}
-.sub{color:var(--muted);font-size:12px;line-height:1.5;max-width:980px}
-.meta{display:flex;flex-wrap:wrap;gap:8px 14px;margin-top:10px;font-size:11px;color:var(--muted)}
+body{
+ margin:0;
+ font-family:"Myriad Pro","MyriadPro-Regular","Arial","Helvetica",sans-serif;
+ background:linear-gradient(180deg,#f7fbff 0%,#eef5fd 100%);
+ color:var(--ink)
+}
+.wrap{width:min(100vw,1320px);margin:0 auto;padding:12px 10px 20px}
+.hero,.section,.card,.mini,.toolbar,.table-card,.ptype{background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow)}
+.hero{border-radius:18px;padding:14px 16px 12px;margin-bottom:10px;background:linear-gradient(135deg,#fff 0%,#f4f9ff 60%,#eefbf8 100%)}
+.eyebrow{font-size:10px;font-weight:800;letter-spacing:.11em;text-transform:uppercase;color:var(--blue);margin-bottom:6px}
+h1{margin:0 0 6px;font-size:26px;line-height:1.02;font-weight:800;letter-spacing:-.02em}
+h2{margin:0 0 8px;font-size:18px;line-height:1.04;font-weight:800;letter-spacing:-.01em}
+h3{margin:0 0 6px;font-size:15px;line-height:1.06;font-weight:800}
+.sub{color:var(--muted);font-size:11.5px;line-height:1.45;max-width:1040px}
+.meta{display:flex;flex-wrap:wrap;gap:6px 12px;margin-top:9px;font-size:10.5px;color:var(--muted)}
 .meta b{color:var(--ink)}
-.nav{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 12px}
-.btn{appearance:none;border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:10px;padding:7px 10px;font-size:11px;font-weight:800;cursor:pointer;text-decoration:none;line-height:1}
+.nav{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 10px}
+.btn{appearance:none;border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:8px;padding:7px 9px;font-size:10px;font-weight:800;cursor:pointer;text-decoration:none;line-height:1;text-transform:uppercase;letter-spacing:.04em}
+.btn.primary{background:linear-gradient(135deg,var(--blue) 0%,#3178d3 100%);border-color:var(--blue);color:#fff}
 .btn:hover{transform:translateY(-1px)}
-.badge{display:inline-flex;align-items:center;border-radius:999px;padding:3px 8px;font-size:10px;font-weight:800;line-height:1}
-.badge.open{background:var(--green-soft);color:var(--green)}
-.badge.upcoming{background:var(--amber-soft);color:var(--amber)}
-.badge.deadline{background:#eef3ff;color:#2847a8}
-.badge.watch{background:var(--red-soft);color:var(--red)}
-a{color:var(--blue);text-decoration:none;font-weight:700}
+.pill{display:inline-flex;align-items:center;border-radius:999px;padding:3px 7px;font-size:9px;font-weight:800;line-height:1;text-transform:uppercase;letter-spacing:.04em}
+.pill.red{background:var(--red-soft);color:var(--red)}
+.pill.green{background:var(--green-soft);color:var(--green)}
+.pill.amber{background:var(--amber-soft);color:var(--amber)}
+.pill.purple{background:var(--purple-soft);color:var(--purple)}
+.note{font-size:10.5px;color:var(--muted);line-height:1.4}
+a{color:var(--blue);text-decoration:none;font-weight:800}
 a:hover{text-decoration:underline}
-.note{font-size:11px;color:var(--muted);line-height:1.45}
-@media print{body{background:#fff}.wrap{width:100%;max-width:none;padding:0}.hero,.region,.block,.card,.month{box-shadow:none}.nav{display:none!important}}
-
-.month{border-radius:16px;padding:12px 14px;margin-bottom:10px}
-.month h2{margin:0 0 8px;font-size:18px;line-height:1.1}
-.region-block{margin:10px 0 0}
-.region-block h3{margin:0 0 6px;font-size:15px;line-height:1.1}
-.state-item{margin:0 0 10px 16px;padding-left:10px;border-left:2px solid #e7eef8}
-.state-name{font-size:12px;font-weight:800;margin-bottom:3px}
-.state-copy{font-size:12px;line-height:1.55;color:var(--ink)}
+.card-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.card{border-radius:14px;padding:11px 11px 10px}
+.card p{margin:0 0 7px;font-size:11px;line-height:1.45}
+.kicker{font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-weight:800;margin-bottom:4px}
+.fact-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin-bottom:8px}
+.fact{background:#f9fbff;border:1px solid #edf2f8;border-radius:10px;padding:7px 8px;font-size:10.5px;line-height:1.35}
+.fact .label{display:block;font-size:9px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:800;margin-bottom:3px}
+.links{display:flex;flex-wrap:wrap;gap:8px;font-size:10px}
+.section{border-radius:16px;padding:11px 12px;margin-bottom:10px}
+.grid-4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.mini{border-radius:12px;padding:10px 11px}
+.mini .value{font-size:22px;font-weight:800;line-height:1}
+.table{width:100%;border-collapse:collapse}
+.table th,.table td{padding:8px 8px;border-bottom:1px solid #edf2f8;vertical-align:top;text-align:left}
+.table th{font-size:9px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:800}
+.table td{font-size:11px;line-height:1.35}
+.banner{background:#eef5fd;border:1px solid #d4e1f1;color:var(--ink);padding:8px 10px;border-radius:10px;font-size:10.5px;margin-bottom:10px}
+.state-pills{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.state-pill{display:inline-flex;align-items:center;border-radius:999px;padding:3px 7px;background:#f3f8ff;border:1px solid #e1eaff;font-size:9px;font-weight:800;line-height:1}
+.ptype-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.ptype{border-radius:14px;padding:11px}
+@media (max-width:1000px){.card-grid,.ptype-grid,.grid-4,.fact-grid{grid-template-columns:1fr}}
+@media print{body{background:#fff}.wrap{width:100%;max-width:none;padding:0}.hero,.section,.card,.mini,.toolbar,.table-card,.ptype{box-shadow:none}.nav{display:none!important}}
 </style></head>
-<body><div class='wrap'><section class='hero'><div class='eyebrow'>GPS Team | Executive summary</div><h1>SLCGP Executive Summary of Changes</h1><div class='sub'>Leadership-facing summary of the most relevant state-level SLCGP changes and current signals. The content is organized newest month first and focuses on sales implications, timing, and which states are truly actionable versus watch states.</div><div class='meta'><div><b>Refresh date:</b> May 11, 2026</div><div><b>View:</b> newest month first</div><div><b>Pennsylvania region:</b> Northeast</div></div></section>
-<div class='nav'><button class='btn' onclick='window.print()'>Print to PDF</button><a class='btn' href='index.html'>Back to Tracker</a><a class='btn' href='open-active-email.html'>Email View</a></div>
-<section class='month'><h2>May 2026</h2>
-<div class='region-block'><h3>West</h3>
-<div class='state-item'><div class='state-name'>Washington</div><div class='state-copy'>Washington remains one of the clearest live opportunities in the market. The WaTech page still points to the round that opened May 4, 2026 and is due June 12, 2026, so the state remains in the active pipeline. Reps should continue prioritizing qualified public-sector prospects that can still move within the live window.</div></div>
-<div class='state-item'><div class='state-name'>Montana</div><div class='state-copy'>Montana should be treated as coming soon rather than a dated upcoming window. The official page says the next application window will open by late spring 2026, but it does not post a specific date. That means Montana belongs in the watch list until the state publishes a clear opening.</div></div>
-<div class='state-item'><div class='state-name'>Oklahoma</div><div class='state-copy'>Oklahoma still lists multiple 2026 deadlines and the next posted date after the April cycle is July 31, 2026. The page also says funding is not currently accessible and that additional funding is expected later this year, so the state remains a cautious pipeline play rather than a clean open-state push.</div></div>
-</div>
-<div class='region-block'><h3>Southeast</h3>
-<div class='state-item'><div class='state-name'>Georgia</div><div class='state-copy'>Georgia remains active and continues to show a hard application deadline of May 15, 2026 on the official state page. That keeps Georgia in the immediate-action group for public-sector outreach. Reps should stay focused on qualified entities that can still assemble a complete submission through Georgia EM Grants Manager.</div></div>
-<div class='state-item'><div class='state-name'>South Carolina</div><div class='state-copy'>South Carolina remains active and still shows proposals due May 15, 2026 through the updated SAA worksheet route. This is still a valid closing-window state for qualified public-sector prospects. It should stay in the near-term action group until the deadline passes.</div></div>
-<div class='state-item'><div class='state-name'>Alabama</div><div class='state-copy'>Alabama remains active through a first-come, first-served participation model. The state continues to route local government entities into eligible service projects rather than direct grant cash. This remains a live but service-structured opportunity.</div></div>
-</div>
-<div class='region-block'><h3>Mid-Atlantic</h3>
-<div class='state-item'><div class='state-name'>Maryland</div><div class='state-copy'>Maryland continues to show one of the clearest live participation paths. The state page still says a second-round FY2023 application is open on a rolling basis and references a short-term funding opportunity. This remains a strong state for immediate outreach where entities can move quickly on scoped cybersecurity projects.</div></div>
-</div>
-<div class='region-block'><h3>Northeast</h3>
-<div class='state-item'><div class='state-name'>Missouri</div><div class='state-copy'>Missouri remains open under its FY2025 SLCGP NOFO, with applications due May 20, 2026 at 5:00 p.m. CST. It remains one of the more clearly documented active windows in the market. Reps should keep Missouri in the closing-opportunity group until the deadline passes.</div></div>
-<div class='state-item'><div class='state-name'>Pennsylvania</div><div class='state-copy'>Pennsylvania still does not post a dated local application window. The Commonwealth continues to say local governments will participate in committee-identified projects and that more information for 2025 funding will be provided later. This remains a monitor-and-warm state, and Pennsylvania stays in the Northeast region throughout the tracker set.</div></div>
-</div>
-</section></div></body></html>
+<body><div class='wrap'><section class='hero'><div class='eyebrow'>GPS Team | Executive summary</div><h1>SLCGP Executive Summary of Changes</h1><div class='sub'>Leadership-facing summary with standardized typography and tighter spacing. This page highlights the states with the most meaningful current signal changes or current action value.</div><div class='meta'><div><b>Refresh date:</b> May 11, 2026</div><div><b>Pennsylvania region:</b> Northeast</div></div></section>
+<div class='nav'><button class='btn' onclick='window.print()'>Print to PDF</button><a class='btn' href='index.html'>Tracker</a><a class='btn primary' href='executive-summary.html'>Executive Summary</a><a class='btn' href='open-active-email.html'>Open / Active</a><a class='btn' href='rep-action-queue.html'>Action Queue</a></div>
+<section class='section'><h2>Open / closing states</h2><div class='note' style='margin-bottom:8px'>Current live states and near-term closing states that deserve active outreach.</div><div class='card-grid'><article class='card'><div class='kicker'>Southeast</div><h3>Alabama</h3><p>Alabama&#x27;s official apply page says local government entities should apply online to participate in eligible projects and that projects are approved on a first-come, first-served basis. Approved projects provide one-time cybersecurity services rather than direct grant cash to local entities.</p></article><article class='card'><div class='kicker'>Mid-Atlantic</div><h3>Maryland</h3><p>Maryland&#x27;s cyber preparedness funding page says a second-round application for FY2023 SLCGP funds is now open and applications will be accepted on a rolling basis. The page also continues to reference an additional funding opportunity for short-term projects.</p></article><article class='card'><div class='kicker'>West</div><h3>Idaho</h3><p>Idaho&#x27;s Operation Cyber Idaho page includes an active &#x27;Ready to Apply&#x27; path for cities, counties, school districts, tribes, and community partners to register for SLCGP-funded services, while program work is described as continuing through federal fiscal year 2025-2026.</p></article><article class='card'><div class='kicker'>West</div><h3>New Mexico</h3><p>New Mexico&#x27;s SLCGP page says the Cybersecurity Planning Committee is accepting participation interest and request forms for cybersecurity services to be included in prospective projects for State Fiscal Year 2027. If approved by the Committee, the services will be offered free of charge using SLCGP funding on a first-come, first-served basis.</p></article><article class='card'><div class='kicker'>Southeast</div><h3>Georgia</h3><p>Georgia&#x27;s official SLCGP page says applications are accepted online via Georgia EM Grants Manager beginning April 1, 2026 and must be received by May 15, 2026. The page continues to point applicants to the FY2024 notice of funding opportunity and the EM Grants Manager portal.</p></article><article class='card'><div class='kicker'>Southeast</div><h3>South Carolina</h3><p>South Carolina&#x27;s State Administrative Agency page links the updated 2024 SLCGP Application Proposal Worksheet, which says proposals are due by May 15, 2026. The page continues to route eligible entities through SLED for homeland security-related grant submissions.</p></article><article class='card'><div class='kicker'>West</div><h3>Wyoming</h3><p>Wyoming Homeland Security says the SLCGP application period is now open and all applications must be submitted via ZoomGrants no later than Friday, May 15, 2026. The page directs applicants to the SLCGP Information Sheet for additional details and the link to apply.</p></article><article class='card'><div class='kicker'>Northeast</div><h3>Missouri</h3><p>Missouri&#x27;s FY2025 SLCGP NOFO says the application start date is April 13, 2026 and the application submission deadline is May 20, 2026 at 5:00 p.m. CST. The state&#x27;s application workshop materials continue to point applicants to WebGrants and the supporting assessment tools.</p></article><article class='card'><div class='kicker'>West</div><h3>Washington</h3><p>Washington&#x27;s WaTech page says the FY25 State and Local Cybersecurity Grant Program competitive project solicitation is now open in May 2026. Applications are due June 12, 2026.</p></article><article class='card'><div class='kicker'>West</div><h3>Oklahoma</h3><p>Oklahoma&#x27;s grants page says the State and Local Cybersecurity Grant Program is now accepting new applications and lists 2026 deadlines of January 30, April 30, July 31, and October 30. The page also says funding is not currently accessible and that additional funding is expected later this year.</p></article></div></section><section class='section'><h2>Coming soon</h2><div class='note' style='margin-bottom:8px'>States with credible next-cycle signals but no fully posted current local window.</div><div class='card-grid'><article class='card'><div class='kicker'>Northeast</div><h3>Pennsylvania</h3><p>Pennsylvania&#x27;s official cybersecurity grant page says local governments will be able to apply to the Commonwealth to participate in cybersecurity projects identified by the committee, cannot apply directly to the federal government, and should sign up for updates. The page says more information to apply for 2025 funding will be provided later.</p></article><article class='card'><div class='kicker'>West</div><h3>Montana</h3><p>Montana says the most recent application window closed January 9, 2026 and that the next application window will open by late spring 2026. The official page does not currently post a specific opening date.</p></article><article class='card'><div class='kicker'>West</div><h3>Oregon</h3><p>Oregon&#x27;s official SLCGP page says the funding opportunity is temporarily closed as of April 1, 2026 and that new applications are anticipated in Summer 2026. The page continues to direct applicants to Oregon&#x27;s Cybersecurity Plan and the SLCGP administrative email for questions.</p></article></div></section><section class='section'><h2>Recently closed</h2><div class='note' style='margin-bottom:8px'>Useful for prior-applicant mapping and next-cycle pre-positioning.</div><div class='card-grid'><article class='card'><div class='kicker'>Northeast</div><h3>Ohio</h3><p>Ohio&#x27;s Round 3 .gov migration application guidance required local government applications to be submitted by midnight on March 13, 2026 and capped federal support at $9,500 per project with a 20% cost share.</p></article><article class='card'><div class='kicker'>West</div><h3>California</h3><p>California posted a formal FFY 2024 Local &amp; Tribal SLCGP RFP with a due date of March 13, 2026.</p></article></div></section>
+</div></body></html>

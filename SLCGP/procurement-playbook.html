@@ -1,0 +1,107 @@
+<!DOCTYPE html><html lang='en'><head><meta charset='utf-8'/><meta name='viewport' content='width=device-width,initial-scale=1'/><title>Procurement Playbook</title><style>
+:root{
+ --bg:#f5f8fc;--card:#ffffff;--ink:#123a5a;--muted:#5a6b7c;--line:#d6e0eb;
+ --blue:#005BBB;--navy:#0B4F75;--black:#000000;--gray:#C5C5C5;
+ --aqua:#7DCEC8;--yellow:#F6F4A7;--orange:#E79665;
+ --green:#15803d;--green-soft:#eaf8ef;--amber:#9a6700;--amber-soft:#fff4d8;
+ --red:#b42318;--red-soft:#fdecec;--purple:#6d28d9;--purple-soft:#f3ebff;
+ --shadow:0 8px 20px rgba(18,58,90,.06);--radius:14px
+}
+*{box-sizing:border-box}
+body{
+ margin:0;
+ font-family:"Myriad Pro","MyriadPro-Regular","Arial","Helvetica",sans-serif;
+ background:linear-gradient(180deg,#f7fbff 0%,#eef5fd 100%);
+ color:var(--ink)
+}
+.wrap{width:min(100vw,1320px);margin:0 auto;padding:12px 10px 20px}
+.hero,.section,.card,.mini,.toolbar,.table-card,.ptype{background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow)}
+.hero{border-radius:18px;padding:14px 16px 12px;margin-bottom:10px;background:linear-gradient(135deg,#fff 0%,#f4f9ff 60%,#eefbf8 100%)}
+.eyebrow{font-size:10px;font-weight:800;letter-spacing:.11em;text-transform:uppercase;color:var(--blue);margin-bottom:6px}
+h1{margin:0 0 6px;font-size:26px;line-height:1.02;font-weight:800;letter-spacing:-.02em}
+h2{margin:0 0 8px;font-size:18px;line-height:1.04;font-weight:800;letter-spacing:-.01em}
+h3{margin:0 0 6px;font-size:15px;line-height:1.06;font-weight:800}
+.sub{color:var(--muted);font-size:11.5px;line-height:1.45;max-width:1040px}
+.meta{display:flex;flex-wrap:wrap;gap:6px 12px;margin-top:9px;font-size:10.5px;color:var(--muted)}
+.meta b{color:var(--ink)}
+.nav{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 10px}
+.btn{appearance:none;border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:8px;padding:7px 9px;font-size:10px;font-weight:800;cursor:pointer;text-decoration:none;line-height:1;text-transform:uppercase;letter-spacing:.04em}
+.btn.primary{background:linear-gradient(135deg,var(--blue) 0%,#3178d3 100%);border-color:var(--blue);color:#fff}
+.btn:hover{transform:translateY(-1px)}
+.pill{display:inline-flex;align-items:center;border-radius:999px;padding:3px 7px;font-size:9px;font-weight:800;line-height:1;text-transform:uppercase;letter-spacing:.04em}
+.pill.red{background:var(--red-soft);color:var(--red)}
+.pill.green{background:var(--green-soft);color:var(--green)}
+.pill.amber{background:var(--amber-soft);color:var(--amber)}
+.pill.purple{background:var(--purple-soft);color:var(--purple)}
+.note{font-size:10.5px;color:var(--muted);line-height:1.4}
+a{color:var(--blue);text-decoration:none;font-weight:800}
+a:hover{text-decoration:underline}
+.card-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.card{border-radius:14px;padding:11px 11px 10px}
+.card p{margin:0 0 7px;font-size:11px;line-height:1.45}
+.kicker{font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-weight:800;margin-bottom:4px}
+.fact-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin-bottom:8px}
+.fact{background:#f9fbff;border:1px solid #edf2f8;border-radius:10px;padding:7px 8px;font-size:10.5px;line-height:1.35}
+.fact .label{display:block;font-size:9px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:800;margin-bottom:3px}
+.links{display:flex;flex-wrap:wrap;gap:8px;font-size:10px}
+.section{border-radius:16px;padding:11px 12px;margin-bottom:10px}
+.grid-4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.mini{border-radius:12px;padding:10px 11px}
+.mini .value{font-size:22px;font-weight:800;line-height:1}
+.table{width:100%;border-collapse:collapse}
+.table th,.table td{padding:8px 8px;border-bottom:1px solid #edf2f8;vertical-align:top;text-align:left}
+.table th{font-size:9px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:800}
+.table td{font-size:11px;line-height:1.35}
+.banner{background:#eef5fd;border:1px solid #d4e1f1;color:var(--ink);padding:8px 10px;border-radius:10px;font-size:10.5px;margin-bottom:10px}
+.state-pills{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.state-pill{display:inline-flex;align-items:center;border-radius:999px;padding:3px 7px;background:#f3f8ff;border:1px solid #e1eaff;font-size:9px;font-weight:800;line-height:1}
+.ptype-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.ptype{border-radius:14px;padding:11px}
+@media (max-width:1000px){.card-grid,.ptype-grid,.grid-4,.fact-grid{grid-template-columns:1fr}}
+@media print{body{background:#fff}.wrap{width:100%;max-width:none;padding:0}.hero,.section,.card,.mini,.toolbar,.table-card,.ptype{box-shadow:none}.nav{display:none!important}}
+</style></head>
+<body><div class='wrap'><section class='hero'><div class='eyebrow'>GPS Team | Procurement playbook</div><h1>Procurement Playbook</h1><div class='sub'>Group states by how a rep enters the process. This is the fastest way to train reps on similar state motions instead of memorizing every state one by one.</div><div class='meta'><div><b>Refresh date:</b> May 11, 2026</div><div><b>Best for:</b> Rep training and call prep</div></div></section>
+<div class='nav'><button class='btn' onclick='window.print()'>Print to PDF</button><a class='btn' href='index.html'>Tracker</a><a class='btn' href='executive-summary.html'>Executive Summary</a><a class='btn' href='open-active-email.html'>Open / Active</a><a class='btn' href='open-active-cards.html'>Cards</a><a class='btn' href='open-active-gantt.html'>Gantt</a><a class='btn' href='rep-action-queue.html'>Action Queue</a><a class='btn' href='recently-closed-radar.html'>Closed / Reopen</a><a class='btn primary' href='procurement-playbook.html'>Procurement Playbook</a><a class='btn' href='committee-watch.html'>Committee Watch</a></div>
+<div class='banner' id='selectionBanner' hidden><b>Selected states from tracker:</b> <span id='selectionList'></span> · <button class='btn' id='clearSelectionBtn' type='button'>Clear selection</button></div>
+<div class='ptype-grid'><section class='ptype' data-filter-section><div class='kicker'>Procurement type</div><h3>Online application window</h3><p class='note'>Work backward from the close date and use the packet as the qualification script.</p><div class='fact-grid'><div class='fact'><span class='label'>States in bucket</span>4</div><div class='fact'><span class='label'>Rep play</span>Work backward from the close date and use the packet as the qualification script.</div></div><div class='state-pills'><span class='state-pill' data-state='Georgia'>Georgia · Do now</span><span class='state-pill' data-state='North Carolina'>North Carolina · Closed</span><span class='state-pill' data-state='Virginia'>Virginia · Closed</span><span class='state-pill' data-state='Missouri'>Missouri · Next 14 days</span></div></section><section class='ptype' data-filter-section><div class='kicker'>Procurement type</div><h3>Proposal application</h3><p class='note'>Use a consultative motion tied to the state worksheet or proposal format.</p><div class='fact-grid'><div class='fact'><span class='label'>States in bucket</span>3</div><div class='fact'><span class='label'>Rep play</span>Use a consultative motion tied to the state worksheet or proposal format.</div></div><div class='state-pills'><span class='state-pill' data-state='South Carolina'>South Carolina · Do now</span><span class='state-pill' data-state='Tennessee'>Tennessee · Closed</span><span class='state-pill' data-state='Wyoming'>Wyoming · Do now</span></div></section><section class='ptype' data-filter-section><div class='kicker'>Procurement type</div><h3>State application</h3><p class='note'>Use direct application support and timeline discipline.</p><div class='fact-grid'><div class='fact'><span class='label'>States in bucket</span>8</div><div class='fact'><span class='label'>Rep play</span>Use direct application support and timeline discipline.</div></div><div class='state-pills'><span class='state-pill' data-state='Florida'>Florida · Closed</span><span class='state-pill' data-state='Louisiana'>Louisiana · Closed</span><span class='state-pill' data-state='Mississippi'>Mississippi · Closed</span><span class='state-pill' data-state='Kentucky'>Kentucky · Closed</span><span class='state-pill' data-state='Kansas'>Kansas · Closed</span><span class='state-pill' data-state='New Jersey'>New Jersey · Closed</span><span class='state-pill' data-state='Oregon'>Oregon · Coming soon</span><span class='state-pill' data-state='Washington'>Washington · Open</span></div></section><section class='ptype' data-filter-section><div class='kicker'>Procurement type</div><h3>Rolling application</h3><p class='note'>Steady pipeline view - move qualified entities continuously.</p><div class='fact-grid'><div class='fact'><span class='label'>States in bucket</span>1</div><div class='fact'><span class='label'>Rep play</span>Steady pipeline view - move qualified entities continuously.</div></div><div class='state-pills'><span class='state-pill' data-state='Maryland'>Maryland · Active now</span></div></section><section class='ptype' data-filter-section><div class='kicker'>Procurement type</div><h3>First-come portal</h3><p class='note'>Speed matters - move eligible entities in quickly.</p><div class='fact-grid'><div class='fact'><span class='label'>States in bucket</span>1</div><div class='fact'><span class='label'>Rep play</span>Speed matters - move eligible entities in quickly.</div></div><div class='state-pills'><span class='state-pill' data-state='Alabama'>Alabama · Active now</span></div></section><section class='ptype' data-filter-section><div class='kicker'>Procurement type</div><h3>Participation request forms</h3><p class='note'>Lead with services and use cases, not just grant language.</p><div class='fact-grid'><div class='fact'><span class='label'>States in bucket</span>1</div><div class='fact'><span class='label'>Rep play</span>Lead with services and use cases, not just grant language.</div></div><div class='state-pills'><span class='state-pill' data-state='Idaho'>Idaho · Active now</span></div></section><section class='ptype' data-filter-section><div class='kicker'>Procurement type</div><h3>Quarterly rolling application</h3><p class='note'>Build a repeating cadence around the next posted quarterly deadline.</p><div class='fact-grid'><div class='fact'><span class='label'>States in bucket</span>1</div><div class='fact'><span class='label'>Rep play</span>Build a repeating cadence around the next posted quarterly deadline.</div></div><div class='state-pills'><span class='state-pill' data-state='Oklahoma'>Oklahoma · Open</span></div></section><section class='ptype' data-filter-section><div class='kicker'>Procurement type</div><h3>RFP</h3><p class='note'>Formal document-heavy motion; useful for structured opportunities.</p><div class='fact-grid'><div class='fact'><span class='label'>States in bucket</span>3</div><div class='fact'><span class='label'>Rep play</span>Formal document-heavy motion; useful for structured opportunities.</div></div><div class='state-pills'><span class='state-pill' data-state='Ohio'>Ohio · Recently closed</span><span class='state-pill' data-state='Wisconsin'>Wisconsin · Closed</span><span class='state-pill' data-state='California'>California · Recently closed</span></div></section><section class='ptype' data-filter-section><div class='kicker'>Procurement type</div><h3>RFA</h3><p class='note'>Formal application motion tied to state scoring or eligibility.</p><div class='fact-grid'><div class='fact'><span class='label'>States in bucket</span>2</div><div class='fact'><span class='label'>Rep play</span>Formal application motion tied to state scoring or eligibility.</div></div><div class='state-pills'><span class='state-pill' data-state='New York'>New York · Closed</span><span class='state-pill' data-state='Texas'>Texas · Closed</span></div></section><section class='ptype' data-filter-section><div class='kicker'>Procurement type</div><h3>State page / TBD</h3><p class='note'>Monitor state pages, committees, and upcoming notices.</p><div class='fact-grid'><div class='fact'><span class='label'>States in bucket</span>25</div><div class='fact'><span class='label'>Rep play</span>Monitor state pages, committees, and upcoming notices.</div></div><div class='state-pills'><span class='state-pill' data-state='Arkansas'>Arkansas · Monitor</span><span class='state-pill' data-state='Delaware'>Delaware · Monitor</span><span class='state-pill' data-state='West Virginia'>West Virginia · Monitor</span><span class='state-pill' data-state='Connecticut'>Connecticut · Monitor</span><span class='state-pill' data-state='Illinois'>Illinois · Monitor</span><span class='state-pill' data-state='Indiana'>Indiana · Monitor</span><span class='state-pill' data-state='Iowa'>Iowa · Monitor</span><span class='state-pill' data-state='Maine'>Maine · Monitor</span><span class='state-pill' data-state='Massachusetts'>Massachusetts · Monitor</span><span class='state-pill' data-state='Michigan'>Michigan · Monitor</span><span class='state-pill' data-state='Minnesota'>Minnesota · Monitor</span><span class='state-pill' data-state='Nebraska'>Nebraska · Monitor</span><span class='state-pill' data-state='New Hampshire'>New Hampshire · Monitor</span><span class='state-pill' data-state='North Dakota'>North Dakota · Monitor</span><span class='state-pill' data-state='Pennsylvania'>Pennsylvania · Coming soon</span><span class='state-pill' data-state='Rhode Island'>Rhode Island · Monitor</span><span class='state-pill' data-state='South Dakota'>South Dakota · Monitor</span><span class='state-pill' data-state='Vermont'>Vermont · Monitor</span><span class='state-pill' data-state='Alaska'>Alaska · Monitor</span><span class='state-pill' data-state='Arizona'>Arizona · Monitor</span><span class='state-pill' data-state='Colorado'>Colorado · Monitor</span><span class='state-pill' data-state='Hawaii'>Hawaii · Monitor</span><span class='state-pill' data-state='Montana'>Montana · Coming soon</span><span class='state-pill' data-state='Nevada'>Nevada · Monitor</span><span class='state-pill' data-state='Utah'>Utah · Monitor</span></div></section></div>
+</div>
+<script>
+const SELECT_KEY = 'slcgpSelectedStates';
+function getSelectedStates() {
+  try {
+    const raw = localStorage.getItem(SELECT_KEY);
+    const parsed = raw ? JSON.parse(raw) : [];
+    return Array.isArray(parsed) ? parsed : [];
+  } catch (e) { return []; }
+}
+function clearSelectedStates() {
+  localStorage.removeItem(SELECT_KEY);
+  applySelectionFilter();
+}
+function applySelectionFilter() {
+  const selected = getSelectedStates();
+  const banner = document.getElementById('selectionBanner');
+  const list = document.getElementById('selectionList');
+  if (!banner || !list) return;
+  if (!selected.length) {
+    banner.hidden = true;
+    document.querySelectorAll('[data-state]').forEach(el => { el.hidden = false; });
+  } else {
+    banner.hidden = false;
+    list.textContent = selected.join(', ');
+    document.querySelectorAll('[data-state]').forEach(el => {
+      el.hidden = !selected.includes(el.getAttribute('data-state'));
+    });
+  }
+  document.querySelectorAll('[data-filter-section]').forEach(sec => {
+    const visible = sec.querySelectorAll('[data-state]:not([hidden])').length;
+    sec.hidden = !visible;
+  });
+}
+window.addEventListener('DOMContentLoaded', () => {
+  const clearBtn = document.getElementById('clearSelectionBtn');
+  if (clearBtn) clearBtn.addEventListener('click', clearSelectedStates);
+  applySelectionFilter();
+});
+</script>
+</body></html>
