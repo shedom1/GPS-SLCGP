@@ -251,7 +251,7 @@ function placeVariants(city){
 async function loadCensusPlacesForState(st){
   const fips=STATE_FIPS[st]; if(!fips)throw new Error(`missing FIPS for ${st}`);
   if(placeCache[st])return placeCache[st];
-  const url=`https://api.census.gov/data/2020/dec/pl?get=NAME,P1_001N&for=place:*&in=state:${fips}`;
+  const url=`https://api.census.gov/data/2020/dec/pl?get=NAME,P1_001N&for=place:*&in=state:${fips}&key=b40f531183c077ba1f8973f7920be189d5cb8d2d`;
   const res=await fetch(url,{cache:'force-cache'});
   if(!res.ok)throw new Error(`2020 Census place API HTTP ${res.status}`);
   const data=await res.json();
@@ -287,7 +287,7 @@ async function loadSaipeForState(st){
   let lastErr='';
   for(const year of years){
     try{
-      const url=`https://api.census.gov/data/timeseries/poverty/saipe?get=NAME,SAEPOVRTALL_PT&for=county:*&in=state:${fips}&YEAR=${year}`;
+      const url=`https://api.census.gov/data/timeseries/poverty/saipe?get=NAME,SAEPOVRTALL_PT&for=county:*&in=state:${fips}&YEAR=${year}&key=b40f531183c077ba1f8973f7920be189d5cb8d2d`;
       const res=await fetch(url,{cache:'force-cache'});
       if(!res.ok){lastErr=`SAIPE ${year} HTTP ${res.status}`;continue;}
       const data=await res.json();

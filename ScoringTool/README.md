@@ -355,3 +355,9 @@ Update v20: K-12 district prospecting/search now uses the bundled ELSI/NCES K-12
 ## v36 update
 - Improved Prior Winners searching for county-formatted names such as `Barton County, KS`, `Barton, County of`, or `County of Barton` by adding county/state aliases and token-based matching across awardee, county, city, site, address, description, and raw source fields.
 - Confirmed Barton County, KS appears as a Telemedicine prior awardee with FY2020 and FY2023 project rows.
+
+
+## v37 update - Census API key for Population + SAIPE lookups
+- Added the provided Census API key to the Census 2020 population and SAIPE poverty lookup requests used by the Scoring Tool, Prospect Finder, and Prior Winners drilldown.
+- Population and SAIPE lookups now append the `key` parameter to Census API calls so the fields can load under the current Census API requirement.
+- Note: because this is a static GitHub Pages tool, any API key used in browser-side JavaScript is visible in page source. For stricter protection, route Census requests through a small private proxy or serverless function.

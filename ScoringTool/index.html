@@ -1204,7 +1204,7 @@ async function enrichPlacePop(s){
   const st=s.state.toUpperCase(); const fips=STATE_FIPS[st]; if(!fips) return;
   if(!placeCache[st]){
     try{
-      const res=await fetch(`https://api.census.gov/data/2020/dec/pl?get=NAME,P1_001N&for=place:*&in=state:${fips}`);
+      const res=await fetch(`https://api.census.gov/data/2020/dec/pl?get=NAME,P1_001N&for=place:*&in=state:${fips}&key=b40f531183c077ba1f8973f7920be189d5cb8d2d`);
       const data=await res.json(); const map={};
       data.slice(1).forEach(r=>{ const name=r[0].replace(/,.*$/,''); map[norm(name)]={name:r[0],pop:parseInt(r[1])}; });
       placeCache[st]=map;
@@ -1219,7 +1219,7 @@ async function enrichSaipe(s){
   const st=s.state.toUpperCase(); const fips=STATE_FIPS[st]; if(!fips) return;
   if(!saipeCache[st]){
     try{
-      const res=await fetch(`https://api.census.gov/data/timeseries/poverty/saipe?get=NAME,SAEPOVRTALL_PT&for=county:*&in=state:${fips}&YEAR=2024`);
+      const res=await fetch(`https://api.census.gov/data/timeseries/poverty/saipe?get=NAME,SAEPOVRTALL_PT&for=county:*&in=state:${fips}&YEAR=2024&key=b40f531183c077ba1f8973f7920be189d5cb8d2d`);
       const data=await res.json(); const byFips={}, byName={};
       data.slice(1).forEach(r=>{const obj={name:r[0],rate:parseFloat(r[1]),state:r[3],county:r[4],fips:r[3]+r[4]}; byFips[obj.fips]=obj; byName[norm(obj.name.replace(/,.*$/,''))]=obj;});
       saipeCache[st]={byFips,byName};
