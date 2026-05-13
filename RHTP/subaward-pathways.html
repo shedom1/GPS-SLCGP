@@ -461,6 +461,11 @@ ul{margin-left:16px!important}li{font-size:11.5px!important;line-height:1.36!imp
   tbody td,td{border:1px solid #ddd!important}
 }
 
+
+/* v3 award/count enhancements */
+.stat-card.awarded{border-left:7px solid var(--solutionz-blue,#005bbb)!important}.status-pill.awarded{background:#e8f0ff!important;color:#005bbb!important;border:1px solid #b7cff5!important}.state-card.award-highlight{border-left:7px solid var(--solutionz-blue,#005bbb)!important;background:linear-gradient(90deg,#f8fbff 0%,#fff 78%)!important}.date-banner.awarded{background:#f8fbff!important;border-color:#d7e6f8!important;color:#0b2f4f!important}.award-pathway-panel{margin:0 24px 12px;border:1px solid #d7e6f8;border-left:5px solid #005bbb;border-radius:10px;background:#f8fbff;padding:10px 12px}.award-pathway-panel h3{margin:0 0 4px;color:#0b2f4f;font-size:14px}.award-pathway-panel p{margin:0;color:var(--ink);font-size:12px;line-height:1.35}.award-pathway-panel .award-ribbon{font-size:9px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;color:#005bbb;margin-bottom:4px}.award-icon{display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;margin-left:5px;border-radius:50%;background:#e8f0ff;border:1px solid #b7cff5;color:#005bbb;font-size:10px;line-height:1;vertical-align:middle}
+@media (min-width:980px){.stat-grid{grid-template-columns:repeat(6,minmax(130px,1fr))!important}}
+
 </style>
 </head>
 <body>
@@ -477,6 +482,10 @@ ul{margin-left:16px!important}li{font-size:11.5px!important;line-height:1.36!imp
 <button class="stat-card open" onclick="setStatus('open')">
 <strong>24</strong>
 <span>Open / accepting</span>
+</button>
+<button class="stat-card awarded" onclick="setStatus('awarded')">
+<strong>1</strong>
+<span>Awarded / announced</span>
 </button>
 <button class="stat-card soon" onclick="setStatus('soon')">
 <strong>15</strong>
@@ -515,10 +524,11 @@ ul{margin-left:16px!important}li{font-size:11.5px!important;line-height:1.36!imp
 <span><b>5</b> coming soon</span>
 <span><b>1</b> engagement</span>
 </div></div>
+<div class="award-pathway-panel"><div class="award-ribbon">Subgrant award announcement</div><h3>North Carolina — NC ROOTS Hub Leads selected</h3><p>Use the Awarded filter to isolate announced subgrant/subaward pathways. North Carolina remains open for active MIH activity, while the ROOTS Hub Lead RFA has moved into award and implementation.</p></div>
 <div class="filters">
 <input id="searchBox" oninput="applyFilters()" placeholder="Search state, pathway, deadline, source, sales action..." type="text"/>
 <select id="regionFilter" onchange="applyFilters()"><option value="">All regions</option><option>Mid-Atlantic</option><option>Northeast</option><option>Southeast</option><option>West</option></select>
-<select id="statusFilter" onchange="applyFilters()"><option value="">All statuses</option><option value="open">Open / accepting</option><option value="soon">Coming soon / forecasted</option><option value="engage">Engagement / invite / input</option><option value="recently_closed">Recently closed / next round</option><option value="monitor">Monitor / not posted</option></select>
+<select id="statusFilter" onchange="applyFilters()"><option value="">All statuses</option><option value="open">Open / accepting</option><option value="awarded">Awarded / announced</option><option value="soon">Coming soon / forecasted</option><option value="engage">Engagement / invite / input</option><option value="recently_closed">Recently closed / next round</option><option value="monitor">Monitor / not posted</option></select>
 <select id="pathwayFilter" onchange="applyFilters()"><option value="">All pathway types</option><option>AFA / State Grant</option><option>Advisory Application</option><option>Closed / Next Round Watch</option><option>Coming Soon / Forecasted</option><option>Committee / Planning Pathway</option><option>Direct Allocation Application</option><option>Email Submission</option><option>Forecasted Grant Application</option><option>Funding Forecast</option><option>Grant / Pass-Through Payment</option><option>Grant / Procurement Monitor</option><option>Grant Application</option><option>Hub / Lead Organization Pathway</option><option>Implementation Office / Website Launch</option><option>Information Session</option><option>Invite-Only / Targeted LOI</option><option>LOI Process</option><option>Mobile Health Outreach</option><option>Monitor</option><option>Monitor / Not Verified</option><option>Monitor / Not Yet Posted</option><option>Monitor for Application Forms</option><option>Monitor for Procurement</option><option>Monitor for RFA/RFP</option><option>Monitor for Subaward</option><option>NOFO</option><option>Next Round Watch</option><option>Payment Certification</option><option>Planning Pathway</option><option>Procurement Portal Watch</option><option>Project Implementation Application</option><option>Provider Finance Grants</option><option>RFA / Grant Application</option><option>RFA Development</option><option>RFGP / Grant Proposal</option><option>RFI / Public Input</option><option>RFI / Public Input Closed</option><option>RFP / Procurement Contract</option><option>RFP / RFQ / EOI</option><option>RFP / TA Contractor</option><option>RFP Development</option><option>Rapid Response Stabilization</option><option>Readiness Pathway</option><option>Recently Closed / Notice of Award</option><option>Recently Closed Application</option><option>Regional Coalition Application</option><option>Restricted Communications</option><option>Rolling Funding Rounds</option><option>Stakeholder Engagement</option><option>Subaward</option><option>Subaward Agreement</option><option>Subrecipient Budget Template</option><option>Subrecipient Budget Workbook</option><option>Support Services RFP</option><option>TA / Implementation Partner</option><option>TA / Technical Assistance</option><option>TA Call</option><option>TA Contractor</option><option>Vendor / Subcontractor Directory</option><option>Webinar / Stakeholder Engagement</option><option>wvOASIS / Vendor Portal</option></select>
 <button onclick="clearFilters()">Clear</button>
 <span id="count" style="align-self:center;color:var(--muted);font-size:12px;font-weight:800">Visible states: --</span>
@@ -1125,9 +1135,9 @@ ul{margin-left:16px!important}li{font-size:11.5px!important;line-height:1.36!imp
 <div class="linkbar"><a href="https://dch.georgia.gov/great-health-program-georgias-rural-health-transformation-program" rel="noreferrer" target="_blank">State RHTP</a><a href="https://ssl.doas.state.ga.us/gpr/" rel="noreferrer" target="_blank">Procurement</a><a href="https://dch.georgia.gov/georgias-application-rht-program" rel="noreferrer" target="_blank">Georgia application page</a><a href="https://dch.georgia.gov/announcement/2026-04-22/georgia-announces-call-great-health-advisory-council-nominations" rel="noreferrer" target="_blank">Advisory Council announcement</a></div>
 <div class="tagbar"><span class="tag">advisory</span><span class="tag">invite-only</span><span class="tag">LOI</span></div>
 </article>
-<article class="state-card open" data-pathways="Hub / Lead Organization Pathway Award / Implementation Network Partnering" data-region="Southeast" data-state="North Carolina" data-status="open">
-<div class="card-head"><div><h3>North Carolina</h3><div class="region-label">Southeast</div></div><span class="status-pill open">OPEN</span></div>
-<div class="date-banner open"><span class="date-icon">●</span><span><strong>MIH RFA due May 20; ROOTS contracts by Jun. 1</strong><br/>ROOTS awards + MIH RFA</span></div>
+<article class="state-card open award-highlight" data-awarded="true" data-pathways="Hub / Lead Organization Pathway Award / Implementation Network Partnering" data-region="Southeast" data-state="North Carolina" data-status="open">
+<div class="card-head"><div><h3>North Carolina <span class="award-icon" title="Subaward announced" aria-label="Subaward announced">🏆</span></h3><div class="region-label">Southeast</div></div><div><span class="status-pill open">OPEN</span> <span class="status-pill awarded">AWARDED</span></div></div>
+<div class="date-banner awarded"><span class="date-icon">🏆</span><span><strong>Subgrant award announcement: NC ROOTS Hub Leads selected May 1</strong><br/>MIH RFA due May 20; ROOTS contracts targeted by Jun. 1</span></div>
 <div class="pathways"><span class="path-badge">Hub / Lead Organization Pathway</span><span class="path-badge">Award / Implementation</span><span class="path-badge">Network Partnering</span></div>
 <div class="money"><strong>Money / range:</strong> State Year 1 award is $213,008,356.47; hub-specific contract/subaward values should be confirmed through NCDHHS and Hub Lead agreements.</div>
 <div class="route"><strong>Exact pathway to award:</strong><br/>The broad ROOTS Hub Lead RFA is no longer open; NCDHHS selected Impact Health, Trillium Health Resources, Vaya Health, UNC Hospitals, and Access East. The practical sub-award/partner route now runs through the selected regional Hub Leads as they finalize contracts and establish local networks.</div>
@@ -1382,7 +1392,7 @@ function applyFilters(){
     const hay=card.innerText.toLowerCase();
     const okQ=!q || hay.includes(q);
     const okR=!region || card.dataset.region===region;
-    const okS=!status || card.dataset.status===status;
+    const okS=!status || (status==='awarded' ? card.dataset.awarded==='true' : card.dataset.status===status);
     const okP=!pathway || card.dataset.pathways.toLowerCase().includes(pathway);
     const show=okQ&&okR&&okS&&okP;
     card.classList.toggle('hidden', !show);
