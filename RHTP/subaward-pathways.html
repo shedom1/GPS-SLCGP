@@ -1,13 +1,466 @@
 <!DOCTYPE html>
+<!DOCTYPE html>
 
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>RHTP Sub-Award Application Pathways | May 7, 2026</title>
+<title>RHTP Sub-Award Application Pathways | May 13, 2026</title>
 <style>
 :root{--navy:#12395b;--blue:#1f5f97;--light:#eaf3fb;--ink:#1f2937;--muted:#5b6470;--line:#d8dee6;--green:#0f8b5f;--amber:#b96a00;--red:#c2410c;--gray:#6b7280;--purple:#7c3aed;--bg:#f7f9fc}
 *{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--ink);line-height:1.34}.page{max-width:1560px;margin:14px auto;background:#fff;border:1px solid var(--line);box-shadow:0 10px 30px rgba(18,57,91,.08)}.hero{padding:18px 24px 16px;background:linear-gradient(135deg,var(--navy),var(--blue));color:#fff}.hero h1{margin:0 0 6px;font-size:27px;line-height:1.12}.hero p{margin:0;max-width:1100px;font-size:13px;opacity:.96}.hero-verified{display:inline-block;margin-top:8px;padding:5px 10px;border:1px solid rgba(255,255,255,.35);border-radius:999px;background:rgba(255,255,255,.16);font-size:12px;font-weight:800;color:#fff}.hero-links,.main-nav{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}.hero-links button,.main-nav a{display:inline-block;padding:7px 10px;border:1px solid rgba(255,255,255,.28);border-radius:999px;color:#fff;text-decoration:none;font-size:11px;background:rgba(255,255,255,.08);cursor:pointer}.main-nav{margin-top:0;padding:10px 24px;background:#0f3150}.main-nav a.active{background:#fff;color:var(--navy);border-color:#fff}.section{padding:14px 24px 6px}.section h2{margin:0 0 6px;color:var(--navy);font-size:18px}.section p{margin:0 0 10px;color:var(--muted);font-size:13px}.stat-grid{display:grid;grid-template-columns:repeat(5,minmax(150px,1fr));gap:10px;margin:8px 24px 10px}.stat-card{border:1px solid var(--line);border-radius:13px;background:#fff;padding:10px 12px;text-align:left;cursor:pointer;box-shadow:0 4px 14px rgba(18,57,91,.04)}.stat-card strong{display:block;font-size:24px;color:var(--navy);line-height:1}.stat-card span{display:block;margin-top:3px;font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.2px}.stat-card.open{border-left:7px solid var(--green)}.stat-card.soon{border-left:7px solid var(--amber)}.stat-card.engage{border-left:7px solid var(--purple)}.stat-card.closed{border-left:7px solid var(--red)}.stat-card.monitor{border-left:7px solid var(--gray)}.mini-grid{display:grid;grid-template-columns:repeat(4,minmax(160px,1fr));gap:10px;margin:0 24px 10px}.mini-card{border:1px solid var(--line);border-radius:12px;background:#fbfdff;padding:9px 10px}.mini-card strong{display:block;color:var(--navy);font-size:13px;margin-bottom:5px}.mini-card span{display:inline-block;margin-right:10px;color:var(--muted);font-size:11px}.filters{display:flex;flex-wrap:wrap;gap:8px;margin:0 24px 12px;padding:8px 10px;border:1px solid var(--line);border-radius:10px;background:#fbfdff}.filters input,.filters select,.filters button{padding:6px 9px;border:1px solid var(--line);border-radius:999px;background:#fff;color:var(--navy);font-size:11px;font-weight:800}.filters input{min-width:290px;color:var(--ink);font-weight:400}.definition-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(245px,1fr));gap:9px;margin:0 24px 12px}.def-card{border:1px solid var(--line);border-radius:12px;background:#fff;padding:9px 10px;border-left:5px solid var(--blue)}.def-card strong{display:block;color:var(--navy);font-size:12px;margin-bottom:4px}.def-card p{margin:0;color:var(--muted);font-size:11.5px}.state-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(360px,1fr));gap:10px;margin:0 24px 20px}.state-card{border:1px solid var(--line);border-radius:14px;background:#fff;padding:11px 12px;box-shadow:0 5px 16px rgba(18,57,91,.05)}.state-card.open{border-left:7px solid var(--green)}.state-card.soon{border-left:7px solid var(--amber)}.state-card.engage{border-left:7px solid var(--purple)}.state-card.closed{border-left:7px solid var(--red)}.state-card.monitor{border-left:7px solid var(--gray)}.card-head{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;border-bottom:1px solid var(--line);padding-bottom:7px;margin-bottom:7px}.card-head h3{margin:0;color:var(--navy);font-size:17px}.region-label{font-size:11px;color:var(--muted);font-weight:800;margin-top:2px}.status-pill{display:inline-block;padding:4px 8px;border-radius:999px;font-size:10px;font-weight:900;white-space:nowrap}.status-pill.open{background:#e7f7ef;color:var(--green);border:1px solid #bfe8cc}.status-pill.soon{background:#fff4e5;color:var(--amber);border:1px solid #f0d3a2}.status-pill.engage{background:#f4eaff;color:var(--purple);border:1px solid #dcc7ff}.status-pill.closed{background:#fbe9e7;color:var(--red);border:1px solid #f3c8bc}.status-pill.monitor{background:#eef2f7;color:var(--gray);border:1px solid #d7dee8}.pathways{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:7px}.path-badge{display:inline-block;padding:4px 8px;border-radius:999px;background:#e8f0ff;color:#1d4ed8;border:1px solid #bfd3ff;font-size:10px;font-weight:900}.money,.route,.current,.sales{font-size:12px;margin:7px 0;color:var(--ink)}.route strong,.current strong,.sales strong,.money strong{color:var(--navy)}.linkbar{border-top:1px dashed var(--line);margin-top:8px;padding-top:7px}.linkbar a{display:inline-block;margin:0 6px 5px 0;color:var(--blue);font-weight:800;text-decoration:none;font-size:11px}.linkbar a:hover{text-decoration:underline}.tagbar{display:flex;flex-wrap:wrap;gap:4px;margin-top:3px}.tag{display:inline-block;padding:3px 6px;border-radius:999px;background:#f3f5f8;color:var(--muted);font-size:9px;font-weight:800}.date-banner{display:flex;align-items:flex-start;gap:7px;margin:0 0 8px;padding:7px 9px;border-radius:11px;background:#fff7ed;border:1px solid #fed7aa;color:#9a3412;font-size:11.5px;font-weight:800;line-height:1.25}.date-banner .date-icon{font-size:14px;line-height:1}.date-banner strong{color:#7c2d12}.date-banner.open{background:#ecfdf5;border-color:#bbf7d0;color:#065f46}.date-banner.soon{background:#fffbeb;border-color:#fde68a;color:#92400e}.date-banner.engage{background:#faf5ff;border-color:#e9d5ff;color:#6b21a8}.date-banner.closed{background:#fef2f2;border-color:#fecaca;color:#991b1b}.date-banner.monitor{background:#f8fafc;border-color:#cbd5e1;color:#475569}.hidden{display:none!important}.footer{padding:14px 24px 22px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}@media print{body{background:#fff}.page{margin:0;border:none;box-shadow:none}.hero-links,.main-nav,.filters{display:none!important}}@media (max-width:900px){.stat-grid,.mini-grid{grid-template-columns:1fr 1fr}.state-grid{grid-template-columns:1fr}}@media (max-width:620px){.stat-grid,.mini-grid{grid-template-columns:1fr}.filters input{min-width:100%}}
+
+
+/* === Corporate UI + data refresh — May 13, 2026 === */
+:root{
+  --solutionz-blue:#005bbb;
+  --solutionz-navy:#0b2f4f;
+  --solutionz-navy-2:#123b5d;
+  --solutionz-aqua:#7dc8c9;
+  --solutionz-gray:#c5c5c5;
+  --solutionz-orange:#e97966;
+  --green:#0f8b5f;
+  --amber:#b96a00;
+  --red:#c2410c;
+  --gray:#6b7280;
+  --purple:#7c3aed;
+  --surface:#ffffff;
+  --canvas:#f4f7fa;
+  --panel:#f8fafc;
+  --panel-blue:#eef5fb;
+  --border:#d9e3ee;
+  --border-strong:#c5d3e2;
+  --text:#17212b;
+  --text-soft:#536170;
+  --shadow-sm:0 1px 3px rgba(11,47,79,.08);
+  --shadow-md:0 8px 24px rgba(11,47,79,.08);
+}
+html{font-size:14px!important;scroll-behavior:smooth}
+body{
+  background:
+    radial-gradient(circle at top right, rgba(0,91,187,.075), transparent 28rem),
+    linear-gradient(180deg,#f7f9fc 0%,#eef3f7 100%)!important;
+  color:var(--text)!important;
+  font-family:"Myriad Pro","Segoe UI",Roboto,Arial,Helvetica,sans-serif!important;
+  line-height:1.30!important;
+  letter-spacing:.005em;
+}
+a{color:var(--solutionz-blue)!important;text-decoration:none!important}
+a:hover{text-decoration:underline!important;color:#004b99!important}
+.page{
+  max-width:1580px!important;
+  margin:10px auto 18px!important;
+  background:var(--surface)!important;
+  border:1px solid var(--border)!important;
+  border-radius:14px!important;
+  overflow:hidden!important;
+  box-shadow:var(--shadow-md)!important;
+}
+.hero{
+  position:relative!important;
+  padding:18px 28px 15px!important;
+  background:linear-gradient(180deg,#ffffff 0%,#f8fbfe 100%)!important;
+  color:var(--solutionz-navy)!important;
+  border-top:5px solid var(--solutionz-blue)!important;
+  border-bottom:1px solid var(--border)!important;
+}
+.hero::after{
+  content:"";
+  position:absolute;
+  inset:0 0 0 auto;
+  width:23%;
+  min-width:230px;
+  background:linear-gradient(135deg,rgba(0,91,187,.08),rgba(125,200,201,.12));
+  clip-path:polygon(34% 0,100% 0,100% 100%,0 100%);
+  pointer-events:none;
+}
+.hero>*{position:relative;z-index:1}
+.hero h1{
+  margin:0 0 5px!important;
+  color:var(--solutionz-navy)!important;
+  font-size:22px!important;
+  line-height:1.12!important;
+  letter-spacing:-.025em!important;
+  font-weight:760!important;
+  max-width:1040px!important;
+}
+.hero p{
+  margin:0!important;
+  color:var(--text-soft)!important;
+  font-size:12.5px!important;
+  line-height:1.35!important;
+  max-width:1120px!important;
+}
+.hero-verified{
+  display:inline-flex!important;
+  align-items:center!important;
+  gap:6px!important;
+  margin-top:8px!important;
+  padding:4px 9px!important;
+  border:1px solid #b9d6f4!important;
+  border-radius:7px!important;
+  background:#eef6ff!important;
+  color:var(--solutionz-navy)!important;
+  font-size:10.5px!important;
+  font-weight:800!important;
+  letter-spacing:.02em!important;
+}
+.hero-verified::before{content:"✓";color:var(--solutionz-blue);font-weight:900}
+.hero-links,.main-nav{gap:6px!important}
+.hero-links{margin-top:10px!important}
+.hero-links a,.hero-links button{
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  min-height:28px!important;
+  padding:5px 9px!important;
+  border:1px solid #c8d7e6!important;
+  border-radius:7px!important;
+  background:#fff!important;
+  color:var(--solutionz-navy)!important;
+  box-shadow:var(--shadow-sm)!important;
+  font-size:10.5px!important;
+  font-weight:800!important;
+}
+.hero-links a:hover,.hero-links button:hover{
+  background:#f2f7fd!important;
+  border-color:#94badd!important;
+  text-decoration:none!important;
+}
+.main-nav{
+  margin:0!important;
+  padding:0 22px!important;
+  background:var(--solutionz-navy)!important;
+  border-bottom:3px solid var(--solutionz-blue)!important;
+  display:flex!important;
+  align-items:center!important;
+  flex-wrap:wrap!important;
+}
+.main-nav a{
+  margin:0!important;
+  min-height:34px!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  padding:8px 11px!important;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  color:rgba(255,255,255,.86)!important;
+  font-size:10.8px!important;
+  font-weight:800!important;
+  letter-spacing:.015em!important;
+}
+.main-nav a:hover{background:rgba(255,255,255,.08)!important;color:#fff!important;text-decoration:none!important}
+.main-nav a.active{background:var(--solutionz-blue)!important;color:#fff!important}
+.meta{
+  grid-template-columns:repeat(4,minmax(160px,1fr))!important;
+  gap:8px!important;
+  padding:10px 22px!important;
+  background:#f7fafc!important;
+  border-bottom:1px solid var(--border)!important;
+  font-size:11.5px!important;
+}
+.meta div{
+  padding:7px 9px!important;
+  border:1px solid var(--border)!important;
+  border-radius:8px!important;
+  background:#fff!important;
+  box-shadow:0 1px 2px rgba(11,47,79,.04)!important;
+}
+.section{
+  padding:14px 22px 6px!important;
+}
+.section h2{
+  position:relative;
+  margin:0 0 6px!important;
+  padding-left:10px!important;
+  color:var(--solutionz-navy)!important;
+  font-size:16px!important;
+  line-height:1.2!important;
+  font-weight:760!important;
+}
+.section h2::before{
+  content:"";
+  position:absolute;
+  left:0;top:2px;bottom:2px;width:4px;
+  border-radius:3px;
+  background:var(--solutionz-blue);
+}
+.section p{margin:0 0 9px!important;color:var(--text-soft)!important;font-size:12px!important;line-height:1.35!important}
+.toolrow,.keyword-panel,.note,.export-note,.filters,.subaward-filters,.toolbar{
+  margin:0 22px 10px!important;
+  padding:8px 10px!important;
+  border:1px solid var(--border)!important;
+  border-radius:10px!important;
+  background:var(--panel)!important;
+  color:var(--text-soft)!important;
+  font-size:11px!important;
+  box-shadow:0 1px 2px rgba(11,47,79,.03)!important;
+}
+.toolrow,.filters,.subaward-filters,.toolbar{display:flex!important;align-items:center!important;gap:7px!important;flex-wrap:wrap!important}
+.toolrow button,.toolrow select,.toolrow input,
+.filters input,.filters select,.filters button,
+.subaward-filters input,.subaward-filters select,.subaward-filters button,
+.toolbar input,.toolbar select,.toolbar button,
+.popup-actions button{
+  min-height:28px!important;
+  padding:5px 9px!important;
+  border:1px solid #c8d7e6!important;
+  border-radius:7px!important;
+  background:#fff!important;
+  color:var(--solutionz-navy)!important;
+  font-size:10.5px!important;
+  font-weight:760!important;
+  box-shadow:none!important;
+}
+.toolrow input,.filters input,.subaward-filters input{font-weight:400!important;color:var(--text)!important}
+.toolrow button:hover,.filters button:hover,.subaward-filters button:hover,.toolbar button:hover,.popup-actions button:hover{
+  background:#edf5ff!important;border-color:#8db5df!important;text-decoration:none!important;cursor:pointer!important
+}
+input:focus,select:focus,button:focus-visible,a:focus-visible{
+  outline:2px solid rgba(0,91,187,.28)!important;
+  outline-offset:2px!important;
+}
+.keyword-panel h3{margin:0 0 6px!important;color:var(--solutionz-navy)!important;font-size:13px!important;font-weight:760!important}
+.keyword-panel p{font-size:11.5px!important;line-height:1.34!important}
+.keyword-chips,.type-chips,.pathways,.tagbar{gap:5px!important}
+.keyword-chip,.type-chip,.region-chip,.path-badge,.tag{
+  padding:3px 7px!important;
+  border-radius:6px!important;
+  font-size:9.5px!important;
+  font-weight:800!important;
+  line-height:1.15!important;
+  letter-spacing:.02em!important;
+  box-shadow:none!important;
+}
+.status,.status-pill{
+  padding:3px 7px!important;
+  border-radius:6px!important;
+  font-size:9px!important;
+  font-weight:900!important;
+  letter-spacing:.025em!important;
+  line-height:1.1!important;
+  box-shadow:none!important;
+}
+table{
+  width:calc(100% - 44px)!important;
+  margin:0 22px 16px!important;
+  border-collapse:separate!important;
+  border-spacing:0!important;
+  table-layout:fixed!important;
+  font-size:11.1px!important;
+  border:1px solid var(--border)!important;
+  border-radius:10px!important;
+  overflow:hidden!important;
+  background:#fff!important;
+  box-shadow:0 1px 2px rgba(11,47,79,.03)!important;
+}
+thead th,th{
+  background:var(--solutionz-navy)!important;
+  color:#fff!important;
+  border:0!important;
+  border-right:1px solid rgba(255,255,255,.12)!important;
+  border-bottom:1px solid #092741!important;
+  padding:7px 8px!important;
+  text-align:left!important;
+  vertical-align:top!important;
+  font-size:10px!important;
+  font-weight:850!important;
+  letter-spacing:.045em!important;
+  text-transform:uppercase!important;
+}
+thead th:last-child,th:last-child{border-right:0!important}
+tbody td,td{
+  border:0!important;
+  border-right:1px solid #e3e9f0!important;
+  border-bottom:1px solid #e3e9f0!important;
+  padding:6px 8px!important;
+  vertical-align:top!important;
+}
+tbody tr:nth-child(even){background:#fbfdff!important}
+tbody tr:hover{background:#f3f8fd!important}
+tbody tr:last-child td{border-bottom:0!important}
+tbody td:last-child{border-right:0!important}
+.sortable-header:hover{background:#14466e!important}
+.sort-indicator{color:#b9d6f4!important}
+.sort-hint{color:rgba(255,255,255,.68)!important;font-size:9.5px!important}
+.resizer{background:linear-gradient(90deg,transparent,rgba(255,255,255,.18))!important}
+.state-link{color:var(--solutionz-blue)!important;font-weight:850!important}
+.popup-overlay{background:rgba(8,31,52,.52)!important;backdrop-filter:blur(2px)!important}
+.popup-card{
+  border:1px solid var(--border)!important;
+  border-radius:14px!important;
+  padding:16px!important;
+  box-shadow:0 20px 60px rgba(8,31,52,.22)!important;
+}
+.popup-card h3{color:var(--solutionz-navy)!important;font-size:19px!important;letter-spacing:-.015em!important}
+.popup-grid p{font-size:11.8px!important;line-height:1.38!important}
+.regional-counts{
+  margin:10px 22px!important;
+  padding:9px 10px!important;
+  border:1px solid var(--border)!important;
+  border-radius:10px!important;
+  background:var(--panel)!important;
+}
+.regional-counts-title{font-size:12px!important;color:var(--solutionz-navy)!important;font-weight:850!important}
+.regional-counts-total{font-size:10.5px!important;color:var(--text-soft)!important}
+.regional-count-grid{gap:7px!important}
+.regional-count-card,.mini-card,.stat-card,.tracker-card,.def-card,.state-card,.month-card,.group,.month,.region,.event-card{
+  border-color:var(--border)!important;
+  box-shadow:0 1px 4px rgba(11,47,79,.055)!important;
+}
+.regional-count-card{
+  border-radius:9px!important;
+  padding:7px 9px!important;
+  background:#fff!important;
+}
+.regional-count-region{font-size:10.5px!important;color:var(--solutionz-navy)!important}
+.regional-count-pill{border-radius:6px!important;padding:3px 6px!important;font-size:9.5px!important}
+.regional-count-pill b{font-size:13px!important}
+.stat-grid{
+  grid-template-columns:repeat(5,minmax(130px,1fr))!important;
+  gap:8px!important;
+  margin:8px 22px 10px!important;
+}
+.stat-card{
+  border-radius:11px!important;
+  padding:9px 10px!important;
+  background:#fff!important;
+  text-align:left!important;
+  transition:transform .12s ease,box-shadow .12s ease,border-color .12s ease!important;
+}
+.stat-card:hover,.state-card:hover,.tracker-card:hover,.event-card:hover,.def-card:hover{transform:translateY(-1px)!important;box-shadow:0 6px 18px rgba(11,47,79,.08)!important}
+.stat-card strong{font-size:21px!important;color:var(--solutionz-navy)!important;line-height:1!important}
+.stat-card span{margin-top:3px!important;font-size:9.6px!important;letter-spacing:.04em!important;color:var(--text-soft)!important}
+.mini-grid{grid-template-columns:repeat(4,minmax(150px,1fr))!important;gap:8px!important;margin:0 22px 10px!important}
+.mini-card{border-radius:10px!important;padding:8px 9px!important;background:#fbfdff!important}
+.mini-card strong{font-size:12px!important;color:var(--solutionz-navy)!important;margin-bottom:4px!important}
+.mini-card span{font-size:10.5px!important;margin-right:8px!important}
+.definition-grid{grid-template-columns:repeat(auto-fit,minmax(230px,1fr))!important;gap:8px!important;margin:0 22px 12px!important}
+.def-card{border-radius:10px!important;padding:8px 9px!important;border-left:4px solid var(--solutionz-blue)!important}
+.def-card strong{font-size:11.5px!important;color:var(--solutionz-navy)!important}
+.def-card p{font-size:10.8px!important;line-height:1.34!important;color:var(--text-soft)!important}
+.state-grid{
+  grid-template-columns:repeat(auto-fit,minmax(330px,1fr))!important;
+  gap:9px!important;
+  margin:0 22px 18px!important;
+}
+.state-card{border-radius:12px!important;padding:10px 11px!important;background:#fff!important}
+.card-head{padding-bottom:7px!important;margin-bottom:7px!important;border-bottom:1px solid var(--border)!important}
+.card-head h3{font-size:15px!important;color:var(--solutionz-navy)!important;letter-spacing:-.01em!important}
+.region-label{font-size:10.2px!important;color:var(--text-soft)!important}
+.money,.route,.current,.sales{font-size:11.2px!important;line-height:1.34!important;margin:6px 0!important}
+.date-banner{
+  padding:6px 8px!important;
+  border-radius:9px!important;
+  font-size:10.7px!important;
+  line-height:1.25!important;
+  margin-bottom:7px!important;
+}
+.linkbar{margin-top:7px!important;padding-top:7px!important;border-top:1px dashed var(--border-strong)!important}
+.linkbar a{font-size:10.5px!important;font-weight:850!important;margin:0 6px 4px 0!important}
+.tracker-cards{
+  width:calc(100% - 44px)!important;
+  margin:0 22px 18px!important;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr))!important;
+  gap:8px!important;
+}
+.tracker-card{border-radius:11px!important;padding:9px 10px!important;border-left-width:4px!important}
+.tracker-card h3{font-size:13.2px!important;color:var(--solutionz-navy)!important;margin-bottom:3px!important}
+.tracker-card p{font-size:11.2px!important;line-height:1.34!important;margin-bottom:5px!important}.tracker-card .mini{font-size:10.5px!important}
+.calendar-wrap{margin:0 22px 16px!important}
+.month-card{border-radius:11px!important;padding:10px!important;margin-bottom:9px!important;background:#fff!important}
+.month-card h3{font-size:14.5px!important;color:var(--solutionz-navy)!important;margin:0 0 8px!important}
+.calendar-grid{grid-template-columns:repeat(auto-fit,minmax(250px,1fr))!important;gap:8px!important}
+.event-card{border-radius:10px!important;padding:9px!important;background:#fbfdff!important;border-left-width:4px!important}
+.event-day{font-size:18px!important;color:var(--solutionz-navy)!important}
+.event-meta{font-size:9.8px!important;color:var(--text-soft)!important;margin:2px 0 5px!important}
+.event-title{font-size:11.8px!important;line-height:1.25!important;margin-bottom:4px!important}
+.detail-block{font-size:10.8px!important;margin-top:5px!important;padding-top:5px!important;border-top:1px solid var(--border)!important}
+.detail-label{color:var(--solutionz-navy)!important}
+.gantt-wrap{
+  margin:0 22px 16px!important;
+  border:1px solid var(--border)!important;
+  border-radius:10px!important;
+  box-shadow:0 1px 4px rgba(11,47,79,.05)!important;
+}
+.scale{
+  background:var(--solutionz-navy)!important;
+  color:#fff!important;
+  font-size:10px!important;
+  letter-spacing:.035em!important;
+  text-transform:uppercase!important;
+}
+.scale>div{padding:7px 8px!important;border-right:1px solid rgba(255,255,255,.12)!important}
+.month-scale{background:linear-gradient(90deg,#f8fbff,#fff)!important}
+.month-label{font-size:9.5px!important;color:var(--solutionz-navy)!important}
+.row{font-size:10.9px!important;border-bottom:1px solid #e3e9f0!important}
+.row:hover{background:#f3f8fd!important}
+.row>div{padding:6px 8px!important;border-right:1px solid #e3e9f0!important}
+.initiative strong{font-size:11.5px!important;color:var(--solutionz-navy)!important}
+.region-tag{border-radius:6px!important;padding:2px 6px!important;font-size:8.5px!important;letter-spacing:.035em!important}
+.bar{height:16px!important;top:10px!important;box-shadow:0 1px 3px rgba(11,47,79,.16)!important}
+.due{background:var(--solutionz-orange)!important}
+.date-label{color:#b9462e!important;font-size:8.5px!important}
+.range-note{font-size:8.7px!important;color:var(--text-soft)!important}
+.group,.month{
+  margin:0 22px 12px!important;
+  padding:12px!important;
+  border-radius:11px!important;
+  background:#fff!important;
+}
+.group h3,.month h3{
+  margin:0 0 8px!important;
+  color:var(--solutionz-navy)!important;
+  font-size:15px!important;
+  padding-bottom:6px!important;
+  border-bottom:1px solid var(--border)!important;
+}
+.resource{padding:8px 0!important;border-top:1px solid var(--border)!important}
+.resource strong{font-size:12px!important;color:var(--solutionz-navy)!important}
+.resource p{font-size:11.2px!important;line-height:1.34!important;color:var(--text-soft)!important;margin-bottom:4px!important}
+.region{
+  margin:0 0 8px!important;
+  padding:8px 10px!important;
+  border-radius:9px!important;
+  background:#fbfdff!important;
+}
+.region h4{margin:0 0 5px!important;color:var(--solutionz-navy)!important;font-size:12.6px!important}
+ul{margin-left:16px!important}li{font-size:11.5px!important;line-height:1.36!important;margin-bottom:4px!important}
+.footer{
+  padding:12px 22px 16px!important;
+  border-top:1px solid var(--border)!important;
+  background:#fbfdff!important;
+  color:var(--text-soft)!important;
+  font-size:10.8px!important;
+}
+.view-mode-active{background:var(--solutionz-blue)!important;color:#fff!important;border-color:var(--solutionz-blue)!important}
+.subaward-table td,.subaward-table th{font-size:10.8px!important;padding:6px 7px!important}
+@media (max-width:1100px){
+  .meta{grid-template-columns:repeat(2,minmax(160px,1fr))!important}
+  .stat-grid{grid-template-columns:repeat(3,minmax(130px,1fr))!important}
+}
+@media (max-width:720px){
+  .page{margin:0!important;border-radius:0!important;border-left:0!important;border-right:0!important}
+  .hero,.main-nav,.meta,.section{padding-left:14px!important;padding-right:14px!important}
+  .hero::after{display:none!important}.hero h1{font-size:19px!important;max-width:none!important}.hero p{font-size:12px!important}
+  .main-nav{display:block!important;white-space:nowrap!important;overflow-x:auto!important;padding:0 10px!important}.main-nav a{min-height:32px!important}
+  .meta,.stat-grid,.mini-grid{grid-template-columns:1fr!important}
+  .toolrow,.keyword-panel,.note,.export-note,.filters,.subaward-filters,.toolbar,.regional-counts,.group,.month,.calendar-wrap,.gantt-wrap{margin-left:14px!important;margin-right:14px!important}
+  table,.tracker-cards{width:calc(100% - 28px)!important;margin-left:14px!important;margin-right:14px!important}
+  .state-grid,.definition-grid{margin-left:14px!important;margin-right:14px!important;grid-template-columns:1fr!important}
+  .filters input{min-width:100%!important}
+}
+@media print{
+  body{background:#fff!important;color:#000!important}
+  .page{box-shadow:none!important;border:0!important;border-radius:0!important;margin:0!important}
+  .hero{border-top:0!important;background:#fff!important;color:#000!important}.hero h1,.section h2,.group h3,.month h3,.region h4{color:#000!important}
+  .main-nav,.hero-links,.toolrow,.toolbar,.filters,.subaward-filters,.popup-overlay{display:none!important}
+  table{box-shadow:none!important}
+  thead th,th{background:#efefef!important;color:#000!important;border:1px solid #bbb!important}
+  tbody td,td{border:1px solid #ddd!important}
+}
+
 </style>
 </head>
 <body>
@@ -15,30 +468,30 @@
 <div class="hero">
 <h1>RHTP Sub-Award Application Pathways</h1>
 <p>State-by-state sales reference with prominent key dates at the top of each card for the actual public route to RHTP awards: LOI, readiness, planning, implementation application, RFA/RFGP/NOFO, RFP, RFI, technical assistance, direct allocation, targeted invitation, or monitor. Unsupported pathways are labeled as monitor rather than assumed.</p>
-<span class="hero-verified">Last verified: May 7, 2026</span>
+<span class="hero-verified">Last verified: May 13, 2026</span>
 <div class="hero-links"><button onclick="window.print()">Print to PDF</button><button onclick="copyVisible()">Copy visible pathway list</button></div>
 </div>
-<div class="main-nav"><a href="./index.html">State Tracker</a><a href="./gantt.html">Gantt View</a><a class="active" href="./subaward-pathways.html">Sub-Award Pathways</a><a href="./events.html">Events &amp; Calendar</a><a href="./resources.html">Resources</a><a href="./rhtp-executive-summary-open-activity-may-07-2026.html">Executive Summary</a></div>
+<div class="main-nav"><a href="./index.html">State Tracker</a><a href="./gantt.html">Gantt View</a><a class="active" href="./subaward-pathways.html">Sub-Award Pathways</a><a href="./events.html">Events &amp; Calendar</a><a href="./resources.html">Resources</a><a href="./rhtp-executive-summary-open-activity-may-13-2026.html">Executive Summary</a></div>
 <div class="section"><h2>Pathway status overview</h2><p>Click a status card to filter. “Open” means a public route is available now or has a posted current submission window. “Coming soon” means the official source names a future/forecasted route but no final form is live yet.</p></div>
 <div class="stat-grid">
 <button class="stat-card open" onclick="setStatus('open')">
-<strong>21</strong>
+<strong>24</strong>
 <span>Open / accepting</span>
 </button>
 <button class="stat-card soon" onclick="setStatus('soon')">
-<strong>18</strong>
+<strong>15</strong>
 <span>Coming soon / forecasted</span>
 </button>
 <button class="stat-card engage" onclick="setStatus('engage')">
-<strong>3</strong>
+<strong>2</strong>
 <span>Engagement / invite / input</span>
 </button>
 <button class="stat-card closed" onclick="setStatus('recently_closed')">
-<strong>4</strong>
+<strong>1</strong>
 <span>Recently closed / next round</span>
 </button>
 <button class="stat-card monitor" onclick="setStatus('monitor')">
-<strong>4</strong>
+<strong>5</strong>
 <span>Monitor / not posted</span>
 </button></div>
 <div class="mini-grid">
@@ -48,32 +501,17 @@
 <span><b>0</b> engagement</span>
 </div>
 <div class="mini-card"><strong>Northeast</strong>
-<span><b>8</b> open</span>
-<span><b>7</b> coming soon</span>
+<span><b>9</b> open</span>
+<span><b>6</b> coming soon</span>
 <span><b>0</b> engagement</span>
 </div>
 <div class="mini-card"><strong>Southeast</strong>
 <span><b>5</b> open</span>
-<span><b>2</b> coming soon</span>
-<span><b>2</b> engagement</span>
-</div>
-<div class="mini-card"><strong>West</strong>
-<span><b>4</b> open</span>
-<span><b>6</b> coming soon</span>
+<span><b>3</b> coming soon</span>
 <span><b>1</b> engagement</span>
-</div></div>
-<div class="mini-card"><strong>Northeast</strong>
-<span><b>7</b> open</span>
-<span><b>7</b> coming soon</span>
-<span><b>0</b> engagement</span>
-</div>
-<div class="mini-card"><strong>Southeast</strong>
-<span><b>3</b> open</span>
-<span><b>2</b> coming soon</span>
-<span><b>3</b> engagement</span>
 </div>
 <div class="mini-card"><strong>West</strong>
-<span><b>4</b> open</span>
+<span><b>6</b> open</span>
 <span><b>5</b> coming soon</span>
 <span><b>1</b> engagement</span>
 </div></div>
@@ -194,15 +632,15 @@
 <h3>West Virginia</h3>
 <div class="region-label">Mid-Atlantic</div>
 </div>
-<span class="status-pill open">Open / accepting</span>
+<span class="status-pill open">OPEN</span>
 </div>
-<div class="date-banner open"><span class="date-icon">📅</span><div><strong>Key date / timing:</strong> First $28.56M tranche announced Apr. 28 across Mountain State Care Force, HealthTech Appalachia, and Connected Care Grid; webinar date still pending.</div></div>
+<div class="date-banner open"><span class="date-icon">●</span><span><strong>See WV OASIS / program guidance</strong><br/>First funding tranche posted Apr. 28</span></div>
 <div class="pathways"><span class="path-badge">AFA / State Grant</span><span class="path-badge">wvOASIS / Vendor Portal</span><span class="path-badge">RFP / RFQ / EOI</span></div>
 <div class="money"><strong>Money / range:</strong> $28.56M first tranche</div>
 <div class="route"><strong>Exact pathway to award:</strong><br/>West Virginia’s route includes Account Funding Announcements (AFAs) for grants and WV OASIS/VSS for procurement. The first tranche announcement points applicants to wvOASIS and a pending AFA release webinar.</div>
-<div class="current"><strong>Current public route / next step:</strong><br/>First $28.56M tranche announced Apr. 28 across Mountain State Care Force, HealthTech Appalachia, and Connected Care Grid; webinar date still pending.</div>
-<div class="sales"><strong>Sales engagement:</strong><br/>Register in wvOASIS/VSS, monitor AFA postings, and align with workforce, telehealth/digital backbone, connected-care, fiscal agent, analytics, and implementation roles.</div>
-<div class="linkbar"><a href="https://health.wv.gov/rural-health-transformation-program" rel="noreferrer" target="_blank">State RHTP</a><a href="https://www.state.wv.us/admin/purchase/oasis.html" rel="noreferrer" target="_blank">Procurement</a><a href="https://governor.wv.gov/article/governor-morrisey-announces-first-2856-million-rural-health-transformation-funding" rel="noreferrer" target="_blank">Funding announcement</a><a href="https://www.wvoasis.gov/" rel="noreferrer" target="_blank">wvOASIS</a></div>
+<div class="current"><strong>Current signal:</strong> West Virginia’s first RHTP tranche is active with $28.56M in available funding and posted applicant guidance.</div>
+<div class="sales"><strong>Sales action:</strong> Immediate rural access and provider transformation signal; prioritize cyber, telehealth, AV-enabled care, and project-readiness needs.</div>
+<div class="linkbar"><a href="https://dhhr.wv.gov/rural-health-transformation/Pages/default.aspx" rel="noopener" target="_blank">West Virginia RHTP page</a><a href="https://prd311.wvoasis.gov/PRDVSS2X1/Advantage4" rel="noopener" target="_blank">WV OASIS procurement portal</a></div>
 <div class="tagbar"><span class="tag">AFA</span><span class="tag">grant</span><span class="tag">procurement</span><span class="tag">wvOASIS</span></div>
 </article>
 <article class="state-card open" data-pathways="LOI Process Regional Coalition Application Subrecipient Budget Workbook LOI coalition grant subrecipient" data-region="Northeast" data-state="Indiana" data-status="open">
@@ -211,15 +649,15 @@
 <h3>Indiana</h3>
 <div class="region-label">Northeast</div>
 </div>
-<span class="status-pill open">Open / accepting</span>
+<span class="status-pill open">OPEN</span>
 </div>
-<div class="date-banner open"><span class="date-icon">📅</span><div><strong>Key date / timing:</strong> LOI due May 1; full Regional Grants application due Jul. 1. First-year grant agreement expected after application review.</div></div>
+<div class="date-banner open"><span class="date-icon">●</span><span><strong>Due May 22, 2026</strong><br/>Regional Grant package live</span></div>
 <div class="pathways"><span class="path-badge">LOI Process</span><span class="path-badge">Regional Coalition Application</span><span class="path-badge">Subrecipient Budget Workbook</span></div>
 <div class="money"><strong>Money / range:</strong> Regional awards; Budget Period 1 referenced in application materials</div>
 <div class="route"><strong>Exact pathway to award:</strong><br/>Indiana uses regional coalitions. Each region submits an LOI before the full Regional Grants application, with named primary subrecipient roles and subrecipient budget workbooks.</div>
-<div class="current"><strong>Current public route / next step:</strong><br/>LOI due May 1; full Regional Grants application due Jul. 1. First-year grant agreement expected after application review.</div>
-<div class="sales"><strong>Sales engagement:</strong><br/>Work through regional coalitions and primary subrecipients. Position Solutionz as implementation/technology partner for coalition-led projects.</div>
-<div class="linkbar"><a href="https://www.in.gov/grow-rural-health/" rel="noreferrer" target="_blank">State RHTP</a><a href="https://www.in.gov/idoa/procurement/" rel="noreferrer" target="_blank">Procurement</a><a href="https://www.in.gov/grow-rural-health/regional-grants/" rel="noreferrer" target="_blank">Regional Grants</a><a href="https://www.in.gov/grow-rural-health/files/Request-for-Funding-Growing-Rural-Opportunities-for-Well-being-GROW-Regional-Grants-Program.pdf" rel="noreferrer" target="_blank">Request for Funding PDF</a></div>
+<div class="current"><strong>Current signal:</strong> Grow Rural Indiana Regional Grants remain active. Current state materials show regional grant submissions due May 22, followed by application activity.</div>
+<div class="sales"><strong>Sales action:</strong> Strong fit for regional coalitions and rural provider networks; Sales should coordinate with coalition leads before the May 22 deadline.</div>
+<div class="linkbar"><a href="https://www.in.gov/grow-rural-health/regional-grants/" rel="noopener" target="_blank">Grow Rural Indiana Regional Grants</a></div>
 <div class="tagbar"><span class="tag">LOI</span><span class="tag">coalition</span><span class="tag">grant</span><span class="tag">subrecipient</span></div>
 </article>
 <article class="state-card open" data-pathways="Direct Allocation Application RFP / TA Contractor direct-allocation RFP TA HIT" data-region="Northeast" data-state="Minnesota" data-status="open">
@@ -244,14 +682,14 @@
 <h3>Nebraska</h3>
 <div class="region-label">Northeast</div>
 </div>
-<span class="status-pill open">Open / accepting</span>
+<span class="status-pill open">OPEN</span>
 </div>
-<div class="date-banner open"><span class="date-icon">📅</span><div><strong>Key date / timing:</strong> Multiple RHTP opportunities are in review or rolling; DHHS says RFAs open throughout the year and additional rounds are expected.</div></div>
+<div class="date-banner open"><span class="date-icon">●</span><span><strong>Applications due Aug. 31, 2026</strong><br/>Initiative 5.3 RFA posted</span></div>
 <div class="pathways"><span class="path-badge">RFA / Grant Application</span><span class="path-badge">Rolling Funding Rounds</span></div>
 <div class="route"><strong>Exact pathway to award:</strong><br/>Nebraska posts RHTP RFAs through its DHHS grant opportunities page and expects additional application opportunities each funding year.</div>
-<div class="current"><strong>Current public route / next step:</strong><br/>Multiple RHTP opportunities are in review or rolling; DHHS says RFAs open throughout the year and additional rounds are expected.</div>
-<div class="sales"><strong>Sales engagement:</strong><br/>Track every RFA number and fit provider/school/community partners to the correct initiative; build quick budget/implementation templates.</div>
-<div class="linkbar"><a href="https://dhhs.ne.gov/Pages/Rural-Health-Transformation.aspx" rel="noreferrer" target="_blank">State RHTP</a><a href="https://das.nebraska.gov/materiel/bid-opportunities.html" rel="noreferrer" target="_blank">Procurement</a><a href="https://dhhs.ne.gov/Pages/Grant-Opportunities.aspx" rel="noreferrer" target="_blank">Grant opportunities</a></div>
+<div class="current"><strong>Current signal:</strong> Nebraska has an active RHTP Initiative 5.3 RFA with a posted Q&amp;A session and late-summer application timeline.</div>
+<div class="sales"><strong>Sales action:</strong> Good fit for implementation, infrastructure, rural access, technology, and partnership projects with longer runway.</div>
+<div class="linkbar"><a href="https://dhhs.ne.gov/Pages/Rural-Health-Transformation-Program.aspx" rel="noopener" target="_blank">Nebraska RHTP Initiative 5.3 RFA</a></div>
 <div class="tagbar"><span class="tag">RFA</span><span class="tag">rolling</span><span class="tag">grant</span></div>
 </article>
 <article class="state-card open" data-pathways="Grant Application TA Call Subrecipient Budget Template grant TA subrecipient-budget" data-region="Northeast" data-state="North Dakota" data-status="open">
@@ -260,15 +698,15 @@
 <h3>North Dakota</h3>
 <div class="region-label">Northeast</div>
 </div>
-<span class="status-pill open">Open / accepting</span>
+<span class="status-pill open">OPEN</span>
 </div>
-<div class="date-banner open"><span class="date-icon">📅</span><div><strong>Key date / timing:</strong> Open initiatives include Train In Place, Zero-Hour PE, Community Gardens, Walking Program, Behavioral Health Promotion, Rightsizing, and Ensuring Safety Net Service Delivery with M</div></div>
+<div class="date-banner open"><span class="date-icon">●</span><span><strong>Deadlines May 15, May 22, May 29</strong><br/>Multiple NOFOs active</span></div>
 <div class="pathways"><span class="path-badge">Grant Application</span><span class="path-badge">TA Call</span><span class="path-badge">Subrecipient Budget Template</span></div>
 <div class="money"><strong>Money / range:</strong> $3.6M+ prevention wave; additional posted initiatives</div>
 <div class="route"><strong>Exact pathway to award:</strong><br/>North Dakota’s pathway is a series of initiative-specific grant applications supported by technical-assistance calls and required budget/scoring documents.</div>
-<div class="current"><strong>Current public route / next step:</strong><br/>Open initiatives include Train In Place, Zero-Hour PE, Community Gardens, Walking Program, Behavioral Health Promotion, Rightsizing, and Ensuring Safety Net Service Delivery with May deadlines; required documents include a scoring tool and subrecipient budget template.</div>
-<div class="sales"><strong>Sales engagement:</strong><br/>Attend TA calls, identify eligible schools/providers/FQHCs/CAHs, and package technology, data, remote support, workforce, and implementation assistance around each initiative.</div>
-<div class="linkbar"><a href="https://www.hhs.nd.gov/rural-health-transformation" rel="noreferrer" target="_blank">State RHTP</a><a href="https://www.bidnetdirect.com/north-dakota" rel="noreferrer" target="_blank">Procurement</a><a href="https://www.hhs.nd.gov/rural-health-transformation/funding" rel="noreferrer" target="_blank">Funding page</a></div>
+<div class="current"><strong>Current signal:</strong> North Dakota lists multiple active RHTP funding opportunities with near-term May deadlines across workforce, behavioral health, and related transformation lanes.</div>
+<div class="sales"><strong>Sales action:</strong> Immediate follow-up on rural providers and eligible partners; prioritize deadlines by fit and purchasing authority.</div>
+<div class="linkbar"><a href="https://www.hhs.nd.gov/rural-health-transformation-program/funding" rel="noopener" target="_blank">North Dakota RHTP funding</a></div>
 <div class="tagbar"><span class="tag">grant</span><span class="tag">TA</span><span class="tag">subrecipient-budget</span></div>
 </article>
 <article class="state-card open" data-pathways="RFP / Procurement Contract TA Contractor RFP TA procurement" data-region="Northeast" data-state="Ohio" data-status="open">
@@ -327,20 +765,20 @@
 <h3>South Carolina</h3>
 <div class="region-label">Southeast</div>
 </div>
-<span class="status-pill open">Open / accepting</span>
+<span class="status-pill open">OPEN</span>
 </div>
-<div class="date-banner open"><span class="date-icon">📅</span><div><strong>Key date / timing:</strong> Applications for Connections to Care, Leveling Up, Wellness Within Reach, and Shoring Up are accepted through Jun. 1; Tech Catalyst will be announced later.</div></div>
+<div class="date-banner open"><span class="date-icon">●</span><span><strong>Due Jun. 1, 2026</strong><br/>Four RFAs + FAQ posted</span></div>
 <div class="pathways"><span class="path-badge">Grant Application</span><span class="path-badge">Email Submission</span><span class="path-badge">Subaward Agreement</span></div>
 <div class="money"><strong>Money / range:</strong> Four Year 1 tracks; package-specific</div>
 <div class="route"><strong>Exact pathway to award:</strong><br/>South Carolina uses state grant applications submitted as PDFs by email. The FAQ confirms each awarded application receives its own subaward agreement.</div>
-<div class="current"><strong>Current public route / next step:</strong><br/>Applications for Connections to Care, Leveling Up, Wellness Within Reach, and Shoring Up are accepted through Jun. 1; Tech Catalyst will be announced later.</div>
-<div class="sales"><strong>Sales engagement:</strong><br/>Match eligible providers/CBOs to the right track; write clear project scopes and budgets for EHR, RPM, telehealth, mobile care, crisis access, workforce, facility, and technology work.</div>
-<div class="linkbar"><a href="https://scorh.net/rural-health-transformation-fund/" rel="noreferrer" target="_blank">State RHTP</a><a href="https://procurement.sc.gov/doing-biz/bid-ops" rel="noreferrer" target="_blank">Procurement</a><a href="https://www.scdhhs.gov/resources/grants" rel="noreferrer" target="_blank">SCDHHS grants page</a><a href="https://www.scdhhs.gov/sites/dhhs/files/%282026-04-02%29%20FAQs%20RHTP%20.pdf" rel="noreferrer" target="_blank">RHTP FAQ</a></div>
+<div class="current"><strong>Current signal:</strong> South Carolina’s four RHTP grant opportunities remain open through June 1, and SCDHHS published a May 8 FAQ update for applicants.</div>
+<div class="sales"><strong>Sales action:</strong> Strong fit across Connections to Care, Wellness Within Reach, Leveling Up, and Shoring Up to Sustainability; monitor Tech Catalyst next.</div>
+<div class="linkbar"><a href="https://www.scdhhs.gov/communications/scdhhs-announces-rural-health-transformation-program-funding-opportunities" rel="noopener" target="_blank">SCDHHS RHTP funding opportunities</a><a href="https://www.scdhhs.gov/communications/scdhhs-announces-rural-health-transformation-program-faqs" rel="noopener" target="_blank">SCDHHS RHTP FAQs</a><a href="https://www.scdhhs.gov/resources/grants" rel="noopener" target="_blank">SCDHHS grants page</a></div>
 <div class="tagbar"><span class="tag">grant</span><span class="tag">email-submit</span><span class="tag">subaward-agreement</span></div>
 </article>
 <article class="state-card open" data-pathways="RFA / Grant Application Provider Finance Grants Infrastructure Capital grant provider-finance" data-region="Southeast" data-state="Texas" data-status="open">
-<div class="card-head"><div><h3>Texas</h3><div class="region-label">Southeast</div></div><span class="status-pill open">Open / accepting</span></div>
-<div class="date-banner open"><span class="date-icon">📅</span><div><strong>Key date / timing:</strong> Initiative 4 due May 27; FY2026 Rural Hospital Innovation due May 28; new $56M Infrastructure/Capital Investments applications due June 1.</div></div>
+<div class="card-head"><div><h3>Texas</h3><div class="region-label">Southeast</div></div><span class="status-pill open">OPEN</span></div>
+<div class="date-banner open"><span class="date-icon">●</span><span><strong>May 27; May 28; Jun. 1</strong><br/>Multiple Rural Texas Strong NOFOs</span></div>
 <div class="pathways"><span class="path-badge">RFA / Grant Application</span><span class="path-badge">Provider Finance Grants</span><span class="path-badge">Infrastructure / Capital</span></div>
 <div class="money"><strong>Money / range:</strong> Infrastructure/Capital Investments: $56M; Rural Hospital Innovation: $25M; Initiative 4 active through HHSC RFA page.</div>
 <div class="route"><strong>Exact pathway to award:</strong><br/>Eligible licensed rural health providers apply through HHSC/Rural Texas Strong RFA processes. The May 1 infrastructure opportunity funds equipment and minor renovations including lab, CT, ultrasound, mammography, nurse call, telemetry, generators, patient equipment, and other allowable capital items.</div>
@@ -348,29 +786,37 @@
 <div class="links"><a href="https://resources.hhs.texas.gov/rfa" rel="noreferrer" target="_blank">Texas HHSC RFA page</a><a href="https://gov.texas.gov/es/news/post/governor-abbott-hhsc-announce-56-million-in-federal-funding-for-rural-health-care-providers-to-modernize-equipment-infrastructure" rel="noreferrer" target="_blank">May 1 $56M announcement</a><a href="https://pfd.hhs.texas.gov/rural-health-transformation-program" rel="noreferrer" target="_blank">Rural Texas Strong page</a></div>
 <div class="tagbar"><span class="tag">RFA</span><span class="tag">grant</span><span class="tag">infrastructure</span><span class="tag">capital</span></div>
 </article>
-<article class="state-card open" data-pathways="open / accepting rfp / procurement advisory opportunity vendor / subcontractor open rfp advisory vendor-engagement" data-region="West" data-state="Montana" data-status="open"><div class="card-head"><div><h3>Montana</h3><div class="region-label">West</div></div><span class="status-pill open">Open / accepting</span></div>
-<div class="date-banner open"><span class="date-icon">📅</span><div><strong>Key date / timing:</strong> CoE/implementation RFPs remain active and Advisory Council applications close May 22.</div></div>
-<div class="pathways"><span class="path-badge">RFP / Procurement</span><span class="path-badge">Advisory Opportunity</span><span class="path-badge">Vendor / Subcontractor</span></div>
-<div class="route"><strong>Exact pathway to award:</strong><br/>Montana routes vendor engagement through bids.mt.gov for CoE/implementation RFP packages and through the DPHHS Advisory Council application path for formal stakeholder input.</div>
-<div class="current"><strong>Current public route / next step:</strong><br/>Track bids.mt.gov packages, advisory applications, vendor resources, and additional RFP/funding opportunities that DPHHS says will be issued over coming months.</div>
-<div class="sales"><strong>Sales engagement:</strong><br/>Prioritize CoE strategy/analytics, implementation support, telehealth, data modernization, advisory visibility, and subcontractor positioning.</div>
-<div class="linkbar"><a href="https://www.dphhs.mt.gov/RuralHealthTransformationProgram/" rel="noreferrer" target="_blank">State RHTP</a><a href="https://bids.mt.gov/" rel="noreferrer" target="_blank">Procurement</a><a href="https://dphhs.mt.gov/News/2026/May/Seeking-RHTP-Advisory-Council" rel="noreferrer" target="_blank">Advisory Council notice</a></div>
-<div class="tagbar"><span class="tag">open</span><span class="tag">rfp</span><span class="tag">advisory</span><span class="tag">vendor-engagement</span></div></article>
+<article class="state-card open" data-pathways="RFP / Procurement Contract TA / Implementation Partner Vendor / Subcontractor Directory RFP procurement vendor-directory TA" data-region="West" data-state="Montana" data-status="open">
+<div class="card-head">
+<div>
+<h3>Montana</h3>
+<div class="region-label">West</div>
+</div>
+<span class="status-pill open">Open / accepting</span>
+</div>
+<div class="date-banner open"><span class="date-icon">📅</span><div><strong>Key date / timing:</strong> Two CoE RFPs are posted through bids.mt.gov; vendor resources, vendor/subcontractor directory, vendor webinar materials, and future opportunity language are posted on the official</div></div>
+<div class="pathways"><span class="path-badge">RFP / Procurement Contract</span><span class="path-badge">TA / Implementation Partner</span><span class="path-badge">Vendor / Subcontractor Directory</span></div>
+<div class="route"><strong>Exact pathway to award:</strong><br/>Montana is using public RFPs for the Center of Excellence Strategy &amp; Analytics vendor and an implementation partner; provider incentive participation is expected later through the CoE model.</div>
+<div class="current"><strong>Current public route / next step:</strong><br/>Two CoE RFPs are posted through bids.mt.gov; vendor resources, vendor/subcontractor directory, vendor webinar materials, and future opportunity language are posted on the official RHTP page.</div>
+<div class="sales"><strong>Sales engagement:</strong><br/>Bid/partner for analytics, financial strategy, change management, implementation support, dashboards, and rural-facility operating model work.</div>
+<div class="linkbar"><a href="https://dphhs.mt.gov/RuralHealthTransformationProgram/" rel="noreferrer" target="_blank">State RHTP</a><a href="https://spb.mt.gov/eMACS-Resources" rel="noreferrer" target="_blank">Procurement</a><a href="https://dphhs.mt.gov/RuralHealthTransformationProgram/RHTP-RFPs" rel="noreferrer" target="_blank">RHTP RFPs</a></div>
+<div class="tagbar"><span class="tag">RFP</span><span class="tag">procurement</span><span class="tag">vendor-directory</span><span class="tag">TA</span></div>
+</article>
 <article class="state-card open" data-pathways="RFI / Public Input Grant Application NOFO Subaward RFI NOFO grant subaward" data-region="West" data-state="Oklahoma" data-status="open">
 <div class="card-head">
 <div>
 <h3>Oklahoma</h3>
 <div class="region-label">West</div>
 </div>
-<span class="status-pill open">Open / accepting</span>
+<span class="status-pill open">OPEN</span>
 </div>
-<div class="date-banner open"><span class="date-icon">📅</span><div><strong>Key date / timing:</strong> Active routes include Expanding Care: Doula Program RFI due May 8, ROOTS grant due May 25, Chronic Disease Management NOFO due Jun. 8, and Rural Regional Reorientation due Jun. 12.</div></div>
+<div class="date-banner open"><span class="date-icon">●</span><span><strong>May 25; Jun. 8; Jun. 12</strong><br/>Active funding page updated</span></div>
 <div class="pathways"><span class="path-badge">RFI / Public Input</span><span class="path-badge">Grant Application</span><span class="path-badge">NOFO</span><span class="path-badge">Subaward</span></div>
 <div class="money"><strong>Money / range:</strong> ROOTS up to $10K/site; RRR up to $4M; other lanes package-specific</div>
 <div class="route"><strong>Exact pathway to award:</strong><br/>Oklahoma posts all active RHTP funding opportunities on a single official page, including RFI responses, school grants, NOFOs, webinars, FAQs, and application links.</div>
-<div class="current"><strong>Current public route / next step:</strong><br/>Active routes include Expanding Care: Doula Program RFI due May 8, ROOTS grant due May 25, Chronic Disease Management NOFO due Jun. 8, and Rural Regional Reorientation due Jun. 12.</div>
-<div class="sales"><strong>Sales engagement:</strong><br/>Use the RFI to shape positioning, then pursue schools, providers, CBOs, and regional partnerships for technology, mobile care, chronic disease, care coordination, and implementation packages.</div>
-<div class="linkbar"><a href="https://oklahoma.gov/health/rhtp.html" rel="noreferrer" target="_blank">State RHTP</a><a href="https://www.ok.gov/dcs/solicit/app/contractSearch.php" rel="noreferrer" target="_blank">Procurement</a><a href="https://oklahoma.gov/health/rhtp/rhtp-funding.html" rel="noreferrer" target="_blank">RHTP funding page</a></div>
+<div class="current"><strong>Current signal:</strong> Oklahoma’s RHTP funding page now lists active opportunities, including OSDE ROOTS, chronic disease, microgrants, and Rural Regional Reorientation NOFOs.</div>
+<div class="sales"><strong>Sales action:</strong> Prioritize K-12 ROOTS, chronic disease management, microgrants, and regional reorientation use cases with rural provider partners.</div>
+<div class="linkbar"><a href="https://oklahoma.gov/health/rhtp/rhtp-funding.html" rel="noopener" target="_blank">Oklahoma RHTP funding</a><a href="https://oklahoma.gov/health/rhtp.html" rel="noopener" target="_blank">Oklahoma RHTP overview</a></div>
 <div class="tagbar"><span class="tag">RFI</span><span class="tag">NOFO</span><span class="tag">grant</span><span class="tag">subaward</span></div>
 </article>
 <article class="state-card open" data-pathways="RFGP / Grant Proposal Project Implementation Application RFGP grant implementation" data-region="West" data-state="Oregon" data-status="open">
@@ -412,17 +858,17 @@
 <h3>Washington</h3>
 <div class="region-label">West</div>
 </div>
-<span class="status-pill open">Open / accepting</span>
+<span class="status-pill open">OPEN</span>
 </div>
-<div class="date-banner open"><span class="date-icon">📅</span><div><strong>Key date / timing:</strong> RFI closes May 31 through the Olympic Area Agency on Aging / OMWBE bid opportunity listing.</div></div>
+<div class="date-banner open"><span class="date-icon">●</span><span><strong>Due May 31, 2026</strong><br/>Mobile Van RFI active</span></div>
 <div class="pathways"><span class="path-badge">RFI / Public Input</span><span class="path-badge">Mobile Health Outreach</span></div>
 <div class="route"><strong>Exact pathway to award:</strong><br/>Washington’s visible public route is an RFI for Mobile Health Assistance Van / rural health outreach, aligned to the state’s mobile outreach strategy.</div>
-<div class="current"><strong>Current public route / next step:</strong><br/>RFI closes May 31 through the Olympic Area Agency on Aging / OMWBE bid opportunity listing.</div>
-<div class="sales"><strong>Sales engagement:</strong><br/>Use as a discovery and partner-entry route; shape mobile health, outreach, chronic-disease screening, care coordination, and field technology solutions.</div>
-<div class="linkbar"><a href="https://www.hca.wa.gov/about-hca/programs-and-initiatives/value-based-purchasing/rural-health-transformation-program" rel="noreferrer" target="_blank">State RHTP</a><a href="https://pr-webs-vendor.des.wa.gov/BidCalendar.aspx" rel="noreferrer" target="_blank">Procurement</a><a href="https://omwbe.wa.gov/bid-opportunities/mobile-health-assistance-van-program-rural-health-outreach-rfi" rel="noreferrer" target="_blank">Mobile Health Outreach RFI</a><a href="https://www.hca.wa.gov/assets/program/rhtp-project-narrative.pdf" rel="noreferrer" target="_blank">WA RHTP project narrative</a></div>
+<div class="current"><strong>Current signal:</strong> Washington’s Mobile Van RFI remains active and closes May 31.</div>
+<div class="sales"><strong>Sales action:</strong> Good fit for mobile telehealth, care delivery technology, connectivity, and vehicle-based clinical workflows.</div>
+<div class="linkbar"><a href="https://doh.wa.gov/public-health-provider-resources/healthcare-professions-and-facilities/rural-health/rural-health-transformation-program" rel="noopener" target="_blank">Washington RHTP page</a></div>
 <div class="tagbar"><span class="tag">RFI</span><span class="tag">mobile</span><span class="tag">public-input</span></div>
 </article>
-<article class="state-card soon" data-pathways="Coming Soon / Forecasted Implementation Partner Interoperability Provider Productivity procurement-watch" data-region="Mid-Atlantic" data-state="Virginia" data-status="soon">
+<article class="state-card soon" data-pathways="Coming Soon / Forecasted coming-soon procurement-watch" data-region="Mid-Atlantic" data-state="Virginia" data-status="soon">
 <div class="card-head">
 <div>
 <h3>Virginia</h3>
@@ -430,13 +876,13 @@
 </div>
 <span class="status-pill soon">Coming soon / forecasted</span>
 </div>
-<div class="date-banner soon"><span class="date-icon">📅</span><div><strong>Key date / timing:</strong> Forecasted watch; DMAS/Virginia Rural Vitality pages are active, but no public subaward form or deadline was verified by May 3.</div></div>
-<div class="pathways"><span class="path-badge">Implementation Partner</span><span class="path-badge">Interoperability / Provider Productivity</span><span class="path-badge">Coming Soon / Forecasted</span></div>
-<div class="route"><strong>Exact pathway to award:</strong><br/>Virginia has visible implementation channels through DMAS and VHCF/CareIQ investment areas; public provider-facing RFA/RFP details are not yet posted.</div>
-<div class="current"><strong>Current public route / next step:</strong><br/>Monitor DMAS, VHCF, and Virginia procurement for provider-facing applications or contract opportunities.</div>
-<div class="sales"><strong>Sales engagement:</strong><br/>Map interoperability, provider productivity, telehealth, training, and workflow solutions to VHCF/CareIQ and future rural provider packages.</div>
-<div class="linkbar"><a href="https://dmas.virginia.gov/data-reporting/programs-services/rural-health-transformation/" rel="noreferrer" target="_blank">DMAS RHTP</a><a href="https://www.vhcf.org/rural-health/" rel="noreferrer" target="_blank">VHCF Rural Health / CareIQ</a><a href="https://www.bidnetdirect.com/virginia" rel="noreferrer" target="_blank">Procurement</a></div>
-<div class="tagbar"><span class="tag">coming-soon</span><span class="tag">implementation-partner</span><span class="tag">interoperability</span><span class="tag">provider-productivity</span></div>
+<div class="date-banner soon"><span class="date-icon">📅</span><div><strong>Key date / timing:</strong> Forecasted watch; no public package/form verified.</div></div>
+<div class="pathways"><span class="path-badge">Coming Soon / Forecasted</span></div>
+<div class="route"><strong>Exact pathway to award:</strong><br/>No public subaward application route has been verified in this build. Use the official state RHTP page and procurement portal as the pathway until a package is posted.</div>
+<div class="current"><strong>Current public route / next step:</strong><br/>Forecasted watch; no public package/form verified.</div>
+<div class="sales"><strong>Sales engagement:</strong><br/>Monitor Virginia procurement and RHTP pages for upcoming RFAs/RFPs and provider engagement opportunities.</div>
+<div class="linkbar"><a href="https://www.dmas.virginia.gov/data-reporting/programs-services/rural-health-transformation/" rel="noreferrer" target="_blank">State RHTP</a><a href="https://www.bidnetdirect.com/virginia" rel="noreferrer" target="_blank">Procurement</a></div>
+<div class="tagbar"><span class="tag">coming-soon</span><span class="tag">procurement-watch</span></div>
 </article>
 <article class="state-card soon" data-pathways="Coming Soon / Forecasted coming-soon procurement-watch" data-region="Northeast" data-state="Illinois" data-status="soon">
 <div class="card-head">
@@ -444,14 +890,14 @@
 <h3>Illinois</h3>
 <div class="region-label">Northeast</div>
 </div>
-<span class="status-pill soon">Coming soon / forecasted</span>
+<span class="status-pill soon">COMING SOON</span>
 </div>
-<div class="date-banner soon"><span class="date-icon">📅</span><div><strong>Key date / timing:</strong> State page active; no public package/form verified.</div></div>
+<div class="date-banner soon"><span class="date-icon">●</span><span><strong>TBD by state listing</strong><br/>CSFA program listings active</span></div>
 <div class="pathways"><span class="path-badge">Coming Soon / Forecasted</span></div>
 <div class="route"><strong>Exact pathway to award:</strong><br/>No public subaward application route has been verified in this build. Use the official state RHTP page and procurement portal as the pathway until a package is posted.</div>
-<div class="current"><strong>Current public route / next step:</strong><br/>State page active; no public package/form verified.</div>
-<div class="sales"><strong>Sales engagement:</strong><br/>Monitor HFS/BidBuy for regional transformation, virtual care, mobile care, crisis care, and HIT funding opportunities.</div>
-<div class="linkbar"><a href="https://hfs.illinois.gov/info/fedresctr/ruralhealthtp.html" rel="noreferrer" target="_blank">State RHTP</a><a href="https://www.bidbuy.illinois.gov/bso/" rel="noreferrer" target="_blank">Procurement</a></div>
+<div class="current"><strong>Current signal:</strong> Illinois CSFA listings continue to show large RHTP-funded program lines, including rural hospital and community care infrastructure concepts; application mechanics remain state-controlled.</div>
+<div class="sales"><strong>Sales action:</strong> Monitor for hospital infrastructure, community care infrastructure, and state-administered subrecipient opportunities.</div>
+<div class="linkbar"><a href="https://gata.illinois.gov/grants/csfa.html" rel="noopener" target="_blank">Illinois CSFA search</a></div>
 <div class="tagbar"><span class="tag">coming-soon</span><span class="tag">procurement-watch</span></div>
 </article>
 <article class="state-card soon" data-pathways="Coming Soon / Forecasted coming-soon procurement-watch" data-region="Northeast" data-state="Massachusetts" data-status="soon">
@@ -460,14 +906,14 @@
 <h3>Massachusetts</h3>
 <div class="region-label">Northeast</div>
 </div>
-<span class="status-pill soon">Coming soon / forecasted</span>
+<span class="status-pill soon">COMING SOON</span>
 </div>
-<div class="date-banner soon"><span class="date-icon">📅</span><div><strong>Key date / timing:</strong> Forecasted watch; no public package/form verified.</div></div>
+<div class="date-banner soon"><span class="date-icon">●</span><span><strong>TBD by state</strong><br/>Program page active</span></div>
 <div class="pathways"><span class="path-badge">Coming Soon / Forecasted</span></div>
 <div class="route"><strong>Exact pathway to award:</strong><br/>No public subaward application route has been verified in this build. Use the official state RHTP page and procurement portal as the pathway until a package is posted.</div>
-<div class="current"><strong>Current public route / next step:</strong><br/>Forecasted watch; no public package/form verified.</div>
-<div class="sales"><strong>Sales engagement:</strong><br/>Monitor state page/procurement for rural regional transformation and digital-health opportunities.</div>
-<div class="linkbar"><a href="https://www.mass.gov/info-details/about-the-rural-health-transformation-program" rel="noreferrer" target="_blank">State RHTP</a><a href="https://www.commbuys.com/bso/" rel="noreferrer" target="_blank">Procurement</a></div>
+<div class="current"><strong>Current signal:</strong> Massachusetts continues to host an RHTP program page and rural health award information, but no current competitive subaward package was verified in this refresh.</div>
+<div class="sales"><strong>Sales action:</strong> Monitor EOHHS/State Office of Rural Health for rural provider, workforce, technology, and access-to-care opportunities.</div>
+<div class="linkbar"><a href="https://www.mass.gov/rural-health-transformation-program" rel="noopener" target="_blank">Massachusetts RHTP page</a><a href="https://www.mass.gov/info-details/about-the-rural-health-transformation-program" rel="noopener" target="_blank">About MA RHTP</a></div>
 <div class="tagbar"><span class="tag">coming-soon</span><span class="tag">procurement-watch</span></div>
 </article>
 <article class="state-card soon" data-pathways="Coming Soon / Forecasted coming-soon procurement-watch" data-region="Northeast" data-state="Michigan" data-status="soon">
@@ -476,30 +922,30 @@
 <h3>Michigan</h3>
 <div class="region-label">Northeast</div>
 </div>
-<span class="status-pill soon">Coming soon / forecasted</span>
+<span class="status-pill soon">COMING SOON</span>
 </div>
-<div class="date-banner soon"><span class="date-icon">📅</span><div><strong>Key date / timing:</strong> Forecasted watch; no public package/form verified.</div></div>
+<div class="date-banner soon"><span class="date-icon">●</span><span><strong>TBD by MDHHS</strong><br/>GFO/LOI planning materials</span></div>
 <div class="pathways"><span class="path-badge">Coming Soon / Forecasted</span></div>
 <div class="route"><strong>Exact pathway to award:</strong><br/>No public subaward application route has been verified in this build. Use the official state RHTP page and procurement portal as the pathway until a package is posted.</div>
-<div class="current"><strong>Current public route / next step:</strong><br/>Forecasted watch; no public package/form verified.</div>
-<div class="sales"><strong>Sales engagement:</strong><br/>Monitor state RHTP/procurement; prep regional partner and technology implementation concepts.</div>
-<div class="linkbar"><a href="https://www.michigan.gov/mdhhs/assistance-programs/medicaid/rural-health-transformation-program" rel="noreferrer" target="_blank">State RHTP</a></div>
+<div class="current"><strong>Current signal:</strong> Michigan continues to indicate grant funding opportunity activity is forthcoming, with budget narrative/LOI planning materials previously posted.</div>
+<div class="sales"><strong>Sales action:</strong> Monitor for hospital, EMS, behavioral health, workforce, and technology implementation lanes once GFOs release.</div>
+<div class="linkbar"><a href="https://www.michigan.gov/mdhhs/inside-mdhhs/budgetfinance/rural-health-transformation-program" rel="noopener" target="_blank">Michigan RHTP page</a></div>
 <div class="tagbar"><span class="tag">coming-soon</span><span class="tag">procurement-watch</span></div>
 </article>
-<article class="state-card soon" data-pathways="Coming Soon / Forecasted coming-soon procurement-watch" data-region="Northeast" data-state="Missouri" data-status="soon">
+<article class="state-card open" data-pathways="Coming Soon / Forecasted coming-soon procurement-watch" data-region="Northeast" data-state="Missouri" data-status="open">
 <div class="card-head">
 <div>
 <h3>Missouri</h3>
 <div class="region-label">Northeast</div>
 </div>
-<span class="status-pill soon">Coming soon / forecasted</span>
+<span class="status-pill open">OPEN</span>
 </div>
-<div class="date-banner soon"><span class="date-icon">📅</span><div><strong>Key date / timing:</strong> Forecasted watch; no public package/form verified.</div></div>
+<div class="date-banner open"><span class="date-icon">●</span><span><strong>RFI ends Jun. 1, 2026</strong><br/>Ambient AI RFI now open</span></div>
 <div class="pathways"><span class="path-badge">Coming Soon / Forecasted</span></div>
 <div class="route"><strong>Exact pathway to award:</strong><br/>No public subaward application route has been verified in this build. Use the official state RHTP page and procurement portal as the pathway until a package is posted.</div>
-<div class="current"><strong>Current public route / next step:</strong><br/>Forecasted watch; no public package/form verified.</div>
-<div class="sales"><strong>Sales engagement:</strong><br/>Monitor state page/procurement for rural delivery, workforce, EMS, and data/technology funding paths.</div>
-<div class="linkbar"><a href="https://mydss.mo.gov/mhd/rural-health" rel="noreferrer" target="_blank">State RHTP</a><a href="https://missouribuys.mo.gov" rel="noreferrer" target="_blank">Procurement</a></div>
+<div class="current"><strong>Current signal:</strong> Missouri posted active procurement activity: Ambient AI RFI DSS 0000000005SL is open, with webinar/Hub Anchor activity continuing in May and June.</div>
+<div class="sales"><strong>Sales action:</strong> Immediate cyber/AI/workflow sales signal; monitor June Hub Anchor applications and social-care platform demos for partner roles.</div>
+<div class="linkbar"><a href="https://health.mo.gov/about/rhtp/" rel="noopener" target="_blank">Missouri RHTP page</a><a href="https://missouribuys.mo.gov/" rel="noopener" target="_blank">MO procurement portal</a></div>
 <div class="tagbar"><span class="tag">coming-soon</span><span class="tag">procurement-watch</span></div>
 </article>
 <article class="state-card soon" data-pathways="Coming Soon / Forecasted coming-soon procurement-watch" data-region="Northeast" data-state="New York" data-status="soon">
@@ -534,7 +980,7 @@
 <div class="linkbar"><a href="https://health.ri.gov/healthcare/rural-health-transformation-program" rel="noreferrer" target="_blank">State RHTP</a><a href="https://ridop.ri.gov/vendors/bidding-opportunities" rel="noreferrer" target="_blank">Procurement</a></div>
 <div class="tagbar"><span class="tag">coming-soon</span><span class="tag">procurement-watch</span></div>
 </article>
-<article class="state-card soon" data-pathways="Coming Soon / Forecasted Grant Application Rural LEA Career Pathway procurement-watch" data-region="Northeast" data-state="Wisconsin" data-status="soon">
+<article class="state-card soon" data-pathways="Coming Soon / Forecasted coming-soon procurement-watch" data-region="Northeast" data-state="Wisconsin" data-status="soon">
 <div class="card-head">
 <div>
 <h3>Wisconsin</h3>
@@ -542,13 +988,13 @@
 </div>
 <span class="status-pill soon">Coming soon / forecasted</span>
 </div>
-<div class="date-banner soon"><span class="date-icon">📅</span><div><strong>Key date / timing:</strong> DHS materials indicate late-spring/early-summer grant opportunity release with a planned 10-week application window; DPI rural LEA grant coming Spring 2026.</div></div>
-<div class="pathways"><span class="path-badge">Grant Application</span><span class="path-badge">Rural LEA Career Pathway</span><span class="path-badge">Coming Soon / Forecasted</span></div>
-<div class="route"><strong>Exact pathway to award:</strong><br/>Wisconsin’s visible pathway is a coming grant route for rural LEAs to build or expand healthcare career pathways, plus DHS RHTP implementation channels.</div>
-<div class="current"><strong>Current public route / next step:</strong><br/>Monitor DHS RHTP and DPI pages for grant application package release. DPI describes up to $41,000 annually for rural LEAs to develop or expand healthcare and human-services career pathways.</div>
-<div class="sales"><strong>Sales engagement:</strong><br/>Prepare rural school, workforce, simulation, AV/collaboration, and health-care career pathway partners for quick response.</div>
-<div class="linkbar"><a href="https://www.dhs.wisconsin.gov/rhtp/index.htm" rel="noreferrer" target="_blank">DHS RHTP</a><a href="https://dpi.wi.gov/cte/rhtp-grant" rel="noreferrer" target="_blank">DPI RHTP grant</a><a href="https://www.dhs.wisconsin.gov/business/solicitations-list.htm" rel="noreferrer" target="_blank">DHS solicitations</a></div>
-<div class="tagbar"><span class="tag">coming-soon</span><span class="tag">grant</span><span class="tag">rural-LEA</span><span class="tag">workforce</span></div>
+<div class="date-banner soon"><span class="date-icon">📅</span><div><strong>Key date / timing:</strong> Grant-prep guidance and advisory structure are visible; no final public subaward package verified.</div></div>
+<div class="pathways"><span class="path-badge">Coming Soon / Forecasted</span></div>
+<div class="route"><strong>Exact pathway to award:</strong><br/>No public subaward application route has been verified in this build. Use the official state RHTP page and procurement portal as the pathway until a package is posted.</div>
+<div class="current"><strong>Current public route / next step:</strong><br/>Grant-prep guidance and advisory structure are visible; no final public subaward package verified.</div>
+<div class="sales"><strong>Sales engagement:</strong><br/>Register/monitor Wisconsin supplier and DHS pages for upcoming opportunities; map advisory council priorities.</div>
+<div class="linkbar"><a href="https://www.dhs.wisconsin.gov/business/rhtp.htm" rel="noreferrer" target="_blank">State RHTP</a><a href="https://www.dhs.wisconsin.gov/business/solicitations-list.htm" rel="noreferrer" target="_blank">Procurement</a></div>
+<div class="tagbar"><span class="tag">coming-soon</span><span class="tag">procurement-watch</span></div>
 </article>
 <article class="state-card soon" data-pathways="Coming Soon / Forecasted coming-soon procurement-watch" data-region="Southeast" data-state="Louisiana" data-status="soon">
 <div class="card-head">
@@ -598,28 +1044,36 @@
 <div class="linkbar"><a href="https://www.azahcccs.gov/AHCCCS/Initiatives/RHTP/" rel="noreferrer" target="_blank">State RHTP</a><a href="https://app.az.gov/page.aspx/en/usr/login?ReturnUrl=%2fpage.aspx%2fen%2fbuy%2fhomepage" rel="noreferrer" target="_blank">Procurement</a></div>
 <div class="tagbar"><span class="tag">coming-soon</span><span class="tag">procurement-watch</span></div>
 </article>
-<article class="state-card soon" data-pathways="coming soon / forecasted webinar rfa development planning pathway coming-soon webinar rfa-watch allowable-expenses" data-region="West" data-state="Colorado" data-status="soon"><div class="card-head"><div><h3>Colorado</h3><div class="region-label">West</div></div><span class="status-pill soon">Coming soon / forecasted</span></div>
-<div class="date-banner soon"><span class="date-icon">📅</span><div><strong>Key date / timing:</strong> Allowable vs. non-allowable expenses webinar scheduled for May 19; RFA material development continues.</div></div>
-<div class="pathways"><span class="path-badge">Webinar</span><span class="path-badge">RFA Development</span><span class="path-badge">Planning Pathway</span></div>
-<div class="route"><strong>Exact pathway to award:</strong><br/>Official HCPF RHTP page remains the pathway. The May 19 webinar creates a state-sanctioned pre-RFA education point before future application materials are released.</div>
-<div class="current"><strong>Current public route / next step:</strong><br/>Attend/track the May 19 webinar and monitor HCPF for RFA materials, advisory/committee updates, and partner requirements.</div>
-<div class="sales"><strong>Sales engagement:</strong><br/>Use the webinar to shape budget-compliant Solutionz positioning for telehealth, RPM, data systems, workflows, and infrastructure before packages post.</div>
+<article class="state-card soon" data-pathways="RFA Development Committee / Planning Pathway Monitor for Procurement RFA-development committee planning" data-region="West" data-state="Colorado" data-status="soon">
+<div class="card-head">
+<div>
+<h3>Colorado</h3>
+<div class="region-label">West</div>
+</div>
+<span class="status-pill soon">Coming soon / forecasted</span>
+</div>
+<div class="date-banner soon"><span class="date-icon">📅</span><div><strong>Key date / timing:</strong> State page identifies RFA material development and committee formation as next steps.</div></div>
+<div class="pathways"><span class="path-badge">RFA Development</span><span class="path-badge">Committee / Planning Pathway</span><span class="path-badge">Monitor for Procurement</span></div>
+<div class="route"><strong>Exact pathway to award:</strong><br/>Colorado is still in RFA-material development and committee buildout; no public application package is verified.</div>
+<div class="current"><strong>Current public route / next step:</strong><br/>State page identifies RFA material development and committee formation as next steps.</div>
+<div class="sales"><strong>Sales engagement:</strong><br/>Engage through provider/community relationships now; monitor the state page and VSS procurement portal.</div>
 <div class="linkbar"><a href="https://hcpf.colorado.gov/rural-health-transformation-program" rel="noreferrer" target="_blank">State RHTP</a><a href="https://vss.state.co.us" rel="noreferrer" target="_blank">Procurement</a></div>
-<div class="tagbar"><span class="tag">coming-soon</span><span class="tag">webinar</span><span class="tag">rfa-watch</span><span class="tag">allowable-expenses</span></div></article>
-<article class="state-card soon" data-pathways="RFP Development RFI / Public Input Closed Stakeholder Engagement RFP-development RFI-closed coming-soon" data-region="West" data-state="New Mexico" data-status="soon">
+<div class="tagbar"><span class="tag">RFA-development</span><span class="tag">committee</span><span class="tag">planning</span></div>
+</article>
+<article class="state-card open" data-pathways="RFP Development RFI / Public Input Closed Stakeholder Engagement RFP-development RFI-closed coming-soon" data-region="West" data-state="New Mexico" data-status="open">
 <div class="card-head">
 <div>
 <h3>New Mexico</h3>
 <div class="region-label">West</div>
 </div>
-<span class="status-pill soon">Coming soon / forecasted</span>
+<span class="status-pill open">OPEN</span>
 </div>
-<div class="date-banner soon"><span class="date-icon">📅</span><div><strong>Key date / timing:</strong> RFI for stakeholder input closed in 2025; RFP development and engagement opportunities are the next route.</div></div>
+<div class="date-banner open"><span class="date-icon">●</span><span><strong>See HCA procurement deadlines</strong><br/>RFP/RFI listed on Open RFPs</span></div>
 <div class="pathways"><span class="path-badge">RFP Development</span><span class="path-badge">RFI / Public Input Closed</span><span class="path-badge">Stakeholder Engagement</span></div>
 <div class="route"><strong>Exact pathway to award:</strong><br/>New Mexico’s official page says HCA will develop RFPs to distribute funding to rural health communities and support the Rural Health Sustainability and Innovation Center.</div>
-<div class="current"><strong>Current public route / next step:</strong><br/>RFI for stakeholder input closed in 2025; RFP development and engagement opportunities are the next route.</div>
-<div class="sales"><strong>Sales engagement:</strong><br/>Monitor for RFPs and engage providers/community partners around RHSIC, technology, workforce, and sustainability projects.</div>
-<div class="linkbar"><a href="https://www.hca.nm.gov/rural-health-transformation-program/" rel="noreferrer" target="_blank">State RHTP</a><a href="https://www.hca.nm.gov/lookingforinformation/open-rfps" rel="noreferrer" target="_blank">Procurement</a></div>
+<div class="current"><strong>Current signal:</strong> New Mexico’s open procurements now include an RHT Program Center for Rural Health Strategy &amp; Innovation RFP and an RHT initiatives RFI.</div>
+<div class="sales"><strong>Sales action:</strong> Strong immediate sales/partner signal for strategy, innovation center, telehealth, cybersecurity, and rural health initiative planning.</div>
+<div class="linkbar"><a href="https://www.hca.nm.gov/about_the_department/open-rfps/" rel="noopener" target="_blank">New Mexico HCA Open RFPs</a><a href="https://www.hca.nm.gov/rural-health-transformation-program/" rel="noopener" target="_blank">New Mexico HCA RHTP</a></div>
 <div class="tagbar"><span class="tag">RFP-development</span><span class="tag">RFI-closed</span><span class="tag">coming-soon</span></div>
 </article>
 <article class="state-card soon" data-pathways="Forecasted Grant Application TA / Technical Assistance Planning Pathway forecasted grant TA planning" data-region="West" data-state="Utah" data-status="soon">
@@ -628,15 +1082,15 @@
 <h3>Utah</h3>
 <div class="region-label">West</div>
 </div>
-<span class="status-pill soon">Coming soon / forecasted</span>
+<span class="status-pill soon">COMING SOON</span>
 </div>
-<div class="date-banner soon"><span class="date-icon">📅</span><div><strong>Key date / timing:</strong> Forecasted May windows include Behavioral Health–Primary Care Integration, Rural Clinical Preceptor Stipends, and GME Strategic Plan.</div></div>
+<div class="date-banner soon"><span class="date-icon">●</span><span><strong>Estimated May 26–May 30 openings</strong><br/>Funding release window</span></div>
 <div class="pathways"><span class="path-badge">Forecasted Grant Application</span><span class="path-badge">TA / Technical Assistance</span><span class="path-badge">Planning Pathway</span></div>
 <div class="money"><strong>Money / range:</strong> Up to $2M/BH-primary care site; stipends up to $10K/$7.5K; GME up to $1.6M</div>
 <div class="route"><strong>Exact pathway to award:</strong><br/>Utah posts forecasted funding opportunities with estimated open windows, eligibility, project overview, and anticipated award ranges.</div>
-<div class="current"><strong>Current public route / next step:</strong><br/>Forecasted May windows include Behavioral Health–Primary Care Integration, Rural Clinical Preceptor Stipends, and GME Strategic Plan.</div>
-<div class="sales"><strong>Sales engagement:</strong><br/>Pre-position with eligible rural providers, local service agencies, preceptors, and consultants before forms open; prepare collaboration documentation.</div>
-<div class="linkbar"><a href="https://dhhs.utah.gov/ruralhealth/" rel="noreferrer" target="_blank">State RHTP</a><a href="https://utah.bonfirehub.com/portal/?tab=openOpportunities" rel="noreferrer" target="_blank">Procurement</a><a href="https://dhhs.utah.gov/ruralhealth/funding-opportunities/" rel="noreferrer" target="_blank">Funding opportunities</a></div>
+<div class="current"><strong>Current signal:</strong> Utah’s RHTP page continues to show funding opportunities moving through the May release window, with several anticipated late-May openings.</div>
+<div class="sales"><strong>Sales action:</strong> Monitor behavioral health/primary care, GME, workforce, and value-based-care opportunities; prepare rural telehealth and collaboration use cases.</div>
+<div class="linkbar"><a href="https://dhhs.utah.gov/ruralhealth/" rel="noopener" target="_blank">Utah rural health page</a><a href="https://dhhs.utah.gov/wp-content/uploads/2026.02.12-RHTP-Informational-Webinar.pdf" rel="noopener" target="_blank">Utah RHTP informational webinar</a></div>
 <div class="tagbar"><span class="tag">forecasted</span><span class="tag">grant</span><span class="tag">TA</span><span class="tag">planning</span></div>
 </article>
 <article class="state-card soon" data-pathways="Coming Soon / Forecasted coming-soon procurement-watch" data-region="West" data-state="Wyoming" data-status="soon">
@@ -645,14 +1099,14 @@
 <h3>Wyoming</h3>
 <div class="region-label">West</div>
 </div>
-<span class="status-pill soon">Coming soon / forecasted</span>
+<span class="status-pill soon">COMING SOON</span>
 </div>
-<div class="date-banner soon"><span class="date-icon">📅</span><div><strong>Key date / timing:</strong> Forecasted watch; no public package/form verified.</div></div>
+<div class="date-banner soon"><span class="date-icon">●</span><span><strong>Awards expected Jun.–Jul.</strong><br/>May–June RFA/RFP window</span></div>
 <div class="pathways"><span class="path-badge">Coming Soon / Forecasted</span></div>
 <div class="route"><strong>Exact pathway to award:</strong><br/>No public subaward application route has been verified in this build. Use the official state RHTP page and procurement portal as the pathway until a package is posted.</div>
-<div class="current"><strong>Current public route / next step:</strong><br/>Forecasted watch; no public package/form verified.</div>
-<div class="sales"><strong>Sales engagement:</strong><br/>Monitor Wyoming RHTP and procurement pages; prepare rural access, telehealth, workforce, and facility-modernization concepts.</div>
-<div class="linkbar"><a href="https://health.wyo.gov/admin/rural-health-transformation-program/" rel="noreferrer" target="_blank">State RHTP</a><a href="https://ai.wyo.gov/divisions/general-services/purchasing/bid-opportunities" rel="noreferrer" target="_blank">Procurement</a></div>
+<div class="current"><strong>Current signal:</strong> Wyoming’s RHTP timeline now indicates RFAs/RFPs and applicant webinars during May–June, with awards expected June–July.</div>
+<div class="sales"><strong>Sales action:</strong> Near-term fit for rural provider infrastructure, technology, telehealth, and workforce project support.</div>
+<div class="linkbar"><a href="https://health.wyo.gov/admin/rural-health-transformation-program/" rel="noopener" target="_blank">Wyoming RHTP page</a></div>
 <div class="tagbar"><span class="tag">coming-soon</span><span class="tag">procurement-watch</span></div>
 </article>
 <article class="state-card engage" data-pathways="Advisory Application Invite-Only / Targeted LOI advisory invite-only LOI" data-region="Southeast" data-state="Georgia" data-status="engage">
@@ -672,8 +1126,8 @@
 <div class="tagbar"><span class="tag">advisory</span><span class="tag">invite-only</span><span class="tag">LOI</span></div>
 </article>
 <article class="state-card open" data-pathways="Hub / Lead Organization Pathway Award / Implementation Network Partnering" data-region="Southeast" data-state="North Carolina" data-status="open">
-<div class="card-head"><div><h3>North Carolina</h3><div class="region-label">Southeast</div></div><span class="status-pill open">Open / accepting</span></div>
-<div class="date-banner open"><span class="date-icon">📅</span><div><strong>Key date / timing:</strong> NC ROOTS Hub Leads selected May 1; contracts targeted by June 1.</div></div>
+<div class="card-head"><div><h3>North Carolina</h3><div class="region-label">Southeast</div></div><span class="status-pill open">OPEN</span></div>
+<div class="date-banner open"><span class="date-icon">●</span><span><strong>MIH RFA due May 20; ROOTS contracts by Jun. 1</strong><br/>ROOTS awards + MIH RFA</span></div>
 <div class="pathways"><span class="path-badge">Hub / Lead Organization Pathway</span><span class="path-badge">Award / Implementation</span><span class="path-badge">Network Partnering</span></div>
 <div class="money"><strong>Money / range:</strong> State Year 1 award is $213,008,356.47; hub-specific contract/subaward values should be confirmed through NCDHHS and Hub Lead agreements.</div>
 <div class="route"><strong>Exact pathway to award:</strong><br/>The broad ROOTS Hub Lead RFA is no longer open; NCDHHS selected Impact Health, Trillium Health Resources, Vaya Health, UNC Hospitals, and Access East. The practical sub-award/partner route now runs through the selected regional Hub Leads as they finalize contracts and establish local networks.</div>
@@ -681,20 +1135,20 @@
 <div class="links"><a href="https://www.ncdhhs.gov/news/press-releases/2026/05/01/ncdhhs-selects-nc-roots-hub-leads-strengthen-rural-health-care-across-north-carolina" rel="noreferrer" target="_blank">May 1 Hub Lead announcement</a><a href="https://www.ncdhhs.gov/divisions/office-rural-health/rural-health-transformation-program" rel="noreferrer" target="_blank">NC RHTP page</a></div>
 <div class="tagbar"><span class="tag">hub-leads</span><span class="tag">award</span><span class="tag">network-partner</span></div>
 </article>
-<article class="state-card engage" data-pathways="Webinar / Stakeholder Engagement Monitor for Subaward engagement webinar monitor" data-region="Southeast" data-state="Tennessee" data-status="engage">
+<article class="state-card soon" data-pathways="Webinar / Stakeholder Engagement Monitor for Subaward engagement webinar monitor" data-region="Southeast" data-state="Tennessee" data-status="soon">
 <div class="card-head">
 <div>
 <h3>Tennessee</h3>
 <div class="region-label">Southeast</div>
 </div>
-<span class="status-pill engage">Engagement / invite / input</span>
+<span class="status-pill soon">COMING SOON</span>
 </div>
-<div class="date-banner engage"><span class="date-icon">📅</span><div><strong>Key date / timing:</strong> Webinar replays and state RHTP materials are the available pathway for market intelligence.</div></div>
+<div class="date-banner soon"><span class="date-icon">●</span><span><strong>Next package TBD</strong><br/>Program page updated</span></div>
 <div class="pathways"><span class="path-badge">Webinar / Stakeholder Engagement</span><span class="path-badge">Monitor for Subaward</span></div>
 <div class="route"><strong>Exact pathway to award:</strong><br/>Tennessee’s current public route is engagement and recorded webinar materials; no broad public subaward application package is verified in this page build.</div>
-<div class="current"><strong>Current public route / next step:</strong><br/>Webinar replays and state RHTP materials are the available pathway for market intelligence.</div>
-<div class="sales"><strong>Sales engagement:</strong><br/>Use recordings to map state initiatives and prepare account-level project ideas while monitoring procurement and RHTF updates.</div>
-<div class="linkbar"><a href="https://www.tn.gov/health/rural.html" rel="noreferrer" target="_blank">State RHTP</a><a href="https://www.tn.gov/health/funding-opportunities.html" rel="noreferrer" target="_blank">Procurement</a></div>
+<div class="current"><strong>Current signal:</strong> Tennessee’s RHTP page remains updated, but no current competitive subaward package was verified; monitor for the next webinar or funding release.</div>
+<div class="sales"><strong>Sales action:</strong> Keep rural hospitals and regional provider stakeholders warm until the next funding/procurement lane opens.</div>
+<div class="linkbar"><a href="https://www.tn.gov/health/health-program-areas/rural-health/rhtp.html" rel="noopener" target="_blank">Tennessee RHTP page</a></div>
 <div class="tagbar"><span class="tag">engagement</span><span class="tag">webinar</span><span class="tag">monitor</span></div>
 </article>
 <article class="state-card engage" data-pathways="Webinar / Stakeholder Engagement Monitor for RFA/RFP engagement webinar monitor" data-region="West" data-state="California" data-status="engage">
@@ -723,21 +1177,21 @@
 <div class="links"><a href="https://www.kdhe.ks.gov/m/NewsFlash/home/detail/1870" rel="noreferrer" target="_blank">KDHE first RFA announcement</a><a href="https://www.kdhe.ks.gov/2361/Rural-Health-Transformation-Program" rel="noreferrer" target="_blank">Kansas RHTP page</a></div>
 <div class="tagbar"><span class="tag">RFA</span><span class="tag">closed</span><span class="tag">next-round</span></div>
 </article>
-<article class="state-card closed" data-pathways="Recently Closed Application RFA NOFA SAGE Next Round Watch closed monitor" data-region="Northeast" data-state="New Jersey" data-status="recently_closed">
+<article class="state-card closed" data-pathways="Recently Closed Application Next Round Watch closed monitor" data-region="Northeast" data-state="New Jersey" data-status="closed">
 <div class="card-head">
 <div>
 <h3>New Jersey</h3>
 <div class="region-label">Northeast</div>
 </div>
-<span class="status-pill closed">Recently closed / next round</span>
+<span class="status-pill closed">RECENTLY CLOSED</span>
 </div>
-<div class="date-banner closed"><span class="date-icon">📅</span><div><strong>Key date / timing:</strong> CHW RHTP RFA due Apr. 15; Doula Integration RHTP RFA due Apr. 27. No newer public RHTP application verified by May 3.</div></div>
-<div class="pathways"><span class="path-badge">NOFA / RFA</span><span class="path-badge">SAGE Grant Application</span><span class="path-badge">Next Round Watch</span></div>
-<div class="route"><strong>Exact pathway to award:</strong><br/>New Jersey’s April RHTP pathway used NJDOH Notice of Grant / RFA postings and electronic submission through SAGE.</div>
-<div class="current"><strong>Current public route / next step:</strong><br/>Both visible April RHTP lanes are now closed; monitor the NJDOH grant directory and SAGE for follow-on packages.</div>
-<div class="sales"><strong>Sales engagement:</strong><br/>Stay close to maternal health, CHW, telehealth, training, and rural care partners that may be eligible in the next package.</div>
-<div class="linkbar"><a href="https://healthapps.nj.gov/noticeofgrant/noticegrants.aspx" rel="noreferrer" target="_blank">NJDOH Notice of Grant directory</a><a href="https://healthapps.nj.gov/noticeofgrant/documents/DFHS26RDI_rfa.pdf" rel="noreferrer" target="_blank">Doula RFA</a><a href="https://healthapps.nj.gov/noticeofgrant/documents/DOHP26RHT_rfa.pdf" rel="noreferrer" target="_blank">RHTP RFA</a></div>
-<div class="tagbar"><span class="tag">RFA</span><span class="tag">NOFA</span><span class="tag">SAGE</span><span class="tag">closed</span><span class="tag">monitor</span></div>
+<div class="date-banner closed"><span class="date-icon">●</span><span><strong>Closed Apr. 27; monitor awards</strong><br/>April RFA posted</span></div>
+<div class="pathways"><span class="path-badge">Recently Closed Application</span><span class="path-badge">Next Round Watch</span></div>
+<div class="route"><strong>Exact pathway to award:</strong><br/>New Jersey’s clearest public package was the Doula Integration application path, which is now past its April deadline.</div>
+<div class="current"><strong>Current signal:</strong> New Jersey’s April RFA activity is now past the posted April 27 deadline; monitor notice directory for awards or next RHTP rounds.</div>
+<div class="sales"><strong>Sales action:</strong> Continue tracking rural community health worker, doula integration, and maternal/community health implementation signals.</div>
+<div class="linkbar"><a href="https://www.nj.gov/health/grants/" rel="noopener" target="_blank">NJ Notices of Grant Opportunity</a><a href="https://www.nj.gov/health/ruralhealth/rhtp/" rel="noopener" target="_blank">NJ RHTP page</a></div>
+<div class="tagbar"><span class="tag">closed</span><span class="tag">monitor</span></div>
 </article>
 <article class="state-card closed" data-pathways="Recently Closed / Notice of Award Next Round Watch closed NOA monitor" data-region="Northeast" data-state="Vermont" data-status="recently_closed">
 <div class="card-head">
@@ -755,7 +1209,7 @@
 <div class="linkbar"><a href="https://healthcarereform.vermont.gov/hr1rural-health-transformation-fund" rel="noreferrer" target="_blank">State RHTP</a><a href="https://www.vermontbusinessregistry.com/default.aspx" rel="noreferrer" target="_blank">Procurement</a></div>
 <div class="tagbar"><span class="tag">closed</span><span class="tag">NOA</span><span class="tag">monitor</span></div>
 </article>
-<article class="state-card closed" data-pathways="LOI Process Readiness Pathway Planning Pathway Project Implementation Application Regional Meetings LOI readiness planning implementation" data-region="West" data-state="Alaska" data-status="recently_closed">
+<article class="state-card closed" data-pathways="LOI Process Readiness Pathway Planning Pathway Project Implementation Application LOI readiness planning implementation" data-region="West" data-state="Alaska" data-status="recently_closed">
 <div class="card-head">
 <div>
 <h3>Alaska</h3>
@@ -763,28 +1217,28 @@
 </div>
 <span class="status-pill closed">Recently closed / next round</span>
 </div>
-<div class="date-banner closed"><span class="date-icon">📅</span><div><strong>Key date / timing:</strong> LOI portal closed Mar. 11; regional meetings Apr. 29, Apr. 30, May 5 and Jun. 4; LOI status updates targeted mid-May.</div></div>
-<div class="pathways"><span class="path-badge">LOI Process</span><span class="path-badge">Readiness Pathway</span><span class="path-badge">Planning Pathway</span><span class="path-badge">Project Implementation Application</span><span class="path-badge">Regional Meetings</span></div>
-<div class="route"><strong>Exact pathway to award:</strong><br/>Alaska’s first intake used a Letter of Interest to collect organization concepts, align ideas to state initiatives, and determine whether readiness, planning, or project implementation is the best future funding pathway.</div>
-<div class="current"><strong>Current public route / next step:</strong><br/>LOI review continues while the state hosts regional meetings. Use the regional sessions to track future rounds and identify local partners.</div>
+<div class="date-banner closed"><span class="date-icon">📅</span><div><strong>Key date / timing:</strong> LOI portal closed Mar. 11. Use this as a next-round watch; the official page still describes the state’s Readiness, Planning, and Project Implementation pathways.</div></div>
+<div class="pathways"><span class="path-badge">LOI Process</span><span class="path-badge">Readiness Pathway</span><span class="path-badge">Planning Pathway</span><span class="path-badge">Project Implementation Application</span></div>
+<div class="route"><strong>Exact pathway to award:</strong><br/>Alaska’s first public intake used a Letter of Interest to collect organization concepts, align ideas to state initiatives, and determine which future funding pathway fits: readiness, planning, or project implementation.</div>
+<div class="current"><strong>Current public route / next step:</strong><br/>LOI portal closed Mar. 11. Use this as a next-round watch; the official page still describes the state’s Readiness, Planning, and Project Implementation pathways.</div>
 <div class="sales"><strong>Sales engagement:</strong><br/>Track future rounds and identify accounts with ideas that need pre-award shaping; help them choose readiness vs planning vs implementation.</div>
-<div class="linkbar"><a href="https://health.alaska.gov/en/education/rural-health-transformation-program/" rel="noreferrer" target="_blank">State RHTP + meetings</a><a href="https://iris-vss.alaska.gov" rel="noreferrer" target="_blank">Procurement</a><a href="https://health.alaska.gov/media/swhj3r0c/rhtp-applicant-resource-guide.pdf" rel="noreferrer" target="_blank">LOI applicant resource guide</a><a href="https://health.alaska.gov/media/o2ybai1e/021026-rhtp-webinar-recap-rural-health-transformation-funding-application-process.pdf" rel="noreferrer" target="_blank">LOI webinar recap</a></div>
-<div class="tagbar"><span class="tag">LOI</span><span class="tag">readiness</span><span class="tag">planning</span><span class="tag">implementation</span><span class="tag">regional-meetings</span></div>
+<div class="linkbar"><a href="https://health.alaska.gov/en/education/rural-health-transformation-program/" rel="noreferrer" target="_blank">State RHTP</a><a href="https://iris-vss.alaska.gov" rel="noreferrer" target="_blank">Procurement</a><a href="https://health.alaska.gov/media/swhj3r0c/rhtp-applicant-resource-guide.pdf" rel="noreferrer" target="_blank">LOI applicant resource guide</a><a href="https://health.alaska.gov/media/o2ybai1e/021026-rhtp-webinar-recap-rural-health-transformation-funding-application-process.pdf" rel="noreferrer" target="_blank">LOI webinar recap</a></div>
+<div class="tagbar"><span class="tag">LOI</span><span class="tag">readiness</span><span class="tag">planning</span><span class="tag">implementation</span></div>
 </article>
-<article class="state-card monitor" data-pathways="Monitor / Not Verified Procurement Portal Watch monitor procurement-watch" data-region="West" data-state="Nevada" data-status="monitor">
+<article class="state-card open" data-pathways="Monitor / Not Verified Procurement Portal Watch monitor procurement-watch" data-region="West" data-state="Nevada" data-status="open">
 <div class="card-head">
 <div>
 <h3>Nevada</h3>
 <div class="region-label">West</div>
 </div>
-<span class="status-pill monitor">Monitor / not posted</span>
+<span class="status-pill open">OPEN</span>
 </div>
-<div class="date-banner monitor"><span class="date-icon">📅</span><div><strong>Key date / timing:</strong> Use the state page and procurement portal until a public package/form can be confirmed.</div></div>
+<div class="date-banner open"><span class="date-icon">●</span><span><strong>Due May 29, 2026</strong><br/>Rural &amp; Tribal RFA active</span></div>
 <div class="pathways"><span class="path-badge">Monitor / Not Verified</span><span class="path-badge">Procurement Portal Watch</span></div>
 <div class="route"><strong>Exact pathway to award:</strong><br/>The tracker carries Nevada as active from prior market watch, but this subaward page does not elevate any Nevada RFI/RFA without an official source link verified in this build.</div>
-<div class="current"><strong>Current public route / next step:</strong><br/>Use the state page and procurement portal until a public package/form can be confirmed.</div>
-<div class="sales"><strong>Sales engagement:</strong><br/>Do not cite third-party listings as fact. Monitor state procurement and health/RHTP pages for official RFAs/RFPs.</div>
-<div class="linkbar"><a href="https://www.medicaid.nv.gov/providers/newsannounce/default" rel="noreferrer" target="_blank">State RHTP</a><a href="https://nevadaepro.com/bso/view/search/external/advancedSearchBid.xhtml?openBids=true" rel="noreferrer" target="_blank">Procurement</a></div>
+<div class="current"><strong>Current signal:</strong> Nevada’s Rural &amp; Tribal Health Services RFA remains active while the first Flex Fund round has closed.</div>
+<div class="sales"><strong>Sales action:</strong> Focus on rural/tribal provider needs, mobile care, telehealth, and access-expansion equipment.</div>
+<div class="linkbar"><a href="https://dhhs.nv.gov/Programs/RuralHealthTransformationProgram/" rel="noopener" target="_blank">Nevada RHTP page</a></div>
 <div class="tagbar"><span class="tag">monitor</span><span class="tag">procurement-watch</span></div>
 </article>
 <article class="state-card monitor" data-pathways="Monitor / Not Yet Posted monitor procurement-watch" data-region="Northeast" data-state="Connecticut" data-status="monitor">
@@ -803,18 +1257,42 @@
 <div class="linkbar"><a href="https://portal.ct.gov/dss/rural-health-transformation-program" rel="noreferrer" target="_blank">State RHTP</a><a href="https://portal.ct.gov/das/procurement-programs-and-services/ctsource?language=en_US" rel="noreferrer" target="_blank">Procurement</a></div>
 <div class="tagbar"><span class="tag">monitor</span><span class="tag">procurement-watch</span></div>
 </article>
-<article class="state-card soon" data-pathways="coming soon / forecasted noi / notice of intent rfi grant forecast coming-soon noi rfi maternal-health mobile-integrated-health" data-region="Northeast" data-state="Iowa" data-status="soon"><div class="card-head"><div><h3>Iowa</h3><div class="region-label">Northeast</div></div><span class="status-pill soon">Coming soon / forecasted</span></div>
-<div class="date-banner soon"><span class="date-icon">📅</span><div><strong>Key date / timing:</strong> Official HHS page lists multiple Healthy Hometowns notices of intent and a Maternal Health Hub and Spoke RFI; release dates remain per Iowa HHS / IowaGrants.</div></div>
-<div class="pathways"><span class="path-badge">NOI / Notice of Intent</span><span class="path-badge">RFI</span><span class="path-badge">Grant Forecast</span></div>
-<div class="route"><strong>Exact pathway to award:</strong><br/>Iowa HHS funding opportunities page is now the path to monitor. It lists notices of intent for cancer, cardiovascular, school-based, mobile integrated health, maternal health, transport, co-location, and public-health lead-entity lanes, plus a Maternal Health Hub and Spoke RFI.</div>
-<div class="current"><strong>Current public route / next step:</strong><br/>Watch Iowa HHS and IowaGrants for conversion of NOIs/RFI into full RFAs or applications.</div>
-<div class="sales"><strong>Sales engagement:</strong><br/>Map partners around MIH, maternal hub-and-spoke, high-risk OB/neonatal transport, co-location, telehealth, HIE, and public health lead entities.</div>
-<div class="linkbar"><a href="https://hhs.iowa.gov/initiatives/healthy-hometowns-iowas-rural-health-transformation-plan" rel="noreferrer" target="_blank">State RHTP</a><a href="https://hhs.iowa.gov/grants/funding-opportunities" rel="noreferrer" target="_blank">Funding opportunities</a><a href="https://das.iowa.gov/vendors/bidding-opportunities" rel="noreferrer" target="_blank">Procurement</a></div>
-<div class="tagbar"><span class="tag">coming-soon</span><span class="tag">noi</span><span class="tag">rfi</span><span class="tag">maternal-health</span><span class="tag">mobile-integrated-health</span></div></article>
+<article class="state-card open" data-pathways="Monitor / Not Yet Posted monitor procurement-watch" data-region="Northeast" data-state="Iowa" data-status="open">
+<div class="card-head">
+<div>
+<h3>Iowa</h3>
+<div class="region-label">Northeast</div>
+</div>
+<span class="status-pill open">OPEN</span>
+</div>
+<div class="date-banner open"><span class="date-icon">●</span><span><strong>Maternal Health RFI due Jun. 12</strong><br/>RFI + NOIA activity posted</span></div>
+<div class="pathways"><span class="path-badge">Monitor / Not Yet Posted</span></div>
+<div class="route"><strong>Exact pathway to award:</strong><br/>No public subaward application route has been verified in this build. Use the official state RHTP page and procurement portal as the pathway until a package is posted.</div>
+<div class="current"><strong>Current signal:</strong> Iowa has funding opportunities and NOIA awardee activity posted; a Maternal Health RFI is active with final response due June 12.</div>
+<div class="sales"><strong>Sales action:</strong> Track NOIA awardees and maternal health stakeholders for telehealth, mobile care, and service access needs.</div>
+<div class="linkbar"><a href="https://hhs.iowa.gov/programs/rural-health-transformation-program" rel="noopener" target="_blank">Iowa RHTP page</a><a href="https://hhs.iowa.gov/media/18633/download?inline=" rel="noopener" target="_blank">Iowa Maternal Health RFI</a></div>
+<div class="tagbar"><span class="tag">monitor</span><span class="tag">procurement-watch</span></div>
+</article>
 <article class="state-card monitor" data-pathways="Monitor / Not Yet Posted monitor procurement-watch" data-region="Northeast" data-state="Maine" data-status="monitor">
 <div class="card-head">
 <div>
 <h3>Maine</h3>
+<div class="region-label">Northeast</div>
+</div>
+<span class="status-pill monitor">MONITOR</span>
+</div>
+<div class="date-banner monitor"><span class="date-icon">●</span><span><strong>Monitor DHHS notices</strong><br/>Implementation/workshop activity</span></div>
+<div class="pathways"><span class="path-badge">Monitor / Not Yet Posted</span></div>
+<div class="route"><strong>Exact pathway to award:</strong><br/>No public subaward application route has been verified in this build. Use the official state RHTP page and procurement portal as the pathway until a package is posted.</div>
+<div class="current"><strong>Current signal:</strong> Maine continues implementation activity, including RHTP staffing/administrative action and Healthy Grants workshop activity; no broad public subaward window was verified.</div>
+<div class="sales"><strong>Sales action:</strong> Watch for implementation, rural hospital, telehealth, and community health grant lanes as workshops convert into funding actions.</div>
+<div class="linkbar"><a href="https://www.maine.gov/dhhs/ruralhealth" rel="noopener" target="_blank">Maine RHTP page</a><a href="https://legislature.maine.gov/doc/12511" rel="noopener" target="_blank">Maine financial order</a></div>
+<div class="tagbar"><span class="tag">monitor</span><span class="tag">procurement-watch</span></div>
+</article>
+<article class="state-card monitor" data-pathways="Monitor / Not Yet Posted monitor procurement-watch" data-region="Northeast" data-state="New Hampshire" data-status="monitor">
+<div class="card-head">
+<div>
+<h3>New Hampshire</h3>
 <div class="region-label">Northeast</div>
 </div>
 <span class="status-pill monitor">Monitor / not posted</span>
@@ -823,25 +1301,9 @@
 <div class="pathways"><span class="path-badge">Monitor / Not Yet Posted</span></div>
 <div class="route"><strong>Exact pathway to award:</strong><br/>No public subaward application route has been verified in this build. Use the official state RHTP page and procurement portal as the pathway until a package is posted.</div>
 <div class="current"><strong>Current public route / next step:</strong><br/>No public subaward application verified.</div>
-<div class="sales"><strong>Sales engagement:</strong><br/>Monitor Maine RHTP and procurement pages; focus on rural access, workforce, telehealth, and mobile care planning.</div>
-<div class="linkbar"><a href="https://www.maine.gov/dhhs/ruralhealth" rel="noreferrer" target="_blank">State RHTP</a><a href="https://mevss.hostams.com/PRDVSS1X1/AltSelfService" rel="noreferrer" target="_blank">Procurement</a></div>
+<div class="sales"><strong>Sales engagement:</strong><br/>Monitor state RHTP/procurement sources for future rural-health transformation packages.</div>
+<div class="linkbar"><a href="https://www.dhhs.nh.gov/programs-services/medicaid/rural-health-transformation-program" rel="noreferrer" target="_blank">State RHTP</a><a href="https://www.dhhs.nh.gov/doing-business-dhhs/contracts-procurement-opportunities/open-requests-proposals" rel="noreferrer" target="_blank">Procurement</a></div>
 <div class="tagbar"><span class="tag">monitor</span><span class="tag">procurement-watch</span></div>
-</article>
-<article class="state-card open" data-pathways="RFP Procurement Contract Evaluation Services GO-NORTH" data-region="Northeast" data-state="New Hampshire" data-status="open">
-<div class="card-head">
-<div>
-<h3>New Hampshire</h3>
-<div class="region-label">Northeast</div>
-</div>
-<span class="status-pill open">Open / accepting</span>
-</div>
-<div class="date-banner open"><span class="date-icon">📅</span><div><strong>Key date / timing:</strong> RFP-Go-NORTH 2026-01 responses due <strong>May 22, 2026 at 2:30 PM</strong>.</div></div>
-<div class="pathways"><span class="path-badge">RFP / Procurement Contract</span><span class="path-badge">Evaluation Services</span></div>
-<div class="route"><strong>Exact pathway to award:</strong><br/>New Hampshire is using a state procurement pathway for Evaluation Services for the Rural Health Transformation Grant. This is not a provider subaward route; it is a contractor opportunity to support RHTP evaluation, performance measurement, reporting, and implementation accountability.</div>
-<div class="current"><strong>Current public route / next step:</strong><br/>Review the GO-NORTH funding page and state procurement bid page, confirm bid requirements, and submit before the May 22 deadline.</div>
-<div class="sales"><strong>Sales engagement:</strong><br/>Position evaluation dashboards, analytics, program reporting, PMO, stakeholder data collection, performance measurement, and implementation tracking support.</div>
-<div class="linkbar"><a href="https://www.dhhs.nh.gov/programs-services/medicaid/rural-health-transformation-program" rel="noreferrer" target="_blank">NH DHHS RHTP</a><a href="https://www.gonorth.nh.gov/funding-opportunities-0" rel="noreferrer" target="_blank">GO-NORTH funding</a><a href="https://apps.das.nh.gov/NHProcurement/Bid/rfpgonorth202601" rel="noreferrer" target="_blank">RFP bid page</a><a href="https://apps.das.nh.gov/bidscontracts/bids.aspx" rel="noreferrer" target="_blank">NH statewide bids</a></div>
-<div class="tagbar"><span class="tag">RFP</span><span class="tag">procurement</span><span class="tag">evaluation</span><span class="tag">GO-NORTH</span></div>
 </article>
 <article class="state-card monitor" data-pathways="Monitor / Not Yet Posted monitor procurement-watch" data-region="Southeast" data-state="Alabama" data-status="monitor">
 <div class="card-head">
@@ -859,48 +1321,56 @@
 <div class="linkbar"><a href="https://adeca.alabama.gov/alruralhealth/" rel="noreferrer" target="_blank">State RHTP</a><a href="https://bidbanana.thebidlab.com/bid/vMJc0ZsfmBtHmPuM7AtQ" rel="noreferrer" target="_blank">Procurement</a></div>
 <div class="tagbar"><span class="tag">monitor</span><span class="tag">procurement-watch</span></div>
 </article>
-<article class="state-card open" data-pathways="NOFO Grant Application Project Implementation Application Application Portal" data-region="Southeast" data-state="Arkansas" data-status="open">
+<article class="state-card open" data-pathways="Monitor / Not Yet Posted monitor procurement-watch" data-region="Southeast" data-state="Arkansas" data-status="open">
 <div class="card-head">
 <div>
 <h3>Arkansas</h3>
 <div class="region-label">Southeast</div>
 </div>
-<span class="status-pill open">Open / posted</span>
+<span class="status-pill open">OPEN</span>
 </div>
-<div class="date-banner open"><span class="date-icon">📅</span><div><strong>Key date / timing:</strong> THRIVE portal opens <strong>May 11, 2026</strong>; applications close <strong>June 12, 2026</strong>; Year 1 funds must be obligated by <strong>October 30, 2026</strong>.</div></div>
-<div class="pathways"><span class="path-badge">NOFO / Grant Application</span><span class="path-badge">Project Implementation Application</span><span class="path-badge">Application Portal</span></div>
-<div class="route"><strong>Exact pathway to award:</strong><br/>Arkansas posted the THRIVE Year 1 NOFO. Applicants submit through the THRIVE application portal once it opens. The state will award grant agreements to eligible rural hospitals, clinics, EMS providers, behavioral health providers, clinically integrated networks, and nonprofit or public entities serving rural Arkansas.</div>
-<div class="current"><strong>Current public route / next step:</strong><br/>Prepare THRIVE proposals for LIFELINE, HOME, VIRTUAL, or TECH Fund alignment before the May 11 portal opening. Total Year 1 THRIVE lane budgets are up to $55.65M: LIFELINE $28.1M, HOME $18.55M, VIRTUAL $2M, and TECH Fund $7M.</div>
-<div class="sales"><strong>Sales engagement:</strong><br/>Target rural hospitals, EMS, clinics, behavioral health, CINs, and public/nonprofit entities with telehealth, RPM, ED tele-consult, EMS tele-triage, cybersecurity, interoperability, EHR/RPM integration, data analytics, cloud clinical systems, and implementation support.</div>
-<div class="linkbar"><a href="https://arkansasrhtp.com/" rel="noreferrer" target="_blank">State RHTP</a><a href="https://arkansasrhtp.com/wp-content/uploads/2026/05/NOFO_THRIVE_Clean.pdf" rel="noreferrer" target="_blank">THRIVE NOFO</a><a href="https://governor.arkansas.gov/news_post/sanders-announces-applications-are-open-for-209-million-in-rural-health-transformation-funds/" rel="noreferrer" target="_blank">Governor notice</a><a href="https://arbuy.arkansas.gov/bso/" rel="noreferrer" target="_blank">ARBuy</a></div>
-<div class="tagbar"><span class="tag">NOFO</span><span class="tag">grant-application</span><span class="tag">portal</span><span class="tag">THRIVE</span></div>
+<div class="date-banner open"><span class="date-icon">●</span><span><strong>Monitor application portal / state notices</strong><br/>Applications open May 4</span></div>
+<div class="pathways"><span class="path-badge">Monitor / Not Yet Posted</span></div>
+<div class="route"><strong>Exact pathway to award:</strong><br/>No public subaward application route has been verified in this build. Use the official state RHTP page and procurement portal as the pathway until a package is posted.</div>
+<div class="current"><strong>Current signal:</strong> Applications are now open for Arkansas’ initial Rural Health Transformation funding process, announced May 4 for $209M in rural health transformation funds.</div>
+<div class="sales"><strong>Sales action:</strong> Strong fit for rural hospital, telehealth, workforce, access-point, and technology-enabled care concepts; Sales should identify provider-led projects quickly.</div>
+<div class="linkbar"><a href="https://governor.arkansas.gov/news_post/sanders-announces-applications-are-open-for-209-million-in-rural-health-transformation-funds/" rel="noopener" target="_blank">AR applications open announcement</a><a href="https://governor.arkansas.gov/news_post/sanders-announces-arkansas-application-for-rural-health-funding/" rel="noopener" target="_blank">AR RHTP application background</a></div>
+<div class="tagbar"><span class="tag">monitor</span><span class="tag">procurement-watch</span></div>
 </article>
-<article class="state-card soon" data-pathways="coming soon / forecasted planning pathway procurement watch rfi forecast coming-soon procurement-watch planning ems infrastructure" data-region="West" data-state="Hawaii" data-status="soon"><div class="card-head"><div><h3>Hawaii</h3><div class="region-label">West</div></div><span class="status-pill soon">Coming soon / forecasted</span></div>
-<div class="date-banner soon"><span class="date-icon">📅</span><div><strong>Key date / timing:</strong> Official EMSAC materials confirm SHPDA RHTP funding and planning/procurement coordination; no official solicitation package verified by May 7.</div></div>
-<div class="pathways"><span class="path-badge">Planning Pathway</span><span class="path-badge">Procurement Watch</span><span class="path-badge">RFI Forecast</span></div>
-<div class="route"><strong>Exact pathway to award:</strong><br/>Use Hawaii’s RHTP engagement page, procurement portal, and EMSAC materials as the official monitoring path while SHPDA, Med-QUEST, and DOH planning/procurement work continues.</div>
-<div class="current"><strong>Current public route / next step:</strong><br/>Monitor for official packages tied to RHIN, RICA, Pili Ola, Home Run, Rural Respite, RVBI, EHR/network infrastructure, analytics, referrals, and EMS modernization.</div>
-<div class="sales"><strong>Sales engagement:</strong><br/>Begin partner mapping around island-specific rural infrastructure, mobile/respite care, EHR/network modernization, analytics, and value-based care support without treating the unverified third-party RFI as active.</div>
-<div class="linkbar"><a href="https://engage.hawaii.gov/rhtp/" rel="noreferrer" target="_blank">State RHTP</a><a href="https://hiepro.ehawaii.gov/welcome.html" rel="noreferrer" target="_blank">Procurement</a><a href="https://health.hawaii.gov/emsipsb/files/2026/04/EMSIPSB_EMSAC_04_17_2026.pdf" rel="noreferrer" target="_blank">EMSAC materials</a></div>
-<div class="tagbar"><span class="tag">coming-soon</span><span class="tag">procurement-watch</span><span class="tag">planning</span><span class="tag">ems</span><span class="tag">infrastructure</span></div></article>
-<article class="state-card soon" data-pathways="RFP / Procurement Contract Competitive Subgrant Coming Soon / Forecasted RFP subgrant procurement" data-region="West" data-state="Idaho" data-status="soon">
+<article class="state-card monitor" data-pathways="Monitor / Not Yet Posted monitor procurement-watch" data-region="West" data-state="Hawaii" data-status="monitor">
+<div class="card-head">
+<div>
+<h3>Hawaii</h3>
+<div class="region-label">West</div>
+</div>
+<span class="status-pill monitor">MONITOR</span>
+</div>
+<div class="date-banner monitor"><span class="date-icon">●</span><span><strong>Monitor SHPDA/DOH releases</strong><br/>Planning + initiative materials posted</span></div>
+<div class="pathways"><span class="path-badge">Monitor / Not Yet Posted</span></div>
+<div class="route"><strong>Exact pathway to award:</strong><br/>No public subaward application route has been verified in this build. Use the official state RHTP page and procurement portal as the pathway until a package is posted.</div>
+<div class="current"><strong>Current signal:</strong> Planning activity is moving forward: Hawaii posted April steering/EMS materials, and EMS/RICA activity is now referenced publicly; no broad subaward package was verified.</div>
+<div class="sales"><strong>Sales action:</strong> Watch RHIN, RICA, EMS, telehealth, and rural infrastructure lanes for partner/vendor openings.</div>
+<div class="linkbar"><a href="https://health.hawaii.gov/shpda/files/2026/04/2026-04-07-Steering-Committee-Presentation-HGB-and-RHTP.pdf" rel="noopener" target="_blank">Hawaii steering committee presentation</a><a href="https://health.hawaii.gov/news/newsroom/department-of-health-ems-branch-named-national-ems-agency-of-the-year/" rel="noopener" target="_blank">Hawaii EMS/RICA update</a></div>
+<div class="tagbar"><span class="tag">monitor</span><span class="tag">procurement-watch</span></div>
+</article>
+<article class="state-card soon" data-pathways="Monitor / Not Yet Posted monitor procurement-watch" data-region="West" data-state="Idaho" data-status="soon">
 <div class="card-head">
 <div>
 <h3>Idaho</h3>
 <div class="region-label">West</div>
 </div>
-<span class="status-pill soon">Coming soon / forecasted</span>
+<span class="status-pill soon">COMING SOON</span>
 </div>
-<div class="date-banner soon"><span class="date-icon">📅</span><div><strong>Key date / timing:</strong> April–June 2026: RFP postings and competitive subgrant solicitations begin; July–September 2026: contracts and subgrants executed; Oct. 30: Year 1 funds obligated.</div></div>
-<div class="pathways"><span class="path-badge">RFP / Procurement Contract</span><span class="path-badge">Competitive Subgrant</span><span class="path-badge">Coming Soon / Forecasted</span></div>
-<div class="route"><strong>Exact pathway to award:</strong><br/>Idaho’s official route is a mix of state RFP postings and competitive subgrant solicitations. The public page names the quarter-by-quarter sequence but does not yet link final forms in this build.</div>
-<div class="current"><strong>Current public route / next step:</strong><br/>Monitor Idaho DHW RHTP and Idaho Purchasing for April–June RFP/subgrant postings.</div>
-<div class="sales"><strong>Sales engagement:</strong><br/>Prepare partners for diagnostic kiosks, telehealth pods, remote monitoring, mobile units, cyber modernization, and emergency communication packages before solicitations post.</div>
-<div class="linkbar"><a href="https://healthandwelfare.idaho.gov/providers/rural-health-transformation-program-grant/about-rural-health-transformation-program-grant" rel="noreferrer" target="_blank">State RHTP</a><a href="https://purchasing.idaho.gov/information-for-vendors/" rel="noreferrer" target="_blank">Procurement</a></div>
-<div class="tagbar"><span class="tag">RFP</span><span class="tag">subgrant</span><span class="tag">coming-soon</span><span class="tag">procurement-watch</span></div>
+<div class="date-banner soon"><span class="date-icon">●</span><span><strong>Contracts/subgrants July–Sept.</strong><br/>May–June RFP/subgrant window</span></div>
+<div class="pathways"><span class="path-badge">Monitor / Not Yet Posted</span></div>
+<div class="route"><strong>Exact pathway to award:</strong><br/>No public subaward application route has been verified in this build. Use the official state RHTP page and procurement portal as the pathway until a package is posted.</div>
+<div class="current"><strong>Current signal:</strong> Idaho’s official RHTP page now lists May–June 2026 as the period for posting RFPs and beginning competitive subgrant solicitations.</div>
+<div class="sales"><strong>Sales action:</strong> Near-term fit for facility technology, telehealth, cybersecurity, digital health tools, emergency communications, and rural infrastructure.</div>
+<div class="linkbar"><a href="https://healthandwelfare.idaho.gov/providers/rural-health-transformation-program-grant/about-rural-health-transformation-program-grant" rel="noopener" target="_blank">Idaho RHTP page</a></div>
+<div class="tagbar"><span class="tag">monitor</span><span class="tag">procurement-watch</span></div>
 </article></div>
 <div class="footer">Source standard: official state/federal pages and primary procurement/grant portals whenever available. Third-party listings are not treated as verified pathways unless an official source confirms the route.</div>
-
+</div>
 <script>
 function applyFilters(){
   const q=(document.getElementById('searchBox').value||'').toLowerCase();

@@ -1,10 +1,12 @@
 <!DOCTYPE html>
+<!DOCTYPE html>
+
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>RHTP Resources | May 7, 2026</title>
-  <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>RHTP Resources | May 13, 2026</title>
+<style>
     :root{--navy:#12395b;--blue:#1f5f97;--line:#d8dee6;--bg:#f7f9fc;--ink:#1f2937;--muted:#5b6470}
     *{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--ink);line-height:1.45}.page{max-width:1280px;margin:24px auto;background:#fff;border:1px solid var(--line);box-shadow:0 10px 30px rgba(18,57,91,.08)}.hero{padding:28px 34px 22px;background:linear-gradient(135deg,var(--navy),var(--blue));color:#fff}.hero h1{margin:0 0 8px;font-size:30px}.hero p{margin:0;max-width:920px;font-size:15px;opacity:.96}.hero-links,.main-nav{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}.hero-links a,.hero-links button,.main-nav a{display:inline-block;padding:8px 12px;border:1px solid rgba(255,255,255,.28);border-radius:999px;color:#fff;text-decoration:none;font-size:12px;background:rgba(255,255,255,.08);cursor:pointer}.main-nav{margin-top:0;padding:14px 34px;background:#0f3150}.main-nav a.active{background:#fff;color:var(--navy);border-color:#fff}.meta{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;padding:18px 34px;border-bottom:1px solid var(--line);background:#fbfdff;font-size:13px}.meta div{padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:#fff}.section{padding:22px 34px 10px}.section h2{margin:0 0 10px;color:var(--navy);font-size:20px}.section p{margin:0 0 14px;color:var(--muted);font-size:14px}.group{margin:0 34px 18px;padding:18px;border:1px solid var(--line);border-radius:14px;background:#fff}.group h3{margin:0 0 12px;color:var(--navy);font-size:18px}.resource{padding:12px 0;border-top:1px solid var(--line)}.resource:first-of-type{border-top:none;padding-top:0}.resource strong{display:block;margin-bottom:4px}.resource p{margin:0 0 6px;color:var(--muted);font-size:13px}.footer{padding:18px 34px 30px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}.regional-counts{margin:10px 34px 12px;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:#fbfdff}
 .regional-counts-header{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:8px}
@@ -86,133 +88,558 @@ li{margin:0 0 4px;font-size:12px}
 @media (max-width:1200px){.since-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:720px){.since-grid{grid-template-columns:1fr}.tracker-cards{width:calc(100% - 24px);margin:0 12px 18px}.subaward-filters{margin:0 12px 14px}}
 
+
+
+/* === Corporate UI + data refresh — May 13, 2026 === */
+:root{
+  --solutionz-blue:#005bbb;
+  --solutionz-navy:#0b2f4f;
+  --solutionz-navy-2:#123b5d;
+  --solutionz-aqua:#7dc8c9;
+  --solutionz-gray:#c5c5c5;
+  --solutionz-orange:#e97966;
+  --green:#0f8b5f;
+  --amber:#b96a00;
+  --red:#c2410c;
+  --gray:#6b7280;
+  --purple:#7c3aed;
+  --surface:#ffffff;
+  --canvas:#f4f7fa;
+  --panel:#f8fafc;
+  --panel-blue:#eef5fb;
+  --border:#d9e3ee;
+  --border-strong:#c5d3e2;
+  --text:#17212b;
+  --text-soft:#536170;
+  --shadow-sm:0 1px 3px rgba(11,47,79,.08);
+  --shadow-md:0 8px 24px rgba(11,47,79,.08);
+}
+html{font-size:14px!important;scroll-behavior:smooth}
+body{
+  background:
+    radial-gradient(circle at top right, rgba(0,91,187,.075), transparent 28rem),
+    linear-gradient(180deg,#f7f9fc 0%,#eef3f7 100%)!important;
+  color:var(--text)!important;
+  font-family:"Myriad Pro","Segoe UI",Roboto,Arial,Helvetica,sans-serif!important;
+  line-height:1.30!important;
+  letter-spacing:.005em;
+}
+a{color:var(--solutionz-blue)!important;text-decoration:none!important}
+a:hover{text-decoration:underline!important;color:#004b99!important}
+.page{
+  max-width:1580px!important;
+  margin:10px auto 18px!important;
+  background:var(--surface)!important;
+  border:1px solid var(--border)!important;
+  border-radius:14px!important;
+  overflow:hidden!important;
+  box-shadow:var(--shadow-md)!important;
+}
+.hero{
+  position:relative!important;
+  padding:18px 28px 15px!important;
+  background:linear-gradient(180deg,#ffffff 0%,#f8fbfe 100%)!important;
+  color:var(--solutionz-navy)!important;
+  border-top:5px solid var(--solutionz-blue)!important;
+  border-bottom:1px solid var(--border)!important;
+}
+.hero::after{
+  content:"";
+  position:absolute;
+  inset:0 0 0 auto;
+  width:23%;
+  min-width:230px;
+  background:linear-gradient(135deg,rgba(0,91,187,.08),rgba(125,200,201,.12));
+  clip-path:polygon(34% 0,100% 0,100% 100%,0 100%);
+  pointer-events:none;
+}
+.hero>*{position:relative;z-index:1}
+.hero h1{
+  margin:0 0 5px!important;
+  color:var(--solutionz-navy)!important;
+  font-size:22px!important;
+  line-height:1.12!important;
+  letter-spacing:-.025em!important;
+  font-weight:760!important;
+  max-width:1040px!important;
+}
+.hero p{
+  margin:0!important;
+  color:var(--text-soft)!important;
+  font-size:12.5px!important;
+  line-height:1.35!important;
+  max-width:1120px!important;
+}
+.hero-verified{
+  display:inline-flex!important;
+  align-items:center!important;
+  gap:6px!important;
+  margin-top:8px!important;
+  padding:4px 9px!important;
+  border:1px solid #b9d6f4!important;
+  border-radius:7px!important;
+  background:#eef6ff!important;
+  color:var(--solutionz-navy)!important;
+  font-size:10.5px!important;
+  font-weight:800!important;
+  letter-spacing:.02em!important;
+}
+.hero-verified::before{content:"✓";color:var(--solutionz-blue);font-weight:900}
+.hero-links,.main-nav{gap:6px!important}
+.hero-links{margin-top:10px!important}
+.hero-links a,.hero-links button{
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  min-height:28px!important;
+  padding:5px 9px!important;
+  border:1px solid #c8d7e6!important;
+  border-radius:7px!important;
+  background:#fff!important;
+  color:var(--solutionz-navy)!important;
+  box-shadow:var(--shadow-sm)!important;
+  font-size:10.5px!important;
+  font-weight:800!important;
+}
+.hero-links a:hover,.hero-links button:hover{
+  background:#f2f7fd!important;
+  border-color:#94badd!important;
+  text-decoration:none!important;
+}
+.main-nav{
+  margin:0!important;
+  padding:0 22px!important;
+  background:var(--solutionz-navy)!important;
+  border-bottom:3px solid var(--solutionz-blue)!important;
+  display:flex!important;
+  align-items:center!important;
+  flex-wrap:wrap!important;
+}
+.main-nav a{
+  margin:0!important;
+  min-height:34px!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  padding:8px 11px!important;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  color:rgba(255,255,255,.86)!important;
+  font-size:10.8px!important;
+  font-weight:800!important;
+  letter-spacing:.015em!important;
+}
+.main-nav a:hover{background:rgba(255,255,255,.08)!important;color:#fff!important;text-decoration:none!important}
+.main-nav a.active{background:var(--solutionz-blue)!important;color:#fff!important}
+.meta{
+  grid-template-columns:repeat(4,minmax(160px,1fr))!important;
+  gap:8px!important;
+  padding:10px 22px!important;
+  background:#f7fafc!important;
+  border-bottom:1px solid var(--border)!important;
+  font-size:11.5px!important;
+}
+.meta div{
+  padding:7px 9px!important;
+  border:1px solid var(--border)!important;
+  border-radius:8px!important;
+  background:#fff!important;
+  box-shadow:0 1px 2px rgba(11,47,79,.04)!important;
+}
+.section{
+  padding:14px 22px 6px!important;
+}
+.section h2{
+  position:relative;
+  margin:0 0 6px!important;
+  padding-left:10px!important;
+  color:var(--solutionz-navy)!important;
+  font-size:16px!important;
+  line-height:1.2!important;
+  font-weight:760!important;
+}
+.section h2::before{
+  content:"";
+  position:absolute;
+  left:0;top:2px;bottom:2px;width:4px;
+  border-radius:3px;
+  background:var(--solutionz-blue);
+}
+.section p{margin:0 0 9px!important;color:var(--text-soft)!important;font-size:12px!important;line-height:1.35!important}
+.toolrow,.keyword-panel,.note,.export-note,.filters,.subaward-filters,.toolbar{
+  margin:0 22px 10px!important;
+  padding:8px 10px!important;
+  border:1px solid var(--border)!important;
+  border-radius:10px!important;
+  background:var(--panel)!important;
+  color:var(--text-soft)!important;
+  font-size:11px!important;
+  box-shadow:0 1px 2px rgba(11,47,79,.03)!important;
+}
+.toolrow,.filters,.subaward-filters,.toolbar{display:flex!important;align-items:center!important;gap:7px!important;flex-wrap:wrap!important}
+.toolrow button,.toolrow select,.toolrow input,
+.filters input,.filters select,.filters button,
+.subaward-filters input,.subaward-filters select,.subaward-filters button,
+.toolbar input,.toolbar select,.toolbar button,
+.popup-actions button{
+  min-height:28px!important;
+  padding:5px 9px!important;
+  border:1px solid #c8d7e6!important;
+  border-radius:7px!important;
+  background:#fff!important;
+  color:var(--solutionz-navy)!important;
+  font-size:10.5px!important;
+  font-weight:760!important;
+  box-shadow:none!important;
+}
+.toolrow input,.filters input,.subaward-filters input{font-weight:400!important;color:var(--text)!important}
+.toolrow button:hover,.filters button:hover,.subaward-filters button:hover,.toolbar button:hover,.popup-actions button:hover{
+  background:#edf5ff!important;border-color:#8db5df!important;text-decoration:none!important;cursor:pointer!important
+}
+input:focus,select:focus,button:focus-visible,a:focus-visible{
+  outline:2px solid rgba(0,91,187,.28)!important;
+  outline-offset:2px!important;
+}
+.keyword-panel h3{margin:0 0 6px!important;color:var(--solutionz-navy)!important;font-size:13px!important;font-weight:760!important}
+.keyword-panel p{font-size:11.5px!important;line-height:1.34!important}
+.keyword-chips,.type-chips,.pathways,.tagbar{gap:5px!important}
+.keyword-chip,.type-chip,.region-chip,.path-badge,.tag{
+  padding:3px 7px!important;
+  border-radius:6px!important;
+  font-size:9.5px!important;
+  font-weight:800!important;
+  line-height:1.15!important;
+  letter-spacing:.02em!important;
+  box-shadow:none!important;
+}
+.status,.status-pill{
+  padding:3px 7px!important;
+  border-radius:6px!important;
+  font-size:9px!important;
+  font-weight:900!important;
+  letter-spacing:.025em!important;
+  line-height:1.1!important;
+  box-shadow:none!important;
+}
+table{
+  width:calc(100% - 44px)!important;
+  margin:0 22px 16px!important;
+  border-collapse:separate!important;
+  border-spacing:0!important;
+  table-layout:fixed!important;
+  font-size:11.1px!important;
+  border:1px solid var(--border)!important;
+  border-radius:10px!important;
+  overflow:hidden!important;
+  background:#fff!important;
+  box-shadow:0 1px 2px rgba(11,47,79,.03)!important;
+}
+thead th,th{
+  background:var(--solutionz-navy)!important;
+  color:#fff!important;
+  border:0!important;
+  border-right:1px solid rgba(255,255,255,.12)!important;
+  border-bottom:1px solid #092741!important;
+  padding:7px 8px!important;
+  text-align:left!important;
+  vertical-align:top!important;
+  font-size:10px!important;
+  font-weight:850!important;
+  letter-spacing:.045em!important;
+  text-transform:uppercase!important;
+}
+thead th:last-child,th:last-child{border-right:0!important}
+tbody td,td{
+  border:0!important;
+  border-right:1px solid #e3e9f0!important;
+  border-bottom:1px solid #e3e9f0!important;
+  padding:6px 8px!important;
+  vertical-align:top!important;
+}
+tbody tr:nth-child(even){background:#fbfdff!important}
+tbody tr:hover{background:#f3f8fd!important}
+tbody tr:last-child td{border-bottom:0!important}
+tbody td:last-child{border-right:0!important}
+.sortable-header:hover{background:#14466e!important}
+.sort-indicator{color:#b9d6f4!important}
+.sort-hint{color:rgba(255,255,255,.68)!important;font-size:9.5px!important}
+.resizer{background:linear-gradient(90deg,transparent,rgba(255,255,255,.18))!important}
+.state-link{color:var(--solutionz-blue)!important;font-weight:850!important}
+.popup-overlay{background:rgba(8,31,52,.52)!important;backdrop-filter:blur(2px)!important}
+.popup-card{
+  border:1px solid var(--border)!important;
+  border-radius:14px!important;
+  padding:16px!important;
+  box-shadow:0 20px 60px rgba(8,31,52,.22)!important;
+}
+.popup-card h3{color:var(--solutionz-navy)!important;font-size:19px!important;letter-spacing:-.015em!important}
+.popup-grid p{font-size:11.8px!important;line-height:1.38!important}
+.regional-counts{
+  margin:10px 22px!important;
+  padding:9px 10px!important;
+  border:1px solid var(--border)!important;
+  border-radius:10px!important;
+  background:var(--panel)!important;
+}
+.regional-counts-title{font-size:12px!important;color:var(--solutionz-navy)!important;font-weight:850!important}
+.regional-counts-total{font-size:10.5px!important;color:var(--text-soft)!important}
+.regional-count-grid{gap:7px!important}
+.regional-count-card,.mini-card,.stat-card,.tracker-card,.def-card,.state-card,.month-card,.group,.month,.region,.event-card{
+  border-color:var(--border)!important;
+  box-shadow:0 1px 4px rgba(11,47,79,.055)!important;
+}
+.regional-count-card{
+  border-radius:9px!important;
+  padding:7px 9px!important;
+  background:#fff!important;
+}
+.regional-count-region{font-size:10.5px!important;color:var(--solutionz-navy)!important}
+.regional-count-pill{border-radius:6px!important;padding:3px 6px!important;font-size:9.5px!important}
+.regional-count-pill b{font-size:13px!important}
+.stat-grid{
+  grid-template-columns:repeat(5,minmax(130px,1fr))!important;
+  gap:8px!important;
+  margin:8px 22px 10px!important;
+}
+.stat-card{
+  border-radius:11px!important;
+  padding:9px 10px!important;
+  background:#fff!important;
+  text-align:left!important;
+  transition:transform .12s ease,box-shadow .12s ease,border-color .12s ease!important;
+}
+.stat-card:hover,.state-card:hover,.tracker-card:hover,.event-card:hover,.def-card:hover{transform:translateY(-1px)!important;box-shadow:0 6px 18px rgba(11,47,79,.08)!important}
+.stat-card strong{font-size:21px!important;color:var(--solutionz-navy)!important;line-height:1!important}
+.stat-card span{margin-top:3px!important;font-size:9.6px!important;letter-spacing:.04em!important;color:var(--text-soft)!important}
+.mini-grid{grid-template-columns:repeat(4,minmax(150px,1fr))!important;gap:8px!important;margin:0 22px 10px!important}
+.mini-card{border-radius:10px!important;padding:8px 9px!important;background:#fbfdff!important}
+.mini-card strong{font-size:12px!important;color:var(--solutionz-navy)!important;margin-bottom:4px!important}
+.mini-card span{font-size:10.5px!important;margin-right:8px!important}
+.definition-grid{grid-template-columns:repeat(auto-fit,minmax(230px,1fr))!important;gap:8px!important;margin:0 22px 12px!important}
+.def-card{border-radius:10px!important;padding:8px 9px!important;border-left:4px solid var(--solutionz-blue)!important}
+.def-card strong{font-size:11.5px!important;color:var(--solutionz-navy)!important}
+.def-card p{font-size:10.8px!important;line-height:1.34!important;color:var(--text-soft)!important}
+.state-grid{
+  grid-template-columns:repeat(auto-fit,minmax(330px,1fr))!important;
+  gap:9px!important;
+  margin:0 22px 18px!important;
+}
+.state-card{border-radius:12px!important;padding:10px 11px!important;background:#fff!important}
+.card-head{padding-bottom:7px!important;margin-bottom:7px!important;border-bottom:1px solid var(--border)!important}
+.card-head h3{font-size:15px!important;color:var(--solutionz-navy)!important;letter-spacing:-.01em!important}
+.region-label{font-size:10.2px!important;color:var(--text-soft)!important}
+.money,.route,.current,.sales{font-size:11.2px!important;line-height:1.34!important;margin:6px 0!important}
+.date-banner{
+  padding:6px 8px!important;
+  border-radius:9px!important;
+  font-size:10.7px!important;
+  line-height:1.25!important;
+  margin-bottom:7px!important;
+}
+.linkbar{margin-top:7px!important;padding-top:7px!important;border-top:1px dashed var(--border-strong)!important}
+.linkbar a{font-size:10.5px!important;font-weight:850!important;margin:0 6px 4px 0!important}
+.tracker-cards{
+  width:calc(100% - 44px)!important;
+  margin:0 22px 18px!important;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr))!important;
+  gap:8px!important;
+}
+.tracker-card{border-radius:11px!important;padding:9px 10px!important;border-left-width:4px!important}
+.tracker-card h3{font-size:13.2px!important;color:var(--solutionz-navy)!important;margin-bottom:3px!important}
+.tracker-card p{font-size:11.2px!important;line-height:1.34!important;margin-bottom:5px!important}.tracker-card .mini{font-size:10.5px!important}
+.calendar-wrap{margin:0 22px 16px!important}
+.month-card{border-radius:11px!important;padding:10px!important;margin-bottom:9px!important;background:#fff!important}
+.month-card h3{font-size:14.5px!important;color:var(--solutionz-navy)!important;margin:0 0 8px!important}
+.calendar-grid{grid-template-columns:repeat(auto-fit,minmax(250px,1fr))!important;gap:8px!important}
+.event-card{border-radius:10px!important;padding:9px!important;background:#fbfdff!important;border-left-width:4px!important}
+.event-day{font-size:18px!important;color:var(--solutionz-navy)!important}
+.event-meta{font-size:9.8px!important;color:var(--text-soft)!important;margin:2px 0 5px!important}
+.event-title{font-size:11.8px!important;line-height:1.25!important;margin-bottom:4px!important}
+.detail-block{font-size:10.8px!important;margin-top:5px!important;padding-top:5px!important;border-top:1px solid var(--border)!important}
+.detail-label{color:var(--solutionz-navy)!important}
+.gantt-wrap{
+  margin:0 22px 16px!important;
+  border:1px solid var(--border)!important;
+  border-radius:10px!important;
+  box-shadow:0 1px 4px rgba(11,47,79,.05)!important;
+}
+.scale{
+  background:var(--solutionz-navy)!important;
+  color:#fff!important;
+  font-size:10px!important;
+  letter-spacing:.035em!important;
+  text-transform:uppercase!important;
+}
+.scale>div{padding:7px 8px!important;border-right:1px solid rgba(255,255,255,.12)!important}
+.month-scale{background:linear-gradient(90deg,#f8fbff,#fff)!important}
+.month-label{font-size:9.5px!important;color:var(--solutionz-navy)!important}
+.row{font-size:10.9px!important;border-bottom:1px solid #e3e9f0!important}
+.row:hover{background:#f3f8fd!important}
+.row>div{padding:6px 8px!important;border-right:1px solid #e3e9f0!important}
+.initiative strong{font-size:11.5px!important;color:var(--solutionz-navy)!important}
+.region-tag{border-radius:6px!important;padding:2px 6px!important;font-size:8.5px!important;letter-spacing:.035em!important}
+.bar{height:16px!important;top:10px!important;box-shadow:0 1px 3px rgba(11,47,79,.16)!important}
+.due{background:var(--solutionz-orange)!important}
+.date-label{color:#b9462e!important;font-size:8.5px!important}
+.range-note{font-size:8.7px!important;color:var(--text-soft)!important}
+.group,.month{
+  margin:0 22px 12px!important;
+  padding:12px!important;
+  border-radius:11px!important;
+  background:#fff!important;
+}
+.group h3,.month h3{
+  margin:0 0 8px!important;
+  color:var(--solutionz-navy)!important;
+  font-size:15px!important;
+  padding-bottom:6px!important;
+  border-bottom:1px solid var(--border)!important;
+}
+.resource{padding:8px 0!important;border-top:1px solid var(--border)!important}
+.resource strong{font-size:12px!important;color:var(--solutionz-navy)!important}
+.resource p{font-size:11.2px!important;line-height:1.34!important;color:var(--text-soft)!important;margin-bottom:4px!important}
+.region{
+  margin:0 0 8px!important;
+  padding:8px 10px!important;
+  border-radius:9px!important;
+  background:#fbfdff!important;
+}
+.region h4{margin:0 0 5px!important;color:var(--solutionz-navy)!important;font-size:12.6px!important}
+ul{margin-left:16px!important}li{font-size:11.5px!important;line-height:1.36!important;margin-bottom:4px!important}
+.footer{
+  padding:12px 22px 16px!important;
+  border-top:1px solid var(--border)!important;
+  background:#fbfdff!important;
+  color:var(--text-soft)!important;
+  font-size:10.8px!important;
+}
+.view-mode-active{background:var(--solutionz-blue)!important;color:#fff!important;border-color:var(--solutionz-blue)!important}
+.subaward-table td,.subaward-table th{font-size:10.8px!important;padding:6px 7px!important}
+@media (max-width:1100px){
+  .meta{grid-template-columns:repeat(2,minmax(160px,1fr))!important}
+  .stat-grid{grid-template-columns:repeat(3,minmax(130px,1fr))!important}
+}
+@media (max-width:720px){
+  .page{margin:0!important;border-radius:0!important;border-left:0!important;border-right:0!important}
+  .hero,.main-nav,.meta,.section{padding-left:14px!important;padding-right:14px!important}
+  .hero::after{display:none!important}.hero h1{font-size:19px!important;max-width:none!important}.hero p{font-size:12px!important}
+  .main-nav{display:block!important;white-space:nowrap!important;overflow-x:auto!important;padding:0 10px!important}.main-nav a{min-height:32px!important}
+  .meta,.stat-grid,.mini-grid{grid-template-columns:1fr!important}
+  .toolrow,.keyword-panel,.note,.export-note,.filters,.subaward-filters,.toolbar,.regional-counts,.group,.month,.calendar-wrap,.gantt-wrap{margin-left:14px!important;margin-right:14px!important}
+  table,.tracker-cards{width:calc(100% - 28px)!important;margin-left:14px!important;margin-right:14px!important}
+  .state-grid,.definition-grid{margin-left:14px!important;margin-right:14px!important;grid-template-columns:1fr!important}
+  .filters input{min-width:100%!important}
+}
+@media print{
+  body{background:#fff!important;color:#000!important}
+  .page{box-shadow:none!important;border:0!important;border-radius:0!important;margin:0!important}
+  .hero{border-top:0!important;background:#fff!important;color:#000!important}.hero h1,.section h2,.group h3,.month h3,.region h4{color:#000!important}
+  .main-nav,.hero-links,.toolrow,.toolbar,.filters,.subaward-filters,.popup-overlay{display:none!important}
+  table{box-shadow:none!important}
+  thead th,th{background:#efefef!important;color:#000!important;border:1px solid #bbb!important}
+  tbody td,td{border:1px solid #ddd!important}
+}
+
 </style>
 </head>
 <body>
-  <div class="page">
-    <div class="hero"><h1>RHTP Resources</h1><p>Grouped resource library for national context, telehealth ecosystem links, state operational sources, and field-use references. Kept separate from the tracker and calendar to make daily maintenance easier.</p><div class="hero-verified">Last verified: May 7, 2026</div><div class="hero-links"><button type="button" onclick="emailPage()">Email</button><button type="button" onclick="emailOpenActivity()">Email Open Activity</button><button type="button" onclick="window.print()">Print to PDF</button><button type="button" onclick="requestRefresh()">Request Daily Refresh</button></div></div>
-    <div class="main-nav"><a href="./index.html">State Tracker</a><a href="./gantt.html">Gantt View</a><a href="./subaward-pathways.html">Sub-Award Pathways</a><a href="./events.html">Events &amp; Calendar</a><a href="./resources.html" class="active">Resources</a><a href="./rhtp-executive-summary-open-activity-may-07-2026.html">Executive Summary</a></div>
-  <div class="regional-counts" aria-label="Regional open activity counts">
-    <div class="regional-counts-header"><div class="regional-counts-title">Regional Open/Active + Coming Soon Counts</div><div class="regional-counts-total">Total: 24 open/active · 15 coming soon</div></div>
-    <div class="regional-count-grid">
-      <div class="regional-count-card">
-        <button type="button" onclick="filterRegionFromSummary('Mid-Atlantic')" aria-label="Filter tracker to Mid-Atlantic">
-          <div class="regional-count-region">Mid-Atlantic</div>
-          <div class="regional-count-values"><span class="regional-count-pill active-count"><b>4</b> Open/Active</span><span class="regional-count-pill soon-count"><b>1</b> Coming Soon</span></div>
-        </button>
-      </div><div class="regional-count-card">
-        <button type="button" onclick="filterRegionFromSummary('Northeast')" aria-label="Filter tracker to Northeast">
-          <div class="regional-count-region">Northeast</div>
-          <div class="regional-count-values"><span class="regional-count-pill active-count"><b>8</b> Open/Active</span><span class="regional-count-pill soon-count"><b>7</b> Coming Soon</span></div>
-        </button>
-      </div><div class="regional-count-card">
-        <button type="button" onclick="filterRegionFromSummary('Southeast')" aria-label="Filter tracker to Southeast">
-          <div class="regional-count-region">Southeast</div>
-          <div class="regional-count-values"><span class="regional-count-pill active-count"><b>6</b> Open/Active</span><span class="regional-count-pill soon-count"><b>2</b> Coming Soon</span></div>
-        </button>
-      </div><div class="regional-count-card">
-        <button type="button" onclick="filterRegionFromSummary('West')" aria-label="Filter tracker to West">
-          <div class="regional-count-region">West</div>
-          <div class="regional-count-values"><span class="regional-count-pill active-count"><b>6</b> Open/Active</span><span class="regional-count-pill soon-count"><b>5</b> Coming Soon</span></div>
-        </button>
-      </div>
-    </div>
-  </div>
-  </div><div><strong>Focus:</strong> Source validation and opportunity tracking</div><div><strong>Format:</strong> Grouped source library</div></div><div class="section"><h2>How this page helps</h2><p>Start with these source groups in order: federal and policy context first, telehealth ecosystem next, state operational links for opportunity checks, then field-use references for deeper background and slide or FAQ support.</p></div>
-    <div class="group"><h3>Current open / near-term source watch</h3>
-      <div class="resource"><strong>Arkansas – THRIVE Year 1 NOFO</strong><p>Official THRIVE NOFO for telehealth, health-monitoring, EMS response, virtual care, and digital infrastructure. Portal opens May 11 and closes June 12; Year 1 THRIVE lanes total up to $55.65M.</p><a href="https://arkansasrhtp.com/wp-content/uploads/2026/05/NOFO_THRIVE_Clean.pdf" target="_blank" rel="noreferrer">Arkansas THRIVE NOFO</a> · <a href="https://arkansasrhtp.com/" target="_blank" rel="noreferrer">Arkansas RHTP page</a></div>
-      <div class="resource"><strong>New Hampshire – GO-NORTH Evaluation Services RFP</strong><p>Official GO-NORTH / state procurement lane for RHTP evaluation services. Responses are due May 22 at 2:30 PM.</p><a href="https://www.gonorth.nh.gov/funding-opportunities-0" target="_blank" rel="noreferrer">GO-NORTH funding opportunities</a> · <a href="https://apps.das.nh.gov/NHProcurement/Bid/rfpgonorth202601" target="_blank" rel="noreferrer">NH RFP bid page</a></div>
-            <div class="resource"><strong>Maryland – RHTP RFA/RFP lanes</strong><p>Maryland now has active transformation and local lead procurement/funding lanes, including the Pillar 2 Transformation RFA and Garrett County revenue-cycle/billing TA RFP.</p><a href="https://health.maryland.gov/pophealth/Pages/Rural-Health-Transformation-Program.aspx" target="_blank" rel="noreferrer">Maryland RHTP page</a></div>
-      <div class="resource"><strong>North Carolina – ROOTS Hub Leads selected</strong><p>NCDHHS announced ROOTS Hub Lead awardees on May 1 and expects contracts to be finalized by June 1.</p><a href="https://www.ncdhhs.gov/news/press-releases/2026/05/01/ncdhhs-selects-nc-roots-hub-leads-strengthen-rural-health-care-across-north-carolina" target="_blank" rel="noreferrer">NC ROOTS Hub Lead announcement</a></div>
-      <div class="resource"><strong>Texas – $56M Infrastructure and Capital Investments</strong><p>New Rural Texas Strong opportunity announced May 1; applications due June 1 for licensed rural providers.</p><a href="https://gov.texas.gov/es/news/post/governor-abbott-hhsc-announce-56-million-in-federal-funding-for-rural-health-care-providers-to-modernize-equipment-infrastructure" target="_blank" rel="noreferrer">Texas May 1 announcement</a></div>
-<div class="resource"><strong>Delaware – RHTP Support Services RFP</strong><p>New support-services RFP path with solicitation ad date May 4, questions due May 18, and proposals due June 22.</p><a href="https://mmp.delaware.gov/Bids/Details/9140" target="_blank" rel="noreferrer">Delaware RFP bid detail</a></div>
-      <div class="resource"><strong>Minnesota – RHTP Funding Page</strong><p>April 30 update extends direct-allocation applications to May 26 and posts a HIT technical-assistance RFP due May 22.</p><a href="https://www.health.state.mn.us/facilities/ruralhealth/ruraltrans/grants.html" target="_blank" rel="noreferrer">Minnesota RHTP funding</a></div>
-      <div class="resource"><strong>Washington – Mobile Health Assistance Van RFI</strong><p>OMWBE/O3A posting for mobile health outreach RFI tied to rural-health outreach; responses due May 31.</p><a href="https://omwbe.wa.gov/bid-opportunities/mobile-health-assistance-van-program-rural-health-outreach-rfi" target="_blank" rel="noreferrer">Washington mobile health RFI</a></div>
-      <div class="resource"><strong>Ohio – Solicitation Invitations</strong><p>RHTP Community Health Worker Training and Technical Assistance solicitation lane with June 15 close date.</p><a href="https://odh.ohio.gov/know-our-programs/rural-health-transformation-program/solicitation-invitations/solicitation-invitations" target="_blank" rel="noreferrer">Ohio solicitation invitations</a></div>
-      <div class="resource"><strong>Utah – RHTP Funding Opportunities</strong><p>Official funding table listing forecasted May opportunities for behavioral health-primary care integration, rural clinical preceptor stipends, and GME planning.</p><a href="https://dhhs.utah.gov/ruralhealth/funding-opportunities/" target="_blank" rel="noreferrer">Utah funding opportunities</a></div>
-    </div>
-        <div class="group"><h3>Current active/open initiative watch | May 7, 2026</h3>
-      <div class="resource"><strong>West Virginia – First $28.56M RHTP tranche</strong><p>Six opportunities across Mountain State Care Force, HealthTech Appalachia, and Connected Care Grid. Materials route through wvOASIS; AFA release webinar date is pending.</p><a href="https://governor.wv.gov/article/governor-morrisey-announces-first-2856-million-rural-health-transformation-funding" target="_blank" rel="noreferrer">WV announcement</a></div>
-      <div class="resource"><strong>Pennsylvania – $25M Rapid Response Stabilization</strong><p>Opens May 1 and closes June 1 or when capped. Payments range from $10,000 to $1,000,000 for eligible rural hospitals, providers, and facilities.</p><a href="https://www.pa.gov/agencies/health/health-programs/rural-health-funding-and-resources/rural-health-transformation-program/funding-opportunities.html" target="_blank" rel="noreferrer">PA funding opportunity</a></div>
-      <div class="resource"><strong>Oklahoma – RFI, ROOTS, Chronic Disease, and Rural Regional Reorientation</strong><p>Multiple active lanes with May 8, May 25, June 8, and June 12 deadlines.</p><a href="https://oklahoma.gov/health/rhtp/rhtp-funding.html" target="_blank" rel="noreferrer">Oklahoma funding page</a></div>
-      <div class="resource"><strong>Texas HHSC – Active RHTP RFAs and infrastructure grant</strong><p>Rural Texas Strong Initiative 4 due May 27, Rural Hospital FY2026 Innovation Grant due May 28, and new $56M Infrastructure and Capital Investments applications due June 1.</p><a href="https://resources.hhs.texas.gov/rfa" target="_blank" rel="noreferrer">Texas HHSC RFA page</a></div>
-      <div class="resource"><strong>South Carolina – Year 1 grants</strong><p>Applications due June 1 for Connections to Care, Leveling Up, Wellness Within Reach, and Shoring Up.</p><a href="https://www.scdhhs.gov/news/scdhhs-opens-application-process-rural-health-transformation-program-grant-opportunities" target="_blank" rel="noreferrer">South Carolina announcement</a></div>
-      <div class="resource"><strong>Oregon – Catalyst Awards RFGP</strong><p>OregonBuys RFGP remains open with bid opening May 26.</p><a href="https://oregonbuys.gov/bso/external/bidDetail.sdo?docId=S-44300-00016498&amp;external=true&amp;parentUrl=close" target="_blank" rel="noreferrer">OregonBuys RFGP</a></div>
-      <div class="resource"><strong>Kentucky – Accredited Dental Hygiene Programs RFA</strong><p>Office hours May 8; applications due May 22.</p><a href="https://www.chfs.ky.gov/agencies/dph/dpqi/cdpb/Pages/rhtp.aspx" target="_blank" rel="noreferrer">Kentucky RHTP page</a></div>
-      <div class="resource"><strong>Utah – Current funding opportunities table</strong><p>May forecasted funding windows for behavioral health-primary care integration, rural clinical preceptor stipends, and GME strategic planning.</p><a href="https://ruralhealth.health.utah.gov/rhtp/current-funding-opportunities/" target="_blank" rel="noreferrer">Utah funding table</a></div>
-    </div>
+<div class="page">
+<div class="hero"><h1>RHTP Resources</h1><p>Grouped resource library for national context, telehealth ecosystem links, state operational sources, and field-use references. Kept separate from the tracker and calendar to make daily maintenance easier.</p><div class="hero-verified">Last verified: May 13, 2026</div><div class="hero-links"><button onclick="emailPage()" type="button">Email</button><button onclick="emailOpenActivity()" type="button">Email Open Activity</button><button onclick="window.print()" type="button">Print to PDF</button><button onclick="requestRefresh()" type="button">Request Daily Refresh</button></div></div>
+<div class="main-nav"><a href="./index.html">State Tracker</a><a href="./gantt.html">Gantt View</a><a href="./subaward-pathways.html">Sub-Award Pathways</a><a href="./events.html">Events &amp; Calendar</a><a class="active" href="./resources.html">Resources</a><a href="./rhtp-executive-summary-open-activity-may-13-2026.html">Executive Summary</a></div>
+<div aria-label="Regional open activity counts" class="regional-counts">
+<div class="regional-counts-header"><div class="regional-counts-title">Regional Open/Active + Coming Soon Counts</div><div class="regional-counts-total">Total: 23 open/active · 14 coming soon</div></div>
+<div class="regional-count-grid">
+<div class="regional-count-card">
+<div class="regional-count-region">Mid-Atlantic</div>
+<div class="regional-count-values"><span class="regional-count-pill active-count"><b>4</b> Open/Active</span><span class="regional-count-pill soon-count"><b>1</b> Coming Soon</span></div>
+</div><div class="regional-count-card">
+<div class="regional-count-region">Northeast</div>
+<div class="regional-count-values"><span class="regional-count-pill active-count"><b>8</b> Open/Active</span><span class="regional-count-pill soon-count"><b>7</b> Coming Soon</span></div>
+</div><div class="regional-count-card">
+<div class="regional-count-region">Southeast</div>
+<div class="regional-count-values"><span class="regional-count-pill active-count"><b>5</b> Open/Active</span><span class="regional-count-pill soon-count"><b>2</b> Coming Soon</span></div>
+</div><div class="regional-count-card">
+<div class="regional-count-region">West</div>
+<div class="regional-count-values"><span class="regional-count-pill active-count"><b>6</b> Open/Active</span><span class="regional-count-pill soon-count"><b>4</b> Coming Soon</span></div>
+</div>
+</div>
+</div><div><strong>Focus:</strong> Source validation and opportunity tracking</div><div><strong>Format:</strong> Grouped source library</div></div><div class="section"><h2>How this page helps</h2><p>Start with these source groups in order: federal and policy context first, telehealth ecosystem next, state operational links for opportunity checks, then field-use references for deeper background and slide or FAQ support.</p></div>
+<div class="group"><h3>May 13 Refresh Sources</h3><div class="resource"><strong>High-priority updated state pages</strong><p>Arkansas applications, Idaho RFP/subgrant timeline, Missouri Ambient AI RFI, North Carolina ROOTS/MIH activity, Oklahoma active funding, South Carolina RFAs/FAQ, Indiana regional grants, and Utah/Wyoming release windows were used for the refreshed state tracker.</p><p><a href="https://governor.arkansas.gov/news_post/sanders-announces-applications-are-open-for-209-million-in-rural-health-transformation-funds/" rel="noopener" target="_blank">Arkansas</a> · <a href="https://healthandwelfare.idaho.gov/providers/rural-health-transformation-program-grant/about-rural-health-transformation-program-grant" rel="noopener" target="_blank">Idaho</a> · <a href="https://health.mo.gov/about/rhtp/" rel="noopener" target="_blank">Missouri</a> · <a href="https://www.ncdhhs.gov/news/press-releases/2026/05/01/ncdhhs-selects-nc-roots-hub-leads-strengthen-rural-health-care-across-north-carolina" rel="noopener" target="_blank">North Carolina</a> · <a href="https://oklahoma.gov/health/rhtp/rhtp-funding.html" rel="noopener" target="_blank">Oklahoma</a> · <a href="https://www.scdhhs.gov/resources/grants" rel="noopener" target="_blank">South Carolina</a></p></div></div><div class="group"><h3>Current open / near-term source watch</h3>
+<div class="resource"><strong>Maryland – RHTP RFA/RFP lanes</strong><p>Maryland now has active transformation and local lead procurement/funding lanes, including the Pillar 2 Transformation RFA and Garrett County revenue-cycle/billing TA RFP.</p><a href="https://health.maryland.gov/pophealth/Pages/Rural-Health-Transformation-Program.aspx" rel="noreferrer" target="_blank">Maryland RHTP page</a></div>
+<div class="resource"><strong>North Carolina – ROOTS Hub Leads selected</strong><p>NCDHHS announced ROOTS Hub Lead awardees on May 1 and expects contracts to be finalized by June 1.</p><a href="https://www.ncdhhs.gov/news/press-releases/2026/05/01/ncdhhs-selects-nc-roots-hub-leads-strengthen-rural-health-care-across-north-carolina" rel="noreferrer" target="_blank">NC ROOTS Hub Lead announcement</a></div>
+<div class="resource"><strong>Texas – $56M Infrastructure and Capital Investments</strong><p>New Rural Texas Strong opportunity announced May 1; applications due June 1 for licensed rural providers.</p><a href="https://gov.texas.gov/es/news/post/governor-abbott-hhsc-announce-56-million-in-federal-funding-for-rural-health-care-providers-to-modernize-equipment-infrastructure" rel="noreferrer" target="_blank">Texas May 1 announcement</a></div>
+<div class="resource"><strong>Delaware – RHTP Support Services RFP</strong><p>New support-services RFP path with solicitation ad date May 4, questions due May 18, and proposals due June 22.</p><a href="https://mmp.delaware.gov/Bids/Details/9140" rel="noreferrer" target="_blank">Delaware RFP bid detail</a></div>
+<div class="resource"><strong>Minnesota – RHTP Funding Page</strong><p>April 30 update extends direct-allocation applications to May 26 and posts a HIT technical-assistance RFP due May 22.</p><a href="https://www.health.state.mn.us/facilities/ruralhealth/ruraltrans/grants.html" rel="noreferrer" target="_blank">Minnesota RHTP funding</a></div>
+<div class="resource"><strong>Washington – Mobile Health Assistance Van RFI</strong><p>OMWBE/O3A posting for mobile health outreach RFI tied to rural-health outreach; responses due May 31.</p><a href="https://omwbe.wa.gov/bid-opportunities/mobile-health-assistance-van-program-rural-health-outreach-rfi" rel="noreferrer" target="_blank">Washington mobile health RFI</a></div>
+<div class="resource"><strong>Ohio – Solicitation Invitations</strong><p>RHTP Community Health Worker Training and Technical Assistance solicitation lane with June 15 close date.</p><a href="https://odh.ohio.gov/know-our-programs/rural-health-transformation-program/solicitation-invitations/solicitation-invitations" rel="noreferrer" target="_blank">Ohio solicitation invitations</a></div>
+<div class="resource"><strong>Utah – RHTP Funding Opportunities</strong><p>Official funding table listing forecasted May opportunities for behavioral health-primary care integration, rural clinical preceptor stipends, and GME planning.</p><a href="https://dhhs.utah.gov/ruralhealth/funding-opportunities/" rel="noreferrer" target="_blank">Utah funding opportunities</a></div>
+</div>
+<div class="group"><h3>Current active/open initiative watch | May 13, 2026</h3>
+<div class="resource"><strong>West Virginia – First $28.56M RHTP tranche</strong><p>Six opportunities across Mountain State Care Force, HealthTech Appalachia, and Connected Care Grid. Materials route through wvOASIS; AFA release webinar date is pending.</p><a href="https://governor.wv.gov/article/governor-morrisey-announces-first-2856-million-rural-health-transformation-funding" rel="noreferrer" target="_blank">WV announcement</a></div>
+<div class="resource"><strong>Pennsylvania – $25M Rapid Response Stabilization</strong><p>Opens May 1 and closes June 1 or when capped. Payments range from $10,000 to $1,000,000 for eligible rural hospitals, providers, and facilities.</p><a href="https://www.pa.gov/agencies/health/health-programs/rural-health-funding-and-resources/rural-health-transformation-program/funding-opportunities.html" rel="noreferrer" target="_blank">PA funding opportunity</a></div>
+<div class="resource"><strong>Oklahoma – RFI, ROOTS, Chronic Disease, and Rural Regional Reorientation</strong><p>Multiple active lanes with May 8, May 25, June 8, and June 12 deadlines.</p><a href="https://oklahoma.gov/health/rhtp/rhtp-funding.html" rel="noreferrer" target="_blank">Oklahoma funding page</a></div>
+<div class="resource"><strong>Texas HHSC – Active RHTP RFAs and infrastructure grant</strong><p>Rural Texas Strong Initiative 4 due May 27, Rural Hospital FY2026 Innovation Grant due May 28, and new $56M Infrastructure and Capital Investments applications due June 1.</p><a href="https://resources.hhs.texas.gov/rfa" rel="noreferrer" target="_blank">Texas HHSC RFA page</a></div>
+<div class="resource"><strong>South Carolina – Year 1 grants</strong><p>Applications due June 1 for Connections to Care, Leveling Up, Wellness Within Reach, and Shoring Up.</p><a href="https://www.scdhhs.gov/news/scdhhs-opens-application-process-rural-health-transformation-program-grant-opportunities" rel="noreferrer" target="_blank">South Carolina announcement</a></div>
+<div class="resource"><strong>Oregon – Catalyst Awards RFGP</strong><p>OregonBuys RFGP remains open with bid opening May 26.</p><a href="https://oregonbuys.gov/bso/external/bidDetail.sdo?docId=S-44300-00016498&amp;external=true&amp;parentUrl=close" rel="noreferrer" target="_blank">OregonBuys RFGP</a></div>
+<div class="resource"><strong>Kentucky – Accredited Dental Hygiene Programs RFA</strong><p>Office hours May 8; applications due May 22.</p><a href="https://www.chfs.ky.gov/agencies/dph/dpqi/cdpb/Pages/rhtp.aspx" rel="noreferrer" target="_blank">Kentucky RHTP page</a></div>
+<div class="resource"><strong>Utah – Current funding opportunities table</strong><p>May forecasted funding windows for behavioral health-primary care integration, rural clinical preceptor stipends, and GME strategic planning.</p><a href="https://ruralhealth.health.utah.gov/rhtp/current-funding-opportunities/" rel="noreferrer" target="_blank">Utah funding table</a></div>
+</div>
 <div class="group"><h3>National RHTP / policy</h3>
-      <div class="resource"><strong>CMS – Rural Health Transformation Program Overview</strong><p>Federal program overview and official CMS program guidance. Use this official CMS page for core program structure, federal framing, and source validation.</p><a href="https://www.cms.gov/priorities/rural-health-transformation-rht-program/overview" target="_blank" rel="noreferrer">CMS RHT overview</a></div>
-      <div class="resource"><strong>CMS – RHTP Post-Award FAQ, April 2026</strong><p>Official CMS post-award FAQ for budget movement, provider recruitment and retention, telehealth use cases, subawardee/contractor engagement, reporting-template status, and other compliance-sensitive implementation questions.</p><a href="https://www.cms.gov/files/document/frequently-asked-questions-april-2026.pdf" target="_blank" rel="noreferrer">CMS April 2026 post-award FAQ</a></div>
-      <div class="resource"><strong>National Rural Health Association – RHTP</strong><p>National rural health transformation resources and redesign support. Use this page for national framing, policy context, and innovation-system-redesign guidance relevant to rural transformation work.</p><a href="https://www.ruralhealth.us/programs/center-for-rural-health-innovation-and-system-redesign/rural-health-transformation-program" target="_blank" rel="noreferrer">NRHA RHTP page</a></div>
-      <div class="resource"><strong>NASHP – RHTP State Focus on Primary Care</strong><p>State policy analysis and primary-care transformation context. Use for comparative state perspective and primary-care positioning around RHTP.</p><a href="https://nashp.org/rural-health-transformation-program-state-focus-on-primary-care/" target="_blank" rel="noreferrer">NASHP state focus</a></div>
-      <div class="resource"><strong>NOSORH – Rural Health Transformation</strong><p>State rural health office perspective and related resources. Use for state-office alignment and rural health office partner context.</p><a href="https://nosorh.org/rural-health-transformation/" target="_blank" rel="noreferrer">NOSORH RHT page</a></div>
-      <div class="resource"><strong>Rural Health Information Hub – RHTP Resources</strong><p>National curated resource list for RHTP. Use as a fast discovery source for state materials, background, and related transformation references.</p><a href="https://www.ruralhealthinfo.org/resources/lists/rhtp" target="_blank" rel="noreferrer">RHIhub RHTP resources</a></div>
-    </div>
-    <div class="group"><h3>Telehealth / digital-health ecosystem</h3>
-      <div class="resource"><strong>National Consortium of Telehealth Resource Centers – Centers Directory</strong><p>Regional and national telehealth assistance centers covering all states. Use this official directory to identify the correct regional TRC, national policy support, and national technology support for each state.</p><a href="https://telehealthresourcecenter.org/centers/" target="_blank" rel="noreferrer">TRC Centers directory</a></div>
-      <div class="resource"><strong>National Consortium of Telehealth Resource Centers – Events</strong><p>National and multi-state telehealth events and webinar listings. Use this official events page in weekly searches for telehealth conferences, webinars, and early-engagement opportunities relevant to RHTP and digital-health planning.</p><a href="https://telehealthresourcecenter.org/events/" target="_blank" rel="noreferrer">TRC Events page</a></div>
-      <div class="resource"><strong>NCTRC Webinar Series</strong><p>Recurring national telehealth webinar series. Useful for ongoing education, vendor positioning, and event coverage updates.</p><a href="https://telehealthresourcecenter.org/nctrc-webinar-series/" target="_blank" rel="noreferrer">NCTRC webinar series</a></div>
-    </div>
-    <div class="group"><h3>State operational links</h3>
-      <div class="resource"><strong>State RHTP pages</strong><p>Best route for official timelines, FAQs, webinars, stakeholder notices, and program contacts.</p><a href="https://www.scdhhs.gov/resources/grants" target="_blank" rel="noreferrer">South Carolina example</a></div>
-      <div class="resource"><strong>State procurement portals</strong><p>Best route for package-level RFPs, RFAs, RFQs, addenda, and amendment monitoring.</p><a href="https://mmp.delaware.gov/Bids/" target="_blank" rel="noreferrer">Delaware example</a></div>
-      <div class="resource"><strong>State grant opportunity pages</strong><p>Useful for daily checks in states with rolling or multi-track opportunities.</p><a href="https://dhhs.ne.gov/Pages/Grant-Opportunities.aspx" target="_blank" rel="noreferrer">Nebraska grant opportunities</a></div>
-      <div class="resource"><strong>State funding / engagement pages</strong><p>Useful when states split funding, events, and engagement into separate pages.</p><a href="https://oklahoma.gov/health/rhtp/rhtp-funding.html" target="_blank" rel="noreferrer">Oklahoma funding page</a></div>
-    </div>
-      <div class="resource"><strong>Pennsylvania DHS – Rapid Response Stabilization Program</strong><p>First Pennsylvania RHTP funding opportunity. Use for rural provider equipment/facility-upgrade prospecting and rapid-response outreach.</p><a href="https://www.pa.gov/agencies/dhs/newsroom/shapiro-admin-invests--25-million-for-rural-health-" target="_blank" rel="noreferrer">Pennsylvania April 2026 funding announcement</a></div>
-      <div class="resource"><strong>Texas HHSC – Grants Request for Applications</strong><p>Official open RFA list showing Texas RHTP-aligned grant deadlines, including Rural Texas Strong Initiative 4 and the FY2026 Rural Hospital Innovation Grant Program.</p><a href="https://resources.hhs.texas.gov/rfa" target="_blank" rel="noreferrer">Texas HHSC RFA list</a></div>
-      <div class="resource"><strong>Ohio Department of Health – RHTP Solicitation Repository</strong><p>Searchable state RHTP solicitation lane and active grant-opportunity reference point for Healthier Ohio initiatives.</p><a href="https://odh.ohio.gov/know-our-programs/rural-health-transformation-program/solicitation-invitations/solicitation-invitations" target="_blank" rel="noreferrer">Ohio RHTP solicitations</a></div>
-      <div class="resource"><strong>Oregon Health Authority – Catalyst Awards RFGP</strong><p>Official Oregon RHTP page pointing applicants to the open Catalyst Awards solicitation on OregonBuys.</p><a href="https://www.oregon.gov/oha/hpa/hp/pages/rural-health-transformation.aspx" target="_blank" rel="noreferrer">Oregon RHTP page</a></div>
-      <div class="resource"><strong>New Mexico HCA – Open RFPs</strong><p>Official procurement page now listing the RHTP initiatives RFI, plus related consultant/procurement materials.</p><a href="https://www.hca.nm.gov/lookingforinformation/open-rfps/" target="_blank" rel="noreferrer">New Mexico HCA open RFPs</a></div>
-    <div class="group"><h3>Current open initiatives / daily watch list</h3>
-      <div class="resource"><strong>Idaho – RFP and subgrant timeline</strong><p>Official state RHTP page lists April–June 2026 RFP postings and competitive subgrant solicitations, July–September contract/subgrant execution, and Oct. 30 Year 1 obligation timing.</p><a href="https://healthandwelfare.idaho.gov/providers/rural-health-transformation-program-grant/about-rural-health-transformation-program-grant" target="_blank" rel="noreferrer">Idaho RHTP page</a></div>
-      <div class="resource"><strong>Alaska – regional RHTP meetings and LOI review</strong><p>Official page lists regional meetings and maintains Alaska’s LOI/resource pathway while the state reviews submissions.</p><a href="https://health.alaska.gov/en/education/rural-health-transformation-program/" target="_blank" rel="noreferrer">Alaska RHTP page</a></div>
-      <div class="resource"><strong>Wisconsin – DPI RHTP grant coming soon</strong><p>DPI page says rural LEAs will have a Spring 2026 grant opportunity of up to $41,000 annually to develop or expand healthcare career pathways.</p><a href="https://dpi.wi.gov/cte/rhtp-grant" target="_blank" rel="noreferrer">Wisconsin DPI RHTP grant</a></div>
+<div class="resource"><strong>CMS – Rural Health Transformation Program Overview</strong><p>Federal program overview and official CMS program guidance. Use this official CMS page for core program structure, federal framing, and source validation.</p><a href="https://www.cms.gov/priorities/rural-health-transformation-rht-program/overview" rel="noreferrer" target="_blank">CMS RHT overview</a></div>
+<div class="resource"><strong>CMS – RHTP Post-Award FAQ, April 2026</strong><p>Official CMS post-award FAQ for budget movement, provider recruitment and retention, telehealth use cases, subawardee/contractor engagement, reporting-template status, and other compliance-sensitive implementation questions.</p><a href="https://www.cms.gov/files/document/frequently-asked-questions-april-2026.pdf" rel="noreferrer" target="_blank">CMS April 2026 post-award FAQ</a></div>
+<div class="resource"><strong>National Rural Health Association – RHTP</strong><p>National rural health transformation resources and redesign support. Use this page for national framing, policy context, and innovation-system-redesign guidance relevant to rural transformation work.</p><a href="https://www.ruralhealth.us/programs/center-for-rural-health-innovation-and-system-redesign/rural-health-transformation-program" rel="noreferrer" target="_blank">NRHA RHTP page</a></div>
+<div class="resource"><strong>NASHP – RHTP State Focus on Primary Care</strong><p>State policy analysis and primary-care transformation context. Use for comparative state perspective and primary-care positioning around RHTP.</p><a href="https://nashp.org/rural-health-transformation-program-state-focus-on-primary-care/" rel="noreferrer" target="_blank">NASHP state focus</a></div>
+<div class="resource"><strong>NOSORH – Rural Health Transformation</strong><p>State rural health office perspective and related resources. Use for state-office alignment and rural health office partner context.</p><a href="https://nosorh.org/rural-health-transformation/" rel="noreferrer" target="_blank">NOSORH RHT page</a></div>
+<div class="resource"><strong>Rural Health Information Hub – RHTP Resources</strong><p>National curated resource list for RHTP. Use as a fast discovery source for state materials, background, and related transformation references.</p><a href="https://www.ruralhealthinfo.org/resources/lists/rhtp" rel="noreferrer" target="_blank">RHIhub RHTP resources</a></div>
+</div>
+<div class="group"><h3>Telehealth / digital-health ecosystem</h3>
+<div class="resource"><strong>National Consortium of Telehealth Resource Centers – Centers Directory</strong><p>Regional and national telehealth assistance centers covering all states. Use this official directory to identify the correct regional TRC, national policy support, and national technology support for each state.</p><a href="https://telehealthresourcecenter.org/centers/" rel="noreferrer" target="_blank">TRC Centers directory</a></div>
+<div class="resource"><strong>National Consortium of Telehealth Resource Centers – Events</strong><p>National and multi-state telehealth events and webinar listings. Use this official events page in weekly searches for telehealth conferences, webinars, and early-engagement opportunities relevant to RHTP and digital-health planning.</p><a href="https://telehealthresourcecenter.org/events/" rel="noreferrer" target="_blank">TRC Events page</a></div>
+<div class="resource"><strong>NCTRC Webinar Series</strong><p>Recurring national telehealth webinar series. Useful for ongoing education, vendor positioning, and event coverage updates.</p><a href="https://telehealthresourcecenter.org/nctrc-webinar-series/" rel="noreferrer" target="_blank">NCTRC webinar series</a></div>
+</div>
+<div class="group"><h3>State operational links</h3>
+<div class="resource"><strong>State RHTP pages</strong><p>Best route for official timelines, FAQs, webinars, stakeholder notices, and program contacts.</p><a href="https://www.scdhhs.gov/resources/grants" rel="noreferrer" target="_blank">South Carolina example</a></div>
+<div class="resource"><strong>State procurement portals</strong><p>Best route for package-level RFPs, RFAs, RFQs, addenda, and amendment monitoring.</p><a href="https://mmp.delaware.gov/Bids/" rel="noreferrer" target="_blank">Delaware example</a></div>
+<div class="resource"><strong>State grant opportunity pages</strong><p>Useful for daily checks in states with rolling or multi-track opportunities.</p><a href="https://dhhs.ne.gov/Pages/Grant-Opportunities.aspx" rel="noreferrer" target="_blank">Nebraska grant opportunities</a></div>
+<div class="resource"><strong>State funding / engagement pages</strong><p>Useful when states split funding, events, and engagement into separate pages.</p><a href="https://oklahoma.gov/health/rhtp/rhtp-funding.html" rel="noreferrer" target="_blank">Oklahoma funding page</a></div>
+</div>
+<div class="resource"><strong>Pennsylvania DHS – Rapid Response Stabilization Program</strong><p>First Pennsylvania RHTP funding opportunity. Use for rural provider equipment/facility-upgrade prospecting and rapid-response outreach.</p><a href="https://www.pa.gov/agencies/dhs/newsroom/shapiro-admin-invests--25-million-for-rural-health-" rel="noreferrer" target="_blank">Pennsylvania April 2026 funding announcement</a></div>
+<div class="resource"><strong>Texas HHSC – Grants Request for Applications</strong><p>Official open RFA list showing Texas RHTP-aligned grant deadlines, including Rural Texas Strong Initiative 4 and the FY2026 Rural Hospital Innovation Grant Program.</p><a href="https://resources.hhs.texas.gov/rfa" rel="noreferrer" target="_blank">Texas HHSC RFA list</a></div>
+<div class="resource"><strong>Ohio Department of Health – RHTP Solicitation Repository</strong><p>Searchable state RHTP solicitation lane and active grant-opportunity reference point for Healthier Ohio initiatives.</p><a href="https://odh.ohio.gov/know-our-programs/rural-health-transformation-program/solicitation-invitations/solicitation-invitations" rel="noreferrer" target="_blank">Ohio RHTP solicitations</a></div>
+<div class="resource"><strong>Oregon Health Authority – Catalyst Awards RFGP</strong><p>Official Oregon RHTP page pointing applicants to the open Catalyst Awards solicitation on OregonBuys.</p><a href="https://www.oregon.gov/oha/hpa/hp/pages/rural-health-transformation.aspx" rel="noreferrer" target="_blank">Oregon RHTP page</a></div>
+<div class="resource"><strong>New Mexico HCA – Open RFPs</strong><p>Official procurement page now listing the RHTP initiatives RFI, plus related consultant/procurement materials.</p><a href="https://www.hca.nm.gov/lookingforinformation/open-rfps/" rel="noreferrer" target="_blank">New Mexico HCA open RFPs</a></div>
+<div class="group"><h3>Current open initiatives / daily watch list</h3>
+<div class="resource"><strong>West Virginia – First RHTP funding tranche</strong><p>Governor announcement for the first $28.56M in RHTP funding opportunities across Mountain State Care Force, HealthTech Appalachia, and Connected Care Grid. Use for immediate WV account targeting; AFA webinar date is still pending.</p><a href="https://governor.wv.gov/article/governor-morrisey-announces-first-2856-million-rural-health-transformation-funding" rel="noreferrer" target="_blank">WV first funding tranche</a></div>
+<div class="resource"><strong>Mississippi – RHTP Office and official website</strong><p>Official implementation-entry source for Mississippi’s new RHTP Office, project director, website, funding-opportunity visibility, and progress updates.</p><a href="https://www.mississippirhtp.com/" rel="noreferrer" target="_blank">Mississippi RHTP website</a></div>
+<div class="resource"><strong>Pennsylvania – Rapid Response Stabilization</strong><p>First Pennsylvania RHTP funding opportunity. Applications run May 1–June 1, 2026, with total available funding of $25M and payment amounts from $10,000 to $1,000,000.</p><a href="https://www.pa.gov/agencies/dhs/programs-services/healthcare/rural-health/rhtp-funding-opportunities" rel="noreferrer" target="_blank">PA RHTP funding opportunities</a></div>
+<div class="resource"><strong>Texas HHSC – Rural Texas Strong / Innovation Grant RFAs</strong><p>Open HHSC RFA lane for rural workforce and hospital innovation. Use for provider and rural-hospital outreach around May 27 and May 28 deadlines.</p><a href="https://resources.hhs.texas.gov/rfa" rel="noreferrer" target="_blank">Texas HHS RFA listings</a></div>
+<div class="resource"><strong>Oregon – Catalyst Awards RFGP</strong><p>Open OregonBuys RFGP for Catalyst Awards supporting rural health transformation projects; use for Oregon partner coalitions and community-driven project support.</p><a href="https://oregonbuys.gov/bso/external/bidDetail.sdo?docId=S-44300-00016498&amp;external=true&amp;parentUrl=close" rel="noreferrer" target="_blank">OregonBuys Catalyst Awards RFGP</a></div>
+<div class="resource"><strong>North Dakota – RHTP funding opportunities</strong><p>Funding page for active school/community prevention opportunities and technical-assistance call details.</p><a href="https://www.hhs.nd.gov/rural-health-transformation/funding" rel="noreferrer" target="_blank">North Dakota RHTP funding</a></div>
+</div>
+<div class="group"><h3>Field-use references</h3>
+<div class="resource"><strong>CMS state application abstracts</strong><p>Fast cross-check for approved state abstracts and early implementation framing.</p><a href="https://www.cms.gov/files/document/rht-program-state-provided-abstracts.pdf" rel="noreferrer" target="_blank">CMS abstracts</a></div>
+<div class="resource"><strong>CMS 50-state spotlights</strong><p>Useful for fast state comparison and program framing.</p><a href="https://www.cms.gov/files/document/rural-health-transformation-50-state-spotlights.pdf" rel="noreferrer" target="_blank">CMS spotlights</a></div>
+<div class="resource"><strong>The Rural Center – Resources</strong><p>Rural systems, workforce, broadband, and community development resources. Use for broader rural ecosystem context that can support Solutionz positioning.</p><a href="https://www.ncruralcenter.org/" rel="noreferrer" target="_blank">The Rural Center resources</a></div>
+</div>
+<div class="group"><h3>Sub-Award Application Pathways</h3>
+<div class="resource"><strong>50-State RHTP Sub-Award Pathways</strong><p>State-by-state sub-recipient application route reference. Each state is labeled as open/active, coming soon, recently closed, engagement-only, or monitor based on current verified tracker sources.</p><a href="./subaward-pathways.html">Open Sub-Award Pathways page</a></div>
+</div>
+<div class="footer">Resources remain separated from the tracker, events, and executive summary to reduce duplication and avoid page-size issues.</div>
 
-      <div class="resource"><strong>West Virginia – First RHTP funding tranche</strong><p>Governor announcement for the first $28.56M in RHTP funding opportunities across Mountain State Care Force, HealthTech Appalachia, and Connected Care Grid. Use for immediate WV account targeting; AFA webinar date is still pending.</p><a href="https://governor.wv.gov/article/governor-morrisey-announces-first-2856-million-rural-health-transformation-funding" target="_blank" rel="noreferrer">WV first funding tranche</a></div>
-      <div class="resource"><strong>Mississippi – RHTP Office and official website</strong><p>Official implementation-entry source for Mississippi’s new RHTP Office, project director, website, funding-opportunity visibility, and progress updates.</p><a href="https://www.mississippirhtp.com/" target="_blank" rel="noreferrer">Mississippi RHTP website</a></div>
-      <div class="resource"><strong>Pennsylvania – Rapid Response Stabilization</strong><p>First Pennsylvania RHTP funding opportunity. Applications run May 1–June 1, 2026, with total available funding of $25M and payment amounts from $10,000 to $1,000,000.</p><a href="https://www.pa.gov/agencies/dhs/programs-services/healthcare/rural-health/rhtp-funding-opportunities" target="_blank" rel="noreferrer">PA RHTP funding opportunities</a></div>
-      <div class="resource"><strong>Texas HHSC – Rural Texas Strong / Innovation Grant RFAs</strong><p>Open HHSC RFA lane for rural workforce and hospital innovation. Use for provider and rural-hospital outreach around May 27 and May 28 deadlines.</p><a href="https://resources.hhs.texas.gov/rfa" target="_blank" rel="noreferrer">Texas HHS RFA listings</a></div>
-      <div class="resource"><strong>Oregon – Catalyst Awards RFGP</strong><p>Open OregonBuys RFGP for Catalyst Awards supporting rural health transformation projects; use for Oregon partner coalitions and community-driven project support.</p><a href="https://oregonbuys.gov/bso/external/bidDetail.sdo?docId=S-44300-00016498&amp;external=true&amp;parentUrl=close" target="_blank" rel="noreferrer">OregonBuys Catalyst Awards RFGP</a></div>
-      <div class="resource"><strong>North Dakota – RHTP funding opportunities</strong><p>Funding page for active school/community prevention opportunities and technical-assistance call details.</p><a href="https://www.hhs.nd.gov/rural-health-transformation/funding" target="_blank" rel="noreferrer">North Dakota RHTP funding</a></div>
-    </div>
-    <div class="group"><h3>Field-use references</h3>
-      <div class="resource"><strong>CMS state application abstracts</strong><p>Fast cross-check for approved state abstracts and early implementation framing.</p><a href="https://www.cms.gov/files/document/rht-program-state-provided-abstracts.pdf" target="_blank" rel="noreferrer">CMS abstracts</a></div>
-      <div class="resource"><strong>CMS 50-state spotlights</strong><p>Useful for fast state comparison and program framing.</p><a href="https://www.cms.gov/files/document/rural-health-transformation-50-state-spotlights.pdf" target="_blank" rel="noreferrer">CMS spotlights</a></div>
-      <div class="resource"><strong>The Rural Center – Resources</strong><p>Rural systems, workforce, broadband, and community development resources. Use for broader rural ecosystem context that can support Solutionz positioning.</p><a href="https://www.ncruralcenter.org/" target="_blank" rel="noreferrer">The Rural Center resources</a></div>
-    </div>
-    
-    <div class="group"><h3>Sub-Award Application Pathways</h3>
-      <div class="resource"><strong>50-State RHTP Sub-Award Pathways</strong><p>State-by-state sub-recipient application route reference. Each state is labeled as open/active, coming soon, recently closed, engagement-only, or monitor based on current verified tracker sources.</p><a href="./subaward-pathways.html">Open Sub-Award Pathways page</a></div>
-    </div>
-    <div class="group"><h3>May 7 active / watch validation sources</h3>
-      <div class="resource"><strong>Iowa HHS – Funding Opportunities</strong><p>Official Iowa HHS funding page now showing Healthy Hometowns notices of intent and the Maternal Health Hub and Spoke RFI. Use for Iowa coming-soon verification.</p><a href="https://hhs.iowa.gov/grants/funding-opportunities" target="_blank" rel="noreferrer">Iowa HHS funding opportunities</a></div>
-      <div class="resource"><strong>North Dakota HHS – RHTP Funding Opportunities</strong><p>Official hub for North Dakota workforce, prevention, safety-net, delivery-system, and TA-call opportunities.</p><a href="https://www.hhs.nd.gov/rural-health-transformation/funding" target="_blank" rel="noreferrer">North Dakota funding opportunities</a></div>
-      <div class="resource"><strong>Oklahoma State Department of Health – RHTP Funding</strong><p>Official funding page for Oklahoma Doula RFI, ROOTS school grant, Chronic Disease Management NOFO, Rural Regional Reorientation NOFO, webinar links, and closed microgrant status.</p><a href="https://oklahoma.gov/health/rhtp/rhtp-funding.html" target="_blank" rel="noreferrer">Oklahoma RHTP funding</a></div>
-      <div class="resource"><strong>Minnesota Department of Health – RHTP Grants</strong><p>Official source for Minnesota direct allocations, HIT technical assistance, and the RHTP ECHO for Maternal and Behavioral Health RFP.</p><a href="https://www.health.state.mn.us/facilities/ruralhealth/ruraltrans/grants.html" target="_blank" rel="noreferrer">Minnesota RHTP grants</a></div>
-      <div class="resource"><strong>Montana DPHHS – RHTP Advisory Council Notice</strong><p>Official May advisory application notice for Montana’s RHTP Center of Excellence stakeholder pathway.</p><a href="https://dphhs.mt.gov/News/2026/May/Seeking-RHTP-Advisory-Council" target="_blank" rel="noreferrer">Montana advisory notice</a></div>
-      <div class="resource"><strong>Pennsylvania DHS – RHTP Funding</strong><p>Official source for Pennsylvania’s Rapid Response Stabilization funding window and payment-certification path.</p><a href="https://www.pa.gov/agencies/dhs/resources/rural-health-transformation-program/rural-health-transformation-program-funding.html" target="_blank" rel="noreferrer">Pennsylvania RHTP funding</a></div>
-      <div class="resource"><strong>Utah Office of Primary Care and Rural Health – Funding Opportunities</strong><p>Official Utah funding table showing estimated May openings, including the GME Strategic Plan lane.</p><a href="https://ruralhealth.health.utah.gov/rural-health-transformation-program/rhtp-funding-opportunities/" target="_blank" rel="noreferrer">Utah RHTP funding opportunities</a></div>
-      <div class="resource"><strong>Washington OMWBE – Mobile Health Assistance Van RFI</strong><p>Official RFI posting for Washington’s RHTP-funded rural health outreach mobile van path.</p><a href="https://omwbe.wa.gov/bid-opportunities/mobile-health-assistance-van-program-rural-health-outreach-rfi" target="_blank" rel="noreferrer">Washington mobile health RFI</a></div>
-      <div class="resource"><strong>Wisconsin DHS and DPI – Coming-soon RHTP sources</strong><p>Official state pages for Wisconsin DHS RHTP grant-development updates and the DPI rural LEA grant opportunity.</p><a href="https://www.dhs.wisconsin.gov/rhtp/index.htm" target="_blank" rel="noreferrer">Wisconsin DHS RHTP</a><br><a href="https://dpi.wi.gov/sfs/rural-health-transformation-program" target="_blank" rel="noreferrer">Wisconsin DPI rural LEA grant</a></div>
-    </div>
-    <div class="footer">Resources remain separated from the tracker, events, and executive summary to reduce duplication and avoid page-size issues.</div>
-  </div>
-  <script>
-    function emailPage(){const body='Please find the attached RHTP Resources HTML or PDF snapshot.'; window.location.href=`mailto:?subject=${encodeURIComponent('RHTP Resources | May 7, 2026')}&body=${encodeURIComponent(body)}`;}
+<script>
+    function emailPage(){const body='Please find the attached RHTP Resources HTML or PDF snapshot.'; window.location.href=`mailto:?subject=${encodeURIComponent('RHTP Resources | May 13, 2026')}&body=${encodeURIComponent(body)}`;}
     function requestRefresh(){const body='Please refresh the RHTP Resources page today. Priority: federal sources, TRC/NRHA/NOSORH links, state program pages, procurement portals, FAQs, and working source validation.'; window.location.href=`mailto:?subject=${encodeURIComponent('Daily RHTP Resources Refresh Request')}&body=${encodeURIComponent(body)}`;}
   
 
 const OPEN_ACTIVITY_SUBJECT = "RHTP Active/Open Opportunities \u2014 Sales Action Update";
-const OPEN_ACTIVITY_EMAIL_TEXT = "RHTP Active/Open Opportunities \u2014 May 7, 2026\n\nLive tracker: ./index.html\n\nIMMEDIATE ACTION\n- Apr. 30: North Dakota CAH workforce retention funding.\n- Apr. 30: Nevada Flex Fund Round 1.\n- May 1: Indiana LOIs and Georgia GREAT Health Advisory Council applications.\n- May 8: Oklahoma Doula Program RFI.\n- May 22: Kentucky dental hygiene RFA and North Dakota prevention/wellness grants.\n- May 26: Oregon Catalyst Awards.\n- May 27\u201328: Texas Rural Texas Strong and Rural Hospital Innovation RFAs.\n- May 29: Nevada Rural Tribal Health Transformation.\n- Jun. 1: Pennsylvania Rapid Response Stabilization and South Carolina Year 1 grants.\n- Jun. 8 / Jun. 12: Oklahoma Chronic Disease Management and Rural Regional Reorientation.\n\nMID-ATLANTIC\nWest Virginia \u2014 Posted Apr. 28. First $28.56M tranche across Mountain State Care Force, HealthTech Appalachia, and Connected Care Grid. Materials through wvOASIS; AFA webinar date pending. Sales: workforce, digital backbone, data source, evaluation, connected care, cyber, telehealth.\nMaryland \u2014 Active near-term RFA/RFP path. Materials point to combined transformation RFA, mobile health, telehealth/HIE, CRISP, behavioral health, and value-based lanes. Sales: support applicants with tech scopes and budgets.\nKentucky \u2014 Posted Apr. 20. Accredited Dental Hygiene Programs RFA, due May 22; office hours May 8. Sales: oral-health mobility, public-health tech, workforce training, telehealth wraparound.\n\nNORTHEAST\nPennsylvania \u2014 Opens May 1. $25M Rapid Response Stabilization, $10K\u2013$1M payments, due Jun. 1 or until cap. Sales: rural hospitals/providers, equipment, infrastructure, telehealth, EMS, maternal/behavioral health.\nNorth Dakota \u2014 Apr. 22\u201327 activity. CAH workforce retention approx. $10M due Apr. 30; $3.6M community/prevention wave due May 22; TA calls May 4\u20136. Sales: CAH workforce, school/community prevention, data and implementation support.\nIndiana \u2014 GROW Regional Grants LOIs due May 1, full applications Jul. 1; expected $120M in Budget Period 1. Sales: join regional coalition strategy, telehealth, HIE, dashboards, workflow.\nOhio \u2014 Healthier Ohio / RHTP solicitation lane active with chronic disease and rural modernization paths; confirm package-specific dollars and deadlines. Sales: technical assistance, hubs, workforce, EMS, pharmacy EMR, maternal health.\nNebraska \u2014 RHTP workforce incentive/sustainability rolling due dates May 1 and Jun. 1. Sales: workforce retention, provider sustainability, data/reporting, implementation support.\n\nSOUTHEAST\nFlorida \u2014 Active RFA wave with more than $188M identified across competitive bundles. Sales: work through eligible applicants, respect restricted communications, focus on telehealth, RPM, diagnostics, workforce and value-based workflows.\nTexas \u2014 Rural Texas Strong Initiative 4 due May 27; Rural Hospital FY2026 Innovation Grant $25M due May 28. Sales: rural hospitals, hospital districts, training partners, workforce and innovation projects.\nSouth Carolina \u2014 Year 1 grants due Jun. 1 across Connections to Care, Leveling Up, Wellness Within Reach, and Shoring Up; state award approx. $200M. Sales: EHR, RPM, telehealth, resource database, mobile units, crisis/pop-up clinics, workforce/facility upgrades.\nGeorgia \u2014 Advisory Council applications due May 1. Sales: stakeholder visibility and partner-entry ahead of funding releases.\n\nWEST\nOklahoma \u2014 Multiple open lanes: Doula RFI due May 8; ROOTS school grants up to $10K/site due May 25; Chronic Disease Management due Jun. 8; Rural Regional Reorientation grants up to $4M due Jun. 12. Sales: maternal health, school care, chronic disease platforms, regional redesign, mobile/telehealth.\nOregon \u2014 Catalyst Awards RFGP due May 26; state award $197.3M Year 1; requests generally $200K\u2013$5M per budget period. Sales: ready-to-launch rural integration and digital health projects.\nNevada \u2014 Flex Fund Round 1 due Apr. 30; Rural Tribal Health Transformation due May 29. Sales: rural hospitals, tribal health, FQHCs, mobile access, equipment, telehealth.\nMontana \u2014 Center of Excellence RFPs posted for strategy/analytics and implementation support. Sales: analytics, PMO, implementation, digital strategy, evaluation, provider engagement.\nUtah \u2014 Forecasted May windows: behavioral health-primary care integration up to $2M Year 1; rural clinical preceptor stipends up to $200K; GME strategic plan up to $1.6M. Sales: provider workflow, integration tech, training infrastructure, telehealth.\nNew Mexico \u2014 RHTP Initiatives RFI posted on HCA procurement page. Sales: submit market intelligence and build early agency/partner positioning.\n\nWHAT SALES SHOULD DO NEXT\n1. Triage by deadline and account ownership.\n2. Confirm applicant eligibility before solutioning.\n3. Sell through eligible applicants where agency communications are restricted.\n4. Use practical bundles: telehealth, RPM, mobile care, AV/collaboration, cybersecurity, dashboards, HIE/interoperability, workflow tools, training and implementation.\n5. Update CRM with state, deadline, buyer type, dollars, and Solutionz fit.\n";
-const OPEN_ACTIVITY_EMAIL_HTML = "<div style=\"font-family:Arial,Helvetica,sans-serif;color:#1f2937;line-height:1.45;max-width:900px\">\n  <h2 style=\"margin:0 0 8px;color:#12395b\">RHTP Active/Open Opportunities \u2014 May 7, 2026</h2>\n  <p style=\"margin:0 0 12px\"><strong>Live tracker:</strong> <a href=\"./index.html\">RHTP State Tracker</a></p>\n  <div style=\"border:1px solid #f0d3a2;border-left:6px solid #b96a00;border-radius:10px;padding:10px 12px;margin:12px 0;background:#fff8ef\">\n    <h3 style=\"margin:0 0 8px;color:#b96a00\">Immediate Action</h3>\n    <ul style=\"margin:0 0 0 18px;padding:0\">\n      <li><strong>Apr. 30:</strong> North Dakota CAH workforce retention funding.</li>\n      <li><strong>Apr. 30:</strong> Nevada Flex Fund Round 1.</li>\n      <li><strong>May 1:</strong> Indiana LOIs and Georgia GREAT Health Advisory Council applications.</li>\n      <li><strong>May 8:</strong> Oklahoma Doula Program RFI.</li>\n      <li><strong>May 22:</strong> Kentucky dental hygiene RFA and North Dakota prevention/wellness grants.</li>\n      <li><strong>May 26:</strong> Oregon Catalyst Awards.</li>\n      <li><strong>May 27\u201328:</strong> Texas Rural Texas Strong and Rural Hospital Innovation RFAs.</li>\n      <li><strong>May 29:</strong> Nevada Rural Tribal Health Transformation.</li>\n      <li><strong>Jun. 1:</strong> Pennsylvania Rapid Response Stabilization and South Carolina Year 1 grants.</li>\n      <li><strong>Jun. 8 / Jun. 12:</strong> Oklahoma Chronic Disease Management and Rural Regional Reorientation.</li>\n    </ul>\n  </div>\n  <h3 style=\"color:#7c3aed;border-bottom:2px solid #7c3aed;padding-bottom:4px\">Mid-Atlantic</h3>\n  <p><strong>West Virginia</strong> \u2014 Posted Apr. 28. First $28.56M tranche across Mountain State Care Force, HealthTech Appalachia, and Connected Care Grid. Materials through wvOASIS; AFA webinar date pending. <strong>Sales:</strong> workforce, digital backbone, data source, evaluation, connected care, cyber, telehealth.</p>\n  <p><strong>Maryland</strong> \u2014 Active near-term RFA/RFP path. Materials point to combined transformation RFA, mobile health, telehealth/HIE, CRISP, behavioral health, and value-based lanes. <strong>Sales:</strong> support applicants with tech scopes and budgets.</p>\n  <p><strong>Kentucky</strong> \u2014 Posted Apr. 20. Accredited Dental Hygiene Programs RFA, due May 22; office hours May 8. <strong>Sales:</strong> oral-health mobility, public-health tech, workforce training, telehealth wraparound.</p>\n  <h3 style=\"color:#2563eb;border-bottom:2px solid #2563eb;padding-bottom:4px\">Northeast</h3>\n  <p><strong>Pennsylvania</strong> \u2014 Opens May 1. $25M Rapid Response Stabilization, $10K\u2013$1M payments, due Jun. 1 or until cap. <strong>Sales:</strong> rural hospitals/providers, equipment, infrastructure, telehealth, EMS, maternal/behavioral health.</p>\n  <p><strong>North Dakota</strong> \u2014 Apr. 22\u201327 activity. CAH workforce retention approx. $10M due Apr. 30; $3.6M community/prevention wave due May 22; TA calls May 4\u20136. <strong>Sales:</strong> CAH workforce, school/community prevention, data and implementation support.</p>\n  <p><strong>Indiana</strong> \u2014 GROW Regional Grants LOIs due May 1, full applications Jul. 1; expected $120M in Budget Period 1. <strong>Sales:</strong> regional coalition strategy, telehealth, HIE, dashboards, workflow.</p>\n  <p><strong>Ohio</strong> \u2014 Healthier Ohio / RHTP solicitation lane active with chronic disease and rural modernization paths; confirm package-specific dollars and deadlines. <strong>Sales:</strong> technical assistance, hubs, workforce, EMS, pharmacy EMR, maternal health.</p>\n  <p><strong>Nebraska</strong> \u2014 RHTP workforce incentive/sustainability rolling due dates May 1 and Jun. 1. <strong>Sales:</strong> workforce retention, provider sustainability, data/reporting, implementation support.</p>\n  <h3 style=\"color:#ea580c;border-bottom:2px solid #ea580c;padding-bottom:4px\">Southeast</h3>\n  <p><strong>Florida</strong> \u2014 Active RFA wave with more than $188M identified across competitive bundles. <strong>Sales:</strong> work through eligible applicants, respect restricted communications, focus on telehealth, RPM, diagnostics, workforce and value-based workflows.</p>\n  <p><strong>Texas</strong> \u2014 Rural Texas Strong Initiative 4 due May 27; Rural Hospital FY2026 Innovation Grant $25M due May 28. <strong>Sales:</strong> rural hospitals, hospital districts, training partners, workforce and innovation projects.</p>\n  <p><strong>South Carolina</strong> \u2014 Year 1 grants due Jun. 1 across Connections to Care, Leveling Up, Wellness Within Reach, and Shoring Up; state award approx. $200M. <strong>Sales:</strong> EHR, RPM, telehealth, resource database, mobile units, crisis/pop-up clinics, workforce/facility upgrades.</p>\n  <p><strong>Georgia</strong> \u2014 Advisory Council applications due May 1. <strong>Sales:</strong> stakeholder visibility and partner-entry ahead of funding releases.</p>\n  <h3 style=\"color:#0f766e;border-bottom:2px solid #0f766e;padding-bottom:4px\">West</h3>\n  <p><strong>Oklahoma</strong> \u2014 Multiple open lanes: Doula RFI due May 8; ROOTS school grants up to $10K/site due May 25; Chronic Disease Management due Jun. 8; Rural Regional Reorientation grants up to $4M due Jun. 12. <strong>Sales:</strong> maternal health, school care, chronic disease platforms, regional redesign, mobile/telehealth.</p>\n  <p><strong>Oregon</strong> \u2014 Catalyst Awards RFGP due May 26; state award $197.3M Year 1; requests generally $200K\u2013$5M per budget period. <strong>Sales:</strong> ready-to-launch rural integration and digital health projects.</p>\n  <p><strong>Nevada</strong> \u2014 Flex Fund Round 1 due Apr. 30; Rural Tribal Health Transformation due May 29. <strong>Sales:</strong> rural hospitals, tribal health, FQHCs, mobile access, equipment, telehealth.</p>\n  <p><strong>Montana</strong> \u2014 Center of Excellence RFPs posted for strategy/analytics and implementation support. <strong>Sales:</strong> analytics, PMO, implementation, digital strategy, evaluation, provider engagement.</p>\n  <p><strong>Utah</strong> \u2014 Forecasted May windows: behavioral health-primary care integration up to $2M Year 1; rural clinical preceptor stipends up to $200K; GME strategic plan up to $1.6M. <strong>Sales:</strong> provider workflow, integration tech, training infrastructure, telehealth.</p>\n  <p><strong>New Mexico</strong> \u2014 RHTP Initiatives RFI posted on HCA procurement page. <strong>Sales:</strong> submit market intelligence and build early agency/partner positioning.</p>\n  <div style=\"border:1px solid #d8dee6;border-radius:10px;padding:10px 12px;margin-top:14px;background:#fbfdff\">\n    <h3 style=\"margin:0 0 8px;color:#12395b\">What sales should do next</h3>\n    <ol style=\"margin:0 0 0 18px;padding:0\">\n      <li>Triage by deadline and account ownership.</li>\n      <li>Confirm applicant eligibility before solutioning.</li>\n      <li>Sell through eligible applicants where agency communications are restricted.</li>\n      <li>Use practical bundles: telehealth, RPM, mobile care, AV/collaboration, cybersecurity, dashboards, HIE/interoperability, workflow tools, training and implementation.</li>\n      <li>Update CRM with state, deadline, buyer type, dollars, and Solutionz fit.</li>\n    </ol>\n  </div>\n</div>";
+const OPEN_ACTIVITY_EMAIL_TEXT = "RHTP Active/Open Opportunities \u2014 May 13, 2026\n\nLive tracker: ./index.html\n\nIMMEDIATE ACTION\n- Apr. 30: North Dakota CAH workforce retention funding.\n- Apr. 30: Nevada Flex Fund Round 1.\n- May 1: Indiana LOIs and Georgia GREAT Health Advisory Council applications.\n- May 8: Oklahoma Doula Program RFI.\n- May 22: Kentucky dental hygiene RFA and North Dakota prevention/wellness grants.\n- May 26: Oregon Catalyst Awards.\n- May 27\u201328: Texas Rural Texas Strong and Rural Hospital Innovation RFAs.\n- May 29: Nevada Rural Tribal Health Transformation.\n- Jun. 1: Pennsylvania Rapid Response Stabilization and South Carolina Year 1 grants.\n- Jun. 8 / Jun. 12: Oklahoma Chronic Disease Management and Rural Regional Reorientation.\n\nMID-ATLANTIC\nWest Virginia \u2014 Posted Apr. 28. First $28.56M tranche across Mountain State Care Force, HealthTech Appalachia, and Connected Care Grid. Materials through wvOASIS; AFA webinar date pending. Sales: workforce, digital backbone, data source, evaluation, connected care, cyber, telehealth.\nMaryland \u2014 Active near-term RFA/RFP path. Materials point to combined transformation RFA, mobile health, telehealth/HIE, CRISP, behavioral health, and value-based lanes. Sales: support applicants with tech scopes and budgets.\nKentucky \u2014 Posted Apr. 20. Accredited Dental Hygiene Programs RFA, due May 22; office hours May 8. Sales: oral-health mobility, public-health tech, workforce training, telehealth wraparound.\n\nNORTHEAST\nPennsylvania \u2014 Opens May 1. $25M Rapid Response Stabilization, $10K\u2013$1M payments, due Jun. 1 or until cap. Sales: rural hospitals/providers, equipment, infrastructure, telehealth, EMS, maternal/behavioral health.\nNorth Dakota \u2014 Apr. 22\u201327 activity. CAH workforce retention approx. $10M due Apr. 30; $3.6M community/prevention wave due May 22; TA calls May 4\u20136. Sales: CAH workforce, school/community prevention, data and implementation support.\nIndiana \u2014 GROW Regional Grants LOIs due May 1, full applications Jul. 1; expected $120M in Budget Period 1. Sales: join regional coalition strategy, telehealth, HIE, dashboards, workflow.\nOhio \u2014 Healthier Ohio / RHTP solicitation lane active with chronic disease and rural modernization paths; confirm package-specific dollars and deadlines. Sales: technical assistance, hubs, workforce, EMS, pharmacy EMR, maternal health.\nNebraska \u2014 RHTP workforce incentive/sustainability rolling due dates May 1 and Jun. 1. Sales: workforce retention, provider sustainability, data/reporting, implementation support.\n\nSOUTHEAST\nFlorida \u2014 Active RFA wave with more than $188M identified across competitive bundles. Sales: work through eligible applicants, respect restricted communications, focus on telehealth, RPM, diagnostics, workforce and value-based workflows.\nTexas \u2014 Rural Texas Strong Initiative 4 due May 27; Rural Hospital FY2026 Innovation Grant $25M due May 28. Sales: rural hospitals, hospital districts, training partners, workforce and innovation projects.\nSouth Carolina \u2014 Year 1 grants due Jun. 1 across Connections to Care, Leveling Up, Wellness Within Reach, and Shoring Up; state award approx. $200M. Sales: EHR, RPM, telehealth, resource database, mobile units, crisis/pop-up clinics, workforce/facility upgrades.\nGeorgia \u2014 Advisory Council applications due May 1. Sales: stakeholder visibility and partner-entry ahead of funding releases.\n\nWEST\nOklahoma \u2014 Multiple open lanes: Doula RFI due May 8; ROOTS school grants up to $10K/site due May 25; Chronic Disease Management due Jun. 8; Rural Regional Reorientation grants up to $4M due Jun. 12. Sales: maternal health, school care, chronic disease platforms, regional redesign, mobile/telehealth.\nOregon \u2014 Catalyst Awards RFGP due May 26; state award $197.3M Year 1; requests generally $200K\u2013$5M per budget period. Sales: ready-to-launch rural integration and digital health projects.\nNevada \u2014 Flex Fund Round 1 due Apr. 30; Rural Tribal Health Transformation due May 29. Sales: rural hospitals, tribal health, FQHCs, mobile access, equipment, telehealth.\nMontana \u2014 Center of Excellence RFPs posted for strategy/analytics and implementation support. Sales: analytics, PMO, implementation, digital strategy, evaluation, provider engagement.\nUtah \u2014 Forecasted May windows: behavioral health-primary care integration up to $2M Year 1; rural clinical preceptor stipends up to $200K; GME strategic plan up to $1.6M. Sales: provider workflow, integration tech, training infrastructure, telehealth.\nNew Mexico \u2014 RHTP Initiatives RFI posted on HCA procurement page. Sales: submit market intelligence and build early agency/partner positioning.\n\nWHAT SALES SHOULD DO NEXT\n1. Triage by deadline and account ownership.\n2. Confirm applicant eligibility before solutioning.\n3. Sell through eligible applicants where agency communications are restricted.\n4. Use practical bundles: telehealth, RPM, mobile care, AV/collaboration, cybersecurity, dashboards, HIE/interoperability, workflow tools, training and implementation.\n5. Update CRM with state, deadline, buyer type, dollars, and Solutionz fit.\n";
+const OPEN_ACTIVITY_EMAIL_HTML = "<div style=\"font-family:Arial,Helvetica,sans-serif;color:#1f2937;line-height:1.45;max-width:900px\">\n  <h2 style=\"margin:0 0 8px;color:#12395b\">RHTP Active/Open Opportunities \u2014 May 13, 2026</h2>\n  <p style=\"margin:0 0 12px\"><strong>Live tracker:</strong> <a href=\"./index.html\">RHTP State Tracker</a></p>\n  <div style=\"border:1px solid #f0d3a2;border-left:6px solid #b96a00;border-radius:10px;padding:10px 12px;margin:12px 0;background:#fff8ef\">\n    <h3 style=\"margin:0 0 8px;color:#b96a00\">Immediate Action</h3>\n    <ul style=\"margin:0 0 0 18px;padding:0\">\n      <li><strong>Apr. 30:</strong> North Dakota CAH workforce retention funding.</li>\n      <li><strong>Apr. 30:</strong> Nevada Flex Fund Round 1.</li>\n      <li><strong>May 1:</strong> Indiana LOIs and Georgia GREAT Health Advisory Council applications.</li>\n      <li><strong>May 8:</strong> Oklahoma Doula Program RFI.</li>\n      <li><strong>May 22:</strong> Kentucky dental hygiene RFA and North Dakota prevention/wellness grants.</li>\n      <li><strong>May 26:</strong> Oregon Catalyst Awards.</li>\n      <li><strong>May 27\u201328:</strong> Texas Rural Texas Strong and Rural Hospital Innovation RFAs.</li>\n      <li><strong>May 29:</strong> Nevada Rural Tribal Health Transformation.</li>\n      <li><strong>Jun. 1:</strong> Pennsylvania Rapid Response Stabilization and South Carolina Year 1 grants.</li>\n      <li><strong>Jun. 8 / Jun. 12:</strong> Oklahoma Chronic Disease Management and Rural Regional Reorientation.</li>\n    </ul>\n  </div>\n  <h3 style=\"color:#7c3aed;border-bottom:2px solid #7c3aed;padding-bottom:4px\">Mid-Atlantic</h3>\n  <p><strong>West Virginia</strong> \u2014 Posted Apr. 28. First $28.56M tranche across Mountain State Care Force, HealthTech Appalachia, and Connected Care Grid. Materials through wvOASIS; AFA webinar date pending. <strong>Sales:</strong> workforce, digital backbone, data source, evaluation, connected care, cyber, telehealth.</p>\n  <p><strong>Maryland</strong> \u2014 Active near-term RFA/RFP path. Materials point to combined transformation RFA, mobile health, telehealth/HIE, CRISP, behavioral health, and value-based lanes. <strong>Sales:</strong> support applicants with tech scopes and budgets.</p>\n  <p><strong>Kentucky</strong> \u2014 Posted Apr. 20. Accredited Dental Hygiene Programs RFA, due May 22; office hours May 8. <strong>Sales:</strong> oral-health mobility, public-health tech, workforce training, telehealth wraparound.</p>\n  <h3 style=\"color:#2563eb;border-bottom:2px solid #2563eb;padding-bottom:4px\">Northeast</h3>\n  <p><strong>Pennsylvania</strong> \u2014 Opens May 1. $25M Rapid Response Stabilization, $10K\u2013$1M payments, due Jun. 1 or until cap. <strong>Sales:</strong> rural hospitals/providers, equipment, infrastructure, telehealth, EMS, maternal/behavioral health.</p>\n  <p><strong>North Dakota</strong> \u2014 Apr. 22\u201327 activity. CAH workforce retention approx. $10M due Apr. 30; $3.6M community/prevention wave due May 22; TA calls May 4\u20136. <strong>Sales:</strong> CAH workforce, school/community prevention, data and implementation support.</p>\n  <p><strong>Indiana</strong> \u2014 GROW Regional Grants LOIs due May 1, full applications Jul. 1; expected $120M in Budget Period 1. <strong>Sales:</strong> regional coalition strategy, telehealth, HIE, dashboards, workflow.</p>\n  <p><strong>Ohio</strong> \u2014 Healthier Ohio / RHTP solicitation lane active with chronic disease and rural modernization paths; confirm package-specific dollars and deadlines. <strong>Sales:</strong> technical assistance, hubs, workforce, EMS, pharmacy EMR, maternal health.</p>\n  <p><strong>Nebraska</strong> \u2014 RHTP workforce incentive/sustainability rolling due dates May 1 and Jun. 1. <strong>Sales:</strong> workforce retention, provider sustainability, data/reporting, implementation support.</p>\n  <h3 style=\"color:#ea580c;border-bottom:2px solid #ea580c;padding-bottom:4px\">Southeast</h3>\n  <p><strong>Florida</strong> \u2014 Active RFA wave with more than $188M identified across competitive bundles. <strong>Sales:</strong> work through eligible applicants, respect restricted communications, focus on telehealth, RPM, diagnostics, workforce and value-based workflows.</p>\n  <p><strong>Texas</strong> \u2014 Rural Texas Strong Initiative 4 due May 27; Rural Hospital FY2026 Innovation Grant $25M due May 28. <strong>Sales:</strong> rural hospitals, hospital districts, training partners, workforce and innovation projects.</p>\n  <p><strong>South Carolina</strong> \u2014 Year 1 grants due Jun. 1 across Connections to Care, Leveling Up, Wellness Within Reach, and Shoring Up; state award approx. $200M. <strong>Sales:</strong> EHR, RPM, telehealth, resource database, mobile units, crisis/pop-up clinics, workforce/facility upgrades.</p>\n  <p><strong>Georgia</strong> \u2014 Advisory Council applications due May 1. <strong>Sales:</strong> stakeholder visibility and partner-entry ahead of funding releases.</p>\n  <h3 style=\"color:#0f766e;border-bottom:2px solid #0f766e;padding-bottom:4px\">West</h3>\n  <p><strong>Oklahoma</strong> \u2014 Multiple open lanes: Doula RFI due May 8; ROOTS school grants up to $10K/site due May 25; Chronic Disease Management due Jun. 8; Rural Regional Reorientation grants up to $4M due Jun. 12. <strong>Sales:</strong> maternal health, school care, chronic disease platforms, regional redesign, mobile/telehealth.</p>\n  <p><strong>Oregon</strong> \u2014 Catalyst Awards RFGP due May 26; state award $197.3M Year 1; requests generally $200K\u2013$5M per budget period. <strong>Sales:</strong> ready-to-launch rural integration and digital health projects.</p>\n  <p><strong>Nevada</strong> \u2014 Flex Fund Round 1 due Apr. 30; Rural Tribal Health Transformation due May 29. <strong>Sales:</strong> rural hospitals, tribal health, FQHCs, mobile access, equipment, telehealth.</p>\n  <p><strong>Montana</strong> \u2014 Center of Excellence RFPs posted for strategy/analytics and implementation support. <strong>Sales:</strong> analytics, PMO, implementation, digital strategy, evaluation, provider engagement.</p>\n  <p><strong>Utah</strong> \u2014 Forecasted May windows: behavioral health-primary care integration up to $2M Year 1; rural clinical preceptor stipends up to $200K; GME strategic plan up to $1.6M. <strong>Sales:</strong> provider workflow, integration tech, training infrastructure, telehealth.</p>\n  <p><strong>New Mexico</strong> \u2014 RHTP Initiatives RFI posted on HCA procurement page. <strong>Sales:</strong> submit market intelligence and build early agency/partner positioning.</p>\n  <div style=\"border:1px solid #d8dee6;border-radius:10px;padding:10px 12px;margin-top:14px;background:#fbfdff\">\n    <h3 style=\"margin:0 0 8px;color:#12395b\">What sales should do next</h3>\n    <ol style=\"margin:0 0 0 18px;padding:0\">\n      <li>Triage by deadline and account ownership.</li>\n      <li>Confirm applicant eligibility before solutioning.</li>\n      <li>Sell through eligible applicants where agency communications are restricted.</li>\n      <li>Use practical bundles: telehealth, RPM, mobile care, AV/collaboration, cybersecurity, dashboards, HIE/interoperability, workflow tools, training and implementation.</li>\n      <li>Update CRM with state, deadline, buyer type, dollars, and Solutionz fit.</li>\n    </ol>\n  </div>\n</div>";
 
 
 function emailOpenActivity(){
-  const subject="RHTP Open Activity Update | May 7, 2026";
-  const html="<h2 style='color:#12395b;margin:0 0 8px'>RHTP Open Activity Update | May 7, 2026</h2>\n<p><strong>Tracker:</strong> <a href='./index.html'>Open the RHTP Tracker</a></p>\n<p style='margin:8px 0 14px'>Active/open and soon-to-open initiatives only. Sales reps should confirm applicant eligibility, work through eligible providers or coalitions where communications are restricted, and package Solutionz capabilities around telehealth, mobile care, AV/collaboration, cybersecurity, data/HIE, RPM, workflow, and implementation support.</p>\n<h3 style='color:#7c3aed'>Mid-Atlantic</h3><ul>\n<li><strong>Delaware</strong> \u2014 RHTP Support Services RFP posts <strong>May 4</strong>; questions due <strong>May 18</strong>; proposals due <strong>June 22</strong>. Money: contract value TBD. <em>Engage:</em> PMO, implementation support, evaluation, monitoring, reporting, and rural-provider coordination.</li>\n<li><strong>West Virginia</strong> \u2014 First tranche <strong>$28.56M</strong> active through wvOASIS; webinar still pending. <em>Engage:</em> workforce, HealthTech Appalachia, connected care grid, digital backbone, cyber, and telehealth.</li>\n<li><strong>Kentucky</strong> \u2014 Accredited Dental Hygiene Programs RFA; office hours <strong>May 8</strong>; due <strong>May 22</strong>. Money: <strong>$9.9M</strong> available beginning July 1. <em>Engage:</em> simulation/clinic equipment, AV, mobile oral-health workflows, and training infrastructure.</li>\n<li><strong>Maryland</strong> \u2014 Near-term RFA/RFP lanes for telehealth/HIE, mobile health, behavioral health, workforce, and transformation funds. <em>Engage:</em> prepare partner-led budgets and CRISP/HIE-aligned tech language.</li></ul>\n<h3 style='color:#2563eb'>Northeast</h3><ul>\n<li><strong>Pennsylvania</strong> \u2014 <strong>$25M</strong> Rapid Response Stabilization opens <strong>May 1</strong>; due <strong>June 1</strong> or until cap; payments <strong>$10K\u2013$1M</strong>. <em>Engage:</em> rural hospitals/providers needing equipment, infrastructure, telehealth, EMS, maternal/BH access, or stabilization support.</li>\n<li><strong>Minnesota</strong> \u2014 Direct allocations extended to <strong>May 26</strong>; HIT TA RFP due <strong>May 22</strong>. Money: from <strong>$193.1M</strong> BP1 award; contract amount TBD. <em>Engage:</em> HIT/RPM/telehealth/cyber guidance and subgrantee implementation support.</li>\n<li><strong>North Dakota</strong> \u2014 <strong>$3.6M</strong> community/school prevention wave due <strong>May 22</strong>; TA calls <strong>May 4\u20136</strong>. <em>Engage:</em> prevention partners, schools, rural clinics, community dashboards, and implementation support.</li>\n<li><strong>Indiana</strong> \u2014 GROW Regional Grants LOIs due <strong>May 1</strong>; full applications due <strong>July 1</strong>. <em>Engage:</em> regional coalitions, HIE, telehealth, dashboards, workforce tech, and innovation support.</li>\n<li><strong>Ohio</strong> \u2014 CHW Training and Technical Assistance solicitation due <strong>June 15</strong>. Money: TBD. <em>Engage:</em> training platforms, recorded learning, community of practice, reporting, and workflow support.</li></ul>\n<h3 style='color:#ea580c'>Southeast</h3><ul>\n<li><strong>Florida</strong> \u2014 More than <strong>$188M</strong> RHTP RFA wave; applications due <strong>June 10</strong>. <em>Engage:</em> observe restricted communications and support eligible applicants with technology, specialty access, diagnostics, workforce, cyber, and evaluation packages.</li>\n<li><strong>Texas</strong> \u2014 Rural Texas Strong / Rural Hospital Innovation RFAs due <strong>May 27</strong> and <strong>May 28</strong>; one lane includes <strong>$25M</strong>. <em>Engage:</em> rural hospitals, hospital districts, workforce and training partners.</li>\n<li><strong>South Carolina</strong> \u2014 Four Year 1 grant tracks due <strong>June 1</strong>. <em>Engage:</em> EHR, RPM, telehealth, mobile/pop-up clinics, behavioral health, resource database, and facility/workforce support.</li>\n<li><strong>Georgia</strong> \u2014 Advisory Council applications due <strong>May 1</strong>; funding still upcoming. <em>Engage:</em> stakeholder access and partner discovery ahead of future releases.</li></ul>\n<h3 style='color:#0f766e'>West</h3><ul>\n<li><strong>Washington</strong> \u2014 Mobile Health Assistance Van Program RFI due <strong>May 31</strong>. Money: TBD. <em>Engage:</em> mobile health, screenings, telehealth access, chronic disease prevention, outreach ops, connectivity, and field data capture.</li>\n<li><strong>Oklahoma</strong> \u2014 Doula RFI due <strong>May 8</strong>; ROOTS grants due <strong>May 25</strong> up to <strong>$10K/site</strong>; Chronic Disease due <strong>June 8</strong>; Rural Regional Reorientation due <strong>June 12</strong> up to <strong>$4M</strong>. <em>Engage:</em> schools, maternal health, chronic disease tech, regional coalitions.</li>\n<li><strong>Oregon</strong> \u2014 Catalyst Awards RFGP due <strong>May 26</strong>; project requests generally <strong>$200K\u2013$5M</strong> per budget period. <em>Engage:</em> ready-to-launch community projects, telehealth, workforce, data, mobile care, and implementation speed.</li>\n<li><strong>Nevada</strong> \u2014 Rural Tribal Health Transformation due <strong>May 29</strong>. <em>Engage:</em> tribal/rural health, FQHCs, mobile access, equipment, cyber, and care coordination.</li>\n<li><strong>Utah</strong> \u2014 May funding windows: BH-primary care up to <strong>$2M</strong> Year 1, preceptor stipends up to <strong>$200K</strong>, GME planning up to <strong>$1.6M</strong>. <em>Engage:</em> rural behavioral/primary-care integration, GME planning, workforce, and provider workflow tech.</li>\n<li><strong>Montana</strong> \u2014 CoE RFPs active; deadlines package-specific. <em>Engage:</em> analytics, implementation support, PMO, digital strategy, and provider transformation operations.</li></ul>\n<p><strong>Next step:</strong> Reps should triage by deadline, confirm eligibility, identify the likely applicant or prime, and attach Solutionz as the technology and implementation partner before submissions close.</p>";
-  const plain="RHTP Open Activity Update | May 7, 2026\nTracker: Open the RHTP Tracker\nActive/open and soon-to-open initiatives only. Sales reps should confirm applicant eligibility, work through eligible providers or coalitions where communications are restricted, and package Solutionz capabilities around telehealth, mobile care, AV/collaboration, cybersecurity, data/HIE, RPM, workflow, and implementation support.\nMid-Atlantic\nDelaware \u2014 RHTP Support Services RFP posts May 4; questions due May 18; proposals due June 22. Money: contract value TBD. Engage: PMO, implementation support, evaluation, monitoring, reporting, and rural-provider coordination.\nWest Virginia \u2014 First tranche $28.56M active through wvOASIS; webinar still pending. Engage: workforce, HealthTech Appalachia, connected care grid, digital backbone, cyber, and telehealth.\nKentucky \u2014 Accredited Dental Hygiene Programs RFA; office hours May 8; due May 22. Money: $9.9M available beginning July 1. Engage: simulation/clinic equipment, AV, mobile oral-health workflows, and training infrastructure.\nMaryland \u2014 Near-term RFA/RFP lanes for telehealth/HIE, mobile health, behavioral health, workforce, and transformation funds. Engage: prepare partner-led budgets and CRISP/HIE-aligned tech language.\nNortheast\nPennsylvania \u2014 $25M Rapid Response Stabilization opens May 1; due June 1 or until cap; payments $10K\u2013$1M. Engage: rural hospitals/providers needing equipment, infrastructure, telehealth, EMS, maternal/BH access, or stabilization support.\nMinnesota \u2014 Direct allocations extended to May 26; HIT TA RFP due May 22. Money: from $193.1M BP1 award; contract amount TBD. Engage: HIT/RPM/telehealth/cyber guidance and subgrantee implementation support.\nNorth Dakota \u2014 $3.6M community/school prevention wave due May 22; TA calls May 4\u20136. Engage: prevention partners, schools, rural clinics, community dashboards, and implementation support.\nIndiana \u2014 GROW Regional Grants LOIs due May 1; full applications due July 1. Engage: regional coalitions, HIE, telehealth, dashboards, workforce tech, and innovation support.\nOhio \u2014 CHW Training and Technical Assistance solicitation due June 15. Money: TBD. Engage: training platforms, recorded learning, community of practice, reporting, and workflow support.\nSoutheast\nFlorida \u2014 More than $188M RHTP RFA wave; applications due June 10. Engage: observe restricted communications and support eligible applicants with technology, specialty access, diagnostics, workforce, cyber, and evaluation packages.\nTexas \u2014 Rural Texas Strong / Rural Hospital Innovation RFAs due May 27 and May 28; one lane includes $25M. Engage: rural hospitals, hospital districts, workforce and training partners.\nSouth Carolina \u2014 Four Year 1 grant tracks due June 1. Engage: EHR, RPM, telehealth, mobile/pop-up clinics, behavioral health, resource database, and facility/workforce support.\nGeorgia \u2014 Advisory Council applications due May 1; funding still upcoming. Engage: stakeholder access and partner discovery ahead of future releases.\nWest\nWashington \u2014 Mobile Health Assistance Van Program RFI due May 31. Money: TBD. Engage: mobile health, screenings, telehealth access, chronic disease prevention, outreach ops, connectivity, and field data capture.\nOklahoma \u2014 Doula RFI due May 8; ROOTS grants due May 25 up to $10K/site; Chronic Disease due June 8; Rural Regional Reorientation due June 12 up to $4M. Engage: schools, maternal health, chronic disease tech, regional coalitions.\nOregon \u2014 Catalyst Awards RFGP due May 26; project requests generally $200K\u2013$5M per budget period. Engage: ready-to-launch community projects, telehealth, workforce, data, mobile care, and implementation speed.\nNevada \u2014 Rural Tribal Health Transformation due May 29. Engage: tribal/rural health, FQHCs, mobile access, equipment, cyber, and care coordination.\nUtah \u2014 May funding windows: BH-primary care up to $2M Year 1, preceptor stipends up to $200K, GME planning up to $1.6M. Engage: rural behavioral/primary-care integration, GME planning, workforce, and provider workflow tech.\nMontana \u2014 CoE RFPs active; deadlines package-specific. Engage: analytics, implementation support, PMO, digital strategy, and provider transformation operations.\nNext step: Reps should triage by deadline, confirm eligibility, identify the likely applicant or prime, and attach Solutionz as the technology and implementation partner before submissions close.";
+  const subject="RHTP Open Activity Update | May 13, 2026";
+  const html="<h2 style='color:#12395b;margin:0 0 8px'>RHTP Open Activity Update | May 13, 2026</h2>\n<p><strong>Tracker:</strong> <a href='./index.html'>Open the RHTP Tracker</a></p>\n<p style='margin:8px 0 14px'>Active/open and soon-to-open initiatives only. Sales reps should confirm applicant eligibility, work through eligible providers or coalitions where communications are restricted, and package Solutionz capabilities around telehealth, mobile care, AV/collaboration, cybersecurity, data/HIE, RPM, workflow, and implementation support.</p>\n<h3 style='color:#7c3aed'>Mid-Atlantic</h3><ul>\n<li><strong>Delaware</strong> \u2014 RHTP Support Services RFP posts <strong>May 4</strong>; questions due <strong>May 18</strong>; proposals due <strong>June 22</strong>. Money: contract value TBD. <em>Engage:</em> PMO, implementation support, evaluation, monitoring, reporting, and rural-provider coordination.</li>\n<li><strong>West Virginia</strong> \u2014 First tranche <strong>$28.56M</strong> active through wvOASIS; webinar still pending. <em>Engage:</em> workforce, HealthTech Appalachia, connected care grid, digital backbone, cyber, and telehealth.</li>\n<li><strong>Kentucky</strong> \u2014 Accredited Dental Hygiene Programs RFA; office hours <strong>May 8</strong>; due <strong>May 22</strong>. Money: <strong>$9.9M</strong> available beginning July 1. <em>Engage:</em> simulation/clinic equipment, AV, mobile oral-health workflows, and training infrastructure.</li>\n<li><strong>Maryland</strong> \u2014 Near-term RFA/RFP lanes for telehealth/HIE, mobile health, behavioral health, workforce, and transformation funds. <em>Engage:</em> prepare partner-led budgets and CRISP/HIE-aligned tech language.</li></ul>\n<h3 style='color:#2563eb'>Northeast</h3><ul>\n<li><strong>Pennsylvania</strong> \u2014 <strong>$25M</strong> Rapid Response Stabilization opens <strong>May 1</strong>; due <strong>June 1</strong> or until cap; payments <strong>$10K\u2013$1M</strong>. <em>Engage:</em> rural hospitals/providers needing equipment, infrastructure, telehealth, EMS, maternal/BH access, or stabilization support.</li>\n<li><strong>Minnesota</strong> \u2014 Direct allocations extended to <strong>May 26</strong>; HIT TA RFP due <strong>May 22</strong>. Money: from <strong>$193.1M</strong> BP1 award; contract amount TBD. <em>Engage:</em> HIT/RPM/telehealth/cyber guidance and subgrantee implementation support.</li>\n<li><strong>North Dakota</strong> \u2014 <strong>$3.6M</strong> community/school prevention wave due <strong>May 22</strong>; TA calls <strong>May 4\u20136</strong>. <em>Engage:</em> prevention partners, schools, rural clinics, community dashboards, and implementation support.</li>\n<li><strong>Indiana</strong> \u2014 GROW Regional Grants LOIs due <strong>May 1</strong>; full applications due <strong>July 1</strong>. <em>Engage:</em> regional coalitions, HIE, telehealth, dashboards, workforce tech, and innovation support.</li>\n<li><strong>Ohio</strong> \u2014 CHW Training and Technical Assistance solicitation due <strong>June 15</strong>. Money: TBD. <em>Engage:</em> training platforms, recorded learning, community of practice, reporting, and workflow support.</li></ul>\n<h3 style='color:#ea580c'>Southeast</h3><ul>\n<li><strong>Florida</strong> \u2014 More than <strong>$188M</strong> RHTP RFA wave; applications due <strong>June 10</strong>. <em>Engage:</em> observe restricted communications and support eligible applicants with technology, specialty access, diagnostics, workforce, cyber, and evaluation packages.</li>\n<li><strong>Texas</strong> \u2014 Rural Texas Strong / Rural Hospital Innovation RFAs due <strong>May 27</strong> and <strong>May 28</strong>; one lane includes <strong>$25M</strong>. <em>Engage:</em> rural hospitals, hospital districts, workforce and training partners.</li>\n<li><strong>South Carolina</strong> \u2014 Four Year 1 grant tracks due <strong>June 1</strong>. <em>Engage:</em> EHR, RPM, telehealth, mobile/pop-up clinics, behavioral health, resource database, and facility/workforce support.</li>\n<li><strong>Georgia</strong> \u2014 Advisory Council applications due <strong>May 1</strong>; funding still upcoming. <em>Engage:</em> stakeholder access and partner discovery ahead of future releases.</li></ul>\n<h3 style='color:#0f766e'>West</h3><ul>\n<li><strong>Washington</strong> \u2014 Mobile Health Assistance Van Program RFI due <strong>May 31</strong>. Money: TBD. <em>Engage:</em> mobile health, screenings, telehealth access, chronic disease prevention, outreach ops, connectivity, and field data capture.</li>\n<li><strong>Oklahoma</strong> \u2014 Doula RFI due <strong>May 8</strong>; ROOTS grants due <strong>May 25</strong> up to <strong>$10K/site</strong>; Chronic Disease due <strong>June 8</strong>; Rural Regional Reorientation due <strong>June 12</strong> up to <strong>$4M</strong>. <em>Engage:</em> schools, maternal health, chronic disease tech, regional coalitions.</li>\n<li><strong>Oregon</strong> \u2014 Catalyst Awards RFGP due <strong>May 26</strong>; project requests generally <strong>$200K\u2013$5M</strong> per budget period. <em>Engage:</em> ready-to-launch community projects, telehealth, workforce, data, mobile care, and implementation speed.</li>\n<li><strong>Nevada</strong> \u2014 Rural Tribal Health Transformation due <strong>May 29</strong>. <em>Engage:</em> tribal/rural health, FQHCs, mobile access, equipment, cyber, and care coordination.</li>\n<li><strong>Utah</strong> \u2014 May funding windows: BH-primary care up to <strong>$2M</strong> Year 1, preceptor stipends up to <strong>$200K</strong>, GME planning up to <strong>$1.6M</strong>. <em>Engage:</em> rural behavioral/primary-care integration, GME planning, workforce, and provider workflow tech.</li>\n<li><strong>Montana</strong> \u2014 CoE RFPs active; deadlines package-specific. <em>Engage:</em> analytics, implementation support, PMO, digital strategy, and provider transformation operations.</li></ul>\n<p><strong>Next step:</strong> Reps should triage by deadline, confirm eligibility, identify the likely applicant or prime, and attach Solutionz as the technology and implementation partner before submissions close.</p>";
+  const plain="RHTP Open Activity Update | May 13, 2026\nTracker: Open the RHTP Tracker\nActive/open and soon-to-open initiatives only. Sales reps should confirm applicant eligibility, work through eligible providers or coalitions where communications are restricted, and package Solutionz capabilities around telehealth, mobile care, AV/collaboration, cybersecurity, data/HIE, RPM, workflow, and implementation support.\nMid-Atlantic\nDelaware \u2014 RHTP Support Services RFP posts May 4; questions due May 18; proposals due June 22. Money: contract value TBD. Engage: PMO, implementation support, evaluation, monitoring, reporting, and rural-provider coordination.\nWest Virginia \u2014 First tranche $28.56M active through wvOASIS; webinar still pending. Engage: workforce, HealthTech Appalachia, connected care grid, digital backbone, cyber, and telehealth.\nKentucky \u2014 Accredited Dental Hygiene Programs RFA; office hours May 8; due May 22. Money: $9.9M available beginning July 1. Engage: simulation/clinic equipment, AV, mobile oral-health workflows, and training infrastructure.\nMaryland \u2014 Near-term RFA/RFP lanes for telehealth/HIE, mobile health, behavioral health, workforce, and transformation funds. Engage: prepare partner-led budgets and CRISP/HIE-aligned tech language.\nNortheast\nPennsylvania \u2014 $25M Rapid Response Stabilization opens May 1; due June 1 or until cap; payments $10K\u2013$1M. Engage: rural hospitals/providers needing equipment, infrastructure, telehealth, EMS, maternal/BH access, or stabilization support.\nMinnesota \u2014 Direct allocations extended to May 26; HIT TA RFP due May 22. Money: from $193.1M BP1 award; contract amount TBD. Engage: HIT/RPM/telehealth/cyber guidance and subgrantee implementation support.\nNorth Dakota \u2014 $3.6M community/school prevention wave due May 22; TA calls May 4\u20136. Engage: prevention partners, schools, rural clinics, community dashboards, and implementation support.\nIndiana \u2014 GROW Regional Grants LOIs due May 1; full applications due July 1. Engage: regional coalitions, HIE, telehealth, dashboards, workforce tech, and innovation support.\nOhio \u2014 CHW Training and Technical Assistance solicitation due June 15. Money: TBD. Engage: training platforms, recorded learning, community of practice, reporting, and workflow support.\nSoutheast\nFlorida \u2014 More than $188M RHTP RFA wave; applications due June 10. Engage: observe restricted communications and support eligible applicants with technology, specialty access, diagnostics, workforce, cyber, and evaluation packages.\nTexas \u2014 Rural Texas Strong / Rural Hospital Innovation RFAs due May 27 and May 28; one lane includes $25M. Engage: rural hospitals, hospital districts, workforce and training partners.\nSouth Carolina \u2014 Four Year 1 grant tracks due June 1. Engage: EHR, RPM, telehealth, mobile/pop-up clinics, behavioral health, resource database, and facility/workforce support.\nGeorgia \u2014 Advisory Council applications due May 1; funding still upcoming. Engage: stakeholder access and partner discovery ahead of future releases.\nWest\nWashington \u2014 Mobile Health Assistance Van Program RFI due May 31. Money: TBD. Engage: mobile health, screenings, telehealth access, chronic disease prevention, outreach ops, connectivity, and field data capture.\nOklahoma \u2014 Doula RFI due May 8; ROOTS grants due May 25 up to $10K/site; Chronic Disease due June 8; Rural Regional Reorientation due June 12 up to $4M. Engage: schools, maternal health, chronic disease tech, regional coalitions.\nOregon \u2014 Catalyst Awards RFGP due May 26; project requests generally $200K\u2013$5M per budget period. Engage: ready-to-launch community projects, telehealth, workforce, data, mobile care, and implementation speed.\nNevada \u2014 Rural Tribal Health Transformation due May 29. Engage: tribal/rural health, FQHCs, mobile access, equipment, cyber, and care coordination.\nUtah \u2014 May funding windows: BH-primary care up to $2M Year 1, preceptor stipends up to $200K, GME planning up to $1.6M. Engage: rural behavioral/primary-care integration, GME planning, workforce, and provider workflow tech.\nMontana \u2014 CoE RFPs active; deadlines package-specific. Engage: analytics, implementation support, PMO, digital strategy, and provider transformation operations.\nNext step: Reps should triage by deadline, confirm eligibility, identify the likely applicant or prime, and attach Solutionz as the technology and implementation partner before submissions close.";
   const w=window.open('', '_blank', 'width=980,height=760,scrollbars=yes');
   if(!w){ alert('Please allow popups for this email preview.'); return; }
   w.document.write(`<!DOCTYPE html><html><head><title>${subject}</title><style>body{font-family:Arial,Helvetica,sans-serif;line-height:1.45;color:#1f2937;margin:24px}.actions{position:sticky;top:0;background:#fff;padding:10px 0 14px;border-bottom:1px solid #d8dee6;margin-bottom:16px}button{border:1px solid #d8dee6;border-radius:999px;padding:8px 12px;background:#12395b;color:#fff;font-weight:700;cursor:pointer;margin-right:8px}a{color:#1f5f97}li{margin-bottom:7px}</style></head><body><div class="actions"><button onclick="navigator.clipboard.writeText(document.getElementById('emailBody').innerHTML)">Copy formatted email</button><button onclick="navigator.clipboard.writeText(plain)">Copy plain text</button><button onclick="location.href='mailto:?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(plain)">Open mail client</button></div><div id="emailBody">${html}</div></body></html>`);
