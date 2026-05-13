@@ -1,12 +1,21 @@
-# My Funding Tracker - GitHub Ready Package
+# My Funding Tracker Homepage Redesign v03
 
-Included files:
-- index.html
-- management_v2.html
-- Code.gs
-- README.md
+This package contains a tighter, cleaner homepage redesign for My Funding Tracker.
 
-Updates in this version:
-- Fixed Google Sheets logging
-- Slightly larger tile titles
-- Section headers like STATE TRACKERS and PROSPECT LISTS now display in all caps and larger font size
+## Files
+- `index.html` — replace the existing homepage `index.html` at the GitHub Pages root.
+
+## Key changes in v03
+- Restored the live homepage link structure using full production URLs.
+- Corrected the RUS DLT Scoring Tool path to `https://www.myfundingtracker.com/ScoringTool/`.
+- Updated the Management link to `https://www.myfundingtracker.com/management_v2.html`.
+- Tightened page density by removing duplicate priority cards and using compact section cards.
+- Changed the visual theme to a clean, modern card-launcher layout with thin borders, strong headers, and restrained Solutionz brand accents.
+- Preserved login, 24-hour session behavior, forgot-password link, Google Sheets logging URL, and logout behavior.
+
+## Notes
+The eRate cards use these production paths:
+- `https://www.myfundingtracker.com/eRate471/`
+- `https://www.myfundingtracker.com/eRate470/`
+
+If your GitHub repository uses a different capitalization or folder naming, update only those two href values before deployment.
