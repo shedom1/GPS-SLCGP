@@ -62,7 +62,7 @@
             <div class="col-3"><label>Minimum Objective Score</label><input id="pfMinObjective" type="number" value="50" min="0" max="70" step="5" /></div>
             <div class="col-3"><label>Minimum SAIPE %</label><input id="pfMinSaipe" type="number" value="20" min="0" max="100" step="1" /></div>
             <div class="col-3"><label>Maximum Place Population</label><input id="pfMaxPop" type="number" value="20000" min="0" step="1000" /></div>
-            <div class="col-3"><label>Result Mode</label><select id="pfMode"><option value="high">Show high-fit only</option><option value="all">Show all returned + scores</option><option value="review">Show high-fit + review-needed</option></select></div>
+            <div class="col-3"><label>Result Mode</label><select id="pfMode"><option value="high">Show high-fit only</option><option value="all">Show all returned + scores</option><option value="review">Show high-fit + review-needed</option><option value="needsReview">Needs review only — missing Pop/SAIPE</option></select></div>
             <div class="col-12">
               <label>Prospect Types</label>
               <label class="inline-check"><input id="pfK12Districts" type="checkbox" checked> K-12 districts</label>
@@ -77,6 +77,7 @@
           <div class="btnrow">
             <button class="primary" onclick="findProspects()">Find Complete Prospects</button>
             <button class="green" onclick="runAllStatesTargetScore()">All States by Target Score</button>
+            <button class="amber" onclick="showNeedsReviewOnly()">Needs Review Only</button>
             <button class="ghost" onclick="clearProspects()">Clear Results</button>
             <button class="accent" onclick="showHrsaFallback()">HRSA Fallback Upload</button>
             <a class="button-link" href="https://data.hrsa.gov/DataDownload/DD_Files/Health_Center_Service_Delivery_and_LookAlike_Sites.xlsx" target="_blank">Download HRSA XLSX</a>
@@ -243,7 +244,7 @@ const HRSA_LOCAL_XLSX='data/Health_Center_Service_Delivery_and_LookAlike_Sites.x
 const HRSA_LOCAL_CSV='data/Health_Center_Service_Delivery_and_LookAlike_Sites.csv';
 let prospects=[]; let placeCache={}; let saipeCache={}; let hrsaLookupCache=null; let sortState={key:'objectiveScore',dir:'desc'}; let columnWidths={};
 const COLS=[
-  ['selected','Select',54,'bool'],['fitLabel','Fit',82,'text'],['objectiveScore','Obj.',60,'number'],['ruralityScore','D-1',55,'number'],['economicScore','D-2',55,'number'],['saipePercent','SAIPE %',72,'number'],['cityPopulation','2020 Pop',82,'number'],['type','Type',98,'text'],['schoolCount','# Schools',76,'number'],['organization','Organization / Entity',170,'text'],['siteName','Site',180,'text'],['address','Address',175,'text'],['city','City',90,'text'],['county','County',105,'text'],['state','State',48,'text'],['zip','ZIP',70,'text'],['phone','Phone',108,'text'],['email','Email',165,'text'],['website','Website',165,'text'],['sourceLocale','Locale',70,'text'],['description','Description from source fields',240,'text'],['source','Source',140,'text'],['map','USDA Map',76,'text']
+  ['selected','Select',54,'bool'],['fitLabel','Fit',82,'text'],['reviewReason','Review Reason',190,'text'],['objectiveScore','Obj.',60,'number'],['ruralityScore','D-1',55,'number'],['economicScore','D-2',55,'number'],['saipePercent','SAIPE %',72,'number'],['cityPopulation','2020 Pop',82,'number'],['type','Type',98,'text'],['schoolCount','# Schools',76,'number'],['organization','Organization / Entity',170,'text'],['siteName','Site',180,'text'],['address','Address',175,'text'],['city','City',90,'text'],['county','County',105,'text'],['state','State',48,'text'],['zip','ZIP',70,'text'],['phone','Phone',108,'text'],['email','Email',165,'text'],['website','Website',165,'text'],['sourceLocale','Locale',70,'text'],['description','Description from source fields',240,'text'],['source','Source',140,'text'],['map','USDA Map',76,'text']
 ];
 function init(){const sel=document.getElementById('pfState');const all=document.createElement('option');all.value=ALL_STATE_VALUE;all.textContent='ALL — Target score scan';sel.appendChild(all);Object.keys(STATE_FIPS).forEach(abbr=>{const o=document.createElement('option');o.value=abbr;o.textContent=`${abbr} — ${STATE_NAMES[abbr]}`;sel.appendChild(o)});sel.value=ALL_STATE_VALUE;const awardSel=document.getElementById('awardState');if(awardSel){const ao=document.createElement('option');ao.value='';ao.textContent='Use prospect state / All';awardSel.appendChild(ao);Object.keys(STATE_FIPS).forEach(abbr=>{const o=document.createElement('option');o.value=abbr;o.textContent=`${abbr} — ${STATE_NAMES[abbr]}`;awardSel.appendChild(o)});}COLS.forEach(c=>columnWidths[c[0]]=c[2]);renderTable();updateMetrics();}
 function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
@@ -310,6 +311,7 @@ async function arcgisQueryAll(url,where,fields,cap=25000){
 function scopeWhere(field,st){return st===ALL_STATE_VALUE?'1=1':`${field}='${st}'`}
 function scopeLabel(st){return st===ALL_STATE_VALUE?'ALL STATES':st}
 function runAllStatesTargetScore(){document.getElementById('pfState').value=ALL_STATE_VALUE;document.getElementById('pfMode').value='high';document.getElementById('pfIncludeReview').checked=true;document.getElementById('pfK12Districts').checked=true;document.getElementById('pfCharter').checked=true;document.getElementById('pfHealthcare').checked=true;document.getElementById('pfHigherEd').checked=true;findProspects()}
+function showNeedsReviewOnly(){document.getElementById('pfMode').value='needsReview';document.getElementById('pfIncludeReview').checked=true;findProspects()}
 async function arcgisQuery(url,where,fields,count=2000){return arcgisQueryAll(url,where,fields,count)}
 function wherePart(field,val){return val?` AND UPPER(${field}) LIKE '%${sqlText(val).toUpperCase()}%'`:''}
 function whereOrPart(fields,val){if(!val)return '';const q=sqlText(val).toUpperCase();return ` AND (${fields.map(f=>`UPPER(${f}) LIKE '%${q}%'`).join(' OR ')})`}
@@ -392,7 +394,7 @@ async function findProspects(){
   renderTable();updateMetrics();
   setBusy(false);
   const high=screened.filter(x=>x.fitLabel==='High Fit').length;
-  const review=screened.filter(x=>x.fitLabel==='Review').length;
+  const review=countNeedsReview(screened);
   const hidden=Math.max(0,screened.length-prospects.length);
   const filteredOut=Math.max(0,sourceCount-screened.length);
   const exactMsg=(document.getElementById('pfShowExactMatches')?.checked!==false&&hasExplicitLookupSearch())?' Name/address match override is ON, so matched source rows display even when they are below target score.':'';
@@ -445,13 +447,57 @@ function appendNote(old,n){old=old||'';return old.includes(n)?old:(old?old+'; ':
 function econScore(p){const n=parseFloat(p);if(isNaN(n))return null;if(n>=30)return 30;if(n>=20)return 20;if(n>=10)return 10;return 0}
 function isNcesRuralLocale(v){const txt=String(v||'');const m=txt.match(/\b(4[123])\b/);return /Rural/i.test(txt)||(m&&['41','42','43'].includes(m[1]))}
 function ruralityScore(s){if(s.contiguous==='Yes')return 0;if(s.censusRural==='Yes')return 40;const pop=parseInt(String(s.cityPopulation||'').replace(/,/g,''));if(isNaN(pop))return null;if(pop>20000&&isNcesRuralLocale(s.sourceLocale)){s.notes=appendNote(s.notes,'D-1 review: NCES rural locale conflicts with postal-city population. Verify actual Rurality Place/CDP and DLT map.');return null}if(pop<=5000)return 40;if(pop<=10000)return 30;if(pop<=20000)return 20;return 0}
-function scoreRow(s){s.economicScore=econScore(s.saipePercent);s.ruralityScore=ruralityScore(s);s.objectiveScore=(s.ruralityScore==null||s.economicScore==null)?null:Number(s.ruralityScore)+Number(s.economicScore);const minObj=parseFloat(document.getElementById('pfMinObjective').value)||50;if(s.objectiveScore!==null&&s.objectiveScore>=minObj)s.fitLabel='High Fit';else if(s.ruralityScore===null&&(isNcesRuralLocale(s.sourceLocale)||Number(s.economicScore)>=20))s.fitLabel='Review';else if(Number(s.economicScore)>=20)s.fitLabel='Economic Fit';else s.fitLabel='Lower Fit';return s}
+function isBlank(v){return v===null||v===undefined||String(v).trim()==='';}
+function hasNumeric(v){return !isBlank(v)&&!isNaN(Number(String(v).replace(/,/g,'')));}
+function buildReviewReason(s){
+  const reasons=[];
+  if(!hasNumeric(s.cityPopulation))reasons.push('2020 Pop not verified');
+  if(!hasNumeric(s.saipePercent))reasons.push('SAIPE not verified');
+  if(s.ruralityScore===null&&hasNumeric(s.cityPopulation))reasons.push('D-1 place/map review');
+  if(/No 2020 Census place match|Census place API failed/i.test(String(s.notes||''))&&!reasons.some(x=>x.includes('2020 Pop')))reasons.push('2020 Pop not verified');
+  if(/No county SAIPE match|SAIPE API failed/i.test(String(s.notes||''))&&!reasons.some(x=>x.includes('SAIPE')))reasons.push('SAIPE not verified');
+  return reasons.join('; ');
+}
+function isNeedsReview(r){return !!(r.reviewReason||(r.fitLabel==='Review'||r.fitLabel==='Needs Review'));}
+function countNeedsReview(rows){return rows.filter(isNeedsReview).length;}
+function scoreRow(s){
+  s.economicScore=econScore(s.saipePercent);
+  s.ruralityScore=ruralityScore(s);
+  s.objectiveScore=(s.ruralityScore==null||s.economicScore==null)?null:Number(s.ruralityScore)+Number(s.economicScore);
+  s.reviewReason=buildReviewReason(s);
+  const minObj=parseFloat(document.getElementById('pfMinObjective').value)||50;
+  if(s.objectiveScore!==null&&s.objectiveScore>=minObj)s.fitLabel='High Fit';
+  else if(s.reviewReason)s.fitLabel='Needs Review';
+  else if(Number(s.economicScore)>=20)s.fitLabel='Economic Fit';
+  else s.fitLabel='Lower Fit';
+  return s;
+}
 function hasExplicitLookupSearch(){return !!((document.getElementById('pfAgency')?.value||'').trim()||(document.getElementById('pfAddress')?.value||'').trim());}
-function applyProspectFilters(rows){const mode=document.getElementById('pfMode').value;const includeReview=document.getElementById('pfIncludeReview').checked;const showExact=(document.getElementById('pfShowExactMatches')?.checked!==false)&&hasExplicitLookupSearch();const minObj=parseFloat(document.getElementById('pfMinObjective').value)||0;const minSaipe=parseFloat(document.getElementById('pfMinSaipe').value)||0;const maxPop=parseFloat(document.getElementById('pfMaxPop').value)||Infinity;if(showExact)return rows;return rows.filter(r=>{const sai=Number(r.saipePercent);const pop=Number(String(r.cityPopulation||'').replace(/,/g,''));const popOk=!r.cityPopulation||isNaN(pop)||pop<=maxPop;const saiOk=isNaN(sai)||sai>=minSaipe;const high=r.objectiveScore!==null&&r.objectiveScore>=minObj;const review=includeReview&&r.fitLabel==='Review';if(mode==='all')return popOk&&saiOk;if(mode==='review')return popOk&&saiOk&&(high||review);return popOk&&saiOk&&high})}
+function applyProspectFilters(rows){
+  const mode=document.getElementById('pfMode').value;
+  const includeReview=document.getElementById('pfIncludeReview').checked;
+  const showExact=(document.getElementById('pfShowExactMatches')?.checked!==false)&&hasExplicitLookupSearch();
+  const minObj=parseFloat(document.getElementById('pfMinObjective').value)||0;
+  const minSaipe=parseFloat(document.getElementById('pfMinSaipe').value)||0;
+  const maxPop=parseFloat(document.getElementById('pfMaxPop').value)||Infinity;
+  if(showExact&&mode!=='needsReview')return rows;
+  return rows.filter(r=>{
+    const sai=Number(r.saipePercent);
+    const pop=Number(String(r.cityPopulation||'').replace(/,/g,''));
+    const popOk=!r.cityPopulation||isNaN(pop)||pop<=maxPop;
+    const saiOk=isNaN(sai)||sai>=minSaipe;
+    const high=r.objectiveScore!==null&&r.objectiveScore>=minObj;
+    const review=includeReview&&isNeedsReview(r);
+    if(mode==='needsReview')return isNeedsReview(r);
+    if(mode==='all')return popOk&&saiOk;
+    if(mode==='review')return popOk&&saiOk&&(high||review);
+    return popOk&&saiOk&&high;
+  });
+}
 function dedupe(rows){const seen=new Set(),out=[];rows.forEach(r=>{const k=norm([r.type,r.sourceId,r.organization,r.siteName,r.address,r.city,r.state].join('|'));if(!seen.has(k)){seen.add(k);out.push(r)}});return out}
-function fitPill(v){const cls=v==='High Fit'?'green':v==='Review'?'amber':v==='Economic Fit'?'blue':'red';return `<span class="pill ${cls}">${esc(v||'')}</span>`}
+function fitPill(v){const cls=v==='High Fit'?'green':(v==='Review'||v==='Needs Review')?'amber':v==='Economic Fit'?'blue':'red';return `<span class="pill ${cls}">${esc(v||'')}</span>`}
 function scorePill(v,max){if(v===null||v===undefined||v==='')return '<span class="pill amber">Review</span>';const n=Number(v);const cls=n>=max*.75?'green':n>=max*.45?'blue':'red';return `<span class="pill ${cls}">${n.toFixed(0)}</span>`}
-function renderTable(){const table=document.getElementById('prospectTable');const rows=sortRows([...prospects]);table.innerHTML=`<colgroup>${COLS.map(c=>`<col style="width:${columnWidths[c[0]]||c[2]}px">`).join('')}</colgroup><thead><tr>${COLS.map(c=>head(c)).join('')}</tr></thead><tbody></tbody>`;const body=table.querySelector('tbody');if(!rows.length){body.innerHTML=`<tr><td colspan="${COLS.length}" class="smalltxt">No prospects yet. Choose a state/county/city and click Find Complete Prospects.</td></tr>`;return}rows.forEach((r,i)=>{const tr=document.createElement('tr');const addr=[r.address,r.city,r.state,r.zip].filter(Boolean).join(', ');tr.innerHTML=`<td><input type="checkbox" ${r.selected?'checked':''} onchange="toggleSelected('${r.id}',this.checked)"></td><td>${fitPill(r.fitLabel)}</td><td class="num">${r.objectiveScore==null?'—':Number(r.objectiveScore).toFixed(0)}</td><td class="num">${scorePill(r.ruralityScore,40)}</td><td class="num">${scorePill(r.economicScore,30)}</td><td class="num">${esc(r.saipePercent||'')}</td><td class="num">${esc(r.cityPopulation||'')}</td><td>${esc(r.type)}</td><td class="num">${esc(r.schoolCount||'')}</td><td title="${esc(r.organization||'')}">${esc(r.organization||'')}</td><td title="${esc(r.siteName||'')}">${esc(r.siteName||'')}</td><td title="${esc(addr)}">${esc(addr)}</td><td>${esc(r.city||'')}</td><td>${esc(r.county||'')}</td><td>${esc(r.state||'')}</td><td>${esc(r.zip||'')}</td><td title="${esc(r.phone||'')}">${esc(r.phone||'')}</td><td title="${esc(r.email||'')}">${emailCell(r.email||'')}</td><td title="${esc(r.website||'')}">${websiteCell(r.website||'')}</td><td>${esc(r.sourceLocale||'')}</td><td title="${esc(r.description||'')}">${esc(r.description||'')}</td><td title="${esc(r.source||'')}">${esc(r.source||'')}</td><td><a href="${sourceLinkFor(r)}" target="_blank">USDA Map</a></td>`;body.appendChild(tr)});updateMetrics();initProspectColumnResize(table)}
+function renderTable(){const table=document.getElementById('prospectTable');const rows=sortRows([...prospects]);table.innerHTML=`<colgroup>${COLS.map(c=>`<col style="width:${columnWidths[c[0]]||c[2]}px">`).join('')}</colgroup><thead><tr>${COLS.map(c=>head(c)).join('')}</tr></thead><tbody></tbody>`;const body=table.querySelector('tbody');if(!rows.length){body.innerHTML=`<tr><td colspan="${COLS.length}" class="smalltxt">No prospects yet. Choose a state/county/city and click Find Complete Prospects.</td></tr>`;return}rows.forEach((r,i)=>{const tr=document.createElement('tr');const addr=[r.address,r.city,r.state,r.zip].filter(Boolean).join(', ');tr.innerHTML=`<td><input type="checkbox" ${r.selected?'checked':''} onchange="toggleSelected('${r.id}',this.checked)"></td><td>${fitPill(r.fitLabel)}</td><td title="${esc(r.reviewReason||'')}">${esc(r.reviewReason||'')}</td><td class="num">${r.objectiveScore==null?'—':Number(r.objectiveScore).toFixed(0)}</td><td class="num">${scorePill(r.ruralityScore,40)}</td><td class="num">${scorePill(r.economicScore,30)}</td><td class="num">${esc(r.saipePercent||'')}</td><td class="num">${esc(r.cityPopulation||'')}</td><td>${esc(r.type)}</td><td class="num">${esc(r.schoolCount||'')}</td><td title="${esc(r.organization||'')}">${esc(r.organization||'')}</td><td title="${esc(r.siteName||'')}">${esc(r.siteName||'')}</td><td title="${esc(addr)}">${esc(addr)}</td><td>${esc(r.city||'')}</td><td>${esc(r.county||'')}</td><td>${esc(r.state||'')}</td><td>${esc(r.zip||'')}</td><td title="${esc(r.phone||'')}">${esc(r.phone||'')}</td><td title="${esc(r.email||'')}">${emailCell(r.email||'')}</td><td title="${esc(r.website||'')}">${websiteCell(r.website||'')}</td><td>${esc(r.sourceLocale||'')}</td><td title="${esc(r.description||'')}">${esc(r.description||'')}</td><td title="${esc(r.source||'')}">${esc(r.source||'')}</td><td><a href="${sourceLinkFor(r)}" target="_blank">USDA Map</a></td>`;body.appendChild(tr)});updateMetrics();initProspectColumnResize(table)}
 function head(c){const active=sortState.key===c[0];const indicator=active?`<span class="sort-indicator">${sortState.dir==='asc'?'▲':'▼'}</span>`:'';return `<th class="sortable" data-key="${c[0]}" onclick="sortTable('${c[0]}')"><div class="th-inner"><span>${c[1]}</span>${indicator}<span class="col-resizer" data-key="${c[0]}" title="Drag to resize"></span></div></th>`}
 
 function initProspectColumnResize(table){
@@ -475,8 +521,8 @@ function compare(a,b,type){const ea=(a===null||a===undefined||a===''),eb=(b===nu
 function toggleSelected(id,val){const p=prospects.find(x=>x.id===id);if(p)p.selected=val;updateMetrics()}
 function selectAll(val){prospects.forEach(p=>p.selected=val);renderTable();updateMetrics()}
 function clearProspects(){setBusy(false);prospects=[];renderTable();updateMetrics();setStatus('Results cleared.')}
-function updateMetrics(){const high=prospects.filter(p=>p.fitLabel==='High Fit').length;const review=prospects.filter(p=>p.fitLabel==='Review').length;const selected=prospects.filter(p=>p.selected).length;document.getElementById('mReturned').textContent=prospects.length;document.getElementById('mHigh').textContent=high;document.getElementById('mReview').textContent=review;document.getElementById('mSelected').textContent=selected;renderTypeBreakdown()}
-function renderTypeBreakdown(){const el=document.getElementById('typeBreakdown');if(!el)return;const ordered=['K-12 District','K-12','Charter School','Rural Health','Higher Ed'];const labels={'K-12 District':'K-12 Districts','K-12':'K-12 School Sites','Charter School':'Charter Schools','Rural Health':'Healthcare / HRSA','Higher Ed':'Higher Ed / Technical'};const counts={};const high={};const review={};const schools={};prospects.forEach(p=>{const t=p.type||'Other';counts[t]=(counts[t]||0)+1;if(p.fitLabel==='High Fit')high[t]=(high[t]||0)+1;if(p.fitLabel==='Review')review[t]=(review[t]||0)+1;const sc=parseFloat(String(p.schoolCount||'').replace(/,/g,''));if(!isNaN(sc))schools[t]=(schools[t]||0)+sc});const types=[...ordered,...Object.keys(counts).filter(t=>!ordered.includes(t)).sort()];el.innerHTML=types.map(t=>{const schoolLine=schools[t]?` • ${schools[t].toLocaleString()} schools`:'';return `<div class="type-chip"><div class="type-label">${esc(labels[t]||t)}</div><div class="type-count">${counts[t]||0}</div><div class="type-sub">${high[t]||0} high fit • ${review[t]||0} review${schoolLine}</div></div>`}).join('')}
+function updateMetrics(){const high=prospects.filter(p=>p.fitLabel==='High Fit').length;const review=countNeedsReview(prospects);const selected=prospects.filter(p=>p.selected).length;document.getElementById('mReturned').textContent=prospects.length;document.getElementById('mHigh').textContent=high;document.getElementById('mReview').textContent=review;document.getElementById('mSelected').textContent=selected;renderTypeBreakdown()}
+function renderTypeBreakdown(){const el=document.getElementById('typeBreakdown');if(!el)return;const ordered=['K-12 District','K-12','Charter School','Rural Health','Higher Ed'];const labels={'K-12 District':'K-12 Districts','K-12':'K-12 School Sites','Charter School':'Charter Schools','Rural Health':'Healthcare / HRSA','Higher Ed':'Higher Ed / Technical'};const counts={};const high={};const review={};const schools={};prospects.forEach(p=>{const t=p.type||'Other';counts[t]=(counts[t]||0)+1;if(p.fitLabel==='High Fit')high[t]=(high[t]||0)+1;if(isNeedsReview(p))review[t]=(review[t]||0)+1;const sc=parseFloat(String(p.schoolCount||'').replace(/,/g,''));if(!isNaN(sc))schools[t]=(schools[t]||0)+sc});const types=[...ordered,...Object.keys(counts).filter(t=>!ordered.includes(t)).sort()];el.innerHTML=types.map(t=>{const schoolLine=schools[t]?` • ${schools[t].toLocaleString()} schools`:'';return `<div class="type-chip"><div class="type-label">${esc(labels[t]||t)}</div><div class="type-count">${counts[t]||0}</div><div class="type-sub">${high[t]||0} high fit • ${review[t]||0} review${schoolLine}</div></div>`}).join('')}
 
 let priorAwards=[];
 let awardResults=[];
@@ -700,7 +746,7 @@ function renderAwardProjectCard(rows){
 function sortAwards(key){if(awardSort.key===key)awardSort.dir=awardSort.dir==='asc'?'desc':'asc';else awardSort={key,dir:'asc'};renderAwardsTable(awardResults);}
 function sortAwardRows(rows){const col=AWARD_COLS.find(c=>c[0]===awardSort.key)||AWARD_COLS[0];const dir=awardSort.dir==='desc'?-1:1;return rows.sort((a,b)=>compare(a[col[0]],b[col[0]],col[3])*dir);}
 function exportAwardsCSV(){let base=awardResults.length?awardResults:priorAwards;if(awardDistrictsOnlyEnabled())base=base.filter(isDistrictAward);const rows=sortAwardRows([...base]);if(!rows.length){setAwardStatus('No prior-award rows to export.');return;}const fields=['year','awardee','projectId','grantType','subtype','siteName','projectTitle','siteType','state','county','city','address','zip','siteGrant','totalGrant','distanceMiles','nearProspect','source','lat','lon'];const csv=[fields.join(',')].concat(rows.map(r=>fields.map(f=>csvCell(r[f])).join(','))).join('\n');download(awardDistrictsOnlyEnabled()?'RUS_DLT_Prior_District_Awards.csv':'RUS_DLT_Prior_Awards_Strategy.csv',csv,'text/csv');}
-function exportCSV(){const fields=['selected','fitLabel','objectiveScore','ruralityScore','economicScore','saipePercent','cityPopulation','type','schoolCount','organization','siteName','address','city','ruralityPlace','state','zip','county','countyFips','phone','email','website','sourceLocale','enrollment','designation','description','source','sourceId','lat','lon','notes'];const csv=[fields.join(',')].concat(prospects.map(p=>fields.map(f=>csvCell(p[f])).join(','))).join('\n');download('RUS_DLT_High_Eligibility_Prospects.csv',csv,'text/csv')}
+function exportCSV(){const fields=['selected','fitLabel','reviewReason','objectiveScore','ruralityScore','economicScore','saipePercent','cityPopulation','type','schoolCount','organization','siteName','address','city','ruralityPlace','state','zip','county','countyFips','phone','email','website','sourceLocale','enrollment','designation','description','source','sourceId','lat','lon','notes'];const csv=[fields.join(',')].concat(prospects.map(p=>fields.map(f=>csvCell(p[f])).join(','))).join('\n');download('RUS_DLT_High_Eligibility_Prospects.csv',csv,'text/csv')}
 function sendSelectedToScoring(){const selected=prospects.filter(p=>p.selected);if(!selected.length){setStatus('Select at least one prospect first.');return}const clean=selected.map(p=>({...p,id:crypto.randomUUID(),include:false,selected:false,notes:appendNote(p.notes,'Sent from Prospect Finder; set Include=true only if used in the DLT project.')}));localStorage.setItem('dltPendingProspectsV1',JSON.stringify(clean));setStatus(`<strong>${clean.length}</strong> selected prospect(s) staged for the scoring worksheet. Click Open Scoring Tool to import them.`)}
 init();
 </script>

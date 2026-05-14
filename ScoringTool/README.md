@@ -382,3 +382,11 @@ Update v20: K-12 district prospecting/search now uses the bundled ELSI/NCES K-12
 - Kept the newer FY2026 Census/SAIPE logic: 2020 Decennial DHC `P1_001N` place population and SAIPE `SAEPOVRTALL_PT` with `YEAR=2023`, matching the December 2024 SAIPE release referenced for FY2026.
 - Kept the ELSI/NCES district CSV fallback path handling so the Prospect Finder can load the bundled district source reliably from GitHub Pages.
 - Kept the Data Sources page so reps can confirm which APIs and bundled datasets are used.
+
+## v45 update
+
+- Added a Prospect Finder result mode: **Needs review only — missing Pop/SAIPE**.
+- Added a **Needs Review Only** quick-search button.
+- Added a **Review Reason** column to the Prospect Finder table and export.
+- Records are flagged for review when 2020 Census population, SAIPE poverty percentage, or D-1 place/map verification cannot be confirmed from the lookup flow.
+- Needs-review filtering ignores score thresholds so reps can export/manual-check unresolved records.
