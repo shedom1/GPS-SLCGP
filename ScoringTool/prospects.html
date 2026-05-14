@@ -20,6 +20,7 @@
         <a class="nav-button" href="prospects.html">Prospect Finder</a>
         <a class="nav-button" href="guide.html">How to Use Guide</a>
         <a class="nav-button" href="match.html">Match Calculator</a>
+        <a class="nav-button" href="sources.html">Data Sources</a>
         <a class="nav-button" href="awards.html">Prior Winners</a>
         <a class="nav-button" href="https://ruraldevelopment.maps.arcgis.com/apps/webappviewer/index.html?id=15a73830555645ae93d2fa773ed8e971" target="_blank">USDA DLT Map</a>
         <a class="nav-button" href="https://www.rd.usda.gov/programs-services/telecommunications-programs/distance-learning-telemedicine-grants" target="_blank">USDA FY2026 Resources</a>
@@ -157,8 +158,15 @@ const NCES_SCHOOLS='https://services1.arcgis.com/Ua5sjt3LWTPigjyD/ArcGIS/rest/se
 const NCES_DISTRICTS='https://services1.arcgis.com/Ua5sjt3LWTPigjyD/ArcGIS/rest/services/School_District_Characteristics_Current/FeatureServer/1/query';
 
 const ELSI_DISTRICTS_CSV = 'data/ELSI_K12_School_Districts_2025_Scoring_Tool.csv';
+const ELSI_DISTRICTS_CSV_OPTIONS = [
+  'data/ELSI_K12_School_Districts_2025_Scoring_Tool.csv',
+  'data/ELSI K-12 School Districts 2025-Scoring Tool.csv',
+  './data/ELSI_K12_School_Districts_2025_Scoring_Tool.csv',
+  './data/ELSI K-12 School Districts 2025-Scoring Tool.csv'
+];
 const PRIOR_AWARDS_CSV = 'data/rus_dlt_all_sites_2026-05-08.csv';
 let elsiDistrictCache = null;
+let elsiDistrictSourceUrl = '';
 function cleanElsi(v){v=String(v??'').trim();return (v==='†'||v==='-'||v==='–')?'':v;}
 function findElsiHeaderIndex(rows){
   return Math.max(0, rows.findIndex(r=>r.some(c=>/Agency Name/i.test(String(c))) && r.some(c=>/Web Site URL/i.test(String(c))) && r.some(c=>/Agency ID.*NCES/i.test(String(c)))));
@@ -169,10 +177,20 @@ function elsiObjectsFromCsv(text){
 }
 async function loadElsiDistricts(){
   if(elsiDistrictCache) return elsiDistrictCache;
-  const res=await fetch(ELSI_DISTRICTS_CSV,{cache:'no-store'});
-  if(!res.ok) throw new Error('Could not load local ELSI/NCES district CSV. Make sure the data folder is uploaded with the site.');
-  elsiDistrictCache=elsiObjectsFromCsv(await res.text());
-  return elsiDistrictCache;
+  const attempts=[];
+  for(const url of ELSI_DISTRICTS_CSV_OPTIONS){
+    try{
+      const res=await fetch(url,{cache:'no-store'});
+      if(!res.ok){attempts.push(`${url}: HTTP ${res.status}`);continue;}
+      const text=await res.text();
+      const parsed=elsiObjectsFromCsv(text);
+      if(!parsed.length){attempts.push(`${url}: loaded but no rows parsed`);continue;}
+      elsiDistrictCache=parsed;
+      elsiDistrictSourceUrl=url;
+      return elsiDistrictCache;
+    }catch(e){attempts.push(`${url}: ${e.message}`)}
+  }
+  throw new Error('Could not load bundled ELSI/NCES district CSV. Tried '+attempts.join(' | '));
 }
 function elsiObjToDistrictFeature(o){
   const state=cleanElsi(o['Location State Abbr [District] 2024-25'] || o['State Abbr [District] Latest available year']).toUpperCase();
@@ -418,8 +436,8 @@ function showHrsaFallback(){document.getElementById('hrsaFallback').classList.to
 function importHRSALookupFile(){const file=document.getElementById('hrsaFile')?.files?.[0];if(!file){setStatus('Select the HRSA XLSX or CSV lookup file first.');return}const lower=file.name.toLowerCase();setStatus(`Loading uploaded HRSA lookup file: <strong>${esc(file.name)}</strong>...`);const reader=new FileReader();reader.onload=()=>{try{let items=[];if(lower.endsWith('.csv')){const rows=parseCSV(reader.result);const headers=rows[0];items=rows.slice(1).map(r=>rowToObject(headers,r)).map(hrsaToSite).filter(Boolean)}else{if(!window.XLSX)throw new Error('XLSX parser did not load.');const wb=XLSX.read(reader.result,{type:'array'});items=workbookToHRSASites(wb)}if(!items.length)throw new Error('No usable HRSA rows found.');hrsaLookupCache=items;setStatus(`<strong>${items.length.toLocaleString()}</strong> HRSA lookup rows loaded from ${esc(file.name)} as the full-table healthcare source. State/county/city filters will be applied locally when you run the prospect search.`)}catch(e){setStatus(`<span style="color:#b42318">HRSA upload failed: ${esc(e.message)}</span>`)}};if(lower.endsWith('.csv'))reader.readAsText(file);else reader.readAsArrayBuffer(file)}
 function parseCSV(text){const rows=[];let row=[],cell='',q=false;for(let i=0;i<text.length;i++){const c=text[i],n=text[i+1];if(q){if(c==='"'&&n==='"'){cell+='"';i++}else if(c==='"'){q=false}else cell+=c}else{if(c==='"')q=true;else if(c===','){row.push(cell);cell=''}else if(c==='\n'){row.push(cell);rows.push(row);row=[];cell=''}else if(c==='\r'){}else cell+=c}}if(cell.length||row.length){row.push(cell);rows.push(row)}return rows.filter(r=>r.some(x=>String(x).trim()!==''))}
 function rowToObject(headers,row){const o={};headers.forEach((h,i)=>o[h.trim()]=row[i]??'');return o}
-async function enrichPlacePop(s){const st=s.state.toUpperCase(),fips=STATE_FIPS[st];if(!fips)return;if(!placeCache[st]){try{const res=await fetch(`https://api.census.gov/data/2020/dec/pl?get=NAME,P1_001N&for=place:*&in=state:${fips}&key=b40f531183c077ba1f8973f7920be189d5cb8d2d`);const data=await res.json();const map={};data.slice(1).forEach(r=>{const name=r[0].replace(/,.*$/,'');map[norm(name)]={name:r[0],pop:parseInt(r[1])}});placeCache[st]=map}catch(e){s.notes=appendNote(s.notes,'Census place API failed');return}}const lookup=(s.ruralityPlace||s.city||'').trim();const m=placeCache[st][norm(lookup)];if(m){s.cityPopulation=m.pop;if(!s.ruralityPlace)s.ruralityPlace=m.name.replace(/,.*$/,'');s.notes=appendNote(s.notes,`Census place match for rurality: ${m.name}`)}else{s.notes=appendNote(s.notes,`No 2020 Census place match for '${lookup}'; verify Census Rural / DLT map`)}}
-async function enrichSaipe(s){const st=s.state.toUpperCase(),fips=STATE_FIPS[st];if(!fips)return;if(!saipeCache[st]){try{const res=await fetch(`https://api.census.gov/data/timeseries/poverty/saipe?get=NAME,SAEPOVRTALL_PT&for=county:*&in=state:${fips}&YEAR=2024&key=b40f531183c077ba1f8973f7920be189d5cb8d2d`);const data=await res.json();const byFips={},byName={};data.slice(1).forEach(r=>{const obj={name:r[0],rate:parseFloat(r[1]),state:r[3],county:r[4],fips:r[3]+r[4]};byFips[obj.fips]=obj;byName[norm(obj.name.replace(/,.*$/,''))]=obj});saipeCache[st]={byFips,byName}}catch(e){s.notes=appendNote(s.notes,'SAIPE API failed');return}}let m=null;const f=cleanCountyFips(s.countyFips,st);if(f&&f.length===5)m=saipeCache[st].byFips[f];if(!m&&s.county)m=saipeCache[st].byName[norm(s.county)];if(m){s.saipePercent=m.rate;if(!s.countyFips)s.countyFips=m.fips;if(!s.county)s.county=m.name.replace(/,.*$/,'')}else{s.notes=appendNote(s.notes,'No county SAIPE match; check county/FIPS')}}
+async function enrichPlacePop(s){const st=s.state.toUpperCase(),fips=STATE_FIPS[st];if(!fips)return;if(!placeCache[st]){try{const res=await fetch(`https://api.census.gov/data/2020/dec/dhc?get=NAME,P1_001N&for=place:*&in=state:${fips}&key=b40f531183c077ba1f8973f7920be189d5cb8d2d`);const data=await res.json();const map={};data.slice(1).forEach(r=>{const name=r[0].replace(/,.*$/,'');map[norm(name)]={name:r[0],pop:parseInt(r[1])}});placeCache[st]=map}catch(e){s.notes=appendNote(s.notes,'Census place API failed');return}}const lookup=(s.ruralityPlace||s.city||'').trim();const m=placeCache[st][norm(lookup)];if(m){s.cityPopulation=m.pop;if(!s.ruralityPlace)s.ruralityPlace=m.name.replace(/,.*$/,'');s.notes=appendNote(s.notes,`Census place match for rurality: ${m.name}`)}else{s.notes=appendNote(s.notes,`No 2020 Census place match for '${lookup}'; verify Census Rural / DLT map`)}}
+async function enrichSaipe(s){const st=s.state.toUpperCase(),fips=STATE_FIPS[st];if(!fips)return;if(!saipeCache[st]){try{const res=await fetch(`https://api.census.gov/data/timeseries/poverty/saipe?get=NAME,SAEPOVRTALL_PT&for=county:*&in=state:${fips}&YEAR=2023&key=b40f531183c077ba1f8973f7920be189d5cb8d2d`);const data=await res.json();const byFips={},byName={};data.slice(1).forEach(r=>{const obj={name:r[0],rate:parseFloat(r[1]),state:r[3],county:r[4],fips:r[3]+r[4]};byFips[obj.fips]=obj;byName[norm(obj.name.replace(/,.*$/,''))]=obj});saipeCache[st]={byFips,byName}}catch(e){s.notes=appendNote(s.notes,'SAIPE API failed');return}}let m=null;const f=cleanCountyFips(s.countyFips,st);if(f&&f.length===5)m=saipeCache[st].byFips[f];if(!m&&s.county)m=saipeCache[st].byName[norm(s.county)];if(m){s.saipePercent=m.rate;if(!s.countyFips)s.countyFips=m.fips;if(!s.county)s.county=m.name.replace(/,.*$/,'')}else{s.notes=appendNote(s.notes,'No county SAIPE match; check county/FIPS')}}
 function appendNote(old,n){old=old||'';return old.includes(n)?old:(old?old+'; ':'')+n}
 function econScore(p){const n=parseFloat(p);if(isNaN(n))return null;if(n>=30)return 30;if(n>=20)return 20;if(n>=10)return 10;return 0}
 function isNcesRuralLocale(v){const txt=String(v||'');const m=txt.match(/\b(4[123])\b/);return /Rural/i.test(txt)||(m&&['41','42','43'].includes(m[1]))}

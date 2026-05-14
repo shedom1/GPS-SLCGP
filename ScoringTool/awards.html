@@ -62,6 +62,7 @@
         <a class="nav-button" href="awards.html">Prior Winners</a>
         <a class="nav-button" href="guide.html">How to Use Guide</a>
         <a class="nav-button" href="match.html">Match Calculator</a>
+        <a class="nav-button" href="sources.html">Data Sources</a>
         <a class="nav-button" href="https://ruraldevelopment.maps.arcgis.com/apps/webappviewer/index.html?id=15a73830555645ae93d2fa773ed8e971" target="_blank">USDA DLT Map</a>
       </nav>
     </div>
@@ -251,7 +252,7 @@ function placeVariants(city){
 async function loadCensusPlacesForState(st){
   const fips=STATE_FIPS[st]; if(!fips)throw new Error(`missing FIPS for ${st}`);
   if(placeCache[st])return placeCache[st];
-  const url=`https://api.census.gov/data/2020/dec/pl?get=NAME,P1_001N&for=place:*&in=state:${fips}&key=b40f531183c077ba1f8973f7920be189d5cb8d2d`;
+  const url=`https://api.census.gov/data/2020/dec/dhc?get=NAME,P1_001N&for=place:*&in=state:${fips}&key=b40f531183c077ba1f8973f7920be189d5cb8d2d`;
   const res=await fetch(url,{cache:'force-cache'});
   if(!res.ok)throw new Error(`2020 Census place API HTTP ${res.status}`);
   const data=await res.json();

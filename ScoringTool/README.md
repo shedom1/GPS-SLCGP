@@ -18,7 +18,7 @@ GitHub Pages-ready static HTML tool for preliminary FY2026 USDA RUS Distance Lea
 - Builds a 25, 50, 75, or 100 mile partner radius list around a selected anchor site, using official K-12, HRSA healthcare, and higher-ed source records.
 - Uses HRSA Health Center Service Delivery and Look-Alike Sites for the Healthcare/Rural Health workflow. The Scoring Tool State / Scope now defaults to `ALL` so users can search by organization/name without knowing the state. Healthcare attempts to load the full HRSA lookup first and then filters locally by state/name/city/county; if browser loading is blocked, use the HRSA fallback upload. If the browser blocks the live HRSA file, download the official HRSA XLSX and upload it under Import / Templates → Healthcare Lookup Dataset Fallback.
 - Adds manual locations for district offices, consortium hubs, partner clinics, higher-ed extension sites, libraries, or other custom project locations.
-- Enriches sites with 2020 Census place population and 2024 Census SAIPE county poverty rate.
+- Enriches sites with 2020 Census place population and 2023 Census SAIPE county poverty rate.
 - Calculates provisional D-1 Rurality and D-2 Economic Need scores.
 - Allows row-level Hub / End-User / Hub-End-User / Proxy Hub designation.
 - Exports CSV/JSON, exports Partner Radius CSV, and prints to PDF.
@@ -318,7 +318,7 @@ Update v20: K-12 district prospecting/search now uses the bundled ELSI/NCES K-12
 - Reworked the Match Calculator to a tighter two-question layout modeled on the RUS DLT support calculator concept: "How much match do I need?" and "How much grant can this match support?"
 - Match Calculator defaults to a 15.1% planning rate, with editable percentage, grant-request presets, available-match reverse calculation, total-project-cost reverse calculation, scenario table, custom scenarios, and match-source reminders.
 - Prior Winners awardee drilldown cards now include Print / PDF Card and Export Card CSV actions.
-- Prior Winners drilldown site rows now include 2020 Census place population and 2024 SAIPE poverty-rate lookup columns where the public APIs return a match.
+- Prior Winners drilldown site rows now include 2020 Census place population and 2023 SAIPE poverty-rate lookup columns where the public APIs return a match.
 - Prior Winner card exports include the included project cards and site rows currently selected for the drilldown calculation.
 
 ## v33 Updates
@@ -361,3 +361,11 @@ Update v20: K-12 district prospecting/search now uses the bundled ELSI/NCES K-12
 - Added the provided Census API key to the Census 2020 population and SAIPE poverty lookup requests used by the Scoring Tool, Prospect Finder, and Prior Winners drilldown.
 - Population and SAIPE lookups now append the `key` parameter to Census API calls so the fields can load under the current Census API requirement.
 - Note: because this is a static GitHub Pages tool, any API key used in browser-side JavaScript is visible in page source. For stricter protection, route Census requests through a small private proxy or serverless function.
+
+
+## v42 notes
+
+- Restored the uploaded v37 layout/design structure across the main HTML views.
+- Kept the newer FY2026 Census/SAIPE logic: 2020 Decennial DHC `P1_001N` place population and SAIPE `SAEPOVRTALL_PT` with `YEAR=2023`, matching the December 2024 SAIPE release referenced for FY2026.
+- Kept the ELSI/NCES district CSV fallback path handling so the Prospect Finder can load the bundled district source reliably from GitHub Pages.
+- Kept the Data Sources page so reps can confirm which APIs and bundled datasets are used.

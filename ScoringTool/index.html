@@ -55,6 +55,7 @@
         <a class="nav-button" href="index.html">Scoring Tool</a>
         <a class="nav-button" href="prospects.html">Prospect Finder</a>
         <a class="nav-button" href="match.html">Match Calculator</a>
+        <a class="nav-button" href="sources.html">Data Sources</a>
         <a class="nav-button" href="awards.html">Prior Winners</a>
         <a class="nav-button" href="guide.html">How to Use Guide</a>
         <a class="nav-button" href="https://ruraldevelopment.maps.arcgis.com/apps/webappviewer/index.html?id=15a73830555645ae93d2fa773ed8e971" target="_blank">USDA DLT Map</a>
@@ -255,7 +256,7 @@ Example County Schools,Example School,100 Main St,Albany,Albany,GA,31701,Dougher
               <tr><td>10% to under 20%</td><td><span class="pill amber">10</span></td></tr>
               <tr><td>Under 10%</td><td><span class="pill red">0</span></td></tr>
             </tbody></table>
-            <p class="smalltxt">This tool uses 2024 Census SAIPE county “all ages poverty rate estimate” where available. USDA’s FY2026 guide references the SAIPE poverty data posted with the DLT application resources.</p>
+            <p class="smalltxt">This tool uses 2023 Census SAIPE county “poverty percentage, all ages” where available. USDA’s FY2026 guide references the SAIPE poverty data posted with the DLT application resources.</p>
           </div>
         </div>
       </div>
@@ -269,7 +270,7 @@ Example County Schools,Example School,100 Main St,Albany,Albany,GA,31701,Dougher
           <a href="https://data.hrsa.gov/DataDownload/DD_Files/Health_Center_Service_Delivery_and_LookAlike_Sites.xlsx" target="_blank"><strong>HRSA Health Center Sites XLSX</strong><span>Health Center Service Delivery and Look-Alike Sites. The tool attempts a full-table lookup and includes an upload fallback when browser/CORS settings block live HRSA loading.</span></a>
           <a href="https://services2.arcgis.com/FiaPA4ga0iQKduv3/ArcGIS/rest/services/Colleges_and_Universities_View/FeatureServer/0" target="_blank"><strong>Higher Ed Colleges & Universities Layer</strong><span>IPEDS/NCES institution names, addresses, sector, locale, county, latitude/longitude.</span></a>
           <a href="https://www.census.gov/data/developers/data-sets/Poverty-Statistics.html" target="_blank"><strong>Census SAIPE API</strong><span>County poverty rate estimates used for Economic Need scoring.</span></a>
-          <a href="https://api.census.gov/data/2020/dec/pl/variables/P1_001N.html" target="_blank"><strong>2020 Decennial Census API</strong><span>P1_001N total population for Census places.</span></a>
+          <a href="https://api.census.gov/data/2020/dec/dhc/variables/P1_001N.html" target="_blank"><strong>2020 Decennial Census API</strong><span>P1_001N total population for Census places.</span></a>
           <a href="https://geocoding.geo.census.gov/" target="_blank"><strong>U.S. Census Geocoder</strong><span>Optional coordinate lookup for manual anchor locations before radius search.</span></a>
         </div>
       </div>
@@ -1204,7 +1205,7 @@ async function enrichPlacePop(s){
   const st=s.state.toUpperCase(); const fips=STATE_FIPS[st]; if(!fips) return;
   if(!placeCache[st]){
     try{
-      const res=await fetch(`https://api.census.gov/data/2020/dec/pl?get=NAME,P1_001N&for=place:*&in=state:${fips}&key=b40f531183c077ba1f8973f7920be189d5cb8d2d`);
+      const res=await fetch(`https://api.census.gov/data/2020/dec/dhc?get=NAME,P1_001N&for=place:*&in=state:${fips}&key=b40f531183c077ba1f8973f7920be189d5cb8d2d`);
       const data=await res.json(); const map={};
       data.slice(1).forEach(r=>{ const name=r[0].replace(/,.*$/,''); map[norm(name)]={name:r[0],pop:parseInt(r[1])}; });
       placeCache[st]=map;
@@ -1219,7 +1220,7 @@ async function enrichSaipe(s){
   const st=s.state.toUpperCase(); const fips=STATE_FIPS[st]; if(!fips) return;
   if(!saipeCache[st]){
     try{
-      const res=await fetch(`https://api.census.gov/data/timeseries/poverty/saipe?get=NAME,SAEPOVRTALL_PT&for=county:*&in=state:${fips}&YEAR=2024&key=b40f531183c077ba1f8973f7920be189d5cb8d2d`);
+      const res=await fetch(`https://api.census.gov/data/timeseries/poverty/saipe?get=NAME,SAEPOVRTALL_PT&for=county:*&in=state:${fips}&YEAR=2023&key=b40f531183c077ba1f8973f7920be189d5cb8d2d`);
       const data=await res.json(); const byFips={}, byName={};
       data.slice(1).forEach(r=>{const obj={name:r[0],rate:parseFloat(r[1]),state:r[3],county:r[4],fips:r[3]+r[4]}; byFips[obj.fips]=obj; byName[norm(obj.name.replace(/,.*$/,''))]=obj;});
       saipeCache[st]={byFips,byName};
@@ -1557,7 +1558,7 @@ function importedManualSite(o){
   return finalizeSiteFields({id:crypto.randomUUID(), include:String(pick(o,['include','Include'])||'true').toLowerCase()!=='false', type:pick(o,['type','Type'])||'Other', source:pick(o,['source','Source'])||'Imported Site File', sourceId:pick(o,['sourceId','ID','NCES ID','UnitID']), organization:pick(o,['organization','Organization','district','District','Agency Name']), siteName, address:pick(o,['address','Address','Site Address','Street','Street Address']), city:pick(o,['city','City','Site City','Postal City','LCITY']), ruralityPlace:pick(o,['ruralityPlace','Rurality Place','Rurality Place/CDP','Town or Place Name','Census Place','CDP']), state, zip:pick(o,['zip','ZIP','Postal Code','LZIP']), county:pick(o,['county','County','County Name','NMCNTY']), countyFips:cleanCountyFips(pick(o,['countyFips','County FIPS','CNTY','COUNTYCD']),state), phone:pick(o,['phone','Phone','PHONE']), email:pick(o,['email','Email','Contact Email']), website:pick(o,['website','Website','WEBADDR','URL']), sourceLocale:pick(o,['sourceLocale','Locale','ULOCALE','LOCALE']), enrollment:pick(o,['enrollment','Enrollment','MEMBER']), schoolCount:pick(o,['schoolCount','School Count','# Schools','SCH']), designation:normalizeDesignation(pick(o,['designation','Designation'])||'End-User'), contiguous:pick(o,['contiguous','Contiguous'])||'Unknown', outsideNonRural:pick(o,['outsideNonRural','Outside Non-Rural','DLT Map Outside Non-Rural'])||'Unknown', censusRural:pick(o,['censusRural','Census Rural'])||'Unknown', cityPopulation:pick(o,['cityPopulation','2020 Population','Census Population']), saipePercent:pick(o,['saipePercent','SAIPE Poverty %','Poverty %']), ruralityScore:null, economicScore:null, lat:pick(o,['lat','Latitude','LATITUDE']), lon:pick(o,['lon','Longitude','LONGITUDE']), description:pick(o,['description','Description']), notes:pick(o,['notes','Notes'])});
 }
 function downloadNcesImportNotes(){
-  const txt=`NCES import notes for the RUS DLT Scoring Tool\n\nAccepted formats: .csv, .xlsx, .xls\n\nThe import tries to detect these source types automatically:\n- NCES/CCD school exports: NCESSCH, SCH_NAME, LEA_NAME, LSTREET1, LCITY, LSTATE/STABR, LZIP, NMCNTY, CNTY, PHONE, ULOCALE, MEMBER, LATCOD, LONCOD\n- NCES/CCD district exports: LEAID, LEA_NAME, LSTREET1, LCITY, LSTATE/STABR, LZIP, CONAME/NMCNTY, COID/CNTY, PHONE, SCH, LOCALE_TEXT\n- Higher-ed/IPEDS exports: UNITID, INSTNM, ADDR, CITY, STABBR, ZIP, COUNTYNM, COUNTYCD, GENTELE, WEBADDR, LOCALE\n- Manual site files: organization, siteName, address, city, ruralityPlace, state, zip, county, countyFips, phone, email, website, schoolCount, designation, sourceLocale\n\nAfter import, Auto-enrich + score looks up Census 2020 place population and 2024 SAIPE county poverty where possible, then calculates D-1, D-2, and D-1+D-2. USDA DLT map verification is still required before final scoring.`;
+  const txt=`NCES import notes for the RUS DLT Scoring Tool\n\nAccepted formats: .csv, .xlsx, .xls\n\nThe import tries to detect these source types automatically:\n- NCES/CCD school exports: NCESSCH, SCH_NAME, LEA_NAME, LSTREET1, LCITY, LSTATE/STABR, LZIP, NMCNTY, CNTY, PHONE, ULOCALE, MEMBER, LATCOD, LONCOD\n- NCES/CCD district exports: LEAID, LEA_NAME, LSTREET1, LCITY, LSTATE/STABR, LZIP, CONAME/NMCNTY, COID/CNTY, PHONE, SCH, LOCALE_TEXT\n- Higher-ed/IPEDS exports: UNITID, INSTNM, ADDR, CITY, STABBR, ZIP, COUNTYNM, COUNTYCD, GENTELE, WEBADDR, LOCALE\n- Manual site files: organization, siteName, address, city, ruralityPlace, state, zip, county, countyFips, phone, email, website, schoolCount, designation, sourceLocale\n\nAfter import, Auto-enrich + score looks up Census 2020 place population and 2023 SAIPE county poverty where possible, then calculates D-1, D-2, and D-1+D-2. USDA DLT map verification is still required before final scoring.`;
   download('NCES_DLT_Import_Notes.txt', txt, 'text/plain');
 }
 function exportCSV(){
