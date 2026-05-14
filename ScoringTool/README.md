@@ -2,6 +2,13 @@
 
 GitHub Pages-ready static HTML tool for preliminary FY2026 USDA RUS Distance Learning & Telemedicine scoring and source-based partner radius prospecting.
 
+## v44 Prospect Finder name-search fix
+
+- Added a default-on option to show Agency / Organization or Address matches even when the record is below the active high-fit thresholds.
+- This prevents known records, such as North Slope Borough School District, from disappearing simply because the default Prospect Finder mode is set to high-fit only with minimum Objective Score / SAIPE / population filters.
+- The row still shows its calculated D-1, D-2, SAIPE, population, and fit status so reps can see why it is or is not a high-fit screen.
+
+
 ## Files
 
 - `index.html` — Solutionz-branded scoring and partner radius workspace.
