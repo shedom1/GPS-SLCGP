@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Prior RUS DLT Awards | Strategy View</title>
+  <link rel="stylesheet" href="brand.css" />
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <script src="auth.js"></script>
+  <style>
+    :root{--navy:#003b5c;--blue:#005bbb;--aqua:#00a6a6;--orange:#f79646;--gray:#e5e5e5;--ink:#17324d;--muted:#60738b;--line:#d7e3ef;--bg:#f7fbff;--shadow:0 16px 40px rgba(0,59,92,.12)}
+    *{box-sizing:border-box} body{margin:0;font-family:Myriad Pro,Segoe UI,Roboto,Arial,sans-serif;background:linear-gradient(180deg,#062543 0,#09365b 228px,#f5f9fc 229px,#fff 100%);color:var(--ink)}
+    a{color:#005bbb;text-decoration:none} a:hover{text-decoration:underline}
+    .app-header{color:#fff;padding:18px 22px 16px;border-bottom:4px solid #00a6a6;box-shadow:0 10px 30px rgba(0,0,0,.14)}
+    .topbar{max-width:1540px;margin:0 auto;display:flex;justify-content:space-between;gap:14px;align-items:flex-start}.brand{display:flex;gap:12px;align-items:center}.brand-mark{font-family:Georgia,serif;font-size:19px;letter-spacing:.08em;color:#fff}.brand-title{font-weight:900;text-transform:uppercase;letter-spacing:.08em}.brand-subtitle{font-size:12px;color:#cde7f8;margin-top:2px}.nav-actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}.nav-button{display:inline-flex;align-items:center;border:1px solid rgba(255,255,255,.22);border-radius:999px;padding:8px 11px;background:rgba(255,255,255,.10);color:#fff;font-weight:800;font-size:12px}.hero{max-width:1540px;margin:16px auto 0;display:grid;grid-template-columns:1.2fr .8fr;gap:16px;align-items:end}.eyebrow{font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:900;color:#9ee7e5}.hero h1{font-size:30px;line-height:1.05;margin:7px 0 7px}.subtitle{font-size:13px;line-height:1.42;color:#d5e8f7}.hero-chips{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap}.badge{border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.10);border-radius:999px;padding:8px 10px;font-size:12px}.badge strong{color:#a7f3d0}
+    main{max-width:1540px;margin:-4px auto 56px;padding:0 18px}.card{background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);margin-top:14px;overflow:hidden}.card h2{margin:0;padding:11px 13px;border-bottom:1px solid #e8eef6;background:linear-gradient(180deg,#fff,#f3f8fd);font-size:14px;letter-spacing:.04em;text-transform:uppercase;color:#003b5c;display:flex;justify-content:space-between;gap:10px;align-items:center}.body{padding:11px 13px}.smalltxt{font-size:12px;color:var(--muted);line-height:1.35;text-transform:none;letter-spacing:0;font-weight:500}.row{display:grid;grid-template-columns:repeat(12,1fr);gap:8px;align-items:end}.col-2{grid-column:span 2}.col-3{grid-column:span 3}.col-4{grid-column:span 4}.col-5{grid-column:span 5}.col-6{grid-column:span 6}.col-12{grid-column:span 12} label{font-size:10px;text-transform:uppercase;letter-spacing:.05em;font-weight:900;color:#34465d;display:block;margin:0 0 3px} input,select{width:100%;border:1px solid #c9d6e6;border-radius:8px;padding:7px 8px;font:inherit;font-size:12px;background:#fff}.btnrow{display:flex;gap:7px;flex-wrap:wrap;align-items:center}.btnrow button,.button-link{border:0;border-radius:8px;padding:7px 10px;font-size:11.5px;font-weight:900;cursor:pointer;display:inline-flex;align-items:center;gap:6px;white-space:nowrap}.primary{background:#005bbb;color:#fff}.accent{background:#dff7ff;color:#005070}.green{background:#dffbed;color:#166534}.ghost{background:#f8fbff;border:1px solid #d7e3ef;color:#17324d}.orange{background:#f79646;color:#fff}.status{font-size:12px;color:var(--muted);min-height:18px;margin-top:7px}.mini-note{font-size:12px;line-height:1.35;color:#10483b;background:#f3fbf7;border-left:4px solid #00a6a6;border-radius:8px;padding:7px 9px;margin-bottom:9px}.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:12px;background:white;max-height:520px}.table-wrap.compact{max-height:410px}table{width:100%;border-collapse:separate;border-spacing:0;font-size:10px;min-width:1260px;table-layout:fixed}th,td{border-bottom:1px solid #e8eef5;border-right:1px solid #eef3f8;padding:4px 5px;vertical-align:top;background:#fff;line-height:1.18}th{position:sticky;top:0;z-index:2;background:#003b5c;color:#fff;text-align:left;font-size:9px;text-transform:uppercase;letter-spacing:.04em;cursor:pointer}tbody tr:hover td{background:#eefaff}.num{text-align:right;font-variant-numeric:tabular-nums}.pill{display:inline-flex;border-radius:999px;padding:2px 6px;font-weight:900;font-size:9px;background:#eaf2fb;color:#003b5c}.pill.tm{background:#e0f2fe;color:#075985}.pill.dl{background:#fef3c7;color:#92400e}.pill.both{background:#dcfce7;color:#166534}.drilldown{border:1px solid #cde4f8;border-radius:14px;background:linear-gradient(180deg,#fff,#f8fbff);padding:12px;margin-bottom:12px;box-shadow:0 10px 26px rgba(8,22,48,.07)}.drill-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;border-bottom:1px solid #e3edf7;padding-bottom:8px;margin-bottom:10px}.drill-head h3{margin:0;font-size:18px;color:#003b5c}.mini-metrics{display:grid;grid-template-columns:repeat(6,minmax(110px,1fr));gap:8px;margin:8px 0}.mini-metric{border:1px solid #dce8f4;border-radius:10px;background:#fff;padding:8px}.mini-metric span{display:block;color:#60738b;font-size:10px;text-transform:uppercase;font-weight:900;letter-spacing:.04em}.mini-metric b{display:block;font-size:15px;margin-top:3px}.year-detail{border:1px solid #dce8f4;border-radius:11px;background:#fff;margin-top:8px;overflow:hidden}.year-detail summary{cursor:pointer;padding:8px 10px;font-weight:900;color:#003b5c;background:#f1f7fd}.project-card{padding:10px;border-top:1px solid #eef3f8}.project-card.excluded{opacity:.55;background:#fbfbfb}.project-title{font-size:13px;font-weight:900;color:#102033;margin-bottom:5px;display:flex;justify-content:space-between;gap:10px;align-items:flex-start}.calc-toggle{font-size:11px;font-weight:800;color:#334155;display:inline-flex;gap:5px;align-items:center;white-space:nowrap}.calc-toggle input{width:auto}.desc{font-size:12px;line-height:1.42;color:#334155;background:#fbfdff;border:1px solid #edf3f8;border-radius:9px;padding:8px;margin:7px 0}.site-table{min-width:900px;font-size:9.5px}.site-table th{position:sticky;background:#eaf2fb;color:#334155}.hidden{display:none!important}.advanced{border:1px solid #d9e5f2;border-radius:10px;background:#f8fbff;padding:7px 9px;margin-top:8px;font-size:11.5px}.advanced summary{cursor:pointer;font-weight:900;color:#0f3760}.two{display:grid;grid-template-columns:minmax(260px,1fr) auto;gap:8px;align-items:end;margin-top:8px}.footnote{font-size:11px;color:#64748b;margin-top:8px;line-height:1.35}.source-line{font-size:11px;color:#475569;background:#f8fbff;border:1px solid #e5edf6;border-radius:8px;padding:6px 8px;margin-bottom:8px}@media(max-width:1100px){.topbar,.hero{display:block}.nav-actions{justify-content:flex-start;margin-top:12px}.hero-chips{justify-content:flex-start;margin-top:12px}.row{grid-template-columns:repeat(6,1fr)}.col-2,.col-3,.col-4,.col-5,.col-6{grid-column:span 6}.mini-metrics{grid-template-columns:repeat(2,1fr)}}
+
+    /* v30 compact awards view */
+    .app-header{padding:8px 14px 9px!important;border-bottom-width:3px!important;}
+    .topbar{align-items:center!important;gap:8px!important}.brand{gap:8px!important}.brand-title{font-size:11px!important}.brand-subtitle{font-size:10px!important}
+    .nav-actions{gap:5px!important}.nav-button{padding:5px 8px!important;font-size:10px!important;border-radius:4px!important}
+    .hero{margin:8px auto 0!important;grid-template-columns:1fr auto!important;gap:8px!important;align-items:center!important}
+    .eyebrow{font-size:9px!important;letter-spacing:.08em!important}.hero h1{font-size:18px!important;line-height:1.15!important;margin:3px 0 0!important;letter-spacing:.01em!important}.subtitle{display:none!important}
+    .hero-chips{gap:5px!important}.badge{padding:4px 6px!important;font-size:10px!important;border-radius:4px!important}
+    main{margin:8px auto 28px!important;padding:0 10px!important}.card{margin-top:8px!important;border-radius:8px!important;box-shadow:0 8px 18px rgba(0,59,92,.08)!important}.card h2{padding:6px 8px!important;font-size:11px!important;border-bottom-width:2px!important}.body{padding:7px 8px!important}.smalltxt{font-size:10.5px!important}
+    .row{gap:5px!important} label{font-size:9px!important;margin-bottom:2px!important} input,select{padding:4px 6px!important;font-size:11px!important;border-radius:4px!important;height:28px!important}
+    .btnrow{gap:5px!important}.compact-actions{flex-wrap:nowrap!important}.btnrow button,.button-link{padding:5px 7px!important;font-size:10px!important;border-radius:4px!important}.action-strip{padding-top:2px!important}
+    .advanced{padding:5px 7px!important;margin-top:5px!important;font-size:10.5px!important;border-radius:6px!important}.two{gap:5px!important;margin-top:5px!important}.status{font-size:10.5px!important;margin-top:4px!important;min-height:12px!important}.footnote{font-size:10px!important;margin-top:4px!important}
+    .table-wrap{max-height:420px!important;border-radius:6px!important}.table-wrap.compact{max-height:345px!important} table{font-size:9px!important;min-width:1180px!important} th,td{padding:3px 4px!important;line-height:1.12!important} th{font-size:8.5px!important}.pill{font-size:8px!important;padding:1px 4px!important;border-radius:4px!important}
+    .drilldown{padding:7px!important;margin-bottom:7px!important;border-radius:8px!important;box-shadow:0 5px 12px rgba(8,22,48,.05)!important}.drill-head{padding-bottom:5px!important;margin-bottom:6px!important;gap:8px!important}.drill-head h3{font-size:14px!important;line-height:1.15!important}.mini-metrics{grid-template-columns:repeat(6,minmax(80px,1fr))!important;gap:5px!important;margin:5px 0!important}.mini-metric{padding:5px!important;border-radius:6px!important}.mini-metric span{font-size:8.5px!important}.mini-metric b{font-size:12px!important;margin-top:1px!important}
+    .year-detail{margin-top:5px!important;border-radius:7px!important}.year-detail summary{padding:5px 7px!important;font-size:11px!important}.project-card{padding:6px!important}.project-title{font-size:11px!important;margin-bottom:3px!important}.calc-toggle{font-size:10px!important}.desc{font-size:10.5px!important;line-height:1.28!important;padding:5px!important;margin:4px 0!important;border-radius:5px!important}.site-table{font-size:8.5px!important;min-width:820px!important}
+    @media(max-width:1100px){.compact-actions{flex-wrap:wrap!important}.hero{display:block!important}.hero-chips{justify-content:flex-start!important;margin-top:6px!important}}
+
+    /* v35: all-awardee prior awards source with compact drilldown */
+    body{font-size:13px!important;}
+    .hero h1{font-size:19px!important;}
+    .card h2{font-size:12px!important;}
+    .smalltxt,.status,.footnote,.source-line,.advanced{font-size:11.5px!important;}
+    label{font-size:10px!important;}
+    input,select{font-size:12px!important;}
+    .btnrow button,.button-link,.nav-button{font-size:11px!important;}
+    table{font-size:10px!important;}
+    th{font-size:9.5px!important;}
+    .pill{font-size:9px!important;}
+    .drill-head h3{font-size:15px!important;}
+    .project-title{font-size:13px!important;}
+    .calc-toggle{font-size:12px!important;}
+    .desc{font-size:13px!important;}
+    .site-table{font-size:10.5px!important;}
+    .mini-metric span{font-size:10.5px!important;}
+    .mini-metric b{font-size:16px!important;}
+
+  </style>
+</head>
+<body>
+  <header class="app-header">
+    <div class="topbar">
+      <div class="brand"><div><div class="brand-title">Prior RUS DLT Awards</div><div class="brand-subtitle">Award history and drilldown cards</div></div></div>
+      <nav class="nav-actions">
+        <a class="nav-button" href="index.html">Scoring Tool</a>
+        <a class="nav-button" href="prospects.html">Prospect Finder</a>
+        <a class="nav-button" href="awards.html">Prior Winners</a>
+        <a class="nav-button" href="guide.html">How to Use Guide</a>
+        <a class="nav-button" href="match.html">Match Calculator</a>
+        <a class="nav-button" href="sources.html">Data Sources</a>
+        <a class="nav-button" href="https://ruraldevelopment.maps.arcgis.com/apps/webappviewer/index.html?id=15a73830555645ae93d2fa773ed8e971" target="_blank">USDA DLT Map</a>
+      </nav>
+    </div>
+    <div class="hero">
+      <div><div class="eyebrow">Source-based award intelligence</div><h1>Prior RUS DLT Awards</h1></div>
+      <div class="hero-chips"><span class="badge"><strong>DL</strong> Distance Learning</span><span class="badge"><strong>TM</strong> Telemedicine</span><span class="badge"><strong>One source table</strong> no duplicate calculations</span></div>
+    </div>
+  </header>
+  <main>
+    <section class="card">
+      <h2>Filters <span class="smalltxt">click a row for card drilldown</span></h2>
+      <div class="body">
+        <div class="row">
+          <div class="col-2"><label>State</label><select id="awardState"></select></div>
+          <div class="col-2"><label>Year</label><select id="awardYear"><option value="">All years</option></select></div>
+          <div class="col-2"><label>Award Type</label><select id="awardUse"><option value="">All</option><option value="DL">DL</option><option value="TM">TM</option><option value="DL + TM">DL + TM</option></select></div>
+          <div class="col-2"><label>Awardee Category</label><select id="awardCategory"><option value="">All</option><option value="District/K-12">District/K-12</option><option value="Healthcare">Healthcare</option><option value="Higher Ed/Technical">Higher Ed/Technical</option><option value="Other">Other</option></select></div>
+          <div class="col-2"><label>Radius</label><select id="awardRadius"><option value="25">25 mi</option><option value="50">50 mi</option><option value="75">75 mi</option><option value="100" selected>100 mi</option></select></div>
+          <div class="col-2"><label>Display Limit</label><input id="awardLimit" type="number" value="1000" min="25" max="20000" step="25" /></div>
+          <div class="col-2"><label>Source</label><select id="sourceKind"><option value="">All rows</option><option value="site">Site-level rows</option><option value="summary">Pre-2017 summary rows</option></select></div>
+          <div class="col-4"><label>County / City / Location</label><input id="awardLocation" placeholder="Example: Dougherty, Albany, Bethel" /></div>
+          <div class="col-5"><label>Awardee / Agency / Description Keyword</label><input id="awardKeyword" placeholder="Example: school district, board of education, telehealth" /></div>
+          <div class="col-12 action-strip"><label>Actions</label><div class="btnrow compact-actions"><button class="primary" onclick="filterPriorAwards()">Filter</button><button class="green" onclick="findAwardsNearSelectedProspects()">Near Selected</button><button class="ghost" onclick="exportAwardsCSV()">Export CSV</button><button class="accent" onclick="loadBundledPriorAwards()">Reload</button></div></div>
+        </div>
+        <details class="advanced"><summary>Advanced: upload a replacement normalized award table</summary><div class="two"><div><label>Upload replacement table</label><input id="awardFile" type="file" accept=".csv,.xlsx,.xls" /></div><button class="ghost" onclick="importPriorAwardsFile()">Upload Table</button></div><div class="smalltxt">Use this only if you want to override the bundled normalized prior-awards table. Expected fields include year, awardee, project_id, award_type, state, county, city, total_grant, site_grant, site_name, address, description, latitude, longitude.</div></details>
+        <div id="awardStatus" class="status"></div>
+      </div>
+    </section>
+    <section class="card">
+      <h2>Awardee Drilldown Card <span class="smalltxt">project card checkboxes control the calculated totals</span></h2>
+      <div class="body"><div id="awardDrilldown" class="drilldown hidden"></div><div id="emptyDrilldown" class="smalltxt">Select an awardee row below to see all winning years, project descriptions, award type, site/sub-recipient rows, and card-level totals.</div></div>
+    </section>
+    <section class="card">
+      <h2>Prior Winners Table <span class="smalltxt">project-level rows; sortable columns</span></h2>
+      <div class="body"><div class="table-wrap compact"><table id="awardsTable"></table></div><div class="footnote"><strong>No hallucination rule:</strong> rows display only source fields from the normalized prior-awards table and the uploaded past-award workbook descriptions that were merged into it.</div></div>
+    </section>
+  </main>
+<script>
+const PRIOR_DISTRICT_AWARDS_CSV='data/RUS_DLT_Prior_District_Awards.csv';
+const STATE_NAMES={AL:'Alabama',AK:'Alaska',AZ:'Arizona',AR:'Arkansas',CA:'California',CO:'Colorado',CT:'Connecticut',DE:'Delaware',DC:'District of Columbia',FL:'Florida',GA:'Georgia',HI:'Hawaii',ID:'Idaho',IL:'Illinois',IN:'Indiana',IA:'Iowa',KS:'Kansas',KY:'Kentucky',LA:'Louisiana',ME:'Maine',MD:'Maryland',MA:'Massachusetts',MI:'Michigan',MN:'Minnesota',MS:'Mississippi',MO:'Missouri',MT:'Montana',NE:'Nebraska',NV:'Nevada',NH:'New Hampshire',NJ:'New Jersey',NM:'New Mexico',NY:'New York',NC:'North Carolina',ND:'North Dakota',OH:'Ohio',OK:'Oklahoma',OR:'Oregon',PA:'Pennsylvania',RI:'Rhode Island',SC:'South Carolina',SD:'South Dakota',TN:'Tennessee',TX:'Texas',UT:'Utah',VT:'Vermont',VA:'Virginia',WA:'Washington',WV:'West Virginia',WI:'Wisconsin',WY:'Wyoming'};
+const STATE_FIPS={AL:'01',AK:'02',AZ:'04',AR:'05',CA:'06',CO:'08',CT:'09',DE:'10',DC:'11',FL:'12',GA:'13',HI:'15',ID:'16',IL:'17',IN:'18',IA:'19',KS:'20',KY:'21',LA:'22',ME:'23',MD:'24',MA:'25',MI:'26',MN:'27',MS:'28',MO:'29',MT:'30',NE:'31',NV:'32',NH:'33',NJ:'34',NM:'35',NY:'36',NC:'37',ND:'38',OH:'39',OK:'40',OR:'41',PA:'42',RI:'44',SC:'45',SD:'46',TN:'47',TX:'48',UT:'49',VT:'50',VA:'51',WA:'53',WV:'54',WI:'55',WY:'56'};
+let placeCache={}, saipeCache={};
+let rawAwardRows=[], projectRows=[], awardResults=[], currentCardProjects=[];
+let awardSort={key:'year',dir:'desc'};
+const AWARD_COLS=[['year','Year',56,'number'],['awardee','Awardee / Recipient',235,'text'],['awardeeCategory','Category',120,'text'],['awardUse','Type',68,'text'],['state','State',50,'text'],['county','County',125,'text'],['city','City',105,'text'],['projectId','Project ID',92,'text'],['totalGrant','Grant $',100,'number'],['siteCount','Site Rows',72,'number'],['description','Description',420,'text']];
+function esc(x){return String(x??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
+function norm(x){return String(x??'').toLowerCase().replace(/&/g,'and').replace(/[^a-z0-9]+/g,' ').trim();}
+function csvCell(v){let s=String(v??'');return /[",\n]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s;}
+function fmtMoney(v){const n=Number(String(v??'').replace(/[^0-9.-]/g,''));return Number.isFinite(n)&&n!==0?n.toLocaleString(undefined,{style:'currency',currency:'USD',maximumFractionDigits:0}):'';}
+function num(v){const n=Number(String(v??'').replace(/[^0-9.-]/g,''));return Number.isFinite(n)?n:0;}
+function compare(a,b,type){if(type==='number')return (parseFloat(a)||0)-(parseFloat(b)||0);return String(a??'').localeCompare(String(b??''));}
+function setAwardStatus(msg){document.getElementById('awardStatus').innerHTML=msg||'';}
+function parseCSV(text){const rows=[];let row=[],cur='',q=false;for(let i=0;i<text.length;i++){const c=text[i],n=text[i+1];if(q){if(c==='"'&&n==='"'){cur+='"';i++;}else if(c==='"'){q=false;}else cur+=c;}else{if(c==='"')q=true;else if(c===','){row.push(cur);cur='';}else if(c==='\n'||c==='\r'){if(c==='\r'&&n==='\n')i++;row.push(cur);if(row.some(x=>String(x).trim()!==''))rows.push(row);row=[];cur='';}else cur+=c;}}row.push(cur);if(row.some(x=>String(x).trim()!==''))rows.push(row);const headers=(rows.shift()||[]).map(h=>String(h||'').trim());return rows.map(r=>Object.fromEntries(headers.map((h,i)=>[h,r[i]??''])));}
+async function fetchCsv(path){const r=await fetch(path,{cache:'no-store'});if(!r.ok)throw new Error(`${path}: HTTP ${r.status}`);return parseCSV(await r.text());}
+function pick(o,names){for(const n of names){if(o[n]!==undefined && String(o[n]??'').trim()!=='')return o[n];}return '';}
+function inferAwardeeCategory(o, awardee, desc, awardUse){
+  const explicit=pick(o,['awardee_category','awardeeCategory','Category','Awardee Category']);
+  if(explicit)return explicit;
+  const text=norm([awardee,desc,awardUse,pick(o,['program','Program']),pick(o,['site_name','siteName','SITENAME'])].join(' '));
+  if(/\b(school district|independent school district|board of education|school board|county schools|public schools|city schools|unified school district|school system|school department|boces|esu|superintendent|\w+ isd)\b/.test(text))return 'District/K-12';
+  if(/\b(university|college|technical college|community college|institute of technology|regents|higher education|vocational)\b/.test(text))return 'Higher Ed/Technical';
+  if(/\b(health center|healthcare|health care|hospital|medical|clinic|telehealth|telemedicine|behavioral health|mental health|dental|public health|health system|health services|fqh|ems|ambulance)\b/.test(text))return 'Healthcare';
+  return 'Other';
+}
+function normalizeAwardRow(o){
+  const year=pick(o,['year','Year','Fiscal Year']);
+  const awardee=pick(o,['awardee','Awardee','Recipient','Borrower Name']);
+  const projectId=pick(o,['project_id','projectId','Project ID','Project Name','PROJECTID']);
+  const awardUse=pick(o,['award_type','awardUse','Award Type','grant_type','GRANTTYPE']);
+  const desc=pick(o,['description','Description','Project Announced Description']);
+  const normalizedUse=normalizeAwardType(awardUse);
+  const category=inferAwardeeCategory(o, awardee, desc, normalizedUse);
+  return {raw:o, sourceKind:pick(o,['source_kind','sourceKind','Source Kind']), year:String(year||''), awardee, awardeeCategory:category, projectId, projectBase:pick(o,['project_id_base','projectIdBase'])||projectId, awardUse:normalizedUse, grantType:pick(o,['grant_type','grantType','GRANTTYPE']), subtype:pick(o,['subtype','SUBTYPE']), fundingCode:pick(o,['funding_code','fundingCode','Funding Code']), state:String(pick(o,['state','State','STATE'])||'').toUpperCase(), county:pick(o,['county','County','COUNTY']), city:pick(o,['city','City','TOWN']), zip:pick(o,['zip','ZIP','ZIPCODE']), totalGrant:num(pick(o,['total_grant','totalGrant','TOTALGRAM','Investment Dollars'])), siteGrant:num(pick(o,['site_grant','siteGrant','SITEGRAM'])), siteName:pick(o,['site_name','siteName','SITENAME']), siteType:pick(o,['site_type','siteType','SITETYPE']), address:pick(o,['address','CONADDRESS','Address']), street:pick(o,['street','STREETADD']), lat:pick(o,['latitude','lat','Y_LAT','geometryLatitude']), lon:pick(o,['longitude','lon','X_LONG','geometryLongitude']), description:desc, descriptionSource:pick(o,['description_source','descriptionSource']), sourceTable:pick(o,['source_table','sourceTable'])};
+}
+function normalizeAwardType(t){t=String(t||'').trim();const low=t.toLowerCase();if(low==='dl'||low.includes('distance learning'))return 'DL';if(low==='tm'||low.includes('telemedicine'))return 'TM';if(low.includes('dl + tm')||low.includes('both'))return 'DL + TM';return t;}
+function projectKey(r){return norm([r.year,r.awardee,r.projectBase||r.projectId].join('|'));}
+function awardeeKey(r){return norm(String(r.awardee||'').replace(/\b(incorporated|inc|llc|ltd|co|company|corp|corporation|foundation|the)\b/ig,' '));}
+function inferType(rows){const types=new Set(rows.map(r=>r.awardUse).filter(Boolean));if(types.has('DL')&&types.has('TM'))return'DL + TM';if(types.has('DL + TM'))return'DL + TM';return [...types][0]||'';}
+function inferCategory(rows){const cats=rows.map(r=>r.awardeeCategory).filter(Boolean);return cats.find(c=>c==='District/K-12')||cats.find(c=>c==='Healthcare')||cats.find(c=>c==='Higher Ed/Technical')||cats[0]||'Other';}
+function firstUsefulDesc(rows){const descs=rows.map(r=>r.description).filter(Boolean);const useful=descs.find(d=>!/^detailed project description not available/i.test(d));return useful||descs[0]||'';}
+function buildProjectRows(){const map=new Map();rawAwardRows.forEach(r=>{const k=projectKey(r);if(!map.has(k))map.set(k,[]);map.get(k).push(r);});projectRows=[...map.values()].map(rows=>{const first=rows[0];const total=Math.max(...rows.map(r=>r.totalGrant||0),0);const siteRows=rows.filter(r=>r.siteName||r.address||r.siteGrant);return {key:projectKey(first),year:first.year,awardee:first.awardee,projectId:first.projectBase||first.projectId,projectRawId:first.projectId,awardUse:inferType(rows),awardeeCategory:inferCategory(rows),state:first.state,county:first.county,city:first.city,totalGrant:total,siteGrantTotal:rows.reduce((s,r)=>s+(r.siteGrant||0),0),siteCount:siteRows.length,description:firstUsefulDesc(rows),fundingCode:first.fundingCode,sourceKind:rows.some(r=>String(r.sourceKind).includes('summary_only'))?'summary':'site',sites:siteRows,rows};}).sort((a,b)=>Number(b.year||0)-Number(a.year||0)||String(a.awardee).localeCompare(String(b.awardee)));}
+async function loadBundledPriorAwards(){try{setAwardStatus('⏱️ Loading normalized prior-awards table...');rawAwardRows=(await fetchCsv(PRIOR_DISTRICT_AWARDS_CSV)).map(normalizeAwardRow).filter(r=>r.awardee);buildProjectRows();populateYears();filterPriorAwards();const pre=rawAwardRows.filter(r=>String(r.sourceKind).includes('pre_2017')||String(r.sourceKind).includes('summary')).length;setAwardStatus(`<strong>${projectRows.length.toLocaleString()}</strong> unique prior-award project row(s) loaded from one normalized table. Source rows: ${rawAwardRows.length.toLocaleString()}. Pre-2017 summary rows available: ${pre.toLocaleString()}.`);}catch(e){setAwardStatus(`<span style="color:#b42318">Could not load normalized prior-winner table: ${esc(e.message)}.</span>`);}}
+function populateYears(){const sel=document.getElementById('awardYear');const current=sel.value;sel.innerHTML='<option value="">All years</option>';[...new Set(projectRows.map(r=>r.year).filter(Boolean))].sort((a,b)=>Number(b)-Number(a)).forEach(y=>{const o=document.createElement('option');o.value=y;o.textContent=y;sel.appendChild(o);});if([...sel.options].some(o=>o.value===current))sel.value=current;}
+function init(){const sel=document.getElementById('awardState');sel.innerHTML='<option value="">All states</option>';Object.keys(STATE_NAMES).sort().forEach(abbr=>{const o=document.createElement('option');o.value=abbr;o.textContent=`${abbr} — ${STATE_NAMES[abbr]}`;sel.appendChild(o);});loadBundledPriorAwards();}
+function countyNameAliases(county,state){
+  const c=String(county||'').trim();
+  const st=String(state||'').trim().toUpperCase();
+  if(!c)return [];
+  const aliases=[c,`${c} County`,`${c} Co`,`${c} County ${st}`,`${c} Co ${st}`,`${c} ${st}`];
+  return aliases;
+}
+function projectSearchText(r){
+  const parts=[r.awardee,r.projectId,r.projectRawId,r.fundingCode,r.description,r.awardUse,r.awardeeCategory,r.state,r.county,r.city,...countyNameAliases(r.county,r.state)];
+  (r.sites||[]).forEach(s=>{
+    parts.push(s.siteName,s.siteType,s.address,s.street,s.city,s.county,s.state,s.zip,...countyNameAliases(s.county,s.state));
+  });
+  (r.rows||[]).forEach(row=>{
+    parts.push(row.awardee,row.projectId,row.projectBase,row.fundingCode,row.description,row.grantType,row.subtype,row.siteName,row.siteType,row.address,row.street,row.city,row.county,row.state,row.zip,...countyNameAliases(row.county,row.state));
+    if(row.raw)parts.push(...Object.values(row.raw));
+  });
+  return norm(parts.filter(Boolean).join(' '));
+}
+function queryMatches(searchText,query){
+  const q=norm(query);
+  if(!q)return true;
+  if(searchText.includes(q))return true;
+  const tokens=q.split(' ').filter(t=>t.length>1&&!['of','the','and'].includes(t));
+  return tokens.length?tokens.every(t=>searchText.includes(t)):true;
+}
+function filterPriorAwards(){
+  const st=(document.getElementById('awardState').value||'').toUpperCase();
+  const yr=document.getElementById('awardYear').value||'';
+  const use=document.getElementById('awardUse').value||'';
+  const cat=document.getElementById('awardCategory')?document.getElementById('awardCategory').value:'';
+  const source=document.getElementById('sourceKind').value||'';
+  const loc=document.getElementById('awardLocation').value||'';
+  const key=document.getElementById('awardKeyword').value||'';
+  const limit=Number(document.getElementById('awardLimit').value)||1000;
+  awardResults=projectRows.filter(r=>{
+    if(st&&r.state!==st)return false;
+    if(yr&&String(r.year)!==String(yr))return false;
+    if(use&&r.awardUse!==use)return false;
+    if(cat&&r.awardeeCategory!==cat)return false;
+    if(source==='site'&&r.sourceKind!=='site')return false;
+    if(source==='summary'&&r.sourceKind!=='summary')return false;
+    const txt=projectSearchText(r);
+    if(loc&&!queryMatches(txt,loc))return false;
+    if(key&&!queryMatches(txt,key))return false;
+    return true;
+  }).slice(0,limit);
+  renderAwardsTable(awardResults);
+  setAwardStatus(`<strong>${awardResults.length.toLocaleString()}</strong> project row(s) displayed from ${projectRows.length.toLocaleString()} prior-award projects.`);
+}
+function renderAwardsTable(rows){const table=document.getElementById('awardsTable');table.innerHTML=`<thead><tr>${AWARD_COLS.map(c=>`<th style="width:${c[2]}px" onclick="sortAwards('${c[0]}')">${esc(c[1])}${awardSort.key===c[0]?` ${awardSort.dir==='asc'?'▲':'▼'}`:''}</th>`).join('')}</tr></thead><tbody></tbody>`;const body=table.querySelector('tbody');const sorted=sortRows([...rows]);if(!sorted.length){body.innerHTML=`<tr><td colspan="${AWARD_COLS.length}" class="smalltxt">No prior award rows match the current filters.</td></tr>`;return;}sorted.forEach(r=>{const tr=document.createElement('tr');tr.style.cursor='pointer';tr.title='Click to open awardee card with all years and project/site rows.';tr.onclick=()=>showAwardeeCard(r);tr.innerHTML=`<td>${esc(r.year)}</td><td title="${esc(r.awardee)}">${esc(r.awardee)}</td><td>${esc(r.awardeeCategory||'')}</td><td>${pillType(r.awardUse)}</td><td>${esc(r.state)}</td><td>${esc(r.county)}</td><td>${esc(r.city)}</td><td>${esc(r.projectId)}</td><td class="num">${fmtMoney(r.totalGrant)}</td><td class="num">${esc(r.siteCount||'')}</td><td title="${esc(r.description)}">${esc(shorten(r.description,260))}</td>`;body.appendChild(tr);});}
+function shorten(s,n){s=String(s||'');return s.length>n?s.slice(0,n-1)+'…':s;}
+function pillType(t){if(t==='TM')return '<span class="pill tm">TM</span>';if(t==='DL')return '<span class="pill dl">DL</span>';if(t==='DL + TM')return '<span class="pill both">DL + TM</span>';return esc(t||'');}
+function sortAwards(key){if(awardSort.key===key)awardSort.dir=awardSort.dir==='asc'?'desc':'asc';else awardSort={key,dir:'asc'};renderAwardsTable(awardResults);}
+function sortRows(rows){const col=AWARD_COLS.find(c=>c[0]===awardSort.key)||AWARD_COLS[0];const dir=awardSort.dir==='desc'?-1:1;return rows.sort((a,b)=>compare(a[col[0]],b[col[0]],col[3])*dir);}
+function showAwardeeCard(seed){const k=awardeeKey(seed);currentCardProjects=projectRows.filter(r=>awardeeKey(r)===k).sort((a,b)=>Number(b.year||0)-Number(a.year||0)||String(a.projectId).localeCompare(String(b.projectId)));const byYear={};currentCardProjects.forEach(p=>{(byYear[p.year||'Unknown'] ||= []).push(p);});const yearHtml=Object.entries(byYear).sort((a,b)=>Number(b[0])-Number(a[0])).map(([year,projs],idx)=>{const yTotal=projs.reduce((s,p)=>s+(p.totalGrant||0),0);const ySites=projs.reduce((s,p)=>s+(p.siteCount||0),0);return `<details class="year-detail" ${idx<2?'open':''}><summary>FY ${esc(year)} • ${projs.length} project(s) • ${ySites} site/sub-recipient row(s) • ${fmtMoney(yTotal)}</summary>${projs.map(renderProjectCard).join('')}</details>`;}).join('');const panel=document.getElementById('awardDrilldown');document.getElementById('emptyDrilldown').classList.add('hidden');panel.classList.remove('hidden');panel.innerHTML=`<div class="drill-head"><div><h3>${esc(seed.awardee)}</h3><div class="smalltxt"><strong>${esc(seed.awardeeCategory||'')}</strong> • Click project checkboxes to include or deselect cards from the totals. Site rows can be exported; Census/SAIPE values are pulled when available and left blank when no source match is found.</div><div id="drillEnrichStatus" class="enrich-note">Preparing Census/SAIPE lookup…</div></div><div class="drill-actions no-print"><button class="primary" onclick="printAwardeeCard()">Print / PDF Card</button><button class="accent" onclick="exportAwardeeCardCSV()">Export Card CSV</button><button class="ghost" onclick="enrichAwardDrilldown(true)">Refresh Census/SAIPE</button><button class="ghost" onclick="document.getElementById('awardDrilldown').classList.add('hidden');document.getElementById('emptyDrilldown').classList.remove('hidden')">Close</button></div></div><div class="mini-metrics"><div class="mini-metric"><span>Included Years</span><b id="metricYears">—</b></div><div class="mini-metric"><span>Award Type</span><b id="metricTypes">—</b></div><div class="mini-metric"><span>States</span><b id="metricStates">—</b></div><div class="mini-metric"><span>Included Projects</span><b id="metricProjects">—</b></div><div class="mini-metric"><span>Included Grant Total</span><b id="metricTotal">—</b></div><div class="mini-metric"><span>Site Rows / Site $</span><b id="metricSites">—</b></div></div>${yearHtml}`;refreshDrillMetrics();enrichAwardDrilldown();panel.scrollIntoView({behavior:'smooth',block:'start'});}
+function renderProjectCard(p){const sites=p.sites||[];const safeKey=esc(p.key);const siteRowsHtml=sites.length?`<div class="table-wrap" style="max-height:240px;border-radius:9px"><table class="site-table"><thead><tr><th>Site / sub-recipient location</th><th>Role</th><th>Address</th><th>City</th><th>County</th><th>State</th><th>2020 Pop</th><th>SAIPE %</th><th>Site $</th><th>USDA Map</th></tr></thead><tbody>${sites.map((s,i)=>{const sid=siteDomId(p,i);s._domId=sid;return `<tr data-site-row="${esc(sid)}"><td>${esc(s.siteName)}</td><td>${esc(s.siteType)}</td><td>${esc(s.address)}</td><td>${esc(s.city)}</td><td>${esc(s.county)}</td><td>${esc(s.state)}</td><td class="num pop-cell">${esc(s.cityPopulation||'')}</td><td class="num saipe-cell">${esc(s.saipePercent||'')}</td><td class="num">${fmtMoney(s.siteGrant)}</td><td><a href="${rusMapLinkFor(s)}" target="_blank">USDA Map</a></td></tr>`}).join('')}</tbody></table></div>`:`<div class="smalltxt">No site-level/sub-recipient rows are available for this project. This row comes from the workbook summary data.</div>`;const desc=p.description&&p.description!=='Detailed Project Description Not Available'?`<div class="desc"><strong>Description:</strong> ${esc(p.description)}</div>`:`<div class="desc"><strong>Description:</strong> Detailed project description not available in the uploaded workbook.</div>`;return `<div class="project-card" data-project-card="${safeKey}"><div class="project-title"><div>${esc(p.projectId||'Project')} • ${pillType(p.awardUse)} <span class="smalltxt">FY ${esc(p.year)} • Grant ${fmtMoney(p.totalGrant)} • Site $ ${fmtMoney(p.siteGrantTotal)} • ${sites.length} site row(s)</span></div><label class="calc-toggle"><input type="checkbox" class="project-calc-toggle" data-key="${safeKey}" data-year="${esc(p.year)}" data-type="${esc(p.awardUse)}" data-state="${esc(p.state)}" data-total="${p.totalGrant||0}" data-sitegrant="${p.siteGrantTotal||0}" data-sites="${sites.length}" checked onchange="toggleProjectCard(this);refreshDrillMetrics()"> Include in totals</label></div>${desc}${siteRowsHtml}</div>`;}
+function siteDomId(p,i){return String(p.key||'project').replace(/[^a-z0-9_-]/gi,'').slice(0,70)+'-'+i;}
+function toggleProjectCard(cb){const card=document.querySelector(`[data-project-card="${CSS.escape(cb.dataset.key)}"]`);if(card)card.classList.toggle('excluded',!cb.checked);}
+function refreshDrillMetrics(){const boxes=[...document.querySelectorAll('.project-calc-toggle')];const included=boxes.filter(b=>b.checked);const years=[...new Set(included.map(b=>b.dataset.year).filter(Boolean))].sort((a,b)=>Number(b)-Number(a));const types=[...new Set(included.map(b=>b.dataset.type).filter(Boolean))].sort();const states=[...new Set(included.map(b=>b.dataset.state).filter(Boolean))].sort();const total=included.reduce((s,b)=>s+num(b.dataset.total),0);const siteGrant=included.reduce((s,b)=>s+num(b.dataset.sitegrant),0);const siteRows=included.reduce((s,b)=>s+(parseInt(b.dataset.sites,10)||0),0);setText('metricYears',years.join(', ')||'—');setText('metricTypes',types.join(', ')||'—');setText('metricStates',states.join(', ')||'—');setText('metricProjects',String(included.length));setText('metricTotal',fmtMoney(total)||'$0');setText('metricSites',`${siteRows.toLocaleString()} / ${fmtMoney(siteGrant)||'$0'}`);}
+function setText(id,val){const el=document.getElementById(id);if(el)el.textContent=val;}
+function rusMapLinkFor(r){const base='https://ruraldevelopment.maps.arcgis.com/apps/webappviewer/index.html?id=15a73830555645ae93d2fa773ed8e971';const lat=parseFloat(r.lat),lon=parseFloat(r.lon);if(Number.isFinite(lat)&&Number.isFinite(lon))return `${base}&center=${lon},${lat}&level=12`;return base;}
+async function enrichAwardDrilldown(force=false){
+  const status=document.getElementById('drillEnrichStatus');
+  const sites=currentCardProjects.flatMap(p=>p.sites||[]);
+  if(!sites.length){if(status)status.textContent='No site-level rows available for Census/SAIPE enrichment.';return;}
+  if(status)status.textContent=`⏱️ Looking up Census place population + SAIPE county poverty… 0 / ${sites.length}`;
+  let done=0,popOk=0,saipeOk=0,popNoMatch=0,saipeNoMatch=0,apiErrors=[];
+  for(const s of sites){
+    if(force){delete s.cityPopulation;delete s.saipePercent;delete s._censusPlace;delete s._saipeCounty;delete s._enrichError;}
+    const beforePop=s.cityPopulation, beforeSaipe=s.saipePercent;
+    try{await enrichAwardPlacePop(s);}catch(e){apiErrors.push(`Census: ${e.message||e}`);s._censusPlace='Lookup failed';}
+    try{await enrichAwardSaipe(s);}catch(e){apiErrors.push(`SAIPE: ${e.message||e}`);s._saipeCounty='Lookup failed';}
+    if(s.cityPopulation)popOk++; else if(s._censusPlace)popNoMatch++;
+    if(s.saipePercent!==undefined && s.saipePercent!=='' && s.saipePercent!==null)saipeOk++; else if(s._saipeCounty)saipeNoMatch++;
+    done++;updateSiteCells(s);
+    if(status)status.textContent=`⏱️ Looking up Census/SAIPE… ${done} / ${sites.length} | Pop matched ${popOk} | SAIPE matched ${saipeOk}`;
+    if(done%15===0) await new Promise(r=>setTimeout(r,25));
+  }
+  const uniqueErr=[...new Set(apiErrors)].slice(0,3);
+  if(status){
+    status.innerHTML=`Census/SAIPE lookup complete: <strong>${popOk}/${sites.length}</strong> population values and <strong>${saipeOk}/${sites.length}</strong> SAIPE values matched. ${uniqueErr.length?`API/status notes: ${esc(uniqueErr.join(' | '))}. `:''}Blank values mean the city/county name did not match the public API or needs manual verification.`;
+  }
+}
+async function enrichAwardSite(s){await Promise.allSettled([enrichAwardPlacePop(s),enrichAwardSaipe(s)]);}
+function normPlaceName(x){
+  return norm(String(x||'')
+    .replace(/\(.*?\)/g,' ')
+    .replace(/\b(city|town|village|cdp|borough|municipality|municipio|comunidad|zona urbana|balance|consolidated government|corporation)\b/ig,' '));
+}
+function placeVariants(city){
+  const raw=String(city||'').trim();
+  const set=new Set();
+  if(raw)set.add(raw);
+  const noParen=raw.replace(/\(.*?\)/g,' ').trim();
+  if(noParen)set.add(noParen);
+  for(const m of raw.matchAll(/\((.*?)\)/g)){ if(m[1])set.add(m[1].trim()); }
+  raw.split(/[\/;|,-]/).map(x=>x.trim()).filter(Boolean).forEach(x=>set.add(x));
+  // common historical/official alternate names observed in the prior-awards table
+  const lower=raw.toLowerCase();
+  if(lower.includes('barrow')||lower.includes('utqiagvik'))set.add('Utqiagvik');
+  return [...set].filter(Boolean);
+}
+async function loadCensusPlacesForState(st){
+  const fips=STATE_FIPS[st]; if(!fips)throw new Error(`missing FIPS for ${st}`);
+  if(placeCache[st])return placeCache[st];
+  const url=`https://api.census.gov/data/2020/dec/dhc?get=NAME,P1_001N&for=place:*&in=state:${fips}&key=b40f531183c077ba1f8973f7920be189d5cb8d2d`;
+  const res=await fetch(url,{cache:'force-cache'});
+  if(!res.ok)throw new Error(`2020 Census place API HTTP ${res.status}`);
+  const data=await res.json();
+  const map={};
+  data.slice(1).forEach(r=>{
+    const name=String(r[0]||'').replace(/,.*$/,'').trim();
+    const pop=parseInt(r[1],10);
+    if(!Number.isFinite(pop))return;
+    const obj={name:r[0],pop};
+    [norm(name),normPlaceName(name)].filter(Boolean).forEach(k=>{if(!map[k])map[k]=obj;});
+  });
+  placeCache[st]=map;return map;
+}
+async function enrichAwardPlacePop(s){
+  const st=String(s.state||'').toUpperCase();
+  if(!st||s.cityPopulation)return;
+  const map=await loadCensusPlacesForState(st);
+  const variants=placeVariants(s.city);
+  for(const v of variants){
+    const keys=[norm(v),normPlaceName(v)].filter(Boolean);
+    for(const k of keys){const m=map[k];if(m&&Number.isFinite(m.pop)){s.cityPopulation=m.pop;s._censusPlace=m.name;return;}}
+  }
+  s._censusPlace='No Census place match';
+}
+function normCountyName(x){
+  return norm(String(x||'')
+    .replace(/\b(county|parish|borough|census area|municipality|municipio|city and borough|city)\b/ig,' '));
+}
+async function loadSaipeForState(st){
+  const fips=STATE_FIPS[st]; if(!fips)throw new Error(`missing FIPS for ${st}`);
+  if(saipeCache[st])return saipeCache[st];
+  const years=['2024','2023'];
+  let lastErr='';
+  for(const year of years){
+    try{
+      const url=`https://api.census.gov/data/timeseries/poverty/saipe?get=NAME,SAEPOVRTALL_PT&for=county:*&in=state:${fips}&YEAR=${year}&key=b40f531183c077ba1f8973f7920be189d5cb8d2d`;
+      const res=await fetch(url,{cache:'force-cache'});
+      if(!res.ok){lastErr=`SAIPE ${year} HTTP ${res.status}`;continue;}
+      const data=await res.json();
+      const byName={};
+      data.slice(1).forEach(r=>{
+        const nm=String(r[0]||'').replace(/,.*$/,'').trim();
+        const rate=parseFloat(r[1]);
+        if(!Number.isFinite(rate))return;
+        const obj={name:r[0],rate,year};
+        [norm(nm),normCountyName(nm)].filter(Boolean).forEach(k=>{if(!byName[k])byName[k]=obj;});
+      });
+      saipeCache[st]={byName,year};return saipeCache[st];
+    }catch(e){lastErr=e.message||String(e);}
+  }
+  throw new Error(lastErr||'SAIPE API failed');
+}
+async function enrichAwardSaipe(s){
+  const st=String(s.state||'').toUpperCase();
+  if(!st||s.saipePercent)return;
+  const cache=await loadSaipeForState(st);
+  const countyRaw=String(s.county||'').trim();
+  const keys=[norm(countyRaw),normCountyName(countyRaw)].filter(Boolean);
+  for(const k of keys){const m=cache.byName[k];if(m&&Number.isFinite(m.rate)){s.saipePercent=m.rate;s._saipeCounty=m.name;s._saipeYear=m.year;return;}}
+  s._saipeCounty='No county match';
+}
+function updateSiteCells(s){
+  const id=s._domId||'';
+  const row=document.querySelector(`[data-site-row="${CSS.escape(id)}"]`);
+  if(!row)return;
+  const pop=row.querySelector('.pop-cell');const sai=row.querySelector('.saipe-cell');
+  if(pop){pop.textContent=s.cityPopulation?Number(s.cityPopulation).toLocaleString():'';pop.title=s._censusPlace||'';}
+  if(sai){sai.textContent=(s.saipePercent!==undefined&&s.saipePercent!==''&&s.saipePercent!==null)?String(s.saipePercent):'';sai.title=s._saipeCounty?`${s._saipeCounty}${s._saipeYear?' ('+s._saipeYear+')':''}`:'';}
+}function currentIncludedProjects(){const selected=new Set([...document.querySelectorAll('.project-calc-toggle')].filter(b=>b.checked).map(b=>b.dataset.key));return currentCardProjects.filter(p=>selected.has(p.key));}
+function exportAwardeeCardCSV(){const projects=currentIncludedProjects();if(!projects.length){setAwardStatus('No included project cards to export.');return;}const fields=['included','year','awardee','projectId','awardUse','totalGrant','siteGrantTotal','siteCount','description','siteName','siteType','address','city','county','state','zip','cityPopulation','saipePercent','siteGrant','usdaMap'];const rows=[];projects.forEach(p=>{if((p.sites||[]).length){p.sites.forEach(s=>rows.push({included:'yes',year:p.year,awardee:p.awardee,projectId:p.projectId,awardUse:p.awardUse,totalGrant:p.totalGrant,siteGrantTotal:p.siteGrantTotal,siteCount:p.siteCount,description:p.description,siteName:s.siteName,siteType:s.siteType,address:s.address,city:s.city,county:s.county,state:s.state,zip:s.zip,cityPopulation:s.cityPopulation||'',saipePercent:s.saipePercent||'',siteGrant:s.siteGrant,usdaMap:rusMapLinkFor(s)}));}else{rows.push({included:'yes',year:p.year,awardee:p.awardee,projectId:p.projectId,awardUse:p.awardUse,totalGrant:p.totalGrant,siteGrantTotal:p.siteGrantTotal,siteCount:0,description:p.description});}});const csv=[fields.join(',')].concat(rows.map(r=>fields.map(f=>csvCell(r[f])).join(','))).join('\n');const blob=new Blob([csv],{type:'text/csv'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`RUS_DLT_Awardee_Card_${(projects[0].awardee||'awardee').replace(/[^a-z0-9]+/gi,'_')}.csv`;a.click();URL.revokeObjectURL(a.href);}
+function printAwardeeCard(){const panel=document.getElementById('awardDrilldown');if(!panel||panel.classList.contains('hidden'))return;const css=[...document.styleSheets].map(s=>{try{return [...s.cssRules].map(r=>r.cssText).join('\n')}catch(e){return ''}}).join('\n');const w=window.open('','_blank');w.document.write(`<!doctype html><html><head><title>RUS DLT Awardee Card</title><style>${css} body{background:#fff!important;margin:12px}.drill-actions,.no-print{display:none!important}.drilldown{box-shadow:none!important;border:1px solid #cbd5e1!important}</style></head><body>${panel.outerHTML}</body></html>`);w.document.close();w.focus();setTimeout(()=>w.print(),300);}
+function findAwardsNearSelectedProspects(){try{const raw=localStorage.getItem('rusDltSelectedProspects')||localStorage.getItem('rusDltProspectSelection')||'[]';const selected=JSON.parse(raw);if(!selected||!selected.length){setAwardStatus('No selected prospects were found from the Prospect Finder. Select prospects there first, then use this button.');return;}const radius=Number(document.getElementById('awardRadius').value)||100;const matches=[];for(const p of selected){const plat=parseFloat(p.lat||p.latitude),plon=parseFloat(p.lon||p.longitude);for(const pr of projectRows){const siteMatch=(pr.sites||[]).some(s=>{const d=distanceMiles(plat,plon,parseFloat(s.lat),parseFloat(s.lon));return Number.isFinite(d)&&d<=radius;});const textMatch=norm([p.county,p.city,p.state].join(' '));const projectText=norm([pr.county,pr.city,pr.state,(pr.sites||[]).map(s=>[s.county,s.city,s.state].join(' ')).join(' ')].join(' '));if(siteMatch||(textMatch&&projectText.includes(textMatch)))matches.push({...pr,nearProspect:p.organization||p.name||p.siteName||''});}}awardResults=matches;renderAwardsTable(awardResults);setAwardStatus(`<strong>${awardResults.length.toLocaleString()}</strong> prior-award project row(s) found near selected prospects using ${radius}-mile radius where coordinates are available, plus county/city fallback.`);}catch(e){setAwardStatus(`Could not compare selected prospects: ${esc(e.message)}`);}}
+function distanceMiles(lat1,lon1,lat2,lon2){if(![lat1,lon1,lat2,lon2].every(Number.isFinite))return NaN;const R=3958.8,dLat=(lat2-lat1)*Math.PI/180,dLon=(lon2-lon1)*Math.PI/180,a=Math.sin(dLat/2)**2+Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLon/2)**2;return 2*R*Math.asin(Math.sqrt(a));}
+function importPriorAwardsFile(){const file=document.getElementById('awardFile').files[0];if(!file){setAwardStatus('Select a CSV/XLSX file first.');return;}const reader=new FileReader();reader.onload=e=>{try{let rows=[];if(file.name.toLowerCase().endsWith('.csv'))rows=parseCSV(e.target.result);else{const wb=XLSX.read(e.target.result,{type:'array'});const ws=wb.Sheets[wb.SheetNames[0]];rows=XLSX.utils.sheet_to_json(ws,{defval:''});}rawAwardRows=rows.map(normalizeAwardRow).filter(r=>r.awardee);buildProjectRows();populateYears();filterPriorAwards();setAwardStatus(`<strong>${projectRows.length.toLocaleString()}</strong> normalized project row(s) loaded from ${esc(file.name)}.`);}catch(err){setAwardStatus(`<span style="color:#b42318">Upload failed: ${esc(err.message)}</span>`);}};if(file.name.toLowerCase().endsWith('.csv'))reader.readAsText(file);else reader.readAsArrayBuffer(file);}
+function exportAwardsCSV(){const rows=sortRows([...(awardResults.length?awardResults:projectRows)]);if(!rows.length){setAwardStatus('No rows to export.');return;}const fields=['year','awardee','awardeeCategory','awardUse','state','county','city','projectId','totalGrant','siteGrantTotal','siteCount','description','sourceKind'];const csv=[fields.join(',')].concat(rows.map(r=>fields.map(f=>csvCell(r[f])).join(','))).join('\n');const blob=new Blob([csv],{type:'text/csv'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='RUS_DLT_Prior_Awards_Filtered.csv';a.click();URL.revokeObjectURL(a.href);}
+document.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>

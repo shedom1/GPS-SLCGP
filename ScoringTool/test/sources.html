@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FY2026 RUS DLT Tool | Data + API Sources</title>
+  <style>
+    :root{--bg0:#06111f;--bg1:#0b1d33;--panel:#fff;--ink:#102033;--muted:#60738b;--line:#d6e1ee;--blue:#005bbb;--navy:#003b5c;--aqua:#84d8d4;--orange:#f79646;--shadow:0 14px 34px rgba(8,22,48,.12);}
+    *{box-sizing:border-box}body{margin:0;font-family:Inter,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);background:linear-gradient(180deg,#06111f 0%,#0b1d33 230px,#f6f9fc 231px,#fff 100%)}
+    a{color:#005bbb;text-decoration:none}a:hover{text-decoration:underline}.app-header{color:white;padding:14px 18px;border-bottom:3px solid var(--blue)}.topbar{display:flex;justify-content:space-between;gap:14px;align-items:center;max-width:1540px;margin:0 auto}.brand-title{font-size:12px;font-weight:900;letter-spacing:.08em;text-transform:uppercase}.brand-subtitle{font-size:11px;color:#b9d7ee}.nav-actions{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:6px}.nav-button{display:inline-flex;align-items:center;border-radius:5px;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.10);color:#fff;padding:6px 9px;font-size:11px;font-weight:850}.nav-button:hover{text-decoration:none;background:rgba(255,255,255,.18)}.hero{max-width:1540px;margin:12px auto 0}.eyebrow{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#a7f3f0;font-weight:900}h1{font-size:22px;line-height:1.15;margin:4px 0 0}.subtitle{font-size:12px;color:#c7d8ea;max-width:960px;margin-top:5px;line-height:1.45}main{max-width:1540px;margin:10px auto 40px;padding:0 12px}.card{background:#fff;border:1px solid var(--line);border-radius:9px;box-shadow:var(--shadow);overflow:hidden;margin:10px 0}.card h2{font-size:12px;margin:0;padding:8px 10px;border-bottom:1px solid #e8eef6;background:#f4f8fc;color:#003b5c;text-transform:uppercase;letter-spacing:.04em}.body{padding:9px 10px}.callout{border:1px solid #cfe8ff;border-left:4px solid var(--blue);background:#f6fbff;border-radius:7px;padding:8px 10px;font-size:12px;line-height:1.4;margin-bottom:8px}.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:7px}table{width:100%;border-collapse:separate;border-spacing:0;font-size:11px;min-width:1180px}th,td{padding:6px 7px;border-bottom:1px solid #e8eef5;border-right:1px solid #eef3f8;vertical-align:top;line-height:1.3}th{background:#003b5c;color:#fff;text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.04em}tr:last-child td{border-bottom:0}code{font-family:Consolas,Monaco,monospace;font-size:10.5px;background:#f1f5f9;border:1px solid #e2e8f0;border-radius:4px;padding:1px 3px;word-break:break-all}.smalltxt{font-size:11px;color:var(--muted);line-height:1.4}.pill{display:inline-block;border-radius:999px;background:#eaf2fb;color:#003b5c;font-weight:900;font-size:10px;padding:2px 6px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}@media(max-width:900px){.topbar{display:block}.nav-actions{justify-content:flex-start;margin-top:8px}.grid{grid-template-columns:1fr}table{min-width:920px}}
+  </style>
+  <link rel="stylesheet" href="brand.css" />
+  <script src="auth.js"></script>
+</head>
+<body>
+  <header class="app-header">
+    <div class="topbar">
+      <div><div class="brand-title">RUS DLT Scoring Workspace</div><div class="brand-subtitle">Data + API source references</div></div>
+      <nav class="nav-actions" aria-label="Primary navigation">
+        <a class="nav-button" href="index.html">Scoring Tool</a>
+        <a class="nav-button" href="prospects.html">Prospect Finder</a>
+        <a class="nav-button" href="awards.html">Prior Winners</a>
+        <a class="nav-button" href="match.html">Match Calculator</a>
+        <a class="nav-button" href="guide.html">How to Use Guide</a>
+        <a class="nav-button" href="https://www.rd.usda.gov/programs-services/telecommunications-programs/distance-learning-telemedicine-grants" target="_blank">USDA FY2026 Resources</a>
+      </nav>
+    </div>
+    <div class="hero">
+      <div class="eyebrow">Source references used by the tool</div>
+      <h1>Data + API Sources</h1>
+      <div class="subtitle">This page documents the source tables, APIs, variables, and endpoint patterns used by the Scoring Tool, Prospect Finder, Prior Winners view, and Match Calculator. API examples omit the Census key value; the code appends the configured key at runtime.</div>
+    </div>
+  </header>
+  <main>
+    <section class="card">
+      <h2>FY2026 scoring source alignment</h2>
+      <div class="body">
+        <div class="callout"><strong>D-1 Rurality:</strong> uses the 2020 Decennial Census for Census place population and still requires USDA DLT map verification for rurality/non-rural/contiguity. <strong>D-2 Economic Need:</strong> uses county SAIPE “poverty percentage, all ages” from the 2023 SAIPE release published December 2024, matching the FY2026 guide’s referenced SAIPE file.</div>
+        <div class="table-wrap"><table>
+          <thead><tr><th>Use in Tool</th><th>Source / API</th><th>Exact field or variable used</th><th>Endpoint / file reference</th><th>Where used</th></tr></thead>
+          <tbody>
+            <tr><td><span class="pill">D-1 population</span></td><td>U.S. Census Bureau 2020 Decennial Census Demographic and Housing Characteristics API</td><td><code>P1_001N</code> — Total population for Census place results, with <code>NAME</code></td><td><code>https://api.census.gov/data/2020/dec/dhc?get=NAME,P1_001N&amp;for=place:*&amp;in=state:{STATE_FIPS}</code><br><a href="https://api.census.gov/data/2020/dec/dhc/variables/P1_001N.html" target="_blank">Variable reference</a> · <a href="https://api.census.gov/data/2020/dec/dhc/variables.html" target="_blank">DHC variables</a></td><td>Scoring Tool, Prospect Finder, Prior Winners drilldown</td></tr>
+            <tr><td><span class="pill">D-2 poverty</span></td><td>U.S. Census Bureau SAIPE API</td><td><code>SAEPOVRTALL_PT</code> — All ages in Poverty, Rate Estimate; <code>YEAR=2023</code></td><td><code>https://api.census.gov/data/timeseries/poverty/saipe?get=NAME,SAEPOVRTALL_PT&amp;for=county:*&amp;in=state:{STATE_FIPS}&amp;YEAR=2023</code><br><a href="https://api.census.gov/data/timeseries/poverty/saipe/variables/SAEPOVRTALL_PT.html" target="_blank">Variable reference</a> · <a href="https://www.census.gov/data/datasets/2023/demo/saipe/2023-state-and-county.html" target="_blank">2023 SAIPE county release</a></td><td>Scoring Tool, Prospect Finder, Prior Winners drilldown</td></tr>
+            <tr><td><span class="pill">DLT rurality map</span></td><td>USDA Rural Development DLT mapping tool</td><td>Manual verification of rurality/non-rural/contiguous areas and prior DLT sites</td><td><a href="https://ruraldevelopment.maps.arcgis.com/apps/webappviewer/index.html?id=15a73830555645ae93d2fa773ed8e971" target="_blank">USDA DLT Map</a></td><td>Record map links, rurality review, prior winner strategy</td></tr>
+            <tr><td><span class="pill">K-12 districts</span></td><td>Bundled ELSI/NCES district CSV uploaded for this project</td><td>District/agency name, NCES ID, state, county, address, phone, website, enrollment, # schools, locale where available</td><td><code>data/ELSI_K12_School_Districts_2025_Scoring_Tool.csv</code><br><a href="https://nces.ed.gov/programs/edge/Geographic/DistrictBoundaries" target="_blank">NCES EDGE district reference</a></td><td>Scoring Tool district search, Prospect Finder K-12 Districts</td></tr>
+            <tr><td><span class="pill">K-12 school sites</span></td><td>NCES Public School Characteristics ArcGIS Feature Layer</td><td>School name, district, address, county/FIPS, locale, enrollment, latitude/longitude where available</td><td><code>https://services1.arcgis.com/Ua5sjt3LWTPigjyD/ArcGIS/rest/services/School_Characteristics_Current/FeatureServer/0/query</code><br><a href="https://data-nces.opendata.arcgis.com/datasets/nces::public-school-characteristics-current-1/about" target="_blank">Layer reference</a></td><td>Scoring Tool school-site expansion, Prospect Finder school-site and charter search</td></tr>
+            <tr><td><span class="pill">Healthcare sites</span></td><td>HRSA Health Center Service Delivery and Look-Alike Sites</td><td>Organization/site name, address, city/state/ZIP, county, phone, website, latitude/longitude where available</td><td><code>https://data.hrsa.gov/DataDownload/DD_Files/Health_Center_Service_Delivery_and_LookAlike_Sites.xlsx</code><br><code>https://data.hrsa.gov/DataDownload/DD_Files/Health_Center_Service_Delivery_and_LookAlike_Sites.csv</code><br><a href="https://data.hrsa.gov/data/download?titleFilter=Health+Center+Service+Delivery+and+Look%E2%80%93Alike+Sites" target="_blank">HRSA download page</a></td><td>Scoring Tool healthcare search/import, Prospect Finder healthcare prospects</td></tr>
+            <tr><td><span class="pill">Higher ed / technical</span></td><td>Colleges and Universities Feature Layer using NCES/IPEDS data</td><td>Institution name, address, city/state/ZIP, phone, website, sector/type, county, latitude/longitude where available</td><td><code>https://services2.arcgis.com/FiaPA4ga0iQKduv3/ArcGIS/rest/services/Colleges_and_Universities_View/FeatureServer/0/query</code><br><a href="https://www.arcgis.com/home/item.html?id=d257743c055e4206bd8a0f2d14af69fe" target="_blank">Layer overview</a> · <a href="https://nces.ed.gov/ipeds" target="_blank">IPEDS reference</a></td><td>Scoring Tool higher-ed search, Prospect Finder higher-ed/technical search</td></tr>
+            <tr><td><span class="pill">Prior awards</span></td><td>Normalized local prior-awards table built from uploaded RUS DLT site/award data and past-award workbook descriptions</td><td>Awardee, year, DL/TM type, state/county/city, project/site rows, grant/site totals, descriptions where available</td><td><code>data/RUS_DLT_Prior_District_Awards.csv</code><br><code>data/rus_dlt_all_sites_2026-05-08.csv</code><br><a href="https://www.rd.usda.gov/programs-services/telecommunications-programs/telecom-maps" target="_blank">USDA Telecom Maps reference</a></td><td>Prior Winners view, awardee drilldown cards</td></tr>
+            <tr><td><span class="pill">Geocoding helper</span></td><td>U.S. Census Geocoder</td><td>Optional address-to-coordinate lookup for manual anchor locations</td><td><code>https://geocoding.geo.census.gov/geocoder/locations/onelineaddress</code><br><a href="https://geocoding.geo.census.gov/" target="_blank">Census Geocoder</a></td><td>Manual locations, partner radius anchoring when coordinates are needed</td></tr>
+          </tbody>
+        </table></div>
+      </div>
+    </section>
+
+    <section class="grid">
+      <div class="card"><h2>Notes for reps</h2><div class="body"><p class="smalltxt">Blank population or SAIPE values do not mean the site is ineligible. They mean the automated place/county match did not find a confident public API match. Use the USDA DLT map, Census Data Explorer, and county/FIPS verification before relying on the row for final scoring.</p></div></div>
+      <div class="card"><h2>Static-site caveat</h2><div class="body"><p class="smalltxt">This GitHub Pages tool runs browser-side. Public datasets may fail because of CORS, rate limits, network settings, or source changes. Where that happens, use the import/fallback sections and keep the downloaded source file with the project record.</p></div></div>
+    </section>
+  </main>
+</body>
+</html>
