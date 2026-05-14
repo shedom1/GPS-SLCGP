@@ -247,6 +247,7 @@ Example County Schools,Example School,100 Main St,Albany,Albany,GA,31701,Dougher
               <tr><td>No Census place match / Census Rural</td><td>No</td><td><span class="pill green">40</span></td></tr>
             </tbody></table>
             <p class="smalltxt">Only End-User and Hub/End-User sites are averaged for fixed projects. Pure hubs are listed but excluded unless the project is non-fixed/hybrid and the hub is the proxy serving non-fixed end users.</p>
+            <p class="smalltxt"><strong>FY2026 Guide source:</strong> Section D, D-1 Rurality, pp. 15–17; Appendix B, pp. 46–48. USDA says to use Census population data citing the 2020 Decennial Census and verify proximity/non-rural status with the DLT Mapping Tool.</p>
           </div>
           <div>
             <h3>D-2 Economic Need – Up to 30 points</h3>
@@ -257,6 +258,7 @@ Example County Schools,Example School,100 Main St,Albany,Albany,GA,31701,Dougher
               <tr><td>Under 10%</td><td><span class="pill red">0</span></td></tr>
             </tbody></table>
             <p class="smalltxt">This tool uses 2023 Census SAIPE county “poverty percentage, all ages” where available. USDA’s FY2026 guide references the SAIPE poverty data posted with the DLT application resources.</p>
+            <p class="smalltxt"><strong>FY2026 Guide source:</strong> Section D, D-2 Economic Need, pp. 17–18; Sample Economic Need Worksheet instructions, pp. 38–39. USDA identifies the required field as County SAIPE Poverty, All Ages.</p>
           </div>
         </div>
       </div>
@@ -269,8 +271,8 @@ Example County Schools,Example School,100 Main St,Albany,Albany,GA,31701,Dougher
           <a href="https://services1.arcgis.com/Ua5sjt3LWTPigjyD/ArcGIS/rest/services/School_Characteristics_Current/FeatureServer/0" target="_blank"><strong>NCES Public School Characteristics</strong><span>School name, district, physical address, county FIPS, NCES locale, enrollment, lat/long. For application-grade review, compare against the latest NCES CCD directory files if available.</span></a>
           <a href="https://data.hrsa.gov/DataDownload/DD_Files/Health_Center_Service_Delivery_and_LookAlike_Sites.xlsx" target="_blank"><strong>HRSA Health Center Sites XLSX</strong><span>Health Center Service Delivery and Look-Alike Sites. The tool attempts a full-table lookup and includes an upload fallback when browser/CORS settings block live HRSA loading.</span></a>
           <a href="https://services2.arcgis.com/FiaPA4ga0iQKduv3/ArcGIS/rest/services/Colleges_and_Universities_View/FeatureServer/0" target="_blank"><strong>Higher Ed Colleges & Universities Layer</strong><span>IPEDS/NCES institution names, addresses, sector, locale, county, latitude/longitude.</span></a>
-          <a href="https://www.census.gov/data/developers/data-sets/Poverty-Statistics.html" target="_blank"><strong>Census SAIPE API</strong><span>County poverty rate estimates used for Economic Need scoring.</span></a>
-          <a href="https://api.census.gov/data/2020/dec/dhc/variables/P1_001N.html" target="_blank"><strong>2020 Decennial Census API</strong><span>P1_001N total population for Census places.</span></a>
+          <a href="https://www.census.gov/data/developers/data-sets/Poverty-Statistics.html" target="_blank"><strong>Census SAIPE API</strong><span>County “poverty percentage, all ages” used for Economic Need scoring; FY2026 guide Section D, pp. 17–18.</span></a>
+          <a href="https://api.census.gov/data/2020/dec/dhc/variables/P1_001N.html" target="_blank"><strong>2020 Decennial Census API</strong><span>P1_001N total population for Census places; FY2026 guide Section D, pp. 15–17 and Appendix B pp. 46–48.</span></a>
           <a href="https://geocoding.geo.census.gov/" target="_blank"><strong>U.S. Census Geocoder</strong><span>Optional coordinate lookup for manual anchor locations before radius search.</span></a>
         </div>
       </div>

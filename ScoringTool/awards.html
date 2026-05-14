@@ -284,7 +284,7 @@ function normCountyName(x){
 async function loadSaipeForState(st){
   const fips=STATE_FIPS[st]; if(!fips)throw new Error(`missing FIPS for ${st}`);
   if(saipeCache[st])return saipeCache[st];
-  const years=['2024','2023'];
+  const years=['2023'];
   let lastErr='';
   for(const year of years){
     try{

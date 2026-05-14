@@ -52,7 +52,7 @@
           <div class="step"><div class="step-num">4</div><div><strong>Build a 50–100 mile partner radius list.</strong><p>Choose an anchor site from the seed organization, pick 50, 75, or 100 miles, and search official K-12, HRSA healthcare, and higher-ed sources for nearby partners. Partner descriptions are assembled only from returned source fields.</p></div></div>
           <div class="step"><div class="step-num">5</div><div><strong>Add only real candidate partners to the worksheet.</strong><p>Use the partner list as a prospecting screen. Added partners are placed in the worksheet as not included by default so they do not inflate scoring until reviewed and intentionally included.</p></div></div>
           <div class="step"><div class="step-num">6</div><div><strong>Add missing or special sites manually.</strong><p>Use Add Manual Location for district offices, consortium hubs, partner clinics, extension campuses, libraries, or other sites not returned by the data source.</p></div></div>
-          <div class="step"><div class="step-num">7</div><div><strong>Enrich with Census + SAIPE.</strong><p>Click Enrich Census + SAIPE to pull 2020 Census place population and 2024 county SAIPE poverty data where available.</p></div></div>
+          <div class="step"><div class="step-num">7</div><div><strong>Enrich with Census + SAIPE.</strong><p>Click Enrich Census + SAIPE to pull 2020 Census place population and 2023 SAIPE county poverty data, matching the December 2024 SAIPE release referenced for FY2026, where available.</p></div></div>
           <div class="step"><div class="step-num">8</div><div><strong>Verify Rurality with the USDA DLT map.</strong><p>Open the DLT map and update the Contiguous / Non-Rural, Outside Non-Rural, and Census Rural fields. This is the most important manual quality-control step.</p></div></div>
           <div class="step"><div class="step-num">9</div><div><strong>Review the score snapshot.</strong><p>Confirm the D-1 Rurality and D-2 Economic Need averages. Add a manual D-3 Need/Benefits estimate only after reviewing the narrative evidence and community need.</p></div></div>
           <div class="step"><div class="step-num">10</div><div><strong>Export or print.</strong><p>Export CSV for worksheet review, JSON for saving the project data, partner CSV for outreach/prospecting, or Save/Print PDF for a quick internal review package.</p></div></div>
@@ -121,7 +121,7 @@
           <ol>
             <li>Keep <strong>Auto-enrich + score</strong> checked when adding or importing rows.</li>
             <li>Upload a manual site file, NCES/CCD school export, NCES/CCD district export, higher-ed/IPEDS file, or HRSA file as CSV/XLSX/XLS.</li>
-            <li>The tool maps available source fields into the worksheet, then looks up Census 2020 place population and 2024 county SAIPE where possible.</li>
+            <li>The tool maps available source fields into the worksheet, then looks up Census 2020 place population and 2023 SAIPE county poverty where possible.</li>
             <li>Review the front scoring columns: D-1 Rurality, D-2 Economic Need, 2020 Pop, SAIPE %, and D-1+D-2 Total.</li>
             <li>Before relying on the score, verify the DLT map fields and correct the Rurality Place/CDP if a mailing city is not the actual rurality community.</li>
           </ol>
@@ -193,6 +193,7 @@
       <section class="card span-6">
         <h2>D-1 Rurality scoring table</h2>
         <div class="body">
+          <p class="muted" style="margin:0 0 10px"><strong>FY2026 Guide source:</strong> Section D, D-1 Rurality, pp. 15–17; Appendix B, pp. 46–48. The guide says to use Census population data citing the 2020 Decennial Census and the USDA DLT map for proximity/non-rural review.</p>
           <table>
             <thead><tr><th>Community / Census place population</th><th>Contiguous to urban &gt;50k?</th><th>Points</th></tr></thead>
             <tbody>
@@ -209,6 +210,7 @@
       <section class="card span-6">
         <h2>D-2 Economic Need scoring table</h2>
         <div class="body">
+          <p class="muted" style="margin:0 0 10px"><strong>FY2026 Guide source:</strong> Section D, D-2 Economic Need, pp. 17–18; Sample Economic Need Worksheet instructions, pp. 38–39. The guide says to use county SAIPE “poverty percentage, all ages.”</p>
           <table>
             <thead><tr><th>County SAIPE poverty, all ages</th><th>Points</th></tr></thead>
             <tbody>
@@ -218,7 +220,7 @@
               <tr><td>Under 10%</td><td><span class="pill red">0</span></td></tr>
             </tbody>
           </table>
-          <p class="muted" style="margin-top:10px">The tool uses county SAIPE poverty rate where available. Confirm the county and FIPS code before relying on the Economic Need score.</p>
+          <p class="muted" style="margin-top:10px">The tool uses 2023 SAIPE county poverty rate where available, matching the December 2024 SAIPE release referenced for FY2026. Confirm the county and FIPS code before relying on the Economic Need score.</p>
         </div>
       </section>
 

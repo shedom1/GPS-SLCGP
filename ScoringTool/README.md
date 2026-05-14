@@ -13,6 +13,12 @@ GitHub Pages-ready static HTML tool for preliminary FY2026 USDA RUS Distance Lea
 
 ## What it does
 
+### FY2026 Guide page references
+
+- **D-1 Rurality / Population:** FY2026 Application Guide, Section D, pp. 15–17, and Appendix B, pp. 46–48. The tool uses 2020 Decennial Census DHC `P1_001N` place population and leaves DLT map proximity/non-rural verification for manual review.
+- **D-2 Economic Need / Poverty:** FY2026 Application Guide, Section D, pp. 17–18, and Sample Economic Need Worksheet instructions, pp. 38–39. The tool uses SAIPE `SAEPOVRTALL_PT` with `YEAR=2023`, corresponding to the December 2024 SAIPE release referenced for FY2026.
+
+
 - Searches K-12 districts and can import the district administrative office as a Hub row plus all school locations from NCES public school and school district characteristics ArcGIS layers. For application-grade review, compare imported rows against the latest NCES CCD directory files.
 - Searches higher education institutions and technical-school style institutions from a public colleges/universities ArcGIS feature layer.
 - Builds a 25, 50, 75, or 100 mile partner radius list around a selected anchor site, using official K-12, HRSA healthcare, and higher-ed source records.
@@ -196,7 +202,7 @@ Added `prospects.html` as a separate view so reps can search by state, optional 
 
 ## v17 Update Notes
 - Tightened the Scoring Tool start screen and moved the partner-radius workflow into a collapsible section so the scoring worksheet is less cluttered.
-- Added **Auto-enrich + score** on add/import. When enabled, newly added rows automatically look up Census 2020 place population and 2024 county SAIPE data, then calculate row-level **D-1 Rurality**, **D-2 Economic Need**, and **D-1 + D-2 Total**.
+- Added **Auto-enrich + score** on add/import. When enabled, newly added rows automatically look up Census 2020 place population and 2023 SAIPE county poverty data, then calculate row-level **D-1 Rurality**, **D-2 Economic Need**, and **D-1 + D-2 Total**.
 - Fixed the scoring table refresh order so D-1, D-2, population, SAIPE, and total scores display immediately after lookup/enrichment instead of waiting for another refresh.
 - Expanded the Project Site import to accept **CSV, XLSX, and XLS** files.
 - Added source-file import detection for NCES/CCD school exports, NCES/CCD district exports, higher-ed/IPEDS exports, HRSA health center files, and manual site templates.
