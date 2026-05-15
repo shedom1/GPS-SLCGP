@@ -1,14 +1,17 @@
-# Key Funding Sources Dashboard — v18 May 13, 2026 Refresh
+# Key Funding Sources Dashboard — v19 (May 15, 2026)
 
-Files:
-- `index.html` opens directly to the Federal Status view.
-- `federal-status.html` is the standalone Federal Status page.
-- `state-status.html` is the standalone State Status page.
+Files included:
+
+- `index.html` — opens the Federal Status dashboard directly for GitHub Pages.
+- `federal-status.html` — standalone Federal Status page.
+- `state-status.html` — standalone State Status page with all 50 states + D.C.
 
 Refresh notes:
-- RHTP state posture refreshed from MyFundingTracker RHTP last verified May 13, 2026.
-- SLCGP state posture refreshed from MyFundingTracker SLCGP last refresh date May 13, 2026.
-- RUS-DLT FY2026 is marked OPEN: May 1, 2026 to June 30, 2026.
-- Federal adjacent rows refreshed for HRSA Telehealth, ED SEED/TSL, and DOL SCC6/SAEF4/INAP May-June windows.
 
-Publishing: upload the files in this folder to the target GitHub Pages directory.
+- RUS-DLT FY2026 remains OPEN, May 1–June 30, 2026, based on USDA/RUS FY2026 NOFO and Grants.gov/Simpler listing.
+- Tennessee RHTP updated May 15, 2026 with first posted competitive opportunity and forward schedule.
+- West Virginia RHTP updated with May 14 workforce/upskilling investments and more than $62M announced.
+- South Dakota RHTP updated with official RHT funding forecast last updated 05/13/2026.
+- SLCGP same-day deadlines for Georgia, South Carolina, and Wyoming are marked Closing Soon on May 15, 2026.
+
+Admin refresh prompt password remains `FedDash-Admin`.
