@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>SLCGP Campaign View | MT, WA, OK</title>
+  <style>
+:root{
+ --bg:#f5f8fc;--card:#ffffff;--ink:#123a5a;--muted:#5a6b7c;--line:#d6e0eb;
+ --blue:#005BBB;--navy:#0B4F75;--black:#000000;--gray:#C5C5C5;
+ --aqua:#7DCEC8;--yellow:#F6F4A7;--orange:#E79665;
+ --green:#15803d;--green-soft:#eaf8ef;--amber:#9a6700;--amber-soft:#fff4d8;
+ --red:#b42318;--red-soft:#fdecec;--purple:#6d28d9;--purple-soft:#f3ebff;
+ --shadow:0 8px 20px rgba(18,58,90,.06);--radius:14px
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Myriad Pro","MyriadPro-Regular","Arial","Helvetica",sans-serif;background:linear-gradient(180deg,#f7fbff 0%,#eef5fd 100%);color:var(--ink)}
+.wrap{width:min(100vw,1320px);margin:0 auto;padding:12px 10px 20px}
+.hero,.section,.card,.mini,.notes-table{background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow)}
+.hero{border-radius:18px;padding:14px 16px 12px;margin-bottom:10px;background:linear-gradient(135deg,#fff 0%,#f4f9ff 60%,#eefbf8 100%)}
+.eyebrow{font-size:10px;font-weight:800;letter-spacing:.11em;text-transform:uppercase;color:var(--blue);margin-bottom:6px}
+h1{margin:0 0 6px;font-size:26px;line-height:1.02;font-weight:800;letter-spacing:-.02em}
+h2{margin:0 0 8px;font-size:18px;line-height:1.04;font-weight:800;letter-spacing:-.01em}
+h3{margin:0 0 6px;font-size:15px;line-height:1.06;font-weight:800}
+.sub{color:var(--muted);font-size:11.5px;line-height:1.45;max-width:1040px}
+.meta{display:flex;flex-wrap:wrap;gap:6px 12px;margin-top:9px;font-size:10.5px;color:var(--muted)}
+.meta b{color:var(--ink)}
+.nav{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 10px}
+.btn{appearance:none;border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:8px;padding:7px 9px;font-size:10px;font-weight:800;cursor:pointer;text-decoration:none;line-height:1;text-transform:uppercase;letter-spacing:.04em}
+.btn.primary{background:linear-gradient(135deg,var(--blue) 0%,#3178d3 100%);border-color:var(--blue);color:#fff}
+.btn:hover{transform:translateY(-1px)}
+.pill{display:inline-flex;align-items:center;border-radius:999px;padding:3px 7px;font-size:9px;font-weight:800;line-height:1;text-transform:uppercase;letter-spacing:.04em}
+.pill.red{background:var(--red-soft);color:var(--red)}
+.pill.green{background:var(--green-soft);color:var(--green)}
+.pill.amber{background:var(--amber-soft);color:var(--amber)}
+.pill.purple{background:var(--purple-soft);color:var(--purple)}
+.note{font-size:10.5px;color:var(--muted);line-height:1.4}
+a{color:var(--blue);text-decoration:none;font-weight:800}
+a:hover{text-decoration:underline}
+.card-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.card{border-radius:14px;padding:11px 11px 10px}
+.card p{margin:0 0 7px;font-size:11px;line-height:1.45}
+.kicker{font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-weight:800;margin-bottom:4px}
+.fact-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin-bottom:8px}
+.fact{background:#f9fbff;border:1px solid #edf2f8;border-radius:10px;padding:7px 8px;font-size:10.5px;line-height:1.35}
+.fact .label{display:block;font-size:9px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:800;margin-bottom:3px}
+.links{display:flex;flex-wrap:wrap;gap:8px;font-size:10px}
+.section{border-radius:16px;padding:11px 12px;margin-bottom:10px}
+.banner{background:#eef5fd;border:1px solid #d4e1f1;color:var(--ink);padding:8px 10px;border-radius:10px;font-size:10.5px;margin-bottom:10px}
+.notes-table{border-radius:16px;padding:12px}
+.table{width:100%;border-collapse:collapse}
+.table th,.table td{padding:8px 8px;border-bottom:1px solid #edf2f8;vertical-align:top;text-align:left}
+.table th{font-size:9px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:800}
+.table td{font-size:11px;line-height:1.35}
+input[type="text"], input[type="date"], select, textarea{
+ width:100%; padding:7px 8px; border:1px solid var(--line); border-radius:8px;
+ font-family:"Myriad Pro","Arial","Helvetica",sans-serif; font-size:10.5px; color:var(--ink); background:#fff;
+}
+textarea{min-height:72px; resize:vertical}
+.note-small{font-size:9.5px;color:var(--muted);line-height:1.35}
+.notes-status{margin-bottom:8px;font-size:10px;color:var(--muted)}
+@media (max-width:1000px){.card-grid,.fact-grid{grid-template-columns:1fr}}
+@media print{body{background:#fff}.wrap{width:100%;max-width:none;padding:0}.hero,.section,.card,.mini,.notes-table{box-shadow:none}.nav{display:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <section class="hero">
+    <div class="eyebrow">GPS Team | Campaign view</div>
+    <h1>Campaign View: MT, WA, OK</h1>
+    <div class="sub">Focused rep campaign page for the current SLCGP push. This page narrows the tracker down to the three active target states and pairs the official-source campaign brief with editable Email Notes and Call-Out Notes backed by a Google Sheet through an Apps Script web app.</div>
+    <div class="meta">
+      <div><b>Refresh date:</b> May 15, 2026</div>
+      <div><b>Campaign states:</b> Montana, Washington, Oklahoma</div>
+      <div><b>Best for:</b> coordinated rep outreach</div>
+    </div>
+  </section>
+
+  <div class="nav">
+    <a class="btn" href="index.html">Tracker</a>
+    <a class="btn" href="executive-summary.html">Executive Summary</a>
+    <a class="btn" href="open-active-email.html">Open / Active</a>
+    <a class="btn" href="rep-action-queue.html">Action Queue</a>
+    <a class="btn" href="procurement-playbook.html">Procurement Playbook</a>
+    <a class="btn primary" href="campaign-view.html">Campaign View</a>
+    <button class="btn" onclick="window.print()">Print to PDF</button>
+  </div>
+
+  <div class="banner"><b>How to use this page:</b> review the official brief for each state, then update Email Notes and Call-Out Notes below. Campaign notes are designed to save to Google Sheets through the Apps Script endpoint configured in <code>campaign-notes-config.js</code>.</div>
+
+  <section class="section">
+    <h2>Campaign states</h2>
+    <div class="card-grid">
+
+      <article class="card" data-state="Montana">
+        <div class="kicker">West | Priority</div>
+        <h3>Montana</h3>
+        <div class="links" style="margin-bottom:7px">
+          <span class="pill red">Do now</span>
+          <span class="pill amber">Special window</span>
+          <span class="pill purple">General round coming soon</span>
+        </div>
+        <p><b>SLCGP summary:</b> Montana is a two-track campaign. The general round is still a coming-soon play, but a separate special application window is open now for end-of-life network hardware replacement.</p>
+        <div class="fact-grid">
+          <div class="fact"><span class="label">Key dates</span>Special hardware window closes <b>May 27, 2026</b>. General round four will open <b>by late spring 2026</b>.</div>
+          <div class="fact"><span class="label">Key requirements</span>Hardware items must be end-of-life and unsupported after <b>December 31, 2026</b>. Partial awards may be made.</div>
+          <div class="fact"><span class="label">What is eligible</span>Replacement of end-of-life <b>firewalls</b>, <b>network switches</b>, and <b>wireless access points</b> for Montana local governments.</div>
+          <div class="fact"><span class="label">How to apply</span>Use the MT DES special hardware application link on the SLCGP page and route questions to <b>MTDESGrants@mt.gov</b>.</div>
+          <div class="fact"><span class="label">Solutionz alignment</span>Strong fit for network refresh, secure wireless, switching, edge security, replacement planning, and implementation tied to unsupported hardware.</div>
+          <div class="fact"><span class="label">Who to target</span>County IT, county commissioners, city IT, school district technology leads, local government operators facing firewall/switch/AP refresh pressure.</div>
+          <div class="fact"><span class="label">Trigger questions</span>Do you have firewalls, switches, or access points that will be unsupported after 12/31/2026? Do you already have an inventory of devices that need replacement? Are you trying to use this hardware window or waiting for the next broader round?</div>
+          <div class="fact"><span class="label">Next action</span>Work hardware-refresh accounts now, especially counties and local governments with aging infrastructure, and prepare a broader follow-up list for the general late-spring round.</div>
+          <div class="fact"><span class="label">Checklist</span>Confirm unsupported hardware list; validate eligibility; review summary sheet; align scope; assign outreach owner; schedule follow-up before May 27.</div>
+          <div class="fact"><span class="label">Official sources</span><a href="https://des.mt.gov/Grant-Programs/State-Local-Cyber-Security-Grant-Program" target="_blank" rel="noopener">MT DES SLCGP main page</a><br/><a href="https://des.mt.gov/Grant-Programs/page" target="_blank" rel="noopener">Hardware application page</a><br/><a href="https://des.mt.gov/Grant-Programs/SLCGPApplicationInfo" target="_blank" rel="noopener">Application guide</a></div>
+        </div>
+      </article>
+
+      <article class="card" data-state="Washington">
+        <div class="kicker">West | Priority</div>
+        <h3>Washington</h3>
+        <div class="links" style="margin-bottom:7px">
+          <span class="pill amber">Next 30 days</span>
+          <span class="pill green">Open</span>
+          <span class="pill purple">State application</span>
+        </div>
+        <p><b>SLCGP summary:</b> Washington remains one of the clearest active opportunities in the campaign. WaTech is showing the FY25 competitive project solicitation open now with a June 12 deadline.</p>
+        <div class="fact-grid">
+          <div class="fact"><span class="label">Key dates</span>Application deadline is <b>June 12, 2026</b>.</div>
+          <div class="fact"><span class="label">Key requirements</span>Projects should align to Washington’s statewide strategic cybersecurity plan and follow the current competitive project solicitation process.</div>
+          <div class="fact"><span class="label">What is eligible</span>Washington’s current materials point to <b>state, local, and Tribal governments</b> as the target applicant groups for funding.</div>
+          <div class="fact"><span class="label">How to apply</span>Washington directs interested applicants to the WaTech SLCGP page and the state application process; the current materials reference <b>preparedness.grants@mil.wa.gov</b> for interested governments.</div>
+          <div class="fact"><span class="label">Solutionz alignment</span>Strong fit for cybersecurity projects tied to state/local government needs: network security, endpoint protection, monitoring, identity, resilience, and implementation support.</div>
+          <div class="fact"><span class="label">Who to target</span>Local governments, Tribal entities, state-adjacent public entities, IT directors, CIO offices, emergency management, and cyber leaders already working against statewide plan priorities.</div>
+          <div class="fact"><span class="label">Trigger questions</span>Have you already scoped a project for the FY25 solicitation? Is the project aligned to the statewide cybersecurity plan? Do you need help shaping a practical project narrative, equipment mix, or implementation path before June 12?</div>
+          <div class="fact"><span class="label">Next action</span>Prioritize Washington now as a live application state. Build a short-list of qualified public-sector entities with near-term readiness and move them into solution scoping before the June 12 close.</div>
+          <div class="fact"><span class="label">Checklist</span>Confirm eligibility; verify state/local/Tribal status; align project to state plan; define scope; assign rep; outreach before deadline; confirm application contact and timeline.</div>
+          <div class="fact"><span class="label">Official sources</span><a href="https://watech.wa.gov/state-local-cybersecurity-grant-program" target="_blank" rel="noopener">WaTech SLCGP page</a></div>
+        </div>
+      </article>
+
+      <article class="card" data-state="Oklahoma">
+        <div class="kicker">West | Priority</div>
+        <h3>Oklahoma</h3>
+        <div class="links" style="margin-bottom:7px">
+          <span class="pill green">Open</span>
+          <span class="pill purple">Quarterly cycle</span>
+          <span class="pill amber">Next posted deadline July 31</span>
+        </div>
+        <p><b>SLCGP summary:</b> Oklahoma is still a valid campaign state, but reps should message it carefully. The state grants page says new applications are being accepted and lists quarterly 2026 deadlines, while also noting funding-access caveats.</p>
+        <div class="fact-grid">
+          <div class="fact"><span class="label">Key dates</span>Current 2026 deadlines listed by the state are <b>January 30</b>, <b>April 30</b>, <b>July 31</b>, and <b>October 30</b>. The next posted deadline is <b>July 31, 2026</b>.</div>
+          <div class="fact"><span class="label">Key requirements</span>Projects must be tied to the <b>State Cyber Plan</b>. Oklahoma says projects must be feasible, effective at reducing the identified risk, and able to be completed in the grant period of performance.</div>
+          <div class="fact"><span class="label">What is eligible</span>Oklahoma’s posted announcement says eligible applicants are <b>state and local units of government</b>, <b>publicly funded educational institutions</b>, and <b>tribal governments</b>. Private and nonprofit entities are not eligible.</div>
+          <div class="fact"><span class="label">How to apply</span>Oklahoma says the complete application package must be emailed to <b>hsgrants@okohs.ok.gov</b> and reviewed by the Oklahoma Cybersecurity Planning Committee. Applicants are directed to review the state application announcement before submission.</div>
+          <div class="fact"><span class="label">Solutionz alignment</span>Strong fit for school districts, public-sector technology modernization, cyber hardening, and projects that can be tied directly to state cyber plan needs and implementation outcomes.</div>
+          <div class="fact"><span class="label">Who to target</span>Local governments, tribal entities, publicly funded K-12 and higher education organizations, IT directors, emergency management, and public-sector cyber leaders.</div>
+          <div class="fact"><span class="label">Trigger questions</span>Do you have a project already tied to Oklahoma’s State Cyber Plan? Is the project feasible within the grant period? Do you need help packaging a solution, equipment list, or services scope for the next posted quarterly deadline?</div>
+          <div class="fact"><span class="label">Next action</span>Use Oklahoma as a structured pipeline state: qualify for the July 31 cycle now, but keep messaging precise because the state page also notes funding-access constraints.</div>
+          <div class="fact"><span class="label">Checklist</span>Confirm applicant type; verify public/tribal eligibility; map project to state cyber plan; review announcement; draft package; assign rep; set follow-up for July 31 cycle.</div>
+          <div class="fact"><span class="label">Official sources</span><a href="https://oklahoma.gov/homeland-security/grants.html" target="_blank" rel="noopener">Oklahoma grants page</a><br/><a href="https://oklahoma.gov/content/dam/ok/en/homeland-security/documents/sub-grant-forms/slcgp-application-announcement.pdf" target="_blank" rel="noopener">Oklahoma application announcement</a></div>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <section class="notes-table">
+    <h2>Campaign Notes Tracker</h2>
+    <div class="note" style="margin-bottom:8px">The notes table below is intended to save to Google Sheets using an Apps Script web app. Update <code>campaign-notes-config.js</code> with your deployed Apps Script URL. The campaign notes tracker is separate from the read-only campaign brief above.</div>
+    <div class="notes-status" id="notesStatus">Loading notes…</div>
+    <table class="table">
+      <thead>
+        <tr>
+          <th style="width:7%">State</th>
+          <th style="width:9%">Priority</th>
+          <th style="width:9%">Assigned To</th>
+          <th style="width:10%">Status</th>
+          <th style="width:10%">Last Contact</th>
+          <th style="width:10%">Next Follow-Up</th>
+          <th style="width:22%">Email Notes</th>
+          <th style="width:22%">Call-Out Notes</th>
+          <th style="width:7%">Action</th>
+        </tr>
+      </thead>
+      <tbody id="notesBody">
+        <tr><td colspan="9" class="note-small">Loading campaign notes tracker…</td></tr>
+      </tbody>
+    </table>
+  </section>
+</div>
+
+<script src="campaign-notes-config.js"></script>
+<script>
+const CAMPAIGN_NOTES_CONFIG = window.SLCGP_CAMPAIGN_NOTES_CONFIG || {};
+const NOTES_API_URL = (CAMPAIGN_NOTES_CONFIG.apiBaseUrl || '').trim();
+const DEFAULT_ROWS = [
+  { Campaign: 'MT-WA-OK', State: 'Montana', Priority: 'High', AssignedTo: '', Status: 'Open', LastContactDate: '', NextFollowUpDate: '', EmailNotes: '', CallOutNotes: '' },
+  { Campaign: 'MT-WA-OK', State: 'Washington', Priority: 'High', AssignedTo: '', Status: 'Open', LastContactDate: '', NextFollowUpDate: '', EmailNotes: '', CallOutNotes: '' },
+  { Campaign: 'MT-WA-OK', State: 'Oklahoma', Priority: 'Medium', AssignedTo: '', Status: 'Open', LastContactDate: '', NextFollowUpDate: '', EmailNotes: '', CallOutNotes: '' },
+];
+
+function esc(v) {
+  return String(v ?? '').replace(/[&<>"']/g, s => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;', "'":'&#39;'}[s]));
+}
+
+async function apiGet(action) {
+  const url = new URL(NOTES_API_URL);
+  url.searchParams.set('action', action);
+  url.searchParams.set('campaign', 'MT-WA-OK');
+  const response = await fetch(url.toString(), { method: 'GET', credentials: 'omit' });
+  if (!response.ok) throw new Error(`HTTP ${response.status}`);
+  return await response.json();
+}
+
+async function apiPost(action, payload) {
+  const response = await fetch(NOTES_API_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+    body: JSON.stringify({ action, payload })
+  });
+  if (!response.ok) throw new Error(`HTTP ${response.status}`);
+  return await response.json();
+}
+
+function rowHtml(row) {
+  return `
+    <tr data-state="${esc(row.State)}">
+      <td><b>${esc(row.State)}</b></td>
+      <td>
+        <select data-field="Priority">
+          <option value="High" ${row.Priority==='High'?'selected':''}>High</option>
+          <option value="Medium" ${row.Priority==='Medium'?'selected':''}>Medium</option>
+          <option value="Watch" ${row.Priority==='Watch'?'selected':''}>Watch</option>
+        </select>
+      </td>
+      <td><input type="text" data-field="AssignedTo" value="${esc(row.AssignedTo)}" /></td>
+      <td>
+        <select data-field="Status">
+          <option value="Open" ${row.Status==='Open'?'selected':''}>Open</option>
+          <option value="In Progress" ${row.Status==='In Progress'?'selected':''}>In Progress</option>
+          <option value="Waiting" ${row.Status==='Waiting'?'selected':''}>Waiting</option>
+          <option value="Closed" ${row.Status==='Closed'?'selected':''}>Closed</option>
+        </select>
+      </td>
+      <td><input type="date" data-field="LastContactDate" value="${esc(row.LastContactDate)}" /></td>
+      <td><input type="date" data-field="NextFollowUpDate" value="${esc(row.NextFollowUpDate)}" /></td>
+      <td><textarea data-field="EmailNotes">${esc(row.EmailNotes)}</textarea></td>
+      <td><textarea data-field="CallOutNotes">${esc(row.CallOutNotes)}</textarea></td>
+      <td><button class="btn" type="button" data-save-state="${esc(row.State)}">Save</button></td>
+    </tr>
+  `;
+}
+
+function getRowData(tr) {
+  const obj = { Campaign: 'MT-WA-OK', State: tr.getAttribute('data-state') };
+  tr.querySelectorAll('[data-field]').forEach(el => {
+    obj[el.getAttribute('data-field')] = el.value;
+  });
+  return obj;
+}
+
+function renderRows(rows) {
+  const body = document.getElementById('notesBody');
+  body.innerHTML = rows.map(rowHtml).join('');
+  body.querySelectorAll('[data-save-state]').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const tr = btn.closest('tr');
+      const row = getRowData(tr);
+      if (!NOTES_API_URL || NOTES_API_URL.includes('PASTE_APPS_SCRIPT_WEB_APP_URL_HERE')) {
+        document.getElementById('notesStatus').textContent = 'Set campaign-notes-config.js with your Apps Script web app URL to save notes to Google Sheets.';
+        return;
+      }
+      document.getElementById('notesStatus').textContent = `Saving ${row.State} notes…`;
+      try {
+        const payload = await apiPost('saveCampaignNotes', [row]);
+        const nextRows = (payload.rows && payload.rows.length) ? payload.rows : DEFAULT_ROWS;
+        renderRows(nextRows);
+        document.getElementById('notesStatus').textContent = `Saved ${row.State} notes.`;
+      } catch (err) {
+        document.getElementById('notesStatus').textContent = 'Unable to save notes. Check the Apps Script deployment URL and sharing settings.';
+      }
+    });
+  });
+}
+
+async function bootstrapNotes() {
+  if (!NOTES_API_URL || NOTES_API_URL.includes('PASTE_APPS_SCRIPT_WEB_APP_URL_HERE')) {
+    renderRows(DEFAULT_ROWS);
+    document.getElementById('notesStatus').textContent = 'Campaign notes backend not configured yet. Update campaign-notes-config.js to connect Google Sheets.';
+    return;
+  }
+  try {
+    const payload = await apiGet('campaignNotes');
+    const rows = (payload.rows && payload.rows.length) ? payload.rows : DEFAULT_ROWS;
+    renderRows(rows);
+    document.getElementById('notesStatus').textContent = 'Campaign notes loaded.';
+  } catch (err) {
+    renderRows(DEFAULT_ROWS);
+    document.getElementById('notesStatus').textContent = 'Unable to load campaign notes from Google Sheets. Showing local template rows.';
+  }
+}
+bootstrapNotes();
+</script>
+</body>
+</html>
