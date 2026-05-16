@@ -390,3 +390,11 @@ Update v20: K-12 district prospecting/search now uses the bundled ELSI/NCES K-12
 - Added a **Review Reason** column to the Prospect Finder table and export.
 - Records are flagged for review when 2020 Census population, SAIPE poverty percentage, or D-1 place/map verification cannot be confirmed from the lookup flow.
 - Needs-review filtering ignores score thresholds so reps can export/manual-check unresolved records.
+
+## v46 update
+
+- Added close-match lookup suggestions for Prospect Finder records that need manual review because the Census place population or SAIPE county lookup did not verify exactly.
+- When a city/place or county name appears to be a near match, the Prospect Finder now shows a **Lookup Suggestion** with **Approve** and **Reject** actions.
+- Approving a Census place suggestion fills the Rurality Place and 2020 Population, then recalculates D-1 and objective score.
+- Approving a SAIPE county suggestion fills the county/FIPS and SAIPE percentage, then recalculates D-2 and objective score.
+- Rejecting a suggestion leaves the row flagged for manual Census/DLT map or county/FIPS review.
