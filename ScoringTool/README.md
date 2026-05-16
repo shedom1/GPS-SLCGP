@@ -398,3 +398,9 @@ Update v20: K-12 district prospecting/search now uses the bundled ELSI/NCES K-12
 - Approving a Census place suggestion fills the Rurality Place and 2020 Population, then recalculates D-1 and objective score.
 - Approving a SAIPE county suggestion fills the county/FIPS and SAIPE percentage, then recalculates D-2 and objective score.
 - Rejecting a suggestion leaves the row flagged for manual Census/DLT map or county/FIPS review.
+
+## v47 update
+
+- Prospect Finder lookup suggestions now display the suggested **City/Place and State** for Census population matches.
+- SAIPE suggestions now display the suggested **County and State** so reps can quickly confirm whether the close match is the right geography before approving or rejecting it.
+

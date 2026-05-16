@@ -448,7 +448,29 @@ function editDistance(a,b){a=String(a||'');b=String(b||'');const m=a.length,n=b.
 function similarity(a,b){a=norm(a);b=norm(b);if(!a||!b)return 0;if(a===b)return 1;const max=Math.max(a.length,b.length);let score=1-(editDistance(a,b)/max);if(a.includes(b)||b.includes(a))score=Math.max(score,.86);const at=a.split(' ')[0],bt=b.split(' ')[0];if(at&&bt&&at===bt)score+=.04;return Math.min(1,score);}
 function bestCensusPlaceSuggestion(lookup,map){lookup=String(lookup||'').trim();if(!lookup||!map)return null;let best=null;Object.values(map).forEach(v=>{const place=(v.name||'').replace(/,.*$/,'');const score=similarity(lookup,place);if(!best||score>best.score)best={name:v.name,pop:v.pop,score};});return best&&best.score>=.72?best:null;}
 function bestSaipeCountySuggestion(county,cache){county=String(county||'').trim();if(!county||!cache||!cache.byName)return null;let best=null;Object.values(cache.byName).forEach(v=>{const cname=(v.name||'').replace(/,.*$/,'');const score=similarity(county,cname);if(!best||score>best.score)best={name:v.name,rate:v.rate,fips:v.fips,score};});return best&&best.score>=.72?best:null;}
-function suggestionLabel(s,kind){if(kind==='census'&&s.censusSuggestion){const x=s.censusSuggestion;return `${x.name} — pop ${Number(x.pop||0).toLocaleString()} (${Math.round((x.score||0)*100)}% close)`;}if(kind==='saipe'&&s.saipeSuggestion){const x=s.saipeSuggestion;return `${x.name} — SAIPE ${x.rate}% (${Math.round((x.score||0)*100)}% close)`;}return '';}
+function suggestionGeoLabel(name,state,kind){
+  const raw=String(name||'').trim();
+  const st=String(state||'').trim().toUpperCase();
+  if(!raw)return '';
+  const hasComma=raw.includes(',');
+  const hasState=st && new RegExp('(?:,\\s*)?'+st+'$','i').test(raw);
+  const hasStateName=hasComma;
+  if(kind==='county')return hasStateName||hasState?raw:(st?`${raw}, ${st}`:raw);
+  return hasStateName||hasState?raw:(st?`${raw}, ${st}`:raw);
+}
+function suggestionLabel(s,kind){
+  if(kind==='census'&&s.censusSuggestion){
+    const x=s.censusSuggestion;
+    const label=suggestionGeoLabel(x.name||s.city||s.ruralityPlace,s.state,'place');
+    return `City/Place: ${label} — pop ${Number(x.pop||0).toLocaleString()} (${Math.round((x.score||0)*100)}% close)`;
+  }
+  if(kind==='saipe'&&s.saipeSuggestion){
+    const x=s.saipeSuggestion;
+    const label=suggestionGeoLabel(x.name||s.county,s.state,'county');
+    return `County: ${label} — SAIPE ${x.rate}% (${Math.round((x.score||0)*100)}% close)`;
+  }
+  return '';
+}
 function econScore(p){const n=parseFloat(p);if(isNaN(n))return null;if(n>=30)return 30;if(n>=20)return 20;if(n>=10)return 10;return 0}
 function isNcesRuralLocale(v){const txt=String(v||'');const m=txt.match(/\b(4[123])\b/);return /Rural/i.test(txt)||(m&&['41','42','43'].includes(m[1]))}
 function ruralityScore(s){if(s.contiguous==='Yes')return 0;if(s.censusRural==='Yes')return 40;const pop=parseInt(String(s.cityPopulation||'').replace(/,/g,''));if(isNaN(pop))return null;if(pop>20000&&isNcesRuralLocale(s.sourceLocale)){s.notes=appendNote(s.notes,'D-1 review: NCES rural locale conflicts with postal-city population. Verify actual Rurality Place/CDP and DLT map.');return null}if(pop<=5000)return 40;if(pop<=10000)return 30;if(pop<=20000)return 20;return 0}
